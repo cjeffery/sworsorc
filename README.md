@@ -1,10 +1,12 @@
 sworsorc
 ========
 
-An online, turn-based epic swords and sorcery strategy game.
+An online, turn-based epic Swords & Sorcery strategy game.
 
 Tao Zhang <br/>
-Matt Brown Was Here <br/>
+Matt Brown was here <br/>
 Colin Clifford
 John Goettsche
 Chihsiang Wang
+Tyler Jaszkowiak
+
