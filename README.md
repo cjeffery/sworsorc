@@ -12,4 +12,5 @@ Chihsiang Wang <br/>
 Tyler Jaszkowiak <br/>
 Cameron Simon <br/>
 David "ReadMe Killer" Klingenberg <br/>
-Ian Westrope
+Ian Westrope <br/>
+Wayne Fuhrman <br/>
