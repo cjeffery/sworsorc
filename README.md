@@ -19,3 +19,4 @@ Contributors:
  * Gabe Pearhill
  * Joe Higley
  * Dr. J
+ * Christopher Goes
