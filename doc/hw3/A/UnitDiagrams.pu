@@ -1,0 +1,85 @@
+'this is the comment syntax
+
+@startuml
+hide circle
+
+MovableUnit <|- ArmyUnit
+FlyingUnit -|> MovableUnit
+
+FlyingUnit --  Character : Carries
+ArmyUnit -- FlyingUnit : Carries
+
+AttackingGroup o- MovableUnit
+MovableUnit -o DefendingGroup
+
+class AttackingGroup{
++ Participants
++ Attack()
+}
+
+class DefendingGroup{
++ Participants
++ Defend()
+}
+
+class ArmyUnit { 
+
++ Unit Type 
++ CanAttack
++ CanBeAttacked
++ CanAttackBridge
++ CanAttackFlying
++ CanCharge
++ IsDemoralized
+
+- Attacking Strength
+- Defending Strength
+- Demoralized Strength
+
++ GetAttackingStrength()
++ GetDefendingStrength()
++ Join AttackingGroup
++ Join DefendingGroup
++ Retreat()
++ Die()
+
+}
+
+
+class FlyingUnit {
++ CharactersCarrying
++ ArmyUnitsCarrying
++ PickUpUnit()
++ DropUnit()
+}
+
+class MovableUnit {
++ RacialType
++ MovementAllowance
++ Move()
+}
+
+
+@enduml
+
+
+'Writeup: Putting this here for now:
+
+' A movable unit is something with a race that a player can move.
+
+' An army unit is something that attacks and defends directly. Army
+' units are mostly differentiated by their fixed attacking and defending
+' strengths, and by restrictions on what sort of units and terrain they
+' can attack. Each individual army unit may be in several different
+' states. IsDemoralized is a state that can persist between game turns.
+' CanAttack and CanBeAttacked are states that are reset each game turn,
+' (these states stem from the rule that each unit can only participate
+' in a single attack each game turn).
+
+' What can an ArmyUnit do? Attack, defend, retreat and die. The games
+' rules are best reflected by considring attacking and defending as
+' group operations (possibly in a group of size 1). The AttackingGroup
+' and DefendingGroup classes capture this.
+
+' FlyingUnits are a subclass of normal ArmyUnits, but they can carry a
+' single unit or any number of characters.
