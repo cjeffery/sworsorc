@@ -21,3 +21,4 @@ Contributors:
  * Dr. J
  * Christopher Goes
  * Jay Drage
+ * Sean Shepherd
