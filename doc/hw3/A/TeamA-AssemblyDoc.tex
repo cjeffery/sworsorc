@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[12pt,a4paper]{article}
 %\usepackage[utf8]{inputenc}
 \usepackage[margin=0.5in]{geometry}
 \usepackage{graphicx}
@@ -52,7 +52,7 @@
 =======
 \item VictoryConditions: A class to manage and check for victory conditions. 
 \item Scenario: A class to manage the specific scenario conditions and story elements. Will initialize victory conditions.
->>>>>>> 521092394ab6230c68dbf71a0ed7ddbd74776aa2
+
 \end{itemize}
 
 \pagebreak
@@ -64,13 +64,8 @@
 
 \end{verbatim}
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 521092394ab6230c68dbf71a0ed7ddbd74776aa2
 \section{Subteam Diagrams}
-\subsection{Keith & Tyler}
+\subsection{Keith and Tyler}
 \includegraphics[width=\textwidth]{classD}
 \subsubsection{PlantUML Source}
 \begin{verbatim}
@@ -156,27 +151,97 @@ Stack -lefto Hex : Aggregation
 @enduml
 \end{verbatim}
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> ff3c1d25eaff8c174f12304e48ef1bf4b99efd62
->>>>>>> 521092394ab6230c68dbf71a0ed7ddbd74776aa2
 \section{Detail Diagrams}
 
 \subsection{Blah Detail}
 
 \section{PlantUML Source}
 
-Picture here!
+\includegraphics[width=\textwidth]{UnitDiagrams.png}
+
+A movable unit is something with a race that a player can move.
+
+An army unit is something that attacks and defends directly. Army
+units are mostly differentiated by their fixed attacking and defending
+strengths, and by restrictions on what sort of units and terrain they
+can attack. Each individual army unit may be in several different
+states. IsDemoralized is a state that can persist between game turns.
+CanAttack and CanBeAttacked are states that are reset each game turn,
+(these states stem from the rule that each unit can only participate
+in a single attack each game turn).
+
+What can an ArmyUnit do? Attack, defend, retreat and die. The games
+rules are best reflected by considring attacking and defending as
+group operations (possibly in a group of size 1). The AttackingGroup
+and DefendingGroup classes capture this.
+
+FlyingUnits are a subclass of normal ArmyUnits, but they can carry a
+single unit or any number of characters.
+
 \begin{verbatim}
 
-Plant UML here!
+@startuml
+hide circle
+
+MovableUnit <|- ArmyUnit
+FlyingUnit -|> MovableUnit
+
+FlyingUnit --  Character : Carries
+ArmyUnit -- FlyingUnit : Carries
+
+AttackingGroup o- MovableUnit
+MovableUnit -o DefendingGroup
+
+class AttackingGroup{
++ Participants
++ Attack()
+}
+
+class DefendingGroup{
++ Participants
++ Defend()
+}
+
+class ArmyUnit { 
+
++ Unit Type 
++ CanAttack
++ CanBeAttacked
++ CanAttackBridge
++ CanAttackFlying
++ CanCharge
++ IsDemoralized
+
+- Attacking Strength
+- Defending Strength
+- Demoralized Strength
+
++ GetAttackingStrength()
++ GetDefendingStrength()
++ Join AttackingGroup
++ Join DefendingGroup
++ Retreat()
++ Die()
+
+}
+
+
+class FlyingUnit {
++ CharactersCarrying
++ ArmyUnitsCarrying
++ PickUpUnit()
++ DropUnit()
+}
+
+class MovableUnit {
++ RacialType
++ MovementAllowance
++ Move()
+}
+
+
+@enduml
 
 \end{verbatim}
-<<<<<<< HEAD
-=======
->>>>>>> 735b5e16f9181b4e3ad15e082f2537dbe788a6e1
->>>>>>> 521092394ab6230c68dbf71a0ed7ddbd74776aa2
 
 \end{document}
