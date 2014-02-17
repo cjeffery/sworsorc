@@ -185,8 +185,6 @@ single unit or any number of characters.
 hide circle
 
 MovableUnit <|- ArmyUnit
-MovableUnit <|- Character
-MovableUnit <|- Monster
 FlyingUnit -|> MovableUnit
 
 FlyingUnit --  Character : Carries
@@ -248,10 +246,13 @@ class MovableUnit {
 \end{verbatim}
 
 \subsection{David and Gabe}
+\includegraphics[width=\textwidth]{DavidGabeDiagram.png}
 \subsubsection{PlantUML Source}
 \begin{verbatim}
 @startuml
-hide circles  
+hide circles 
+
+title Player Turn Objects\nAuthors: David Klingenberg and Gabe Pearhill 
 
 class Player{
 	-race : char
