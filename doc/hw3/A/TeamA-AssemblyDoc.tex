@@ -31,6 +31,10 @@
 \item Hex: A discrete location on the board. Hexes are represented by a unique ID, terrain, and a stack of units that can be empty.
 \item Stack: A collection of units and characters, bound by the rules of the game. Ie, 0 or more characters, and 0-2 units. Also, special considerations for movement phase, flying units, and monsters.
 \item Special Hex: The special hex can be any of the residential hexes (city/capital/town/castle), or it can be one of the several unique hex types, such as a teleport hex or vortex hex, or the terrifying Bottomless Plungehole.
+\item BottomlessPlungehole: The bottomless plungehole is a special hex that destroys all non-flying units passing over it or any characters \& flying units who end their movement on this hex. Therefore, it has a method for discriminantly destroying a stack.
+\item ResidentialHex: Since cities, capitals, towns, and castles have inherent defense rating and leadership, they have fields and methods relating to these properties. As defenseRating can change, the initial value is also stored so that a user can regenerate it.
+\item TeleportHex The portal hexes, in addition to other properties of hexes, can also teleport units and characters to other portals.
+\item VortexHex: These impassable hexes are the spawn points of the treacherous vortices that run rampant throughout the planet damaging units.
 \item Vortex: A vortex is a moveable unit, from the system's point of view. A character can control vortices under certain conditions. Otherwise movement, creation, and destruction of vortices is automated.
 
 \item Diplomacy: An object defining the relationship between players and neutral entities.
