@@ -55,8 +55,8 @@
 \item VictoryConditions: A class to manage and check for victory conditions. 
 \item Scenario: A class to manage the specific scenario conditions and story elements. Will initialize victory conditions.
 \item SwordSorcery: A class to handle the main menu, loading, and saving games.
-\item MannaRegeneration: An object to handle the regeneration of manna based on the stellar configuration for the Characters on the game board. 
-
+\item MannaRegeneration: An object to handle the regeneration of manna based on the stellar configuration for the Characters on the game board.
+\item MovableUnit: Something that can moved by the player. 
 
 \end{itemize}
 
@@ -71,6 +71,7 @@
 
 \section{Subteam Diagrams}
 \subsection{Keith and Tyler}
+Reviewed by Wayne.
 \includegraphics[width=\textwidth]{classD}
 \subsubsection{PlantUML Source}
 \begin{verbatim}
@@ -158,10 +159,8 @@ Stack -lefto Hex : Aggregation
 
 \section{Detail Diagrams}
 
-\subsection{Blah Detail}
-
-\section{PlantUML Source}
-
+\subsection{Army Unit Detail}
+Reviewed by Gabe and David
 \includegraphics[width=\textwidth]{UnitDiagrams.png}
 
 A movable unit is something with a race that a player can move.
@@ -250,6 +249,7 @@ class MovableUnit {
 \end{verbatim}
 
 \subsection{David and Gabe}
+Reviewed by Keith and Tyler 
 \includegraphics[width=\textwidth]{DavidGabeDiagram.png}
 \subsubsection{PlantUML Source}
 \begin{verbatim}
