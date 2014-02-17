@@ -1,5 +1,4 @@
 \documentclass[12pt,a4paper]{article}
-%\usepackage[utf8]{inputenc}
 \usepackage[margin=0.5in]{geometry}
 \usepackage{graphicx}
 \author{
@@ -57,21 +56,18 @@
 \item SwordSorcery: A class to handle the main menu, loading, and saving games.
 \item MannaRegeneration: An object to handle the regeneration of manna based on the stellar configuration for the Characters on the game board.
 \item MovableUnit: Something that can moved by the player. 
-
 \end{itemize}
-
 \pagebreak
 \section{Team A Class Diagram}
-%\includegraphics[width=\textwidth]{YOUR FILE HERE}
-
+\includegraphics[width=\textwidth]{TeamAClassOverView}
+\pagebreak
 \subsection{Team A PlantUML Source}
 \begin{verbatim}
 
 \end{verbatim}
 
 \section{Subteam Diagrams}
-\subsection{Keith and Tyler}
-Reviewed by Wayne.
+\subsection{Keith and Tyler - Reviewed by Wayne}
 \includegraphics[width=\textwidth]{classD}
 \subsubsection{PlantUML Source}
 \begin{verbatim}
@@ -159,13 +155,13 @@ Stack -lefto Hex : Aggregation
 
 \section{Detail Diagrams}
 
-\subsection{Army Unit Detail: Wayne}
-Reviewed by Gabe and David
+\subsection{Wayne - Reviewed by Gabe and David}
 \includegraphics[width=\textwidth]{UnitDiagrams.png}
+\begin{itemize}
 
-A movable unit is something with a race that a player can move.
+\item A movable unit is something with a race that a player can move.
 
-An army unit is something that attacks and defends directly. Army
+\item An army unit is something that attacks and defends directly. Army
 units are mostly differentiated by their fixed attacking and defending
 strengths, and by restrictions on what sort of units and terrain they
 can attack. Each individual army unit may be in several different
@@ -174,16 +170,16 @@ CanAttack and CanBeAttacked are states that are reset each game turn,
 (these states stem from the rule that each unit can only participate
 in a single attack each game turn).
 
-What can an ArmyUnit do? Attack, defend, retreat and die. The games
+\item What can an ArmyUnit do? Attack, defend, retreat and die. The games
 rules are best reflected by considring attacking and defending as
 group operations (possibly in a group of size 1). The AttackingGroup
 and DefendingGroup classes capture this.
 
-FlyingUnits are a subclass of normal ArmyUnits, but they can carry a
+\item FlyingUnits are a subclass of normal ArmyUnits, but they can carry a
 single unit or any number of characters.
-
+\end{itemize}
+\subsubsection{PlantUML Source}
 \begin{verbatim}
-
 @startuml
 hide circle
 
@@ -242,14 +238,10 @@ class MovableUnit {
 + MovementAllowance
 + Move()
 }
-
-
 @enduml
-
 \end{verbatim}
 
-\subsection{David and Gabe}
-Reviewed by Keith and Tyler 
+\subsection{David and Gabe - Reviewed by Keith and Tyler}
 \includegraphics[width=\textwidth]{DavidGabeDiagram.png}
 \subsubsection{PlantUML Source}
 \begin{verbatim}
@@ -533,5 +525,4 @@ Diplomacy o-- “<b>*..1</b>” MovableUnit
 
 @enduml
 \end{verbatim}
-
 \end{document}
