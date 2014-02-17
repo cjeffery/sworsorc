@@ -31,9 +31,8 @@
 \item Hex: A discrete location on the board. Hexes are represented by a unique ID, terrain, and a stack of units that can be empty.
 \item Stack: A collection of units and characters, bound by the rules of the game. Ie, 0 or more characters, and 0-2 units. Also, special considerations for movement phase, flying units, and monsters.
 \item Special Hex: The special hex can be any of the residential hexes (city/capital/town/castle), or it can be one of the several unique hex types, such as a teleport hex or vortex hex, or the terrifying Bottomless Plungehole.
-
-
 \item Vortex: A vortex is a moveable unit, from the system's point of view. A character can control vortices under certain conditions. Otherwise movement, creation, and destruction of vortices is automated.
+
 \item Diplomacy: An object defining the relationship between players and neutral entities.
 \item Player: The human player. This object contains information about the players armies, diplomatic relations, race, and victory points.
 \item Army: This object is responsible for conveniently managing the units of each individual diplomatic entity.
@@ -44,9 +43,15 @@
 \item Alliances: A class to facilitate player interactions and diplomatic relations.
 \item PreTurnPhase: A class to initialize the game turn.
 \item PlayerTurnPhase: A class to initialize the player turn phase.
+\item PostTurnPhase: A class to handle post-turn house keeping.
 \item RandomEvent: This object is responsible for facilitating random events.
+\item RandomMovement: This object is responsible for handling the movement of neutral characters on the game board.
 \item PlayerOrderDetermination: Responsible for finding the next player.
 \item GameSetUp: A class the select the scenario and handle initial unit placement.
+\item VictoryConditions: A class to manage and check for victory conditions. 
+\item Scenario: A class to manage the specific scenario conditions and story elements. Will initialize victory conditions.
+\item SwordSorcery: A class to handle the main menu, loading, and saving games.
+\item MannaRegeneration: An object to handle the regeneration of manna based on the stellar configuration for the Characters on the game board. 
 
 
 \end{itemize}
