@@ -4,7 +4,11 @@
 hide circle
 
 MovableUnit <|- ArmyUnit
+MovableUnit <|- Character
+MovableUnit <|- Monster
+MovableUnit <|- ArmyUnit
 FlyingUnit -|> MovableUnit
+
 
 FlyingUnit --  Character : Carries
 ArmyUnit -- FlyingUnit : Carries
