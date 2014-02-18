@@ -124,4 +124,7 @@ Stack -> Hex : Uses
 Battle o-- "2..*" Stack : Is used by 
 
 Flying <|-- Dragon : Inherits
+
+Monster <|-- Penguin : Inherits
+
 @enduml
