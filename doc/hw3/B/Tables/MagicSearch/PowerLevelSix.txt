@@ -1,0 +1,6 @@
+Banish Demon,N*,C,6,4 hexes
+Beserkergang,N,A,2 per unit,7 hexes
+Bind Demon,N*,A,4 per GT,15 hexes
+Conjure Demonic Infantry,N,A,2 per GT,0 hexes
+Firestorm,N,A,10,5 hexes
+Summon Force,N,A,All(5 minumum),in hex 0606 only
