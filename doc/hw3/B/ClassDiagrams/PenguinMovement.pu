@@ -1,0 +1,12 @@
+@startuml
+class Penguin {
+-location
++getLocation()
++move()
+}
+note right of Penguin
+ Movement opperations 
+ are defined in class
+end note
+
+@enduml

@@ -1,0 +1,94 @@
+@startuml
+
+class Hex {
+-number
+-province
++getNumber()
++getProvince()
++getMovementCost()
++getCombatEffect()
+}
+
+class HexEdge {
+-edges[]
++getEdges()
++edgeCrossed()
+}
+
+interface TerrainImprovementType {
++getMovementCost()
++getCombatEffect()
+}
+
+interface TerrainType {
++getMovementCost()
++getCombatEffect()
+}
+
+class Blasted
+class Bridge
+class BridgeGate
+class Broken
+class Capital
+class Castle
+class City
+class Clear
+class Cultivated
+class DragonTunnel
+class Ford
+class Forest
+class Glacier
+class Karoo
+class Moat
+class River
+class Lake
+class Mountain
+class Portal
+class ProvenceBorder
+class Road
+class Rough
+class Stream
+class Swamp
+class Town
+class Trail
+class Vortex
+class Wall
+class Woods
+
+Hex *-- TerrainType : 1
+Hex *-- TerrainImprovementType : 0-1
+Hex *-- Capital : 0-1
+Hex *-- HexEdge : 0-1
+
+TerrainImprovementType <|-- Blasted
+TerrainImprovementType <|-- Bridge
+TerrainImprovementType <|-- BridgeGate
+TerrainImprovementType <|-- Castle
+TerrainImprovementType <|-- City
+TerrainImprovementType <|-- DragonTunnel
+TerrainImprovementType <|-- Ford
+TerrainImprovementType <|-- Portal
+TerrainImprovementType <|-- Road
+TerrainImprovementType <|-- Town
+TerrainImprovementType <|-- Trail
+TerrainImprovementType <|-- Vortex
+
+TerrainType <|-- Broken
+TerrainType <|-- Clear
+TerrainType <|-- Cultivated
+TerrainType <|-- Forest
+TerrainType <|-- Glacier
+TerrainType <|-- Karoo
+TerrainType <|-- River
+TerrainType <|-- Lake
+TerrainType <|-- Moat
+TerrainType <|-- Mountain
+TerrainType <|-- Rough
+TerrainType <|-- Swamp
+TerrainType <|-- Woods
+
+HexEdge <|-- ProvenceBorder
+HexEdge <|-- Stream
+HexEdge <|-- Wall
+
+@enduml
