@@ -1,0 +1,39 @@
+Spell_book:
+	A class that sorts all available spells for the character
+
+Fields:
+Spells_By_PL: 
+	a string array to store all the name of spells that is below, equal, or one level higher than the Magic PL of the character.
+Spells_By_Avaiable_Mana:
+	A string array to store all the name of spells that the character has enough mana to cast FROM Spells_By_PL.
+
+Methods:
+Look_up_by_PL():
+	Function to sort search Spells_By_PL.
+Look_up_by_Available_Mana():
+	Function to search Spells_By_Available_Mana from Spells_By_PL.
+
+Spell:
+	We will have 32 spell classes for each spell
+
+Fields:
+Name: string
+	Name of the spell
+index: int
+	We can put index on each spell so that is easy to deal with.
+PowerLevel: int
+	Just the Magic PL of this spell
+Mana Cost: int
+	Mana for this spell to cost
+Range: int
+	Range of the spell
+Limits: 
+	There are varies of limitations. We will have many booleans.
+Effects:
+	Just the description of the spell that can be shown to players
+
+Methods:
+Select_target():
+	Function to select a target that the player want to cast his spell on.
+Cost_Mana():
+	Simple calculation to reduce the current mana points for that character.

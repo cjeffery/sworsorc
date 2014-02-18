@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{graphicx}
+
+% al is like description but nice and aligned
+% http://tex.stackexchange.com/questions/67720/description-list-with-aligned-descriptions
+\usepackage{calc}  
+\usepackage[shortlabels]{enumitem} %without 'shortlabels' enumerate is sad
+
+\newenvironment{al}
+{\begin{description}[leftmargin=0pt,
+                     labelwidth=\widthof{\bfseries Methods: }]}
+{\end{description}}
+
+\author{
+  Tao \\ \and John G \\ \and Jay \\ \and John F \\ \and Matt \\ \and Clifford 
+}
+\title{HW3 Team B Class Diagrams}
+
+\begin{document}
+  \maketitle
+
+\section{Random Events}
+\includegraphics[width=\textwidth]{pngs/randomevents.png}
+
+\section{Map and Movement}
+\includegraphics[width=\textwidth]{pngs/Map.png}
+
+\section{Terrain Classes}
+\includegraphics[width=\textwidth]{pngs/TerrainClasses.png}
+
+%\section{Penguin Movement}
+%\includegraphics[width=\textwidth]{pngs/PenguinMovement.png}
+
+\section{Spells}
+\includegraphics[width=\textwidth]{pngs/spell.png}
+
+\section{Unit Classes}
+\includegraphics[width=\textwidth]{pngs/UnitClasses.png}
+
+\input{combatClassesDict.tex}
+\input{mapmove.tex}
+
+\end{document}
