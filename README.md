@@ -5,7 +5,6 @@ An online, turn-based epic Swords & Sorcery strategy game.
 
 Contributors:
 
- * Keith Drew
  * Tao Zhang
  * Matt Brown
  * Colin Clifford
@@ -23,3 +22,4 @@ Contributors:
  * Jay Drage
  * Sean Shepherd
  * Johnathan Flake
+ * Keith Drew <--- HA!! LAST!! Muhahahahaha!!!!!!
