@@ -1,4 +1,6 @@
 @startuml
+title Terrain Classes by John G. and Colin Clifford.
+hide circle
 
 class Hex {
 -number
@@ -86,6 +88,8 @@ TerrainType <|-- Mountain
 TerrainType <|-- Rough
 TerrainType <|-- Swamp
 TerrainType <|-- Woods
+TerrainType <|-- BottomlessPlungehole
+TerrainType <|-- GatewayOfEvil
 
 HexEdge <|-- ProvenceBorder
 HexEdge <|-- Stream

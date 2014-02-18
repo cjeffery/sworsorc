@@ -1,4 +1,5 @@
 @startuml
+title Map and Movement by John G. and Colin Clifford.
 hide circle
 
 class Map {
@@ -45,46 +46,13 @@ interface TerrainType {
 +getCombatEffect()
 }
 
-class Blasted
-class Bridge
-class Gate
-class Broken
-class Castle
-class City
-class Clear
-class Cultivated
-class DragonTunnel
-class Ford
-class Forest
-class Glacier
-class Karoo
-class Moat
-class River
-class Lake
-class Mountain
-class Portal {
-    -Hex[] portalHexes
-    +Hex[] getPortals()
-}
-class ProvenceBorder
-class Road
-class Rough
-class Stream
-class Swamp
-class Town
-class Trail
-class Vortex
-class Wall
-class Woods
-class BottomlessPlungehole
-class GatewayOfEvil
 class HexEdgeSpellEffect
 class     HexSpellEffect
 
-RandomEvent ()- Map
+RandomEvent "effects" -- "effected" Map
 
 
-Map *-- "*" Hex
+Map *-- "2046" Hex
 Stack "0..1" o- Hex
 
 
@@ -93,33 +61,6 @@ Hex *--- "0..1" TerrainImprovementType
 Hex *------ "6" HexEdge 
 Hex o-- "0..*" HexSpellEffect
 
-TerrainImprovementType <|-- Bridge
-TerrainImprovementType <|-- Castle
-TerrainImprovementType <|-- City
-TerrainImprovementType <|-- DragonTunnel
-TerrainImprovementType <|-- Ford
-TerrainImprovementType <|-- Portal
-TerrainImprovementType <|-- Road
-TerrainImprovementType <|-- Town
-TerrainImprovementType <|-- Trail
-TerrainImprovementType <|-- Vortex
-TerrainImprovementType <|-- BottomlessPlungehole
-TerrainImprovementType <|-- GatewayOfEvil
-
-TerrainType <|--- Blasted
-TerrainType <|--- Broken
-TerrainType <|--- Clear
-TerrainType <|--- Cultivated
-TerrainType <|--- Forest
-TerrainType <|--- Glacier
-TerrainType <|--- Karoo
-TerrainType <|--- River
-TerrainType <|--- Lake
-TerrainType <|--- Moat
-TerrainType <|--- Mountain
-TerrainType <|--- Rough
-TerrainType <|--- Swamp
-TerrainType <|--- Woods
 
 HexEdge <|---- ProvenceBorder
 HexEdge <|---- Stream
