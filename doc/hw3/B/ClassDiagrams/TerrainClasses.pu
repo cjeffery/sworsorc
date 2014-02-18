@@ -2,21 +2,6 @@
 title Terrain Classes by John G. and Colin Clifford.
 hide circle
 
-class Hex {
--number
--province
-+getNumber()
-+getProvince()
-+getMovementCost()
-+getCombatEffect()
-}
-
-class HexEdge {
--edges[]
-+getEdges()
-+edgeCrossed()
-}
-
 interface TerrainImprovementType {
 +getMovementCost()
 +getCombatEffect()
@@ -56,11 +41,6 @@ class Trail
 class Vortex
 class Wall
 class Woods
-
-Hex *-- TerrainType : 1
-Hex *-- TerrainImprovementType : 0-1
-Hex *-- Capital : 0-1
-Hex *-- HexEdge : 0-1
 
 TerrainImprovementType <|-- Blasted
 TerrainImprovementType <|-- Bridge
