@@ -1,6 +1,7 @@
 .PHONY: clean pdf forcepdf png
 DIAGRAMS = pngs/Map.png pngs/PenguinMovement.png pngs/spell.png \
-           pngs/TerrainClasses.png pngs/UnitClasses.png pngs/randomevents.png
+           pngs/TerrainClasses.png pngs/UnitClasses.png pngs/randomevents.png \
+           pngs/overview.png
 pdf: classdiagrams_b.tex classdiagrams_b.pdf ${DIAGRAMS} combatClassesDict.tex
 png: pngs/*.png
 
