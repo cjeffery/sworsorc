@@ -184,7 +184,12 @@ single unit or any number of characters.
 hide circle
 
 MovableUnit <|- ArmyUnit
+MovableUnit <|- Character
+MovableUnit <|- Monster
 FlyingUnit -|> MovableUnit
+Monster <|- Demon
+Monster <|- KillerPenguin
+Monster <|- Dragon
 
 FlyingUnit --  Character : Carries
 ArmyUnit -- FlyingUnit : Carries
@@ -237,6 +242,59 @@ class MovableUnit {
 + RacialType
 + MovementAllowance
 + Move()
+}
+
+class Character {
++ Unique ID
++ Name
++ Subtitle
++ HomeHex
++ MagicProfile
++ MagicResistence
++ MagicPowerLevel
++ MagicPotential
++ MagicColor
++ Leadership
++ Diplomacy
++ Fighting
++ Endurance
++ HasTalisman
++ IsCaptured
+
++ AttemptEscape()
++ AffectCombatMagically()
+}
+
+class Monster {
++ Name
++ MagicResistence
++ MagicPowerLevel
++ MagicPotential
++ MagicColor
++ Fighting
++ Endurance
+
++ Eliminated()
++ Retreat()
+}
+
+class Demon {
++ BoundCharacter
+
++ AttemptBind()
+}
+
+class KillerPenguin {
++ PlayerControlled
++ ControllingPlayer
+
++ RandomMove()
++ AttackAdjacent()
+
+}
+
+class Dragon {
++ BlockadeComplex()
 }
 @enduml
 \end{verbatim}
