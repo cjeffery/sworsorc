@@ -1,0 +1,6 @@
+Building,N,A,5,5 hexes
+Conjure Koboldic Infantry,N,A,1 per GT,in hex only
+Disintegration,N,A,6,5 hexes
+Ersatz Winter,N,A,8,Unlimited
+Teleportation Control,A,4,in hex only
+Vortex Creation,N,A,2 per Vortex,5 hexes

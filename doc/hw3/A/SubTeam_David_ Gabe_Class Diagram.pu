@@ -1,0 +1,281 @@
+@startuml
+hide circles 
+
+title Player Turn Objects\nAuthors: David Klingenberg and Gabe Pearhill 
+
+class Player{
+	-race : char
+	-playerOrder : int
+	--
+	+setRace(r : char) : void
+	+setNumber(n : int )
+	+getRace() : char
+	==
+	Author: Gabe Pearhill
+}
+
+class Army{
+	-unitID : Unit[]
+	-playerOrder : int
+	--
+	+addUnit(id : Unit)
+	+removeUnit(id : Unit)
+	+getUnits() : Unit[]
+	==
+	Author: David Klingenberg
+}
+
+class NeutralArmy{
+	-AlliedWithPlayer : int
+	--
+	+setAlliedPlayer
+	==
+	Author: David Klingenberg
+}
+
+class StellarConfiguration{
+	-yellowSunPosition : int
+	-redSunPosition : char
+	-blueSunPosition : char
+	-redSunAscendent : boolean
+	-redSunDescendent : boolean
+	--
+	+<<constructor>>StellarConfiguration(positionOfRedSun : char)
+	+AdvanceSuns() : void
+	-CheckMinorSunsPosition(minorSunAscendentPositionOne : char,\n minorSunAscendentPositionTwo : char,\nminorSunAscendentPositionThree : char) : void
+	-SetSunPhase() : void
+	+getYelloSunPosition() : int
+	+getRedSunPosition() : char
+	+getBlueSunPosition() : char
+	+GetRedSunIsInAscension() : boolean
+	+GetRedSunIsInDeclension() : boolean
+	+GetBlueSunIsInAscension() : boolean
+	+GetBlueSunIsInDeclension() : boolean 
+	-SetYellowSunPosition(sunPosition : int) : void
+	-SetRedSunPosition(sunPosition : char) : void
+	-SetBlueSunPosition(sunPosition : char) : void
+	-SetRedSunAscendent( sunAscension : boolean) : void
+	-SetRedSunDescendent(sunDescendent : boolean) : void
+	==
+	Author: David Klingenberg
+} 
+
+class Scenario {
+	-numerPlayers : int
+	-raceList : char[]
+	-unitsList : unit[]
+	--
+	+<<constructor>>Scenario()
+	+getRace(playerNum : int) : char
+	+getUnites(playerNum : int) : unit[]
+	+getNumberPlayers() : int
+	==
+	Author: David Klingenberg
+}
+
+class RandomEvent{
+	-currentEventKey : int
+	-currentEventLength : int
+	-currentEventDescription : int
+	--
+	+<<constructor>>RandomEvent(cEKey : int, cELength : int, cEDescription : int) : void
+	+setCurrentEventKey (cEKey : int) : void
+	+setCurrentEventLength (cELength :  int) : void
+	+setCurrentEventDescription(cEDescription : int) : void
+	+getCurrentEventKey () :  int
+	+getCurrentEventLength (): int
+	+getCurrentEventDescription() : int
+	==
+	Author: David Klingenberg
+}
+
+
+
+class Diplomacy{
+	-neutral : NeutralArmy[]
+	-- 
+	+influenceNetural() : void
+	+getNeturalPosition() : Hex
+	+moveNeturalPosition : DiplomacyMap   
+	==
+	Author: David Klingenberg
+} 
+
+
+class PreTurnPhase{
+	--
+	+PreTrunHouseKeeping() : void
+	==
+	 Author: David Klingenberg
+}
+
+class PlayerTurnPhase{
+	--
+	+RunPlayerMovement
+	==
+		--
+	+PreTrunHouseKeeping() : void
+	==
+	 Author: David Klingenberg
+}
+
+class PostTurnPhase{
+	--
+	+PostTurnHouseKeeping() : void 
+	==
+	 Author: David Klingenberg
+}
+
+class GameTurn{
+	-turnNumber : int
+	--
+	+AdvanceTurn() : void
+	==
+	 Author: David Klingenberg
+}
+
+class Spells{
+	-name : String 
+	-type : char
+  	-manaCost : int
+   	-range : int
+   	-powerLevel : int
+   	-resistable : bool
+   	--
+   	+Cast(hexTarget) : void
+   	+Cast() : void
+   	==
+   	Author: Gabe Pearhill
+}
+class CounterSpells{
+	-name : String 
+	-type : char
+  	-manaCost : int
+   	-range : int
+   	-powerLevel : int
+   	--
+	+Cast(TargetSpell) : Void
+	+Cast() : void
+	==
+	Author: Gabe Pearhill
+}
+
+class Alliances{
+	-player : Player[]
+	--
+	+formAlliances() : void
+	==
+	Author: David Klingenberg
+}
+
+class SwordSorcery{
+	--
+	+StartNewGame() : void
+	+SaveLoadGame() : void
+	==
+	Author: David Klingenberg
+}
+
+class PlayerOrderDetermination{
+	--
+	+chooseNextPlayer(aliances) : int
+	==
+	Author: Gabe Pearhill
+}
+class Alliances
+class SwordSorcery
+class MannaRegeneration {
+	-rate : int
+	--
+	+Regenerate(Character) : int
+	==
+	Author: Gabe Pearhill
+}
+
+class MovableUnit{
+}  
+note right  : See Sub diagram.
+
+class RandomMovment{
+	-Monster : MovableUnit
+	-Vorticies : MovableUnit
+	--
+	+RandomlyMoveMonster(Monster : MovableUnit) : void
+	+RandomlyMoveVorticies(Vorticies : MovableUnit) : void
+	==
+	Author: David Klingenberg
+}
+
+
+Class GameSetUp{
+	--
+	+SelectScenaro(selection) : void
+	==
+	Author: Gabe Pearhill
+}
+
+class VictoryConditions{
+	-points : int
+	-specialConditions : String
+	--
+	+checkForCondtion(map) : int
+	==
+	Author: Gabe Pearhill
+}
+
+class LookUpTable{
+	-AppropriateTable
+	--
+	+LookUp(key) : SummaryObject
+	==
+	Author: Gabe Pearhill
+}
+
+SwordSorcery *-- GameTurn
+GameSetUp -* SwordSorcery
+Scenario -* GameSetUp 
+VictoryConditions "<b>1 per player</b>" --* Scenario
+
+Scenario *-- Player
+Scenario *-- Army
+
+GameTurn *-- PostTurnPhase 
+GameTurn -- PreTurnPhase : Initiates current\ngame turn 
+
+PlayerTurnPhase “<b>7..1</b>” -o  PostTurnPhase
+PreTurnPhase “<b>1..7</b>”  -o  PlayerTurnPhase
+
+PreTurnPhase --* RandomEvent
+PlayerOrderDetermination *-- PreTurnPhase
+Alliances --* PreTurnPhase
+Alliances -- PlayerOrderDetermination : Allied players act in sequence
+
+PlayerTurnPhase *-- Player
+Player o-- “<b>1..6</b>” Army
+Army o-- “<b>1..*</b>” MovableUnit
+NeutralArmy “<b>1..5</b>” -|> Army
+
+MovableUnit -- Spells : Affect unit(s),\nunit(s) movement,\nor hex(es)  
+MovableUnit -- CounterSpells : Cast by\nopposing player(s)
+CounterSpells - Spells : Negates Spells
+
+Spells *-- LookUpTable
+CounterSpells *-- LookUpTable
+RandomEvent *-- LookUpTable
+
+PostTurnPhase *-- RandomMovment
+StellarConfiguration --* PostTurnPhase
+StellarConfiguration –  MannaRegeneration : Regeneration dependant on\n stellar configuration
+PostTurnPhase *-- Diplomacy
+PostTurnPhase *-- MannaRegeneration
+
+Alliances  o-- “<b>1..6</b>” Player
+Player --* PlayerOrderDetermination
+
+RandomMovment  o-- “<b>1..*</b>” MovableUnit 
+MannaRegeneration  o-- “      <b>1..*</b>” MovableUnit
+Diplomacy o-- “<b>*..1</b>” MovableUnit
+
+@enduml
+
+

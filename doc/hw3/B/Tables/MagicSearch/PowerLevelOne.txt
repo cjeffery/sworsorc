@@ -1,0 +1,3 @@
+Conjure Zombie Infantry,N,A,1 per 2 GT,in hex only
+Force Wall,N,A,2 per hexside,7 hexes
+Teleportation Protection,N,A,2,in hex only

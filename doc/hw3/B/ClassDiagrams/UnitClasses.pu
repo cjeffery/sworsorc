@@ -1,0 +1,130 @@
+@startuml
+hide circle
+
+title Unit & Combat Classes\nby Matt Brown\nReviewed By Jay Drage
+
+class Unit {
+ -combat strength
+ -movement allowance
+ +die()
+ +spawn()
+}
+
+class Stack{
+ -units[]
+ -location :Hex Object
+ -controlled hexes[6]
+ +combat()
+ +Retreat()
+ +Capture()
+ +Advance()
+ +moveStack()
+ +makeStack()
+ +breakStack()
+ +leaveStack()
+ +joinStack()
+}
+
+class Monster{
+ -name
+ -Magic Potential
+ -Magic Color
+ -Magic Resistance
+ -Fighting
+ -Endurance
+ -Combat Strength
+ +Random Movement()
+}
+
+class Character{
+ -Race
+ -Magic Potential
+ -Magic Color
+ -Home Hex
+ -Magic Profile
+ -Magic Resistance
+ -Leadership
+ -Diplomatic
+ -Fighting
+ -Endurance
+ +Diplomacy()
+ +Escape()
+ +Cast Spell( Spell Book )
+ +Cast Counter-Spell()
+ +Rally Units()
+ +Die()
+ +Spawn()
+}
+
+class SpellBook{
+ -See Spell Class Diagram
+}
+
+class Flying{
+ -race
+ -carrying
+}
+
+class Dragon{
+ +Blockade()
+}
+
+class Conjured{
+ -spawner
+ -demoralized value
+ +Life Cost()
+}
+
+class Infantry{
+ -race
+ -demoralized value
+}
+
+class Cavalry{
+ -race
+ -demoralized value
+}
+
+class Ranged{
+ -race
+ -demoralized Value
+ +Ranged Attack()
+}
+
+class Hex{
+ -implements terrain diagram
+}
+
+class Battle{
+ -Attacker: Stack Object
+ -Defender: Stack Object
+ -Combat Ratio
+ -Result
+ -Attacker Hex
+ -Defender Hex
+ -Terrain type
+ +Find Combat Ratio()
+ +Resolve Combat()
+ +Check Valid Combat()
+ +Find Battle Terrain Type()
+ +Award Victory Points()
+}
+
+Stack o-- "1..2" Unit : of same type
+Stack o-- "1..*" Character
+Unit <|-- Monster : Inherits
+Unit <|-- Infantry : Inherits
+Unit <|-- Cavalry : Inherits
+Unit <|-- Ranged : Inherits
+Unit <|-- Conjured : Inherits
+Unit <|-- Flying : Inherits
+
+Character -> SpellBook : Uses
+Stack -> Hex : Uses
+Battle o-- "2..*" Stack : Is used by 
+
+Flying <|-- Dragon : Inherits
+
+Monster <|-- Penguin : Inherits
+
+@enduml

@@ -1,0 +1,4 @@
+Banish Conjured Troops,N,A,3,7 hexes
+Conjure Wraith Troops,N,A,1.5 per GT,in hex only
+Planar Return,N,A,6,Unlimited
+Summon Demon,N,A,4,in hex only
