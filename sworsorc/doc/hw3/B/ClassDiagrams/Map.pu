@@ -1,0 +1,73 @@
+@startuml
+title Map and Movement by John G. and Colin Clifford.
+hide circle
+
+class Map {
+-hexes[]
++getHex(index)
+}
+
+class Hex {
+-neighbors[6]
+-edges[6]
+-number
+-province
+-TerrainImprovementType
+-TerrainType
+-isCapitol
++getNumber()
++getProvince()
++getMovementCost()
++getCombatEffect()
++getTerrainType()
++getTerrainImprovementType()
++HexEdge[6] getEdges()
++isCapital()
++getStack()
++updateStack()
+}
+
+class Stack {
+	+Hex[] getReachableHexes()
+	+move(index)
+}
+
+class HexEdge {
+	+elements
+	+edgeCrossed()
+}
+
+interface TerrainImprovementType {
++getMovementCost()
++getCombatEffect()
+}
+
+interface TerrainType {
++getMovementCost()
++getCombatEffect()
+}
+
+class HexEdgeSpellEffect
+class     HexSpellEffect
+
+RandomEvent "effects" -- "effected" Map
+
+
+Map *-- "2046" Hex
+Stack "0..1" o- Hex
+
+
+Hex *----- "1" TerrainType
+Hex *--- "0..1" TerrainImprovementType
+Hex *------ "6" HexEdge 
+Hex o-- "0..*" HexSpellEffect
+
+HexEdge o-- EdgeElement
+EdgeElement <|---- ProvinceBorder
+EdgeElement <|---- Stream
+EdgeElement <|---- Wall
+EdgeElement <|---- ForceWall
+EdgeElement <|---- DragonWall
+EdgeElement  o---- "0..*" HexEdgeSpellEffect
+EdgeElement <|---- Gate
+@enduml

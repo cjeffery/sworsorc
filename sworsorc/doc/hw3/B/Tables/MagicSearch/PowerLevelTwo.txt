@@ -1,0 +1,5 @@
+Conjure Centauriod Cavalry,N,A,1 per GT,in hex only
+Fear,N,A,3 per unit,7 hexes
+Manna Transfer,N,A,2 for 1,in hex only
+Morale,N,C,3 per unit,7 hexes
+River Crossing,N,A,2 per hex,10 hexes
