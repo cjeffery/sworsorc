@@ -17,7 +17,7 @@ public class StellarConfigurationTest {
     StellarConfiguration sun;
  
     public StellarConfigurationTest() {
-        sun = new StellarConfiguration('b');
+        sun = StellarConfiguration.GetStellarConfiguration('b');
     }
 
     /**

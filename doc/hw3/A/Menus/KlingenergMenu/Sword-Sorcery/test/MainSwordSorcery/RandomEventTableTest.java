@@ -22,7 +22,7 @@ public class RandomEventTableTest {
    
     
     public RandomEventTableTest() {
-          rEvent = new RandomEventTable(0);
+          rEvent = RandomEventTable.getInstance();
     }
     
     @BeforeClass
@@ -68,7 +68,7 @@ public class RandomEventTableTest {
         
         while (d1 <= 5){
             while (d2 <= 5){
-                rEvent.RandomEventTableNew(0, d1, d2);
+                rEvent.RandomEventTableNewEvent(0, d1, d2);
                 
                 
                 System.out.println("EventKey");
@@ -90,7 +90,7 @@ public class RandomEventTableTest {
             d2 = 0;
         }
         
-         rEvent.RandomEventTableNew(13, 5, 21);
+         rEvent.RandomEventTableNewEvent(13, 5, 21);
                 
                 
                 System.out.println("EventKey");
