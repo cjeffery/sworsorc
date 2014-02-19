@@ -19,9 +19,11 @@ public class StellarConfiguration {
   
   boolean redSunAscendent;
   boolean redSunDescendent;
- 
   
-  public StellarConfiguration(char positionOfRedSun){
+  private static StellarConfiguration INSTANCE;
+ 
+ 
+  private StellarConfiguration(char positionOfRedSun){
       
       SetYellowSunPosition(1);
       
@@ -86,6 +88,12 @@ public class StellarConfiguration {
       SetSunPhase();
       
   }//StellarCongfiguration
+  
+  public static StellarConfiguration GetStellarConfiguration(char positionOfRedSun){
+      if (INSTANCE == null)
+          INSTANCE =  new  StellarConfiguration(positionOfRedSun);
+      return INSTANCE;
+  }
   
   public void AdvanceSuns(){
       

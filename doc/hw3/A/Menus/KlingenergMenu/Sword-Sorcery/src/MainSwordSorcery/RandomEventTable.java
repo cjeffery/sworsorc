@@ -18,6 +18,7 @@ public class RandomEventTable {
     private String eventDescription;
     private int currentEventKey; 
     Random RandomGenerator = new Random();
+    private static RandomEventTable INSTANCE;
     
         
     private void KeyLookup(int sixSidedDieOne, int sixSidedDieTwo){
@@ -246,7 +247,7 @@ public class RandomEventTable {
         currentEventKey = keyOfEvent;
     }
     
-    public RandomEventTable() {
+    private RandomEventTable() {
           
         SetCurrentEvent(0);
         
@@ -259,7 +260,7 @@ public class RandomEventTable {
     private int RandomSixSideDie() {
         return RandomGenerator.nextInt(6);
     }
-       
+    /*   
     public RandomEventTable(int inEvent) {
         
         SetCurrentEvent(inEvent);
@@ -279,8 +280,8 @@ public class RandomEventTable {
         this.LookUpLength(GetEventKey());
         
     }//RandomTable(int inEvent, int firstSixSideDie, int secondSixSideDie)
-    
-    public void RandomEventTableNew(){
+    */
+    public void RandomEvenTableNewEvent(){
         
         SetCurrentEvent(0);
         
@@ -290,7 +291,7 @@ public class RandomEventTable {
         
     }//NewRandomEvent()
     
-    public void RandomEventTableNew(int inEvent){
+    public void RandomEventTableNewEvent(int inEvent){
 
         SetCurrentEvent(inEvent);
         
@@ -300,7 +301,7 @@ public class RandomEventTable {
         
     }//NewRandomEvent(int inEvent){
     
-    public void RandomEventTableNew(int inEvent, int sixSidedDieOne, int sixSidedDieTwo){
+    public void RandomEventTableNewEvent(int inEvent, int sixSidedDieOne, int sixSidedDieTwo){
         
         SetCurrentEvent(inEvent);
 
@@ -309,5 +310,13 @@ public class RandomEventTable {
         this.LookUpLength(GetEventKey());
         
     }//NewRandomEvent(int inEvent, int Die1, int secondSixSideDie){
+      
+    public static RandomEventTable getInstance(){
+        if (INSTANCE == null)
+            INSTANCE = new RandomEventTable();
+        
+        return INSTANCE;
+    }
             
+    
 }//class
