@@ -1,0 +1,118 @@
+\section*{Combat and Unit classes dictionary}
+Jay Drage
+reviewed by Matt Brown
+
+%looks terrible, but no time to prettify
+\subsection*{Class:  Unit}
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{combatStrength - the combat strength rating of unit}
+    \item[] \parbox{\textwidth}{movementAllowance - movement points remaining}
+	\item[Methods:]	\parbox{\textwidth}{Die()  -  removes unit from play}
+	\item[] \parbox{\textwidth}{Spawn() - creates unit and puts into play}
+\end{al}
+
+
+\subsection*{Class:  Flying inherits Unit}
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{race - race type of unit}
+	\item[] \parbox{\textwidth}{carrying - is unit carrying anything}
+\end{al}
+
+\subsection*{Class: Dragon inherits Flying}
+\begin{al}
+	\item[Methods:] \parbox{\textwidth}{Blockade[] - allows dragon to blockade tunnel entrance}
+\end{al}
+
+\subsection*{Class:  Monster  extends  Unit}
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{name - name of unit}
+    \item[] \parbox{\textwidth}{Magic Potential - maximum level of magic}
+    \item[] \parbox{\textwidth}{Magic Color - associated magic color}
+    \item[] \parbox{\textwidth}{Magic Resistance - magic resistance level}
+    \item[] \parbox{\textwidth}{Fighting - fighting ability}
+    \item[] \parbox{\textwidth}{Endurance - number of endurance points}
+    \item[] \parbox{\textwidth}{Combat Strength - combat strength}
+	\item[Methods:]\parbox{\textwidth}{Random Movement() - moves monster in a random manner}
+\end{al}
+
+\subsection*{Class: Conjured extends Unit}
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{spawner - character who spawned the unit}
+    \item[] \parbox{\textwidth}{demoralized value - value once unit is demoralized}
+\end{al}
+
+\subsection*{Class: Infantry extends Unit}
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{spawner - character who spawned the unit}
+    \item[] \parbox{\textwidth}{demoralized value - value once unit is demoralized}
+\end{al}
+
+		
+\subsection*{Class: Cavalry extends Unit}
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{spawner - character who spawned the unit}
+    \item[] \parbox{\textwidth}{demoralized value - value once unit is demoralized}
+\end{al}
+
+\subsection*{Class: Cavalry extends Unit}
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{spawner - character who spawned the unit}
+    \item[] \parbox{\textwidth}{demoralized value - value once unit is demoralized}
+	\item[Methods:] \parbox{\textwidth}{Ranged Attack() - allows ranged units to attack a non-adjacent hex}
+\end{al}
+
+\subsection*{Class:  Character}
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{Race - race type of unit}
+    \item[] \parbox{\textwidth}{Magic Potential  -  maximum allowed mana points}
+    \item[] \parbox{\textwidth}{Magic Color - associated magic color}
+    \item[] \parbox{\textwidth}{Home Hex  -  starting location of character}
+    \item[] \parbox{\textwidth}{Magic Profile - magical visibilty of character }
+    \item[] \parbox{\textwidth}{Endurance - number of endurance points}
+    \item[] \parbox{\textwidth}{Magic Resistance - resistance level to magic }
+    \item[] \parbox{\textwidth}{Leadership  -  leadership value}
+    \item[] \parbox{\textwidth}{Diplomatic - diplomatic level}
+    \item[] \parbox{\textwidth}{Fighting - fighting ability}
+    \item[] \parbox{\textwidth}{Endurance - number of endurance points}
+	\item[Methods:] \parbox{\textwidth}{Diplomacy() - conduct diplomacy with other nations }
+    \item[] \parbox{\textwidth}{Escape() - attempt escape from capture}
+    \item[] \parbox{\textwidth}{CastSpell() - cast spell if character has mana}
+    \item[] \parbox{\textwidth}{CastCounterSpell() - cast a counter spell during different players turn}
+    \item[] \parbox{\textwidth}{RallyUnits() - attempt to rally units in current hex}
+    \item[] \parbox{\textwidth}{Die()  -  removes character from play}
+    \item[] \parbox{\textwidth}{Spawn() - creates unit and puts into play}
+\end{al}
+
+
+\subsection*{Class:  Stack  :  dynamic aggregate of Units}
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{Unit[] memberUnits - array of units that are in stack}
+    \item[] \parbox{\textwidth}{location - Hex object: hex stack is on}
+    \item[] \parbox{\textwidth}{controlledHexes[6] - hexes under zone of control}
+	\item[Methods:]\parbox{\textwidth}{Retreat() - retreats after combat}
+    \item[] \parbox{\textwidth}{Capture() - capture enemy units}
+    \item[] \parbox{\textwidth}{Advance() - advance forward after combat}
+    \item[] \parbox{\textwidth}{MoveStack()  -  move stack to selected hex}
+    \item[] \parbox{\textwidth}{MakeStack() - create new stack for exiting units}
+    \item[] \parbox{\textwidth}{breakStack() - destroys stack}
+    \item[] \parbox{\textwidth}{UseMagic() - if magic units present then allow Unit.CastSpell()}
+    \item[] \parbox{\textwidth}{LeaveStack()  - removes unit from memberUnits[], update characterPresent}
+    \item[] \parbox{\textwidth}{JoinStack()  -  adds unit to memberUnits[], update characterPresent if unit is character}
+\end{al}
+
+
+\subsection*{Class:  Battle}
+\begin{al}
+	\item[Fields:]\parbox{\textwidth}{attacker - stacks of attacking units}
+    \item[] \parbox{\textwidth}{defender - stack of defending units}
+    \item[] \parbox{\textwidth}{combatRatio  - calculated ratio from combat table }
+    \item[] \parbox{\textwidth}{result - result of battle}
+    \item[] \parbox{\textwidth}{attackerHex - hex numbers of attackers before battle}
+    \item[] \parbox{\textwidth}{defenderHex - hex number of defender before battle}
+    \item[] \parbox{\textwidth}{terrainType - holds int code for terrain type of battle hex}
+	\item[Methods:]\parbox{\textwidth}{FindCombatRatio() - calculates combatRatio}
+    \item[] \parbox{\textwidth}{\parbox{\textwidth}{ResolveCombat( ) - resolves combat and sets retreat or advance status of stacks}}
+    \item[] \parbox{\textwidth}{CheckValidCombat( ) - performs check to see if battle can procede}
+    \item[] \parbox{\textwidth}{FindBattleTerrainType() - uses defenderHex to determine terrainType}
+    \item[] \parbox{\textwidth}{AwardVictoryPoints() - adds victory points to victory conditions}
+\end{al}
