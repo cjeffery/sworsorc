@@ -2,6 +2,7 @@ Sean Shepherd
 Reviewed by Shaung Wang
 
 @startuml
+
 hide circles
 
 Magic : numberActiveSpells : integer
