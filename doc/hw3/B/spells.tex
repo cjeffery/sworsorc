@@ -1,0 +1,23 @@
+\section*{Spell diagram dictionary}
+\subsection*{Class: Spell\_book}
+A class that sorts all available spells for the character
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{Spells\_By\_PL - a string array to store all the name of spells that is below, equal, or one level higher than the Magic PL of the character.}
+	\item[] \parbox{\textwidth}{Spells\_By\_Available\_Mana - A string array to store all the name of spells that the character has enough mana to cast FROM Spells\_By\_PL.}
+	\item[Methods:] 	\item[] \parbox{\textwidth}{Look\_up\_by\_PL() - Function to sort search Spells\_By\_PL.}
+	\item[] \parbox{\textwidth}{Look\_up\_by\_Available\_Mana() - Function to search Spells\_By\_Available\_Mana from Spells\_By\_PL.}
+\end{al}
+\subsection*{Class: Spell}
+We will have 32 spell classes for each spell
+\begin{al}
+	\item[Fields:] \parbox{\textwidth}{Name - String Name of the spell}
+	\item[] \parbox{\textwidth}{index -	We can put index on each spell so that is easy to deal with.}
+	\item[] \parbox{\textwidth}{PowerLevel - Just the Magic PL of this spell}
+	\item[] \parbox{\textwidth}{Mana Cost - Integer Mana for this spell to cost}
+	\item[] \parbox{\textwidth}{Range - Range of the spell in hexes}
+	\item[] \parbox{\textwidth}{Limits - There are varies of limitations. We will have many booleans.}
+	\item[] \parbox{\textwidth}{Effects - Just the description of the spell that can be shown to players}
+	\item[Methods:] \parbox{\textwidth}{Select\_target() - Function to select a target that the player want to cast his spell on.}
+	\item[] \parbox{\textwidth}{Cost\_Mana() - Simple calculation to reduce the current mana points for that character.}
+\end{al}
+

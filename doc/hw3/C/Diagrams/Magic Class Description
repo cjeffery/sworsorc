@@ -1,0 +1,23 @@
+The Magic class has two public member variables that keep track of the number of spells the character has currently
+activated and the total mana cost of all the spells casted that round by that character.
+
+The Spell class is a subclass of Magic. It has 4 unique public member variables and one public method. 
+1. spellNumber[] is an integer array of all the spells in the war game.
+2. powerLevel is an integer that indicates the level of the spell.
+3. mannaPerTurn is a bool that indicates whether the spell costs manna every turn.
+4. mannaPerTarget is a bool that idicates whether a spell stacks manna cost per target it's cast on.
+
+1. castSpell() is a function called to cast a spell that the player has chosen their character to cast.
+
+The CounterSpells class is a subclass of Magic. It has two public member variables and one method.
+1. spellNumber[] is an integer array of all the spells in the game.
+2. powerLevel is an integer that indicates the power level of the spell.
+
+1. castCounterSpell() checks if the selected spell is a valid counterspell and then casts the counterspell.
+
+The MagicSupport class is a subclass of Magic. It has 2 public member variables and 2 public methods.
+1. mannaExpending is an integer that holds the amount of manna expended on a unit.
+2. powerLevel indicates the power level of the character casting the spell.
+
+1. expendManna() returns the added combat strength of the magic support. 
+2. getPowerLevel() retrieves the power level of the character casting the magic support.
