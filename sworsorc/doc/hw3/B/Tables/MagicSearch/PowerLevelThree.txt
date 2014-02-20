@@ -1,0 +1,7 @@
+Conjure Wyvern Airtroops,N,A,1.5 per GT,in hex only
+Dispell Magicks,N,C,3,variable
+Enhance Stature,N,A,1 per GT/Dip Pt or 2 per Dip Pt Emissary,in hex only
+Forest,N,A,2 per hex, 5 hexes
+Immobilization,N,A,1 per unit,7 hexes
+Monsoon,N,A,5,Unlimited
+Vortex Suppresion,N,C,2 per Vortex,10 hexes

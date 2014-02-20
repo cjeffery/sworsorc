@@ -1,0 +1,96 @@
+@startuml
+
+note "Author: Ian Westrope \n Edited by Sean Shepherd" as Note1
+
+hide circles
+class Unit{
+      +Int Movement_Allowance
+      +Int Combat_Strength
+      +Bool Flying_Unit
+}
+class Character{
+      +Char Race
+      +Int Magic_PL
+      +Int Magic_Potential
+      +Int Magic_Color
+      +Int Home_Hex
+      +Int Magic_Profile
+      +Int Magic_Resistance
+      +Int Leadership
+      +Int Diplomatic
+      +Int Fighting
+      +Int Endurance
+}
+
+class ArmyUnit{
+      +Char Unit_Type
+      +Char Unit_Race
+      +Int Demoralized_Strength
+}
+
+class Calvary{
+      +void Charge()
+}
+
+class Archer{
+
+}
+
+class Infantry{
+
+}
+
+class Monster{
+      +Int Magic_PL
+      +Int Magic_Potential
+      +Int Magic_Color
+      +Int Magic_Resitance
+      +Int Fighting
+      +Int Endurance
+      +Int Combat_Strenght
+      +Char Owner
+      +void ChangeOwner()
+}
+
+class Demon{
+      +Bool Bound
+}
+
+class Killer_Penguins{
+      +Bool In_Combat
+      +Bool Have_Attacked
+}
+
+class Dragons{
+      +void Breathe_Fire()
+}
+
+class Troll{
+      +void Regenerate()
+}
+
+class Spectre
+
+class T_Rex
+
+class Item
+
+Class Magic
+
+Unit <|-- Character
+Unit <|-- ArmyUnit
+Unit <|-- Monster
+ArmyUnit <|-- Calvary
+ArmyUnit <|-- Archer
+ArmyUnit <|-- Infantry
+Demon -u-|> Monster
+Killer_Penguins -u-|> Monster
+Dragons -u-|> Monster
+Spectre -u-|> Monster
+Troll -u-|> Monster
+T_Rex -u-|> Monster
+Character .. Item : can hold
+Character .. Magic : uses 
+
+
+@enduml

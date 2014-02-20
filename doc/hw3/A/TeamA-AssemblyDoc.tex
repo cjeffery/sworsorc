@@ -155,7 +155,7 @@ Stack -lefto Hex : Aggregation
 
 \section{Detail Diagrams}
 
-\subsection{Wayne - Reviewed by Gabe and David}
+\subsection{Wayne And Chris- Reviewed by Gabe and David}
 \includegraphics[width=\textwidth]{UnitDiagrams.png}
 \begin{itemize}
 
@@ -193,10 +193,8 @@ Monster <|- Dragon
 
 FlyingUnit --  Character : Carries
 ArmyUnit -- FlyingUnit : Carries
-
 AttackingGroup o- MovableUnit
 MovableUnit -o DefendingGroup
-
 class AttackingGroup{
 + Participants
 + Attack()
@@ -573,14 +571,11 @@ StellarConfiguration --* PostTurnPhase
 StellarConfiguration –  MannaRegeneration : Regeneration dependant on\n stellar configuration
 PostTurnPhase *-- Diplomacy
 PostTurnPhase *-- MannaRegeneration
-
 Alliances  o-- “<b>1..6</b>” Player
 Player --* PlayerOrderDetermination
-
 RandomMovment  o-- “<b>1..*</b>” MovableUnit 
 MannaRegeneration  o-- “      <b>1..*</b>” MovableUnit
 Diplomacy o-- “<b>*..1</b>” MovableUnit
-
 @enduml
 \end{verbatim}
 \end{document}
