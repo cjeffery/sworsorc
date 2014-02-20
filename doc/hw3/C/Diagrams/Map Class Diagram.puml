@@ -11,8 +11,8 @@ Hexes o-- "0..*" Characters
 Hexes o-- "0..2" Army_Units
     Army_Units <|-- Imperial_Army 
     Army_Units <|-- Elven 
-    Army_Units <|-- O.R.C.
-    Army_Units <|-right- etc.
+    Army_Units <|-- ORC
+    Army_Units <|-right- etc
 
 Hexes o-- "0..3" Monsters
     Monsters <|-- Demons
@@ -23,7 +23,7 @@ Hexes *-right- "1" Terrain
     Terrain <|-- Swamp
     Terrain <|-- Glacier
     Terrain <|-- Moat_or_River
-    Terrain <|-right- etc..
+    Terrain <|-right- etc_
     Terrain <|-up- SpecialTerrain
         SpecialTerrain <|-up- Portal_and_Vortex
         SpecialTerrain <|-up- SpecialHexes
