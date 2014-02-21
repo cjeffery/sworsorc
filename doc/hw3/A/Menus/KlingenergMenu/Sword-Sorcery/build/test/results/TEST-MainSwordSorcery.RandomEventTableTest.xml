@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="LivingRoom" name="MainSwordSorcery.RandomEventTableTest" skipped="0" tests="1" time="0.068" timestamp="2014-02-16T22:57:33">
+<testsuite errors="0" failures="0" hostname="LivingRoom" name="MainSwordSorcery.RandomEventTableTest" skipped="0" tests="1" time="0.063" timestamp="2014-02-21T18:12:41">
   <properties>
     <property name="netbeans.autoupdate.country" value="US" />
     <property name="nb.wait.for.caches" value="true" />
@@ -7,7 +7,7 @@
     <property name="libs.junit.javadoc" value="C:\Program Files\NetBeans 7.4\java\docs\junit-3.8.2-api.zip" />
     <property name="ant.core.lib" value="C:\Program Files\NetBeans 7.4\extide\ant\lib\ant.jar" />
     <property name="javadoc.windowtitle" value="" />
-    <property name="user.dir" value="C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery" />
+    <property name="user.dir" value="C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery" />
     <property name="libs.hibernate-persistence.javadoc" value="" />
     <property name="java.vm.version" value="24.51-b03" />
     <property name="libs.MySQLDriver.classpath" value="C:\Program Files\NetBeans 7.4\ide\modules\ext\mysql-connector-java-5.1.23-bin.jar" />
@@ -40,7 +40,7 @@
     <property name="user.name" value="David" />
     <property name="copylibs.rebase" value="true" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainSwordSorcery.RandomEventTableTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\build\test\results\TEST-MainSwordSorcery.RandomEventTableTest.xml crashfile=C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\build\junitvmwatcher1180940515728545547.properties propsfile=C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\build\junit1993625857788971529.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainSwordSorcery.RandomEventTableTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\test\results\TEST-MainSwordSorcery.RandomEventTableTest.xml crashfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junitvmwatcher4932142049093107335.properties propsfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junit5603493826082808460.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -90,9 +90,9 @@
     <property name="javadoc.author" value="false" />
     <property name="java.util.logging.config.class" value="org.netbeans.core.startup.TopLogging" />
     <property name="libs.PostgreSQLDriver.src" value="" />
-    <property name="ant.file.Sword-Sorcery-impl" value="C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\nbproject\build-impl.xml" />
+    <property name="ant.file.Sword-Sorcery-impl" value="C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\nbproject\build-impl.xml" />
     <property name="sun.arch.data.model" value="64" />
-    <property name="basedir" value="C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery" />
+    <property name="basedir" value="C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery" />
     <property name="libs.jpa20-persistence.maven-pom" value="" />
     <property name="jar.compress" value="true" />
     <property name="path.separator" value=";" />
@@ -130,7 +130,7 @@
     <property name="libs.JWSAntTasks.classpath" value="C:\Program Files\NetBeans 7.4\java\ant\extra\org-netbeans-modules-javawebstart-anttasks.jar" />
     <property name="libs.spring-framework300.src" value="" />
     <property name="ant.file.type.Sword-Sorcery-impl" value="file" />
-    <property name="empty.dir" value="C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\build\empty" />
+    <property name="empty.dir" value="C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\empty" />
     <property name="version-output" value="java version &quot;1.7" />
     <property name="test.binarytestincludes" value="" />
     <property name="javadoc.preview" value="true" />
@@ -150,7 +150,7 @@
     <property name="jna.boot.library.name" value="jnidispatch-340" />
     <property name="sun.awt.datatransfer.timeout" value="1000" />
     <property name="annotation.processing.enabled.in.editor" value="false" />
-    <property name="ant.file.Sword-Sorcery" value="C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\build.xml" />
+    <property name="ant.file.Sword-Sorcery" value="C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build.xml" />
     <property name="nb.native.filechooser" value="false" />
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
     <property name="javac.deprecation" value="false" />
@@ -158,7 +158,7 @@
     <property name="sun.java2d.noddraw" value="true" />
     <property name="javac.processorpath" value="" />
     <property name="javac.compilerargs" value="" />
-    <property name="ant.file" value="C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\build.xml" />
+    <property name="ant.file" value="C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build.xml" />
     <property name="libs.beans-binding.maven-pom" value="" />
     <property name="libs.beans-binding.src" value="" />
     <property name="java.vm.specification.vendor" value="Oracle Corporation" />
@@ -219,7 +219,7 @@
     <property name="libs.testng.maven-pom" value="" />
     <property name="ant.file.type.Sword-Sorcery" value="file" />
     <property name="libs.jaxb.src" value="" />
-    <property name="work.dir" value="C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery" />
+    <property name="work.dir" value="C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery" />
     <property name="libs.jaxb.classpath" value="C:\Program Files\NetBeans 7.4\ide\modules\ext\jaxb\jaxb-impl.jar;C:\Program Files\NetBeans 7.4\ide\modules\ext\jaxb\jaxb-xjc.jar;C:\Program Files\NetBeans 7.4\ide\modules\ext\jaxb\jaxb1-impl.jar;C:\Program Files\NetBeans 7.4\ide\modules\ext\jaxb\activation.jar;C:\Program Files\NetBeans 7.4\ide\modules\ext\jaxb\api\jaxb-api.jar;C:\Program Files\NetBeans 7.4\ide\modules\ext\jaxb\api\jsr173_1.0_api.jar" />
     <property name="do.depend" value="false" />
     <property name="dist.javadoc.dir" value="dist/javadoc" />
@@ -236,7 +236,7 @@
     <property name="libs.spring-framework.maven-pom" value="" />
     <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.7.0_51\jre\lib\resources.jar;C:\Program Files\Java\jdk1.7.0_51\jre\lib\rt.jar;C:\Program Files\Java\jdk1.7.0_51\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.7.0_51\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.7.0_51\jre\lib\jce.jar;C:\Program Files\Java\jdk1.7.0_51\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.7.0_51\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.7.0_51\jre\classes" />
     <property name="javac.target" value="1.7" />
-    <property name="built-jar.properties" value="C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\build\built-jar.properties" />
+    <property name="built-jar.properties" value="C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\built-jar.properties" />
     <property name="build.test.classes.dir" value="build/test/classes" />
     <property name="src.dir" value="src" />
     <property name="annotation.processing.enabled" value="true" />
@@ -264,7 +264,7 @@
     <property name="endorsed.classpath" value="" />
     <property name="libs.absolutelayout.classpath" value="C:\Program Files\NetBeans 7.4\java\modules\ext\AbsoluteLayout.jar" />
     <property name="excludes" value="" />
-    <property name="java.class.path" value="C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\build\classes;C:\Program Files\NetBeans 7.4\platform\modules\ext\junit-4.10.jar;C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery\build\test\classes;C:\Users\David\Documents\GitHub\CS383\src\Bigwookiee\Sword-Sorcery;C:\Program Files (x86)\Java\jre7\lib\ext\QTJava.zip;C:\Program Files\NetBeans 7.4\extide\ant\lib\ant-launcher.jar;C:\Program Files\NetBeans 7.4\extide\ant\lib\ant.jar;C:\Program Files\NetBeans 7.4\extide\ant\lib\ant-junit.jar;C:\Program Files\NetBeans 7.4\extide\ant\lib\ant-junit4.jar" />
+    <property name="java.class.path" value="C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\classes;C:\Program Files\NetBeans 7.4\platform\modules\ext\junit-4.10.jar;C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\test\classes;C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery;C:\Program Files (x86)\Java\jre7\lib\ext\QTJava.zip;C:\Program Files\NetBeans 7.4\extide\ant\lib\ant-launcher.jar;C:\Program Files\NetBeans 7.4\extide\ant\lib\ant.jar;C:\Program Files\NetBeans 7.4\extide\ant\lib\ant-junit.jar;C:\Program Files\NetBeans 7.4\extide\ant\lib\ant-junit4.jar" />
     <property name="apple.laf.useScreenMenuBar" value="true" />
     <property name="do.mkdist" value="true" />
     <property name="libs.absolutelayout.src" value="" />
@@ -305,13 +305,13 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
   </properties>
-  <testcase classname="MainSwordSorcery.RandomEventTableTest" name="testRandEvent" time="0.005" />
+  <testcase classname="MainSwordSorcery.RandomEventTableTest" name="testRandEvent" time="0.016" />
   <system-out><![CDATA[EventKey
-20
+7
 EventLength
 1
 Event Description
-Killer penguin migration
+Elven high holy day.
 
 EventKey
 1
