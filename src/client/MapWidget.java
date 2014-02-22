@@ -1,36 +1,81 @@
 import javax.swing.*;
-import java.awt.Dimension;
-public class MapWidget extends JLabel
+import java.awt.*;
+import java.awt.geom.*;
+
+public class MapWidget extends JPanel
                        implements Scrollable {
-	/** The width (in pixels) of a game hex. */
-	double hexWidth() { return 16*2; }
+	Map map;
+	private HexPainter hp;
+	double radius, width, height;
 
-	/** The height (in pixels) of a game hex. */
-	double hexWidth() { return 16*Math.sqrt(3); }
+	public MapWidget() {
+		map = new Map();
+		hp = new HexPainter(16);
+		radius = 16;
+		width  = radius*2;
+		height = radius*Math.sqrt(3);
+	}
 
-	@Override public void paintComponent(Graphics g) {
-		
+	@Override
+	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
 
-	@Override Dimension getPreferredScrollableViewportSize() {
+		AffineTransform identity = new AffineTransform();
+		for(int col = 0; col < map.columns(); col++) {
+			g2.setTransform( identity );
+			//these numbers came to me in a vision quest, and are sacrosanct
+			g2.translate(width*col*0.75, height*(col%2)*0.5 - height);
+			for(int row = 0; row < map.columnLength(col); row++) {
+				g2.translate(0, height);
+				hp.paintHex(g2, map.hexes[col][row]);
+			}
+		}
+	}
+
+	@Override
+	public Dimension getPreferredScrollableViewportSize() {
 		//TODO: what dimension is preferred? I just made something up
 		return new Dimension(400, 600);
 	}
+
 	/** Todo: this one is a bit tricky because of hex widths and heights
 	    and such */
-	@Override int getScrollableBlockIncrement(Rectangle visibleRect,
-	                                          int orientation, int direction)
+	@Override
+	public int getScrollableBlockIncrement(Rectangle visibleRect,
+	                                       int orientation, int direction)
 	{
 		//TODO
 		return 1;
 	}
+
+	/** Todo: this one is a bit tricky because of hex widths and heights
+	    and such */
+	@Override
+	public int getScrollableUnitIncrement(Rectangle visibleRect,
+                                          int orientation, int direction)
+	{
+		//TODO
+		return 1;
+	}
+
 	/** @return false */
-	@Override boolean getScrollableTracksViewportHeight() {	return false; }
+	@Override
+	public boolean getScrollableTracksViewportHeight() {
+		return false;
+	}
+
 	/** @return false */
-	@Override boolean getScrollableTracksViewportWidth()  { return false; }
+	@Override
+	public boolean getScrollableTracksViewportWidth() {
+		return false;
+	}
 
 	public static void scrollDemo() {
-		window = new JFrame("Scrolling Map Demo");
-
+		JFrame window = new JFrame("Scrolling Map Demo");
+		MapWidget mapWidget = new MapWidget();
+		window.getContentPane().add(mapWidget);
+		window.setVisible(true);
+	}
     public static void main(String[] args) {
         /* GUI needs to be started on event dispatch thread */
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
