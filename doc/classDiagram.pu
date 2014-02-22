@@ -1,0 +1,100 @@
+@startuml
+hide circle
+title <b>Master Class Diagram<b> Authors: Keith Drew, Ian Westrope
+
+class Game {
+
+}
+
+class Board {
+
+}
+
+class Player {
+}
+
+class Alliance {
+}
+
+class NPCAlliance {
+}
+
+class Province {
+}
+
+class Hex {
+}
+
+class SpecialHex {
+}
+
+class TeleportHex {
+}
+
+class VortexHex {
+}
+
+class PlungeholeHex {
+}
+
+class Stack {
+}
+
+class MoveableUnit {
+}
+
+class ArmyUnit {
+}
+
+class MeleeArmyUnit {
+}
+
+class RangedArmyUnit {
+}
+
+class Monster {
+}
+
+class Character {
+}
+
+class CasterCharacter {
+}
+
+class FighterCharacter {
+}
+
+class TalismanOfOrb {
+}
+
+class Scenario {
+}
+
+class StaticDataStructure {
+}
+
+class GameChart {
+}
+
+class GameTerrainChart {
+}
+
+class GameCombatResultsChart {
+}
+
+class GameRandomEventChart {
+}
+
+class GameSpellChart {
+}
+
+class GameKillerPenguinEntryChart {
+}
+
+class GameEmissaryResultsChart {
+}
+
+class GameDiplomaticGroupChart {
+}
+
+@enduml
