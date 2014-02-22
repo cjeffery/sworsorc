@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
+import static javax.swing.WindowConstants.*;
 
-public class MapWidget extends JPanel
+public class MapWidget extends JComponent
                        implements Scrollable {
 	Map map;
 	private HexPainter hp;
@@ -10,52 +11,53 @@ public class MapWidget extends JPanel
 
 	public MapWidget() {
 		map = new Map();
-		hp = new HexPainter(16);
-		radius = 16;
+		radius = 32;
 		width  = radius*2;
 		height = radius*Math.sqrt(3);
-	}
+        hp = new HexPainter(radius);
+    }
 
 	@Override
 	public void paintComponent(Graphics g) {
-		Graphics2D g2 = (Graphics2D)g;
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D)g;
 
-		AffineTransform identity = new AffineTransform();
+		AffineTransform identity = g2.getTransform();
 		for(int col = 0; col < map.columns(); col++) {
 			g2.setTransform( identity );
-			//these numbers came to me in a vision quest, and are sacrosanct
-			g2.translate(width*col*0.75, height*(col%2)*0.5 - height);
+			g2.translate(width*col*0.75, height*(col%2)*0.5);
 			for(int row = 0; row < map.columnLength(col); row++) {
-				g2.translate(0, height);
 				hp.paintHex(g2, map.hexes[col][row]);
-			}
+				g2.translate(0, height);
+            }
 		}
 	}
 
 	@Override
 	public Dimension getPreferredScrollableViewportSize() {
-		//TODO: what dimension is preferred? I just made something up
-		return new Dimension(400, 600);
+		return getPreferredSize();
+	}
+        
+    @Override
+	public Dimension getPreferredSize() {
+		return new Dimension((int)(width*((map.columns()-1)*0.75+1)),
+                             (int)(height*map.columnLength(0)));
 	}
 
-	/** Todo: this one is a bit tricky because of hex widths and heights
-	    and such */
 	@Override
 	public int getScrollableBlockIncrement(Rectangle visibleRect,
 	                                       int orientation, int direction)
 	{
 		//TODO
-		return 1;
+		return 32;
 	}
 
-	/** Todo: this one is a bit tricky because of hex widths and heights
-	    and such */
 	@Override
 	public int getScrollableUnitIncrement(Rectangle visibleRect,
                                           int orientation, int direction)
 	{
 		//TODO
-		return 1;
+		return 32;
 	}
 
 	/** @return false */
@@ -72,8 +74,16 @@ public class MapWidget extends JPanel
 
 	public static void scrollDemo() {
 		JFrame window = new JFrame("Scrolling Map Demo");
+        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		MapWidget mapWidget = new MapWidget();
-		window.getContentPane().add(mapWidget);
+        JScrollPane scrollPane = new JScrollPane(mapWidget);
+        
+        //TODO: get rid of this nonsense
+        //scrollPane.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
+        
+        scrollPane.setPreferredSize(new Dimension(400,600));
+        window.getContentPane().add(scrollPane);
+        window.pack();
 		window.setVisible(true);
 	}
     public static void main(String[] args) {
