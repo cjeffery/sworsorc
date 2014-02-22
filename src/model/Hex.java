@@ -1,7 +1,7 @@
 public class Hex {
-	public enum Terrain {
-		CLEAR, FOREST, RIVER
-	}
+    public enum Terrain {
+        CLEAR, FOREST, RIVER
+    }
 
-	Terrain terrain;
+    Terrain terrain;
 }
