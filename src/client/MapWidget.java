@@ -78,9 +78,6 @@ public class MapWidget extends JComponent
         MapWidget mapWidget = new MapWidget();
         JScrollPane scrollPane = new JScrollPane(mapWidget);
         
-        //TODO: get rid of this nonsense
-        //scrollPane.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
-        
         scrollPane.setPreferredSize(new Dimension(400,600));
         window.getContentPane().add(scrollPane);
         window.pack();
