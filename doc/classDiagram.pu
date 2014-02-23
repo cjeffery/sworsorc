@@ -2,99 +2,166 @@
 hide circle
 title <b>Master Class Diagram<b> Authors: Keith Drew, Ian Westrope
 
-class Game {
+Game *-- Board
+Game *-- Player
+Game *-- Alliance 
+Alliance <|-down- NPCAlliance
+Alliance - Player : An alliance links two\nplayers/NPC turns together
+Province -down-* Board
+Hex -down-* Province
+SpecialHex -down-* Hex
+TeleportHex -up-|> SpecialHex
+VortexHex -up-|> SpecialHex
+PlungeholeHex -up-|> SpecialHex
+Town -up-|> SpecialHex
+City -up-|> SpecialHex
+Castle -up-|> SpecialHex
+Capital -up-|> SpecialHex
 
+Stack -right-o Hex
+MoveableUnit -down-o Stack
+
+Monster -up-|> MoveableUnit
+ArmyUnit -up-|> MoveableUnit
+FlyingUnit -up-|> MoveableUnit
+Character -left-|> Monster
+RangedArmyUnit -up-|> ArmyUnit
+MeleeArmyUnit -up-|> ArmyUnit
+Dragon -up-|> Monster
+Demon -up-|> Monster
+Troll -up-|> Monster
+TyrannosauriReges -up-|> Monster
+Spectre -up-|> Monster
+FlyingUnit -- Dragon : Dragons are\nflying monsters
+TalismanOfOrb -up-o Character
+
+
+class Game #529292 {
 }
 
-class Board {
-
+class Board #529292 {
 }
 
-class Player {
+class Player #529292 {
 }
 
-class Alliance {
+class Alliance #529292 {
 }
 
-class NPCAlliance {
+class NPCAlliance #529292 {
 }
 
-class Province {
+class Province #529292 {
 }
 
-class Hex {
+class Hex #529292 {
 }
 
-class SpecialHex {
+class SpecialHex #529292 {
 }
 
-class TeleportHex {
+class TeleportHex #529292 {
 }
 
-class VortexHex {
+class VortexHex #529292 {
 }
 
-class PlungeholeHex {
+class PlungeholeHex #529292 {
 }
 
-class Stack {
+class Town #529292 {
 }
 
-class MoveableUnit {
+class Castle #529292 {
 }
 
-class ArmyUnit {
+class Capital #529292 {
 }
 
-class MeleeArmyUnit {
+class City #529292 {
 }
 
-class RangedArmyUnit {
+class Stack #529292 {
 }
 
-class Monster {
+class MoveableUnit #529292 {
 }
 
-class Character {
+class FlyingUnit #529292 {
 }
 
-class CasterCharacter {
+class ArmyUnit #529292 {
 }
 
-class FighterCharacter {
+class MeleeArmyUnit #529292 {
 }
 
-class TalismanOfOrb {
+class RangedArmyUnit #529292 {
 }
 
-class Scenario {
+class Monster #529292 {
 }
 
-class StaticDataStructure {
+class Dragon #529292 {
 }
 
-class GameChart {
+class Demon #529292 {
 }
 
-class GameTerrainChart {
+class Troll #529292 {
 }
 
-class GameCombatResultsChart {
+class TyrannosauriReges #529292 {
 }
 
-class GameRandomEventChart {
+class Spectre #529292 {
 }
 
-class GameSpellChart {
+class KillerPenguin #529292 {
 }
 
-class GameKillerPenguinEntryChart {
+class Character #529292 {
 }
 
-class GameEmissaryResultsChart {
+class CasterCharacter #529292 {
 }
 
-class GameDiplomaticGroupChart {
+class FighterCharacter #529292 {
 }
+
+class TalismanOfOrb #529292 {
+}
+
+class Scenario #529292 {
+}
+
+class StaticDataStructure #529292 {
+}
+
+class GameChart #529292 {
+}
+
+class GameTerrainChart #529292 {
+}
+
+class GameCombatResultsChart #529292 {
+}
+
+class GameRandomEventChart #529292 {
+}
+
+class GameSpellChart #529292 {
+}
+
+class GameKillerPenguinEntryChart #529292 {
+}
+
+class GameEmissaryResultsChart #529292 {
+}
+
+class GameDiplomaticGroupChart #529292 {
+}
+
+
 
 @enduml
