@@ -14,9 +14,9 @@ import static org.junit.Assert.*;
  * @author David
  */
 public class HexTest {
-    public Hex hexagon1 = new Hex(101,102,103,104,105,106,107);
+    public Hex hexagon1 = new Hex("101","102","103","104","105","106","107");
    
-    //101,102,103,104,105,106,107
+    //"101","102","103",104,"105","106","107"
 
     public HexTest() {
     }
@@ -26,25 +26,25 @@ public class HexTest {
        
        
         
-        boolean result = hexagon1.GetID() == 101;
+        boolean result = hexagon1.GetID() == "101";
         assertTrue(result);
         
-        result = hexagon1.GetIDofNorthHexagon() == 102;
+        result = hexagon1.GetIDofNorthHexagon() == "102";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofNorthEastHexagon() == 103;
+        result = hexagon1.GetIDofNorthEastHexagon() == "103";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofSouthEastHexagon() == 104;
+        result = hexagon1.GetIDofSouthEastHexagon() == "104";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofSouthHexagon() == 105;
+        result = hexagon1.GetIDofSouthHexagon() == "105";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofSouthWestHexagon() == 106;
+        result = hexagon1.GetIDofSouthWestHexagon() == "106";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofNorthWestHexagon() == 107;
+        result = hexagon1.GetIDofNorthWestHexagon() == "107";
         assertTrue(result); 
     }
     

@@ -14,9 +14,9 @@ import static org.junit.Assert.*;
  * @author David
  */
 public class DiplomacyMapHexTest {
-    public DiplomacyMapHex  hexagon1 = new DiplomacyMapHex(101,102,103,104,105,106,107);
-    public DiplomacyMapHex  hexagon2 = new DiplomacyMapHex(101,102,103,104,105,106,107,true,1);
-    public DiplomacyMapHex  hexagon3 = new DiplomacyMapHex(101,102,103,104,105,106,107,true,2);
+    public DiplomacyHex  hexagon1 = new DiplomacyHex("101","102","103","104","105","106","107");
+    public DiplomacyHex  hexagon2 = new DiplomacyHex("101","102","103","104","105","106","107","1");
+    public DiplomacyHex  hexagon3 = new DiplomacyHex("101","102","103","104","105","106","107","2");
     //101,102,103,104,105,106,107
 
     public DiplomacyMapHexTest() {
@@ -27,25 +27,25 @@ public class DiplomacyMapHexTest {
        
        // hexagon1
         
-        boolean result = hexagon1.GetID() == 101;
+        boolean result = hexagon1.GetID() == "101";
         assertTrue(result);
         
-        result = hexagon1.GetIDofNorthHexagon() == 102;
+        result = hexagon1.GetIDofNorthHexagon() == "102";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofNorthEastHexagon() == 103;
+        result = hexagon1.GetIDofNorthEastHexagon() == "103";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofSouthEastHexagon() == 104;
+        result = hexagon1.GetIDofSouthEastHexagon() == "104";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofSouthHexagon() == 105;
+        result = hexagon1.GetIDofSouthHexagon() == "105";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofSouthWestHexagon() == 106;
+        result = hexagon1.GetIDofSouthWestHexagon() == "106";
         assertTrue(result); 
         
-        result = hexagon1.GetIDofNorthWestHexagon() == 107;
+        result = hexagon1.GetIDofNorthWestHexagon() == "107";
         assertTrue(result); 
        
         result = hexagon1.GetIsPlayerHex();
@@ -56,25 +56,25 @@ public class DiplomacyMapHexTest {
                 
         // hexagon2
         
-        result = hexagon2.GetID() == 101;
+        result = hexagon2.GetID() == "101";
         assertTrue(result);
         
-        result = hexagon2.GetIDofNorthHexagon() == 102;
+        result = hexagon2.GetIDofNorthHexagon() == "102";
         assertTrue(result); 
         
-        result = hexagon2.GetIDofNorthEastHexagon() == 103;
+        result = hexagon2.GetIDofNorthEastHexagon() == "103";
         assertTrue(result); 
         
-        result = hexagon2.GetIDofSouthEastHexagon() == 104;
+        result = hexagon2.GetIDofSouthEastHexagon() == "104";
         assertTrue(result); 
         
-        result = hexagon2.GetIDofSouthHexagon() == 105;
+        result = hexagon2.GetIDofSouthHexagon() == "105";
         assertTrue(result); 
         
-        result = hexagon2.GetIDofSouthWestHexagon() == 106;
+        result = hexagon2.GetIDofSouthWestHexagon() == "106";
         assertTrue(result); 
         
-        result = hexagon2.GetIDofNorthWestHexagon() == 107;
+        result = hexagon2.GetIDofNorthWestHexagon() == "107";
         assertTrue(result); 
        
         result = hexagon2.GetIsPlayerHex();
@@ -85,25 +85,25 @@ public class DiplomacyMapHexTest {
         
         //hexagon3
         
-        result = hexagon3.GetID() == 101;
+        result = hexagon3.GetID() == "101";
         assertTrue(result);
         
-        result = hexagon3.GetIDofNorthHexagon() == 102;
+        result = hexagon3.GetIDofNorthHexagon() == "102";
         assertTrue(result); 
         
-        result = hexagon3.GetIDofNorthEastHexagon() == 103;
+        result = hexagon3.GetIDofNorthEastHexagon() == "103";
         assertTrue(result); 
         
-        result = hexagon3.GetIDofSouthEastHexagon() == 104;
+        result = hexagon3.GetIDofSouthEastHexagon() == "104";
         assertTrue(result); 
         
-        result = hexagon3.GetIDofSouthHexagon() == 105;
+        result = hexagon3.GetIDofSouthHexagon() == "105";
         assertTrue(result); 
         
-        result = hexagon3.GetIDofSouthWestHexagon() == 106;
+        result = hexagon3.GetIDofSouthWestHexagon() == "106";
         assertTrue(result); 
         
-        result = hexagon3.GetIDofNorthWestHexagon() == 107;
+        result = hexagon3.GetIDofNorthWestHexagon() == "107";
         assertTrue(result); 
        
         result = hexagon3.GetIsPlayerHex();

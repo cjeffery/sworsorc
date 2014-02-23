@@ -12,10 +12,10 @@ package MainSwordSorcery;
  */
 public class Hex {
     
-  private int[] hexagon = new int[7];
+  private String[] hexagon = new String[7];
   
-  public Hex(int ID, int northHexID, int northEastHexID, int southEastHexID, 
-          int southHexID, int southWestHexID, int northWestHexID){
+  public Hex(String ID, String northHexID, String northEastHexID, String southEastHexID, 
+          String southHexID, String southWestHexID, String northWestHexID){
       SetID(ID);
       SetIDofNorthHexagon(northHexID);
       SetIDofNorthEastHexagon(northEastHexID);
@@ -25,59 +25,59 @@ public class Hex {
       SetIDofNorthWestHexagon(northWestHexID);
   }
 
-  private void SetID(int ID){
+  private void SetID(String ID){
       hexagon[0] = ID;
   } 
   
-  private void SetIDofNorthHexagon(int ID){
+  private void SetIDofNorthHexagon(String ID){
       hexagon[1] = ID;
   }
   
-  private void SetIDofNorthEastHexagon(int ID){
+  private void SetIDofNorthEastHexagon(String ID){
       hexagon[2] = ID;
   }
   
-  private void SetIDofSouthEastHexagon(int ID){
+  private void SetIDofSouthEastHexagon(String ID){
       hexagon[3] = ID;
   }
   
-  private void SetIDofSouthHexagon(int ID){
+  private void SetIDofSouthHexagon(String ID){
       hexagon[4] = ID;
   }
    
-  private void SetIDofSouthWestHexagon(int ID){
+  private void SetIDofSouthWestHexagon(String ID){
       hexagon[5] = ID;
   }
 
-  private void SetIDofNorthWestHexagon(int ID){
+  private void SetIDofNorthWestHexagon(String ID){
       hexagon[6] = ID;
   }
   
-  public int GetID(){
+  public String GetID(){
       return hexagon[0];
    }
   
-  public int GetIDofNorthHexagon(){
+  public String GetIDofNorthHexagon(){
       return hexagon[1];
   }
   
-  public int GetIDofNorthEastHexagon(){
+  public String GetIDofNorthEastHexagon(){
       return hexagon[2];
   }
   
-  public int GetIDofSouthEastHexagon(){
+  public String GetIDofSouthEastHexagon(){
       return hexagon[3];
   }
   
-  public int GetIDofSouthHexagon(){
+  public String GetIDofSouthHexagon(){
       return hexagon[4];
   }
    
-  public int GetIDofSouthWestHexagon(){
+  public String GetIDofSouthWestHexagon(){
      return hexagon[5];
   }
 
-  public int GetIDofNorthWestHexagon(){
+  public String GetIDofNorthWestHexagon(){
       return hexagon[6];
   }
   

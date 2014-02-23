@@ -10,27 +10,26 @@ package MainSwordSorcery;
  *
  * @author David
  */
-public class DiplomacyMapHex extends Hex {
+public class DiplomacyHex extends Hex {
     private boolean playerHex = false;
     private boolean neturalHex = false;
     
-    public DiplomacyMapHex(int id, int northHexID, int northEastHexID, 
-                            int southEastHexID, int southHexID, int southWestHexID, 
-                            int northWestHexID, boolean playerHex, int specialHexCode) {
+    public DiplomacyHex(String id, String northHexID, String northEastHexID, 
+                            String southEastHexID, String southHexID, String southWestHexID, 
+                            String northWestHexID, String specialHexCode) {
         super(id, northHexID, northEastHexID, southEastHexID, southHexID, southWestHexID, northWestHexID);
         
-        if (specialHexCode == 1)
+        if ("1".equals(specialHexCode))
             SetPlayerHex();
-        if (specialHexCode == 2)
+        if ("2".equals(specialHexCode))
             SetNeturalHex();
     }
     
-    public DiplomacyMapHex(int ID, int northHexID, int northEastHexID, 
-                            int southEastHexID, int southHexID, int southWestHexID, 
-                            int northWestHexID) {
+    public DiplomacyHex(String ID, String northHexID, String northEastHexID, 
+                            String southEastHexID, String southHexID, String southWestHexID, 
+                            String northWestHexID) {
         super(ID, northHexID, northEastHexID, southEastHexID, southHexID, southWestHexID, northWestHexID);
-        if (playerHex)
-            SetPlayerHex();        
+        
     }
         
     private void SetPlayerHex(){
@@ -40,10 +39,6 @@ public class DiplomacyMapHex extends Hex {
     private void SetNeturalHex(){
         neturalHex = true;
     } 
-    
-    public void RemoveANetural(){
-        //needs implementing. 
-    }
     
     public boolean GetIsPlayerHex(){
         return playerHex; 
