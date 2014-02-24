@@ -46,8 +46,11 @@ public class DiplomacyMap {
             factory.setValidating(true);
             doc = builder.parse(file);
         
-        } catch (ParserConfigurationException|SAXException|IOException ex) {
+        } catch (ParserConfigurationException|SAXException ex) {
             Logger.getLogger(DiplomacyMap.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex){
+            Logger.getLogger(DiplomacyMap.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Check line 37. You may need to change your path to reflect the location the XML file.");
         }
         
         BuildDiplomacyMap();
