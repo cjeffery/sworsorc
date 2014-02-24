@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
 public class ScrollDemo implements MouseListener, KeyListener {
     private MapView mapView;
     public ScrollDemo() {
@@ -11,10 +10,6 @@ public class ScrollDemo implements MouseListener, KeyListener {
      
         mapView = new MapView(new Map());
         
-        //JScrollPane scrollPane = new JScrollPane(mapView);
-        //scrollPane.setPreferredSize(new Dimension(800,600));
-        //scrollPane.setWheelScrollingEnabled(false);
-        //window.add(scrollPane);    
         window.add(mapView);
         window.pack();
         window.setVisible(true);
@@ -41,32 +36,13 @@ public class ScrollDemo implements MouseListener, KeyListener {
                                                 h.terrain.toString());
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
+    @Override public void mousePressed(MouseEvent e) {}
+    @Override public void mouseReleased(MouseEvent e){}
+    @Override public void mouseEntered(MouseEvent e) {}
+    @Override public void mouseExited(MouseEvent e) {}
+    @Override public void keyTyped(KeyEvent e) {}
+    
+    @Override public void keyPressed(KeyEvent e) {
         /*int key = e.getKeyCode();
         if(key == KeyEvent.VK_EQUALS) {
             mapView.setZoom( mapView.getZoom() + 0.1 );
@@ -76,7 +52,5 @@ public class ScrollDemo implements MouseListener, KeyListener {
         }*/
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
+    @Override public void keyReleased(KeyEvent e) {}
 }
