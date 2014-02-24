@@ -25,7 +25,9 @@ import org.xml.sax.SAXException;
  */
 public class DiplomacyMap {
     private HashMap <String, DiplomacyHex> DiplomacyMap = new HashMap();
-    private String id, nid, neid, seid, sid, swid, nwid, scode;
+    private String hexNumber, northHexNumber, northEastHexNumber, 
+            southEastHexNumber, southHexNumber, southWestHexNumber,
+            northWestHexNumber, specialCode; // specialCode determines if it is a player or neutral hex.
     private DocumentBuilderFactory factory; 
     private DocumentBuilder builder;
     private Document doc;
@@ -74,50 +76,35 @@ public class DiplomacyMap {
                 Node hexItem = hexList.item(i);
                 
                 if(hexItem.getNodeType() == Node.ELEMENT_NODE){
-                    
-                    
-                   if ("id".equals(hexItem.getNodeName())) 
-                       id =  hexItem.getTextContent();
-                   if ("nid".equals(hexItem.getNodeName())) 
-                       nid = hexItem.getTextContent();
-                   if ("neid".equals(hexItem.getNodeName())) 
-                       neid = hexItem.getTextContent();
-                   if ("seid".equals(hexItem.getNodeName())) 
-                       seid = hexItem.getTextContent();
-                   if ("sid".equals(hexItem.getNodeName())) 
-                       sid = hexItem.getTextContent();
-                   if ("swid".equals(hexItem.getNodeName())) 
-                       swid = hexItem.getTextContent();
-                   if ("nwid".equals(hexItem.getNodeName())) 
-                       nwid = hexItem.getTextContent();
-                   if ("scode".equals(hexItem.getNodeName())) 
-                       scode = hexItem.getTextContent();
-                   
-                   //System.out.println("child name: "  + hexItem.getNodeName() + "\tValue : " + hexItem.getTextContent());
-                  
+                                        
+                   if ("hexNumber".equals(hexItem.getNodeName())) 
+                       hexNumber =  hexItem.getTextContent();
+                   if ("northHexNumber".equals(hexItem.getNodeName())) 
+                       northHexNumber = hexItem.getTextContent();
+                   if ("northEastHexNumber".equals(hexItem.getNodeName())) 
+                       northEastHexNumber = hexItem.getTextContent();
+                   if ("southEastHexNumber".equals(hexItem.getNodeName())) 
+                       southEastHexNumber = hexItem.getTextContent();                       
+                   if ("southHexNumber".equals(hexItem.getNodeName())) 
+                       southHexNumber = hexItem.getTextContent();
+                   if ("southWestHexNumber".equals(hexItem.getNodeName())) 
+                       southWestHexNumber = hexItem.getTextContent();
+                   if ("northWestHexNumber".equals(hexItem.getNodeName())) 
+                       northWestHexNumber = hexItem.getTextContent();
+                   if ("specialHex".equals(hexItem.getNodeName())) 
+                       specialCode = hexItem.getTextContent();
                 
                 }//if(hexItem.getNodeType() == Node.ELEMENT_NODE)
                 
             }//for (int i = 0; i < hexList.getLength(); i++)
 
-            //System.out.println("child name data: " + id + " " + nid + " " + sid + " " + scode);
-            
-            DiplomacyHex hexObject;
-            
-            
-               hexObject = new DiplomacyHex(id,nid,neid,seid,sid,swid,nwid,scode);                      
-            
-            //System.out.println("Hex object id : " + hexObject.GetID());
-            
+            DiplomacyHex hexObject = new DiplomacyHex(hexNumber,northHexNumber,northEastHexNumber,southEastHexNumber,southHexNumber,southWestHexNumber,northWestHexNumber,specialCode);                      
+                        
             DiplomacyMap.put(hexObject.GetID(), hexObject);
-            
-            
-            
+                        
         }//for(int s = 0; s < listOfHex.getLength(); s++)         
         
-        //DiplomacyHex tempHexObject;
-        //tempHexObject = DiplomacyMap.get("101");
-        //System.out.println("test id :" + tempHexObject.GetID());
+        
         
     }//BuildDiplomacyMap
         

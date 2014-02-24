@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="LivingRoom" name="MainSwordSorcery.DiplomacyMapHexTest" skipped="0" tests="1" time="0.053" timestamp="2014-02-23T09:29:05">
+<testsuite errors="0" failures="0" hostname="LivingRoom" name="MainSwordSorcery.DiplomacyMapHexTest" skipped="0" tests="1" time="0.054" timestamp="2014-02-24T21:38:15">
   <properties>
     <property name="netbeans.autoupdate.country" value="US" />
     <property name="nb.wait.for.caches" value="true" />
@@ -40,7 +40,7 @@
     <property name="user.name" value="David" />
     <property name="copylibs.rebase" value="true" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainSwordSorcery.DiplomacyMapHexTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\test\results\TEST-MainSwordSorcery.DiplomacyMapHexTest.xml crashfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junitvmwatcher450668393706681572.properties propsfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junit2712001924815303589.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainSwordSorcery.DiplomacyMapHexTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\test\results\TEST-MainSwordSorcery.DiplomacyMapHexTest.xml crashfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junitvmwatcher5635669967619778781.properties propsfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junit3673336862279748551.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -182,6 +182,7 @@
     <property name="meta.inf.dir" value="src/META-INF" />
     <property name="javadoc.encoding.used" value="UTF-8" />
     <property name="dist.jar" value="dist/Sword-Sorcery.jar" />
+    <property name="netbeans.automatic.build" value="true" />
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
     <property name="ant.project.name" value="Sword-Sorcery" />
     <property name="netbeans.hash.code" value="unique=NBJDK_EXTIDE_JAVA_JDK06c2fccd7-967a-40bf-860d-1b103647c7a3_d51bc5df-4e77-4afa-9270-0e5828c41b92" />
@@ -287,9 +288,9 @@
     <property name="run.jvmargs" value="" />
     <property name="libs.ejb3-persistence.classpath" value="C:\Program Files\NetBeans 7.4\java\modules\ext\hibernate\hibernate-jpa-2.0-api-1.0.1.Final.jar" />
     <property name="libs.hibernate-persistencemodelgen.javadoc" value="" />
+    <property name="libs.JAXB-ENDORSED.src" value="" />
     <property name="dist.archive.excludes" value="" />
     <property name="libs.spring-framework.javadoc" value="" />
-    <property name="libs.JAXB-ENDORSED.src" value="" />
     <property name="libs.testng.javadoc" value="C:\Program Files\NetBeans 7.4\platform\docs\testng-6.8.1-javadoc.zip" />
     <property name="user.script" value="" />
     <property name="libs.PostgreSQLDriver.classpath" value="C:\Program Files\NetBeans 7.4\ide\modules\ext\postgresql-9.2-1002.jdbc4.jar" />
@@ -301,12 +302,12 @@
     <property name="ant.version" value="Apache Ant(TM) version 1.9.1 compiled on May 15 2013" />
     <property name="file.encoding" value="Cp1252" />
     <property name="build.classes.excludes" value="**/*.java,**/*.form" />
-    <property name="javadoc.nonavbar" value="false" />
     <property name="jdkBug6558476" value="false" />
+    <property name="javadoc.nonavbar" value="false" />
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
   </properties>
-  <testcase classname="MainSwordSorcery.DiplomacyMapHexTest" name="testGetID" time="0.0" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapHexTest" name="testGetID" time="0.001" />
   <system-out><![CDATA[DiplomacyMapHexTest Fineshed
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -70,8 +70,10 @@ public class DiplomacyMapTest {
        assertTrue(result);
     }
     
+   
     @Test
     public void test9() {
+       System.out.println(testMap.GetSouthEastNeighborID("0606"));
        boolean result = "0707".equals(this.testMap.GetSouthEastNeighborID("0606"));
        assertTrue(result);
     }
@@ -81,7 +83,7 @@ public class DiplomacyMapTest {
        boolean result = "0607".equals(this.testMap.GetSouthNeighborID("0606"));
        assertTrue(result);
     }
-    
+ 
     @Test
     public void test11() {
        boolean result = "0507".equals(this.testMap.GetSouthWestNeighborID("0606"));
