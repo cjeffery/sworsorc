@@ -3,8 +3,6 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.*;
 
 /** A class that does nothing but draw hexes! Right now it's somewhat closely
