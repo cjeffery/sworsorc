@@ -30,7 +30,7 @@ public class HexPainter {
         hexShape.closePath();
         
         try {
-            mountainImage = ImageIO.read(new File("mountains.png"));
+            mountainImage = ImageIO.read(new File("mountains2.png"));
         }
         //FIXME, need error handling
         catch (IOException ex) {
@@ -50,14 +50,32 @@ public class HexPainter {
                 g2.fill(hexShape); 
                 break;
             case MOUNTAIN:
-                //g2.setColor( Color.RED );
-                //g2.fill(hexShape);
-                g2.drawImage(mountainImage, 0, 0, null);
+                Shape s = g2.getClip();
+                g2.clip(hexShape);
+                float scale = (float) (width/mountainImage.getWidth());
+                AffineTransform at = new AffineTransform();
+                at.scale(scale, scale);
+                g2.drawImage(mountainImage, at, null);
+                g2.setClip(s);
                 break;
              case FOREST:
                 g2.setColor( Color.GREEN );
                 g2.fill(hexShape);
-                //g2.drawImage(forestImage, 0, 0, null);
+                g2.drawImage(forestImage, 0, 0, null);
         }
+    }
+    
+    public void paintEdges(Graphics2D g2, Hex h) {
+        g2.setColor( Color.BLACK );
+        g2.setStroke( new BasicStroke(3) );
+        int[] xArr = {(int)width, (int)(width*0.75), (int)(width*0.25), 0,
+                    (int)(width*0.25), (int)(width*0.75), (int)width};
+        int[] yArr = {(int)(height/2), 0, 0, (int)(height/2), (int)height,
+                    (int)height, (int)(height/2)};       
+        for(int i = 0; i < 6; i++) {
+            if(h.edges[i].type == HexEdge.Type.WALL) {
+                g2.drawLine(xArr[i], yArr[i], xArr[i+1], yArr[i+1]);
+            }
+        }        
     }
 }

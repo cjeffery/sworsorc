@@ -9,8 +9,14 @@ public class Map {
 
         for(int i = 0; i < 39; i++)
         for(int j = 0; j < 54; j++) {
-            hexes[i][j] = new Hex();
-            hexes[i][j].terrain = terrainValues[r.nextInt(len)];
+            Hex.Terrain t = terrainValues[r.nextInt(len)];
+            HexEdge[] e = new HexEdge[6];
+            for(int k = 0; k <6; k++) {
+                e[k] = new HexEdge();
+                double d = r.nextDouble();
+                e[k].type = (d < 0.05) ? HexEdge.Type.WALL : HexEdge.Type.CLEAR;
+            }
+            hexes[i][j] = new Hex(t, e);
         }
     }
 
@@ -23,5 +29,10 @@ public class Map {
         assert(column >= 0 && column < columns());
         if(column <= 11) return 54 - (column%2);
         return 52;
+    }
+    
+    public boolean inBounds(int x, int y) {
+        return    x >= 0 && x < columns()
+               && y >= 0 && y < columnLength(x);
     }
 }

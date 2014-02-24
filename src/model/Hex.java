@@ -14,5 +14,10 @@ public class Hex {
         }
     }
 
+    public Hex(Terrain t, HexEdge[] e) {
+       terrain = t;
+       edges = e;
+    }
     Terrain terrain;
+    HexEdge[] edges; 
 }
