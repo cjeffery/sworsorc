@@ -20,7 +20,10 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- *
+ * 
+ *   line 37 may need changing to reflect your local path.
+ *   That needs to be fixed at some point in the future.
+ * 
  * @author David
  */
 public class DiplomacyMap {
