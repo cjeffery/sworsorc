@@ -82,15 +82,10 @@ public class MapView extends JPanel {
         public int getScrollableUnitIncrement(Rectangle visibleRect,
                                               int orientation, int direction)
         {
-            switch(orientation) {
-                case SwingConstants.HORIZONTAL:
+            if(orientation == SwingConstants.HORIZONTAL)
                     return (int)(Math.ceil(0.75*width));
-                case SwingConstants.VERTICAL:
+            else
                     return (int)(Math.ceil(height));
-            }
-            assert false; 
-            return 0;
-
         }
 
         /** @return false */
