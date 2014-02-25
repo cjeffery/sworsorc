@@ -3,13 +3,15 @@ hide circle
 title <b>Master Class Diagram<b> Authors: Keith Drew, Ian Westrope
 
 Game *-- Board
-Game *-- Player
-Game *-- Alliance 
+Game *-- "2..7" Player
+Game *-- "0..*" Alliance 
+Game - Scenario : Scenario Initiates\nGame
+Scenario "14" -* StaticDataStructure
 Alliance <|-down- NPCAlliance
 Alliance - Player : An alliance links two\nplayers/NPC turns together
-Province -down-* Board
-Hex -down-* Province
-SpecialHex -down-* Hex
+Province "25" -down-* Board
+Hex "0..*" -down-* Province
+SpecialHex -up-|> Hex
 TeleportHex -up-|> SpecialHex
 VortexHex -up-|> SpecialHex
 PlungeholeHex -up-|> SpecialHex
@@ -18,9 +20,10 @@ City -up-|> SpecialHex
 Castle -up-|> SpecialHex
 Capital -up-|> SpecialHex
 
-Stack -right-o Hex
-MoveableUnit -down-o Stack
+Stack -right-* Hex
+MoveableUnit "0..*" -down-o Stack
 
+Vortex -up-|> MoveableUnit
 Monster -up-|> MoveableUnit
 ArmyUnit -up-|> MoveableUnit
 FlyingUnit -up-|> MoveableUnit
@@ -30,11 +33,23 @@ MeleeArmyUnit -up-|> ArmyUnit
 Dragon -up-|> Monster
 Demon -up-|> Monster
 Troll -up-|> Monster
+KillerPenguin -up-|> Monster
 TyrannosauriReges -up-|> Monster
 Spectre -up-|> Monster
 FlyingUnit -- Dragon : Dragons are\nflying monsters
 TalismanOfOrb -up-o Character
+CasterCharacter -up-|> Character
+FighterCharacter -up-|> Character
 
+StaticDataStructure *- "7" GameChart
+
+GameTerrainChart -up-|> GameChart
+GameCombatResultsChart -up-|> GameChart
+GameRandomEventChart -up-|> GameChart
+GameSpellChart --up-|> GameChart
+GameKillerPenguinEntryChart --up-|> GameChart
+GameEmissaryResultsChart --up-|> GameChart
+GameDiplomaticGroupChart --up-|> GameChart
 
 class Game #529292 {
 }
@@ -85,6 +100,9 @@ class Stack #529292 {
 }
 
 class MoveableUnit #529292 {
+}
+
+class Vortex #529292 {
 }
 
 class FlyingUnit #529292 {

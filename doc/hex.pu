@@ -1,25 +1,26 @@
 @startuml
 hide circles
+title <b>Data Structures Class Diagram<b> Author: Ian Westrope
 
-class Hex
+class Hex #529292
 
-class SpecialHex
+class SpecialHex #529292
 
-class VortexHex
+class VortexHex #529292
 
-class PlungeholeHex
+class PlungeholeHex #529292
 
-class Town
+class Town #529292
 
-class City
+class City #529292
 
-class Castle
+class Castle #529292
 
-class Capital
+class Capital #529292
 
-class TeleportHex
+class TeleportHex #529292
 
-Hex *-- SpecialHex
+Hex <|-- SpecialHex
 
 SpecialHex <|-- VortexHex
 SpecialHex <|-- PlungeholeHex
