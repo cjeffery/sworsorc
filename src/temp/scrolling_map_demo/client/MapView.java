@@ -149,7 +149,7 @@ public class MapView extends JPanel {
         double centerX = width*(0.5 + hexX*0.75);
         double centerY = height*(0.5+hexY + (hexX%2)*0.5);
         
-        //y-coordinate has to be flipped here if a "sensible" angle is desired
+        //y-coordinate has been flipped here for a "sensible" angle
         //since down is positive
         double angle = Math.atan2(centerY - y, x - centerX) + 2*Math.PI;
         angle %= 2*Math.PI;
