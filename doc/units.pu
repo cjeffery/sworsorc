@@ -1,0 +1,90 @@
+@startuml
+
+note "Author: Ian Westrope \n Edited by Sean Shepherd" as Note1
+
+hide circles
+class MoveableUnit{
+      +Int Movement_Allowance
+      +Int Combat_Strength
+      +Bool Flying_Unit
+}
+class Character{
+      +Char Race
+      +Int Magic_PL
+      +Int Magic_Potential
+      +Int Magic_Color
+      +Int Home_Hex
+      +Int Magic_Profile
+      +Int Magic_Resistance
+      +Int Leadership
+      +Int Diplomatic
+      +Int Fighting
+      +Int Endurance
+}
+
+class ArmyUnit{
+      +Char Unit_Type
+      +Char Unit_Race
+      +Int Demoralized_Strength
+}
+
+class MeeleeArmyUnit{
+      +void Charge()
+}
+
+class RangedArmyUnit{
+
+}
+
+
+class Monster{
+      +Int Magic_PL
+      +Int Magic_Potential
+      +Int Magic_Color
+      +Int Magic_Resitance
+      +Int Fighting
+      +Int Endurance
+      +Int Combat_Strenght
+      +Char Owner
+      +void ChangeOwner()
+}
+
+class Demon{
+      +Bool Bound
+}
+
+class Dragon{
+      +void Breathe_Fire()
+}
+
+class Troll{
+      +void Regenerate()
+}
+
+class Spectre
+
+class TyrannosauriRegs
+
+class TalismanOfOrb
+
+Class FlyingUnit
+
+MoveableUnit <|-- Monster
+MoveableUnit <|-- FlyingUnit
+MoveableUnit <|-- ArmyUnit
+
+Monster <|-- Character
+Monster <|-- Demon
+Monster <|-- Troll
+Monster <|-- TyrannosauriRegs
+Monster <|-- Spectre
+Monster <|-- Dragon
+
+ArmyUnit <|-- RangedArmyUnit
+ArmyUnit <|-- MeeleeArmyUnit
+
+Character o-- TalismanOfOrb
+
+FlyingUnit -- Dragon
+
+@enduml

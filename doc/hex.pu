@@ -1,0 +1,33 @@
+@startuml
+hide circles
+
+class Hex
+
+class SpecialHex
+
+class VortexHex
+
+class PlungeholeHex
+
+class Town
+
+class City
+
+class Castle
+
+class Capital
+
+class TeleportHex
+
+Hex *-- SpecialHex
+
+SpecialHex <|-- VortexHex
+SpecialHex <|-- PlungeholeHex
+SpecialHex <|-- Town
+SpecialHex <|-- City
+SpecialHex <|-- Castle
+SpecialHex <|-- Capital
+SpecialHex <|-- TeleportHex
+
+
+@enduml
