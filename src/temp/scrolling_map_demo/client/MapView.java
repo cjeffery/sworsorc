@@ -64,14 +64,11 @@ public class MapView extends JPanel {
                                                int orientation, int direction)
         {
             double coef = 1.0;
-            switch(orientation) {
-                case SwingConstants.HORIZONTAL:
-                    coef = visibleRect.width / width;
-                    break;
-                case SwingConstants.VERTICAL:
-                    coef = visibleRect.height / height;
-                    break;
-            }
+            if(orientation == SwingConstants.HORIZONTAL)
+                coef = visibleRect.width / width;
+            else
+                coef = visibleRect.height / height;
+
             return (int)(coef*getScrollableUnitIncrement(visibleRect,
                                                          orientation,
                                                          direction));
