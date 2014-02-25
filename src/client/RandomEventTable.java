@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  * 
- * @author David
+ * @author David Klingenberg 2/18/2014
  */
 public class RandomEventTable {
     private int eventKey;
