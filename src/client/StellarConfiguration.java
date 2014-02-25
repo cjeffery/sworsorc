@@ -8,7 +8,7 @@ package MainSwordSorcery;
 
 /**
  *  
- * @author David Klingenberg
+ * @author David Klingenberg 2/18/2014
  */
 
 
