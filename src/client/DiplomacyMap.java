@@ -24,7 +24,7 @@ import org.xml.sax.SAXException;
  *   line 37 may need changing to reflect your local path.
  *   That needs to be fixed at some point in the future.
  * 
- * @author David
+ * @author David Klingenberg  2/24/2014
  */
 public class DiplomacyMap {
     private HashMap <String, DiplomacyHex> DiplomacyMap = new HashMap();
