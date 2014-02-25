@@ -143,6 +143,9 @@ public class MapView extends JPanel {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
         
+        //TODO: if the coordinates are < 0.5 hexes outside the map
+        //then this could be changed to still return a hex-edge
+        //in those cases
         if(!map.inBounds(hexX, hexY))
             return null;
                 
