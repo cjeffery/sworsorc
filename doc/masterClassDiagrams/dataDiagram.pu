@@ -1,0 +1,73 @@
+@startuml
+hide circle
+title <b>Data Structures Class Diagram<b> Author: Keith Drew
+
+StaticDataStructure *- "7" GameChart
+GameTerrainChart --up-|> GameChart
+GameCombatResultsChart -up-|> GameChart
+GameRandomEventChart --up-|> GameChart
+GameSpellChart -up-|> GameChart
+GameKillerPenguinEntryChart --up-|> GameChart
+GameEmissaryResultsChart -up-|> GameChart
+GameDiplomaticGroupChart --up-|> GameChart
+
+class StaticDataStructure #529292 {
+-terrainChart
+-combatChart
+-randomChart
+-spellChart
+-kpChart
+-emissaryChart
+-diplomacyChart
++getChartResults()
+}
+note left of StaticDataStructure #red
+getChartResults() overloaded
+for each chart type.
+end note
+
+class GameChart #529292 {
+-randomEventTurnCounter
++getRECounter()
+}
+
+class GameTerrainChart #529292 {
+-terrainLookupArray[]
++getTerrainDefenseBonus()
++getTerrainMoveCost()
++isPassableEdge()
+}
+
+class GameCombatResultsChart #529292 {
+-combatResultsLookupArray[]
++getCombatResults()
+}
+
+class GameRandomEventChart #529292 {
+-randomEventLookupArray[]
++getRandomEvent()
+}
+
+class GameSpellChart #529292 {
+-spellLookupArray[]
++getSpellInfo()
+}
+
+class GameKillerPenguinEntryChart #529292 {
+-kpEntryLookupArray[]
+-kpCount
++getKPEntry()
++getKPCount()
+}
+
+class GameEmissaryResultsChart #529292 {
+-emissaryLookupArray[]
++getEmissaryResults()
+}
+
+class GameDiplomaticGroupChart #529292 {
+-diplomacyGroupLookupArray[]
++getDiplomacyResults()
+}
+
+@enduml

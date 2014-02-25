@@ -1,0 +1,91 @@
+@startuml
+hide circle
+title <b>Overview Class Diagram<b> Author: Keith Drew
+
+Game *-- Board
+Game *-- "2..7" Player
+Game *-- "0..*" Alliance 
+Game - Scenario : Scenario Initiates\nGame
+Scenario "14" -* StaticDataStructure
+Alliance - Player : An alliance links two\nplayers/NPC turns together
+Province "25" -down-* Board
+Hex "0..*" -right-* Province
+Stack -right-* Hex
+MoveableUnit "0..*" -right-o Stack
+StaticDataStructure *- "7" GameChart
+
+class Game #529292 {
+-players[]
+-alliances[]
+-scenarioNumber
+-victoryConditions
+-currentGameTurnNumber
+-currentPlayerTurnNumber
++Game( Scenario )
+}
+
+class Board #529292 {
+-provinces[]
++Display()
++HighlightHex( hexID )
+}
+
+class Player #529292 {
+-playerNumber
+-playerVictoryPoints
++AddVictoryPoints()
+}
+
+class Alliance #529292 {
+-alliedPlayers[]
++AlliedTurn()
+}
+
+class Province #529292 {
+-name
+-hexes[]
+}
+
+class Hex #529292 {
+-terrainType
+-hexID
+-
+}
+
+class Stack #529292 {
+-ArmyUnit[]
+-Character[]
+-Monster[]
++resolveUnitConflicts()
++selectUnits()
++removeUnits()
++addUnits()
+}
+
+class MoveableUnit #529292 {
+-movementAllowance
+-combatStrength
+-flyingUnitFlag
++move()
+}
+
+class Scenario #529292 {
+}
+
+class StaticDataStructure #529292 {
+-terrainChart
+-combatChart
+-randomChart
+-spellChart
+-kpChart
+-emissaryChart
+-diplomacyChart
++getChartResults()
+}
+
+class GameChart #529292 {
+-randomEventTurnCounter
++getRECounter()
+}
+
+@enduml
