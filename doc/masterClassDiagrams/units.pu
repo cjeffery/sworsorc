@@ -1,14 +1,14 @@
 @startuml
-
-note "Author: Ian Westrope \n Edited by Sean Shepherd" as Note1
-
 hide circles
-class MoveableUnit{
+title <b>Unit Use Case Diagram<b> Author: Ian Westrope
+
+class MoveableUnit #529292 {
       +Int Movement_Allowance
       +Int Combat_Strength
       +Bool Flying_Unit
 }
-class Character{
+
+class Character #529292 {
       +Char Race
       +Int Magic_PL
       +Int Magic_Potential
@@ -22,22 +22,22 @@ class Character{
       +Int Endurance
 }
 
-class ArmyUnit{
+class ArmyUnit #529292 {
       +Char Unit_Type
       +Char Unit_Race
       +Int Demoralized_Strength
 }
 
-class MeeleeArmyUnit{
+class MeeleeArmyUnit #529292 {
       +void Charge()
 }
 
-class RangedArmyUnit{
+class RangedArmyUnit #529292 {
 
 }
 
 
-class Monster{
+class Monster #529292 {
       +Int Magic_PL
       +Int Magic_Potential
       +Int Magic_Color
@@ -49,25 +49,25 @@ class Monster{
       +void ChangeOwner()
 }
 
-class Demon{
+class Demon #529292 {
       +Bool Bound
 }
 
-class Dragon{
+class Dragon #529292 {
       +void Breathe_Fire()
 }
 
-class Troll{
+class Troll #529292 {
       +void Regenerate()
 }
 
-class Spectre
+class Spectre #529292 
 
-class TyrannosauriRegs
+class TyrannosauriRegs #529292 
 
-class TalismanOfOrb
+class TalismanOfOrb #529292 
 
-Class FlyingUnit
+Class FlyingUnit #529292 
 
 MoveableUnit <|-- Monster
 MoveableUnit <|-- FlyingUnit

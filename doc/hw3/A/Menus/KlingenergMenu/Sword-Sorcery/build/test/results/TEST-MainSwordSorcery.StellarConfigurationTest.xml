@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="LivingRoom" name="MainSwordSorcery.StellarConfigurationTest" skipped="0" tests="1" time="0.058" timestamp="2014-02-24T21:38:19">
+<testsuite errors="0" failures="0" hostname="LivingRoom" name="MainSwordSorcery.StellarConfigurationTest" skipped="0" tests="1" time="0.064" timestamp="2014-02-25T04:14:02">
   <properties>
     <property name="netbeans.autoupdate.country" value="US" />
     <property name="nb.wait.for.caches" value="true" />
@@ -40,7 +40,7 @@
     <property name="user.name" value="David" />
     <property name="copylibs.rebase" value="true" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainSwordSorcery.StellarConfigurationTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\test\results\TEST-MainSwordSorcery.StellarConfigurationTest.xml crashfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junitvmwatcher5300381042143042393.properties propsfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junit4336365765650310877.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainSwordSorcery.StellarConfigurationTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\test\results\TEST-MainSwordSorcery.StellarConfigurationTest.xml crashfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junitvmwatcher1132856717373608349.properties propsfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junit1057124205491536180.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -167,7 +167,6 @@
     <property name="org.openide.major.version" value="IDE/1" />
     <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
     <property name="netbeans.user" value="C:\Users\David\AppData\Roaming\NetBeans\7.4" />
-    <property name="tests.failed" value="true" />
     <property name="javadoc.additionalparam" value="" />
     <property name="java.io.tmpdir" value="C:\Users\David\AppData\Local\Temp\" />
     <property name="java.vendor.url" value="http://java.oracle.com/" />
@@ -290,16 +289,16 @@
     <property name="libs.ejb3-persistence.classpath" value="C:\Program Files\NetBeans 7.4\java\modules\ext\hibernate\hibernate-jpa-2.0-api-1.0.1.Final.jar" />
     <property name="libs.hibernate-persistencemodelgen.javadoc" value="" />
     <property name="libs.JAXB-ENDORSED.src" value="" />
-    <property name="libs.spring-framework.javadoc" value="" />
     <property name="dist.archive.excludes" value="" />
+    <property name="libs.spring-framework.javadoc" value="" />
     <property name="libs.testng.javadoc" value="C:\Program Files\NetBeans 7.4\platform\docs\testng-6.8.1-javadoc.zip" />
     <property name="user.script" value="" />
     <property name="libs.PostgreSQLDriver.classpath" value="C:\Program Files\NetBeans 7.4\ide\modules\ext\postgresql-9.2-1002.jdbc4.jar" />
     <property name="libs.junit.src" value="" />
     <property name="annotation.processing.source.output" value="build/generated-sources/ap-source-output" />
     <property name="main.class" value="MainSwordSorcery.SwordSorceryGUI" />
-    <property name="build.dir" value="build" />
     <property name="libs.CopyLibs.src" value="" />
+    <property name="build.dir" value="build" />
     <property name="ant.version" value="Apache Ant(TM) version 1.9.1 compiled on May 15 2013" />
     <property name="file.encoding" value="Cp1252" />
     <property name="build.classes.excludes" value="**/*.java,**/*.form" />
@@ -308,7 +307,7 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
   </properties>
-  <testcase classname="MainSwordSorcery.StellarConfigurationTest" name="testAdvanceSuns" time="0.005" />
+  <testcase classname="MainSwordSorcery.StellarConfigurationTest" name="testAdvanceSuns" time="0.006" />
   <system-out><![CDATA[
 AdvanceSuns
 Red in ass:  false

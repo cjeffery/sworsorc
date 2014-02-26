@@ -6,6 +6,7 @@
 
 package MainSwordSorcery;
 
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,50 +17,89 @@ import static org.junit.Assert.*;
 public class MapHexTest {
     MapHex testHex;
     
-    
     public MapHexTest() {
         
     }
-    /*
+    
     @Test
     public void testGetTerrainKey() {
-        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",false,"",false,0);
+        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        
+        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges);
+        
         boolean result = "R".equals(testHex.GetTerrainKey());
         assertTrue(result);
+        
     }
     
     @Test
     public void testGetTerrainDescription() {
-        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",false,"",false,0);
-        boolean result = "Rough".equals(testHex.GetTerrainDescription(testHex.GetTerrainKey()));
+        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+    
+        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges);
+        boolean result = "Rough".equals(testHex.GetTerrainDescription());
         assertTrue(result);
     }
     
     @Test
     public void testGetIsCityHex() {
-        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",false,"",false,0);
+        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges,true,"Moscow");
+        
         boolean result = testHex.GetIsCityHex();
-        assertFalse(result);
-    }
-    
-    @Test
-    public void testGetCityName() {
-        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",true,"Moscow",false,0);
-        boolean result = "Moscow".equals(testHex.GetCityName());
+        assertTrue(result);
+        
+        result = "Moscow".equals(testHex.GetCityName());
         assertTrue(result);
     }
     
+    
+    
+    
      @Test
     public void testGetIsVortexHex() {
-        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",false,"",true,0);
+        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges,true);
         boolean result = testHex.GetIsVortexHex();
         assertTrue(result);
     }
     
     @Test
     public void testGetIsPortalHex() {
-        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",false,"",false,0);
+        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges,0);
         boolean result = testHex.GetIsPortalHex();
         assertFalse(result);
-    }*/
+    }
+    
+  
+    @Test
+    public void testGetNorthHexEdgeListTwo() {
+        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        ArrayList<String> edgeOfHex = new ArrayList();
+        ArrayList<String> testEdgeOfHex = new ArrayList();
+        
+        edgeOfHex.add("Ga");
+        edgeOfHex.add("Br");
+        
+        hexEdges.add(edgeOfHex);
+        hexEdges.add(edgeOfHex);
+        hexEdges.add(edgeOfHex);
+        hexEdges.add(edgeOfHex);
+        hexEdges.add(edgeOfHex);
+        hexEdges.add(edgeOfHex);
+        
+        
+        testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges);
+    
+        
+        testEdgeOfHex = testHex.getNorthWestHexEdgeCodes();
+        
+        boolean result = "Ga".equals(testEdgeOfHex.get(0));
+        assertTrue(result);
+        
+        result = "Br".equals(testEdgeOfHex.get(1));
+        assertTrue(result);
+    }
+    
 }
