@@ -14,7 +14,7 @@ public class HexPainter {
     private BufferedImage mountainImage;
     private BufferedImage forestImage;
 
-    public HexPainter(double hexRadius) {
+    public HexPainter(double hexRadius) throws IOException {
         this.hexRadius = hexRadius;
         width  = hexRadius*2;
         height = hexRadius*Math.sqrt(3);
@@ -28,13 +28,7 @@ public class HexPainter {
         hexShape.lineTo(width*0.25, height);
         hexShape.closePath();
         
-        try {
-            mountainImage = ImageIO.read(new File("mountains2.png"));
-        }
-        //FIXME, need error handling
-        catch (IOException ex) {
-            System.out.println("Could not load image D:");
-        }
+        mountainImage = ImageIO.read(new File("mountains2.png"));
     }
 
     /* Paint the specified hex onto the specified Graphics */

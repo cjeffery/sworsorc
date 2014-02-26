@@ -1,5 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class ScrollDemo implements MouseListener, KeyListener {
@@ -7,8 +10,13 @@ public class ScrollDemo implements MouseListener, KeyListener {
     public ScrollDemo() {
         JFrame window = new JFrame("Scrolling Map Demo"); 
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-     
-        mapView = new MapView(new Map());
+        
+        try {
+            mapView = new MapView(new Map());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "IOException: " +
+                                          ex.getMessage()+" "+ex.getCause());
+        }
         
         window.add(mapView);
         window.pack();
