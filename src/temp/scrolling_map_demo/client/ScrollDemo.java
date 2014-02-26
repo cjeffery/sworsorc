@@ -1,8 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 public class ScrollDemo implements MouseListener, KeyListener {
