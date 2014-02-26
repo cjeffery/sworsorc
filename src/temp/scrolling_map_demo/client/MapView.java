@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.io.IOException;
 import javax.swing.*;
 
 public class MapView extends JPanel {
@@ -104,7 +105,7 @@ public class MapView extends JPanel {
     public MapSurface surface;
     double radius, width, height;    
    
-    public MapView(Map map) {
+    public MapView(Map map) throws IOException {
         super(new BorderLayout());
         this.map = map;
         this.map = map;
