@@ -1,0 +1,1 @@
+This directory is for the Java utilities that may be needed for sworsorc project that are not integrated into the game client.
