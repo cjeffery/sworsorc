@@ -7,37 +7,219 @@
 package MainSwordSorcery;
 
 import java.awt.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- * @author David
- */
+/*******************************************************************************
+ * 
+ *   This class defines a map hex. All the attributes of a map hex is contained
+ *   here, such as terrain key, portal number, vortex hex,  etc.
+ * 
+ *   Hex edges can have multiple attributes. For example a single hex edge could
+ *   contain a Providence border, a bridge exit, a shoreline, and a gate.
+ *   
+ *   @author David Klingenberg 2/25/2014
+ * 
+ ******************************************************************************/
+
+
 public class MapHex extends Hex{
+    private String hexName;
     private String terrainKey;
-    private boolean cityHex;
+    private boolean cityHex = false;
     private String cityName;
-    private boolean vortexHex;
-    private int portalHex;
-   
+    private boolean vortexHex = false;
+    private int portalHex = 0;
+    ArrayList<ArrayList<String>> hexEdgeMap;
+    ArrayList<Integer> hexEdgeAdditions = new ArrayList<>();
+    
+     /** 
+     * This constructor creates a standard hex.
+     * all of the IDs are strings.
+     * 
+     * @param id Unique identifier of the current hex.
+     * @param northHexID  Unique identifier of the North neighbor.
+     * @param northEastHexID Unique identifier the North East neighbor.
+     * @param southEastHexID Unique identifier of the southeast neighbor.
+     * @param southHexID Unique identifier of the South neighbor.
+     * @param southWestHexID unique identifier of the Southwest neighbor.
+     * @param northWestHexID unique identifier of the Northwest neighbor.
+     * @param keyTerrain  String.
+     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * the attributes of all 6 hex edges.
+     */
     
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
-                  String northWestHexID, String keyTerrain, boolean hexIsCity, 
-                  String nameCity, boolean hexVortex, int portalNumber, String[] edgesHex ) {
+                  String northWestHexID, String keyTerrain,
+                  ArrayList<ArrayList<String>> edgesOfHex){
+        
+        super(id, northHexID, northEastHexID, southEastHexID, 
+                          southHexID, southWestHexID, northWestHexID);
+        
+        setHexEdgeList(edgesOfHex);        
+        InitialiseHexEdgeAdditions();
+        SetKeyterrain(keyTerrain);
                   
+    }
+
+    
+     /** 
+     * This constructor creates a named (non-city/castle) hex. 
+     * all of the IDs are strings.
+     * 
+     * @param id Unique identifier of the current hex.
+     * @param northHexID  Unique identifier of the North neighbor.
+     * @param northEastHexID Unique identifier the North East neighbor.
+     * @param southEastHexID Unique identifier of the southeast neighbor.
+     * @param southHexID Unique identifier of the South neighbor.
+     * @param southWestHexID unique identifier of the Southwest neighbor.
+     * @param northWestHexID unique identifier of the Northwest neighbor.
+     * @param keyTerrain  String.
+     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * the attributes of all 6 hex edges.
+     * @param nameHex String.
+     */
+    public MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, 
+                  ArrayList<ArrayList<String>> edgesOfHex,String nameHex){
         
-        super(id, northHexID, northEastHexID, southEastHexID, southHexID, southWestHexID, northWestHexID);
-   
+        super(id, northHexID, northEastHexID, southEastHexID, 
+                          southHexID, southWestHexID, northWestHexID);
         
-        terrainKey = keyTerrain;
-        cityHex = hexIsCity;
-        cityName = nameCity;
+        setHexEdgeList(edgesOfHex);
+        InitialiseHexEdgeAdditions();
+        SetKeyterrain(keyTerrain);
+        SetHexName(nameHex);
+        
+    }
+
+    
+    
+     /** 
+     * This constructor creates a city hex.
+     * all of the IDs are strings.
+     * 
+     * @param id Unique identifier of the current hex.
+     * @param northHexID  Unique identifier of the North neighbor.
+     * @param northEastHexID Unique identifier the North East neighbor.
+     * @param southEastHexID Unique identifier of the southeast neighbor.
+     * @param southHexID Unique identifier of the South neighbor.
+     * @param southWestHexID unique identifier of the Southwest neighbor.
+     * @param northWestHexID unique identifier of the Northwest neighbor.
+     * @param keyTerrain  String.
+     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * the attributes of all 6 hex edges.
+     * @param hexIsCity boolean.
+     * @param nameCity String. 
+     */
+    public MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, 
+                  ArrayList<ArrayList<String>> edgesOfHex, boolean hexIsCity, 
+                  String nameCity){
+        
+        super(id, northHexID, northEastHexID, southEastHexID, southHexID,
+                southWestHexID, northWestHexID);
+        
+        setHexEdgeList(edgesOfHex);
+        InitialiseHexEdgeAdditions();
+        SetKeyterrain(keyTerrain);
+        SetCityHex(hexIsCity);
+        SetCityName(nameCity);
+    }
+    
+    /** This constructor creates a vortex hex.
+     * 
+     * @param id Unique identifier of the current hex.
+     * @param northHexID  Unique identifier of the North neighbor.
+     * @param northEastHexID Unique identifier the North East neighbor.
+     * @param southEastHexID Unique identifier of the southeast neighbor.
+     * @param southHexID Unique identifier of the South neighbor.
+     * @param southWestHexID unique identifier of the Southwest neighbor.
+     * @param northWestHexID unique identifier of the Northwest neighbor.
+     * @param keyTerrain String;
+     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * the attributes of all 6 hex edges.
+     * @param hexVortex 
+     */
+    public MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, 
+                  ArrayList<ArrayList<String>> edgesOfHex, boolean hexVortex){
+        
+        super(id, northHexID, northEastHexID, southEastHexID, southHexID,
+                southWestHexID, northWestHexID);
+        
+        setHexEdgeList(edgesOfHex);
+        InitialiseHexEdgeAdditions();
+        SetIsVortex(hexVortex);
+    }
+
+    /** This constructor creates a numbered portal hex.
+     * 
+     * @param id Unique identifier of the current hex.
+     * @param northHexID  Unique identifier of the North neighbor.
+     * @param northEastHexID Unique identifier the North East neighbor.
+     * @param southEastHexID Unique identifier of the southeast neighbor.
+     * @param southHexID Unique identifier of the South neighbor.
+     * @param southWestHexID unique identifier of the Southwest neighbor.
+     * @param northWestHexID unique identifier of the Northwest neighbor.
+     * @param keyTerrain String.
+     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * the attributes of all 6 hex edges.  
+     * @param portalNumber Integer.
+     */
+    public MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, 
+                  ArrayList<ArrayList<String>> edgesOfHex, int portalNumber){
+        
+        super(id, northHexID, northEastHexID, southEastHexID, southHexID,
+                southWestHexID, northWestHexID);
+        
+        setHexEdgeList(edgesOfHex);      
+        InitialiseHexEdgeAdditions();
+        SetPortalNumber(portalNumber);
+    }
+
+    private void SetIsVortex(boolean hexVortex) {
         vortexHex = hexVortex;
+    }
+  
+    private void SetPortalNumber(int portalNumber) {
         portalHex = portalNumber;
-   
-       
+    }
+    
+    private void InitialiseHexEdgeAdditions() {            
+        for (int i = 0; i < 5; i++) 
+            hexEdgeAdditions.add(0);
+    }
+
+    private void SetCityName(String nameCity) {
+        cityName = nameCity;
+    }
+
+    private void SetCityHex(boolean hexIsCity) {
+        cityHex = hexIsCity;
+    }
+
+    private void SetHexName(String nameHex) {
+        hexName = nameHex;
+    }
+    
+    private void SetKeyterrain(String keyTerrain) {
+        terrainKey = keyTerrain;
+    }
+    
+    
+    private void setHexEdgeList(ArrayList<ArrayList<String>> edgesOfHex) {
+        hexEdgeMap = new ArrayList<>();
+        
+        for (ArrayList<String> S : edgesOfHex)
+            hexEdgeMap.add(S);
     }
     
     public boolean GetIsPortalHex(){
@@ -60,78 +242,218 @@ public class MapHex extends Hex{
     public boolean GetIsCityHex (){
         return cityHex;
     }
-   
-    
-    
-    public  String GetTerrainDescription (String terrainCode){
+  
+     /** 
+     * Converts the terrain key into a description
+     * 
+     * @return The name of hex terrain.
+     */
+    public  String GetTerrainDescription(){
         
+        if ("Bl".equals(terrainKey))
+            return "Blasted";        
+        if ("Br".equals(terrainKey)) 
+            return "Bridge Over Water";
+        if ("Bro".equals(terrainKey))
+            return "Broken";
+        if ("Cap".equals(terrainKey))
+            return "Capital";
+        if ("Cas".equals(terrainKey))
+            return "Castel";
+        if ("Ci".equals(terrainKey))
+            return "City";
+        if ("Cl".equals(terrainKey))
+            return "Clear";
+        if ("Cu".equals(terrainKey))
+            return "Cultivated";
+        if ("D".equals(terrainKey))
+            return "Dragon Tunnel Complex";
+        if ("Ford".equals(terrainKey))
+            return "Ford";
+        if ("Fore".equals(terrainKey))
+            return "Forest";
+        if ("G".equals(terrainKey))
+            return "Glacier";
+        if ("K".equals(terrainKey))
+            return "Karoo";
+        if ("Mrl".equals(terrainKey))
+            return "Moat/River/Lake";
+        if ("Mo".equals(terrainKey))
+            return "Mountains";
+        if ("Po".equals(terrainKey))
+            return "Portal";
+        if ("R".equals(terrainKey))
+            return "Rough";
+        if ("Roa".equals(terrainKey))
+            return "Road";
+        if ("Sh".equals(terrainKey))
+            return "Special Hex";
+        if ("Sw".equals(terrainKey))
+            return "Swamp";
+        if ("To".equals(terrainKey))
+            return "Town";
+        if ("V".equals(terrainKey))
+            return "Vortex";
+        if ("Wo".equals(terrainKey))
+            return "Woods";
         
-        if ("Bl".equals(terrainCode))
-            return"Blasted";        
-        if ("Br".equals(terrainCode))
-            return"Broken";
-        if ("Cap".equals(terrainCode))
-            return"Capital";
-        if ("Cas".equals(terrainCode))
-            return"Castel";
-        if ("Ci".equals(terrainCode))
-            return"City";
-        if ("Cl".equals(terrainCode))
-            return"Clear";
-        if ("Cu".equals(terrainCode))
-            return"Cultivated";
-        if ("D".equals(terrainCode))
-            return"Dragon Tunnel Complex";
-        if ("Ford".equals(terrainCode))
-            return"Ford";
-        if ("Fore".equals(terrainCode))
-            return"Forest";
-        if ("G".equals(terrainCode))
-            return"Glacier";
-        if ("K".equals(terrainCode))
-            return"Karoo";
-        if ("Mrl".equals(terrainCode))
-            return"Moat/River/Lake";
-        if ("Mo".equals(terrainCode))
-            return"Mountains";
-        if ("Po".equals(terrainCode))
-            return"Portal";
-        if ("Roa".equals(terrainCode))
-            return"Road";
-        if ("Sh".equals(terrainCode))
-            return"Special Hex";
-        if ("Sw".equals(terrainCode))
-            return"Swamp";
-        if ("To".equals(terrainCode))
-            return"Town";
-        if ("V".equals(terrainCode))
-            return"Vortex";
-        if ("Wo".equals(terrainCode))
-            return"Woods";
-        
-        
-        /*    Hexside
-              
-                if ("Br".equals(terrainCode))  Hexside
-                    return"Bridge";
-                if ("Ga".equals(terrainCode))  Hexside
-                    return"Gate";
-                if ("Pb".equals(terrainCode))
-                    return"Province Border";
-                if ("St".equals(terrainCode))
-                    return"Stream";
-                if ("Tr".equals(terrainCode))
-                    return"Trail";
-                if ("Wa".equals(terrainCode))
-                    return"Wall";
-        */
-        
-        return "";
+        return null;
     }
+
+    public String getHexName(  ) { 
+        return hexName;
+    }
+   
+    public ArrayList<String> GetNorthHexSideDescription () {
+        ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
+
+         for (String s : hexEdgeMap.get(0)){
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
+         }
+         
+         return descriptionsOfHexSide;                 
+    }
+
+    public ArrayList<String> GetNorthEastHexSideDescription () {
+        ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
+
+         for (String s : hexEdgeMap.get(1)){
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
+         }
+         
+         return descriptionsOfHexSide;                 
+    }
+    
+    public ArrayList<String> GetSouthEastHexSideDescription () {
+        ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
+
+         for (String s : hexEdgeMap.get(2)){
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
+         }
+         
+         return descriptionsOfHexSide;                 
+    }
+    
+    public ArrayList<String> GetSouthHexSideDescription () {
+        ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
+
+         for (String s : hexEdgeMap.get(3)){
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
+         }
+         
+         return descriptionsOfHexSide;                 
+    }
+    
+    public ArrayList<String> GetSouthWestHexSideDescription () {
+        ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
+
+         for (String s : hexEdgeMap.get(4)){
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
+         }
+         
+         return descriptionsOfHexSide;                 
+    }
+    
+    public ArrayList<String> GetNorthWestSideDescription () {
+        ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
+
+         for (String s : hexEdgeMap.get(5)){
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
+         }
+         
+         return descriptionsOfHexSide;                 
+    }
+    
+     /**  
+     * Converts the text side key into a description.
+     * 
+     * @return Hex edge description.
+     */ 
+    public String GetHexSidDescription(String hexSideCode) {
+        if ("Ri".equals(hexSideCode))
+            return "Riverbank";
+        if ("La".equals(hexSideCode))
+            return "Shoreline";
+        if ("Br".equals(hexSideCode)) 
+            return "Bridge Entrance/Exit";
+        if ("Ga".equals(hexSideCode))
+            return "Gate";
+        if ("Pb".equals(hexSideCode))
+            return "Province Border";
+        if ("St".equals(hexSideCode))
+            return "Stream";
+        if ("Tr".equals(hexSideCode))
+            return "Trail";
+        if ("Wa".equals(hexSideCode))
+            return "Wall";
+        
+        return null;
+    }
+
+
     
     public String GetTerrainKey(){
         return terrainKey;
         
     }
+    
+    public ArrayList<String> getNorthHexEdgeCodes () { 
+        return hexEdgeMap.get(0);
+    }
+    
+    public ArrayList<String> getNorthEastHexEdgeCodes () { 
+        return hexEdgeMap.get(1);
+    }
+    
+    public ArrayList<String> getSouthEastHexEdgeCodes () { 
+        return hexEdgeMap.get(2);
+    }
+    
+    public ArrayList<String> getSouthHexEdgeCodes () { 
+        return hexEdgeMap.get(3);
+    }
+    
+    public ArrayList<String> getSoutWesthexEdgeCodes () { 
+        return hexEdgeMap.get(4);
+    }
+    
+    public ArrayList<String> getNorthWestHexEdgeCodes () { 
+        return hexEdgeMap.get(5);
+    }
+     /**
+     * This method will allow the addition of new conditions on hex edges. These 
+     * additions can be caused by spells affecting hexes.  For example the 
+     * wall spell.
+     * 
+     * Note: This method is not fully implemented and needs testing.  
+     * 
+     * @param edgedDirection an integer that reflects a hex face.
+     * @param hexEdgeCode 
+     */
+    public void SetHexEdgeAdditions(int edgedDirection,String hexEdgeCode){
+        //hexEdgeMap.get(edgedDirection).add(hexEdgeCode);      
+    }
+    
+    /**
+     * Removes any modifications to hex edges that are caused by spells that 
+     * have expired. 
+     * 
+     * This method needs implementation.
+     */
+    
+    public void RemoveHexEdgeAdditions (int edgedDirection,String hexEdgeCode ) { 
+        //to do
+        
+    }
+    
+    
+    /**      
+     * Modifies the train to reflect the effects of spells or random events.
+     * 
+     * This method needs implementation.
+     */
+    public void ModifyTerrainCode (String keyterrain) {
+        //to do.
+    } 
     
 }

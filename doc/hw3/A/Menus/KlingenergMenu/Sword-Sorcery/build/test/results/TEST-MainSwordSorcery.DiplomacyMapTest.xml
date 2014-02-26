@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="2" hostname="LivingRoom" name="MainSwordSorcery.DiplomacyMapTest" skipped="0" tests="13" time="0.109" timestamp="2014-02-24T21:38:15">
+<testsuite errors="0" failures="0" hostname="LivingRoom" name="MainSwordSorcery.DiplomacyMapTest" skipped="0" tests="13" time="0.105" timestamp="2014-02-25T04:13:59">
   <properties>
     <property name="netbeans.autoupdate.country" value="US" />
     <property name="nb.wait.for.caches" value="true" />
@@ -40,7 +40,7 @@
     <property name="user.name" value="David" />
     <property name="copylibs.rebase" value="true" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainSwordSorcery.DiplomacyMapTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\test\results\TEST-MainSwordSorcery.DiplomacyMapTest.xml crashfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junitvmwatcher3044980712712724658.properties propsfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junit6362804283435972633.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainSwordSorcery.DiplomacyMapTest filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\test\results\TEST-MainSwordSorcery.DiplomacyMapTest.xml crashfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junitvmwatcher8733707509694199468.properties propsfile=C:\Users\David\Documents\GitHub\sworsorc\doc\hw3\A\Menus\KlingenergMenu\Sword-Sorcery\build\junit2256308566076205243.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -307,27 +307,20 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
   </properties>
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test7" time="0.001" />
   <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test13" time="0.001" />
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test3" time="0.0" />
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test11" time="0.0" />
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test2" time="0.0" />
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test8" time="0.0" />
   <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test4" time="0.0" />
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test12" time="0.0" />
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test5" time="0.0" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test8" time="0.0" />
   <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test1" time="0.0" />
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test10" time="0.003">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at MainSwordSorcery.DiplomacyMapTest.test10(DiplomacyMapTest.java:82)
-</failure>
-  </testcase>
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test6" time="0.001" />
-  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test9" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at MainSwordSorcery.DiplomacyMapTest.test9(DiplomacyMapTest.java:76)
-</failure>
-  </testcase>
-  <system-out><![CDATA[]]></system-out>
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test9" time="0.001" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test6" time="0.0" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test2" time="0.0" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test10" time="0.0" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test5" time="0.0" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test12" time="0.001" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test11" time="0.0" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test3" time="0.0" />
+  <testcase classname="MainSwordSorcery.DiplomacyMapTest" name="test7" time="0.0" />
+  <system-out><![CDATA[0707
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

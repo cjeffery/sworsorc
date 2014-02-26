@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Author: David Klingenberg
+  Date: 02/24/2014
+-->
+
+
+<!DOCTYPE map [
+  <!ELEMENT map (hex*)>
+  <!ELEMENT hex (hexNumber, northHexNumber, northEastHexNumber, 
+                 southEastHexNumber, southHexNumber, southWestHexNumber, 
+                 northWestHexNumber, terrainKey, cityHex?, vortexHex?, 
+                 portalHex?, hexEdgeMap?)>
+     <!ELEMENT hexNumber (#PCDATA)>
+     <!ELEMENT northHexNumber (#PCDATA)>
+     <!ELEMENT northEastHexNumber (#PCDATA)>
+     <!ELEMENT southEastHexNumber (#PCDATA)>
+     <!ELEMENT southHexNumber (#PCDATA)>
+     <!ELEMENT southWestHexNumber (#PCDATA)>
+     <!ELEMENT northWestHexNumber (#PCDATA)>
+     <!ELEMENT terrainKey (#PCDATA)>
+     <!ELEMENT cityHex (#PCDATA)>
+     <!ELEMENT vortexHex (#PCDATA)>
+     <!ELEMENT portalHex (#PCDATA)>
+     <!ELEMENT hexEdgeMap (northEdge?, northEastEdge?, southEastEdge?, 
+                           southEdge?, southWest?, northWestEdge?) >
+        <!ELEMENT northEdge (edgeAttribute+)> 
+        <!ELEMENT northEastEdge (edgeAttribute+)> 
+        <!ELEMENT southEastEdge (edgeAttribute+)>
+        <!ELEMENT southEdge (edgeAttribute+)>
+        <!ELEMENT southWest (edgeAttribute+)> 
+        <!ELEMENT northWestEdge (edgeAttribute+)>
+            <!ELEMENT edgeAttribute (#PCDATA)> 
+]>
+
+<map>
+    <hex>
+        <hexNumber>1932</hexNumber>
+        <northHexNumber>1931</northHexNumber>
+        <northEastHexNumber>2031</northEastHexNumber>
+        <southEastHexNumber>2032</southEastHexNumber>
+        <southHexNumber>1933</southHexNumber>
+        <southWestHexNumber>1832</southWestHexNumber>
+        <northWestHexNumber>1831</northWestHexNumber>
+        <terrainKey>Br</terrainKey>
+        <hexEdgeMap>
+            <southEastEdge>
+                <edgeAttribute>Br</edgeAttribute>
+            </southEastEdge>
+            <southEdge>
+                <edgeAttribute>Pb</edgeAttribute>
+            </southEdge>
+            <southWest>
+                <edgeAttribute>Pb</edgeAttribute>
+            </southWest>
+            <northWestEdge>
+                <edgeAttribute>Br</edgeAttribute>
+                <edgeAttribute>Pb</edgeAttribute>
+            </northWestEdge>
+        </hexEdgeMap>
+    </hex>
+    <hex>
+        <hexNumber>1931</hexNumber>
+        <northHexNumber>1930</northHexNumber>
+        <northEastHexNumber>2030</northEastHexNumber>
+        <southEastHexNumber>2031</southEastHexNumber>
+        <southHexNumber>1932</southHexNumber>
+        <southWestHexNumber>1831</southWestHexNumber>
+        <northWestHexNumber>1830</northWestHexNumber>
+        <terrainKey>Bro</terrainKey>
+        <hexEdgeMap>
+            <southEastEdge>
+                <edgeAttribute>Pb</edgeAttribute>
+            </southEastEdge>
+            <southEdge>
+                <edgeAttribute>Pb</edgeAttribute>
+            </southEdge>
+        </hexEdgeMap>
+    </hex>
+</map>
