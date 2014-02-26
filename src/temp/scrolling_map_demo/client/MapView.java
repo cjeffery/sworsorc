@@ -48,6 +48,7 @@ public class MapView extends JPanel {
 
         /** Return the size for the scrollbars
          */
+        
         @Override
         public Dimension getPreferredScrollableViewportSize() {
             return getPreferredSize();

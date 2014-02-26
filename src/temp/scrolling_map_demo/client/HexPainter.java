@@ -18,6 +18,7 @@ public class HexPainter {
         this.hexRadius = hexRadius;
         width  = hexRadius*2;
         height = hexRadius*Math.sqrt(3);
+        //not sure if this number should be 6 or 7
         hexShape = new Path2D.Double(Path2D.WIND_NON_ZERO, 7);
         hexShape.moveTo(0,          height*0.5);
         hexShape.lineTo(width*0.25, 0);
