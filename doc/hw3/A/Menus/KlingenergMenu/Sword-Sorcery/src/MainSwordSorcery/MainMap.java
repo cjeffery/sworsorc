@@ -8,12 +8,14 @@ package MainSwordSorcery;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -27,7 +29,7 @@ import org.xml.sax.SAXException;
  * @author David
  */
 public class MainMap {
-    private HashMap <String, DiplomacyHex> DiplomacyMap = new HashMap();
+    private HashMap <String, MapHex> mainMap = new HashMap();
     private String hexNumber, northHexNumber, northEastHexNumber, 
             southEastHexNumber, southHexNumber, southWestHexNumber,
             northWestHexNumber, terrainKey, cityName;
@@ -36,17 +38,19 @@ public class MainMap {
     private DocumentBuilderFactory factory; 
     private DocumentBuilder builder;
     private Document doc;
-    private File file = new File("C:\\Users\\David\\Documents\\GitHub\\sworsorc\\doc\\hw3\\A\\Menus\\KlingenergMenu\\Sword-Sorcery\\src\\MainSwordSorcery\\DiplomacyMap.xml");
-    //private DiplomacyHex hexObject;
+    private File file = new File("C:\\Users\\David\\Documents\\GitHub\\sworsorc\\doc\\hw3\\A\\Menus\\KlingenergMenu\\Sword-Sorcery\\src\\MainSwordSorcery\\mainMap.xml");
+    private HashMap<String, ArrayList<String>> edgeDirectionList = new HashMap<>();
+    private ArrayList<String> edgeItemList;
+
     
     private static MainMap INSTANCE;
     
     private MainMap(){
-         factory = DocumentBuilderFactory.newInstance();
+         SetFactory();
         try {
-            builder = factory.newDocumentBuilder();
-            factory.setValidating(true);
-            doc = builder.parse(file);
+            SetBuilder();
+            SetValidateFactory();
+            SetDoc();
         
         } catch (ParserConfigurationException|SAXException ex) {
             Logger.getLogger(MainMap.class.getName()).log(Level.SEVERE, null, ex);
@@ -55,19 +59,15 @@ public class MainMap {
             System.out.println("Check line 37. You may need to change your path to reflect the location the XML file.");
         }
         
-        BuildDiplomacyMap();
+        BuildmainMap();
         
-    }//diplomacy map
+    }
+
+   
     
-    public static MainMap GetDiplomacyMap(){
-      if (INSTANCE == null)
-          INSTANCE =  new  MainMap();
-      return INSTANCE;
-  }
-    
-    private void BuildDiplomacyMap(){
+    private void BuildmainMap(){
         
-        NodeList listOfHex = doc.getElementsByTagName("hex");
+        NodeList listOfHex = GetDoc();
        
         //System.out.println("Total number of hexs : " + listOfHex.getLength());
         
@@ -86,89 +86,228 @@ public class MainMap {
                 if(hexItem.getNodeType() == Node.ELEMENT_NODE){
                                         
                    if ("hexNumber".equals(hexItem.getNodeName())) 
-                       hexNumber =  hexItem.getTextContent();
+                       SetHexNumber(hexItem);
                    if ("northHexNumber".equals(hexItem.getNodeName())) 
-                       northHexNumber = hexItem.getTextContent();
+                       SetNorthHexNumber(hexItem);
                    if ("northEastHexNumber".equals(hexItem.getNodeName())) 
-                       northEastHexNumber = hexItem.getTextContent();
+                       SetNorthEastHexNumber(hexItem);
                    if ("southEastHexNumber".equals(hexItem.getNodeName())) 
-                       southEastHexNumber = hexItem.getTextContent();                       
+                       SetSouthEastHexNumber(hexItem);                       
                    if ("southHexNumber".equals(hexItem.getNodeName())) 
-                       southHexNumber = hexItem.getTextContent();
+                       SetSouthHexNumber(hexItem);
                    if ("southWestHexNumber".equals(hexItem.getNodeName())) 
-                       southWestHexNumber = hexItem.getTextContent();
+                       SetSouthWestHexNumber(hexItem);
                    if ("northWestHexNumber".equals(hexItem.getNodeName())) 
-                       northWestHexNumber = hexItem.getTextContent();
+                       SetNorthWestHexNumber(hexItem);
                    if ("terrainKey".equals(hexItem.getNodeName())) 
-                       terrainKey = hexItem.getTextContent();
+                       SetTerrainKey(hexItem);
                    if ("cityHex".equals(hexItem.getNodeName())) 
                        if ("true".equals(hexItem.getTextContent()))
-                       cityHex = true;
+                       SetCityHex();
                    if ("cityName".equals(hexItem.getNodeName()))
-                       cityName = hexItem.getTextContent();
+                       SetCityName(hexItem);
                    if ("vortexHex".equals(hexItem.getNodeName())) 
                        if ("true".equals(hexItem.getTextContent()))
-                       vortexHex = true;
+                       SetVortexHex();
                    if ("portalHex".equals(hexItem.getNodeName()))
-                       portalHex = Integer.parseInt(hexItem.getTextContent());
+                       SetPortalHex(hexItem);
                    if ("hexEdgeMap".equals(hexItem.getNodeName())){
-                       NodeList listOfEdges = new NodeList();
+                       NodeList listOfEdges = hexItem.getChildNodes();
                        
-                   }
-                       
-                }//if(hexItem.getNodeType() == Node.ELEMENT_NODE)
-                
-            }//for (int i = 0; i < hexList.getLength(); i++)
+                       for (int j = 0; j < listOfEdges.getLength(); j ++){
+                           Node edgeDerection = listOfEdges.item(j);
+                           
+                           if(edgeDerection.getNodeType() == Node.ELEMENT_NODE){
+                               NodeList edgeItems = edgeDerection.getChildNodes();
+                               ArrayList<String> edgeList = new ArrayList<>();
+                               
+                               for (int h = 0; h < edgeItems.getLength(); h++){
+                                   Node edgeAttribute = edgeItems.item(h);
+                                   
+                                   if(edgeAttribute.getNodeType() == Node.ELEMENT_NODE)
+                                       edgeList.add(edgeAttribute.getTextContent());
+                               }//for (int h = 0; h < edgeItems.getLength(); h++)
+                               
+                                SetEdgeDirectionList(edgeDerection, edgeList);
 
-            //DiplomacyHex hexObject = new DiplomacyHex(hexNumber,northHexNumber,northEastHexNumber,southEastHexNumber,southHexNumber,southWestHexNumber,northWestHexNumber,specialCode);                      
-                        
-            //DiplomacyMap.put(hexObject.GetID(), hexObject);
-                        
-        }//for(int s = 0; s < listOfHex.getLength(); s++)         
+                           }
+                                          
+                       }//for (int j = 0; j < listOfEdges.getLength(); j ++)
+                       
+                   }//if ("hexEdgeMap".equals(hexItem.getNodeName()))
+                
+                }//if(hexItem.getNodeType() == Node.ELEMENT_NODE)
+            
+            }//for(int i = 0; s < listOfHex.getLength(); s++)         
+            if (GetPortalHex() >0 ){    
+            
+            MapHex hexObject = new MapHex(GetHexNumber(), GetNorthHexNumber(), GetNorthEastHexNumber(), 
+                    GetSouthEastHexNumber(), GetSouthHexNumber(), GetSouthWestHexNumber(), GetNorthWestHexNumber(), GetTerrainKey(), GetEdgeDirectionList(), GetPortalHex());                      
+                SetMainMap(hexObject);
+                
+            }
+            else
+                if (GetVortexHex()){
+                    MapHex hexObject = new MapHex(GetHexNumber(), GetNorthHexNumber(), GetNorthEastHexNumber(), 
+                            GetSouthEastHexNumber(), GetSouthHexNumber(), GetSouthWestHexNumber(), GetNorthWestHexNumber(), GetTerrainKey(), GetEdgeDirectionList(), GetVortexHex());                      
+                    SetMainMap(hexObject);
+                
+                
+                }
+                else
+                    if (GetCityHex()){
+                        MapHex hexObject = new MapHex(GetHexNumber(), GetNorthHexNumber(), 
+                                GetNorthEastHexNumber(), GetSouthEastHexNumber(), GetSouthHexNumber(), 
+                                GetSouthWestHexNumber(), GetNorthWestHexNumber(), GetTerrainKey(), GetEdgeDirectionList(), GetCityHex(), GetCityName());                      
+                        SetMainMap(hexObject);
+                    }
+                    else {
+                        MapHex hexObject = new MapHex(GetHexNumber(), GetNorthHexNumber(), GetNorthEastHexNumber(), 
+                                GetSouthEastHexNumber(), GetSouthHexNumber(), GetSouthWestHexNumber(), GetNorthWestHexNumber(), GetTerrainKey(), GetEdgeDirectionList());                      
+                        SetMainMap(hexObject);
+                    }
+        }//for(int s = 0; s < listOfHex.getLength(); s++)
         
-        
-        
-    }//BuildDiplomacyMap
-        
-    public String GetNorthNeighborID(String id){
-        
-        return DiplomacyMap.get(id).GetIDofNorthHexagon();
+    }//private void BuildmainMap(){
+
+    private String GetCityName() {
+        return cityName;
+    }
+
+    private boolean GetCityHex() {
+        return cityHex;
+    }
+
+    private boolean GetVortexHex() {
+        return vortexHex;
+    }
+
+    private void SetMainMap(MapHex hexObject) {
+        mainMap.put(hexObject.GetID(), hexObject);
+    }
+
+    private HashMap<String, ArrayList<String>> GetEdgeDirectionList() {
+        return edgeDirectionList;
+    }
+
+    private String GetTerrainKey() {
+        return terrainKey;
+    }
+
+    private String GetNorthWestHexNumber() {
+        return northWestHexNumber;
+    }
+
+    private String GetSouthWestHexNumber() {
+        return southWestHexNumber;
+    }
+
+    private String GetSouthHexNumber() {
+        return southHexNumber;
     }
     
-    public String GetNorthEastNeighborID(String id){
+    private String GetSouthEastHexNumber() {
+        return southEastHexNumber;
+    }
+
+    private String GetNorthEastHexNumber() {
+        return northEastHexNumber;
+    }
+
+    private String GetNorthHexNumber() {
+        return northHexNumber;
+    }
+
+    private int GetPortalHex() {
+        return portalHex;
+    }
+
+    private void SetEdgeDirectionList(Node edgeDerection, ArrayList<String> edgeList) {
+        edgeDirectionList.put(edgeDerection.getNodeName(), edgeList);
+    }
+
+    private void SetPortalHex(Node hexItem) throws DOMException, NumberFormatException {
+        portalHex = Integer.parseInt(hexItem.getTextContent());
+    }
+
+    private void SetVortexHex() {
+        vortexHex = true;
+    }
+
+    private void SetCityName(Node hexItem) throws DOMException {
+        cityName = hexItem.getTextContent();
+    }
+
+    private void SetCityHex() {
+        cityHex = true;
+    }
+
+    private void SetTerrainKey(Node hexItem) throws DOMException {
+        terrainKey = hexItem.getTextContent();
+    }
+
+    private void SetNorthWestHexNumber(Node hexItem) throws DOMException {
+        northWestHexNumber = hexItem.getTextContent();
+    }
+
+    private void SetSouthWestHexNumber(Node hexItem) throws DOMException {
+        southWestHexNumber = hexItem.getTextContent();
+    }
+
+    private void SetSouthHexNumber(Node hexItem) throws DOMException {
+        southHexNumber = hexItem.getTextContent();
+    }
+
+    private void SetSouthEastHexNumber(Node hexItem) throws DOMException {
+        southEastHexNumber = hexItem.getTextContent();
+    }
+
+    private void SetNorthEastHexNumber(Node hexItem) throws DOMException {
+        northEastHexNumber = hexItem.getTextContent();
+    }
+
+    private void SetNorthHexNumber(Node hexItem) throws DOMException {
+        northHexNumber = hexItem.getTextContent();
+    }
+
+    private void SetHexNumber(Node hexItem) throws DOMException {
+        hexNumber =  hexItem.getTextContent();
+    }
+
+    private String GetHexNumber() {
+        return hexNumber;
+    }
+
+    private NodeList GetDoc() {
+        return doc.getElementsByTagName("hex");
+    }
         
-        return DiplomacyMap.get(id).GetIDofNorthEastHexagon();
+    public MapHex GetMapHex (String id){
+        return mainMap.get(id);
     }
     
-    public String GetSouthEastNeighborID(String id){
-        
-        return DiplomacyMap.get(id).GetIDofSouthEastHexagon();
+     private void SetDoc() throws IOException, SAXException {
+        doc = builder.parse(file);
+    }
+
+    private void SetValidateFactory() {
+        factory.setValidating(true);
+    }
+
+    private void SetBuilder() throws ParserConfigurationException {
+        builder = factory.newDocumentBuilder();
+    }
+
+    private void SetFactory() {
+        factory = DocumentBuilderFactory.newInstance();
     }
     
-    public String GetSouthNeighborID(String id){
-        
-        return DiplomacyMap.get(id).GetIDofSouthHexagon();
-    }
+    public static MainMap GetMainMap(){
+      if (INSTANCE == null)
+          INSTANCE =  new  MainMap();
+      return INSTANCE;
+  }
     
-    public String GetSouthWestNeighborID(String id){
-        
-        return DiplomacyMap.get(id).GetIDofSouthWestHexagon();
-    }
-    
-    public String GetNorthWestNeighborID(String id){
-        
-        return DiplomacyMap.get(id).GetIDofNorthWestHexagon();
-    }
-    
-    public boolean GetIsPlayerHex(String id){
-        
-        return DiplomacyMap.get(id).GetIsPlayerHex();
-    }
-    
-    public boolean GetIsNeturalHex(String id){
-        
-        return DiplomacyMap.get(id).GetIsNeturalHex();
-    }
 }
 
 

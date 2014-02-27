@@ -31,8 +31,8 @@ public class MapHex extends Hex{
     private String cityName;
     private boolean vortexHex = false;
     private int portalHex = 0;
-    ArrayList<ArrayList<String>> hexEdgeMap;
-    ArrayList<Integer> hexEdgeAdditions = new ArrayList<>();
+    private HashMap<String, ArrayList<String>> hexEdgeMap = new HashMap<>();
+    //ArrayList<Integer> hexEdgeAdditions = new ArrayList<>();
     
      /** 
      * This constructor creates a standard hex.
@@ -46,20 +46,19 @@ public class MapHex extends Hex{
      * @param southWestHexID unique identifier of the Southwest neighbor.
      * @param northWestHexID unique identifier of the Northwest neighbor.
      * @param keyTerrain  String.
-     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * @param edgesOfHex an HashMap of ArrayList<Strings> that contains 
      * the attributes of all 6 hex edges.
      */
     
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
                   String northWestHexID, String keyTerrain,
-                  ArrayList<ArrayList<String>> edgesOfHex){
+                  HashMap<String, ArrayList<String>> edgesOfHex){
         
         super(id, northHexID, northEastHexID, southEastHexID, 
                           southHexID, southWestHexID, northWestHexID);
         
         setHexEdgeList(edgesOfHex);        
-        InitialiseHexEdgeAdditions();
         SetKeyterrain(keyTerrain);
                   
     }
@@ -77,20 +76,19 @@ public class MapHex extends Hex{
      * @param southWestHexID unique identifier of the Southwest neighbor.
      * @param northWestHexID unique identifier of the Northwest neighbor.
      * @param keyTerrain  String.
-     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * @param edgesOfHex an HashMap of ArrayList<Strings> that contains 
      * the attributes of all 6 hex edges.
      * @param nameHex String.
      */
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
                   String northWestHexID, String keyTerrain, 
-                  ArrayList<ArrayList<String>> edgesOfHex,String nameHex){
+                  HashMap<String, ArrayList<String>> edgesOfHex,String nameHex){
         
         super(id, northHexID, northEastHexID, southEastHexID, 
                           southHexID, southWestHexID, northWestHexID);
         
         setHexEdgeList(edgesOfHex);
-        InitialiseHexEdgeAdditions();
         SetKeyterrain(keyTerrain);
         SetHexName(nameHex);
         
@@ -110,7 +108,7 @@ public class MapHex extends Hex{
      * @param southWestHexID unique identifier of the Southwest neighbor.
      * @param northWestHexID unique identifier of the Northwest neighbor.
      * @param keyTerrain  String.
-     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * @param edgesOfHex an HashMap of ArrayList<Strings> that contains 
      * the attributes of all 6 hex edges.
      * @param hexIsCity boolean.
      * @param nameCity String. 
@@ -118,14 +116,13 @@ public class MapHex extends Hex{
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
                   String northWestHexID, String keyTerrain, 
-                  ArrayList<ArrayList<String>> edgesOfHex, boolean hexIsCity, 
+                  HashMap<String, ArrayList<String>> edgesOfHex, boolean hexIsCity, 
                   String nameCity){
         
         super(id, northHexID, northEastHexID, southEastHexID, southHexID,
                 southWestHexID, northWestHexID);
         
         setHexEdgeList(edgesOfHex);
-        InitialiseHexEdgeAdditions();
         SetKeyterrain(keyTerrain);
         SetCityHex(hexIsCity);
         SetCityName(nameCity);
@@ -141,20 +138,19 @@ public class MapHex extends Hex{
      * @param southWestHexID unique identifier of the Southwest neighbor.
      * @param northWestHexID unique identifier of the Northwest neighbor.
      * @param keyTerrain String;
-     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * @param edgesOfHex an HashMap of ArrayList<Strings> that contains 
      * the attributes of all 6 hex edges.
      * @param hexVortex 
      */
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
                   String northWestHexID, String keyTerrain, 
-                  ArrayList<ArrayList<String>> edgesOfHex, boolean hexVortex){
+                  HashMap<String, ArrayList<String>> edgesOfHex, boolean hexVortex){
         
         super(id, northHexID, northEastHexID, southEastHexID, southHexID,
                 southWestHexID, northWestHexID);
         
         setHexEdgeList(edgesOfHex);
-        InitialiseHexEdgeAdditions();
         SetIsVortex(hexVortex);
     }
 
@@ -168,20 +164,19 @@ public class MapHex extends Hex{
      * @param southWestHexID unique identifier of the Southwest neighbor.
      * @param northWestHexID unique identifier of the Northwest neighbor.
      * @param keyTerrain String.
-     * @param edgesOfHex an arraylist of arraylist<Strings> that contains 
+     * @param edgesOfHex an HashMap of ArrayList<Strings> that contains 
      * the attributes of all 6 hex edges.  
      * @param portalNumber Integer.
      */
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
                   String northWestHexID, String keyTerrain, 
-                  ArrayList<ArrayList<String>> edgesOfHex, int portalNumber){
+                  HashMap<String,ArrayList<String>> edgesOfHex, int portalNumber){
         
         super(id, northHexID, northEastHexID, southEastHexID, southHexID,
                 southWestHexID, northWestHexID);
         
         setHexEdgeList(edgesOfHex);      
-        InitialiseHexEdgeAdditions();
         SetPortalNumber(portalNumber);
     }
 
@@ -193,10 +188,10 @@ public class MapHex extends Hex{
         portalHex = portalNumber;
     }
     
-    private void InitialiseHexEdgeAdditions() {            
+    /*private void InitialiseHexEdgeAdditions() {            
         for (int i = 0; i < 5; i++) 
             hexEdgeAdditions.add(0);
-    }
+    }*/
 
     private void SetCityName(String nameCity) {
         cityName = nameCity;
@@ -215,11 +210,9 @@ public class MapHex extends Hex{
     }
     
     
-    private void setHexEdgeList(ArrayList<ArrayList<String>> edgesOfHex) {
-        hexEdgeMap = new ArrayList<>();
-        
-        for (ArrayList<String> S : edgesOfHex)
-            hexEdgeMap.add(S);
+    private void setHexEdgeList(HashMap<String, ArrayList<String>> edgesOfHex) {
+        hexEdgeMap = new HashMap<>();
+        hexEdgeMap = edgesOfHex;
     }
     
     public boolean GetIsPortalHex(){
@@ -398,27 +391,27 @@ public class MapHex extends Hex{
     }
     
     public ArrayList<String> getNorthHexEdgeCodes () { 
-        return hexEdgeMap.get(0);
+        return hexEdgeMap.get("northEdge");
     }
     
     public ArrayList<String> getNorthEastHexEdgeCodes () { 
-        return hexEdgeMap.get(1);
+        return hexEdgeMap.get("northEastEdge");
     }
     
     public ArrayList<String> getSouthEastHexEdgeCodes () { 
-        return hexEdgeMap.get(2);
+        return hexEdgeMap.get("southEastEdge");
     }
     
     public ArrayList<String> getSouthHexEdgeCodes () { 
-        return hexEdgeMap.get(3);
+        return hexEdgeMap.get("southEdge");
     }
     
     public ArrayList<String> getSoutWesthexEdgeCodes () { 
-        return hexEdgeMap.get(4);
+        return hexEdgeMap.get("southWestEdge");
     }
     
     public ArrayList<String> getNorthWestHexEdgeCodes () { 
-        return hexEdgeMap.get(5);
+        return hexEdgeMap.get("northWestEdge");
     }
      /**
      * This method will allow the addition of new conditions on hex edges. These 

@@ -24,12 +24,12 @@
      <!ELEMENT vortexHex (#PCDATA)>
      <!ELEMENT portalHex (#PCDATA)>
      <!ELEMENT hexEdgeMap (northEdge?, northEastEdge?, southEastEdge?, 
-                           southEdge?, southWest?, northWestEdge?) >
+                           southEdge?, southWestEdge?, northWestEdge?) >
         <!ELEMENT northEdge (edgeAttribute+)> 
         <!ELEMENT northEastEdge (edgeAttribute+)> 
         <!ELEMENT southEastEdge (edgeAttribute+)>
         <!ELEMENT southEdge (edgeAttribute+)>
-        <!ELEMENT southWest (edgeAttribute+)> 
+        <!ELEMENT southWestEdge (edgeAttribute+)> 
         <!ELEMENT northWestEdge (edgeAttribute+)>
             <!ELEMENT edgeAttribute (#PCDATA)> 
 ]>
@@ -51,9 +51,9 @@
             <southEdge>
                 <edgeAttribute>Pb</edgeAttribute>
             </southEdge>
-            <southWest>
+            <southWestEdge>
                 <edgeAttribute>Pb</edgeAttribute>
-            </southWest>
+            </southWestEdge>
             <northWestEdge>
                 <edgeAttribute>Br</edgeAttribute>
                 <edgeAttribute>Pb</edgeAttribute>

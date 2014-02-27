@@ -7,6 +7,7 @@
 package MainSwordSorcery;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -23,7 +24,7 @@ public class MapHexTest {
     
     @Test
     public void testGetTerrainKey() {
-        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        HashMap<String,ArrayList<String>> hexEdges = new HashMap();
         
         testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges);
         
@@ -34,7 +35,7 @@ public class MapHexTest {
     
     @Test
     public void testGetTerrainDescription() {
-        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        HashMap<String,ArrayList<String>> hexEdges = new HashMap();
     
         testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges);
         boolean result = "Rough".equals(testHex.GetTerrainDescription());
@@ -43,7 +44,7 @@ public class MapHexTest {
     
     @Test
     public void testGetIsCityHex() {
-        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        HashMap<String,ArrayList<String>> hexEdges = new HashMap();
         testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges,true,"Moscow");
         
         boolean result = testHex.GetIsCityHex();
@@ -58,7 +59,7 @@ public class MapHexTest {
     
      @Test
     public void testGetIsVortexHex() {
-        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        HashMap<String,ArrayList<String>> hexEdges = new HashMap();
         testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges,true);
         boolean result = testHex.GetIsVortexHex();
         assertTrue(result);
@@ -66,7 +67,7 @@ public class MapHexTest {
     
     @Test
     public void testGetIsPortalHex() {
-        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        HashMap<String,ArrayList<String>> hexEdges = new HashMap();
         testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges,0);
         boolean result = testHex.GetIsPortalHex();
         assertFalse(result);
@@ -75,19 +76,16 @@ public class MapHexTest {
   
     @Test
     public void testGetNorthHexEdgeListTwo() {
-        ArrayList<ArrayList<String>> hexEdges = new ArrayList();
+        HashMap<String,ArrayList<String>> hexEdges = new HashMap();
         ArrayList<String> edgeOfHex = new ArrayList();
         ArrayList<String> testEdgeOfHex = new ArrayList();
         
         edgeOfHex.add("Ga");
         edgeOfHex.add("Br");
         
-        hexEdges.add(edgeOfHex);
-        hexEdges.add(edgeOfHex);
-        hexEdges.add(edgeOfHex);
-        hexEdges.add(edgeOfHex);
-        hexEdges.add(edgeOfHex);
-        hexEdges.add(edgeOfHex);
+        hexEdges.put("northWestEdge",edgeOfHex);
+        hexEdges.put("southEdge",edgeOfHex);
+        
         
         
         testHex = new MapHex("0404","0403","0504","0505","0405","0305","0304","R",hexEdges);

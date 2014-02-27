@@ -113,6 +113,10 @@ public class DiplomacyMap {
         
         
     }//BuildDiplomacyMap
+    
+    public DiplomacyHex GetDiplomacyHex(String id){
+        return DiplomacyMap.get(id);
+    }
         
     public String GetNorthNeighborID(String id){
         
