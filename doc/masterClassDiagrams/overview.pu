@@ -12,7 +12,6 @@ Province "25" -down-* Board
 Hex "0..*" -right-* Province
 Stack -right-* Hex
 MoveableUnit "0..*" -right-o Stack
-StaticDataStructure *- "7" GameChart
 
 class Game #529292 {
 -players[]
@@ -82,10 +81,4 @@ class StaticDataStructure #529292 {
 -diplomacyChart
 +getChartResults()
 }
-
-class GameChart #529292 {
--randomEventTurnCounter
-+getRECounter()
-}
-
 @enduml

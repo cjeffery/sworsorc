@@ -2,33 +2,46 @@
 hide circles
 title <b>Data Structures Class Diagram<b> Author: Ian Westrope
 
-class Hex #529292
+class Hex #529292 {
+-hexID
++getTerrainDefenseBonus()
+}
 
-class SpecialHex #529292
+class VortexHex #529292 {
++spawnVortex()
+}
 
-class VortexHex #529292
+class PlungeholeHex #529292 {
++eatUnits()
+}
 
-class PlungeholeHex #529292
+class Town #529292 {
+-defenseRating
+}
 
-class Town #529292
+class City #529292 {
+-defenseRating
+}
 
-class City #529292
+class Castle #529292 {
+-defenseRating
+}
 
-class Castle #529292
+class Capital #529292 {
+-defenseRating
+}
 
-class Capital #529292
+class TeleportHex #529292 {
+-defenseRating
+}
 
-class TeleportHex #529292
-
-Hex <|-- SpecialHex
-
-SpecialHex <|-- VortexHex
-SpecialHex <|-- PlungeholeHex
-SpecialHex <|-- Town
-SpecialHex <|-- City
-SpecialHex <|-- Castle
-SpecialHex <|-- Capital
-SpecialHex <|-- TeleportHex
+Hex <|-- VortexHex
+Hex <|-- PlungeholeHex
+Hex <|-- Town
+Hex <|-- City
+Hex <|-- Castle
+Hex <|-- Capital
+Hex <|-- TeleportHex
 
 
 @enduml
