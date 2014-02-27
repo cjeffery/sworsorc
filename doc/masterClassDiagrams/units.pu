@@ -1,6 +1,6 @@
 @startuml
 hide circles
-title <b>Unit Use Case Diagram<b> Author: Ian Westrope
+title <b>Unit Class Diagram<b> Author: Ian Westrope
 
 class MoveableUnit #529292 {
       +Int Movement_Allowance

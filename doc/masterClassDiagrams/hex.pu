@@ -1,6 +1,6 @@
 @startuml
 hide circles
-title <b>Data Structures Class Diagram<b> Author: Ian Westrope
+title <b>Hex Class Diagram<b> Author: Ian Westrope
 
 class Hex #529292 {
 -hexID
