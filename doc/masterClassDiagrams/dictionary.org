@@ -27,12 +27,12 @@
 - Province: :: The Province class is an aggregate class, made up of Hexes. It represents the different provinces found on the game map.
 - Hex: :: The Hex class is an aggregate class, made up of a Stack class. It represents the individual hexes found on the game map.
 - Stack: :: The Stack class is an aggreage class, made up of zero or more MoveableUnits. 
-- Moveable Unit: ::
+- Moveable Unit: :: 
 - Army Unit: ::
-- Melee Army Unit: ::
-- Ranged Army Unit: ::
-- Monster: ::
-- Character: ::
+- Melee Army Unit: :: Meellee Army Unit inherits from Army Unit. Meelee Army Unit represents both horsed and foot units from the game. 
+- Ranged Army Unit: :: Ranged Army Unit inherits from Army Unit. Ranged Army Unit represents the units with bows from the game.
+- Monster: :: The Monster class inherits from MoveableUnit. It represents the monster units from the game. 
+- Character: :: Character inherits from Monster and is also an aggregate class possibly made of TalismanOfOrb.
 - Caster Character: ::
 - Fighter Character: ::
 - Talisman Of Orb: ::
