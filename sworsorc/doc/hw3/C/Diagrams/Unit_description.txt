@@ -1,4 +1,0 @@
-The Units class diagram is generally straight forward. The only part that needs
-some explaining is where a Character can hold an Item(s) or that a Character 
-can cast a spell using the Magic class. Other than those two cases the rest of
-the diagram is pure inheiritance between classes. 
