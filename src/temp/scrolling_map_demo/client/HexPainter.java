@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
+import java.net.URL;
 import javax.imageio.*;
 
 /** A class that does nothing but draw hexes! Right now it's somewhat closely
@@ -27,8 +28,9 @@ public class HexPainter {
         hexShape.lineTo(width*0.75, height);
         hexShape.lineTo(width*0.25, height);
         hexShape.closePath();
-        
-        mountainImage = ImageIO.read(new File("mountains2.png"));
+
+        URL resource = getClass().getResource("mountains2.png");
+        mountainImage = ImageIO.read(resource);
     }
 
     /* Paint the specified hex onto the specified Graphics */
