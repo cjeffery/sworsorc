@@ -6,7 +6,7 @@ Game *-- Board
 Game *-- "2..7" Player
 Game *-- "0..*" Alliance 
 Game - Scenario : Scenario Initiates\nGame
-Scenario "14" -* StaticDataStructure
+Scenario "14" -* DataController
 Alliance - Player : An alliance links two\nplayers/NPC turns together
 Province "25" -down-* Board
 Hex "0..*" -right-* Province
@@ -71,7 +71,7 @@ class MoveableUnit #529292 {
 class Scenario #529292 {
 }
 
-class StaticDataStructure #529292 {
+class DataController #529292 {
 -terrainChart
 -combatChart
 -randomChart

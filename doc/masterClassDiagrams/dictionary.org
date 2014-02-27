@@ -20,15 +20,15 @@
 \includegraphics[width=\linewidth]{hex.png}
 
 * Class Dictionary
-- Game: :: 
+- Game: :: An instance of the game, Swords and Sorcery
 - Board: :: The Board class is an aggregate class, made up of Provinces.
-- Player: :: 
+- Player: :: An programming construct that represents a player at the "board". This includes factions, victory points, etc.
 - Alliance: :: The Alliance class is a that links two Players or NPCs together for a turn.
 - Province: :: The Province class is an aggregate class, made up of Hexes. It represents the different provinces found on the game map.
 - Hex: :: The Hex class is an aggregate class, made up of a Stack class. It represents the individual hexes found on the game map.
-- Stack: :: The Stack class is an aggreage class, made up of zero or more MoveableUnits. 
-- Moveable Unit: :: 
-- Army Unit: ::
+- Stack: :: The Stack class is an aggregate class, made up of zero or more MoveableUnits. 
+- Moveable Unit: :: MoveableUnit is the superclass for any object that can move in S&S.
+- Army Unit: :: Simple units used for combat, limited to 2 per Stack object.  
 - Melee Army Unit: :: Meellee Army Unit inherits from Army Unit. Meelee Army Unit represents both horsed and foot units from the game. 
 - Ranged Army Unit: :: Ranged Army Unit inherits from Army Unit. Ranged Army Unit represents the units with bows from the game.
 - Monster: :: The Monster class inherits from MoveableUnit. It represents the monster units from the game. 
@@ -36,5 +36,12 @@
 - Caster Character: ::
 - Fighter Character: ::
 - Talisman Of Orb: ::
-- Scenario: ::
-- Static Data Structure: :: 
+- Scenario: :: A premade instance of a game. The scenario both initializes a game and dictates any win conditions, number of players, and other meta-details about the game.
+- DataController: :: The class that holds all data chart classes. Through this class all data charts should be accessed. 
+- Game Combat Results Chart: :: This chart class holds the data indicating combat results, as well as necessary methods that are intuitive to hold here. 
+- Game Terrain Chart: :: This chart class holds necessary data and methods for determining terrain effects for defense bonuses and movement costs. This class also contains methods for altering hex types.
+- Game Random Event Chart: :: This chart class holds methods and data for determining random events for each game turn. The class includes methods to apply random event effects where needed.
+- Game Spell Chart: :: This chart class contains spell descriptions, spell casting charts, and the methods that are used to cast each spell. Casting a spell involves asking this class to execute a method.
+- Game Killer Penguin Entry Chart: :: This chart class determines how many (if any) Killer Penguins enter the field in given circumstances, and includes methods for adding the KPs to the field of play.
+- Game Emissary Results Chart: :: This chart includes the methods and data necessary to determine the results of an emissary's attempt to conduct diplomacy.
+- Game Diplomatic Group Chart: :: 

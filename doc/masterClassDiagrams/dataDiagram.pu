@@ -2,15 +2,15 @@
 hide circle
 title <b>Data Structures Class Diagram<b> Author: Keith Drew
 
-GameTerrainChart --up-|> StaticDataStructure 
-GameCombatResultsChart -up-|> StaticDataStructure 
-GameRandomEventChart --up-|> StaticDataStructure 
-GameSpellChart -up-|> StaticDataStructure 
-GameKillerPenguinEntryChart --up-|> StaticDataStructure 
-GameEmissaryResultsChart -up-|> StaticDataStructure 
-GameDiplomaticGroupChart --up-|> StaticDataStructure 
+GameTerrainChart --up-|> DataController 
+GameCombatResultsChart -up-|> DataController 
+GameRandomEventChart --up-|> DataController 
+GameSpellChart -up-|> DataController 
+GameKillerPenguinEntryChart --up-|> DataController 
+GameEmissaryResultsChart -up-|> DataController 
+GameDiplomaticGroupChart --up-|> DataController 
 
-class StaticDataStructure #529292 {
+class DataController #529292 {
 -terrainChart
 -combatChart
 -randomChart
@@ -20,7 +20,7 @@ class StaticDataStructure #529292 {
 -diplomacyChart
 +getChartResults()
 }
-note left of StaticDataStructure #red
+note left of DataController #red
 getChartResults() overloaded
 for each chart type.
 end note
