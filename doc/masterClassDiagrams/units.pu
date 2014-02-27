@@ -33,11 +33,13 @@ class MeeleeArmyUnit #529292 {
 }
 
 class RangedArmyUnit #529292 {
-
++attackFlyingUnit()
++attackBridgedUnit()
 }
 
 
 class Monster #529292 {
+      -talismanOfOrb
       +Int Magic_PL
       +Int Magic_Potential
       +Int Magic_Color
@@ -61,13 +63,25 @@ class Troll #529292 {
       +void Regenerate()
 }
 
-class Spectre #529292 
+class KillerPenguin #529292 {
+-hexLocation
+}
 
-class TyrannosauriRegs #529292 
+class Spectre #529292 {
+}
 
-class TalismanOfOrb #529292 
+class TyrannosauriRegs #529292 {
+}
 
-Class FlyingUnit #529292 
+class TalismanOfOrb #529292 {
+-orbEffectModifiers
++useOrbSpell()
+}
+
+Class FlyingUnit #529292 {
+-moveableUnit[]
++carryUnit
+}
 
 MoveableUnit <|-- Monster
 MoveableUnit <|-- FlyingUnit
@@ -79,12 +93,13 @@ Monster <|-- Troll
 Monster <|-- TyrannosauriRegs
 Monster <|-- Spectre
 Monster <|-- Dragon
+Monster <|-- KillerPenguin
 
 ArmyUnit <|-- RangedArmyUnit
 ArmyUnit <|-- MeeleeArmyUnit
 
 Character o-- TalismanOfOrb
 
-FlyingUnit -- Dragon
+FlyingUnit <|-- Dragon
 
 @enduml
