@@ -1,9 +1,0 @@
-Item_Class Diagram
-Author: Joe Higley
-
-I read thru the entire rules section on Talismans of Orb.  It separated the Talismans into 2 types, Magicks and Weapons.
-So I made these the subclasses of my Talismans of Orbs.  I noticed that the Weapons all changed certain character attributs,
-so I made these all private members of the Weapons class that the weapons will all share.
-
-Then I placed all the different weapon and magical talismans as subclasses of the Weapons and Magicks classes respectively.
-The individual items have specific members and functions for each of them.
