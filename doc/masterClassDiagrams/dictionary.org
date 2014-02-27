@@ -1,0 +1,40 @@
+#+TITLE:     Master Class Diagram
+#+AUTHOR:    Ian Westrope, Keith Drew
+#+EMAIL:     ian_westrope@Computer-1.local
+#+DATE:      2014-02-22 Sat
+#+LATEX_HEADER: \usepackage[margin=0.75in]{geometry}
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+
+\includegraphics[width=\linewidth]{classDiagram.png}
+\includegraphics[width=\linewidth]{units.png}
+\includegraphics[width=\linewidth]{hex.png}
+
+* Class Dictionary
+- Game: :: 
+- Board: :: The Board class is an aggregate class, made up of Provinces.
+- Player: :: 
+- Alliance: :: The Alliance class is a that links two Players or NPCs together for a turn.
+- Province: :: The Province class is an aggregate class, made up of Hexes. It represents the different provinces found on the game map.
+- Hex: :: The Hex class is an aggregate class, made up of a Stack class. It represents the individual hexes found on the game map.
+- Stack: :: The Stack class is an aggreage class, made up of zero or more MoveableUnits. 
+- Moveable Unit: ::
+- Army Unit: ::
+- Melee Army Unit: ::
+- Ranged Army Unit: ::
+- Monster: ::
+- Character: ::
+- Caster Character: ::
+- Fighter Character: ::
+- Talisman Of Orb: ::
+- Scenario: ::
+- Static Data Structure: :: 
