@@ -38,7 +38,7 @@ public class MainMap {
     private DocumentBuilderFactory factory; 
     private DocumentBuilder builder;
     private Document doc;
-    private File file = new File("C:\\Users\\David\\Documents\\GitHub\\sworsorc\\doc\\hw3\\A\\Menus\\KlingenergMenu\\Sword-Sorcery\\src\\MainSwordSorcery\\mainMap.xml");
+    private File file = new File("resources/MainMap.xml");
     private HashMap<String, ArrayList<String>> edgeDirectionList = new HashMap<>();
     private ArrayList<String> edgeItemList;
 
@@ -56,7 +56,7 @@ public class MainMap {
             Logger.getLogger(MainMap.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex){
             Logger.getLogger(MainMap.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Check line 37. You may need to change your path to reflect the location the XML file.");
+            System.out.println("You need a resource folder in your projects root directory containing the MainMap.xml.");
         }
         
         BuildmainMap();
