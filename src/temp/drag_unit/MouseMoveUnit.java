@@ -5,7 +5,7 @@
 *  Release left button to release unit.
 */
 
-public class MouseMoveUnit.java{
+public class MouseMoveUnit{
 
 
 
