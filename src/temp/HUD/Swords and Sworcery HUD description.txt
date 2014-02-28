@@ -1,0 +1,26 @@
+I was thinking there would be a panel on the right of the "active map."
+
+Minimap:
+
+We need it on the side of the map becasue the swords and sorcery map is longer along the y 
+axis than it is along the x so it can't go on the bottom or top without encroaching into 
+the active map.
+
+Where you are looking on the active map determines where the square on the minimap is located 
+and this square can probably be dragged around to shift where you are lookign on the active
+map.
+
+Goals:
+
+The goal button would open up your scenario objective according to what player you are in
+that scenario.
+
+Main Menu:
+
+The main menu button would simply take you to the options menu with options to quit, save, or
+change settings.
+
+Redo and Undo:
+
+These buttons would allow you to quickly undo whatever your last movement was or replay a 
+movement you didnt mean to undo.
