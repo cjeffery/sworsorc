@@ -28,7 +28,7 @@ public class SwordSorceryGUI extends javax.swing.JFrame {
     
     public SwordSorceryGUI() {
         setLayout(new BorderLayout());
-	setContentPane(new JLabel(new ImageIcon("images/Swords-Sorcery-Counters-A.jpg")));
+	setContentPane(new JLabel(new ImageIcon("resources/images/Swords-Sorcery-Counters-A.jpg")));
         setLayout(new FlowLayout());
         
         initComponents();
@@ -45,7 +45,6 @@ public class SwordSorceryGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         mainMenu = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newGameFileMenuItem = new javax.swing.JMenuItem();
@@ -60,8 +59,7 @@ public class SwordSorceryGUI extends javax.swing.JFrame {
         setTitle("Sword and Sorcery!");
         setBackground(new java.awt.Color(204, 0, 51));
         setForeground(java.awt.Color.white);
-
-        jButton1.setText("jButton1");
+        setIconImage(new ImageIcon("resources/images/Sword-Sorcery32.png").getImage());
 
         mainMenu.setBackground(new java.awt.Color(255, 255, 51));
         mainMenu.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -128,17 +126,11 @@ public class SwordSorceryGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(56, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(50, 50, 50))
+            .addGap(0, 179, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jButton1)
-                .addContainerGap(40, Short.MAX_VALUE))
+            .addGap(0, 92, Short.MAX_VALUE)
         );
 
         pack();
@@ -235,7 +227,6 @@ int n = JOptionPane.showOptionDialog(frame,
     private javax.swing.JMenuItem exitFileMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenuItem loadGameFileMenuItem;
     private javax.swing.JMenuBar mainMenu;
     private javax.swing.JMenuItem newGameFileMenuItem;
