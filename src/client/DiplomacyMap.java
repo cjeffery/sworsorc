@@ -8,6 +8,8 @@ package MainSwordSorcery;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +26,7 @@ import org.xml.sax.SAXException;
  *   line 37 may need changing to reflect your local path.
  *   That needs to be fixed at some point in the future.
  * 
- * @author David Klingenberg  2/24/2014
+ * @author David
  */
 public class DiplomacyMap {
     private HashMap <String, DiplomacyHex> DiplomacyMap = new HashMap();
@@ -34,8 +36,9 @@ public class DiplomacyMap {
     private DocumentBuilderFactory factory; 
     private DocumentBuilder builder;
     private Document doc;
-    private File file = new File("C:\\Users\\David\\Documents\\GitHub\\sworsorc\\doc\\hw3\\A\\Menus\\KlingenergMenu\\Sword-Sorcery\\src\\MainSwordSorcery\\DiplomacyMap.xml");
-    //private DiplomacyHex hexObject;
+    private File file = new File("resources/DiplomacyMap.xml");
+    
+//private DiplomacyHex hexObject;
     
     private static DiplomacyMap INSTANCE;
     
@@ -50,7 +53,7 @@ public class DiplomacyMap {
             Logger.getLogger(DiplomacyMap.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex){
             Logger.getLogger(DiplomacyMap.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Check line 37. You may need to change your path to reflect the location the XML file.");
+            System.out.println("You need a resource folder in your projects root directory containing the DiplomacyMap.xml.");
         }
         
         BuildDiplomacyMap();
@@ -113,6 +116,10 @@ public class DiplomacyMap {
         
         
     }//BuildDiplomacyMap
+    
+    public DiplomacyHex GetDiplomacyHex(String id){
+        return DiplomacyMap.get(id);
+    }
         
     public String GetNorthNeighborID(String id){
         
