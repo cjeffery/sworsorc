@@ -13,6 +13,7 @@ public class ChatServer implements Runnable {
         try{
             System.out.println("Binding port " + port + " . . .");
             server = new ServerSocket(port);
+            System.out.println("Server started (" + InetAddress.getLocalHost() + ")");
             System.out.println("Server started ( " + server + " )");
         }catch(IOException e){
             System.out.println(e);

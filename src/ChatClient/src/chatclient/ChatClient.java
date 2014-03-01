@@ -2,6 +2,7 @@ package chatclient;
 
 import java.net.*;
 import java.io.*;
+import javax.swing.JOptionPane;
 
 public class ChatClient {
     private Socket socket = null;
@@ -44,12 +45,22 @@ public class ChatClient {
         }
     }
     public static void main(String[] args) throws IOException{
+        //JFrame frame;
+        Object[] possibilities = null;
+        String ip = (String)JOptionPane.showInputDialog(
+                    null,
+                    "IP Address of server: ",
+                    "IP Address",
+                    JOptionPane.CANCEL_OPTION,
+                    null,
+                    possibilities, "127.0.0.1");
+        
         ChatClient client = null;
         if(args.length != 2){
             System.out.println("Usage: ChatClient host port");
             System.out.println("Attempting defualt connection!");
             //client = new ChatClient("76.178.139.129", 25565);
-            client = new ChatClient("127.0.0.1", 25565);
+            client = new ChatClient(ip, 25565);
         }else{
             client = new ChatClient(args[0], Integer.parseInt(args[1]));
         }
