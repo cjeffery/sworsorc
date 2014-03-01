@@ -23,10 +23,9 @@ import org.xml.sax.SAXException;
 
 /**
  * 
- *   line 37 may need changing to reflect your local path.
- *   That needs to be fixed at some point in the future.
+ *   Email me at klin7456@vandals.uidaho.edu if you hove questions or need help
  * 
- * @author David
+ * @author David Klingenberg: 
  */
 public class MainMap {
     private HashMap <String, MapHex> mainMap = new HashMap();
