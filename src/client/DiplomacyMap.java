@@ -22,7 +22,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- * Email me if anyone has any questions.
+ * Email me if anyone has any questions or needs changes made.
  *
  * 
  * @author David Klingenberg,  klin7456@vandals.uidaho.edu 
