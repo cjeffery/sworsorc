@@ -7,8 +7,9 @@
 package MainSwordSorcery;
 
 /**
- *
- * @author David
+ * Email me if anyone has questions or need chages made.
+ * 
+ * @author David Klingenberg, klin7456@vandals.uidaho.edu
  */
 public class Hex {
     
