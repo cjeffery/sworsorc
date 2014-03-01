@@ -8,7 +8,7 @@ package MainSwordSorcery;
 
 /**
  *
- * @author David Klingenberg 2/22/2014
+ * @author David
  */
 public class DiplomacyHex extends Hex {
     private boolean playerHex = false;

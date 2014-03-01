@@ -8,7 +8,7 @@ package MainSwordSorcery;
 
 /**
  *
- * @author David Klingenberg 2/20/2014
+ * @author David
  */
 public class Hex {
     
