@@ -9,8 +9,9 @@ package MainSwordSorcery;
 import java.util.Random;
 
 /**
+ * email me if anyone has questions or need changes.
  * 
- * @author David
+ * @author David Klingenberg, klin7456@vandals.uidaho.edu
  */
 public class RandomEventTable {
     private int eventKey;
