@@ -18,8 +18,10 @@ import java.util.Map;
  * 
  *   Hex edges can have multiple attributes. For example a single hex edge could
  *   contain a Providence border, a bridge exit, a shoreline, and a gate.
+ * 
+ *   Email me if anyone has questions or need changes made.
  *   
- *   @author David Klingenberg 2/25/2014
+ *   @author David Klingenberg 2/25/2014,  klin7456@vandals.uidaho.edu
  * 
  ******************************************************************************/
 
