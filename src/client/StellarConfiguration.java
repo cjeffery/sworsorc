@@ -7,8 +7,9 @@
 package MainSwordSorcery;
 
 /**
- *  
- * @author David Klingenberg
+ * email me if anyone need help or changes. 
+ * 
+ * @author David Klingenberg, klin7456@vandals.uidaho.edu
  */
 
 
