@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class MapView extends JPanel {
@@ -24,6 +25,10 @@ public class MapView extends JPanel {
             /* effective origin from whatever graphics object we're given */
             AffineTransform identity = g2.getTransform();
 
+            //determine the furthest hex that needs drawing in the row
+            int max_row = (int)(hexRect.y+hexRect.height);
+            max_row = Math.min(max_row, map.GetRows()-1);
+                
             /* For each hex, translate it and then draw it with HexPainter
              * first pass for hexes, second pass for hex edges */
             for(int edge = 0; edge < 2; edge++)
@@ -32,16 +37,12 @@ public class MapView extends JPanel {
                 g2.setTransform( identity );
                 g2.translate(width*col*0.75, height*(hexRect.y + (col%2)*0.5));
 
-                //determine the furthest hex that needs drawing in the row
-                int max_row = (int)(hexRect.y+hexRect.height);
-                max_row = Math.min(max_row, map.columnLength(col)-1);
-
                 //draw all the hexes in the row
                 for(int row = hexRect.y; row <= max_row; row++) {
                     if(edge == 0)
-                        hp.paintHex(g2, map.hexes[col][row]);
+                        hp.paintHex(g2, map.GetMapHex(col,row));
                     else
-                        hp.paintEdges(g2, map.hexes[col][row]);
+                        hp.paintEdges(g2, map.GetMapHex(col,row));
                     g2.translate(0, height);
                 }
             }
@@ -56,8 +57,8 @@ public class MapView extends JPanel {
         }
         /** return the size of the map surface */
         public Dimension getPreferredSize() {
-            return new Dimension((int)(width*((map.columns()-1)*.75+1)),
-                                 (int)(height*map.columnLength(0)));
+            return new Dimension((int)(width*((map.GetColumns()-1)*.75+1)),
+                                 (int)(height*map.GetRows()));
         }
 
         /** Scroll roughly one screens worth of hexes */
@@ -100,12 +101,12 @@ public class MapView extends JPanel {
         }
     }
     
-    private Map map;
+    private MainMap map;
     private HexPainter hp;
     public MapSurface surface;
     double radius, width, height;    
    
-    public MapView(Map map) throws IOException {
+    public MapView(MainMap map) throws IOException {
         super(new BorderLayout());
         this.map = map;
         this.map = map;
@@ -127,20 +128,23 @@ public class MapView extends JPanel {
         int hexX = hexc[0], hexY = hexc[1];
         
         //System.out.printf("X: %d, Y: %d\n\n", hexX, hexY);
-        if(map.inBounds(hexX, hexY))
-            return map.hexes[hexX][hexY];
-        return null;
+        return map.GetMapHex(hexX, hexY);
+        //if(hexX < map.GetColumns() && hexY < map.GetRows*() )
+        //    return map.hexes[hexX][hexY];
+        //return null;
     }
     
     /** @return the hexEdge closest to the given coordinates */
-    public HexEdge hexEdgeAt(int x, int y) {
+    public ArrayList<String> hexEdgeAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
-        
+
+        MapHex hex = map.GetMapHex(hexX, hexY);
+                
         //TODO: if the coordinates are < 0.5 hexes outside the map
         //then this could be changed to still return a hex-edge
         //in those cases
-        if(!map.inBounds(hexX, hexY))
+        if(hex == null)
             return null;
                 
         double centerX = width*(0.5 + hexX*0.75);
@@ -153,8 +157,8 @@ public class MapView extends JPanel {
         
         int region = (int)(angle*3 / Math.PI);
         //System.out.printf("centerX: %f, centerY: %f\n\n", centerX, centerY);
-        System.out.printf("Angle: %f, region: %d\n",angle*57.2957795, region);
-        return map.hexes[hexX][hexY].edges[region];
+        //System.out.printf("Angle: %f, region: %d\n",angle*57.2957795, region);
+        return hex.getHexEdgeCodes(region);
     }
     
     /** Calculate what hexes are contained in the specified clipping rect
@@ -172,8 +176,8 @@ public class MapView extends JPanel {
         int max_row = (int)(y2/height);
         min_col = Math.max(min_col, 0);
         min_row = Math.max(min_row, 0);
-        max_col = Math.min(max_col, map.columns()-1);  
-        max_row = Math.min(max_row, map.columnLength(0)-1);
+        max_col = Math.min(max_col, map.GetColumns()-1);  
+        max_row = Math.min(max_row, map.GetRows()-1);
         return new Rectangle(        min_col,         min_row,
                              max_col-min_col, max_row-min_row);
     }

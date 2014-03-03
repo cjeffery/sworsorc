@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package MainSwordSorcery;
+//package MainSwordSorcery;
 
 import java.io.File;
 import java.io.IOException;

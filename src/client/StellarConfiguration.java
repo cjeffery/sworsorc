@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package MainSwordSorcery;
+//package MainSwordSorcery;
 
 /**
  * email me if anyone need help or changes. 
