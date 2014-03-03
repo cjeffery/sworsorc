@@ -21,7 +21,7 @@ public class ChatServerThread extends Thread{
                 System.out.println(streamIn.readUTF());
             }catch (IOException e){
             }
-            }
+        }
     }
     public void open() throws IOException{
         streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));

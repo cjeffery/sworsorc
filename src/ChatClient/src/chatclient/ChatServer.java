@@ -2,11 +2,13 @@ package chatclient;
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
 
 public class ChatServer implements Runnable {
     private ServerSocket server = null;
     private Thread thread = null;
     private ChatServerThread client = null;
+    private ArrayList<String> usernames;
     
     public ChatServer(int port)
     {
@@ -15,6 +17,7 @@ public class ChatServer implements Runnable {
             server = new ServerSocket(port);
             System.out.println("Server started (" + InetAddress.getLocalHost() + ")");
             System.out.println("Server started ( " + server + " )");
+            usernames = new ArrayList<>();
         }catch(IOException e){
             System.out.println(e);
         }

@@ -1,3 +1,9 @@
+/*
+    1. Add a dialog to ask for an IP and Username (Handle).
+    2. Correctly echo back recieved messages to connect clients.
+    3. Make chat log.
+    4. Display user handle on echoed message!
+*/
 package chatclient;
 
 import java.net.*;
@@ -18,7 +24,13 @@ public class ChatClient {
         }catch(UnknownHostException e){
             System.out.println("Uknown host!");
         }
+        String username = "Blarg";
         String line = "";
+        try{
+            streamOut.writeUTF(username);
+        }catch(IOException e){
+            // ERRROR
+        }
         while(!line.equals("/close")){
             try{
                 line = console.readLine();
