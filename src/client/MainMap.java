@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package MainSwordSorcery;
+//package MainSwordSorcery;
 
 import java.io.File;
 import java.io.IOException;
@@ -280,12 +280,28 @@ public class MainMap {
     private NodeList GetDoc() {
         return doc.getElementsByTagName("hex");
     }
-        
+
+    /** Get hexagon out of map by string ID */   
     public MapHex GetMapHex (String id){
         return mainMap.get(id);
     }
     
-     private void SetDoc() throws IOException, SAXException {
+    /** Get hexagon out of map by (zero-indexed) integer coordinates */   
+    public MapHex GetMapHex(int x, int y) {
+        return GetMapHex( String.format("%02d%02d", x+1, y+1) );
+    }
+    
+    /** Get the number of columns. FIXME: should this be hardcoded? */
+    public int GetColumns() {
+        return 39;
+    }
+ 
+    /** Get the number of rows in the largest column
+        FIXME: should this be hardcoded? */   
+    public int GetRows() {
+        return 54;
+    }
+    private void SetDoc() throws IOException, SAXException {
         doc = builder.parse(file);
     }
 

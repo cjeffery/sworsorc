@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package MainSwordSorcery;
+//package MainSwordSorcery;
 
 import java.awt.List;
 import java.util.ArrayList;
@@ -303,7 +303,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(0)){
-             descriptionsOfHexSide.add(GetHexSidDescription(s));
+             descriptionsOfHexSide.add(GetHexSideDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -313,7 +313,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(1)){
-             descriptionsOfHexSide.add(GetHexSidDescription(s));
+             descriptionsOfHexSide.add(GetHexSideDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -323,7 +323,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(2)){
-             descriptionsOfHexSide.add(GetHexSidDescription(s));
+             descriptionsOfHexSide.add(GetHexSideDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -333,7 +333,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(3)){
-             descriptionsOfHexSide.add(GetHexSidDescription(s));
+             descriptionsOfHexSide.add(GetHexSideDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -343,7 +343,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(4)){
-             descriptionsOfHexSide.add(GetHexSidDescription(s));
+             descriptionsOfHexSide.add(GetHexSideDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -353,7 +353,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(5)){
-             descriptionsOfHexSide.add(GetHexSidDescription(s));
+             descriptionsOfHexSide.add(GetHexSideDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -364,7 +364,7 @@ public class MapHex extends Hex{
      * 
      * @return Hex edge description.
      */ 
-    public String GetHexSidDescription(String hexSideCode) {
+    public String GetHexSideDescription(String hexSideCode) {
         if ("Ri".equals(hexSideCode))
             return "Riverbank";
         if ("La".equals(hexSideCode))
@@ -408,13 +408,29 @@ public class MapHex extends Hex{
         return hexEdgeMap.get("southEdge");
     }
     
-    public ArrayList<String> getSoutWesthexEdgeCodes () { 
+    public ArrayList<String> getSouthWestHexEdgeCodes () { 
         return hexEdgeMap.get("southWestEdge");
     }
     
     public ArrayList<String> getNorthWestHexEdgeCodes () { 
         return hexEdgeMap.get("northWestEdge");
     }
+    
+    /** return the appropriate HexEdge codes based on the passed in direction
+     * where 0 is NE, and 5 is SE.
+     */
+    public ArrayList<String> getHexEdgeCodes(int direction) {
+        switch(direction) {
+            case 0: return getNorthEastHexEdgeCodes();
+            case 1: return getNorthHexEdgeCodes();
+            case 2: return getNorthWestHexEdgeCodes();
+            case 3: return getSouthWestHexEdgeCodes();
+            case 4: return getSouthHexEdgeCodes();
+            case 5: return getSouthEastHexEdgeCodes();
+            default: assert false; return null;
+        }
+    }
+    
      /**
      * This method will allow the addition of new conditions on hex edges. These 
      * additions can be caused by spells affecting hexes.  For example the 
