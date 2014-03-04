@@ -59,21 +59,18 @@ public class ChatClient {
         }
     }
     public static void main(String[] args) throws IOException{
-        //JFrame frame;
-        Object[] possibilities = null;
-        ipAddress = (String)JOptionPane.showInputDialog(
-                    null,
-                    "IP Address of server: ",
-                    "IP Address",
-                    JOptionPane.CANCEL_OPTION,
-                    null,
-                    possibilities, "127.0.0.1");
-        username = (String)JOptionPane.showInputDialog(
-                null,
-                "Username",
-                "Username",
-                JOptionPane.CANCEL_OPTION);
         
+        ClientData clientData = new ClientData();
+        ClientDataForm clientDataForm = new ClientDataForm(clientData);
+        
+        //makes program wait  until user has hit either connect or cancel
+        //if someone has a better idea, let me know - John
+        while(!clientData.isDone()) {
+            clientDataForm.setVisible(true);
+        }
+        ipAddress = clientData.getIPAddress();
+        username = clientData.getUsername();
+
         ChatClient client = null;
         if(args.length != 2){
             System.out.println("Usage: ChatClient host port");
