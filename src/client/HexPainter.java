@@ -4,6 +4,7 @@ import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
 import java.net.URL;
+import java.util.*;
 import javax.imageio.*;
 
 /** A class that does nothing but draw hexes! Right now it's somewhat closely
@@ -12,9 +13,22 @@ import javax.imageio.*;
 public class HexPainter {
     private final double hexRadius, width, height;
     private final Path2D.Double hexShape;
-    private BufferedImage mountainImage;
-    private BufferedImage forestImage;
+    private Map<String, BufferedImage> images;
 
+    private void loadImages() throws IOException {
+        Class<? extends HexPainter> c = getClass();
+        images.put("Clear", ImageIO.read(c.getResource( "clear_hex.png" )));
+        
+        /* TODO  "blasted_hex.png", "broken_hex.png", "city_hex.png",
+            "cultivated_hex.png", "tunnel_hex.png",
+            "forest_hex.png", "glacier_hex.png", "karoo_hex.png",
+            "water_hex.png", "mountain_hex.png", "portal_hex.png",
+            "rough_hex.png", "road_hex.png", "swamp_hex.png",
+            "vortex_hex.png", "woods_hex.png" */
+        
+            /*"waterbridge_hex.png", "capital_hex.png", "castle_hex.png",
+              "ford_hex.png", "town_hex.png" */ 
+    }
     public HexPainter(double hexRadius) throws IOException {
         this.hexRadius = hexRadius;
         width  = hexRadius*2;
@@ -29,37 +43,28 @@ public class HexPainter {
         hexShape.lineTo(width*0.25, height);
         hexShape.closePath();
 
-        //URL resource = getClass().getResource("mountains2.png");
+        Map<String, String> imageFiles = new HashMap<String, String>();
+        imageFiles.put("Clear", "clear_hex.png");
+
+        URL resource = getClass().getResource("mountains2.png");
         //mountainImage = ImageIO.read(resource);
     }
 
     /* Paint the specified hex onto the specified Graphics */
     public void paintHex(Graphics2D g2, MapHex h) {
         switch(h.GetTerrainDescription()) {
-            case CLEAR:
+            case "Clear":
+            default:
                 g2.setColor( new Color(245, 245, 220) );
                 g2.fill(hexShape); 
-                break;
-            case RIVER:
-                g2.setColor( Color.BLUE );
-                g2.fill(hexShape); 
-                break;
-            case MOUNTAIN:
-                /*Shape s = g2.getClip();
-                g2.clip(hexShape);
-                float scale = (float) (width/mountainImage.getWidth());
-                AffineTransform at = new AffineTransform();
-                at.scale(scale, scale);
-                g2.drawImage(mountainImage, at, null);
-                g2.setClip(s);*/
-                g2.setColor( Color.RED );
-                g2.fill(hexShape); 
-                break;
-             case FOREST:
-                g2.setColor( Color.GREEN );
-                g2.fill(hexShape);
-                g2.drawImage(forestImage, 0, 0, null);
         }
+/* TODO: (also these would be better / faster 
+          as an enum, but am I motivated enough to do that??? maybe later) 
+"Blasted" "Bridge Over Water" "Broken" "Capital" "Castle" "City"
+"Cultivated" "Dragon Tunnel Complex" "Ford" "Forest" "Glacier" "Karoo" 
+"Moat/River/Lake" "Mountains" "Portal" "Rough" "Road" "Special Hex" "Swamp"
+"Town" "Vortex" "Woods"
+*/
     }
     
     public void paintEdges(Graphics2D g2, MapHex h) {
