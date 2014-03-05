@@ -6,7 +6,7 @@ package chatclient;
 
 /**
  *
- * @author John
+ * @author John Goettsche
  */
 public class ClientDataForm extends javax.swing.JFrame {
 
