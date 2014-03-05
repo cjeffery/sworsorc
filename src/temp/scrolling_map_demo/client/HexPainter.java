@@ -29,8 +29,8 @@ public class HexPainter {
         hexShape.lineTo(width*0.25, height);
         hexShape.closePath();
 
-        URL resource = getClass().getResource("mountains2.png");
-        mountainImage = ImageIO.read(resource);
+        //URL resource = getClass().getResource("mountains2.png");
+        //mountainImage = ImageIO.read(resource);
     }
 
     /* Paint the specified hex onto the specified Graphics */
@@ -45,13 +45,15 @@ public class HexPainter {
                 g2.fill(hexShape); 
                 break;
             case MOUNTAIN:
-                Shape s = g2.getClip();
+                /*Shape s = g2.getClip();
                 g2.clip(hexShape);
                 float scale = (float) (width/mountainImage.getWidth());
                 AffineTransform at = new AffineTransform();
                 at.scale(scale, scale);
                 g2.drawImage(mountainImage, at, null);
-                g2.setClip(s);
+                g2.setClip(s);*/
+                g2.setColor( Color.RED );
+                g2.fill(hexShape); 
                 break;
              case FOREST:
                 g2.setColor( Color.GREEN );
