@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
  * 
  * @author David Klingenberg: 
  */
-public class MainMap {
+public class MainMap implements IGameMap {
     private HashMap <String, MapHex> mainMap = new HashMap();
     private String hexNumber, northHexNumber, northEastHexNumber, 
             southEastHexNumber, southHexNumber, southWestHexNumber,
@@ -282,13 +282,13 @@ public class MainMap {
     }
 
     /** Get hexagon out of map by string ID */   
-    public MapHex GetMapHex (String id){
+    public MapHex GetHex (String id){
         return mainMap.get(id);
     }
     
     /** Get hexagon out of map by (zero-indexed) integer coordinates */   
-    public MapHex GetMapHex(int x, int y) {
-        return GetMapHex( String.format("%02d%02d", x+1, y+1) );
+    public MapHex GetHex(int x, int y) {
+        return GetHex( String.format("%02d%02d", x+1, y+1) );
     }
     
     /** Get the number of columns. FIXME: should this be hardcoded? */
@@ -317,12 +317,14 @@ public class MainMap {
         factory = DocumentBuilderFactory.newInstance();
     }
     
-    public static MainMap GetMainMap(){
+    public boolean LowFirstRow() {
+        return false;
+    }
+    
+    public static MainMap GetInstance(){
       if (INSTANCE == null)
           INSTANCE =  new  MainMap();
       return INSTANCE;
   }
     
 }
-
-

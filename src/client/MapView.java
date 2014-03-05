@@ -35,14 +35,16 @@ public class MapView extends JPanel {
             for(int col = hexRect.x; col <= hexRect.x+hexRect.width; col++) {
                 //translate to first hex in row that needs drawing
                 g2.setTransform( identity );
-                g2.translate(width*col*0.75, height*(hexRect.y + (col%2)*0.5));
+                int par = map.LowFirstRow() ? 1 : 0; //map "parity"
+                g2.translate(width*col*0.75,
+                             height*(hexRect.y + ((col%2)*0.5) - par*0.5));
 
                 //draw all the hexes in the row
                 for(int row = hexRect.y; row <= max_row; row++) {
                     if(edge == 0)
-                        hp.paintHex(g2, map.GetMapHex(col,row));
+                        hp.paintHex(g2, map.GetHex(col,row));
                     else
-                        hp.paintEdges(g2, map.GetMapHex(col,row));
+                        hp.paintEdges(g2, map.GetHex(col,row));
                     g2.translate(0, height);
                 }
             }
@@ -101,12 +103,12 @@ public class MapView extends JPanel {
         }
     }
     
-    private MainMap map;
+    private IGameMap map;
     private HexPainter hp;
     public MapSurface surface;
     double radius, width, height;    
    
-    public MapView(MainMap map) throws IOException {
+    public MapView(IGameMap map) throws IOException {
         super(new BorderLayout());
         this.map = map;
         this.map = map;
@@ -128,25 +130,17 @@ public class MapView extends JPanel {
         int hexX = hexc[0], hexY = hexc[1];
         
         //System.out.printf("X: %d, Y: %d\n\n", hexX, hexY);
-        return map.GetMapHex(hexX, hexY);
+        return map.GetHex(hexX, hexY);
         //if(hexX < map.GetColumns() && hexY < map.GetRows*() )
         //    return map.hexes[hexX][hexY];
         //return null;
     }
     
     /** @return the hexEdge closest to the given coordinates */
-    public ArrayList<String> hexEdgeAt(int x, int y) {
+    public int hexEdgeRegionAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
-
-        MapHex hex = map.GetMapHex(hexX, hexY);
-                
-        //TODO: if the coordinates are < 0.5 hexes outside the map
-        //then this could be changed to still return a hex-edge
-        //in those cases
-        if(hex == null)
-            return null;
-                
+      
         double centerX = width*(0.5 + hexX*0.75);
         double centerY = height*(0.5+hexY + (hexX%2)*0.5);
         
@@ -156,9 +150,7 @@ public class MapView extends JPanel {
         angle %= 2*Math.PI;
         
         int region = (int)(angle*3 / Math.PI);
-        //System.out.printf("centerX: %f, centerY: %f\n\n", centerX, centerY);
-        //System.out.printf("Angle: %f, region: %d\n",angle*57.2957795, region);
-        return hex.getHexEdgeCodes(region);
+        return region;
     }
     
     /** Calculate what hexes are contained in the specified clipping rect

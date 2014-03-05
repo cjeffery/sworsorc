@@ -50,14 +50,29 @@ public class HexPainter {
         //mountainImage = ImageIO.read(resource);
     }
 
-    /* Paint the specified hex onto the specified Graphics */
-    public void paintHex(Graphics2D g2, MapHex h) {
+    public void paintDiplomacyHex(Graphics2D g2, DiplomacyHex h) {
+        g2.setColor( new Color(245, 245, 220) );
+        g2.fill(hexShape);        
+    }
+    
+    public void paintMapHex(Graphics2D g2, MapHex h) {
         switch(h.GetTerrainDescription()) {
             case "Clear":
             default:
                 g2.setColor( new Color(245, 245, 220) );
                 g2.fill(hexShape); 
         }
+    }
+    /* Paint the specified hex onto the specified Graphics */
+    public void paintHex(Graphics2D g2, Hex h) {
+        if(h == null)
+            return;
+        if( h instanceof DiplomacyHex )
+            paintDiplomacyHex(g2, (DiplomacyHex)h);
+        else
+            paintMapHex(g2, (MapHex)h);
+    }
+
 /* TODO: (also these would be better / faster 
           as an enum, but am I motivated enough to do that??? maybe later) 
 "Blasted" "Bridge Over Water" "Broken" "Capital" "Castle" "City"
@@ -65,9 +80,8 @@ public class HexPainter {
 "Moat/River/Lake" "Mountains" "Portal" "Rough" "Road" "Special Hex" "Swamp"
 "Town" "Vortex" "Woods"
 */
-    }
     
-    public void paintEdges(Graphics2D g2, MapHex h) {
+    public void paintEdges(Graphics2D g2, Hex h) {
         /*g2.setColor( Color.BLACK );
         g2.setStroke( new BasicStroke(3) );
         int[] xArr = {(int)width, (int)(width*0.75), (int)(width*0.25), 0,
