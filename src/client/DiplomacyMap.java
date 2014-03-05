@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
  * 
  * @author David Klingenberg,  klin7456@vandals.uidaho.edu 
  */
-public class DiplomacyMap {
+public class DiplomacyMap implements IGameMap {
     private HashMap <String, DiplomacyHex> DiplomacyMap = new HashMap();
     private String hexNumber, northHexNumber, northEastHexNumber, 
             southEastHexNumber, southHexNumber, southWestHexNumber,
@@ -59,7 +59,7 @@ public class DiplomacyMap {
         
     }//diplomacy map
     
-    public static DiplomacyMap GetDiplomacyMap(){
+    public static DiplomacyMap GetInstance(){
       if (INSTANCE == null)
           INSTANCE =  new  DiplomacyMap();
       return INSTANCE;
@@ -116,10 +116,25 @@ public class DiplomacyMap {
         
     }//BuildDiplomacyMap
     
-    public DiplomacyHex GetDiplomacyHex(String id){
+    public DiplomacyHex GetHex(String id){
         return DiplomacyMap.get(id);
     }
-        
+    public DiplomacyHex GetHex(int x, int y) {
+        return GetHex( String.format("%02d%02d", x+1, y+1) );
+    }
+    
+    /** Get the number of columns. FIXME: should this be hardcoded? */
+    public int GetColumns() {
+        return 11;
+    }
+ 
+    /** Get the number of rows in the largest column
+        FIXME: should this be hardcoded? */   
+    public int GetRows() {
+        return 11;
+    }
+    
+    
     public String GetNorthNeighborID(String id){
         
         return DiplomacyMap.get(id).GetIDofNorthHexagon();
@@ -158,6 +173,10 @@ public class DiplomacyMap {
     public boolean GetIsNeturalHex(String id){
         
         return DiplomacyMap.get(id).GetIsNeturalHex();
+    }
+    
+    public boolean LowFirstRow() {
+        return true;
     }
 }
 

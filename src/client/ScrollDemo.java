@@ -10,7 +10,7 @@ public class ScrollDemo implements MouseListener, KeyListener {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         try {
-            mapView = new MapView(new Map());
+            mapView = new MapView(DiplomacyMap.GetInstance());
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "IOException: " +
                                           ex.getMessage()+" "+ex.getCause());
@@ -34,7 +34,7 @@ public class ScrollDemo implements MouseListener, KeyListener {
     public void mouseClicked(MouseEvent e) {
         mapView.requestFocusInWindow();
         Hex h = mapView.hexAt(e.getX(), e.getY());
-        mapView.hexEdgeAt(e.getX(), e.getY());
+        //mapView.hexEdgeRegionAt(e.getX(), e.getY());
         if(h == null)
             JOptionPane.showMessageDialog(null, "You clicked somewhere mysterious");
         //else
