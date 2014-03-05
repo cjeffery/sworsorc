@@ -25,6 +25,15 @@ import java.util.Map;
  * 
  ******************************************************************************/
 
+/* public enum TERRAIN {
+    CLEAR, BLASTED, BROKEN, CULTIVATED, TUNNEL, FOREST, GLACIER, KAROO, WATER,
+    MOUNTAIN, ROUGH, SWAMP, WOODS, VORTEX, 
+    PORTAL,
+    CITY, TOWN, CAPITAL, CASTLE, 
+    SPECIAL,
+    ROAD, FORD, BRIDGE
+} */
+
 
 public class MapHex extends Hex{
     private String hexName;
@@ -254,7 +263,7 @@ public class MapHex extends Hex{
         if ("Cap".equals(terrainKey))
             return "Capital";
         if ("Cas".equals(terrainKey))
-            return "Castel";
+            return "Castle";
         if ("Ci".equals(terrainKey))
             return "City";
         if ("Cl".equals(terrainKey))
