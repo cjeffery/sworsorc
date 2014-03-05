@@ -34,8 +34,8 @@ public class HexPainter {
     }
 
     /* Paint the specified hex onto the specified Graphics */
-    public void paintHex(Graphics2D g2, Hex h) {
-        switch(h.terrain) {
+    public void paintHex(Graphics2D g2, MapHex h) {
+        switch(h.GetTerrainDescription()) {
             case CLEAR:
                 g2.setColor( new Color(245, 245, 220) );
                 g2.fill(hexShape); 
@@ -62,8 +62,8 @@ public class HexPainter {
         }
     }
     
-    public void paintEdges(Graphics2D g2, Hex h) {
-        g2.setColor( Color.BLACK );
+    public void paintEdges(Graphics2D g2, MapHex h) {
+        /*g2.setColor( Color.BLACK );
         g2.setStroke( new BasicStroke(3) );
         int[] xArr = {(int)width, (int)(width*0.75), (int)(width*0.25), 0,
                     (int)(width*0.25), (int)(width*0.75), (int)width};
@@ -73,6 +73,6 @@ public class HexPainter {
             if(h.edges[i].type == HexEdge.Type.WALL) {
                 g2.drawLine(xArr[i], yArr[i], xArr[i+1], yArr[i+1]);
             }
-        }        
+        } */       
     }
 }
