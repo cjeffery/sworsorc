@@ -4,15 +4,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 
+/**
+ * View class that can display the game world or the diplomacy map in a
+ * scrollable window. 
+ */
 public class MapView extends JPanel {
-    /** The surface that MapView displays behind the JScrollPane.
-     * only a subclass for the purposes of implementing scrollable
+    /**
+     * This inner class is what's contained inside the scrollbar. It's only
+     * public for if you need to set up mouse listeners or something.
+     * For the most part you shouldn't have to interact with it directly,
+     * and it might be made private in the future
      */
     public class MapSurface extends JComponent
-                            implements Scrollable {
-        /** Paints the map surface by calling out to HexPainter for each hex
-         * there are currently two passes, hexEdges get pained in the second
-         * pass
+                             implements Scrollable {
+        /**
+         * This method draws the hexmap as part of the java swing drawing
+         * process.
+         * It draws everything it needs to in several passes, first hexes,
+         * then hex-edges, etc.
+         * @param g the Graphics2D object to draw on.
          */
         @Override
         public void paintComponent(Graphics g) {
@@ -50,14 +60,12 @@ public class MapView extends JPanel {
             }
         }
 
-        /** Return the size for the scrollbars
-         */
-        
+        /** @return JScrollPane uses this to determine scrollbar dimensions. */        
         @Override
         public Dimension getPreferredScrollableViewportSize() {
             return getPreferredSize();
         }
-        /** return the size of the map surface */
+        /** @return The actual size of the map in pixels */
         public Dimension getPreferredSize() {
             return new Dimension((int)(width*((map.GetColumns()-1)*.75+1)),
                                  (int)(height*map.GetRows()));
@@ -79,7 +87,15 @@ public class MapView extends JPanel {
                                                          direction));
         }
 
-        /** Scroll roughly one hex */
+        /** Return the rough amount to scroll for one unit amount
+         * This isn't perfect because it returns an integer, and doesn't keep
+         * track of leftover amounts.
+         * @param Rectangle the visible area
+         * @param orientation either SwingConstants.HORIZONTAL
+         *                    or SwingConstants.VERTICAL
+         * @param direction currently unused. See java API docs for what it
+         *                  means
+         * @return the rough amount of pixelsto scroll for one unit amount */
         @Override
         public int getScrollableUnitIncrement(Rectangle visibleRect,
                                               int orientation, int direction)
@@ -90,13 +106,15 @@ public class MapView extends JPanel {
                     return (int)(Math.ceil(height));
         }
 
-        /** @return false */
+        /** Currently unused.
+         * @return false */
         @Override
         public boolean getScrollableTracksViewportHeight() {
         return false;
         }
 
-        /** @return false */
+        /** Currently unused
+         * @return false */
         @Override
         public boolean getScrollableTracksViewportWidth() {
             return false;
@@ -108,6 +126,11 @@ public class MapView extends JPanel {
     public MapSurface surface;
     double radius, width, height;    
    
+    /**
+     * Creates a new MapView class given a map to show.
+     * @param map The map to show. Either a world map or diplomacy map
+     * @throws IOException 
+     */
     public MapView(IGameMap map) throws IOException {
         super(new BorderLayout());
         this.map = map;
@@ -124,7 +147,10 @@ public class MapView extends JPanel {
         add(scrollPane);        
     }
 
-    /** @return the hex at the given coordinates */
+    /** 
+     * @param x The X pixel coordinate
+     * @param y The Y pixel coordinate
+     * @return The hex at the given coordinates or null */
     public Hex hexAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
@@ -136,7 +162,11 @@ public class MapView extends JPanel {
         //return null;
     }
     
-    /** @return the hexEdge closest to the given coordinates */
+    /** 
+     * Returns the direction to the closest hex-edge at the given coordinate
+     * @param x The X pixel coordinate
+     * @param y The Y pixel coordinate
+     * @@return A number between 0-5 where 0 is northeast, 5 is southeast */
     public int hexEdgeRegionAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
@@ -153,9 +183,11 @@ public class MapView extends JPanel {
         return region;
     }
     
-    /** Calculate what hexes are contained in the specified clipping rect
-        keep in mind that column lengths vary, this method assumes the first
-        column's length.
+    /**
+     * Calculate what hexes are contained in the specified clipping rect
+     * in terms of hexagon coordinates.
+     * @param bounds The bounds in pixel coordinates.
+     * @return The bounds in hex coordinates.
     */
     private Rectangle hexBounds(Rectangle bounds)
     {
@@ -174,14 +206,12 @@ public class MapView extends JPanel {
                              max_col-min_col, max_row-min_row);
     }
         
-    /** return the index of the hex under the given pixel coordinates 
+    /** 
+     * return the index of the hex under the given pixel coordinates 
      * For the math, see: http://gamedev.stackexchange.com/a/20762 
-     * 
-     * This is about the trickiest hex math we're liable to see
-     * my comments probably won't make much sense without the above article
-     *
-     * If you have to touch this method then I guess may god have mercy on 
-     * your sou-- erm, I mean, feel free to email clif7786
+     * @param x The X pixel coordinate
+     * @param y The Y pixel coordinate
+     * @return An (x,y) pair representing the hex coordinates.
      */
     private int[] hexCoords(int x, int y) {
          /* cellWidth and cellHeight are the dimensions of a hex-rectangle
