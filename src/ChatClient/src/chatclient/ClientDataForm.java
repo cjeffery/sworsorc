@@ -8,7 +8,7 @@ package chatclient;
  *
  * @author John Goettsche
  */
-public class ClientDataForm extends javax.swing.JFrame {
+public class ClientDataForm extends javax.swing.JDialog {
 
     /**
      * Creates new form ClientDataForm
@@ -18,8 +18,9 @@ public class ClientDataForm extends javax.swing.JFrame {
     public ClientDataForm(ClientData thisClientData) {
         initComponents();
         this.clientData = thisClientData;
-        this.setVisible(true);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //this.setVisible(true);
+        //this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setModal(true);
     }
 
     /**
@@ -37,8 +38,6 @@ public class ClientDataForm extends javax.swing.JFrame {
         usernameTextField = new javax.swing.JTextField();
         connectButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("IP Address");
 
