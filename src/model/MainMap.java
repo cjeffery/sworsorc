@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-//package MainSwordSorcery;
+package MainMapBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,19 +27,19 @@ import org.xml.sax.SAXException;
  * 
  * @author David Klingenberg: 
  */
-public class MainMap implements IGameMap {
-    private HashMap <String, MapHex> mainMap = new HashMap();
+public class MainMap {
+    public HashMap <String, MapHex> mainMap = new HashMap();
     private String hexNumber, northHexNumber, northEastHexNumber, 
             southEastHexNumber, southHexNumber, southWestHexNumber,
-            northWestHexNumber, terrainKey, cityName;
-    private boolean cityHex, vortexHex;
+            northWestHexNumber, terrainKey, providenceName, hexName;
+    private boolean cityHex, vortexHex, castleHex, capitalHex, townHex;
     private int portalHex;
     private DocumentBuilderFactory factory; 
     private DocumentBuilder builder;
     private Document doc;
     private File file = new File("resources/MainMap.xml");
     private HashMap<String, ArrayList<String>> edgeDirectionList = new HashMap<>();
-    private ArrayList<String> edgeItemList;
+    
 
     
     private static MainMap INSTANCE;
@@ -62,7 +62,25 @@ public class MainMap implements IGameMap {
         
     }
 
-   
+   private void CleanHex(){
+        hexNumber = "";
+        northHexNumber = "";
+        northEastHexNumber= "";
+        southEastHexNumber = "";
+        southHexNumber = ""; 
+        southWestHexNumber = "";
+        northWestHexNumber = "";
+        terrainKey = ""; 
+        providenceName = "";
+        hexName = "";
+        cityHex = false;
+        vortexHex = false;
+        castleHex = false;
+        capitalHex = false; 
+        townHex = false;
+        portalHex = 0;
+        HashMap<String, ArrayList<String>> edgeDirectionList = new HashMap<>();
+   }
     
     private void BuildmainMap(){
         
@@ -71,6 +89,7 @@ public class MainMap implements IGameMap {
         //System.out.println("Total number of hexs : " + listOfHex.getLength());
         
         for(int s = 0; s < listOfHex.getLength(); s++){
+            CleanHex();
            Node hex = listOfHex.item(s);
            
             //if(hex.getNodeType() == Node.ELEMENT_NODE )
@@ -103,13 +122,20 @@ public class MainMap implements IGameMap {
                    if ("cityHex".equals(hexItem.getNodeName())) 
                        if ("true".equals(hexItem.getTextContent()))
                        SetCityHex();
-                   if ("cityName".equals(hexItem.getNodeName()))
-                       SetCityName(hexItem);
+                   if ("hexName".equals(hexItem.getNodeName()))
+                       SetHexName(hexItem);
                    if ("vortexHex".equals(hexItem.getNodeName())) 
                        if ("true".equals(hexItem.getTextContent()))
                        SetVortexHex();
                    if ("portalHex".equals(hexItem.getNodeName()))
                        SetPortalHex(hexItem);
+                   if ("providenceName".equals(hexItem.getNodeName()))
+                       this.providenceName = hexItem.getTextContent();
+                   if ("castleHex".equals(hexItem.getNodeName()))
+                       this.castleHex = true;
+                   if ("townHex".equals(hexItem.getNodeName()))
+                       this.townHex = true;
+                   
                    if ("hexEdgeMap".equals(hexItem.getNodeName())){
                        NodeList listOfEdges = hexItem.getChildNodes();
                        
@@ -140,82 +166,48 @@ public class MainMap implements IGameMap {
             }//for(int i = 0; s < listOfHex.getLength(); s++)         
             if (GetPortalHex() >0 ){    
             
-            MapHex hexObject = new MapHex(GetHexNumber(), GetNorthHexNumber(), GetNorthEastHexNumber(), 
-                    GetSouthEastHexNumber(), GetSouthHexNumber(), GetSouthWestHexNumber(), GetNorthWestHexNumber(), GetTerrainKey(), GetEdgeDirectionList(), GetPortalHex());                      
+            MapHex hexObject = new MapHex(hexNumber, northHexNumber, northEastHexNumber,
+                    southEastHexNumber, southHexNumber, southWestHexNumber, northWestHexNumber, terrainKey, this.providenceName,edgeDirectionList, portalHex);
                 SetMainMap(hexObject);
                 
             }
             else
-                if (GetVortexHex()){
-                    MapHex hexObject = new MapHex(GetHexNumber(), GetNorthHexNumber(), GetNorthEastHexNumber(), 
-                            GetSouthEastHexNumber(), GetSouthHexNumber(), GetSouthWestHexNumber(), GetNorthWestHexNumber(), GetTerrainKey(), GetEdgeDirectionList(), GetVortexHex());                      
+                if (this.vortexHex){
+                    MapHex hexObject = new MapHex(hexNumber, northHexNumber, northEastHexNumber,
+                            southEastHexNumber, southHexNumber, southWestHexNumber, northWestHexNumber, terrainKey, providenceName, edgeDirectionList, vortexHex);
                     SetMainMap(hexObject);
                 
                 
                 }
                 else
-                    if (GetCityHex()){
-                        MapHex hexObject = new MapHex(GetHexNumber(), GetNorthHexNumber(), 
-                                GetNorthEastHexNumber(), GetSouthEastHexNumber(), GetSouthHexNumber(), 
-                                GetSouthWestHexNumber(), GetNorthWestHexNumber(), GetTerrainKey(), GetEdgeDirectionList(), GetCityHex(), GetCityName());                      
+                    if (cityHex || capitalHex || castleHex || townHex){
+                        MapHex hexObject = new MapHex(hexNumber, northHexNumber,
+                                northEastHexNumber, southEastHexNumber, southHexNumber,
+                                southWestHexNumber, northWestHexNumber, terrainKey,
+                                providenceName, edgeDirectionList, cityHex, capitalHex,
+                                castleHex, townHex, this.hexName);
                         SetMainMap(hexObject);
                     }
-                    else {
-                        MapHex hexObject = new MapHex(GetHexNumber(), GetNorthHexNumber(), GetNorthEastHexNumber(), 
-                                GetSouthEastHexNumber(), GetSouthHexNumber(), GetSouthWestHexNumber(), GetNorthWestHexNumber(), GetTerrainKey(), GetEdgeDirectionList());                      
-                        SetMainMap(hexObject);
-                    }
+                    else
+                        if (this.hexName != null){
+                            MapHex hexObject = new MapHex(hexNumber, northHexNumber,
+                                    northEastHexNumber, southEastHexNumber, southHexNumber,
+                                    southWestHexNumber, northWestHexNumber, terrainKey, providenceName, edgeDirectionList, this.hexName);
+                            SetMainMap(hexObject);
+                        }
+                        else {
+                            MapHex hexObject = new MapHex(hexNumber, northHexNumber, northEastHexNumber,
+                                    southEastHexNumber, southHexNumber, southWestHexNumber, northWestHexNumber, terrainKey, providenceName, edgeDirectionList);
+                            SetMainMap(hexObject);
+                        }
         }//for(int s = 0; s < listOfHex.getLength(); s++)
         
     }//private void BuildmainMap(){
-
-    private String GetCityName() {
-        return cityName;
-    }
-
-    private boolean GetCityHex() {
-        return cityHex;
-    }
-
-    private boolean GetVortexHex() {
-        return vortexHex;
-    }
 
     private void SetMainMap(MapHex hexObject) {
         mainMap.put(hexObject.GetID(), hexObject);
     }
 
-    private HashMap<String, ArrayList<String>> GetEdgeDirectionList() {
-        return edgeDirectionList;
-    }
-
-    private String GetTerrainKey() {
-        return terrainKey;
-    }
-
-    private String GetNorthWestHexNumber() {
-        return northWestHexNumber;
-    }
-
-    private String GetSouthWestHexNumber() {
-        return southWestHexNumber;
-    }
-
-    private String GetSouthHexNumber() {
-        return southHexNumber;
-    }
-    
-    private String GetSouthEastHexNumber() {
-        return southEastHexNumber;
-    }
-
-    private String GetNorthEastHexNumber() {
-        return northEastHexNumber;
-    }
-
-    private String GetNorthHexNumber() {
-        return northHexNumber;
-    }
 
     private int GetPortalHex() {
         return portalHex;
@@ -233,8 +225,8 @@ public class MainMap implements IGameMap {
         vortexHex = true;
     }
 
-    private void SetCityName(Node hexItem) throws DOMException {
-        cityName = hexItem.getTextContent();
+    private void SetHexName(Node hexItem) throws DOMException {
+        this.hexName = hexItem.getTextContent();
     }
 
     private void SetCityHex() {
@@ -273,66 +265,11 @@ public class MainMap implements IGameMap {
         hexNumber =  hexItem.getTextContent();
     }
 
-    private String GetHexNumber() {
-        return hexNumber;
-    }
 
     private NodeList GetDoc() {
         return doc.getElementsByTagName("hex");
     }
-
-    /**
-     * Converts a string hex ID to a zero-indexed xy pair.
-     * @param id The hexagons ID
-     * @return (x,y) hex-coordinate pair
-     */
-    public static int[] HexStringToXY(String id) {
-        int xy = Integer.parseInt(id);
-        int[] res = new int[2];
-        res[0] = xy/100 - 1;
-        res[1] = xy%100 - 1;
-        return res;
-    }
     
-    /**
-     * Converts a zero-indexed xy pair to a hex string
-     * @param x The x coordinate
-     * @param y The y coordinate
-     * @return The hexagons string ID.
-     */
-    public static String HexXYToString(int x, int y) {
-        return String.format("%02d%02d", x+1, y+1);
-    }
-    
-    /**
-     * Get hexagon out of map by string ID
-     */   
-    public MapHex GetHex (String id){
-        return mainMap.get(id);
-    }
-    
-    /**
-     * Get hexagon out of map by (zero-indexed) integer coordinates
-     */   
-    public MapHex GetHex(int x, int y) {
-        return GetHex( HexXYToString(x,y) );
-    }
-    
-    /**
-     * Get the number of columns.
-     * FIXME: should this be hardcoded?
-     */
-    public int GetColumns() {
-        return 39;
-    }
- 
-    /**
-     * Get the number of rows in the largest column
-     * FIXME: should this be hardcoded?
-     */   
-    public int GetRows() {
-        return 54;
-    }
     private void SetDoc() throws IOException, SAXException {
         doc = builder.parse(file);
     }
@@ -349,14 +286,16 @@ public class MainMap implements IGameMap {
         factory = DocumentBuilderFactory.newInstance();
     }
     
-    public boolean LowFirstRow() {
-        return false;
-    }
-    
-    public static MainMap GetInstance(){
+    public static MainMap GetMainMap(){
       if (INSTANCE == null)
           INSTANCE =  new  MainMap();
       return INSTANCE;
-  }
+    }
+    
+    public MapHex GetMapHex (String id){
+        return mainMap.get(id);
+    }
     
 }
+
+

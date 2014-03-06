@@ -4,12 +4,11 @@
  * and open the template in the editor.
  */
 
-//package MainSwordSorcery;
+package MainMapBuilder;
 
 /**
- * Email me if anyone has questions or need chages made.
- * 
- * @author David Klingenberg, klin7456@vandals.uidaho.edu
+ *
+ * @author David
  */
 public class Hex {
     
