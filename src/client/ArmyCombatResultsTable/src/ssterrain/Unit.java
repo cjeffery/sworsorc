@@ -11,7 +11,7 @@ package ssterrain;
  * @author John Goettsche
  * CS 383 Software Engineering
  */
-public class Unit {    
+public class Unit {  
     protected Race race;
     protected UnitType unitType;
     protected int strength;
@@ -19,7 +19,7 @@ public class Unit {
     protected int demoralizedStrength;
     protected boolean ranged;
     protected boolean demorlized;
-    
+      
     public void setDemorlized(boolean demorlized) {
         this.demorlized = demorlized;
     }
@@ -35,7 +35,7 @@ public class Unit {
     public void setUnitType(UnitType newType){
         this.unitType = newType;
     }
-    
+     
     public Race getRace(){
         return race;
     }

@@ -4,13 +4,14 @@
  * and open the template in the editor.
  */
 
-package MainSwordSorcery;
+//package MainSwordSorcery;
 
 import java.util.Random;
 
 /**
+ * email me if anyone has questions or need changes.
  * 
- * @author David Klingenberg 2/18/2014
+ * @author David Klingenberg, klin7456@vandals.uidaho.edu
  */
 public class RandomEventTable {
     private int eventKey;

@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 
-package MainSwordSorcery;
+//package MainSwordSorcery;
 
 /**
- *  
- * @author David Klingenberg 2/18/2014
+ * email me if anyone need help or changes. 
+ * 
+ * @author David Klingenberg, klin7456@vandals.uidaho.edu
  */
 
 
