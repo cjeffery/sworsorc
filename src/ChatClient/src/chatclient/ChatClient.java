@@ -11,43 +11,112 @@ import java.io.*;
 import javax.swing.JOptionPane;
 
 public class ChatClient {
+    
     private Socket socket = null;
-    private DataInputStream console = null;
+    private BufferedReader console = null;
     private DataOutputStream streamOut = null;
     private static String ipAddress;
     private static String username;
     
-    public ChatClient(String serverName, int serverPort) throws IOException{
-        System.out.println("Connecting! Please Wait!");
-        try{
-            socket = new Socket(serverName, serverPort);
-            System.out.println("Connected: " + socket);
-            start();
-        }catch(UnknownHostException e){
-            System.out.println("Uknown host!");
+    ListenerThread listenerThread;
+    WriterThread writerThread;
+    
+    class ListenerThread extends Thread {
+        
+        BufferedReader streamIn; 
+        
+        public ListenerThread() {
+            try {
+                streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            } catch (Exception e) {
+                System.err.println("Error : Opening reading stream from socket");
+            }
         }
-        //String username = "Blarg";
-        String line = "";
-        try{
-            streamOut.writeUTF(username);
-        }catch(IOException e){
-            // ERRROR
-        }
-        while(!line.equals("/close")){
-            try{
-                line = console.readLine();
-                streamOut.writeUTF(line);
-                streamOut.flush();
-            }catch(IOException e){
-                System.out.println("Error sending message!");
+
+        public void run() {
+            try {
+                while (true) {
+                    //Blocking read:
+                    String messageIn = streamIn.readLine();
+                    System.out.println("(from server) " + messageIn);
+                
+                }
+            } catch (Exception e) {
+                System.out.println("Client " + " error: " + e);
+            } finally {
+                //close();
             }
         }
     }
     
-    public void start() throws IOException{
-        console = new DataInputStream(System.in);
-        streamOut = new DataOutputStream(socket.getOutputStream());
+    class WriterThread extends Thread {
+        
+        PrintWriter writer;
+        
+        public WriterThread() {
+            try {
+                writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
+            } catch (Exception e) {
+                System.err.println("Error : Creating output stream for socket");
+            }
+ 
+        }
+        
+        public void write(String message){ //if we want to programmatically write something
+            writer.println(message);
+            writer.flush();
+        }
+        
+        public void run() {
+            
+          while (true){
+             try{
+                String line = console.readLine();
+
+                writer.println(line);
+                writer.flush();
+                
+            }catch(IOException e){
+                System.out.println("Error sending message!");
+            }          
+
+            }
+           
+        }
+        
+   
     }
+    
+
+    
+    public ChatClient(String serverName, int serverPort) throws IOException{
+        
+        System.out.println("Connecting! Please Wait!");
+        try{
+            socket = new Socket(serverName, serverPort);
+            System.out.println("Connected: " + socket);
+            //start();
+        }catch(UnknownHostException e){
+            System.err.println("Error : Uknown host!");
+        } catch (ConnectException e){
+            System.err.println("Error : Connection Refused!");
+        }
+        
+        
+        //Reads from stdin:
+        console = new BufferedReader(new InputStreamReader(System.in));
+        
+        listenerThread = new ListenerThread();
+        writerThread = new WriterThread();
+        
+        //first message is handle:
+        writerThread.write(username);
+        
+        writerThread.start();
+        listenerThread.start();
+      
+    }
+ 
     public void stop()
     {
         try{
@@ -58,16 +127,20 @@ public class ChatClient {
             System.out.println("Error closing connection!");
         }
     }
+    
     public static void main(String[] args) throws IOException{
         
         ClientData clientData = new ClientData();
         ClientDataForm clientDataForm = new ClientDataForm(clientData);
         
-        //makes program wait  until user has hit either connect or cancel
-        //if someone has a better idea, let me know - John
-        while(!clientData.isDone()) {
-            clientDataForm.setVisible(true);
-        }
+        System.out.println("Launching Login Dialog");
+        
+        clientDataForm.setVisible(true);
+        
+        System.out.println("Login Dialog Finished");
+        
+        System.out.flush(); // I was losing input is the JDialog crashed
+        
         ipAddress = clientData.getIPAddress();
         username = clientData.getUsername();
 
@@ -75,11 +148,13 @@ public class ChatClient {
         if(args.length != 2){
             System.out.println("Usage: ChatClient host port");
             System.out.println("Attempting defualt connection!");
-            //client = new ChatClient("76.178.139.129", 25565);
+
             client = new ChatClient(ipAddress, 25565);
         }else{
             client = new ChatClient(args[0], Integer.parseInt(args[1]));
         }
+        
+        
     }
     
 }
