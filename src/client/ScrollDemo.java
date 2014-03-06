@@ -37,9 +37,9 @@ public class ScrollDemo implements MouseListener, KeyListener {
         //mapView.hexEdgeRegionAt(e.getX(), e.getY());
         if(h == null)
             JOptionPane.showMessageDialog(null, "You clicked somewhere mysterious");
-        //else
-        //    JOptionPane.showMessageDialog(null, "You clicked on a " +
-        //                                        h.terrain.toString());
+        else
+            JOptionPane.showMessageDialog(null, "You clicked on a " +
+                                                h.GetID());
     }
 
     @Override public void mousePressed(MouseEvent e) {}
