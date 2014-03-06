@@ -153,16 +153,11 @@ public class MapView extends JPanel {
     /** 
      * @param x The X pixel coordinate
      * @param y The Y pixel coordinate
-     * @return The hex at the given coordinates or null */
-    public Hex hexAt(int x, int y) {
+     * @return The hex ID at the given coordinates or null */
+    public String hexAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
-        
-        //System.out.printf("X: %d, Y: %d\n\n", hexX, hexY);
-        return map.GetHex(hexX, hexY);
-        //if(hexX < map.GetColumns() && hexY < map.GetRows*() )
-        //    return map.hexes[hexX][hexY];
-        //return null;
+        return MainMap.HexXYToString(hexX, hexY);
     }
     
     /** 
