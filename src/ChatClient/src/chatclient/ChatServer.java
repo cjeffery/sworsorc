@@ -10,14 +10,23 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class ChatServer {
 
+    //TODO: have clientObjects remove themselves on disconnect:
     protected static List<ClientObject> clientObjects; //"Packaged sockets"
     protected static int DEFAULT_PORT = 25565;
 
+    //Legacy method, I think this will be replaced soon:
     public static void sendToAllClients(String handle, String message) {
         for (ClientObject client : clientObjects) {
             if (!client.handle.equals(handle)) {
                 client.send(handle, message);
             }
+        }
+    }
+    
+    //Forward the message to all ClientObjects, which will send to their Clients:
+    public static void sendToAllClients(List<String> message) {
+        for (ClientObject client : clientObjects) {
+             client.send(message);           
         }
     }
 
@@ -69,20 +78,30 @@ class ClientObject {
 
     ListenerThread listenerThread;
     WriterThread writerThread; //this is "pretend" for now. 
+    
+    //We need a PrintWriter to standardize the printMessage functions:
+    PrintWriter consoleOut = new PrintWriter(System.out, true);
 
-    boolean echo = true; //Should we echo back to client?
-
+    //Legacy method: should be replaced with protocol:
     public void send(String handle, String message) {
+        //write the literal string:
         writerThread.write(handle + ": " + message);
     }
+    
+    //Inform the writer thread that it's time to do his job:
+    public void send(List<String> message) {
+        writerThread.write(message);
+    }
 
+    
     public String getHandle() {
         return handle;
     }
 
     class WriterThread extends Thread {
-
-        PrintWriter writer;
+        //Writer thread waits around until it has something to write
+        
+        PrintWriter writer; //Connection to socket
 
         public WriterThread() {
             try {
@@ -96,20 +115,26 @@ class ClientObject {
             writer.println(message);
             writer.flush();
         }
+ 
+        public void write(List<String> message) {
+            //Write to socket outoing connection, hide the protocol details:
+            MessageUtils.sendMessage(writer, message);
+        }
 
+        
+        //Legacy method: should be replaced with a standard protocol:
         public void sendConnectionList() {
             List<String> handles = new ArrayList<>();
             for (ClientObject obj : ChatServer.clientObjects) {
                 handles.add(obj.getHandle());
             }
-
-            MessageUtils.sendArray(writer, handles);
+            MessageUtils.sendMessage(writer, handles);
         }
 
         public void run() {
             //This is a "pretend" thread for now, since we will always just
             //call the "write()" method directly at the moment.
-
+            //idk if we really need this or not?
         }
 
         public void close() {
@@ -128,8 +153,9 @@ class ClientObject {
     }
 
     class ListenerThread extends Thread {
-
-        BufferedReader streamIn;
+        //Makes the blocking receive until a message arrives
+        
+        BufferedReader streamIn; //socket incoming
 
         public ListenerThread() {
             try {
@@ -139,6 +165,7 @@ class ClientObject {
             }
         }
 
+        //legacy: replace with protocol:
         public String getHandle() {
             //For now, just read a string and assume it's the handle!
             String handle = null;
@@ -152,30 +179,37 @@ class ClientObject {
         }
 
         public void run() {
-
+            //This run method DOES matter
             while (true) {
                 try {
-                    //Blocking read:
-                    String messageIn = null;
-                    messageIn = streamIn.readLine();
-
-                    if (messageIn == null) {
+                    //Blocking read: (messageUtil will return null is socket closed)
+                    List<String> message = MessageUtils.receiveMessage(streamIn);
+                    
+                    if (message == null) {
                         //connection broken (NOT an exception)
                         System.out.println("Client " + clientID + " (" + handle + "): disconnected" );
-                        ChatServer.sendToAllClients(handle, "(disconnected)");
+                        
+                        ChatServer.sendToAllClients(MessageUtils.makeDisconnectMessage(handle));
+                        
                         close();
                         break;
+                        
                     }
-                    //Prints to server console:
-                    System.out.println(handle + ": " + messageIn);
-
-                    if (echo) { //repeat message to client:
-                        send("(echo)" + handle, messageIn);
-
+                    
+                    //what type of message did we get?
+                    //For now, the first element of the parsed array (from messageUtils),
+                    //will tell us:
+                    if (message.get(0).equals(MessageUtils.CHAT)){
+                        //Prints to _server_ console:
+                        MessageUtils.printChat(consoleOut, message);
+   
+                        //Send to all connected clients:
+                        ChatServer.sendToAllClients(message);
                     }
-
-                    //Send to all connected clients:
-                    ChatServer.sendToAllClients(handle, messageIn);
+                    else {
+                        //will add other protocols 
+                        System.err.println("Unknown tag!");
+                    }
 
                 } catch (Exception e) {
                     System.out.println("Client " + clientID + " error: " + e);
@@ -215,17 +249,20 @@ class ClientObject {
         writerThread = new WriterThread();
 
         //For now, assume first message is handle (blocking):
-        this.handle = listenerThread.getHandle();
+        this.handle = listenerThread.getHandle(); //Legacy! replace with protocol!
 
         //next: send list of handles to client:
-        writerThread.sendConnectionList();
+        writerThread.sendConnectionList(); //Legacy! replace with protocol!
 
-        ChatServer.sendToAllClients(handle, "(Joined)");
+        //announce the new client's connection to all old clients:
+        ChatServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
+        //ChatServer.sendToAllClients(handle, "(Joined)");
 
         //Start threads:
         writerThread.start();
         listenerThread.start();
 
+        //System console message:
         System.out.println("Opened connection from: " + handle);
 
     }

@@ -1,8 +1,7 @@
 /*
- 1. Add a dialog to ask for an IP and Username (Handle).
- 2. Correctly echo back recieved messages to connect clients.
+ 1. 
+ 2. 
  3. Make chat log.
- 4. Display user handle on echoed message!
  */
 package chatclient;
 
@@ -14,8 +13,9 @@ import javax.swing.JOptionPane;
 public class ChatClient {
 
     private Socket socket = null;
-    private BufferedReader console = null;
-    private DataOutputStream streamOut = null;
+    private BufferedReader consoleIn = null;
+    private PrintWriter consoleOut = new PrintWriter(System.out, true);
+    
     private static String ipAddress;
     private static String username;
 
@@ -37,9 +37,28 @@ public class ChatClient {
         public void run() {
             try {
                 while (true) {
-                    //Blocking read:
-                    String messageIn = streamIn.readLine();
-                    System.out.println("(from server) " + messageIn);
+                    
+                    List<String> message = MessageUtils.receiveMessage(streamIn);
+                    if (message == null){
+                        break;
+                    }
+                    //first element of the parsed message array will tell us
+                    //what type of message it is:
+                    if (message.get(0).equals(MessageUtils.CHAT)){
+                        //Printing methods can be centralized!
+                        MessageUtils.printChat(consoleOut, message);
+                    }
+                    else  if (message.get(0).equals(MessageUtils.DISCONNECT)){                       
+                        MessageUtils.printDisconnect(consoleOut, message);
+                    }
+                    else  if (message.get(0).equals(MessageUtils.CONNECT)){                       
+                        MessageUtils.printConnectionMessage(consoleOut, message);
+                    }
+                    else {
+                        //This shouldn't ever happen!
+                        System.err.println("Unknown tag: " + message.get(0));
+                    }
+                    
 
                 }
             } catch (Exception e) {
@@ -62,9 +81,10 @@ public class ChatClient {
             }
         }
 
+        //TODO: make standard message protocol function:
         private void receiveConnectionList() {
             System.out.println("Users online:");
-            List<String> connections = MessageUtils.receiveArray(streamIn);
+            List<String> connections = MessageUtils.receiveMessage(streamIn);
             for (String s : connections) {
                 System.out.println(s);
             }
@@ -93,15 +113,16 @@ public class ChatClient {
 
             while (true) {
                 try {
-                    String line = console.readLine();
+                    String line = consoleIn.readLine();
                     if (line == null){ //connection broken (NOT an exception)
                         close();
                         break;
                     }
-                    //System.out.println("read from console:" + line);
-                    //System.out.flush();
-                    writer.println(line);
-                    writer.flush();
+                    
+                    //Send out a "normal" chat message, which get's forwarded
+                    //to everyone. Again, we hide the message format details:
+                    MessageUtils.sendMessage(writer, MessageUtils.makeChatMessage(username, line));
+                    
                 } catch (IOException e) {
                     System.out.println("Error sending message!");
                     close();
@@ -141,7 +162,7 @@ public class ChatClient {
         }
 
         //Reads from stdin:
-        console = new BufferedReader(new InputStreamReader(System.in));
+        consoleIn = new BufferedReader(new InputStreamReader(System.in));
 
         listenerThread = new ListenerThread();
         writerThread = new WriterThread();
@@ -159,12 +180,12 @@ public class ChatClient {
 
     public void stop() {
         try {
-            if (console != null) {
-                console.close();
+            if (consoleIn != null) {
+                consoleIn.close();
             }
-            if (streamOut != null) {
-                console.close();
-            }
+            //if (streamOut != null) {
+              //  console.close();
+            //}
             if (socket != null) {
                 socket.close();
             }
