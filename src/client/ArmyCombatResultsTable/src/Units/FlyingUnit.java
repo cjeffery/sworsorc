@@ -12,7 +12,6 @@ package Units;
  * Things will fill this class im just not sure what yet
  * Things like properties that flying units have that Land units don't
  */
-import ssterrain.*;
 
 public class FlyingUnit extends Unit{
         

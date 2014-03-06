@@ -11,6 +11,7 @@ package ssterrain;
  * @author John Goettsche
  * CS 383 Software Engineering
  */
+import Units.*;
 public interface ImprovedTerrainType {
     public double getMovementCost(Unit unit);
     public double getCombatMultiplier(Unit unit);

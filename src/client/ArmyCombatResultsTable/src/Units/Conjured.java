@@ -6,8 +6,6 @@
 
 package Units;
 
-import ssterrain.*;
-
 /**
  *
  * @author Matt

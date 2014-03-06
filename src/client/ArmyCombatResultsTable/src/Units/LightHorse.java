@@ -10,7 +10,7 @@ package Units;
  *
  * @author Matt
  */
-public class LightHorse extends LandUnit{
+public class LightHorse extends Calvery{
 
     public LightHorse() {
         super();

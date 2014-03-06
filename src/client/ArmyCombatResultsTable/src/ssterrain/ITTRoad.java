@@ -12,6 +12,7 @@ import java.util.ArrayList;
  *
  * @author John
  */
+import Units.*;
 public class ITTRoad implements ImprovedTerrainType{
     Hex hex;
     

@@ -4,17 +4,17 @@
  * and open the template in the editor.
  */
 
-package ssterrain;
+package Units;
+
+import ssterrain.*;
 
 /**
  *
  * @author John Goettsche
  * CS 383 Software Engineering
  */
-import Units.*;
-public interface TerrainType {
-    public double getMovementCost(Unit unit);
-    public double getCombatMultiplier(Unit unit);
-    public String getCombatEffect(Unit unit);
-    
+public enum UnitType {
+    Character,
+    Fighter,
+    MagicUser
 }

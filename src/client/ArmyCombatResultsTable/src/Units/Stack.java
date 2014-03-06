@@ -10,12 +10,9 @@ package Units;
  *
  * @author matt
  */
-public class HeavyHorse extends Calvery{
-    public HeavyHorse() {
-        super();
-        strength = 4;
-        movement = 7;
-        demoralizedStrength = 1;
-    }
+public class Stack {
+    Class<?> unit1;
+    Class<?> unit2;
     
+       
 }

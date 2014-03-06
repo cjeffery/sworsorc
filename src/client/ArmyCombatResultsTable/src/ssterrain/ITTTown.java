@@ -11,6 +11,7 @@ package ssterrain;
  * @author John Goettsche
  * CS 383 Software Engineering
  */
+import Units.*;
 public class ITTTown implements ImprovedTerrainType{
     Hex hex;
     

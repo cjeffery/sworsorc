@@ -17,6 +17,7 @@ package armycombatresultstable;
 import java.util.Random;
 import java.util.ArrayList;
 import ssterrain.*;
+import Units.*;
 
         
 public class ArmyCombatResultsTable {

@@ -10,6 +10,7 @@ package ssterrain;
  *
  * @author John
  */
+import Units.*;
 public class TTBlasted implements TerrainType{
     public TTBlasted(){
     }

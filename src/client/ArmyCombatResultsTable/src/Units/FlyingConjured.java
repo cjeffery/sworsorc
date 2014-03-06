@@ -10,7 +10,6 @@ package Units;
  *
  * @author matt
  */
-import ssterrain.*;
 
 public class FlyingConjured extends Unit{
      protected int lifeCost;
