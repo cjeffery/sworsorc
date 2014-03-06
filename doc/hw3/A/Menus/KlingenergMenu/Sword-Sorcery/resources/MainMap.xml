@@ -10,7 +10,7 @@
   <!ELEMENT map (hex*)>
   <!ELEMENT hex (hexNumber, northHexNumber, northEastHexNumber, 
                  southEastHexNumber, southHexNumber, southWestHexNumber, 
-                 northWestHexNumber, terrainKey, cityHex?, vortexHex?, 
+                 northWestHexNumber, terrainKey, providenceName, cityHex?, vortexHex?, 
                  portalHex?, hexEdgeMap?)>
      <!ELEMENT hexNumber (#PCDATA)>
      <!ELEMENT northHexNumber (#PCDATA)>
@@ -20,6 +20,7 @@
      <!ELEMENT southWestHexNumber (#PCDATA)>
      <!ELEMENT northWestHexNumber (#PCDATA)>
      <!ELEMENT terrainKey (#PCDATA)>
+     <!ELEMENT providenceName (#PCDATA)>
      <!ELEMENT cityHex (#PCDATA)>
      <!ELEMENT vortexHex (#PCDATA)>
      <!ELEMENT portalHex (#PCDATA)>
@@ -44,6 +45,7 @@
         <southWestHexNumber>1832</southWestHexNumber>
         <northWestHexNumber>1831</northWestHexNumber>
         <terrainKey>Br</terrainKey>
+        <providenceName>Endore</providenceName>
         <hexEdgeMap>
             <southEastEdge>
                 <edgeAttribute>Br</edgeAttribute>
@@ -69,6 +71,7 @@
         <southWestHexNumber>1831</southWestHexNumber>
         <northWestHexNumber>1830</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
+        <providenceName>Neitherwold</providenceName>
         <hexEdgeMap>
             <southEastEdge>
                 <edgeAttribute>Pb</edgeAttribute>
