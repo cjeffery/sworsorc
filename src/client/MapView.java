@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.swing.*;
 
 /**
@@ -124,6 +126,7 @@ public class MapView extends JPanel {
     private IGameMap map;
     private HexPainter hp;
     public MapSurface surface;
+    public TreeSet<String> highlightSet;
     double radius, width, height;    
    
     /**
@@ -133,7 +136,7 @@ public class MapView extends JPanel {
      */
     public MapView(IGameMap map) throws IOException {
         super(new BorderLayout());
-        this.map = map;
+        this.highlightSet = new TreeSet<String>();
         this.map = map;
         this.radius = 32;
         width  = radius*2;
@@ -254,5 +257,21 @@ public class MapView extends JPanel {
         hexY = (hexY == -1) ? -1 : (hexY / 2);
         int[] res = {hexX, hexY};
         return res;        
+    }
+    
+    /**
+     * highlight the set of given hexes, pass null to unhighlight.
+     * Right now color is hardcoded, and you can't highlight multiple
+     * colors at once. This could change in the future.
+     * @param hexes A Set of hex IDs
+     */
+    public void highlight(Set<String> hexes) {
+        highlightSet.addAll(hexes);
+    }
+    /**
+     * Unhighlight all currently highlighted hexes
+     */
+    public void clearHighlights() {
+        highlightSet.clear();
     }
 }

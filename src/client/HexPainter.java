@@ -51,7 +51,7 @@ public class HexPainter {
     }
 
     public void paintDiplomacyHex(Graphics2D g2, DiplomacyHex h) {
-        g2.setColor( new Color(245, 245, 220) );
+        g2.setColor( Color.RED /*new Color(245, 245, 220)*/ );
         g2.fill(hexShape);        
     }
     
@@ -59,7 +59,7 @@ public class HexPainter {
         switch(h.GetTerrainDescription()) {
             case "Clear":
             default:
-                g2.setColor( new Color(245, 245, 220) );
+                g2.setColor( Color.RED /*new Color(245, 245, 220)*/ );
                 g2.fill(hexShape); 
         }
     }

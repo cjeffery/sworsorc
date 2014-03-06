@@ -281,23 +281,55 @@ public class MainMap implements IGameMap {
         return doc.getElementsByTagName("hex");
     }
 
-    /** Get hexagon out of map by string ID */   
+    /**
+     * Converts a string hex ID to a zero-indexed xy pair.
+     * @param id The hexagons ID
+     * @return (x,y) hex-coordinate pair
+     */
+    public static int[] HexStringToXY(String id) {
+        int xy = Integer.parseInt(id);
+        int[] res = new int[2];
+        res[0] = xy/100 - 1;
+        res[1] = xy%100 - 1;
+        return res;
+    }
+    
+    /**
+     * Converts a zero-indexed xy pair to a hex string
+     * @param x The x coordinate
+     * @param y The y coordinate
+     * @return The hexagons string ID.
+     */
+    public static String HexXYToString(int x, int y) {
+        return String.format("%02d%02d", x+1, y+1);
+    }
+    
+    /**
+     * Get hexagon out of map by string ID
+     */   
     public MapHex GetHex (String id){
         return mainMap.get(id);
     }
     
-    /** Get hexagon out of map by (zero-indexed) integer coordinates */   
+    /**
+     * Get hexagon out of map by (zero-indexed) integer coordinates
+     */   
     public MapHex GetHex(int x, int y) {
-        return GetHex( String.format("%02d%02d", x+1, y+1) );
+        return GetHex( HexXYToString(x,y) );
     }
     
-    /** Get the number of columns. FIXME: should this be hardcoded? */
+    /**
+     * Get the number of columns.
+     * FIXME: should this be hardcoded?
+     */
     public int GetColumns() {
         return 39;
     }
  
-    /** Get the number of rows in the largest column
-        FIXME: should this be hardcoded? */   
+    /**
+     * Get the number of rows in the largest column
+     * FIXME: should this be hardcoded?
+     */   
     public int GetRows() {
         return 54;
     }
