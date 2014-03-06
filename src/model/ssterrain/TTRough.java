@@ -11,6 +11,7 @@ package ssterrain;
  * @author John Goettsche
  * CS 383 Software Engineering
  */
+import Units.Race;
 import Units.*;
 public class TTRough implements TerrainType{
     public TTRough(){

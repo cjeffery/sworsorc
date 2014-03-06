@@ -18,6 +18,11 @@ public class Hex {
     private ArrayList<HexEdge> edges;
     private TerrainType terrainType;
     private ArrayList<ImprovedTerrainType> improvements;
+    private int ID;
+    
+    public int getID(){
+        return ID;
+    }
     
     public Hex(){
         edges = new ArrayList<HexEdge>();

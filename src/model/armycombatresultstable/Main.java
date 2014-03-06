@@ -6,10 +6,12 @@
 
 package armycombatresultstable;
 
+import Units.Race;
 import static armycombatresultstable.ArmyCombatResultsTable.*;
 import Units.*;
 import ssterrain.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -22,11 +24,12 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        HashMap units = new HashMap();
         Hex hex1 = new Hex();
         TerrainType tt1 = new TTWoods();
         hex1.setTerrainType(tt1);
         HeavyHorse unit1 = new HeavyHorse();
-        Pikeman unit2 = new Pikeman();
+        PikeMan unit2 = new PikeMan();
         HeavySword unit3 = new HeavySword();
         
         ArrayList<Unit> attackers = new ArrayList<>();
@@ -35,6 +38,10 @@ public class Main {
         unit1.setRace(Race.Human);
         unit2.setRace(Race.Cronk);
         unit3.setRace(Race.Human);
+        
+        units.put("HHH01", unit1);
+        units.put("CPM01", unit2);
+        units.put("HHS01", unit3);
         
         attackers.add(unit1);
         attackers.add(unit2);
@@ -47,5 +54,7 @@ public class Main {
         
         System.out.println("Attackers: " + results[0]);
         System.out.println("Defenders: " + results[1]);
+        
+        
     }
 }

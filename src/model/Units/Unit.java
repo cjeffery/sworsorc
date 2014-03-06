@@ -21,14 +21,14 @@ public class Unit {
     protected int demoralizedStrength;
     protected boolean ranged;
     protected boolean demorlized;
-    protected int ID;
+    protected String ID;
     protected int location;
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
