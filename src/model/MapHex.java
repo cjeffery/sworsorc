@@ -249,7 +249,7 @@ public class MapHex extends Hex{
         
         if (edgesOfHex.containsKey("northEastEdge")){
             this.northEastList = new ArrayList(edgesOfHex.get("northEastEdge"));
-            hexEdgeMap.put("northEastEdge", northList);
+            hexEdgeMap.put("northEastEdge", northEastList);
         }
         
         if (edgesOfHex.containsKey("southWestEdge")){
@@ -264,7 +264,7 @@ public class MapHex extends Hex{
         
         if (edgesOfHex.containsKey("southEastEdge")){
             this.southEastList = new ArrayList(edgesOfHex.get("southEastEdge"));
-            hexEdgeMap.put("southEastEdge", southList);
+            hexEdgeMap.put("southEastEdge", southEastList);
         }
         
         
