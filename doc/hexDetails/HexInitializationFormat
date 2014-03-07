@@ -1,8 +1,0 @@
-My idea is that for initializing all hexes with the proper format we can use
-the following format for our data file: 
-
-hexID: Terraintype; augmentedTerrain; edge0,edge1,edge2,edge3,edge4,edge5.
-
-With the above delimiters it shouldn't be hard to write a method to initialize
-all hexes from a file that lists the hexes like above. I'll begin working on 
-that.
