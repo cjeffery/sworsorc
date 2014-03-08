@@ -220,3 +220,60 @@ Hex <|- “<b>1..1</b>” DiplomacyHex
 @enduml
 
 end David Klingenberg
+
+/*  here are some changes to help fill out the chart section of the diagram.
+ *  I don't see a solar cycle class of any kind so here's the one I wrote.
+ *  It's more than a simple chart as the Suns relationship to each other and
+ *  there starting positions very by scenario and therefore has to be 
+ *  calculated versus a simple look up.
+ */
+
+@startuml
+
+class StellarConfiguration{
+	-yellowSunPosition : int
+	-redSunPosition : char
+	-blueSunPosition : char
+	-redSunAscendent : boolean
+	-redSunDescendent : boolean
+	--
+	+<<constructor>>StellarConfiguration(positionOfRedSun : char)
+	+AdvanceSuns() : void
+	-CheckMinorSunsPosition(minorSunAscendentPositionOne : char,\n minorSunAscendentPositionTwo : char,\nminorSunAscendentPositionThree : char) : void
+	-SetSunPhase() : void
+	+getYelloSunPosition() : int
+	+getRedSunPosition() : char
+	+getBlueSunPosition() : char
+	+GetRedSunIsInAscension() : boolean
+	+GetRedSunIsInDeclension() : boolean
+	+GetBlueSunIsInAscension() : boolean
+	+GetBlueSunIsInDeclension() : boolean 
+	-SetYellowSunPosition(sunPosition : int) : void
+	-SetRedSunPosition(sunPosition : char) : void
+	-SetBlueSunPosition(sunPosition : char) : void
+	-SetRedSunAscendent( sunAscension : boolean) : void
+	-SetRedSunDescendent(sunDescendent : boolean) : void
+	==
+	Author: David Klingenberg
+}
+
+class RandomEvent{
+	-currentEventKey : int
+	-currentEventLength : int
+	-currentEventDescription : int
+	--
+	+<<constructor>>RandomEvent(cEKey : int, cELength : int, cEDescription : int) : void
+	+setCurrentEventKey (cEKey : int) : void
+	+setCurrentEventLength (cELength :  int) : void
+	+setCurrentEventDescription(cEDescription : int) : void
+	+getCurrentEventKey () :  int
+	+getCurrentEventLength (): int
+	+getCurrentEventDescription() : int
+	==
+	Author: David Klingenberg
+}
+
+GameChart  *-- “<b>1..1</b>” RandomEvent
+GameChart  *-- “<b>1..1</b>”  StellarConfiguration
+
+@enduml
