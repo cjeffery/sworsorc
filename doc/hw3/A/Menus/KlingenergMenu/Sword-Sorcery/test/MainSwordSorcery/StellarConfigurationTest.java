@@ -15,9 +15,9 @@ import static org.junit.Assert.*;
  */
 public class StellarConfigurationTest {
     StellarConfiguration sun;
- 
+    int c = 0;
     public StellarConfigurationTest() {
-        sun = StellarConfiguration.GetStellarConfiguration('b');
+        sun = StellarConfiguration.GetStellarConfiguration('c');
     }
 
     /**
@@ -25,7 +25,10 @@ public class StellarConfigurationTest {
      */
     @Test
     public void testAdvanceSuns() {
+       
+        
         do {
+        
         System.out.println("\nAdvanceSuns");
         System.out.println("Red in ass:  " + sun.GetRedSunIsInAscension());
         System.out.println("Red in des:  " + sun.GetRedSunIsInDeclension());
