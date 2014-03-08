@@ -16,20 +16,24 @@ End Example
 David Klingenberg:
 /*   Remove Board. Replaced by MainMap class.
  *   Assuming we keep Providence. Your plant code will look like this for your overall diagram.
- *   Let me know if I need to wright definitions for the definition library. 
+ *   Let me know if I need to wright definitions for the definition library.
+ *
+ *   According to Dr. J the inheritance arrow points towards the superclass.
+ *   This seems ass backwards to me, that the MapHex class has the inheritance arrows pointing
+ *   at the hex class and the same thing applies to the DiplomacyHex class.
  */
  
 @startuml
 
-Game *-- MainMap :  1..1
+Game *-- “<b>1..1</b>” MainMap
 
 MainMap *-- “<b>1..*</b>” MapHex
-MapHex <|-- “<b>1..1</b>” Hex
+MapHex “<b>1..1</b>” -|>  Hex
 
-MainMap *-- “<b>1..25</b>” Providence
+Providence “<b>1..25</b>” -*  MainMap
 
 DiplomacyMap  *-- “<b>1..*</b>”  DiplomacyHex
-DiplomacyHex <|-- “<b>1..1</b>”  Hex
+Hex <|- “<b>1..1</b>” DiplomacyHex
 
 @enduml
 
@@ -203,15 +207,15 @@ class DiplomacyMap {
 +GetDiplomacyHex(String id) : DiplomacyHex 
 }
 
-Game *-- MainMap :  1..1
+Game *-- “<b>1..1</b>” MainMap
 
 MainMap *-- “<b>1..*</b>” MapHex
-MapHex <|-- “<b>1..1</b>” Hex
+MapHex “<b>1..1</b>” -|>  Hex
 
-MainMap *-- “<b>1..25</b>” Providence
+Providence “<b>1..25</b>” -*  MainMap
 
 DiplomacyMap  *-- “<b>1..*</b>”  DiplomacyHex
-DiplomacyHex <|-- “<b>1..1</b>”  Hex
+Hex <|- “<b>1..1</b>” DiplomacyHex
 
 @enduml
 
