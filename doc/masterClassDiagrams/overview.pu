@@ -7,7 +7,7 @@ Game *- "2..7" Player
 Game *- "0..*" Alliance 
 Game - Chart : The game finds chart data by\naccessing chart classes.
 Alliance - Player : An alliance links two\nplayers/NPC turns together
-Hex "0..*" -down-* MainMap
+MapHex "0..*" -down-* MainMap
 Hex <|-right- MapHex
 Stack -left-* MapHex
 MoveableUnit "0..*" -left-o Stack
