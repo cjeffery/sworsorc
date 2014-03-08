@@ -27,12 +27,12 @@ David Klingenberg:
 
 Game *-- “<b>1..1</b>” MainMap
 
-MainMap *-- “<b>1..*</b>” MapHex
+MainMap o-- “<b>1..*</b>” MapHex
 MapHex “<b>1..1</b>” -|>  Hex
 
-Providence “<b>1..25</b>” -*  MainMap
+Providence “<b>1..25</b>” -o  MainMap
 
-DiplomacyMap  *-- “<b>1..*</b>”  DiplomacyHex
+DiplomacyMap  o-- “<b>1..*</b>”  DiplomacyHex
 Hex <|- “<b>1..1</b>” DiplomacyHex
 
 @enduml
