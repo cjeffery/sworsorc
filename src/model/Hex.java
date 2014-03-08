@@ -81,4 +81,10 @@ public class Hex {
       return hexagon[6];
   }
   
+  public int GetIntID(){
+      int hexId;
+      hexId = Integer.parseInt(hexagon[0]);
+      return hexId;
+  }
+  
 }//class
