@@ -13,25 +13,25 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTKaroo implements TerrainType{
+public class TTKaroo extends TerrainType{
     public TTKaroo(){
         
     }
-
+    
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Cronk))return 1;
         else return 2;                
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Cronk))return 3;
         else return 2;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
     

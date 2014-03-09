@@ -13,26 +13,26 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTForest implements TerrainType{
+public class TTForest extends TerrainType{
     public TTForest(){
         
     }
-
+    
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Spiders))return 1;
         else if(unit.getRace().equals(Race.Elves)) return 2;
         else return 3;
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Spiders) || unit.getRace().equals(Race.Elves))return 3;
         else return 2;            
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
     

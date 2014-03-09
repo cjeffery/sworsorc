@@ -13,24 +13,24 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTWoods implements TerrainType{
+public class TTWoods extends TerrainType{
     public TTWoods(){
         
     }
-
+    
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Elves))return 1;
         else return 2;
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         return 2;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
     

@@ -13,26 +13,26 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTWater implements TerrainType{
+public class TTWater extends TerrainType{
     public TTWater(){
         
     }
-
+    
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.SwampCreature))return 2;
         else if(unit.getRace().equals(Race.KillerPenguin))return 1;
         else return 99;
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         if(unit.getRace().equals(Race.SwampCreature))return 2;
         else return 1;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
     

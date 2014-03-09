@@ -13,24 +13,24 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTRough implements TerrainType{
+public class TTRough extends TerrainType{
     public TTRough(){
         
     }
-
+    
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Dwarrows) || unit.getRace().equals(Race.Orc)) return 2;
         else return 3;
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         return 2;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
     

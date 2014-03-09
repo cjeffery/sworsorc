@@ -13,9 +13,9 @@ package ssterrain;
  */
 import Units.*;
 public interface HexEdge {
-    public double getMovementCost(Unit unit);
-    public double getCombatMultiplier(Unit unit);
-    public String getCombatEffect(Unit unit);
+    public double getMovementCost(MoveableUnit unit);
+    public double getCombatMultiplier(MoveableUnit unit);
+    public String getCombatEffect(MoveableUnit unit);
     public HexEdgeType getEdgeType();
     public int getEdge();
 }
