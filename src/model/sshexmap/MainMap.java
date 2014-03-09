@@ -21,6 +21,10 @@ public class MainMap extends HexMap {
         return new MapHex(h);
     }
     
+    public MapHex GetHex(String id) {
+        return (MapHex)super.GetHex(id);
+    }
+    
     public static MainMap GetInstance(){
       if (INSTANCE == null)
           INSTANCE =  new MainMap();

@@ -12,11 +12,12 @@ package ssterrain;
  * CS 383 Software Engineering
  */
 import Units.*;
-public class HEProvenceBorder implements HexEdge{
-    Hex hex;
+import sshexmap.MapHex;
+public class HEProvinceBorder extends HexEdge{
+    MapHex hex;
     int edge;
     
-    public HEProvenceBorder(Hex thisHex, int thisEdge){
+    public HEProvinceBorder(MapHex thisHex, int thisEdge){
         this.hex = thisHex;
         this.edge = thisEdge;
     }
@@ -38,7 +39,7 @@ public class HEProvenceBorder implements HexEdge{
 
     @Override
     public HexEdgeType getEdgeType() {
-        return HexEdgeType.ProvenceBoarder;
+        return HexEdgeType.ProvinceBorder;
     } 
 
     @Override
