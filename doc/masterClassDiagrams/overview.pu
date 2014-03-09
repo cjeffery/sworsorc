@@ -40,6 +40,7 @@ class MainMap #529292 {
 -CleanHex()
 -GetDoc() :  NodeList
 {static} GetMainMap() :  MainMap
++GetMapHex(String id) : MapHex
 }
 
 class Player #529292 {
