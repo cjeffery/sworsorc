@@ -13,6 +13,7 @@ public class ChatServer {
     //TODO: have clientObjects remove themselves on disconnect:
     protected static List<ClientObject> clientObjects; //"Packaged sockets"
     protected static int DEFAULT_PORT = 25565;
+    protected static String DEFAULT_IP = "76.178.139.129";
 
     //Legacy method, I think this will be replaced soon:
     public static void sendToAllClients(String handle, String message) {
@@ -46,8 +47,10 @@ public class ChatServer {
         ServerSocket listen = null;
         try {
             listen = new ServerSocket(DEFAULT_PORT);
+            //listen = new ServerSocket(DEFAULT_PORT, 0, InetAddress.getByName(DEFAULT_IP));
         } catch (Exception e) {
-            System.err.println("Error : While creating serversocket");
+            System.err.println("Error : While creating ServerSocket\n" + e);
+            System.exit(-1);
         }
 
         //Spins off new client connections:
@@ -59,7 +62,8 @@ public class ChatServer {
                 //The constructor of ClientObject will create the new threads:
                 clientObjects.add(new ClientObject(socket));
             } catch (Exception e) {
-
+                System.out.println("Server failed to accept client!");
+                break;
             }
         }
 

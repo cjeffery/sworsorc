@@ -31,15 +31,15 @@ public class MainMap {
     private HashMap <String, MapHex> mainMap = new HashMap();
     private String hexNumber, northHexNumber, northEastHexNumber, 
             southEastHexNumber, southHexNumber, southWestHexNumber,
-            northWestHexNumber, terrainKey, cityName;
-    private boolean cityHex, vortexHex;
+            northWestHexNumber, terrainKey, providenceName, hexName;
+    private boolean cityHex, vortexHex, castleHex;
     private int portalHex;
     private DocumentBuilderFactory factory; 
     private DocumentBuilder builder;
     private Document doc;
     private File file = new File("resources/MainMap.xml");
     private HashMap<String, ArrayList<String>> edgeDirectionList = new HashMap<>();
-    private ArrayList<String> edgeItemList;
+    
 
     
     private static MainMap INSTANCE;
@@ -170,7 +170,7 @@ public class MainMap {
     }//private void BuildmainMap(){
 
     private String GetCityName() {
-        return cityName;
+        return this.hexName;
     }
 
     private boolean GetCityHex() {
@@ -234,7 +234,7 @@ public class MainMap {
     }
 
     private void SetCityName(Node hexItem) throws DOMException {
-        cityName = hexItem.getTextContent();
+        this.hexName = hexItem.getTextContent();
     }
 
     private void SetCityHex() {

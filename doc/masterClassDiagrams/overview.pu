@@ -2,16 +2,15 @@
 hide circle
 title <b>Overview Class Diagram<b> Author: Keith Drew
 
-Game *-- Board
-Game *-- "2..7" Player
-Game *-- "0..*" Alliance 
-Game - Scenario : Scenario Initiates\nGame
-Scenario "14" -* DataController
+Game *- MainMap
+Game *- "2..7" Player
+Game *- "0..*" Alliance 
+Game - Chart : The game finds chart data by\naccessing chart classes.
 Alliance - Player : An alliance links two\nplayers/NPC turns together
-Province "25" -down-* Board
-Hex "0..*" -right-* Province
-Stack -right-* Hex
-MoveableUnit "0..*" -right-o Stack
+MapHex "0..*" -down-* MainMap
+Hex <|-right- MapHex
+Stack -left-* MapHex
+MoveableUnit "0..*" -left-o Stack
 
 class Game #529292 {
 -players[]
@@ -23,10 +22,25 @@ class Game #529292 {
 +Game( Scenario )
 }
 
-class Board #529292 {
--provinces[]
-+Display()
-+HighlightHex( hexID )
+class MainMap #529292 {
+ -HashMap <String, MapHex> mainMap
+ -String hexNumber, northHexNumber, northEastHexNumber, 
+            southEastHexNumber, southHexNumber, southWestHexNumber,
+            northWestHexNumber, terrainKey, providenceName, hexName;
+ -boolean cityHex, vortexHex, castleHex, capitalHex, townHex;
+-int portalHex
+ -DocumentBuilderFactory factory
+ -DocumentBuilder builder
+ -Document doc
+ -File file = new File("resources/MainMap.xml")
+ -HashMap<String, ArrayList<String>> edgeDirectionList
+-{static}MainMap INSTANCE
+-MainMap()
+-BuildmainMap()
+-CleanHex()
+-GetDoc() :  NodeList
+{static} GetMainMap() :  MainMap
++GetMapHex(String id) : MapHex
 }
 
 class Player #529292 {
@@ -40,15 +54,54 @@ class Alliance #529292 {
 +AlliedTurn()
 }
 
-class Province #529292 {
--name
--hexes[]
+class Hex #529292 {
+-String[] hexagon
+-Hex(String ID, String northHexID, String northEastHexID, String southEastHexID, 
+          String southHexID, String southWestHexID, String northWestHexID)
++GetID() : String
++GetIDofNorthEastHexagon() : String 
+-SetID(String ID)
+-SetIDofNorthEastHexagon(String ID)
 }
 
-class Hex #529292 {
--terrainType
--hexID
--
+class MapHex #529292 {
+-String hexName, terrainKey, providenceName;
+-boolean cityHex, vortexHex, castleHex, capitalHex, 
+townHex
+-int portalHex
+-HashMap<String, ArrayList<String>> hexEdgeMap
+-ArrayList<String> northList, northWestList, northEastList, 
+southList, southEastList, southWestList;
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence,
+                  HashMap<String, ArrayList<String>> edgesOfHex)
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
+                  HashMap<String, ArrayList<String>> edgesOfHex,String nameHex)
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
+                  HashMap<String, ArrayList<String>> edgesOfHex, boolean hexIsCity, 
+                  boolean hexIsCapital, boolean hexIsCastle, boolean hexIsTown, String nameHex)
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
+                  HashMap<String, ArrayList<String>> edgesOfHex, boolean hexVortex)
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
+                  HashMap<String,ArrayList<String>> edgesOfHex, int portalNumber)
++IsCapitalHex() : boolean
++IsCastleHex() : boolean
++IsCityHex() : boolean
++IsCityTownCastel() : boolean
++IsPortalHex() : boolean
++IsTownHex() : boolean 
++IsVortexHex() : boolean 
++ModifyTerrainCode(String keyterrain)
++RemoveHexEdgeAdditions(int edgedDirection,String hexEdgeCode)
 }
 
 class Stack #529292 {
@@ -68,10 +121,8 @@ class MoveableUnit #529292 {
 +move()
 }
 
-class Scenario #529292 {
-}
 
-class DataController #529292 {
+class Chart #529292 {
 -terrainChart
 -combatChart
 -randomChart

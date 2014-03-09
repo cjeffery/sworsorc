@@ -1,47 +1,112 @@
 @startuml
 hide circles
-title <b>Hex Class Diagram<b> Author: Ian Westrope
+title <b>Hex Class Diagram<b> Author: Ian Westrope, Keith Drew
+
+MainMap *-- "1..*" MapHex
+Hex <|-- MapHex
+Hex <|-- DiplomacyHex
+DiplomacyMap *-- "1..*" DiplomacyHex
+
+
+class MainMap #529292 {
+ -HashMap <String, MapHex> mainMap
+ -String hexNumber, northHexNumber, northEastHexNumber, 
+            southEastHexNumber, southHexNumber, southWestHexNumber,
+            northWestHexNumber, terrainKey, providenceName, hexName;
+ -boolean cityHex, vortexHex, castleHex, capitalHex, townHex;
+-int portalHex
+ -DocumentBuilderFactory factory
+ -DocumentBuilder builder
+ -Document doc
+ -File file = new File("resources/MainMap.xml")
+ -HashMap<String, ArrayList<String>> edgeDirectionList
+-{static}MainMap INSTANCE
+-MainMap()
+-BuildmainMap()
+-CleanHex()
+-GetDoc() :  NodeList
+{static} GetMainMap() :  MainMap
++GetMapHex(String id) : MapHex
+}
 
 class Hex #529292 {
--hexID
-+getTerrainDefenseBonus()
+-String[] hexagon
+-Hex(String ID, String northHexID, String northEastHexID, String southEastHexID, 
+          String southHexID, String southWestHexID, String northWestHexID)
++GetID() : String
++GetIDofNorthEastHexagon() : String 
+-SetID(String ID)
+-SetIDofNorthEastHexagon(String ID)
 }
 
-class VortexHex #529292 {
-+spawnVortex()
+class MapHex #529292 {
+-String hexName, terrainKey, providenceName;
+-boolean cityHex, vortexHex, castleHex, capitalHex, 
+townHex
+-int portalHex
+-HashMap<String, ArrayList<String>> hexEdgeMap
+-ArrayList<String> northList, northWestList, northEastList, 
+southList, southEastList, southWestList;
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence,
+                  HashMap<String, ArrayList<String>> edgesOfHex)
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
+                  HashMap<String, ArrayList<String>> edgesOfHex,String nameHex)
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
+                  HashMap<String, ArrayList<String>> edgesOfHex, boolean hexIsCity, 
+                  boolean hexIsCapital, boolean hexIsCastle, boolean hexIsTown, String nameHex)
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
+                  HashMap<String, ArrayList<String>> edgesOfHex, boolean hexVortex)
++MapHex(String id, String northHexID, String northEastHexID, 
+                  String southEastHexID, String southHexID, String southWestHexID, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
+                  HashMap<String,ArrayList<String>> edgesOfHex, int portalNumber)
++IsCapitalHex() : boolean
++IsCastleHex() : boolean
++IsCityHex() : boolean
++IsCityTownCastel() : boolean
++IsPortalHex() : boolean
++IsTownHex() : boolean 
++IsVortexHex() : boolean 
++ModifyTerrainCode(String keyterrain)
++RemoveHexEdgeAdditions(int edgedDirection,String hexEdgeCode)
 }
 
-class PlungeholeHex #529292 {
-+eatUnits()
+class DiplomacyMap #529292 {
+-HashMap <String, DiplomacyHex> DiplomacyMap
+-String hexNumber, northHexNumber, northEastHexNumber, 
+            southEastHexNumber, southHexNumber, southWestHexNumber,
+            northWestHexNumber, specialCode
+ -DocumentBuilderFactory factory;
+ -DocumentBuilder builder
+-Document doc
+-File file
+{static}DiplomacyMap INSTANCE
+-DiplomacyMap()
+-BuildDiplomacyMap()
+{static}GetDiplomacyMap() : DiplomacyMap
++GetDiplomacyHex(String id) : DiplomacyHex 
 }
 
-class Town #529292 {
--defenseRating
+class DiplomacyHex #529292 {
+-boolean playerHex, neturalHex
++public DiplomacyHex(String id, String northHexID, String northEastHexID, 
+                            String southEastHexID, String southHexID, String southWestHexID, 
+                            String northWestHexID, String specialHexCode)
++DiplomacyHex(String id, String northHexID, String northEastHexID, 
+                            String southEastHexID, String southHexID, String southWestHexID, 
+                            String northWestHexID, String specialHexCode)
+-SetPlayerHex()
+-SetNeturalHex()
++GetIsPlayerHex() : boolean 
++GetIsNeturalHex() : boolean 
 }
-
-class City #529292 {
--defenseRating
-}
-
-class Castle #529292 {
--defenseRating
-}
-
-class Capital #529292 {
--defenseRating
-}
-
-class TeleportHex #529292 {
--defenseRating
-}
-
-Hex <|-- VortexHex
-Hex <|-- PlungeholeHex
-Hex <|-- Town
-Hex <|-- City
-Hex <|-- Castle
-Hex <|-- Capital
-Hex <|-- TeleportHex
-
 
 @enduml

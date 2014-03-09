@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-//package MainSwordSorcery;
+package MainMapBuilder;
 
 import java.awt.List;
 import java.util.ArrayList;
@@ -18,31 +18,29 @@ import java.util.Map;
  * 
  *   Hex edges can have multiple attributes. For example a single hex edge could
  *   contain a Providence border, a bridge exit, a shoreline, and a gate.
- * 
- *   Email me if anyone has questions or need changes made.
  *   
- *   @author David Klingenberg 2/25/2014,  klin7456@vandals.uidaho.edu
+ *   @author David Klingenberg 2/25/2014
  * 
  ******************************************************************************/
-
-/* public enum TERRAIN {
-    CLEAR, BLASTED, BROKEN, CULTIVATED, TUNNEL, FOREST, GLACIER, KAROO, WATER,
-    MOUNTAIN, ROUGH, SWAMP, WOODS, VORTEX, 
-    PORTAL,
-    CITY, TOWN, CAPITAL, CASTLE, 
-    SPECIAL,
-    ROAD, FORD, BRIDGE
-} */
 
 
 public class MapHex extends Hex{
     private String hexName;
     private String terrainKey;
+    private String providenceName;
     private boolean cityHex = false;
-    private String cityName;
     private boolean vortexHex = false;
+    private boolean castleHex = false;
+    private boolean capitalHex = false;
+    private boolean townHex = false;
     private int portalHex = 0;
     private HashMap<String, ArrayList<String>> hexEdgeMap = new HashMap<>();
+    private ArrayList<String> northList;
+    private ArrayList<String> northWestList;
+    private ArrayList<String> northEastList;
+    private ArrayList<String> southList;
+    private ArrayList<String> southEastList;
+    private ArrayList<String> southWestList;
     //ArrayList<Integer> hexEdgeAdditions = new ArrayList<>();
     
      /** 
@@ -63,7 +61,7 @@ public class MapHex extends Hex{
     
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
-                  String northWestHexID, String keyTerrain,
+                  String northWestHexID, String keyTerrain, String nameProvidence,
                   HashMap<String, ArrayList<String>> edgesOfHex){
         
         super(id, northHexID, northEastHexID, southEastHexID, 
@@ -71,7 +69,7 @@ public class MapHex extends Hex{
         
         setHexEdgeList(edgesOfHex);        
         SetKeyterrain(keyTerrain);
-                  
+        SetProvidenceName(nameProvidence);
     }
 
     
@@ -93,7 +91,7 @@ public class MapHex extends Hex{
      */
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
-                  String northWestHexID, String keyTerrain, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
                   HashMap<String, ArrayList<String>> edgesOfHex,String nameHex){
         
         super(id, northHexID, northEastHexID, southEastHexID, 
@@ -102,7 +100,7 @@ public class MapHex extends Hex{
         setHexEdgeList(edgesOfHex);
         SetKeyterrain(keyTerrain);
         SetHexName(nameHex);
-        
+        SetProvidenceName(nameProvidence);
     }
 
     
@@ -126,9 +124,9 @@ public class MapHex extends Hex{
      */
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
-                  String northWestHexID, String keyTerrain, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
                   HashMap<String, ArrayList<String>> edgesOfHex, boolean hexIsCity, 
-                  String nameCity){
+                  boolean hexIsCapital, boolean hexIsCastle, boolean hexIsTown, String nameHex){
         
         super(id, northHexID, northEastHexID, southEastHexID, southHexID,
                 southWestHexID, northWestHexID);
@@ -136,7 +134,23 @@ public class MapHex extends Hex{
         setHexEdgeList(edgesOfHex);
         SetKeyterrain(keyTerrain);
         SetCityHex(hexIsCity);
-        SetCityName(nameCity);
+        this.SetCastleHex(hexIsCastle);
+        SetCapitalHex(hexIsCapital);
+        SetTownHex(hexIsTown);
+        SetHexName(nameHex);
+        SetProvidenceName(nameProvidence);
+    }
+
+    private void SetCapitalHex(boolean hexIsCapital) {
+        this.capitalHex = hexIsCapital;
+    }
+
+    private void SetTownHex(boolean hexIsTown) {
+        this.townHex = hexIsTown;
+    }
+    
+    private void SetCastleHex(boolean hexIsCastleHex) {
+        castleHex = hexIsCastleHex;
     }
     
     /** This constructor creates a vortex hex.
@@ -155,7 +169,7 @@ public class MapHex extends Hex{
      */
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
-                  String northWestHexID, String keyTerrain, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
                   HashMap<String, ArrayList<String>> edgesOfHex, boolean hexVortex){
         
         super(id, northHexID, northEastHexID, southEastHexID, southHexID,
@@ -163,6 +177,8 @@ public class MapHex extends Hex{
         
         setHexEdgeList(edgesOfHex);
         SetIsVortex(hexVortex);
+        this.SetKeyterrain(keyTerrain);
+        SetProvidenceName(nameProvidence);
     }
 
     /** This constructor creates a numbered portal hex.
@@ -181,14 +197,20 @@ public class MapHex extends Hex{
      */
     public MapHex(String id, String northHexID, String northEastHexID, 
                   String southEastHexID, String southHexID, String southWestHexID, 
-                  String northWestHexID, String keyTerrain, 
+                  String northWestHexID, String keyTerrain, String nameProvidence, 
                   HashMap<String,ArrayList<String>> edgesOfHex, int portalNumber){
         
         super(id, northHexID, northEastHexID, southEastHexID, southHexID,
                 southWestHexID, northWestHexID);
         
+        this.SetKeyterrain(keyTerrain);
         setHexEdgeList(edgesOfHex);      
         SetPortalNumber(portalNumber);
+        SetProvidenceName(nameProvidence);
+    }
+
+    private void SetProvidenceName(String nameProvidence) {
+        providenceName = nameProvidence;
     }
 
     private void SetIsVortex(boolean hexVortex) {
@@ -197,15 +219,6 @@ public class MapHex extends Hex{
   
     private void SetPortalNumber(int portalNumber) {
         portalHex = portalNumber;
-    }
-    
-    /*private void InitialiseHexEdgeAdditions() {            
-        for (int i = 0; i < 5; i++) 
-            hexEdgeAdditions.add(0);
-    }*/
-
-    private void SetCityName(String nameCity) {
-        cityName = nameCity;
     }
 
     private void SetCityHex(boolean hexIsCity) {
@@ -223,27 +236,79 @@ public class MapHex extends Hex{
     
     private void setHexEdgeList(HashMap<String, ArrayList<String>> edgesOfHex) {
         hexEdgeMap = new HashMap<>();
-        hexEdgeMap = edgesOfHex;
+        
+        if (edgesOfHex.containsKey("northWestEdge")){
+            this.northWestList = new ArrayList(edgesOfHex.get("northWestEdge"));
+            hexEdgeMap.put("northWestEdge", northWestList);
+        }
+        
+        if (edgesOfHex.containsKey("northEdge")){
+            this.northList = new ArrayList(edgesOfHex.get("northEdge"));
+            hexEdgeMap.put("northEdge", northList);
+        }
+        
+        if (edgesOfHex.containsKey("northEastEdge")){
+            this.northEastList = new ArrayList(edgesOfHex.get("northEastEdge"));
+            hexEdgeMap.put("northEastEdge", northEastList);
+        }
+        
+        if (edgesOfHex.containsKey("southWestEdge")){
+            this.southWestList = new ArrayList(edgesOfHex.get("southWestEdge"));
+            hexEdgeMap.put("southWestEdge", southWestList);
+        }
+        
+        if (edgesOfHex.containsKey("southEdge")){
+            this.southList = new ArrayList(edgesOfHex.get("southEdge"));
+            hexEdgeMap.put("southEdge", southList);
+        }
+        
+        if (edgesOfHex.containsKey("southEastEdge")){
+            this.southEastList = new ArrayList(edgesOfHex.get("southEastEdge"));
+            hexEdgeMap.put("southEastEdge", southEastList);
+        }
+        
+        
+        //hexEdgeMap = new HashMap<>();
+        //hexEdgeMap = edgesOfHex;
+    }
+    public String GetProvidenceName(){
+        return this.providenceName;
     }
     
-    public boolean GetIsPortalHex(){
+    public int GetPortalNumber(){
+        return this.portalHex;
+    }
+    
+    public boolean IsPortalHex(){
         if (portalHex > 0)            
           return true;
         else
             return false;
     }
     
+    public boolean IsCastleHex(){
+        return castleHex;
+    }
     
+    public boolean IsCapitalHex(){
+        return capitalHex;
+    }
     
-    public boolean GetIsVortexHex(){
+    public boolean IsTownHex(){
+        return townHex;
+    }
+    
+    public boolean IsCityTownCastel(){
+        if (this.capitalHex  || this.castleHex || this.townHex)
+            return true;
+        return false;
+    }
+    
+    public boolean IsVortexHex(){
         return vortexHex;
     }
     
-    public String GetCityName (){
-        return cityName;
-    }
-    
-    public boolean GetIsCityHex (){
+    public boolean IsCityHex (){
         return cityHex;
     }
   
@@ -260,10 +325,6 @@ public class MapHex extends Hex{
             return "Bridge Over Water";
         if ("Bro".equals(terrainKey))
             return "Broken";
-        if ("Cap".equals(terrainKey))
-            return "Capital";
-        if ("Cas".equals(terrainKey))
-            return "Castle";
         if ("Ci".equals(terrainKey))
             return "City";
         if ("Cl".equals(terrainKey))
@@ -272,8 +333,6 @@ public class MapHex extends Hex{
             return "Cultivated";
         if ("D".equals(terrainKey))
             return "Dragon Tunnel Complex";
-        if ("Ford".equals(terrainKey))
-            return "Ford";
         if ("Fore".equals(terrainKey))
             return "Forest";
         if ("G".equals(terrainKey))
@@ -288,14 +347,10 @@ public class MapHex extends Hex{
             return "Portal";
         if ("R".equals(terrainKey))
             return "Rough";
-        if ("Roa".equals(terrainKey))
-            return "Road";
         if ("Sh".equals(terrainKey))
             return "Special Hex";
         if ("Sw".equals(terrainKey))
             return "Swamp";
-        if ("To".equals(terrainKey))
-            return "Town";
         if ("V".equals(terrainKey))
             return "Vortex";
         if ("Wo".equals(terrainKey))
@@ -304,7 +359,7 @@ public class MapHex extends Hex{
         return null;
     }
 
-    public String getHexName(  ) { 
+    public String GetHexName(){ 
         return hexName;
     }
    
@@ -312,7 +367,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(0)){
-             descriptionsOfHexSide.add(GetHexSideDescription(s));
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -322,7 +377,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(1)){
-             descriptionsOfHexSide.add(GetHexSideDescription(s));
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -332,7 +387,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(2)){
-             descriptionsOfHexSide.add(GetHexSideDescription(s));
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -342,7 +397,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(3)){
-             descriptionsOfHexSide.add(GetHexSideDescription(s));
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -352,7 +407,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(4)){
-             descriptionsOfHexSide.add(GetHexSideDescription(s));
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -362,7 +417,7 @@ public class MapHex extends Hex{
         ArrayList<String> descriptionsOfHexSide = new ArrayList<>();
 
          for (String s : hexEdgeMap.get(5)){
-             descriptionsOfHexSide.add(GetHexSideDescription(s));
+             descriptionsOfHexSide.add(GetHexSidDescription(s));
          }
          
          return descriptionsOfHexSide;                 
@@ -373,11 +428,11 @@ public class MapHex extends Hex{
      * 
      * @return Hex edge description.
      */ 
-    public String GetHexSideDescription(String hexSideCode) {
-        if ("Ri".equals(hexSideCode))
-            return "Riverbank";
-        if ("La".equals(hexSideCode))
-            return "Shoreline";
+    public String GetHexSidDescription(String hexSideCode) {
+        if ("Ro".equals(hexSideCode))
+            return "Road";
+        if ("Ford".equals(hexSideCode))
+            return "Ford";
         if ("Br".equals(hexSideCode)) 
             return "Bridge Entrance/Exit";
         if ("Ga".equals(hexSideCode))
@@ -417,29 +472,13 @@ public class MapHex extends Hex{
         return hexEdgeMap.get("southEdge");
     }
     
-    public ArrayList<String> getSouthWestHexEdgeCodes () { 
+    public ArrayList<String> getSoutWesthexEdgeCodes () { 
         return hexEdgeMap.get("southWestEdge");
     }
     
     public ArrayList<String> getNorthWestHexEdgeCodes () { 
         return hexEdgeMap.get("northWestEdge");
     }
-    
-    /** return the appropriate HexEdge codes based on the passed in direction
-     * where 0 is NE, and 5 is SE.
-     */
-    public ArrayList<String> getHexEdgeCodes(int direction) {
-        switch(direction) {
-            case 0: return getNorthEastHexEdgeCodes();
-            case 1: return getNorthHexEdgeCodes();
-            case 2: return getNorthWestHexEdgeCodes();
-            case 3: return getSouthWestHexEdgeCodes();
-            case 4: return getSouthHexEdgeCodes();
-            case 5: return getSouthEastHexEdgeCodes();
-            default: assert false; return null;
-        }
-    }
-    
      /**
      * This method will allow the addition of new conditions on hex edges. These 
      * additions can be caused by spells affecting hexes.  For example the 

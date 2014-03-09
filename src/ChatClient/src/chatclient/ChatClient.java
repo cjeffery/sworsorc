@@ -183,9 +183,6 @@ public class ChatClient {
             if (consoleIn != null) {
                 consoleIn.close();
             }
-            //if (streamOut != null) {
-              //  console.close();
-            //}
             if (socket != null) {
                 socket.close();
             }
@@ -211,15 +208,7 @@ public class ChatClient {
         username = clientData.getUsername();
 
         ChatClient client = null;
-        if (args.length != 2) {
-            System.out.println("Usage: ChatClient host port");
-            System.out.println("Attempting defualt connection!");
-
-            client = new ChatClient(ipAddress, 25565);
-        } else {
-            client = new ChatClient(args[0], Integer.parseInt(args[1]));
-        }
-
+        client = new ChatClient(ipAddress, 25565);
     }
 
 }

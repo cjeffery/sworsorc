@@ -2,14 +2,14 @@
 hide circle
 title <b>Master Class Diagram<b> Authors: Keith Drew, Ian Westrope
 
-Game *-- Board
+Game *-- MainMap
 Game *-- "2..7" Player
 Game *-- "0..*" Alliance 
 Game - Scenario : Scenario Initiates\nGame
 Scenario "14" -* StaticDataStructure
 Alliance <|-down- NPCAlliance
 Alliance - Player : An alliance links two\nplayers/NPC turns together
-Province "25" -down-* Board
+Province "25" -down-* MainMap
 Hex "0..*" -down-* Province
 SpecialHex -up-|> Hex
 TeleportHex -up-|> SpecialHex
@@ -54,7 +54,7 @@ GameDiplomaticGroupChart --up-|> GameChart
 class Game #529292 {
 }
 
-class Board #529292 {
+class MainMap #529292 {
 }
 
 class Player #529292 {
