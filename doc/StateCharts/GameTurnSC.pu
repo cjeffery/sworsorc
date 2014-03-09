@@ -1,6 +1,7 @@
 ' Keith Drew - Statechart for HW 5
 ' For the general game turn
 @startuml
+title StateChart for phases of game-play by Keith Drew
 [*] --> RandomEventDetermination : Begin Game
 RandomEventDetermination : Determine Event, Apply Effects
 
