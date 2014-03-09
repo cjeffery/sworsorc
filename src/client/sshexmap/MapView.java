@@ -1,3 +1,5 @@
+package sshexmap;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package MainMapBuilder;
+package sshexmap;
 
 import java.io.File;
 import java.io.IOException;
