@@ -312,7 +312,7 @@ public class MainMap {
             int hexId = Integer.parseInt( sourceHex.GetHexName() );
             // If the 2nd most significant digit of the hex id is even...
             if( (hexId/100)%2 == 0 )
-            {
+            {   // Check if north hex is in the list of available moves
                 if( !validHexes.contains( GetMapHex( Integer.toString(hexId -1))))
                 {
                     // isValidEdge() and isValidHex() need to be written.
@@ -324,6 +324,77 @@ public class MainMap {
                                 moveAllowance, /*- function call for move modification */
                                 validHexes);
                     }
+
+                }
+                // Check if northeast hex is in list of available moves...
+                if( !validHexes.contains( GetMapHex( Integer.toString(hexId -1))))
+                {
+                    // isValidEdge() and isValidHex() need to be written.
+                    if( isValidEdge() && isValidHex() )
+                    {
+                        validHexes.add(GetMapHex( Integer.toString(hexId-1)));
+                        MovementCalculator(GetMapHex(Integer.toString(hexId-1)),
+                                movingUnit, 
+                                moveAllowance, /*- function call for move modification */
+                                validHexes);
+                    }
+
+                }
+                // Check if southeast hex is in list of available moves
+                if( !validHexes.contains( GetMapHex( Integer.toString(hexId -1))))
+                {
+                    // isValidEdge() and isValidHex() need to be written.
+                    if( isValidEdge() && isValidHex() )
+                    {
+                        validHexes.add(GetMapHex( Integer.toString(hexId-1)));
+                        MovementCalculator(GetMapHex(Integer.toString(hexId-1)),
+                                movingUnit, 
+                                moveAllowance, /*- function call for move modification */
+                                validHexes);
+                    }
+
+                }
+                // Check if south hex is in list of available moves...
+                if( !validHexes.contains( GetMapHex( Integer.toString(hexId -1))))
+                {
+                    // isValidEdge() and isValidHex() need to be written.
+                    if( isValidEdge() && isValidHex() )
+                    {
+                        validHexes.add(GetMapHex( Integer.toString(hexId-1)));
+                        MovementCalculator(GetMapHex(Integer.toString(hexId-1)),
+                                movingUnit, 
+                                moveAllowance, /*- function call for move modification */
+                                validHexes);
+                    }
+
+                }
+                // Check if south west hex is in list of available moves...
+                if( !validHexes.contains( GetMapHex( Integer.toString(hexId -1))))
+                {
+                    // isValidEdge() and isValidHex() need to be written.
+                    if( isValidEdge() && isValidHex() )
+                    {
+                        validHexes.add(GetMapHex( Integer.toString(hexId-1)));
+                        MovementCalculator(GetMapHex(Integer.toString(hexId-1)),
+                                movingUnit, 
+                                moveAllowance, /*- function call for move modification */
+                                validHexes);
+                    }
+
+                }
+                // Check if north west hex is in list of available moves...kanye lol...
+                if( !validHexes.contains( GetMapHex( Integer.toString(hexId -1))))
+                {
+                    // isValidEdge() and isValidHex() need to be written.
+                    if( isValidEdge() && isValidHex() )
+                    {
+                        validHexes.add(GetMapHex( Integer.toString(hexId-1)));
+                        MovementCalculator(GetMapHex(Integer.toString(hexId-1)),
+                                movingUnit, 
+                                moveAllowance, /*- function call for move modification */
+                                validHexes);
+                    }
+
                 }
                 
             }
@@ -335,8 +406,6 @@ public class MainMap {
         }
         
     }// End MovementCalculator
-        
-    
     
     
 }// End MainMap class
