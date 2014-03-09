@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package sshexmap;
 
 /**
@@ -11,80 +5,61 @@ package sshexmap;
  * @author David
  */
 public class Hex {
+    private String ID;
+ 
+    public Hex(String ID) {
+        SetID(ID);
+    }
+
+    Hex() {}
+    void SetID(String ID){
+        this.ID = ID;
+    } 
+
     
-  private String[] hexagon = new String[7];
+    public String GetID(){
+        return ID;
+    }
   
-  public Hex(String ID, String northHexID, String northEastHexID, String southEastHexID, 
-          String southHexID, String southWestHexID, String northWestHexID){
-      SetID(ID);
-      SetIDofNorthHexagon(northHexID);
-      SetIDofNorthEastHexagon(northEastHexID);
-      SetIDofSouthEastHexagon(southEastHexID);
-      SetIDofSouthHexagon(southHexID);
-      SetIDofSouthWestHexagon(southWestHexID);
-      SetIDofNorthWestHexagon(northWestHexID);
-  }
+    public String GetNeighborID(int direction) {
+        int[] coords = GetCoords();
+        int x = coords[0], y = coords[1];
+        switch(direction) {
+            case 0: //NE
+                y++;
+                x -= (x%2 == 1) ? 0 : 1;
+                break;
+            case 1: //North
+                x--;
+                break;
+            case 2:
+                y--;
+                x -= (x%2 == 1) ? 0 : 1;
+                break;
+            case 3:
+                y--;
+                x += (x%2 == 1) ? 1 : 0;
+                break;             
+            case 4:
+                x++;
+                break;
+            case 5:
+                y++;
+                x += (x%2 == 1) ? 1 : 0;
+                break;                
+        }
+        return HexMap.GetIDFromCoords(x,y);
+    }
+  
+    public int[] GetCoords() {
+        int[] res = new int[2];
+        res[0] = GetIntID() / 100;
+        res[1] = GetIntID() % 100;
+        return res;
+    }
+ 
 
-  private void SetID(String ID){
-      hexagon[0] = ID;
-  } 
-  
-  private void SetIDofNorthHexagon(String ID){
-      hexagon[1] = ID;
-  }
-  
-  private void SetIDofNorthEastHexagon(String ID){
-      hexagon[2] = ID;
-  }
-  
-  private void SetIDofSouthEastHexagon(String ID){
-      hexagon[3] = ID;
-  }
-  
-  private void SetIDofSouthHexagon(String ID){
-      hexagon[4] = ID;
-  }
-   
-  private void SetIDofSouthWestHexagon(String ID){
-      hexagon[5] = ID;
-  }
-
-  private void SetIDofNorthWestHexagon(String ID){
-      hexagon[6] = ID;
-  }
-  
-  public String GetID(){
-      return hexagon[0];
-   }
-  
-  public String GetIDofNorthHexagon(){
-      return hexagon[1];
-  }
-  
-  public String GetIDofNorthEastHexagon(){
-      return hexagon[2];
-  }
-  
-  public String GetIDofSouthEastHexagon(){
-      return hexagon[3];
-  }
-  
-  public String GetIDofSouthHexagon(){
-      return hexagon[4];
-  }
-   
-  public String GetIDofSouthWestHexagon(){
-     return hexagon[5];
-  }
-
-  public String GetIDofNorthWestHexagon(){
-      return hexagon[6];
-  }
-  
-  public int GetIntID(){
-      int hexId;
-      hexId = Integer.parseInt(hexagon[0]);
-      return hexId;
-  }
-  
-}//class
+    public int GetIntID(){
+        return Integer.parseInt(ID);
+    }  
+}

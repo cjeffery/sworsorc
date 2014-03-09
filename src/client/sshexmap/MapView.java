@@ -58,7 +58,7 @@ public class MapView extends JPanel {
                     if(edge == 0)
                         hp.paintHex(g2, map.GetHex(col,row));
                     else
-                        hp.paintEdges(g2, map.GetHex(col,row));
+                        ;//hp.paintEdges(g2, map.GetHex(col,row));
                     g2.translate(0, height);
                 }
             }
@@ -125,7 +125,7 @@ public class MapView extends JPanel {
         }
     }
     
-    private IGameMap map;
+    private HexMap map;
     private HexPainter hp;
     public MapSurface surface;
     public TreeSet<String> highlightSet;
@@ -136,7 +136,7 @@ public class MapView extends JPanel {
      * @param map The map to show. Either a world map or diplomacy map
      * @throws IOException 
      */
-    public MapView(IGameMap map) throws IOException {
+    public MapView(HexMap map) throws IOException {
         super(new BorderLayout());
         this.highlightSet = new TreeSet<String>();
         this.map = map;
@@ -159,7 +159,7 @@ public class MapView extends JPanel {
     public String hexAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
-        return MainMap.HexXYToString(hexX, hexY);
+        return HexMap.GetIDFromCoords(hexX, hexY);
     }
     
     /** 

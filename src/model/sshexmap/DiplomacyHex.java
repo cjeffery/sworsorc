@@ -1,10 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package sshexmap;
+
+import java.util.ArrayList;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import ssterrain.TerrainType;
 
 /**
  *
@@ -13,30 +12,41 @@ package sshexmap;
 public class DiplomacyHex extends Hex {
     private boolean playerHex = false;
     private boolean neturalHex = false;
-    
-    public DiplomacyHex(String id, String northHexID, String northEastHexID, 
-                            String southEastHexID, String southHexID, String southWestHexID, 
-                            String northWestHexID, String specialHexCode) {
-        super(id, northHexID, northEastHexID, southEastHexID, southHexID, southWestHexID, northWestHexID);
-        
-        if ("1".equals(specialHexCode))
-            SetPlayerHex();
-        if ("2".equals(specialHexCode))
-            SetNeturalHex();
+
+    public DiplomacyHex(Node hex) {
+        NodeList hexList = hex.getChildNodes();
+        for(int i = 0; i < hexList.getLength(); i++) {
+            Node hexItem = hexList.item(i);
+            if(hexItem.getNodeType() != Node.ELEMENT_NODE)
+                continue;
+            String contents = hexItem.getTextContent();
+            switch(hexItem.getNodeName()) {
+                case "hexNumber":
+                    SetID(contents);
+                    break;
+                case "specialHex":
+                    if(contents.equals("1"))
+                        SetPlayerHex();
+                    if(contents.equals("2"))
+                        SetNeutralHex();
+                    break;
+            }
+        }
     }
     
-    public DiplomacyHex(String ID, String northHexID, String northEastHexID, 
-                            String southEastHexID, String southHexID, String southWestHexID, 
-                            String northWestHexID) {
-        super(ID, northHexID, northEastHexID, southEastHexID, southHexID, southWestHexID, northWestHexID);
-        
+    public DiplomacyHex(String hexNumber, String specialHex) {
+        SetID(hexNumber);
+        if(specialHex.equals("1"))
+            SetPlayerHex();
+        if(specialHex.equals("2"))
+            SetNeutralHex();       
     }
         
     private void SetPlayerHex(){
         playerHex = true;
     }
     
-    private void SetNeturalHex(){
+    private void SetNeutralHex(){
         neturalHex = true;
     } 
     
@@ -47,5 +57,5 @@ public class DiplomacyHex extends Hex {
     public boolean GetIsNeturalHex(){
         return neturalHex;
     }
-    
+        
 }
