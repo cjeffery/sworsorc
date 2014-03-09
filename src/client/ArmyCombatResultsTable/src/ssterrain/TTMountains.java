@@ -19,19 +19,19 @@ public class TTMountains implements TerrainType{
     }
 
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Dwarrows) || unit.getRace().equals(Race.Orc))return 2;
         else return 3;
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Dwarrows))return 4;
         else return 3;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
     

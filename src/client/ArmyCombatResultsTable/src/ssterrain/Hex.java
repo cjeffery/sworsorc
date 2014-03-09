@@ -74,7 +74,7 @@ public class Hex {
         return thisEdge;
     }
     
-    public double getMovementCost(Unit unit){
+    public double getMovementCost(MoveableUnit unit){
         double move = terrainType.getMovementCost(unit);
         double override = 100;
         if(improvements.size() > 0)
@@ -88,7 +88,7 @@ public class Hex {
         return move;
     }
     
-    public double getCombatMultiplier(Unit unit){
+    public double getCombatMultiplier(ArmyUnit unit){
         double mult = 1;
         mult *= terrainType.getCombatMultiplier(unit);
         if(improvements.size() > 0)

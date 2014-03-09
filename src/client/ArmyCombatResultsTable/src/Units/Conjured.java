@@ -11,7 +11,7 @@ package Units;
  * @author Matt
  * More will go here but this is good for now
  */
-public class Conjured extends Unit{
+public class Conjured extends ArmyUnit{
     protected int lifeCost;
 
     public Conjured() {

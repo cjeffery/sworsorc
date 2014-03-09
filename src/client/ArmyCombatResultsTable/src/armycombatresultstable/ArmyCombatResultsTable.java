@@ -22,19 +22,19 @@ import Units.*;
         
 public class ArmyCombatResultsTable {
     
-    public static int [] PrepareAttackResults(ArrayList<Unit> attackers, ArrayList<Unit> defenders, Hex defHex){
+    public static int [] PrepareAttackResults(ArrayList<ArmyUnit> attackers, ArrayList<ArmyUnit> defenders, Hex defHex){
         int atk = 0;
         int def = 0;
         int index;
         double ratio;
         
-        for (Unit attacker : attackers) {
+        for (ArmyUnit attacker : attackers) {
             atk += attacker.getStrength();
         }
         
         System.out.println("Total Attackers Strength: " + atk);
         
-        for (Unit defender : defenders){
+        for (ArmyUnit defender : defenders){
             def += defender.getStrength();
         }
         

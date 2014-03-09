@@ -13,7 +13,7 @@ package Units;
  * Ranged unit properties will go here
  */
 import ssterrain.*;
-public class RangedLandUnit extends Unit{
+public class RangedLandUnit extends ArmyUnit{
     RangedLandUnit(){
         super();
     }

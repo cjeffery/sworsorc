@@ -13,7 +13,7 @@ package Units;
  * @author matt
  * More will go here but this is good for now
  */
-public class LandUnit extends Unit{
+public class LandUnit extends ArmyUnit{
     
     
     public LandUnit() {

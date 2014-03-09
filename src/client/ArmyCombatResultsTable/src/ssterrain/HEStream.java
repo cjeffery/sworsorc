@@ -23,7 +23,7 @@ public class HEStream implements HexEdge{
     }
 
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         ArrayList<HexEdgeType> thisEdge = hex.getEdgeType(edge);
         Boolean aBridge = false;
         for(int i = 0; i < thisEdge.size(); i++)
@@ -33,12 +33,12 @@ public class HEStream implements HexEdge{
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         return 2;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
 

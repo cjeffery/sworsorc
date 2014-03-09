@@ -19,20 +19,20 @@ public class TTSwamp implements TerrainType{
     }
 
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Cronk))return 2;
         else if(unit.getRace().equals(Race.SwampCreature))return 1;
         else return 3;
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         if(unit.getRace().equals(Race.SwampCreature))return 3;
         else return 2;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
     

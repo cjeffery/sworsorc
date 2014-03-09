@@ -21,19 +21,19 @@ public class ITTDragonTunnel implements ImprovedTerrainType{
     }
 
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Dragon))return 1;
         else return 2;
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Dragon))return 4;
         else return 1;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "Dragon Tunnel Complex";
     }
     
@@ -43,7 +43,7 @@ public class ITTDragonTunnel implements ImprovedTerrainType{
     }
 
     @Override
-    public double getMovementOverride(Unit unit) {
+    public double getMovementOverride(MoveableUnit unit) {
         return 0;
     }
     
