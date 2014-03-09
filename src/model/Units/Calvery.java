@@ -10,7 +10,7 @@ package Units;
  *
  * @author matt
  */
-public class Calvery extends Unit{
+public class Calvery extends ArmyUnit{
     
     Calvery(){
         super();

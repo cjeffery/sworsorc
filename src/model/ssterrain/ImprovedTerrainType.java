@@ -13,8 +13,8 @@ package ssterrain;
  */
 import Units.*;
 public interface ImprovedTerrainType {
-    public double getMovementCost(Unit unit);
-    public double getCombatMultiplier(Unit unit);
-    public String getCombatEffect(Unit unit);
-    public double getMovementOverride(Unit unit);
+    public double getMovementCost(MoveableUnit unit);
+    public double getCombatMultiplier(MoveableUnit unit);
+    public String getCombatEffect(MoveableUnit unit);
+    public double getMovementOverride(MoveableUnit unit);
 }

@@ -6,18 +6,18 @@
 
 package Units;
 
-
-
 /**
  *
  * @author matt
- * More will go here but this is good for now
  */
-public class LandUnit extends ArmyUnit{
-    
-    
-    public LandUnit() {
+public class PikeMan extends LandUnit {
+    public PikeMan(){
         super();
+        strength = 6;
+        movement = 3;
+        demoralizedStrength = 3;
+        ranged = false;
     }
+    
     
 }

@@ -4,17 +4,21 @@
  * and open the template in the editor.
  */
 
-package ssterrain;
+package Units;
 
 /**
  *
  * @author John Goettsche
  * CS 383 Software Engineering
  */
-import Units.*;
-public interface TerrainType {
-    public double getMovementCost(MoveableUnit unit);
-    public double getCombatMultiplier(MoveableUnit unit);
-    public String getCombatEffect(MoveableUnit unit);
-    
+public enum Race {
+    Cronk,
+    Dragon,
+    Dwarrows,
+    Elves,
+    Human,
+    KillerPenguin,
+    Orc,
+    Spiders,
+    SwampCreature
 }

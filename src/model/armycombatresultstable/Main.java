@@ -32,8 +32,8 @@ public class Main {
         PikeMan unit2 = new PikeMan();
         HeavySword unit3 = new HeavySword();
         
-        ArrayList<Unit> attackers = new ArrayList<>();
-        ArrayList<Unit> defenders = new ArrayList<>();
+        ArrayList<ArmyUnit> attackers = new ArrayList<>();
+        ArrayList<ArmyUnit> defenders = new ArrayList<>();
         
         unit1.setRace(Race.Human);
         unit2.setRace(Race.Cronk);

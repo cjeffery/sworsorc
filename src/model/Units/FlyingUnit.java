@@ -13,7 +13,7 @@ package Units;
  * Things like properties that flying units have that Land units don't
  */
 
-public class FlyingUnit extends Unit{
+public class FlyingUnit extends ArmyUnit{
         
     public FlyingUnit(){
         super();

@@ -16,19 +16,19 @@ public class TTBlasted implements TerrainType{
     }
 
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         if(unit.getUnitType().equals(UnitType.Fighter)) return 3;
         else if(unit.getUnitType().equals(UnitType.MagicUser)) return 2;
         else return 99;
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         return 1;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
     

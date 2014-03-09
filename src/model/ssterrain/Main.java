@@ -26,7 +26,7 @@ public class Main {
         hex1.setTerrainType(tt1);
         ImprovedTerrainType itt1 = new ITTCastle(hex1);
         hex1.addImprovement(itt1);
-        Unit unit1 = new Unit();
+        ArmyUnit unit1 = new ArmyUnit();
         unit1.setRace(Race.Human);
         System.out.println(unit1.getRace().toString() + " moved into a hex that contains: ");
         if(hex1.getImprovements().size() > 0)
@@ -46,7 +46,7 @@ public class Main {
         ImprovedTerrainType itt3 = new ITTCity(hex2);
         hex2.addImprovement(itt3);
         
-        Unit unit2 = new Unit();
+        ArmyUnit unit2 = new ArmyUnit();
         unit2.setRace(Race.Orc);
         unit2.setUnitType(UnitType.Character);
         System.out.println(unit2.getRace().toString() + " moved into a hex that contains: ");

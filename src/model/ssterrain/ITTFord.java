@@ -20,17 +20,17 @@ public class ITTFord implements ImprovedTerrainType{
     }
 
     @Override
-    public double getMovementCost(Unit unit) {
+    public double getMovementCost(MoveableUnit unit) {
         return 3;
     }
 
     @Override
-    public double getCombatMultiplier(Unit unit) {
+    public double getCombatMultiplier(MoveableUnit unit) {
         return 0.5;
     }
 
     @Override
-    public String getCombatEffect(Unit unit) {
+    public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
     
@@ -40,7 +40,7 @@ public class ITTFord implements ImprovedTerrainType{
     }
 
     @Override
-    public double getMovementOverride(Unit unit) {
+    public double getMovementOverride(MoveableUnit unit) {
         return 0;
     }
     
