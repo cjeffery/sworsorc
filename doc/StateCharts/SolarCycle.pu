@@ -37,7 +37,9 @@ rd1 --> sb4 : Count  > 6
 sb4 --> ra1 : Count > 5
 }
 
-[*] --> starta : Start Red Sun at [A,C, .., K]
-[*] --> startb : Start Red Sun at [B,D, .., L]
+[*] --> starta : Start Red\nSun at\n[A,C, .., K]
+[*] --> startb : Start Red\nSun at\n[B,D, .., L]
+starta --> [*] : Scenario\nEnds
+startb --> [*] : Scenario\nEnds
 
 @enduml
