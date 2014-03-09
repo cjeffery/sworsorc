@@ -1,5 +1,5 @@
 ' David Klingenberg - Statechart for HW 5
-' Soar Cycle class.
+' State chart for Soar Cycle class.
 @startuml
 title   Solar Cycle\nAuthor:  David Klingenberg
 
