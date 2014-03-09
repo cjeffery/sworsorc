@@ -44,7 +44,6 @@ public abstract class HexMap {
         for(int s = 0; s < listOfHex.getLength(); s++){
             Node hex = listOfHex.item(s);
             Hex h = makeHex(hex);
-            System.out.println("hex: " + h.GetID());
             hexHash.put(h.GetID(), h);
         }     
     }

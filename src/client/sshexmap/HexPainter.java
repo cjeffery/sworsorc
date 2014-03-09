@@ -27,15 +27,9 @@ public class HexPainter {
             "rough", "swamp", "vortex", "water", "woods"            
         };
         for(String s : types) {
-            System.out.println("loading " + path + s + "_hex.png");
             File f = new File( path + s + "_hex.png" );
-            if(f == null) System.out.println("Null!");
-            System.out.println("there");
             BufferedImage img = ImageIO.read(f);
-            if(img == null) System.out.println("Null B!");
-            System.out.println("here");
             images.put(s + "_hex.png", img);
-            System.out.println("done");
         }
     }
     public HexPainter(double hexRadius) throws IOException {
@@ -59,7 +53,6 @@ public class HexPainter {
     public void paintHex(Graphics2D g2, Hex h) {
         if(h == null)
             return;
-        System.out.println("B");
         if( h instanceof MapHex ) {
             paintTerrain(g2, (MapHex)h);
             //...
@@ -75,12 +68,14 @@ public class HexPainter {
         if(t == null)
             return;
         String str = t.toString().toLowerCase() + "_hex.png";
-        System.out.println("I want to draw a " + str);
-        if(!images.containsKey(str) || images.get(str) == null) {
+        /*if(!images.containsKey(str) || images.get(str) == null) {
             System.out.println("Image " + path + str + " wasn't loaded");
             return;
-        }
-        g2.drawImage(images.get(str), 0, 0, null);
+        }*/
+        AffineTransform at = AffineTransform.getScaleInstance(.5, .5);
+        //g2.drawImage(images.get(str), 0, 0, null);
+        g2.drawRenderedImage(images.get(str), at);
+
     }
     
     public void paintDiplomacyHex(Graphics2D g2, DiplomacyHex h) {
