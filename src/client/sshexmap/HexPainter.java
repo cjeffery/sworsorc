@@ -65,7 +65,7 @@ public class HexPainter {
     }
     
     public void paintTerrain(Graphics2D g2, MapHex h) {
-        ssterrain.TerrainType GetTerrain = h.GetTerrain();
+        ssterrain.TerrainType t = h.GetTerrain();
         String str = t.toString().toLowerCase() + "_hex.png";
         if(!images.containsKey(str) || images.get(str) == null) {
             System.out.println("Image " + path + str + " wasn't loaded");

@@ -12,7 +12,7 @@ import ssterrain.HexEdge;
 import ssterrain.HexEdgeType;
 import ssterrain.ImprovedTerrainType;
 import ssterrain.TerrainType;
-import ssterrain.Unit;
+import Units.*;
 
 /*******************************************************************************
  * 

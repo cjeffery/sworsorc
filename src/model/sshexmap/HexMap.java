@@ -69,7 +69,7 @@ public abstract class HexMap {
     public abstract boolean LowFirstRow();
     
     public static String GetIDFromCoords(int x, int y) {
-        return String.format("%02d%02dfffff", x+1, y+1);
+        return String.format("%02d%02d", x+1, y+1);
     }
   
 }
