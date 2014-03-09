@@ -20,10 +20,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+//import ssterrain.*;
+import Units.*;
 
 /**
  * 
  *   Email me at klin7456@vandals.uidaho.edu if you hove questions or need help
+ * 
+ *   Keith's pull - adding movement calculator prelim. 
  * 
  * @author David Klingenberg: 
  */
@@ -292,10 +296,49 @@ public class MainMap {
       return INSTANCE;
     }
     
-    public MapHex GetMapHex (String id){
+    public static MapHex GetMapHex (String id){
         return mainMap.get(id);
     }
+
+    public static void MovementCalculator( MapHex sourceHex, Unit movingUnit,
+                                       int moveAllowance, ArrayList validHexes )
+    {
+        if( moveAllowance == 0 )
+        {
+            return;
+        }
+        else
+        {
+            int hexId = Integer.parseInt( sourceHex.GetHexName() );
+            // If the 2nd most significant digit of the hex id is even...
+            if( (hexId/100)%2 == 0 )
+            {
+                if( !validHexes.contains( GetMapHex( Integer.toString(hexId -1))))
+                {
+                    // isValidEdge() and isValidHex() need to be written.
+                    if( isValidEdge() && isValidHex() )
+                    {
+                        validHexes.add(GetMapHex( Integer.toString(hexId-1)));
+                        MovementCalculator(GetMapHex(Integer.toString(hexId-1)),
+                                movingUnit, 
+                                moveAllowance, /*- function call for move modification */
+                                validHexes);
+                    }
+                }
+                
+            }
+            // If the 2nd most significant digit of the hex id is odd...
+            else if( (hexId/100)%2 == 1 )
+            {
+                
+            }
+        }
+        
+    }// End MovementCalculator
+        
     
-}
+    
+    
+}// End MainMap class
 
 
