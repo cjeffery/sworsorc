@@ -12,10 +12,11 @@ package ssterrain;
  * CS 383 Software Engineering
  */
 import Units.*;
-public class ITTCapital implements ImprovedTerrainType{
-    Hex hex;
+import sshexmap.MapHex;
+public class ITTCapital extends ImprovedTerrainType{
+    MapHex hex;
     
-    public ITTCapital(Hex thisHex){
+    public ITTCapital(MapHex thisHex){
         this.hex = thisHex;
     }
 

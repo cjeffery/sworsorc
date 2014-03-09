@@ -13,10 +13,11 @@ import java.util.ArrayList;
  * @author John
  */
 import Units.*;
-public class ITTRoad implements ImprovedTerrainType{
-    Hex hex;
+import sshexmap.MapHex;
+public class ITTRoad extends ImprovedTerrainType{
+    MapHex hex;
     
-    public ITTRoad(Hex thisHex){
+    public ITTRoad(MapHex thisHex){
         this.hex = thisHex;
     }
 

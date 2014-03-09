@@ -12,9 +12,10 @@ package ssterrain;
  * CS 383 Software Engineering
  */
 import Units.*;
-public class ITTVortex implements ImprovedTerrainType{
-    Hex hex;
-    public ITTVortex(Hex thisHex){
+import sshexmap.MapHex;
+public class ITTVortex extends ImprovedTerrainType{
+    MapHex hex;
+    public ITTVortex(MapHex thisHex){
         this.hex = thisHex;
     }
 

@@ -8,15 +8,16 @@ package ssterrain;
 
 import java.util.ArrayList;
 import Units.*;
+import sshexmap.MapHex;
 /**
  *
  * @author John Goettsche
  * CS 383 Software Engineering
  */
-public class ITTTrail implements ImprovedTerrainType{
-    Hex hex;
+public class ITTTrail extends ImprovedTerrainType{
+    MapHex hex;
             
-    public ITTTrail(Hex thisHex){
+    public ITTTrail(MapHex thisHex){
         this.hex = thisHex;
     }
 

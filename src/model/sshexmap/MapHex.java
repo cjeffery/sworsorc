@@ -31,6 +31,7 @@ import Units.*;
 public class MapHex extends Hex{
     private String hexName;
     private TerrainType terrainType;
+    private ArrayList<ImprovedTerrainType> improvements;
     private String provinceName;
     private boolean cityHex = false;
     private boolean vortexHex = false;
@@ -43,6 +44,7 @@ public class MapHex extends Hex{
     //ArrayList<Integer> hexEdgeAdditions = new ArrayList<>();
 
     public MapHex(Node hex) {
+        improvements = new ArrayList<ImprovedTerrainType>();
         NodeList hexList = hex.getChildNodes();
         for(int i = 0; i < hexList.getLength(); i++) {
             Node hexItem = hexList.item(i);
@@ -56,7 +58,11 @@ public class MapHex extends Hex{
                 case "terrainKey":
                     terrainType = TerrainType.makeTerrainType(contents);
                     //FIXME could be more than one improvement
-                    improvement = TerrainImprovementType.makeImprovement(contents);
+                    //yeah I know it's bad passing 'this' from a constructor, 
+                    //but it should be OK in this instance
+                    ImprovedTerrainType improvement = ImprovedTerrainType.makeImprovement(contents, this);
+                    if(improvement != null)
+                        improvements.add(improvement);
                     break;
                 case "cityHex":
                     cityHex = contents.equals("true");
@@ -191,4 +197,75 @@ public class MapHex extends Hex{
     public void ModifyTerrainCode (String keyterrain) {
         //to do.
     }     
+
+
+    public void addEdge(HexEdge newEdge){
+        //edges.add(newEdge);
+    }
+    
+    public void setTerrainType(TerrainType newTerrainType){
+        this.terrainType = newTerrainType;
+    }
+    
+    public void addImprovement(ImprovedTerrainType newImprovement){
+        improvements.add(newImprovement);
+    }
+    
+    public void removeEdge(HexEdge deadEdge){
+        //edges.remove(deadEdge);
+    }
+    
+    public TerrainType getTerrainType(){
+        return terrainType;
+    }
+    
+    public void removeImprovement(ImprovedTerrainType deadImprovement){
+        improvements.remove(deadImprovement);
+    }
+    
+    public ArrayList<ImprovedTerrainType> getImprovements(){
+        return improvements;
+    }
+    
+    /* TODO: what does this method suppoed to do */
+    public boolean checkIfCrossed(ArrayList<HexEdgeType> list){
+        /*for(int l = 0; l < list.size(); l++){
+            for(int e = 0; e < edges.size(); e++){
+                if(edges.get(e).getEdgeType().equals(list.get(l)))return true;
+            }
+        }*/
+        return false;
+    }
+    
+    public ArrayList<HexEdgeType> getEdgeType(int edge){
+        /*ArrayList<HexEdgeType> thisEdge = new ArrayList<HexEdgeType>();
+        for(int e = 0; e < edges.size(); e++){
+            if(edges.get(e).getEdge() == edge) thisEdge.add(edges.get(e).getEdgeType());
+        }
+        return thisEdge;*/
+        return null;
+    }
+    
+    public double getMovementCost(MoveableUnit unit){
+        double move = terrainType.getMovementCost(unit);
+        double override = 100;
+        if(improvements.size() > 0)
+            for(int i = 0; i < improvements.size(); i++){   
+                move += improvements.get(i).getMovementCost(unit);
+                if(improvements.get(i).getMovementOverride(unit) > 0.0)
+                    if(improvements.get(i).getMovementOverride(unit) < override) 
+                        override = improvements.get(i).getMovementOverride(unit);
+            }
+        if(override > 0 && override < 100) move = override;
+        return move;
+    }
+    
+    public double getCombatMultiplier(ArmyUnit unit){
+        double mult = 1;
+        mult *= terrainType.getCombatMultiplier(unit);
+        if(improvements.size() > 0)
+            for(int i = 0; i < improvements.size(); i++)
+                mult *= improvements.get(i).getCombatMultiplier(unit);
+        return mult;
+    }
 }

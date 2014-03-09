@@ -12,10 +12,11 @@ package ssterrain;
  * CS 383 Software Engineering
  */
 import Units.*;
-public class ITTFord implements ImprovedTerrainType{
-    Hex hex;
+import sshexmap.MapHex;
+public class ITTFord extends ImprovedTerrainType{
+    MapHex hex;
     
-    public ITTFord(Hex thisHex){
+    public ITTFord(MapHex thisHex){
         this.hex = thisHex;
     }
 
