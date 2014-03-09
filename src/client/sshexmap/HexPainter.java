@@ -17,16 +17,25 @@ public class HexPainter {
     private final double hexRadius, width, height;
     private final Path2D.Double hexShape;
     private Map<String, BufferedImage> images;
-    String path = "resources/images/";
+    String path = "C:\\Users\\zoe\\Documents\\NetBeansProjects\\sorcery\\";
     
     private void loadImages() throws IOException {
+        images = new TreeMap<String, BufferedImage>();
         Class<? extends HexPainter> c = getClass();
         String[] types = {
             "clear", "broken", "cultivated", "forest", "karoo", "mountain",
             "rough", "swamp", "vortex", "water", "woods"            
         };
         for(String s : types) {
-            images.put(s, ImageIO.read(c.getResource( path + s + "_hex.png" )));
+            System.out.println("loading " + path + s + "_hex.png");
+            File f = new File( path + s + "_hex.png" );
+            if(f == null) System.out.println("Null!");
+            System.out.println("there");
+            BufferedImage img = ImageIO.read(f);
+            if(img == null) System.out.println("Null B!");
+            System.out.println("here");
+            images.put(s + "_hex.png", img);
+            System.out.println("done");
         }
     }
     public HexPainter(double hexRadius) throws IOException {
@@ -43,17 +52,14 @@ public class HexPainter {
         hexShape.lineTo(width*0.25, height);
         hexShape.closePath();
 
-        Map<String, String> imageFiles = new HashMap<String, String>();
-        imageFiles.put("Clear", "clear_hex.png");
-
-        URL resource = getClass().getResource("mountains2.png");
-        //mountainImage = ImageIO.read(resource);
+        loadImages();
     }
 
     /* Paint the specified hex onto the specified Graphics */
     public void paintHex(Graphics2D g2, Hex h) {
         if(h == null)
             return;
+        System.out.println("B");
         if( h instanceof MapHex ) {
             paintTerrain(g2, (MapHex)h);
             //...
@@ -66,7 +72,10 @@ public class HexPainter {
     
     public void paintTerrain(Graphics2D g2, MapHex h) {
         ssterrain.TerrainType t = h.GetTerrain();
+        if(t == null)
+            return;
         String str = t.toString().toLowerCase() + "_hex.png";
+        System.out.println("I want to draw a " + str);
         if(!images.containsKey(str) || images.get(str) == null) {
             System.out.println("Image " + path + str + " wasn't loaded");
             return;

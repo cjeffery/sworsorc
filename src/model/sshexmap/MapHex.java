@@ -61,16 +61,22 @@ public class MapHex extends Hex{
                     break;
                 case "hexName":
                     hexName = contents;
+                    break;
                 case "vortexHex":
                     vortexHex = contents.equals("true");
+                    break;
                 case "portalHex":
                     portalHex = Integer.parseInt(contents);
+                    break;
                 case "providenceName": //FIXME typo in XML
                     provinceName = contents;
+                    break;
                 case "castleHex":
                     castleHex = contents.equals("true");
+                    break;
                 case "townHex":
                     townHex = contents.equals("true");
+                    break;
                 case "hexEdgeMap":
                     //iterate over edges
                     NodeList listOfEdges = hexItem.getChildNodes();
@@ -91,6 +97,9 @@ public class MapHex extends Hex{
                         }//for (int h = 0; h < edgeItems.getLength(); h++)
                         //FIXME edgeList[xmlOrder[j]] = new HexEdge(attrList);                       
                     }//for (int j = 0; j < listOfEdges.getLength(); j ++)
+                    break;
+                case "default":
+                    System.out.println("uh oh :(");
             }
         }
     }

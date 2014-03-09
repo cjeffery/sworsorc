@@ -12,7 +12,7 @@ public class ScrollDemo implements MouseListener, KeyListener {
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         try {
-            mapView = new MapView(DiplomacyMap.GetInstance());
+            mapView = new MapView(MainMap.GetInstance());
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "IOException: " +
                                           ex.getMessage()+" "+ex.getCause());

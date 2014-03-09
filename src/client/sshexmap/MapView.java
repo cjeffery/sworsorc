@@ -140,7 +140,7 @@ public class MapView extends JPanel {
         super(new BorderLayout());
         this.highlightSet = new TreeSet<String>();
         this.map = map;
-        this.radius = 32;
+        this.radius = 64;
         width  = radius*2;
         height = radius*Math.sqrt(3);
         hp = new HexPainter(radius);   

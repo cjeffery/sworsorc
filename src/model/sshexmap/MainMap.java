@@ -12,7 +12,7 @@ public class MainMap extends HexMap {
     private static MainMap INSTANCE;
     
     private MainMap(){
-        super("resources/MainMap.xml");
+        super("MainMap.xml");
         BuildMap();
     }
 

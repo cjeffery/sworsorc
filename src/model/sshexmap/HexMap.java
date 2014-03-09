@@ -35,6 +35,7 @@ public abstract class HexMap {
         } catch (IOException ex){
             Logger.getLogger(DiplomacyMap.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Could not find " + filename);
+            System.out.println("Working Directory = " + System.getProperty("user.dir"));
         }        
     }
     
@@ -42,12 +43,9 @@ public abstract class HexMap {
         NodeList listOfHex = doc.getElementsByTagName("hex");
         for(int s = 0; s < listOfHex.getLength(); s++){
             Node hex = listOfHex.item(s);
-            NodeList hexList = hex.getChildNodes();
-            for (int i = 0; i < hexList.getLength(); i++) {
-                Node hexItem = hexList.item(i);
-                Hex h = makeHex(hexItem);
-                hexHash.put(h.GetID(), h);
-            }
+            Hex h = makeHex(hex);
+            System.out.println("hex: " + h.GetID());
+            hexHash.put(h.GetID(), h);
         }     
     }
 
