@@ -13,11 +13,11 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTForest implements TerrainType{
+public class TTForest extends TerrainType{
     public TTForest(){
         
     }
-
+    
     @Override
     public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Spiders))return 1;

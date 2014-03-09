@@ -13,11 +13,11 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTSwamp implements TerrainType{
+public class TTSwamp extends TerrainType{
     public TTSwamp(){
         
     }
-
+    
     @Override
     public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Cronk))return 2;

@@ -12,11 +12,11 @@ package ssterrain;
  * CS 383 Software Engineering
  */
 import Units.*;
-public class TTClear implements TerrainType{
+public class TTClear extends TerrainType{
     public TTClear(){
         
     }
-
+    
     @Override
     public double getMovementCost(MoveableUnit unit) {
         return 1;
