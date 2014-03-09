@@ -2,15 +2,21 @@
 hide circle
 title <b>Data Structures Class Diagram<b> Author: Keith Drew
 
-GameTerrainChart --up-|> DataController 
-GameCombatResultsChart -up-|> DataController 
-GameRandomEventChart --up-|> DataController 
-GameSpellChart -up-|> DataController 
-GameKillerPenguinEntryChart --up-|> DataController 
-GameEmissaryResultsChart -up-|> DataController 
-GameDiplomaticGroupChart --up-|> DataController 
+GameTerrainChart -up-|> Chart 
+GameCombatResultsChart -|> Chart 
+GameRandomEventChart -|> Chart 
+GameSpellChart -|> Chart 
+GameKillerPenguinEntryChart -|> Chart 
+GameEmissaryResultsChart -|> Chart 
+GameDiplomaticGroupChart -up-|> Chart 
+DiplomacyMap -up- GameDiplomaticGroupChart : The DipMap does not live here\nbut is accessed here.
+DiplomacyMap *-right- "1..*" DiplomacyHex 
+GameRandomEventChart  *-- RandomEvent
 
-class DataController #529292 {
+GameSpellChart -- GameDiplomaticGroupChart
+(GameSpellChart, GameDiplomaticGroupChart) -- StellarConfiguration : These use the suns
+
+class Chart #529292 {
 -terrainChart
 -combatChart
 -randomChart
@@ -18,12 +24,7 @@ class DataController #529292 {
 -kpChart
 -emissaryChart
 -diplomacyChart
-+getChartResults()
 }
-note left of DataController #red
-getChartResults() overloaded
-for each chart type.
-end note
 
 class GameTerrainChart #529292 {
 -terrainLookupArray[]
@@ -63,5 +64,60 @@ class GameDiplomaticGroupChart #529292 {
 -diplomacyGroupLookupArray[]
 +getDiplomacyResults()
 }
+
+class DiplomacyMap #529292 {
+-HashMap <String, DiplomacyHex> DiplomacyMap
+-String hexNumber, northHexNumber, northEastHexNumber, 
+            southEastHexNumber, southHexNumber, southWestHexNumber,
+            northWestHexNumber, specialCode
+ -DocumentBuilderFactory factory;
+ -DocumentBuilder builder
+-Document doc
+-File file
+{static}DiplomacyMap INSTANCE
+-DiplomacyMap()
+-BuildDiplomacyMap()
+{static}GetDiplomacyMap() : DiplomacyMap
++GetDiplomacyHex(String id) : DiplomacyHex 
+}
+
+class DiplomacyHex #529292 {
+-boolean playerHex, neturalHex
++public DiplomacyHex(String id, String northHexID, String northEastHexID, 
+                            String southEastHexID, String southHexID, String southWestHexID, 
+                            String northWestHexID, String specialHexCode)
++DiplomacyHex(String id, String northHexID, String northEastHexID, 
+                            String southEastHexID, String southHexID, String southWestHexID, 
+                            String northWestHexID, String specialHexCode)
+-SetPlayerHex()
+-SetNeturalHex()
++GetIsPlayerHex() : boolean 
++GetIsNeturalHex() : boolean 
+}
+
+class RandomEvent #529292 {
+	-currentEventKey : int
+	-currentEventLength : int
+	-currentEventDescription : int
+	--
+	+RandomEvent(cEKey : int, cELength : int, cEDescription : int) : void
+	==
+	Author: David Klingenberg
+}
+
+class StellarConfiguration #529292 {
+	-yellowSunPosition : int
+	-redSunPosition : char
+	-blueSunPosition : char
+	-redSunAscendent : boolean
+	-redSunDescendent : boolean
+	--
+	+StellarConfiguration(positionOfRedSun : char)
+	+AdvanceSuns() : void
+	-CheckMinorSunsPosition(minorSunAscendentPositionOne : char,\n minorSunAscendentPositionTwo : char,\nminorSunAscendentPositionThree : char) : void
+	==
+	Author: David Klingenberg
+}
+
 
 @enduml
