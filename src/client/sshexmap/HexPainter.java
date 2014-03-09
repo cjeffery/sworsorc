@@ -64,7 +64,7 @@ public class HexPainter {
     }
     
     public void paintTerrain(Graphics2D g2, MapHex h) {
-        ssterrain.TerrainType t = h.GetTerrain();
+        TerrainType t = h.GetTerrain();
         if(t == null)
             return;
         String str = t.toString().toLowerCase() + "_hex.png";

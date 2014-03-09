@@ -55,6 +55,8 @@ public class MapHex extends Hex{
                     break;
                 case "terrainKey":
                     terrainType = TerrainType.makeTerrainType(contents);
+                    //FIXME could be more than one improvement
+                    improvement = TerrainImprovementType.makeImprovement(contents);
                     break;
                 case "cityHex":
                     cityHex = contents.equals("true");
