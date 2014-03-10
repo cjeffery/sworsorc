@@ -22,4 +22,4 @@ Contributors:
  * Jay Drage
  * Sean Shepherd
  * Johnathan Flake
- * Keith Drew <--- HA!! LAST!! Muhahahahaha!!!!!!
+ * Keith Drew
