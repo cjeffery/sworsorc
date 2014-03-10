@@ -7,8 +7,9 @@ import javax.swing.*;
 
 public class ScrollDemo implements MouseListener, KeyListener {
     private MapView mapView;
+    private MapView diploView;
     public ScrollDemo() {
-        JFrame window = new JFrame("Scrolling Map Demo"); 
+        JFrame window = new JFrame("Game Map"); 
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         try {
@@ -21,6 +22,20 @@ public class ScrollDemo implements MouseListener, KeyListener {
         window.add(mapView);
         window.pack();
         window.setVisible(true);
+        
+        JFrame window2 = new JFrame("Diplomacy Map"); 
+        window2.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        try {
+            diploView = new MapView(DiplomacyMap.GetInstance());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "IOException: " +
+                                          ex.getMessage()+" "+ex.getCause());
+        }
+        
+        window2.add(diploView);
+        window2.pack();
+        window2.setVisible(true);
     }
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

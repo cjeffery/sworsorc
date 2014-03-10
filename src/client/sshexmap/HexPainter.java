@@ -162,6 +162,7 @@ public class HexPainter {
     }
     
     public void paintDiplomacyHex(Graphics2D g2, DiplomacyHex h) {
+        g2.setColor( Color.RED /*new Color(245, 245, 220)*/ );
+        g2.fill(hexShape);        
     }
-    
 }

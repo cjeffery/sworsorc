@@ -58,8 +58,9 @@ public class MapView extends JPanel {
                 for(int row = hexRect.y; row <= max_row; row++) {
                     if(edge == 0)
                         hp.paintHex(g2, map.GetHex(col,row));
-                    else
+                    else if( map instanceof MainMap ) {
                         hp.paintEdges(g2, (MapHex)map.GetHex(col, row));
+                    }                        
                     g2.translate(0, height);
                 }
             }
