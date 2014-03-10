@@ -1,0 +1,17 @@
+@startuml
+' Ian Westrope
+' State Chart for Captured Character
+
+title State Chart for Captured Character by Ian Westrope
+
+[*] --> NormalCharacter
+NormalCharacter --> CapturedCharacter : Captured by enemy units
+CapturedCharacter --> NormalCharacter : Released from capture or escaped
+CapturedCharacter --> RemovedFromPlay : Killed by enemy player
+RemovedFromPlay --> [*]
+
+
+
+
+
+@enduml
