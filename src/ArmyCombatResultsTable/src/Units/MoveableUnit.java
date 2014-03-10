@@ -15,6 +15,15 @@ public class MoveableUnit {
     protected int movement;
     protected Race race;
     protected String location;
+    protected String ID;
+    
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }   
     
     public String getLocation() {
         return location;

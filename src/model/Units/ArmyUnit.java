@@ -18,16 +18,7 @@ public class ArmyUnit extends MoveableUnit{
     protected int demoralizedStrength;
     protected boolean ranged;
     protected boolean demorlized;
-    protected String ID;
     
-
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }   
     
     public void setDemorlized(boolean demorlized) {
         this.demorlized = demorlized;

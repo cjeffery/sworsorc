@@ -10,7 +10,7 @@ package Units;
  *
  * @author matt
  */
-public class HeavyHorse extends Calvery{
+public class HeavyHorse extends Cavalry{
     public HeavyHorse() {
         super();
         strength = 4;

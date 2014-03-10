@@ -10,12 +10,10 @@ package Units;
  *
  * @author matt
  */
-public class HeavyHorse extends Cavalry{
-    public HeavyHorse() {
+public class Cavalry extends ArmyUnit{
+    
+    Cavalry(){
         super();
-        strength = 4;
-        movement = 7;
-        demoralizedStrength = 1;
     }
     
 }
