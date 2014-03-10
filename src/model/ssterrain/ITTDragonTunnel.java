@@ -13,10 +13,11 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class ITTDragonTunnel implements ImprovedTerrainType{
-    Hex hex;
+import sshexmap.MapHex;
+public class ITTDragonTunnel extends ImprovedTerrainType{
+    MapHex hex;
     
-    public ITTDragonTunnel(Hex thisHex){
+    public ITTDragonTunnel(MapHex thisHex){
         this.hex = thisHex;
     }
 

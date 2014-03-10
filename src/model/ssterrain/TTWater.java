@@ -13,11 +13,11 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTWater implements TerrainType{
+public class TTWater extends TerrainType{
     public TTWater(){
         
     }
-
+    
     @Override
     public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.SwampCreature))return 2;

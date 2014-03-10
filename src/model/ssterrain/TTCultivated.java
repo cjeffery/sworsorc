@@ -12,11 +12,11 @@ package ssterrain;
  * CS 383 Software Engineering
  */
 import Units.*;
-public class TTCultivated implements TerrainType{
+public class TTCultivated extends TerrainType{
     public TTCultivated(){
         
     }
-
+    
     @Override
     public double getMovementCost(MoveableUnit unit) {
         if(unit.getUnitType().equals(UnitType.Character)) return 0.5;

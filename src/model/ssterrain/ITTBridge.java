@@ -12,10 +12,11 @@ package ssterrain;
  * CS 383 Software Engineering
  */
 import Units.*;
-public class ITTBridge implements ImprovedTerrainType {
-    Hex hex;
+import sshexmap.MapHex;
+public class ITTBridge extends ImprovedTerrainType {
+    MapHex hex;
     
-    public ITTBridge(Hex thisHex){
+    public ITTBridge(MapHex thisHex){
         this.hex = thisHex;
     }
 

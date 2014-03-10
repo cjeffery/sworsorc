@@ -13,11 +13,11 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTGlacier implements TerrainType{
+public class TTGlacier extends TerrainType{
     public TTGlacier(){
         
     }
-
+    
     @Override
     public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.KillerPenguin))return 1;

@@ -14,7 +14,7 @@ package ssterrain;
 public enum HexEdgeType {
     Bridge,
     Ford,
-    ProvenceBoarder,
+    ProvinceBorder,
     Road,
     Stream,
     Trail,

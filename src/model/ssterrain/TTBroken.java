@@ -12,7 +12,7 @@ package ssterrain;
  * CS 383 Software Engineering
  */
 import Units.*;
-public class TTBroken implements TerrainType{
+public class TTBroken extends TerrainType{
     public TTBroken(){
         
     }

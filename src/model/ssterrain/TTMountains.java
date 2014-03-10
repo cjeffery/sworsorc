@@ -13,11 +13,11 @@ package ssterrain;
  */
 import Units.Race;
 import Units.*;
-public class TTMountains implements TerrainType{
+public class TTMountains extends TerrainType{
     public TTMountains(){
         
     }
-
+    
     @Override
     public double getMovementCost(MoveableUnit unit) {
         if(unit.getRace().equals(Race.Dwarrows) || unit.getRace().equals(Race.Orc))return 2;

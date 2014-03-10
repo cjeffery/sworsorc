@@ -8,16 +8,17 @@ package ssterrain;
 
 import java.util.ArrayList;
 import Units.*;
+import sshexmap.MapHex;
 /**
  *
  * @author John Goettsche
  * CS 383 Software Engineering
  */
-public class HEBridge implements HexEdge{
-    Hex hex;
+public class HEBridge extends HexEdge{
+    MapHex hex;
     int edge;
     
-    public HEBridge(Hex thisHex, int thisEdge){
+    public HEBridge(MapHex thisHex, int thisEdge){
         this.hex = thisHex;
         this.edge = thisEdge;
     }
