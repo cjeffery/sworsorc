@@ -17,7 +17,7 @@ public class HexPainter {
     private final double hexRadius, width, height;
     private final Path2D.Double hexShape;
     private Map<String, BufferedImage> images;
-    String path = "C:\\Users\\zoe\\Documents\\NetBeansProjects\\sorcery\\";
+    String path = "resources/";
     
     private void loadImages() throws IOException {
         images = new TreeMap<String, BufferedImage>();
