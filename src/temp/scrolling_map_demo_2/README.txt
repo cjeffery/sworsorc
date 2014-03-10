@@ -6,4 +6,4 @@ Alternatively: download this .zip: https://dl.dropboxusercontent.com/u/18936195/
 
 2. Load netbeans project, choose run, choose ScrollDemo if it asks for a class.
 
-
+Note that the Diplomacy Map will appear on top of the Main Map, move it to the side to see the Main Map. Closing one window will close both.
