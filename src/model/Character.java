@@ -86,7 +86,7 @@ public class Character extends Monster {
 
     public int GetAvgMagicPL()
     {
-	return GetAvgMagicPL;
+	return AvgMagicPL;
     }
     
     public int GetMagicPL()

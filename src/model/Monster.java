@@ -8,7 +8,7 @@ public class Monster
 {
     int MagicPL;
     int MagicPotential;
-    int MagicColor;
+    char MagicColor;
     int MagicResistance;
     int Fighting;
     int Endurance;
@@ -30,7 +30,7 @@ public class Monster
 	return MagicPotential;
     }
 
-    public int GetMagicColor()
+    public char GetMagicColor()
     {
 	return MagicColor;
     }

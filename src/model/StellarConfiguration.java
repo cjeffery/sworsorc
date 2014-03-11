@@ -29,8 +29,8 @@ public class StellarConfiguration {
       SetYellowSunPosition(1);
       
       
-      if(Character.isUpperCase(positionOfRedSun))
-        Character.toLowerCase(positionOfRedSun);
+      if(java.lang.Character.isUpperCase(positionOfRedSun))
+         java.lang.Character.toLowerCase(positionOfRedSun);
       
       SetRedSunPosition(positionOfRedSun);
       
