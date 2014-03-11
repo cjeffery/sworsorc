@@ -39,23 +39,19 @@ public class MapView extends JPanel {
             /* effective origin from whatever graphics object we're given */
             AffineTransform identity = g2.getTransform();
 
-            //determine the furthest hex that needs drawing in the row
-            int max_row = (int)(hexRect.y+hexRect.height);
-            max_row = Math.min(max_row, map.GetRows()-1);
-                
             /* For each hex, translate it and then draw it with HexPainter
              * first pass for hexes, second pass for hex edges */
             for(int edge = 0; edge < 2; edge++)
-            for(int col = hexRect.x; col <= hexRect.x+hexRect.width; col++) {
+            for(int col = hexRect.x; col <= hexRect.getMaxX(); col++) {
                 //translate to first hex in row that needs drawing
                 g2.setTransform( identity );
                 int par = map.LowFirstRow() ? 1 : 0; //map "parity"
                 g2.translate(width*col*0.75,
                              height*(hexRect.y + ((col%2)*0.5) - par*0.5));
 
-                int topleftmask = 0x3F;
+                //int topleftmask = 0x3F;
                 //draw all the hexes in the row
-                for(int row = hexRect.y; row <= max_row; row++) {
+                for(int row = hexRect.y; row <= hexRect.getMaxY(); row++) {
                     if(edge == 0)
                         hp.paintHex(g2, map.GetHex(col,row));
                     else if( map instanceof MainMap ) {
@@ -199,7 +195,7 @@ public class MapView extends JPanel {
         int min_col = (int)((x1-width*.25)/(width*.75));
         int max_col = (int)(x2/(width*.75));
         int min_row = (int)((y1-0.5*height)/height);
-        int max_row = (int)(y2/height);
+        int max_row = 1 + (int)(y2/height);
         min_col = Math.max(min_col, 0);
         min_row = Math.max(min_row, 0);
         max_col = Math.min(max_col, map.GetColumns()-1);  

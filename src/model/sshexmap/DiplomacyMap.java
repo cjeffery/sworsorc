@@ -29,16 +29,16 @@ public class DiplomacyMap extends HexMap {
 
     @Override
     public int GetRows() {
-        return 54;
+        return 11;
     }
 
     @Override
     public int GetColumns() {
-        return 39;
+        return 11;
     }
 
     @Override
     public boolean LowFirstRow() {
-        return false;
+        return true;
     }
 }
