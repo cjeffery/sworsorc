@@ -1,0 +1,46 @@
+@startuml
+
+state "Random Event Determination Phase" as RandomE
+RandomE : Enter/
+RandomE : Random Event Table is consulted
+state "Player Order Determination Phase" as Order
+Order : Enter/
+Order : Player Order is randomly generated
+Order : Do/
+Order : Alliances are forming
+state "Movement Phase" as Movement
+Movement : Do/
+Movement : Current Player moves units
+state "Magic Phase" as Magic
+Magic : Do/
+Magic : Current Player casts spells
+state "Combat Phase" as Combat
+Combat : Do/
+Combat : Current Player attacks enemy units
+Combat : Current Player rallies demoralized units
+state "Random Movement Phase" as RandomM
+RandomM : Enter/
+RandomM : Randomly moving units are moved
+state "Diplomacy Phase" as Diplomacy
+Diplomacy : Enter/
+Diplomacy : Diplomacy Chart is consulted
+Diplomacy : Do/
+Diplomacy : Display results
+state "Manna Regeneration Phase" as Manna
+Manna : Enter/
+Manna : Solar Display is consulted
+Manna : Do/
+Manna : Manna is regenerated
+
+RandomE --> Order : Random Event is done reporting
+Order --> Movement : Player-order and Alliances have been determined
+Movement --> Magic : Clicks End Phase
+Magic --> Combat : Clicks End Phase
+Combat -right-> Movement : Clicks End Phase
+Combat --> RandomM : Last player clicks End Phase
+RandomM --> Diplomacy : Randomly moving units have moved
+Diplomacy --> Manna : Diplomatic relations have been updated
+
+
+
+@enduml
