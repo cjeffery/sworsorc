@@ -254,7 +254,7 @@ public class MapView extends JPanel {
         //every other column is offset a little bit
         int hexY = (j - i%2);
         //conditional is needed for detecting negative y coordinate hex
-        hexY = (hexY == 0) ? 0 : (hexY / 2);
+        hexY = (hexY == -1) ? -1 : (hexY / 2);
         int[] res = {hexX, hexY};
         return res;        
     }
