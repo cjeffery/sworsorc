@@ -57,6 +57,11 @@ public class MapView extends JPanel {
                     else if( map instanceof MainMap ) {
                         hp.paintEdges(g2, (MapHex)map.GetHex(col, row));
                     }                        
+                    
+                    //highlight hex if it's in the highlighted set
+                    if(highlightSet.contains(HexMap.GetIDFromCoords(col, row))){
+                        hp.highlight(g2);
+                    }
                     g2.translate(0, height);
                 }
             }
@@ -249,24 +254,42 @@ public class MapView extends JPanel {
         //every other column is offset a little bit
         int hexY = (j - i%2);
         //conditional is needed for detecting negative y coordinate hex
-        hexY = (hexY == -1) ? -1 : (hexY / 2);
+        hexY = (hexY == 0) ? 0 : (hexY / 2);
         int[] res = {hexX, hexY};
         return res;        
     }
     
     /**
-     * highlight the set of given hexes, pass null to unhighlight.
+     * highlight the set of given hexes. This adds to any previous highlights
+     * to unhighlight use clearHighlights
      * Right now color is hardcoded, and you can't highlight multiple
      * colors at once. This could change in the future.
      * @param hexes A Set of hex IDs
      */
-    public void highlight(Set<String> hexes) {
+    public void highlight(ArrayList<String> hexes) {
         highlightSet.addAll(hexes);
+        repaint(); //fixme allow partial update
     }
+ 
     /**
-     * Unhighlight all currently highlighted hexes
+     * highlight the given hex. Adds to any previous highlights.
+     * @param hex A hex ID to highlight
+     */
+    public void highlight(String hex) {
+        highlightSet.add(hex);
+        repaint(); //fixme allow partial update
+    }
+    
+    /**
+     * Clear all currently highlighted hexes
      */
     public void clearHighlights() {
         highlightSet.clear();
+        repaint(); //fixme allow partial update
+    }
+    
+    public void clearHighlight(String hex) {
+        highlightSet.remove(hex);
+        repaint(); //fixme allow partial update
     }
 }

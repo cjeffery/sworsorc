@@ -165,4 +165,9 @@ public class HexPainter {
         g2.setColor( Color.RED /*new Color(245, 245, 220)*/ );
         g2.fill(hexShape);        
     }
+    
+    public void highlight(Graphics2D g2) {
+        g2.setColor( new Color(0,0,255, 70) );
+        g2.fill(hexShape);
+    }
 }
