@@ -52,6 +52,10 @@ public abstract class HexMap {
         return hexHash.get(id);
     }    
     
+    /**
+     * get hex from integer coordinates. Right now this is 1-indexed, but should
+     * it be one indexed?
+     */
     public Hex GetHex(int x, int y){
         return GetHex(GetIDFromCoords(x, y));
     }  
@@ -67,6 +71,14 @@ public abstract class HexMap {
     
     public static String GetIDFromCoords(int x, int y) {
         return String.format("%02d%02d", x+1, y+1);
+    }
+    
+    public static int[] GetCoordsFromID(String hex) {
+        int[] res = new int[2];
+        int i = Integer.parseInt(hex);
+        res[0] = (i / 100) - 1;
+        res[1] = (i % 100) - 1;
+        return res;
     }
   
 }
