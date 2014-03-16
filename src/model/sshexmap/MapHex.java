@@ -115,6 +115,7 @@ public class MapHex extends Hex{
                                 HexEdgeType t = HexEdge.getType(attr.getTextContent());
                                 if(t != null) {
                                     edgeList.get(dir).add(t);
+                                    //System.out.println("adding " + t.toString());
                                 }
                             }
                         }

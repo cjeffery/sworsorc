@@ -19,10 +19,15 @@ public abstract class HexEdge {
     
     public static HexEdgeType getType(String attr) {
         switch(attr) {
-            case "Pb":
-                return HexEdgeType.ProvinceBorder;
-            default:
-                //System.out.println(attr);
+            case "Pb": return HexEdgeType.ProvinceBorder;
+            case "Rd": return HexEdgeType.Road;
+            case "Tr": return HexEdgeType.Trail;
+            case "Br": return HexEdgeType.Bridge;
+            case "Wa": return HexEdgeType.Wall;
+            case "St": return HexEdgeType.Stream;
+            //case "Ga": return HexEdgeType.Gate;
+            //case "Ro": //????????????
+            default: //System.out.println(attr);
         }
         return null;
     }
