@@ -1,4 +1,4 @@
-
+package scenarioconfigurationreader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -36,8 +35,7 @@ public class ScenarioConfigurationReader {
      Map<String, List<String>> provinces; //name -> list of province names
      Map<String, List<String>> characters; //name -> list of character names
      Map<String, Map<String, Integer>> units; //name -> (unitName -> unitCount)
-     Map<String, String> replacements; //player -> description of replacement
-     Map<String, String> reinforcements;
+     Map<String, String> replacements; //player -> description of replacement 
 
     //Diplomacy stuff:
      Map<String, String> leaningTowards;
@@ -59,7 +57,6 @@ public class ScenarioConfigurationReader {
             System.out.println("Has characters: " + getCharacters(player));
             System.out.println("Has units: " + getUnits(player));
             System.out.println("Replacements: " + getReplacement(player));
-            System.out.println("Reinforcements: " + getReinforcement(player));
         }
         for (String neutral : neutralNames) {
             System.out.println();
@@ -88,14 +85,13 @@ public class ScenarioConfigurationReader {
         leaningAmount = new HashMap<>();
         acceptsSacrifice = new HashMap<>();
         replacements = new HashMap<>();
-        reinforcements = new HashMap<>();
 
         //neutralNames has keys for the maps:
         neutralNames = new ArrayList<>();
 
         try {
             //The entire file:
-            Object obj = parser.parse(new FileReader(configurationFileName));
+            Object obj = parser.parse(new FileReader("Weird.json"));
             JSONObject jsonObject = (JSONObject) obj;
 
             //Top-level game information:
@@ -119,9 +115,6 @@ public class ScenarioConfigurationReader {
 
                 String replacementDescription = (String) playerObject.get("replacements");
                 replacements.put(playerName, replacementDescription);
-                
-                String reinforcementDescription = (String) playerObject.get("reinforcements");
-                reinforcements.put(playerName, reinforcementDescription);
 
                 List<String> playerProvinces = new ArrayList<>();
                 for (Object provinceObject : (JSONArray) playerObject.get("provinces")) {
@@ -201,13 +194,13 @@ public class ScenarioConfigurationReader {
                     }
                 }
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ScenarioConfigurationReader.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ScenarioConfigurationReader.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-             Logger.getLogger(ScenarioConfigurationReader.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
     
     public String getScenarioName() {
@@ -252,10 +245,6 @@ public class ScenarioConfigurationReader {
     public String  getReplacement(String name) {
         return replacements.get(name);
     }
-    
-    public String getReinforcement(String name) {
-        return reinforcements.get(name);
-    }
 
     public String getLeaningToward(String name) {
         return leaningTowards.get(name);
@@ -270,9 +259,8 @@ public class ScenarioConfigurationReader {
     }
 
     public static void main(String[] args) {
-      /* System.out.println("Working Directory = " +
-              System.getProperty("user.dir")); */
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("8_Weird.json");
+
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("Weird.json");
         reader.print();
     }
 }

@@ -27,6 +27,7 @@
                 "Snorri",
                 "Therefond"
             ],
+	    "reinforcements":"0",
             "replacements":"1 in 3"
         },
         {
@@ -43,6 +44,7 @@
             "characters": [
                 "Ganab the Nasty"
             ],
+	    "reinforcements":"0",
             "replacements":"1 in 3"
         }
     ],
