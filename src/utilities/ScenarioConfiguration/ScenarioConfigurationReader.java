@@ -20,24 +20,25 @@ import org.json.simple.parser.*;
  * This class reads a scenario configuration file. There a bunch of getters().
  * Look at the "print()" function as an example of the getters().
  * 
- * You will need to point netbeans at the JSON.simple library (in libs directory)
+ * It will be helpful to use the ScenarioReader run configuration to test this
  */
 
 public class ScenarioConfigurationReader {
     
-     List<String> playerNames;
+     List<String> nationNames;
      List<String> neutralNames;
 
-    //Information storage for each player:
+    //Information storage for each nation:
      
-    //The player or neutral name is the key for these hashmaps
-     Map<String, Integer> setupOrders; //name -> order
-     Map<String, Integer> moveOrders; //name -> order
-     Map<String, List<String>> provinces; //name -> list of province names
-     Map<String, List<String>> characters; //name -> list of character names
-     Map<String, Map<String, Integer>> units; //name -> (unitName -> unitCount)
-     Map<String, String> replacements; //player -> description of replacement
-     Map<String, String> reinforcements;
+    //The player nation or neutral name is the key for these hashmaps
+     Map<String, Integer> controllingPlayers;   //name -> controllingPlayer
+     Map<String, Integer> setupOrders;          //name -> order
+     Map<String, Integer> moveOrders;           //name -> order
+     Map<String, List<String>> provinces;       //name -> list of province names
+     Map<String, List<String>> characters;      //name -> list of character names
+     Map<String, Map<String, Integer>> units;   //name -> (unitName -> unitCount)
+     Map<String, String> replacements;          //nation -> description of replacement
+     Map<String, String> reinforcements;        //nation -> description of reinforcements
 
     //Diplomacy stuff:
      Map<String, String> leaningTowards;
@@ -50,16 +51,17 @@ public class ScenarioConfigurationReader {
      int gameLength; //Number of game turns
 
     public void print() {
-        for (String player : getPlayerNames()) {
+        for (String nation : getNationNames()) {
             System.out.println();
-            System.out.println("Player: " + player);
-            System.out.println("Sets up: " + getSetupOrder(player));
-            System.out.println("Moves: " + getMoveOrder(player));
-            System.out.println("Controls Provinces: " + getProvinces(player));
-            System.out.println("Has characters: " + getCharacters(player));
-            System.out.println("Has units: " + getUnits(player));
-            System.out.println("Replacements: " + getReplacement(player));
-            System.out.println("Reinforcements: " + getReinforcement(player));
+            System.out.println("Nation: " + nation);
+            System.out.println("Controlled by: Player " + getControllingPlayer(nation));
+            System.out.println("Sets up: " + getSetupOrder(nation));
+            System.out.println("Moves: " + getMoveOrder(nation));
+            System.out.println("Controls Provinces: " + getProvinces(nation));
+            System.out.println("Has characters: " + getCharacters(nation));
+            System.out.println("Has units: " + getUnits(nation));
+            System.out.println("Replacements: " + getReplacement(nation));
+            System.out.println("Reinforcements: " + getReinforcement(nation));
         }
         for (String neutral : neutralNames) {
             System.out.println();
@@ -78,12 +80,13 @@ public class ScenarioConfigurationReader {
 
         JSONParser parser = new JSONParser();
 
-        playerNames = new ArrayList<>();
+        controllingPlayers = new HashMap<>();
+        nationNames = new ArrayList<>();
         setupOrders = new HashMap<>();
         moveOrders = new HashMap<>();
-        provinces = new HashMap<>(); //Array of province names
-        characters = new HashMap<>(); //Array of character names
-        units = new HashMap<>(); //The return map is unitName:unitCount
+        provinces = new HashMap<>();    //Array of province names
+        characters = new HashMap<>();   //Array of character names
+        units = new HashMap<>();        //The return map is unitName:unitCount
         leaningTowards = new HashMap<>();
         leaningAmount = new HashMap<>();
         acceptsSacrifice = new HashMap<>();
@@ -103,56 +106,59 @@ public class ScenarioConfigurationReader {
             numberOfPlayers = ((Long) jsonObject.get("numberOfPlayers")).intValue();
             gameLength = ((Long) jsonObject.get("gameLength")).intValue();
 
-            //We'll iterate and grab info for each human controlled player:
-            JSONArray JSONPlayerArray = (JSONArray) jsonObject.get("players");
-            for (Object basePlayerObject : JSONPlayerArray) {
-                JSONObject playerObject = (JSONObject) basePlayerObject;
+            //We'll iterate and grab info for each human controlled nation:
+            JSONArray JSONNationArray = (JSONArray) jsonObject.get("nations");
+            for (Object baseNationObject : JSONNationArray) {
+                JSONObject nationObject = (JSONObject) baseNationObject;
 
-                String playerName = (String) playerObject.get("name");
-                playerNames.add(playerName);
-
-                int setupOrder = ((Long) playerObject.get("setupOrder")).intValue();
-                setupOrders.put(playerName, setupOrder);
-
-                int moveOrder = ((Long) playerObject.get("moveOrder")).intValue();
-                moveOrders.put(playerName, moveOrder);
-
-                String replacementDescription = (String) playerObject.get("replacements");
-                replacements.put(playerName, replacementDescription);
+                String nationName = (String) nationObject.get("name");
+                nationNames.add(nationName);
                 
-                String reinforcementDescription = (String) playerObject.get("reinforcements");
-                reinforcements.put(playerName, reinforcementDescription);
+                int controllingPlayer = ((Long) nationObject.get("player")).intValue();
+                controllingPlayers.put(nationName, controllingPlayer);
 
-                List<String> playerProvinces = new ArrayList<>();
-                for (Object provinceObject : (JSONArray) playerObject.get("provinces")) {
+                int setupOrder = ((Long) nationObject.get("setupOrder")).intValue();
+                setupOrders.put(nationName, setupOrder);
+
+                int moveOrder = ((Long) nationObject.get("moveOrder")).intValue();
+                moveOrders.put(nationName, moveOrder);
+
+                String replacementDescription = (String) nationObject.get("replacements");
+                replacements.put(nationName, replacementDescription);
+                
+                String reinforcementDescription = (String) nationObject.get("reinforcements");
+                reinforcements.put(nationName, reinforcementDescription);
+
+                List<String> nationProvinces = new ArrayList<>();
+                for (Object provinceObject : (JSONArray) nationObject.get("provinces")) {
                     String province = (String) provinceObject;
-                    playerProvinces.add(province);
+                    nationProvinces.add(province);
                 }
-                provinces.put(playerName, playerProvinces);
+                provinces.put(nationName, nationProvinces);
 
-                List<String> playerCharacters = new ArrayList<>();
-                for (Object characterObject : (JSONArray) playerObject.get("characters")) {
+                List<String> nationCharacters = new ArrayList<>();
+                for (Object characterObject : (JSONArray) nationObject.get("characters")) {
                     String character = (String) characterObject;
 
-                    playerCharacters.add(character);
+                    nationCharacters.add(character);
                 }
-                characters.put(playerName, playerCharacters);
+                characters.put(nationName, nationCharacters);
 
-                JSONObject playerUnits = (JSONObject) playerObject.get("units");
+                JSONObject nationUnits = (JSONObject) nationObject.get("units");
 
                 Map<String, Integer> unitAndCount = new HashMap<>();
-                for (Object entry : playerUnits.entrySet()) {
+                for (Object entry : nationUnits.entrySet()) {
                     Map.Entry en = (Map.Entry) entry;
                     String unitName = (String) en.getKey();
                     int unitCount = ((Long) en.getValue()).intValue();
                     unitAndCount.put(unitName, unitCount);
 
                 }
-                units.put(playerName, unitAndCount);
+                units.put(nationName, unitAndCount);
 
             }
 
-            //Iterate and grab information for neutral players:
+            //Iterate and grab information for neutral nations:
             JSONArray neutralJSONArray = (JSONArray) jsonObject.get("neutrals");
             for (Object neutralBaseObject : neutralJSONArray) {
                 JSONObject neutralObject = (JSONObject) neutralBaseObject;
@@ -176,9 +182,9 @@ public class ScenarioConfigurationReader {
 
                 //Since we don't want to hard-code unit names, we have to iterate
                 //over the hash map entries to get unit names:
-                JSONObject playerUnitObject = (JSONObject) neutralObject.get("units");
+                JSONObject nationUnitObject = (JSONObject) neutralObject.get("units");
                 Map<String, Integer> nmap = new HashMap<>();
-                for (Object entry : playerUnitObject.entrySet()) {
+                for (Object entry : nationUnitObject.entrySet()) {
                     Map.Entry en = (Map.Entry) entry;
                     String unitName = (String) en.getKey();
                     int unitCount = ((Long) en.getValue()).intValue();
@@ -210,6 +216,10 @@ public class ScenarioConfigurationReader {
          }
     }
     
+    public int getControllingPlayer(String name) {
+        return controllingPlayers.get(name);
+    }
+    
     public String getScenarioName() {
         return scenarioName;
     }
@@ -221,8 +231,8 @@ public class ScenarioConfigurationReader {
     public int getGameLength() {
         return gameLength;
     }
-    public List<String> getPlayerNames() {
-        return playerNames;
+    public List<String> getNationNames() {
+        return nationNames;
     }
 
     public List<String> getNeutralNames() {
@@ -272,7 +282,7 @@ public class ScenarioConfigurationReader {
     public static void main(String[] args) {
       /* System.out.println("Working Directory = " +
               System.getProperty("user.dir")); */
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("8_Weird.json");
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("2_Dwarrows.json");
         reader.print();
     }
 }

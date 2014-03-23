@@ -9,8 +9,9 @@
         "red":"D"
     },
     
-    "players": [
+    "nations": [
         {
+	    "player":1
             "name": "Snorri",
             "provinces": ["UrfDurfal"],
             "setupOrder":2,
@@ -31,6 +32,7 @@
             "replacements":"1 in 3"
         },
         {
+	    "player":2
             "name": "Goblin State",
             "provinces": ["Endore"],
             "setupOrder": 1,
