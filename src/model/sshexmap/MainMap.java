@@ -12,13 +12,17 @@ public class MainMap extends HexMap {
     private static MainMap INSTANCE;
     
     private MainMap(){
-        super("MainMap.xml");
+        super("resources/MainMap.xml");
         BuildMap();
     }
 
     @Override
     MapHex makeHex(Node h) {
         return new MapHex(h);
+    }
+    
+    public MapHex GetHex(String id) {
+        return (MapHex)super.GetHex(id);
     }
     
     public static MainMap GetInstance(){

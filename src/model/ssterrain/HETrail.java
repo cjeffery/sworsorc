@@ -12,11 +12,12 @@ package ssterrain;
  * CS 383 Software Engineering
  */
 import Units.*;
-public class HETrail implements HexEdge{
-    Hex hex;
+import sshexmap.MapHex;
+public class HETrail extends HexEdge{
+    MapHex hex;
     int edge;
     
-    public HETrail(Hex thisHex, int thisEdge){
+    public HETrail(MapHex thisHex, int thisEdge){
         this.hex = thisHex;
         this.edge = thisEdge;
     }

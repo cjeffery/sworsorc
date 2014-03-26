@@ -18,6 +18,11 @@ public abstract class TerrainType {
     public abstract double getCombatMultiplier(MoveableUnit unit);
     public abstract String getCombatEffect(MoveableUnit unit);
 
+    /**
+     * convert XML terrain key to terrain type
+     * @param code The string key from an XML file
+     * @return The terrain type, or null.
+     */
     public static TerrainType makeTerrainType(String code) {
         switch(code) {
             case "Bl": return new TTBlasted();

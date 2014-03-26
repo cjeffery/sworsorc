@@ -31,6 +31,7 @@ import Units.*;
 public class MapHex extends Hex{
     private String hexName;
     private TerrainType terrainType;
+    private ArrayList<ImprovedTerrainType> improvements;
     private String provinceName;
     private boolean cityHex = false;
     private boolean vortexHex = false;
@@ -38,11 +39,18 @@ public class MapHex extends Hex{
     private boolean capitalHex = false;
     private boolean townHex = false;
     private int portalHex = 0;
-    private HexEdge[] edgeList = new HexEdge[6];
-    private HashMap<String, ArrayList<String>> hexEdgeMap = new HashMap<>();
+    private ArrayList<ArrayList<HexEdgeType>> edgeList;
+    
+    //private HashMap<String, ArrayList<String>> hexEdgeMap = new HashMap<>();
     //ArrayList<Integer> hexEdgeAdditions = new ArrayList<>();
 
+    public MapHex() {    }
     public MapHex(Node hex) {
+        this.edgeList = new ArrayList<ArrayList<HexEdgeType>>(6);
+        for(int i = 0; i < 6; i++)
+            edgeList.add(i,  new ArrayList<HexEdgeType>());
+        
+        improvements = new ArrayList<ImprovedTerrainType>();
         NodeList hexList = hex.getChildNodes();
         for(int i = 0; i < hexList.getLength(); i++) {
             Node hexItem = hexList.item(i);
@@ -55,6 +63,12 @@ public class MapHex extends Hex{
                     break;
                 case "terrainKey":
                     terrainType = TerrainType.makeTerrainType(contents);
+                    //FIXME could be more than one improvement
+                    //yeah I know it's bad passing 'this' from a constructor, 
+                    //but it should be OK in this instance
+                    ImprovedTerrainType improvement = ImprovedTerrainType.makeImprovement(contents, this);
+                    if(improvement != null)
+                        improvements.add(improvement);
                     break;
                 case "cityHex":
                     cityHex = contents.equals("true");
@@ -81,22 +95,31 @@ public class MapHex extends Hex{
                     //iterate over edges
                     NodeList listOfEdges = hexItem.getChildNodes();
                     for (int j = 0; j < listOfEdges.getLength(); j ++){
-                        Node edge = listOfEdges.item(j); 
-                        if(edge.getNodeType() != Node.ELEMENT_NODE)
-                            break;
-                         
-                        NodeList edgeItems = edge.getChildNodes();
-                        ArrayList<String> attrList = new ArrayList<>();
-                        //iterate over attributes of given edge
-                        int[] xmlOrder = {1, 0, 5, 4, 3, 2};
-                        for (int h = 0; h < edgeItems.getLength(); h++){
-                            Node attr = edgeItems.item(h);
-
-                            if(attr.getNodeType() == Node.ELEMENT_NODE)
-                                attrList.add(attr.getTextContent());
-                        }//for (int h = 0; h < edgeItems.getLength(); h++)
-                        //FIXME edgeList[xmlOrder[j]] = new HexEdge(attrList);                       
-                    }//for (int j = 0; j < listOfEdges.getLength(); j ++)
+                        Node edgeDir = listOfEdges.item(j); 
+                        int dir = 0;
+                        switch(edgeDir.getNodeName()) {
+                            case "northEastEdge": dir = 0; break;
+                            case "northEdge":     dir = 1; break;
+                            case "northWestEdge": dir = 2; break;
+                            case "southWestEdge": dir = 3; break;
+                            case "southEdge":     dir = 4; break;
+                            case "southEastEdge": dir = 5; break;                                                         
+                        }
+                        if(edgeDir.getNodeType() != Node.ELEMENT_NODE)
+                            continue;
+                        NodeList edgeItems = edgeDir.getChildNodes();
+                        
+                        for (int k = 0; k < edgeItems.getLength(); k++){
+                            Node attr = edgeItems.item(k);
+                            if(attr.getNodeType() == Node.ELEMENT_NODE) {
+                                HexEdgeType t = HexEdge.getType(attr.getTextContent());
+                                if(t != null) {
+                                    edgeList.get(dir).add(t);
+                                }
+                            }
+                        }
+                        
+                    }
                     break;
                 case "default":
                     System.out.println("uh oh :(");
@@ -189,4 +212,75 @@ public class MapHex extends Hex{
     public void ModifyTerrainCode (String keyterrain) {
         //to do.
     }     
+
+
+    public void addEdge(HexEdge newEdge){
+        //edges.add(newEdge);
+    }
+    
+    public void setTerrainType(TerrainType newTerrainType){
+        this.terrainType = newTerrainType;
+    }
+    
+    public void addImprovement(ImprovedTerrainType newImprovement){
+        improvements.add(newImprovement);
+    }
+    
+    public void removeEdge(HexEdge deadEdge){
+        //edges.remove(deadEdge);
+    }
+    
+    public TerrainType getTerrainType(){
+        return terrainType;
+    }
+    
+    public void removeImprovement(ImprovedTerrainType deadImprovement){
+        improvements.remove(deadImprovement);
+    }
+    
+    public ArrayList<ImprovedTerrainType> getImprovements(){
+        return improvements;
+    }
+    
+    /* TODO: what does this method suppoed to do */
+    public boolean checkIfCrossed(ArrayList<HexEdgeType> list){
+        /*for(int l = 0; l < list.size(); l++){
+            for(int e = 0; e < edges.size(); e++){
+                if(edges.get(e).getEdgeType().equals(list.get(l)))return true;
+            }
+        }*/
+        return false;
+    }
+    
+    public ArrayList<HexEdgeType> getEdgeType(int edge){
+        /*
+        for(int e = 0; e < edges.size(); e++){
+            if(edges.get(e).getEdge() == edge) thisEdge.add(edges.get(e).getEdgeType());
+        }
+        return thisEdge;*/
+        return edgeList.get(edge);
+    }
+    
+    public double getMovementCost(MoveableUnit unit){
+        double move = terrainType.getMovementCost(unit);
+        double override = 100;
+        if(improvements.size() > 0)
+            for(int i = 0; i < improvements.size(); i++){   
+                move += improvements.get(i).getMovementCost(unit);
+                if(improvements.get(i).getMovementOverride(unit) > 0.0)
+                    if(improvements.get(i).getMovementOverride(unit) < override) 
+                        override = improvements.get(i).getMovementOverride(unit);
+            }
+        if(override > 0 && override < 100) move = override;
+        return move;
+    }
+    
+    public double getCombatMultiplier(ArmyUnit unit){
+        double mult = 1;
+        mult *= terrainType.getCombatMultiplier(unit);
+        if(improvements.size() > 0)
+            for(int i = 0; i < improvements.size(); i++)
+                mult *= improvements.get(i).getCombatMultiplier(unit);
+        return mult;
+    }
 }

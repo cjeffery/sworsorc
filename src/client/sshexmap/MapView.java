@@ -53,12 +53,13 @@ public class MapView extends JPanel {
                 g2.translate(width*col*0.75,
                              height*(hexRect.y + ((col%2)*0.5) - par*0.5));
 
+                int topleftmask = 0x3F;
                 //draw all the hexes in the row
                 for(int row = hexRect.y; row <= max_row; row++) {
                     if(edge == 0)
                         hp.paintHex(g2, map.GetHex(col,row));
                     else
-                        ;//hp.paintEdges(g2, map.GetHex(col,row));
+                        hp.paintEdges(g2, (MapHex)map.GetHex(col, row));
                     g2.translate(0, height);
                 }
             }

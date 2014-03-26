@@ -8,16 +8,17 @@ package ssterrain;
 
 import java.util.ArrayList;
 import Units.*;
+import sshexmap.MapHex;
 /**
  *
  * @author John Goettsche
  * CS 383 Software Engineering
  */
-public class HEWall implements HexEdge{
-    Hex hex;
+public class HEWall extends HexEdge{
+    MapHex hex;
     int edge;
     
-    public HEWall(Hex thisHex, int thisEdge){
+    public HEWall(MapHex thisHex, int thisEdge){
         this.hex = thisHex;
         this.edge = thisEdge;
     }

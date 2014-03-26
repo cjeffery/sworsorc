@@ -7,6 +7,7 @@
 package ssterrain;
 import Units.Race;
 import Units.*;
+import sshexmap.MapHex;
 /**
  *
  * @author John Goettsche
@@ -21,7 +22,7 @@ public class Main {
     //John Wrote this im using it as an example
     
     public static void main(String[] args) {
-        Hex hex1 = new Hex();
+        MapHex hex1 = new MapHex();
         TerrainType tt1 = new TTWoods();
         hex1.setTerrainType(tt1);
         ImprovedTerrainType itt1 = new ITTCastle(hex1);
@@ -38,7 +39,7 @@ public class Main {
         System.out.println("and a combat bonus of: *" + hex1.getCombatMultiplier(unit1));
         
         System.out.println("\n\n");
-        Hex hex2 = new Hex();
+        MapHex hex2 = new MapHex();
         TerrainType tt2 = new TTMountains();
         hex2.setTerrainType(tt2);
         ImprovedTerrainType itt2 = new ITTTrail(hex2);
