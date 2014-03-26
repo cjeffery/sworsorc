@@ -52,7 +52,6 @@ public class spell_search {
         }
         if(strTok.hasMoreElements()){
             Name = (String) strTok.nextElement();
-            System.out.println("Test: "+ Name);
         }
         if(Name.compareTo(NameByIn) == 0){
             found = true;

@@ -7,13 +7,16 @@
 package implement_spells;
 
 import implement_spells.Spell_Details.*;
-
+import implement_spells.spells.CastSpell;
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,7 +31,7 @@ public class Spell {
     double  ManaCost;
     
     public JButton spellbutton;
-    private JFrame selectF;
+    private JFrame spellFrame;
     private JPanel controlPanel;
     
     Spell(String n, int lv, double mc) {
@@ -40,75 +43,57 @@ public class Spell {
         spellbutton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                prepareSelectionGUI();
+                showSpellDetails();
                 showButtonDemo();
             }
         });
     }
     
-    public void prepareSelectionGUI(){
-        selectF = new JFrame("Selection");
-        selectF.setSize(350,80);
-        selectF.setLayout(new GridLayout(1,3));
-        selectF.addWindowListener(new WindowAdapter() {
-           @Override
-           public void windowClosing(WindowEvent windowEvent){
-                System.exit(0);
-           }        
-        }); 
+    public void showSpellDetails(){
+        spellFrame = new JFrame(Name);
+        spellFrame.setSize(300,500);
         
-        controlPanel = new JPanel();
-        controlPanel.setLayout(new FlowLayout());
+        spellFrame.addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowClosing( WindowEvent e )
+            {  //System.exit(0); 
+
+            }
+        });
         
-        selectF.add(controlPanel);
-        selectF.setVisible(true);
+        spellFrame.getContentPane().add( new Spell_Details(Name));
+        spellFrame.setVisible( true );
     }
     
     public void showButtonDemo(){
-        JButton detailButton = new JButton("Show Details");
-        JButton castButton = new JButton("Cast spell");
-        JButton cancelButton = new JButton("Cancel");
+        JButton cast_button = new JButton("Cast");
+        JButton cancel_button = new JButton("Cancel");
         
-        detailButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                //=========================
-                JFrame spell_window = new JFrame("Spell Details");
-                int sframe_width  = 300;
-                int sframe_height = 500;
-        
-                spell_window.addWindowListener( new WindowAdapter() {
-                    @Override
-                    public void windowClosing( WindowEvent e )
-                    {  System.exit(0); }
-                });
-        
-                spell_window.setSize(sframe_width, sframe_height);
-                spell_window.getContentPane().add( new Spell_Details(Name) );
-                spell_window.setVisible( true );
-                
-            }
-        });
-        
-        castButton.addActionListener(new ActionListener(){
+        cast_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 //JFrame spell_cast_window = new JFrame(Name);
-                
+                CastSpell cs = new CastSpell(Name);
+                cs.call_spell();
             }
         });
         
-        cancelButton.addActionListener(new ActionListener(){
+        cancel_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                
+                spellFrame.dispose();
             }
         });
         
-        controlPanel.add(detailButton);
-        controlPanel.add(castButton);
-        controlPanel.add(cancelButton);
+        JPanel selection = new JPanel();// panel for cast and cancel buttons
+        selection.setLayout(new FlowLayout());
+        selection.add(cast_button);
+        selection.add(cancel_button);
         
-        selectF.setVisible(true);
+        spellFrame.setLayout(new BorderLayout());
+        spellFrame.add(selection, BorderLayout.SOUTH);
+        spellFrame.setVisible(true);
     }
+    
+    
 }

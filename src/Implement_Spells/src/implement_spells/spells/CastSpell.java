@@ -14,14 +14,12 @@ import implement_spells.spells.PL_5.*;
 import implement_spells.spells.PL_6.*;
 import implement_spells.spells.PL_7.*;
 
-import java.awt.Graphics;
-import javax.swing.JComponent;
 
 /**
  *
  * @author 张涛
  */
-public class CastSpell extends JComponent{
+public class CastSpell{
     
     String Name;
 
@@ -29,10 +27,6 @@ public class CastSpell extends JComponent{
         Name = n;
     }
     
-    @Override
-    public void paintComponent(Graphics g){
-        
-    }
     
     public void call_spell(){
         
