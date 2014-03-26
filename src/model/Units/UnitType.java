@@ -6,7 +6,6 @@
 
 package Units;
 
-import ssterrain.*;
 
 /**
  *
@@ -15,6 +14,7 @@ import ssterrain.*;
  */
 public enum UnitType {
     Character,
-    Fighter,
-    MagicUser
+    ArmyUnit,
+    MagicUser,
+    Monster
 }

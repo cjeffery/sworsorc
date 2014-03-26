@@ -10,13 +10,14 @@ package Units;
  *
  * @author matt
  */
-
-public class FlyingConjured extends ArmyUnit{
-
-    public FlyingConjured() {
-        flying = true;
-        conjured = true;
+public class PikeMan extends LandUnit {
+    public PikeMan(){
+        super();
+        strength = 6;
+        movement = 3;
+        demoralizedStrength = 3;
+        ranged = false;
     }
-
+    
     
 }

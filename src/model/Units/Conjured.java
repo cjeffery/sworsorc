@@ -12,18 +12,11 @@ package Units;
  * More will go here but this is good for now
  */
 public class Conjured extends ArmyUnit{
-    protected int lifeCost;
+
 
     public Conjured() {
         super();
+        conjured = true;
     }   
-
-    public void setLifeCost(int lifeCost) {
-        this.lifeCost = lifeCost;
-    }
-
-    public int getLifeCost() {
-        return lifeCost;
-    }
-    
+  
 }
