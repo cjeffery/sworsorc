@@ -29,7 +29,7 @@ public class Main {
         TerrainType tt1 = new TTWoods();
         hex1.setTerrainType(tt1);
         HeavyHorse unit1 = new HeavyHorse();
-        PikeMan unit2 = new PikeMan();
+        HeavyHorse unit2 = new HeavyHorse();
         HeavySword unit3 = new HeavySword();
         
         ArrayList<ArmyUnit> attackers = new ArrayList<>();

@@ -47,4 +47,6 @@ public class ArmyUnit extends MoveableUnit{
     public void SetDemorlized(boolean x){
         demorlized = x;
     }
+    
+    
 }
