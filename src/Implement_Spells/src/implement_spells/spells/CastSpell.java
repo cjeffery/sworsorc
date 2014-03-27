@@ -44,8 +44,8 @@ public class CastSpell{
                 break;
             // ======================
             // PL_2
-            case "Mana Transfer":
-                Mana_Transfer m_t = new Mana_Transfer();
+            case "Manna Transfer":
+                Manna_Transfer m_t = new Manna_Transfer();
                 break;
             case "River Crossing":
                 River_Crossing r_c = new River_Crossing();
@@ -142,7 +142,7 @@ public class CastSpell{
                 Wizard_Wheel w_w = new Wizard_Wheel();
                 break;
             default:
-                System.err.println("Error: Unknown spell name: CaseSpell: call_spell");
+                System.err.println("Error: Unknown spell name: CastSpell: call_spell");
         }
     }
     
