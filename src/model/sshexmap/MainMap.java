@@ -13,7 +13,6 @@ public class MainMap extends HexMap {
     
     private MainMap(){
         super("resources/MainMap.xml");
-        BuildMap();
     }
 
     @Override
@@ -26,8 +25,10 @@ public class MainMap extends HexMap {
     }
     
     public static MainMap GetInstance(){
-      if (INSTANCE == null)
+      if (INSTANCE == null) {
           INSTANCE =  new MainMap();
+          INSTANCE.BuildMap();
+      }
       return INSTANCE;
     }
 

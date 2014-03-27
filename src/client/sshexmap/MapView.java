@@ -35,7 +35,8 @@ public class MapView extends JPanel {
 
             /* Get what hexes are in view */
             Rectangle hexRect = hexBounds(g2.getClip().getBounds());
-
+            hexRect.x--;
+            hexRect.y--;
             /* effective origin from whatever graphics object we're given */
             AffineTransform identity = g2.getTransform();
 
@@ -53,13 +54,13 @@ public class MapView extends JPanel {
                 //draw all the hexes in the row
                 for(int row = hexRect.y; row <= hexRect.getMaxY(); row++) {
                     if(edge == 0)
-                        hp.paintHex(g2, map.GetHex(col,row));
+                        hp.paintHex(g2, map.GetHex(col+1, row+1));
                     else if( map instanceof MainMap ) {
-                        hp.paintEdges(g2, (MapHex)map.GetHex(col, row));
+                        hp.paintEdges(g2, (MapHex)map.GetHex(col+1, row+1));
                     }                        
                     
                     //highlight hex if it's in the highlighted set
-                    if(highlightSet.contains(HexMap.GetIDFromCoords(col, row))){
+                    if(highlightSet.contains(HexMap.GetIDFromCoords(col+1, row+1))){
                         hp.highlight(g2);
                     }
                     g2.translate(0, height);
@@ -162,6 +163,7 @@ public class MapView extends JPanel {
     public String hexAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
+        System.out.println("" + hexX + " " + hexY);
         return HexMap.GetIDFromCoords(hexX, hexY);
     }
     
@@ -205,8 +207,9 @@ public class MapView extends JPanel {
         min_row = Math.max(min_row, 0);
         max_col = Math.min(max_col, map.GetColumns()-1);  
         max_row = Math.min(max_row, map.GetRows()-1);
-        return new Rectangle(        min_col,         min_row,
-                             max_col-min_col, max_row-min_row);
+        //return new Rectangle(        min_col,         min_row,
+        //                     max_col-min_col, max_row-min_row);
+        return new Rectangle(1, 1, map.GetColumns(), map.GetRows());
     }
         
     /** 
@@ -255,7 +258,7 @@ public class MapView extends JPanel {
         int hexY = (j - i%2);
         //conditional is needed for detecting negative y coordinate hex
         hexY = (hexY == -1) ? -1 : (hexY / 2);
-        int[] res = {hexX, hexY};
+        int[] res = {hexX+1, hexY+1};
         return res;        
     }
     

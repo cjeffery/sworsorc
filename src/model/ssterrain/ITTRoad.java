@@ -43,13 +43,7 @@ public class ITTRoad extends ImprovedTerrainType{
 
     @Override
     public double getMovementOverride(MoveableUnit unit) {
-        ArrayList<HexEdgeType> list = new ArrayList<HexEdgeType>();
-        list.add(HexEdgeType.Bridge);
-        list.add(HexEdgeType.Road);
-        list.add(HexEdgeType.Ford);
-        list.add(HexEdgeType.Trail);
-        if(hex.checkIfCrossed(list)) return 0.5;
-        else return 0;
+        return 0;
     }
     
 }
