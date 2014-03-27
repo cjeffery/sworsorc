@@ -65,7 +65,8 @@ public class MapView extends JPanel {
                     
                     //third pass, highlighting
                     if(pass == 2)
-                    if(highlightSet.contains(HexMap.GetIDFromCoords(col+1, row+1))){
+                    if(highlightSet.contains(HexMap.GetIDFromCoords(col+1,
+                                                                    row+1))){
                         hp.highlight(g2);
                     }
                     
