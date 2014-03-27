@@ -14,6 +14,7 @@ public class Cavalry extends ArmyUnit{
     
     Cavalry(){
         super();
+        cavalry = true;
     }
     
 }

@@ -7,3 +7,5 @@ doc/masterClassDiagrams/Thumbs.db
 *.class
 /nbproject/private/
 /build/
+/dist/
+/src/Implement_Spells/dist/

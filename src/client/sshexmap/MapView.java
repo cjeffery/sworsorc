@@ -42,7 +42,8 @@ public class MapView extends JPanel {
 
             /* For each hex, translate it and then draw it with HexPainter
              * first pass for hexes, second pass for hex edges */
-            for(int edge = 0; edge < 2; edge++)
+            
+            for(int pass = 0; pass < 3; pass++)
             for(int col = hexRect.x; col <= hexRect.getMaxX(); col++) {
                 //translate to first hex in row that needs drawing
                 g2.setTransform( identity );
@@ -53,16 +54,21 @@ public class MapView extends JPanel {
                 //int topleftmask = 0x3F;
                 //draw all the hexes in the row
                 for(int row = hexRect.y; row <= hexRect.getMaxY(); row++) {
-                    if(edge == 0)
-                        hp.paintHex(g2, map.GetHex(col+1, row+1));
-                    else if( map instanceof MainMap ) {
-                        hp.paintEdges(g2, (MapHex)map.GetHex(col+1, row+1));
-                    }                        
+                    //First pass: hexagons
+                    if(pass == 0)
+                        hp.paintHex(g2, map.GetHex(col+1,row+1));
                     
-                    //highlight hex if it's in the highlighted set
+                    //Second pass: edges
+                    if(pass == 1 && map instanceof MainMap ) {
+                        hp.paintEdges(g2, (MapHex)map.GetHex(col+1, row+1));
+                    }
+                    
+                    //third pass, highlighting
+                    if(pass == 2)
                     if(highlightSet.contains(HexMap.GetIDFromCoords(col+1, row+1))){
                         hp.highlight(g2);
                     }
+                    
                     g2.translate(0, height);
                 }
             }

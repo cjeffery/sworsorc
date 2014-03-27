@@ -6,7 +6,6 @@
 
 package Units;
 
-import ssterrain.*;
 
 /**
  *
@@ -16,8 +15,13 @@ import ssterrain.*;
 public class ArmyUnit extends MoveableUnit{   
     protected int strength;    
     protected int demoralizedStrength;
+    protected int lifeCost;    
+    
+    protected boolean conjured;
     protected boolean ranged;
     protected boolean demorlized;
+    protected boolean flying;
+    protected boolean cavalry;
     
     
     public void setDemorlized(boolean demorlized) {
@@ -25,7 +29,11 @@ public class ArmyUnit extends MoveableUnit{
     }
     
     public ArmyUnit() {
-        this.demorlized = true;
+        this.demorlized = false;
+        this.flying = false;
+        this.cavalry = false;
+        this.ranged = false;
+        this.conjured = false;
     }  
 
     public int getStrength() {
@@ -47,4 +55,13 @@ public class ArmyUnit extends MoveableUnit{
     public void SetDemorlized(boolean x){
         demorlized = x;
     }
+    
+    public void setLifeCost(int lifeCost) {
+        this.lifeCost = lifeCost;
+    }
+
+    public int getLifeCost() {
+        return lifeCost;
+    }
+    
 }

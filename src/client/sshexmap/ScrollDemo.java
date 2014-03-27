@@ -19,10 +19,6 @@ public class ScrollDemo implements MouseListener, KeyListener {
                                           ex.getMessage()+" "+ex.getCause());
         }
         
-        window.add(mapView);
-        window.pack();
-        window.setVisible(true);
-        
         JFrame window2 = new JFrame("Diplomacy Map"); 
         window2.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
@@ -36,6 +32,10 @@ public class ScrollDemo implements MouseListener, KeyListener {
         window2.add(diploView);
         window2.pack();
         window2.setVisible(true);
+
+        window.add(mapView);
+        window.pack();
+        window.setVisible(true);
     }
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

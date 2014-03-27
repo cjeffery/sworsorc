@@ -12,16 +12,11 @@ package Units;
  */
 
 public class FlyingConjured extends ArmyUnit{
-     protected int lifeCost;
 
     public FlyingConjured() {
+        flying = true;
+        conjured = true;
     }
 
-    public int getLifeCost() {
-        return lifeCost;
-    }
-
-    public void setLifeCost(int lifeCost) {
-        this.lifeCost = lifeCost;
-    }    
+    
 }

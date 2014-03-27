@@ -11,7 +11,9 @@
                 <root id="resources.dir"/>
                 <root id="src.server.dir" name="server"/>
             </source-roots>
-            <test-roots/>
+            <test-roots>
+                <root id="test.test.dir"/>
+            </test-roots>
         </data>
     </configuration>
 </project>

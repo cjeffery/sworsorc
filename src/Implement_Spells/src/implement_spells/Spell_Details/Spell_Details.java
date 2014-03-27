@@ -18,6 +18,7 @@ import javax.swing.JFrame;
  */
 public class Spell_Details extends JComponent{
     
+        // default frame size
     static int frame_width  = 300;
     static int frame_height = 500;
     
@@ -60,7 +61,7 @@ public class Spell_Details extends JComponent{
         frame_width = getWidth();
         frame_height = getHeight();
         
-        g.drawLine(100, 0, 100, frame_height);
+        g.drawLine(100, 0, 100, frame_height-50);
         
         g.drawLine(0,30,frame_width,30);
         g.drawLine(0,60,frame_width,60);
@@ -69,6 +70,7 @@ public class Spell_Details extends JComponent{
         g.drawLine(0,150,frame_width,150);
         g.drawLine(0,180,frame_width,180);
         g.drawLine(0,240,frame_width,240);
+        g.drawLine(0, frame_height-50, frame_width, frame_height-50);
         
         g.drawString("Name: ",6, 20);
         g.drawString("Power Level: ",6 ,50);

@@ -17,7 +17,7 @@ public class Spell_Book {
         list = new Spell[32];
         list[0]  = new Spell("Teleportation Protection", 1, 2);
         list[1]  = new Spell("Force Wall", 1, 2);
-        list[2]  = new Spell("Conjure Zombie Infanty", 1, 1);
+        list[2]  = new Spell("Conjure Zombie Infantry", 1, 1);
         
         list[3]  = new Spell("Manna Transfer", 2, 2);
         list[4]  = new Spell("River Crossing", 2, 2);
@@ -52,7 +52,7 @@ public class Spell_Book {
         list[29] = new Spell("Berserkergang", 6, 2);
         list[30] = new Spell("Conjure Demonic Infantry", 6, 2);
         
-        list[31] = new Spell("Wizard Whell", 7, 6);
+        list[31] = new Spell("Wizard Wheel", 7, 6);
     }
     
     public Spell[] MySpells(int pl){

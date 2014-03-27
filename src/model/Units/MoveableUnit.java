@@ -17,6 +17,14 @@ public class MoveableUnit {
     protected String location;
     protected String ID;
     
+    public MoveableUnit(){
+        
+    }
+    
+    public MoveableUnit(String location){
+        this.location = location;
+    }
+    
     public String getID() {
         return ID;
     }
@@ -53,5 +61,8 @@ public class MoveableUnit {
         this.UnitType = UnitType;
     }
     
-    
+    @Override
+    public String toString(){
+        return getClass().getSimpleName();
+    }
 }
