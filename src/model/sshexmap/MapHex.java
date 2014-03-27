@@ -63,12 +63,10 @@ public class MapHex extends Hex{
                     SetID(contents);
                     //edges can't be set up until ID is known
                     //so set them up here
-                    System.out.println("My ID is " + GetID());
                     for(int j = 0; j < 6; j++) {
                         //if the Edge already exists use it,
                         MapHex neighbor = this.getNeighbor(j);
                         if(neighbor != null) {
-                            System.out.println("Neighbor ID is " + neighbor.GetID());
                             edgeList.add(j, neighbor.getEdge( (j+3) % 6 ));
                         }
                         else
