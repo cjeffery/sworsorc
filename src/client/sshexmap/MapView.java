@@ -55,16 +55,17 @@ public class MapView extends JPanel {
                 for(int row = hexRect.y; row <= hexRect.getMaxY(); row++) {
                     //First pass: hexagons
                     if(pass == 0)
-                        hp.paintHex(g2, map.GetHex(col,row));
+                        hp.paintHex(g2, map.GetHex(col+1,row+1));
                     
                     //Second pass: edges
                     if(pass == 1 && map instanceof MainMap ) {
-                        hp.paintEdges(g2, (MapHex)map.GetHex(col, row));
+                        hp.paintEdges(g2, (MapHex)map.GetHex(col+1, row+1));
                     }
                     
                     //third pass, highlighting
                     if(pass == 2)
-                    if(highlightSet.contains(HexMap.GetIDFromCoords(col, row))){
+                    if(highlightSet.contains(HexMap.GetIDFromCoords(col+1,
+                                                                    row+1))){
                         hp.highlight(g2);
                     }
                     
