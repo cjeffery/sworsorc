@@ -83,6 +83,8 @@ class ClientObject {
     ListenerThread listenerThread;
     WriterThread writerThread; //this is "pretend" for now. 
     
+    List<String> file;
+    
     //We need a PrintWriter to standardize the printMessage functions:
     PrintWriter consoleOut = new PrintWriter(System.out, true);
 
@@ -209,6 +211,27 @@ class ClientObject {
    
                         //Send to all connected clients:
                         ChatServer.sendToAllClients(message);
+                    }
+                    else if (message.get(0).equals(MessageUtils.FILE)){
+                        System.out.println("Receiving file " + message.get(1));
+                        file = new ArrayList<String>();
+                    }
+                    else if (message.get(0).equals(MessageUtils.FILE_LINE)){
+                        if(file != null){
+                            file.add(message.get(2));
+                            System.out.println(message.get(2));
+                        } else {
+                            System.err.println("No file created to receive!");
+                        }
+                    }
+                    else if (message.get(0).equals(MessageUtils.PRINT_FILE)){
+                        if (file != null){
+                            for (int i = 0; i < file.size(); i++){
+                                System.out.println(file.get(i));
+                            }
+                        } else {
+                            System.err.println("No file loaded!");
+                        }
                     }
                     else {
                         //will add other protocols 

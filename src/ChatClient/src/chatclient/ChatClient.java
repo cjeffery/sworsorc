@@ -7,6 +7,7 @@ package chatclient;
 
 import java.net.*;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -98,7 +99,7 @@ public class ChatClient {
         public WriterThread() {
             try {
                 writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println("Error : Creating output stream for socket");
             }
 
@@ -108,9 +109,23 @@ public class ChatClient {
             writer.println(message);
             writer.flush();
         }
+        
+        public void sendFile(String fileName){
+            String line;
+            try{
+                BufferedReader file = new BufferedReader(new InputStreamReader
+                    (new FileInputStream(fileName), Charset.forName("UTF-8")));
+                MessageUtils.sendMessage(writer, MessageUtils.makeIncomingFileMessage(fileName));
+                while ((line = file.readLine()) != null){
+                    MessageUtils.sendMessage(writer, MessageUtils.makeFileLineMessage(fileName, line));
+                }
+            }catch(Exception e){
+                System.out.println("Could not open file!");
+            }
+        }
 
         public void run() {
-
+            String[] parsedString;
             while (true) {
                 try {
                     String line = consoleIn.readLine();
@@ -118,7 +133,17 @@ public class ChatClient {
                         close();
                         break;
                     }
-                    
+                    parsedString = line.split("\\s+"); //Split line by whitespace
+                    if(parsedString.length == 2){
+                        if("/file".equals(parsedString[0])){
+                            sendFile(parsedString[1]);
+                        }
+                    }
+                    else if(parsedString.length == 1){
+                        if("/printFile".equals(parsedString[0])){
+                            write(MessageUtils.PRINT_FILE);
+                        }
+                    }
                     //Send out a "normal" chat message, which get's forwarded
                     //to everyone. Again, we hide the message format details:
                     MessageUtils.sendMessage(writer, MessageUtils.makeChatMessage(username, line));

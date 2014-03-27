@@ -32,6 +32,9 @@ public class MessageUtils {
     static String CHAT = "chat"; //Normal chat message:
     static String DISCONNECT = "disconnect"; //Announcement:
     static String CONNECT = "connect"; //Announcement:
+    static String FILE = "file"; 
+    static String FILE_LINE = "fileLine";
+    static String PRINT_FILE = "printFile";
     
     static boolean debug = false;
 
@@ -45,7 +48,22 @@ public class MessageUtils {
     public static void printConnectionMessage(PrintWriter write, List<String> array){
         write.println("User: " + array.get(1) + " has joined ");
     }
- 
+    
+    //Announce that a file is about to be sent:
+    public static List<String> makeIncomingFileMessage(String fileName){
+        List<String> message = new ArrayList<>();
+        message.add(FILE);
+        message.add(fileName);
+        return message;
+    }
+    
+    public static List<String> makeFileLineMessage(String fileName, String line){
+        List<String> message = new ArrayList<>();
+        message.add(FILE_LINE);
+        message.add(fileName);
+        message.add(line);
+        return message;
+    }
     
     //Normal chat message, just forward and print handle:
     public static List<String> makeChatMessage(String handle, String text){
