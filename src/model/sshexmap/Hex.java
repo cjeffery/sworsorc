@@ -26,31 +26,31 @@ public class Hex {
         int x = coords[0], y = coords[1];
         switch(direction) {
             case 0: //NE
-                y++;
-                x -= (x%2 == 1) ? 0 : 1;
-                break;
-            case 1: //North
-                x--;
-                break;
-            case 2:
-                y--;
-                x -= (x%2 == 1) ? 0 : 1;
-                break;
-            case 3:
-                y--;
-                x += (x%2 == 1) ? 1 : 0;
-                break;             
-            case 4:
+                y -= (x%2 == 1) ? 1 : 0;
                 x++;
                 break;
-            case 5:
+            case 1: //N
+                y--;
+                break;
+            case 2: //NW
+                y -= (x%2 == 1) ? 1 : 0;
+                x--;
+                break;
+            case 3: //SW
+                y += (x%2 == 1) ? 0 : 1;
+                x--;
+                break;             
+            case 4: //S
                 y++;
-                x += (x%2 == 1) ? 1 : 0;
+                break;
+            case 5: //SE
+                y += (x%2 == 1) ? 0 : 1;
+                x++;
                 break;                
         }
         return HexMap.GetIDFromCoords(x,y);
     }
-  
+     
     public int[] GetCoords() {
         int[] res = new int[2];
         res[0] = GetIntID() / 100;

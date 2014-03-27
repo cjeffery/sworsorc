@@ -70,14 +70,14 @@ public abstract class HexMap {
     public abstract boolean LowFirstRow();
     
     public static String GetIDFromCoords(int x, int y) {
-        return String.format("%02d%02d", x+1, y+1);
+        return String.format("%02d%02d", x, y);
     }
     
     public static int[] GetCoordsFromID(String hex) {
         int[] res = new int[2];
         int i = Integer.parseInt(hex);
-        res[0] = (i / 100) - 1;
-        res[1] = (i % 100) - 1;
+        res[0] = (i / 100);
+        res[1] = (i % 100);
         return res;
     }
   
