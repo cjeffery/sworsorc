@@ -5,98 +5,63 @@
  */
 
 
-public class Character extends Monster {
+public class Character extends MoveableUnit {
 
-    String  Name;
-    char Race;
-    char MagicColor;
-    int HomeHex;
-    int MagicProfile;
-    int MagicResistance;
-    int Leadership;
-    int Diplomatic;
-    int Fighting;
-    int Endurance;
-    int AvgMagicPL;
-    int MagicPL;
-    int MannaLevel;
-
-    // something with talisman of orbs possibly an arrayList
+    protected int MagicPotential;
+    protected int MagicLevel;
+    protected int Attack;
+    protected bool Demorailzed;
 
     public Character()
     {
 	
     }
 
-    public void SetMannaLevel( int mana )
+    public bool getDemoralized()
     {
-	// add checking later
-	MannaLevel = mana;
+	return Demoralized;
     }
 
-    public int GetMannaLevel()
+    public void setDemoralized(bool D)
     {
-	return MannaLevel;
+	Demoralized = D;
     }
 
-    public char GetRace()
+    public int getMagicPotential()
     {
-	return Race;
+	return MagicPotential;
     }
 
-    public char GetMagicColor()
+    public int getMagicLevel()
     {
-	return MagicColor;
+	return MagicLevel;
     }
 
-    public int GetHomeHex()
+    public int getAttack()
     {
-	return HomeHex;
+	return Attack;
     }
 
-    public int GetMagicProfile()
+    public void setMagicPotential(int MP)
     {
-	return MagicProfile;
+	this.MagicPotential = MP;
     }
 
-    public int GetMagicResistance()
+    public void setMagicLevel(int ML)
     {
-	return MagicResistance;
+	this.MagicLevel = ML;
     }
 
-    public int GetLeadership()
+    public void setAttack(int A)
     {
-	return Leadership;
+	this.Attack = A;
     }
 
-    public int GetDiplomatic()
+    public void GetSpells()
     {
-	return Diplomatic;
-    }
-
-    public int GetFighting()
-    {
-	return Fighting;
-    }
-
-    public int GetEndurance()
-    {
-	return Endurance;
-    }
-
-    public int GetAvgMagicPL()
-    {
-	return AvgMagicPL;
-    }
-    
-    public int GetMagicPL()
-    {
-	return MagicPL;
-    }
-
-    public void GetSpells( /* don't know what needs to be passed probably mana and power level */ )
-    {
-
+	int tmp = 0;
+	tmp =something.getSpellBook(MagicLevel);
+	this.setMagicPotential(tmp);
     }
 
     public void CastSpell( /* don't know exactly what needs to be passed */ )
