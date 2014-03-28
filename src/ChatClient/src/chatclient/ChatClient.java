@@ -1,8 +1,4 @@
-/*
- 1. 
- 2. 
- 3. Make chat log.
- */
+
 package chatclient;
 
 import java.net.*;
@@ -45,15 +41,21 @@ public class ChatClient {
                     }
                     //first element of the parsed message array will tell us
                     //what type of message it is:
-                    if (message.get(0).equals(MessageUtils.CHAT)){
+                    if (message.get(0).equals(MessageUtils.GLOBAL_CHAT)){
                         //Printing methods can be centralized!
                         MessageUtils.printChat(consoleOut, message);
                     }
-                    else  if (message.get(0).equals(MessageUtils.DISCONNECT)){                       
+                    else  if (message.get(0).equals(MessageUtils.DISCONNECT_ANNOUNCEMENT)){                       
                         MessageUtils.printDisconnect(consoleOut, message);
                     }
-                    else  if (message.get(0).equals(MessageUtils.CONNECT)){                       
+                    else  if (message.get(0).equals(MessageUtils.CONNECT_ANNOUNCEMENT)){                       
                         MessageUtils.printConnectionMessage(consoleOut, message);
+                    }
+                    else  if (message.get(0).equals(MessageUtils.GLOBAL_WHO_LIST)){                       
+                        MessageUtils.printGlobalWhoList(consoleOut, message);
+                    }
+                    else  if (message.get(0).equals(MessageUtils.LOBBY_INFO)){                       
+                        MessageUtils.printLobbyInfo(consoleOut, message);
                     }
                     else {
                         //This shouldn't ever happen!
@@ -138,15 +140,35 @@ public class ChatClient {
                         if("/file".equals(parsedString[0])){
                             sendFile(parsedString[1]);
                         }
+                        else if ("/newLobby".equals(parsedString[0])){
+                            String lobbyName = parsedString[1];
+                            MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyMessage(lobbyName));
+                        }
+                        else if ("/joinLobby".equals(parsedString[0])){
+                            String lobbyName = parsedString[1];
+                            MessageUtils.sendMessage(writer, MessageUtils.makeJoinLobbyRequestMessage(lobbyName));
+                        }
                     }
                     else if(parsedString.length == 1){
                         if("/printFile".equals(parsedString[0])){
-                            write(MessageUtils.PRINT_FILE);
+                            write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
+                        }
+                        if("/globalWho".equals(parsedString[0])){
+                            MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
+                        }
+                        else if ("/leaveLobby".equals(parsedString[0])){
+                            MessageUtils.sendMessage(writer, MessageUtils.makeLeaveLobbyMessage());
+                        }
+                        else if ("/showLobbies".equals(parsedString[0])){
+                            MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage());
+                        }
+                        else if ("/disconnect".equals(parsedString[0])){
+                            //TODO: Disconnect
                         }
                     }
-                    //Send out a "normal" chat message, which get's forwarded
-                    //to everyone. Again, we hide the message format details:
-                    MessageUtils.sendMessage(writer, MessageUtils.makeChatMessage(username, line));
+                    
+                    //We should keep this for now:
+                    MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, line));
                     
                 } catch (IOException e) {
                     System.out.println("Error sending message!");
@@ -193,11 +215,16 @@ public class ChatClient {
         writerThread = new WriterThread();
 
         //first message is handle:
-        writerThread.write(username);
+        //writerThread.write(username);
+        MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeSendHandleMessage(username));
 
-        //next message is list of other clients:
-        listenerThread.receiveConnectionList();
+        //request list of clients:
+        MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeGlobalWhoRequestMessage());
 
+        //request list of lobbies:
+        MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeRequestLobbyInfoMessage());
+
+        
         writerThread.start();
         listenerThread.start();
 

@@ -12,16 +12,51 @@ public class ChatServer {
 
     //TODO: have clientObjects remove themselves on disconnect:
     protected static List<ClientObject> clientObjects; //"Packaged sockets"
+    protected static List<Lobby> lobbies;
+    
+    
     protected static int DEFAULT_PORT = 25565;
     protected static String DEFAULT_IP = "76.178.139.129";
 
-    //Legacy method, I think this will be replaced soon:
-    public static void sendToAllClients(String handle, String message) {
-        for (ClientObject client : clientObjects) {
-            if (!client.handle.equals(handle)) {
-                client.send(handle, message);
+    public static void createNewLobby(String name){
+        //TODO: Enforce unique names?
+       Lobby lobby = new Lobby(name);
+       lobbies.add(lobby);
+    }
+    
+    public static void joinLobby(String lobbyName, ClientObject client){
+        for (Lobby l : lobbies){
+            if (l.name.equals(lobbyName)){
+                l.join(client);
+                return;
             }
         }
+        //If we're here, we didn't find the name!
+        System.err.println("Error: Couldn't find lobby: " + lobbyName + " to join.");
+    }
+    
+    public static void leaveLobby(ClientObject client){
+        
+        for (Lobby l : lobbies){
+            if (l.lobbyClients.contains(client)){
+                l.leave(client);
+                if (l.lobbyClients.size() == 0){
+                    //For now, just kill lobbies when everyone leaves
+                    lobbies.remove(l);
+                }
+                return;
+            }
+        }
+        //If we're here, we didn't find the name!
+        System.err.println("Requested to leave lobby from client not in lobby");
+    }
+    
+    public static List<String> getAllUserNames(){
+        List<String> handles = new ArrayList<>();
+        for (ClientObject obj : ChatServer.clientObjects) {
+             handles.add(obj.getHandle());
+        }
+        return handles;
     }
     
     //Forward the message to all ClientObjects, which will send to their Clients:
@@ -30,9 +65,27 @@ public class ChatServer {
              client.send(message);           
         }
     }
+    
+    public static void clientDisconnected(int clientId){
+        //clientObject will call this on a planned or unplanned disconnection
+        
+        ClientObject dearlyDeparted = null;
+        
+        for (int i = 0; i < clientObjects.size(); i++){
+            if (clientObjects.get(i).clientID == clientId){
+                dearlyDeparted = clientObjects.get(i);
+                break;
+            }
+        }
+        
+        clientObjects.remove(dearlyDeparted);
+        
+        sendToAllClients(MessageUtils.makeDisconnectAnnouncementMessage(dearlyDeparted.getHandle()));
+    }
 
     public static void main(String args[]) {
         clientObjects = new ArrayList<>();
+        lobbies = new ArrayList<>();
 
         System.out.println("Server starting. . .");
 
@@ -71,6 +124,43 @@ public class ChatServer {
 
 }
 
+class Lobby {
+    List<ClientObject> lobbyClients;
+    static int lobbyCounter = 0;
+    int lobbyId;
+    String name;
+    
+    public Lobby(String name){
+        lobbyClients = new ArrayList<>();
+        this.name = name;
+        this.lobbyId = lobbyCounter++;
+    }
+    
+    public void sendToEntireLobby(List<String> message){
+        for (ClientObject client: lobbyClients){
+            client.send(message);
+        }
+    }
+    
+    public List<String> getUserNames(){
+        List<String> handles = new ArrayList<>();
+        for (ClientObject client : lobbyClients){
+            handles.add(client.getHandle());
+        }
+        return handles;
+    }
+    
+    public void join(ClientObject client){
+        lobbyClients.add(client);
+        //TODO: announce join to other connected clients
+    }
+    
+    public void leave(ClientObject client){
+        lobbyClients.remove(client);
+        //TODO: announce leave to other connected clients
+    }
+}
+
 class ClientObject {
 
     static int totalClients = 0;
@@ -88,18 +178,11 @@ class ClientObject {
     //We need a PrintWriter to standardize the printMessage functions:
     PrintWriter consoleOut = new PrintWriter(System.out, true);
 
-    //Legacy method: should be replaced with protocol:
-    public void send(String handle, String message) {
-        //write the literal string:
-        writerThread.write(handle + ": " + message);
-    }
-    
     //Inform the writer thread that it's time to do his job:
     public void send(List<String> message) {
-        writerThread.write(message);
+        writerThread.write(message); //"Pretend"... 
     }
 
-    
     public String getHandle() {
         return handle;
     }
@@ -127,16 +210,6 @@ class ClientObject {
             MessageUtils.sendMessage(writer, message);
         }
 
-        
-        //Legacy method: should be replaced with a standard protocol:
-        public void sendConnectionList() {
-            List<String> handles = new ArrayList<>();
-            for (ClientObject obj : ChatServer.clientObjects) {
-                handles.add(obj.getHandle());
-            }
-            MessageUtils.sendMessage(writer, handles);
-        }
-
         public void run() {
             //This is a "pretend" thread for now, since we will always just
             //call the "write()" method directly at the moment.
@@ -155,7 +228,6 @@ class ClientObject {
                 System.err.println(e);
             }
         }
-
     }
 
     class ListenerThread extends Thread {
@@ -171,18 +243,7 @@ class ClientObject {
             }
         }
 
-        //legacy: replace with protocol:
-        public String getHandle() {
-            //For now, just read a string and assume it's the handle!
-            String handle = null;
-            try {
-                handle = streamIn.readLine();
-            } catch (Exception e) {
-                System.err.println("Error : Reading client handle");
-            }
-
-            return handle;
-        }
+ 
 
         public void run() {
             //This run method DOES matter
@@ -192,11 +253,14 @@ class ClientObject {
                     List<String> message = MessageUtils.receiveMessage(streamIn);
                     
                     if (message == null) {
-                        //connection broken (NOT an exception)
+                        //connection broken (does NOT throw an exception)
                         System.out.println("Client " + clientID + " (" + handle + "): disconnected" );
                         
-                        ChatServer.sendToAllClients(MessageUtils.makeDisconnectMessage(handle));
+                        //ChatServer.sendToAllClients(MessageUtils.makeDisconnectMessage(handle));
                         
+                        ChatServer.clientDisconnected(clientID);
+                        
+                        //TODO: Exit and die
                         close();
                         break;
                         
@@ -205,18 +269,19 @@ class ClientObject {
                     //what type of message did we get?
                     //For now, the first element of the parsed array (from messageUtils),
                     //will tell us:
-                    if (message.get(0).equals(MessageUtils.CHAT)){
+                    String TAG = message.get(0);
+                    if (TAG.equals(MessageUtils.GLOBAL_CHAT)){
                         //Prints to _server_ console:
                         MessageUtils.printChat(consoleOut, message);
    
                         //Send to all connected clients:
                         ChatServer.sendToAllClients(message);
                     }
-                    else if (message.get(0).equals(MessageUtils.FILE)){
+                    else if (TAG.equals(MessageUtils.FILE)){
                         System.out.println("Receiving file " + message.get(1));
                         file = new ArrayList<String>();
                     }
-                    else if (message.get(0).equals(MessageUtils.FILE_LINE)){
+                    else if (TAG.equals(MessageUtils.FILE_LINE)){
                         if(file != null){
                             file.add(message.get(2));
                             System.out.println(message.get(2));
@@ -224,7 +289,7 @@ class ClientObject {
                             System.err.println("No file created to receive!");
                         }
                     }
-                    else if (message.get(0).equals(MessageUtils.PRINT_FILE)){
+                    else if (TAG.equals(MessageUtils.PRINT_FILE)){
                         if (file != null){
                             for (int i = 0; i < file.size(); i++){
                                 System.out.println(file.get(i));
@@ -233,9 +298,55 @@ class ClientObject {
                             System.err.println("No file loaded!");
                         }
                     }
+                    else if (TAG.equals(MessageUtils.REQUEST_GLOBAL_WHO)){
+                        //Client asked for list of current connected users
+                        List<String> handles = ChatServer.getAllUserNames();   
+                        writerThread.write(MessageUtils.makeGlobalWhoListMessage(handles));
+                    }
+                    else if (TAG.equals(MessageUtils.CREATE_NEW_LOBBY)){
+                        //client asks to create new lobby, and provided name
+                        System.out.println("Received request to create lobby: "+ message.get(1));
+                        ChatServer.createNewLobby(message.get(1));
+                        ChatServer.joinLobby(message.get(1), ClientObject.this);
+                        
+                    }
+                    else if (TAG.equals(MessageUtils.REQUEST_LOBBY_INFO)){
+                        //client asks to create new lobby, and provided name
+                        //System.out.println("Received request to create lobby: "+ message.get(1));
+                               //Send current lobbies to client:
+                      for (Lobby lobby: ChatServer.lobbies){
+                        MessageUtils.sendMessage(writerThread.writer, 
+                        MessageUtils.makeLobbyInfoMessage(lobby.name, lobby.getUserNames()));
+                      }
+                        
+                    }
+                    else if (TAG.equals(MessageUtils.JOIN_LOBBY_REQUEST)){
+                        //client requested to join lobby.
+                        System.out.println("Received request to join lobby: "+ message.get(1));
+                        ChatServer.joinLobby(message.get(1), ClientObject.this);
+                        //TODO: Send a accept/reject message
+                    }
+                    else if (TAG.equals(MessageUtils.LEAVE_LOBBY_REQUEST)){
+                        System.out.println(handle + " has requested to leave lobby");
+                        ChatServer.leaveLobby(ClientObject.this);
+                        
+                        
+                    }
+                    else if (TAG.equals(MessageUtils.SEND_HANDLE)){
+                        //client has sent us their new handle:
+                        handle = message.get(1);
+                        System.out.println("Assigning handle " + handle + " to client " + clientID);
+                        
+                        ChatServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
+                        
+                    }
                     else {
                         //will add other protocols 
-                        System.err.println("Unknown tag!");
+                        System.err.println("Unknown tag! Printing message...");
+                        for (String s : message){
+                            System.err.println(s + " ");
+                        }
+                        System.err.println("End of unknown message");
                     }
 
                 } catch (Exception e) {
@@ -269,21 +380,18 @@ class ClientObject {
         //Given instance it's own ID:
         clientID = totalClients;
         totalClients++;
+        handle = "UnknownHandle"; //client will tell us by message
 
         this.socket = socket;
 
         listenerThread = new ListenerThread();
         writerThread = new WriterThread();
 
-        //For now, assume first message is handle (blocking):
-        this.handle = listenerThread.getHandle(); //Legacy! replace with protocol!
-
-        //next: send list of handles to client:
-        writerThread.sendConnectionList(); //Legacy! replace with protocol!
-
-        //announce the new client's connection to all old clients:
-        ChatServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
-        //ChatServer.sendToAllClients(handle, "(Joined)");
+        //Send the list of online users to the newly connected client:
+        //List<String> handles = ChatServer.getAllUserNames();                  
+        //MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeGlobalWhoListMessage(handles));
+        
+ 
 
         //Start threads:
         writerThread.start();
