@@ -13,6 +13,9 @@ import ssterrain.*;
  * @author John Goettsche
  * CS 383 Software Engineering
  */
+
+// NOTE: I didn't want to make this change because I wasn't sure where else the 
+// interface was used - but it should be "demoralized" rather than "demorlized"
 public class Unit {    
     protected Race race;
     protected UnitType unitType;
@@ -84,6 +87,17 @@ public class Unit {
         return demorlized;
     }
     
+    // I think it would be an easier interface for the rest of the developers
+    // if we had functions Demoralize() and Rally() so they don't have to 
+    // know about this boolean at all. Just a thought - Tyler Jaszkowiak
+    //
+    // public void Demoralize() {
+    //     demorlized = true;
+    // }
+    //
+    // public void Rally() {
+    //     demorlized = false;
+    // }   
     public void SetDemorlized(boolean x){
         demorlized = x;
     }
