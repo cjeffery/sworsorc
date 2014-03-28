@@ -16,6 +16,6 @@ package Units;
 public class RangedLandUnit extends ArmyUnit{
     RangedLandUnit(){
         super();
-        ranged = true;
+        armyUnitType = ArmyUnitType.ranged;
     }
 }

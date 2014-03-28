@@ -14,7 +14,8 @@ package Units;
 public class FlyingConjured extends ArmyUnit{
 
     public FlyingConjured() {
-        flying = true;
+        super();
+        armyUnitType = ArmyUnitType.flying;
         conjured = true;
     }
 

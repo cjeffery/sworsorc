@@ -17,7 +17,6 @@ public class IntelligentMold extends LandUnit{
         strength = 2;
         movement = 3;
         demoralizedStrength = 1;
-        ranged = false;
     }
         
 }

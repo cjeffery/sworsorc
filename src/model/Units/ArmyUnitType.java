@@ -10,11 +10,9 @@ package Units;
  *
  * @author matt
  */
-public class Cavalry extends ArmyUnit{
-    
-    Cavalry(){
-        super();
-        armyUnitType = ArmyUnitType.cavalry;
-    }
-    
+public enum ArmyUnitType {
+    ranged,
+    flying,
+    cavalry,
+    land
 }

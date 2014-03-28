@@ -18,21 +18,20 @@ public class ArmyUnit extends MoveableUnit{
     protected int lifeCost;    
     
     protected boolean conjured;
-    protected boolean ranged;
     protected boolean demorlized;
-    protected boolean flying;
-    protected boolean cavalry;
+    
+    protected ArmyUnitType armyUnitType;
     
     
     public void setDemorlized(boolean demorlized) {
         this.demorlized = demorlized;
     }
     
+    public ArmyUnitType getArmyUnitType(){
+        return armyUnitType;
+    }
     public ArmyUnit() {
         this.demorlized = false;
-        this.flying = false;
-        this.cavalry = false;
-        this.ranged = false;
         this.conjured = false;
     }  
 
@@ -42,10 +41,6 @@ public class ArmyUnit extends MoveableUnit{
 
     public int getDemoralizedStrength() {
         return demoralizedStrength;
-    }
-
-    public boolean isRanged() {
-        return ranged;
     }
 
     public boolean isDemorlized() {

@@ -16,7 +16,6 @@ public class PikeMan extends LandUnit {
         strength = 6;
         movement = 3;
         demoralizedStrength = 3;
-        ranged = false;
     }
     
     

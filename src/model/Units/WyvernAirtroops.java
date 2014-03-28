@@ -16,7 +16,6 @@ public class WyvernAirtroops extends FlyingConjured{
         strength = 3;
         movement = 10;
         demoralizedStrength = 1;
-        ranged = false;
     }
     
     

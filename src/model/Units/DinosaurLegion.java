@@ -17,7 +17,6 @@ public class DinosaurLegion extends LandUnit{
         strength = 6;
         movement = 2;
         demoralizedStrength = 3;
-        ranged = false;
     }
     
     

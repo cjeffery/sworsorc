@@ -16,7 +16,6 @@ public class Zeppelin extends FlyingUnit{
         strength = 4;
         movement = 10;
         demoralizedStrength = 2;
-        ranged = false;
     }
     
 }

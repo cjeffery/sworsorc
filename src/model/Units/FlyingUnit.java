@@ -17,7 +17,7 @@ public class FlyingUnit extends ArmyUnit{
         
     public FlyingUnit(){
         super();
-        flying = true;
+        armyUnitType = ArmyUnitType.flying;
     }
       
 }

@@ -13,23 +13,23 @@ import java.util.ArrayList;
  * @author matt
  */
 public class Stack {
-    private final ArrayList<String> units;
-    private int location;
+    private final ArrayList<ArmyUnit> units;
+    private String location;
     
-    Stack(int x){
+    Stack(String x){
         units = new ArrayList();
         location = x;
     }
     
-    public int getLocation(){
+    public String getLocation(){
         return location;
     }
     
-    public void setLocation(int x){
+    public void setLocation(String x){
         location = x;
     }
     
-    public void addUnit(String unit){
+    public void addUnit(ArmyUnit unit){
         units.add(unit);
     }
     
@@ -37,7 +37,7 @@ public class Stack {
         units.remove(x);
     }
     
-    public String getUnit(int x){
+    public ArmyUnit getUnit(int x){
         return units.get(x);
     }
     
@@ -45,9 +45,6 @@ public class Stack {
         if(units.size() > 2){
             System.out.println("A unit needs to be removed!");
             System.out.println("Chose a unit to remove:");
-            for(String unit: units){
-                
-            }
         }
     }
 }

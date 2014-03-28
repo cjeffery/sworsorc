@@ -17,7 +17,5 @@ public class Bow extends RangedLandUnit{
         strength = 2;
         movement = 5;
         demoralizedStrength = 1;
-        ranged = true;
-    }
-    
+    }    
 }

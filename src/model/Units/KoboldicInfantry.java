@@ -16,7 +16,6 @@ public class KoboldicInfantry extends Conjured{
         strength = 4;
         movement = 4;
         demoralizedStrength = 2;
-        ranged = false;
     }
     
     
