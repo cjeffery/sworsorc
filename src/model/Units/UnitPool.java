@@ -14,18 +14,18 @@ import java.util.TreeMap;
  *
  * @author David
  */
-public class UnitHashMap {
+public class UnitPool {
     TreeMap<Integer, HashMap<String,ArrayList<Object>>> pool = new TreeMap(); 
    
-    private static UnitHashMap INSTANCE;
+    private static UnitPool INSTANCE;
     
-    private UnitHashMap() {
+    private UnitPool() {
     
 }
     
-    public static UnitHashMap getInstance(){
+    public static UnitPool getInstance(){
         if (INSTANCE == null)
-            INSTANCE = new UnitHashMap();
+            INSTANCE = new UnitPool();
         return INSTANCE;
     }
             
@@ -34,11 +34,19 @@ public class UnitHashMap {
     
         
         if (pool.containsKey(playerNumber)){
-            //pool.get(playerNumber).put(unit.toString(), unit);
+            if(pool.get(playerNumber).containsKey(unit.toString())){
+                pool.get(playerNumber).get(unit.toString()).add(unit);
+            }
+            else{
+                ArrayList<Object> unitList = new ArrayList();
+                
+                unitList.add(unit);
+                pool.get(playerNumber).put(unit.toString(),unitList);
+            }
         }
         else{
-            HashMap<String, ArrayList<Object>> unitMap = new HashMap();
             ArrayList<Object> unitList = new ArrayList();
+            HashMap<String, ArrayList<Object>> unitMap = new HashMap();
             
             unitList.add(unit);
             unitMap.put(unit.toString(), unitList);
