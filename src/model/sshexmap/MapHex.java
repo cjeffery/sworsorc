@@ -39,16 +39,17 @@ public class MapHex extends Hex{
     private boolean capitalHex = false;
     private boolean townHex = false;
     private int portalHex = 0;
-    private ArrayList<ArrayList<HexEdgeType>> edgeList;
-    
-    //private HashMap<String, ArrayList<String>> hexEdgeMap = new HashMap<>();
-    //ArrayList<Integer> hexEdgeAdditions = new ArrayList<>();
+    private ArrayList<HexEdge> edgeList;
 
     public MapHex() {    }
+    
+    /** 
+     * This constructor constructs a MapHex from an XML node
+     * @param hex The XML node
+     */
     public MapHex(Node hex) {
-        this.edgeList = new ArrayList<ArrayList<HexEdgeType>>(6);
-        for(int i = 0; i < 6; i++)
-            edgeList.add(i,  new ArrayList<HexEdgeType>());
+
+        this.edgeList = new ArrayList<HexEdge>(6);
         
         improvements = new ArrayList<ImprovedTerrainType>();
         NodeList hexList = hex.getChildNodes();
@@ -60,12 +61,22 @@ public class MapHex extends Hex{
             switch(hexItem.getNodeName()) {
                 case "hexNumber":
                     SetID(contents);
+                    //edges can't be set up until ID is known
+                    //so set them up here
+                    for(int j = 0; j < 6; j++) {
+                        //if the Edge already exists use it,
+                        MapHex neighbor = this.getNeighbor(j);
+                        if(neighbor != null) {
+                            edgeList.add(j, neighbor.getEdge( (j+3) % 6 ));
+                        }
+                        else
+                            edgeList.add(j,  new HexEdge());
+                    }
+                    
                     break;
                 case "terrainKey":
                     terrainType = TerrainType.makeTerrainType(contents);
                     //FIXME could be more than one improvement
-                    //yeah I know it's bad passing 'this' from a constructor, 
-                    //but it should be OK in this instance
                     ImprovedTerrainType improvement = ImprovedTerrainType.makeImprovement(contents, this);
                     if(improvement != null)
                         improvements.add(improvement);
@@ -95,6 +106,7 @@ public class MapHex extends Hex{
                     //iterate over edges
                     NodeList listOfEdges = hexItem.getChildNodes();
                     for (int j = 0; j < listOfEdges.getLength(); j ++){
+                        //determine the direction
                         Node edgeDir = listOfEdges.item(j); 
                         int dir = 0;
                         switch(edgeDir.getNodeName()) {
@@ -109,13 +121,14 @@ public class MapHex extends Hex{
                             continue;
                         NodeList edgeItems = edgeDir.getChildNodes();
                         
+                        //iterate through the edge elements
                         for (int k = 0; k < edgeItems.getLength(); k++){
                             Node attr = edgeItems.item(k);
                             if(attr.getNodeType() == Node.ELEMENT_NODE) {
-                                HexEdgeType t = HexEdge.getType(attr.getTextContent());
-                                if(t != null) {
-                                    edgeList.get(dir).add(t);
-                                    //System.out.println("adding " + t.toString());
+                                String s = attr.getTextContent();
+                                EdgeElement e = EdgeElement.makeEdgeElement(s);
+                                if(e != null) {
+                                    addEdge(e, dir);
                                 }
                             }
                         }
@@ -128,6 +141,87 @@ public class MapHex extends Hex{
         }
     }
     
+    /**
+     * Uses the MainMap singleton to get the neighbor in the specified direction
+     * @param dir the direction
+     * @return the neighbor or null
+     */
+    public final MapHex getNeighbor(int dir) {
+        return MainMap.GetInstance().GetHex( GetNeighborID(dir) );
+    }
+    
+     /**
+     * This method will allow the addition of new conditions on hex edges. These 
+     * additions can be caused by spells affecting hexes.  For example the 
+     * wall spell.
+     * 
+     * Note: This method is not fully implemented and needs testing.  
+     * 
+     * @param edgedDirection an integer that reflects a hex face.
+     * @param hexEdgeCode 
+     */
+    public void SetHexEdgeAdditions(int edgedDirection, String hexEdgeCode){
+        //hexEdgeMap.get(edgedDirection).add(hexEdgeCode);      
+    }
+    
+    /**
+     * Removes any modifications to hex edges that are caused by spells that 
+     * have expired. 
+     * 
+     * This method needs implementation.
+     */    
+    public void RemoveHexEdgeAdditions (int edgedDirection,String hexEdgeCode ) { 
+        //to do
+    }
+    
+    
+    /**      
+     * Modifies the train to reflect the effects of spells or random events.
+     * 
+     * This method needs implementation.
+     */
+    public void ModifyTerrainCode (String keyterrain) {
+        //to do.
+    }     
+
+    /**
+     * Add an EdgeElement between this hex and the hex in direction dir
+     * @param e The EdgeElement
+     * @param dir direction from current hex
+     */
+    public void addEdge(EdgeElement e, int dir){
+        edgeList.get(dir).put(e);
+    }
+    
+    public void setTerrainType(TerrainType newTerrainType){
+        this.terrainType = newTerrainType;
+    }
+    
+    public void addImprovement(ImprovedTerrainType newImprovement){
+        improvements.add(newImprovement);
+    }
+    
+    public void removeEdge(HexEdge deadEdge){
+        //edges.remove(deadEdge);
+    }
+    
+    public TerrainType getTerrainType(){
+        return terrainType;
+    }
+    
+    public void removeImprovement(ImprovedTerrainType deadImprovement){
+        improvements.remove(deadImprovement);
+    }
+    
+    public ArrayList<ImprovedTerrainType> getImprovements(){
+        return improvements;
+    }
+    
+    
+    public HexEdge getEdge(int dir){
+        return edgeList.get(dir);
+    }
+
     private void SetProvinceName(String nameProvidence) {
         provinceName = nameProvidence;
     }
@@ -180,108 +274,4 @@ public class MapHex extends Hex{
         return terrainType;
     }
     
-     /**
-     * This method will allow the addition of new conditions on hex edges. These 
-     * additions can be caused by spells affecting hexes.  For example the 
-     * wall spell.
-     * 
-     * Note: This method is not fully implemented and needs testing.  
-     * 
-     * @param edgedDirection an integer that reflects a hex face.
-     * @param hexEdgeCode 
-     */
-    public void SetHexEdgeAdditions(int edgedDirection, String hexEdgeCode){
-        //hexEdgeMap.get(edgedDirection).add(hexEdgeCode);      
-    }
-    
-    /**
-     * Removes any modifications to hex edges that are caused by spells that 
-     * have expired. 
-     * 
-     * This method needs implementation.
-     */    
-    public void RemoveHexEdgeAdditions (int edgedDirection,String hexEdgeCode ) { 
-        //to do
-    }
-    
-    
-    /**      
-     * Modifies the train to reflect the effects of spells or random events.
-     * 
-     * This method needs implementation.
-     */
-    public void ModifyTerrainCode (String keyterrain) {
-        //to do.
-    }     
-
-
-    public void addEdge(HexEdge newEdge){
-        //edges.add(newEdge);
-    }
-    
-    public void setTerrainType(TerrainType newTerrainType){
-        this.terrainType = newTerrainType;
-    }
-    
-    public void addImprovement(ImprovedTerrainType newImprovement){
-        improvements.add(newImprovement);
-    }
-    
-    public void removeEdge(HexEdge deadEdge){
-        //edges.remove(deadEdge);
-    }
-    
-    public TerrainType getTerrainType(){
-        return terrainType;
-    }
-    
-    public void removeImprovement(ImprovedTerrainType deadImprovement){
-        improvements.remove(deadImprovement);
-    }
-    
-    public ArrayList<ImprovedTerrainType> getImprovements(){
-        return improvements;
-    }
-    
-    /* TODO: what does this method suppoed to do */
-    public boolean checkIfCrossed(ArrayList<HexEdgeType> list){
-        /*for(int l = 0; l < list.size(); l++){
-            for(int e = 0; e < edges.size(); e++){
-                if(edges.get(e).getEdgeType().equals(list.get(l)))return true;
-            }
-        }*/
-        return false;
-    }
-    
-    public ArrayList<HexEdgeType> getEdgeType(int edge){
-        /*
-        for(int e = 0; e < edges.size(); e++){
-            if(edges.get(e).getEdge() == edge) thisEdge.add(edges.get(e).getEdgeType());
-        }
-        return thisEdge;*/
-        return edgeList.get(edge);
-    }
-    
-    public double getMovementCost(MoveableUnit unit){
-        double move = terrainType.getMovementCost(unit);
-        double override = 100;
-        if(improvements.size() > 0)
-            for(int i = 0; i < improvements.size(); i++){   
-                move += improvements.get(i).getMovementCost(unit);
-                if(improvements.get(i).getMovementOverride(unit) > 0.0)
-                    if(improvements.get(i).getMovementOverride(unit) < override) 
-                        override = improvements.get(i).getMovementOverride(unit);
-            }
-        if(override > 0 && override < 100) move = override;
-        return move;
-    }
-    
-    public double getCombatMultiplier(ArmyUnit unit){
-        double mult = 1;
-        mult *= terrainType.getCombatMultiplier(unit);
-        if(improvements.size() > 0)
-            for(int i = 0; i < improvements.size(); i++)
-                mult *= improvements.get(i).getCombatMultiplier(unit);
-        return mult;
-    }
 }

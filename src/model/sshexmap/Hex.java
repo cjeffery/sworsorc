@@ -50,7 +50,7 @@ public class Hex {
         }
         return HexMap.GetIDFromCoords(x,y);
     }
-  
+     
     public int[] GetCoords() {
         int[] res = new int[2];
         res[0] = GetIntID() / 100;

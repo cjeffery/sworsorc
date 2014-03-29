@@ -13,38 +13,13 @@ package ssterrain;
  */
 import Units.*;
 import sshexmap.MapHex;
-public class HEProvinceBorder extends HexEdge{
-    MapHex hex;
-    int edge;
-    
-    public HEProvinceBorder(MapHex thisHex, int thisEdge){
-        this.hex = thisHex;
-        this.edge = thisEdge;
-    }
-
-    @Override
-    public double getMovementCost(MoveableUnit unit) {
-        return 0;
-    }
-
-    @Override
-    public double getCombatMultiplier(MoveableUnit unit) {
-        return 1;
-    }
-
-    @Override
-    public String getCombatEffect(MoveableUnit unit) {
-        return "";
-    }
+public class HEProvinceBorder extends EdgeElement {
+    //public HEProvinceBorder(){
 
     @Override
     public HexEdgeType getEdgeType() {
         return HexEdgeType.ProvinceBorder;
     } 
 
-    @Override
-    public int getEdge() {
-        return edge;
-    }
     
 }

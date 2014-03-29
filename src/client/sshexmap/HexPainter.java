@@ -159,12 +159,10 @@ public class HexPainter {
                     y1 = height;    y2 = height/2;
                     break;
             }
-            ArrayList<HexEdgeType> edgeTypes = h.getEdgeType(i);
-            if(edgeTypes == null)
-                return;
-            for(HexEdgeType e : edgeTypes) {
+            HexEdge edge = h.getEdge(i);
+            for(EdgeElement e : edge.elements.values()) {
                 if(e != null) {
-                    paintEdge(g2, e, x1, y1, x2, y2);
+                    paintEdge(g2, e.getEdgeType(), x1, y1, x2, y2);
                 }
                 //else System.out.println( edgeTypes.size() );
                 

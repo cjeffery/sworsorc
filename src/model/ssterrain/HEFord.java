@@ -14,44 +14,9 @@ import sshexmap.MapHex;
  * @author John Goettsche
  * CS 383 Software Engineering
  */
-public class HEFord extends HexEdge{
-    MapHex hex;
-    int edge;
-    
-    public HEFord(MapHex thisHex, int thisEdge){
-        this.hex = thisHex;
-        this.edge = thisEdge;
-    }
-
-    @Override
-    public double getMovementCost(MoveableUnit unit) {
-        ArrayList<HexEdgeType> list = new ArrayList<HexEdgeType>();
-        list.add(HexEdgeType.Bridge);
-        list.add(HexEdgeType.Road);
-        list.add(HexEdgeType.Ford);
-        list.add(HexEdgeType.Trail);
-        if(hex.checkIfCrossed(list)) return 3;
-        else return hex.getTerrainType().getMovementCost(unit);
-    }
-
-    @Override
-    public double getCombatMultiplier(MoveableUnit unit) {
-        return 0.5;
-    }
-
-    @Override
-    public String getCombatEffect(MoveableUnit unit) {
-        return "";
-    }
-
+public class HEFord extends EdgeElement {
     @Override
     public HexEdgeType getEdgeType() {
         return HexEdgeType.Ford;
     }
-
-    @Override
-    public int getEdge() {
-        return edge;
-    }
-    
 }
