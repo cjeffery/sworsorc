@@ -32,9 +32,9 @@ public class UnitPool {
         return INSTANCE;
     }
             
-    public void addUnit(int playedId, ArmyUnit unit, String location){
+    public void addUnit(int playerID, ArmyUnit unit, String location){
         unit.setLocation(location);
-        this.addUnit(playedId, unit);
+        this.addUnit(playerID, unit);
         this.addToHex(hexList, unitsInHex, unit);
        this.addToMove(unitMove, hexVisited, unit);
     }
