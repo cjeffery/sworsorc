@@ -33,7 +33,14 @@ public class ArmyUnit extends MoveableUnit{
     public ArmyUnit() {
         this.demorlized = false;
         this.conjured = false;
+    }
+    
+    public ArmyUnit(String location) {
+        this.demorlized = false;
+        this.conjured = false;
+        this.setLocation(location);
     }  
+
 
     public int getStrength() {
         return strength;
