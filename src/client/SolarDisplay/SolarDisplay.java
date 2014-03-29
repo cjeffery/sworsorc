@@ -1,28 +1,33 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 
 package solardisplay;
 
 /**
- *
- * @author Johnathan Flake
- * CS 383 - University of Idaho
- * 2/27/2014
- */
+*
+* @author Johnathan Flake
+* CS 383 - University of Idaho
+* 2/27/2014
+*/
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class SolarDisplay extends JFrame implements ActionListener{
     /**
-     * @param args the command line arguments
-     */
+* @param args the command line arguments
+*/
     
-        JLabel Title, SolarDay, RedSun, BlueSun;
+        JLabel Title, SolarDay, RedSun, BlueSun, SunImageLabel;
+        ImageIcon SunImage;
         JButton AddDay;
         
         int SolarDayNum = 1;
@@ -31,7 +36,7 @@ public class SolarDisplay extends JFrame implements ActionListener{
     
     public SolarDisplay() {
         
-        setLayout(new GridLayout(5,1)); //5 rows, 1 column
+        setLayout(new GridLayout(6,1)); //6 rows, 1 column
         
         Title = new JLabel ("Solar Display", SwingConstants.CENTER);
         Title.setFont(new java.awt.Font("Tahoma", 0, 18));
@@ -42,22 +47,43 @@ public class SolarDisplay extends JFrame implements ActionListener{
         RedSun = new JLabel("Red Sun State: Equilibrium", SwingConstants.CENTER);
         BlueSun = new JLabel("Blue Sun State: Equilibrium", SwingConstants.CENTER);
         
+//        SunImage = createImageIcon("resources/images/YellowSun.png");
+        
         AddDay = new JButton("Add Day");
         AddDay.setActionCommand("AddDay");
         AddDay.addActionListener(this);
         
-//        JLabel Blank = new JLabel ("");
+        ImageIcon SunImageIcon;
+        try {
+            File SunImage = new File("resources/images/YellowSun.png");
+            BufferedImage SunImg_buff = ImageIO.read(SunImage);
+            SunImageIcon = new ImageIcon(SunImg_buff);
+            SunImageLabel = new JLabel(SunImageIcon);
+        }
+        catch(IOException e){
+            SunImageIcon = new ImageIcon();
+            System.out.println("Loading image failed");
+        }
         
         add(Title);
         add(SolarDay);
         add(RedSun);
         add(BlueSun);
         add(AddDay);
+        add(SunImageLabel);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0, 0, 250, 150);
-        setLocationRelativeTo(null);        
+        setLocationRelativeTo(null);
         setVisible(true);
+}
+    protected ImageIcon createImageIcon(String filename) {
+    if (filename != null) {
+        return new ImageIcon(filename);
+    } else {
+        System.err.println("Couldn't find file: " + filename);
+        return null;
+    }
 }
     public void actionPerformed(ActionEvent e){
         if(e.getActionCommand().equals("AddDay")){
@@ -195,12 +221,12 @@ public class SolarDisplay extends JFrame implements ActionListener{
                     }
                 break;
                     case 18: case 19: case 20:
-                    if (RedSunVal == 11 || RedSunVal == 12 
+                    if (RedSunVal == 11 || RedSunVal == 12
                             || RedSunVal == 1){
                         RedSun.setText("Red Sun State: Ascension");
                         BlueSun.setText("Blue Sun State: Descension");
                     }
-                    else if (BlueSunVal == 11 || BlueSunVal == 12 
+                    else if (BlueSunVal == 11 || BlueSunVal == 12
                             || BlueSunVal == 1){
                         RedSun.setText("Red Sun State: Descension");
                         BlueSun.setText("Blue Sun State: Ascension");
@@ -211,12 +237,12 @@ public class SolarDisplay extends JFrame implements ActionListener{
                     }
                 break;
                     case 21: case 22:
-                    if (RedSunVal == 12 || RedSunVal == 1 
+                    if (RedSunVal == 12 || RedSunVal == 1
                             || RedSunVal == 2){
                         RedSun.setText("Red Sun State: Ascension");
                         BlueSun.setText("Blue Sun State: Descension");
                     }
-                    else if (BlueSunVal == 12 || BlueSunVal == 1 
+                    else if (BlueSunVal == 12 || BlueSunVal == 1
                             || BlueSunVal == 2){
                         RedSun.setText("Red Sun State: Descension");
                         BlueSun.setText("Blue Sun State: Ascension");
