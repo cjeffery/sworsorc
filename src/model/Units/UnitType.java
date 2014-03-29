@@ -17,4 +17,5 @@ public enum UnitType {
     ArmyUnit,
     MagicUser,
     Monster,
+    Fighter
 }
