@@ -2121,11 +2121,6 @@
         <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
-        <hexEdgeMap>
-          <southEastEdge>
-            <edgeAttribute>St</edgeAttribute>
-          </southEastEdge>
-        </hexEdgeMap>
     </hex>
     <hex>
         <hexNumber>0839</hexNumber>
