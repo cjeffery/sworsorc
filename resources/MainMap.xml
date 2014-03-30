@@ -329,9 +329,6 @@
           <northEastEdge>
             <edgeAttribute>Wa</edgeAttribute>
           </northEastEdge>
-          <southEastEdge>
-            <edgeAttribute>Pb</edgeAttribute>
-          </southEastEdge>
           <southEdge>
             <edgeAttribute>Pb</edgeAttribute>
           </southEdge>
@@ -2124,11 +2121,6 @@
         <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
-        <hexEdgeMap>
-          <southEastEdge>
-            <edgeAttribute>St</edgeAttribute>
-          </southEastEdge>
-        </hexEdgeMap>
     </hex>
     <hex>
         <hexNumber>0839</hexNumber>
@@ -3059,11 +3051,6 @@
         <terrainKey>Cu</terrainKey>
         <providenceName>Capella</providenceName>
         
-        <hexEdgeMap>
-          <northWestEdge>
-            <edgeAttribute>Pb</edgeAttribute>
-          </northWestEdge>
-        </hexEdgeMap>
     </hex>
     <hex>
         <hexNumber>0651</hexNumber>
@@ -4046,11 +4033,6 @@
         <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
-        <hexEdgeMap>
-          <northEdge>
-            <edgeAttribute>St</edgeAttribute>
-          </northEdge>
-        </hexEdgeMap>
     </hex>
     <hex>
         <hexNumber>0237</hexNumber>
@@ -5941,7 +5923,7 @@
         <southHexNumber>0351</southHexNumber>
         <southWestHexNumber>0250</southWestHexNumber>
         <northWestHexNumber>0249</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
+        <terrainKey>Br</terrainKey>
         <providenceName>Minotaurus</providenceName>
         <hexName>Toll Troll</hexName>
         <hexEdgeMap>
@@ -6474,11 +6456,6 @@
         <terrainKey>D</terrainKey>
         <providenceName>Kelgarnth</providenceName>
         
-        <hexEdgeMap>
-          <southEdge>
-            <edgeAttribute>Pb</edgeAttribute>
-          </southEdge>
-        </hexEdgeMap>
     </hex>
     <hex>
         <hexNumber>0106</hexNumber>

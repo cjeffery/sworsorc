@@ -47,4 +47,12 @@ public class Stack {
             System.out.println("Chose a unit to remove:");
         }
     }
+    
+    public void printUnits(){
+        System.out.println("Units in this stack:");
+        
+        for(ArmyUnit unit: units){
+            unit.printSelf();
+        }
+    }
 }
