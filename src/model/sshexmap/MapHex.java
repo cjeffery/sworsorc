@@ -29,6 +29,9 @@ import Units.*;
 import ssterrain.*;
 import Units.*;
 public class MapHex extends Hex{
+    /**
+     * Various attributes!
+     */
     private String hexName;
     private TerrainType terrainType;
     private ArrayList<ImprovedTerrainType> improvements;
@@ -39,18 +42,27 @@ public class MapHex extends Hex{
     private boolean capitalHex = false;
     private boolean townHex = false;
     private int portalHex = 0;
+    
+    /**
+     * An array of size 6 of HexEdge objects
+     */
     private ArrayList<HexEdge> edgeList;
 
-    public MapHex() {    }
+    /**
+     * Don't actually use this constructor >_> except for mockups
+     * bad or confusing things could happen
+     */
+    public MapHex() {
+        edgeList = new ArrayList<HexEdge>(6);
+        improvements = new ArrayList<ImprovedTerrainType>();
+    }
     
     /** 
      * This constructor constructs a MapHex from an XML node
      * @param hex The XML node
      */
     public MapHex(Node hex) {
-
-        this.edgeList = new ArrayList<HexEdge>(6);
-        
+        edgeList = new ArrayList<HexEdge>(6);
         improvements = new ArrayList<ImprovedTerrainType>();
         NodeList hexList = hex.getChildNodes();
         for(int i = 0; i < hexList.getLength(); i++) {
@@ -70,7 +82,7 @@ public class MapHex extends Hex{
                             edgeList.add(j, neighbor.getEdge( (j+3) % 6 ));
                         }
                         else
-                            edgeList.add(j,  new HexEdge());
+                            edgeList.add(j,  new HexEdge(GetID(), j));
                     }
                     
                     break;
@@ -128,7 +140,7 @@ public class MapHex extends Hex{
                                 String s = attr.getTextContent();
                                 EdgeElement e = EdgeElement.makeEdgeElement(s);
                                 if(e != null) {
-                                    addEdge(e, dir);
+                                    addEdgeElement(e, dir);
                                 }
                             }
                         }
@@ -159,119 +171,221 @@ public class MapHex extends Hex{
      * 
      * @param edgedDirection an integer that reflects a hex face.
      * @param hexEdgeCode 
+     * Commented out for now because of hex edge changes
      */
-    public void SetHexEdgeAdditions(int edgedDirection, String hexEdgeCode){
+   // public void SetHexEdgeAdditions(int edgedDirection, String hexEdgeCode){
         //hexEdgeMap.get(edgedDirection).add(hexEdgeCode);      
-    }
+    //}
     
     /**
      * Removes any modifications to hex edges that are caused by spells that 
      * have expired. 
      * 
      * This method needs implementation.
+     * Commented out for now because of Hex Edge changes
      */    
-    public void RemoveHexEdgeAdditions (int edgedDirection,String hexEdgeCode ) { 
+    //public void RemoveHexEdgeAdditions (int edgedDirection,String hexEdgeCode ) { 
         //to do
-    }
+    //}
     
     
     /**      
      * Modifies the train to reflect the effects of spells or random events.
      * 
      * This method needs implementation.
+     * Commented out for now because of Hex Edge changes
      */
-    public void ModifyTerrainCode (String keyterrain) {
+    //public void ModifyTerrainCode (String keyterrain) {
         //to do.
-    }     
+    //}     
 
     /**
+     * Helper function to
      * Add an EdgeElement between this hex and the hex in direction dir
      * @param e The EdgeElement
      * @param dir direction from current hex
      */
-    public void addEdge(EdgeElement e, int dir){
+    public void addEdgeElement(EdgeElement e, int dir){
         edgeList.get(dir).put(e);
     }
     
+    /**
+     * Set the base terrain type (not improvements)
+     */
     public void setTerrainType(TerrainType newTerrainType){
         this.terrainType = newTerrainType;
     }
     
+    /**
+     * Add an "improved" terrain type (not base terrain type)
+     */
     public void addImprovement(ImprovedTerrainType newImprovement){
         improvements.add(newImprovement);
     }
     
-    public void removeEdge(HexEdge deadEdge){
+    /**
+     * Commented out for now, because of Hex Edge changes
+     */
+    //public void removeEdge(HexEdge deadEdge){
         //edges.remove(deadEdge);
-    }
-    
+    //}
+
+     /**
+     * @return the base terrain type of the hex (not an improvement type)
+     */
     public TerrainType getTerrainType(){
         return terrainType;
     }
     
+    /**
+     * Remove the specified improvement
+     * @param deadImprovement a reference to the improvement in the list to
+     *                        remove
+     */
     public void removeImprovement(ImprovedTerrainType deadImprovement){
         improvements.remove(deadImprovement);
     }
     
+    /**
+     * Get all the "terrain improvements" (not base terrain type)
+     */
     public ArrayList<ImprovedTerrainType> getImprovements(){
         return improvements;
     }
     
-    
+    /**
+     * Get the HexEdge at the particular direction
+     * @param dir direction. 0 = NE, 1 = N, 2 = NW, ... 5 = SE
+     * @return The edge
+     */
     public HexEdge getEdge(int dir){
         return edgeList.get(dir);
     }
 
+    /**
+     * Sets the hexes province name
+     */
     private void SetProvinceName(String nameProvidence) {
         provinceName = nameProvidence;
     }
 
+    /**
+     * Sets whether or not the hex is a vortex hex
+     */
     private void SetIsVortex(boolean hexVortex) {
         vortexHex = hexVortex;
     }
     
+    /**
+     * @return The province name of the hex
+     */
     public String GetProvinceName(){
         return this.provinceName;
     }
     
+    /**
+     * @return The portal number (1-6), or -1 if it's not a portal
+     */
     public int GetPortalNumber() {
         return portalHex;        
     }
     
+    /**
+     * @return whether or not the hex is a portal
+     */
     public boolean IsPortalHex(){
         return portalHex > 0;
     }
     
+    /**
+     * @return whether or not the hex is a castle
+     */
     public boolean IsCastleHex(){
         return castleHex;
     }
     
+    /**
+     * @return whether or not the hex is a capital
+     */
     public boolean IsCapitalHex(){
         return capitalHex;
     }
     
+    /**
+     * @return whether or not the hex is a town
+     */
     public boolean IsTownHex(){
         return townHex;
     }
     
+    /**
+     * @return whether or not the hex is a city, castle, or town
+     */
     public boolean IsCityTownCastle(){
         return capitalHex  || castleHex || townHex;
     }
     
+    /**
+     * @return whether or not the hex is a vortex
+     */
     public boolean IsVortexHex(){
         return vortexHex;
     }
     
+    /**
+     * @return whether or not the hex is a city 
+     */
     public boolean IsCityHex (){
         return cityHex;
     }
   
+    /**
+     * @return If the hex has a special name (like Mt. Greymoor) this will
+     *         return it.
+     */
     public String GetHexName(){ 
         return hexName;
     }
 
-    public TerrainType GetTerrain() {
-        return terrainType;
+    /**
+     * 
+     * @param unit The unit that is moving
+     * @param dir The direction the unit is moving
+     *                 1
+     *                2 0
+     *                3 5
+     *                 4
+     * @return the cost to move the unit on to this hex
+     */
+    public double getMovementCost(MoveableUnit unit, int dir){
+        double move = terrainType.getMovementCost(unit);
+        /* TODO get the rest working 
+        double override = 100;
+        if(improvements.size() > 0)
+            for(int i = 0; i < improvements.size(); i++){
+                move += improvements.get(i).getMovementCost(unit);
+                if(improvements.get(i).getMovementOverride(unit) > 0.0)
+                    if(improvements.get(i).getMovementOverride(unit) < override)
+                        override = improvements.get(i).getMovementOverride(unit);
+            }
+        if(override > 0 && override < 100) move = override;
+        return move; */
+        return move;
     }
     
+    /**
+     * TODO: This will probably need some changes
+     * wrt having both an attacker, defender, what hex they're both on
+     * and the hex edge between them
+     * @param unit
+     * @return 
+     */
+    public double getCombatMultiplier(ArmyUnit unit){
+        double mult = 1;
+        mult *= terrainType.getCombatMultiplier(unit);
+        if(improvements.size() > 0)
+            for(int i = 0; i < improvements.size(); i++)
+                mult *= improvements.get(i).getCombatMultiplier(unit);
+        return mult;
+    }
 }

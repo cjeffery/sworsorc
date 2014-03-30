@@ -18,11 +18,12 @@ import java.util.Random;
 import java.util.ArrayList;
 import ssterrain.*;
 import Units.*;
+import sshexmap.*;
 
         
 public class ArmyCombatResultsTable {
     
-    public static int [] PrepareAttackResults(ArrayList<ArmyUnit> attackers, ArrayList<ArmyUnit> defenders, Hex defHex){
+    public static int [] PrepareAttackResults(ArrayList<ArmyUnit> attackers, ArrayList<ArmyUnit> defenders, MapHex defHex){
         int atk = 0;
         int def = 0;
         int index;

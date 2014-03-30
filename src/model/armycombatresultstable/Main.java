@@ -10,6 +10,7 @@ import Units.Race;
 import static armycombatresultstable.ArmyCombatResultsTable.*;
 import Units.*;
 import ssterrain.*;
+import sshexmap.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,7 +26,7 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         HashMap units = new HashMap();
-        Hex hex1 = new Hex();
+        MapHex hex1 = new MapHex();
         TerrainType tt1 = new TTWoods();
         hex1.setTerrainType(tt1);
         HeavyHorse unit1 = new HeavyHorse();

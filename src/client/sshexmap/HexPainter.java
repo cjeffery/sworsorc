@@ -84,7 +84,7 @@ public class HexPainter {
      * @param h  The hex to draw
      */
     public void paintTerrain(Graphics2D g2, MapHex h) {
-        TerrainType t = h.GetTerrain();
+        TerrainType t = h.getTerrainType();
         if(t == null)
             return;
         String str = t.toString().toLowerCase() + "_hex.png";
