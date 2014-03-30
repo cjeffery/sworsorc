@@ -40,7 +40,7 @@ public class ChatServer {
         for (Lobby l : lobbies){
             if (l.lobbyClients.contains(client)){
                 l.leave(client);
-                if (l.lobbyClients.size() == 0){
+                if (l.lobbyClients.isEmpty()){
                     //For now, just kill lobbies when everyone leaves
                     lobbies.remove(l);
                 }
@@ -78,9 +78,11 @@ public class ChatServer {
             }
         }
         
+        leaveLobby(dearlyDeparted);
         clientObjects.remove(dearlyDeparted);
-        
         sendToAllClients(MessageUtils.makeDisconnectAnnouncementMessage(dearlyDeparted.getHandle()));
+        
+        
     }
 
     public static void main(String args[]) {
@@ -238,25 +240,23 @@ class ClientObject {
         public ListenerThread() {
             try {
                 streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println("Error : Creating streamIn for client: " + clientID);
             }
         }
 
- 
-
+        
         public void run() {
             //This run method DOES matter
             while (true) {
                 try {
-                    //Blocking read: (messageUtil will return null is socket closed)
+                    //Blocking read: (messageUtil will return null if socket closed)
                     List<String> message = MessageUtils.receiveMessage(streamIn);
                     
-                    if (message == null) {
+                    // Socket closed OR Client requested disconnect
+                    if (message == null || message.get(0).equals(MessageUtils.DISCONNECT_REQUEST)) {
                         //connection broken (does NOT throw an exception)
                         System.out.println("Client " + clientID + " (" + handle + "): disconnected" );
-                        
-                        //ChatServer.sendToAllClients(MessageUtils.makeDisconnectMessage(handle));
                         
                         ChatServer.clientDisconnected(clientID);
                         
@@ -277,6 +277,7 @@ class ClientObject {
                         //Send to all connected clients:
                         ChatServer.sendToAllClients(message);
                     }
+                   
                     else if (TAG.equals(MessageUtils.FILE)){
                         System.out.println("Receiving file " + message.get(1));
                         file = new ArrayList<String>();
@@ -355,10 +356,8 @@ class ClientObject {
                     break;
 
                 } 
-
             }
-
-            //close();
+            
         }
 
         public void close() {
@@ -369,11 +368,11 @@ class ClientObject {
                 if (streamIn != null) {
                     streamIn.close();
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println(e);
             }
         }
-
+        
     }
 
     public ClientObject(Socket socket) {

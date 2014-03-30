@@ -20,7 +20,7 @@ public class MessageUtils {
 
     //End of message (last element of any array):
     static String DONE = "donesignalthingy";
-
+    
     //Opening string to tell receiver how to interpret message contents.
     //This will be the first element of every message:
     static String GLOBAL_CHAT = "chat"; //Normal chat message:
@@ -33,7 +33,6 @@ public class MessageUtils {
 
     static String CREATE_NEW_LOBBY = "createNewLobby"; //client requests a new lobby
     static String JOIN_LOBBY_REQUEST = "joinLobby"; //client requests to join an existing lobby
-
     static String LEAVE_LOBBY_REQUEST = "leaveLobby"; //client requests to leave lobby
     static String LOBBY_INFO = "lobbyNameAndUsers"; //send info about a lobby
     static String REQUEST_LOBBY_INFO = "requestLobbyInfo";
@@ -41,6 +40,7 @@ public class MessageUtils {
 
     static String SEND_HANDLE = "sendHandle"; //client sending handle to server
 
+    static String DISCONNECT_REQUEST = "disconnectrequest"; // client requests soft disconnect (Breakup is sitll a breakup, but this is nicer)
     static String GLOBAL_WHO_LIST = "globalwholist"; //send list of all online users
     static String REQUEST_GLOBAL_WHO = "globalwhoreqest"; //ask for all online usernames
     //static String LOBBY_WHO_REQUEST = "lobbywho"; //ask for user names in same lobby
@@ -113,6 +113,13 @@ public class MessageUtils {
         return message;
     }
 
+    // Client requests disconnect from server
+    public static List<String> makeDisconnectRequestMessage() {
+        List<String> message = new ArrayList<>();
+        message.add(DISCONNECT_REQUEST);
+        return message;
+    }
+    
     //Send a list (from server to client) of all online users:
     public static List<String> makeGlobalWhoListMessage(List<String> users) {
         List<String> message = new ArrayList<>();
