@@ -66,4 +66,11 @@ public class ArmyUnit extends MoveableUnit{
         return lifeCost;
     }
     
+    public void printSelf(){
+        System.out.println(armyUnitType + "" + race +" " + strength + " " + movement);
+        if(this.conjured){
+            System.out.println("Life Cost: " + lifeCost);
+        }
+    }
+    
 }
