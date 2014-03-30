@@ -22,10 +22,17 @@ public abstract class EdgeElement {
      */
     public static EdgeElement makeEdgeElement( String attr ) {
         switch(attr) {
-            case "Pb":
-                return makeEdgeElement( HexEdgeType.ProvinceBorder );
+            case "Pb": return makeEdgeElement( HexEdgeType.ProvinceBorder );
+            case "Rd": return makeEdgeElement( HexEdgeType.Road );
+            case "Tr": return makeEdgeElement( HexEdgeType.Trail);
+            case "Br": return makeEdgeElement( HexEdgeType.Bridge );                
+            case "Wa": return makeEdgeElement( HexEdgeType.Wall );
+            case "St": return makeEdgeElement( HexEdgeType.Stream );
+            case "Ga": return makeEdgeElement( HexEdgeType.Gate );
+            case "Ro": return null; //TODO: what is Ro? We just don't know    
+            
             default:
-                //System.out.println(attr);
+                System.out.println("unhandled edge attr: " + attr);
         }
         return null;
     }  
@@ -37,9 +44,15 @@ public abstract class EdgeElement {
      */
     public static EdgeElement makeEdgeElement( HexEdgeType t ) {
         switch(t) {
-            case ProvinceBorder:
-                return new HEProvinceBorder();
+            case ProvinceBorder: return new HEProvinceBorder();
+            case Road: return new HERoad();
+            case Trail: return new HETrail();
+            case Bridge: return new HEBridge();    
+            case Wall: return new HEWall();
+            case Stream: return new HEStream();
+            case Gate: return new HEGate();
         }
+        System.out.println("unhandled case in makeEdgeElement :(");
         return null;
     }
 }

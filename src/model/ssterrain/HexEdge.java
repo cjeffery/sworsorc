@@ -52,4 +52,15 @@ public class HexEdge {
     public String getEdgeID() {
         return String.format("%s,%s", hex1, hex2);
     }
+    
+    /**
+     * Returns true if the edge contains an element of the specified type
+     * @param t The type to search for
+     */
+    public boolean contains(HexEdgeType t) {
+        for(HexEdgeType k : elements.keySet()) {
+            if(k == t) return true;
+        }
+        return false;
+    }
 }

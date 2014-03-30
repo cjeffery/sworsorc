@@ -69,6 +69,7 @@ public class HexPainter {
         if( h instanceof MapHex ) {
             paintTerrain(g2, (MapHex)h);
             paintImprovements(g2, (MapHex)h);
+            paintRoad(g2, (MapHex)h);
             //paintEdges(g2, (MapHex)h, edgeMask);
             //...
         }
@@ -103,6 +104,52 @@ public class HexPainter {
             }
         }
         drawImage(g2, str);
+    }
+    
+    public void paintRoad(Graphics2D g2, MapHex h) {
+        Color c = new Color(150, 75, 0);
+        for(int t = 0; t < 2; t++) {
+            Stroke s;
+            HexEdgeType type;
+            float dash[] = { 3.0f };
+            if(t == 0){
+                type = HexEdgeType.Trail;
+                //c = new Color(0, 0, 0);
+                s = new BasicStroke(3, BasicStroke.CAP_BUTT,
+                                       BasicStroke.JOIN_MITER,
+                                       1.0f, dash, 0.0f);
+            }
+            else {
+                type = HexEdgeType.Road;
+                //c = new Color(0, 0, 0);
+                s = new BasicStroke(3);      
+            }
+
+            ArrayList<Integer> roads = new ArrayList<Integer>();
+            for(int i = 0; i < 6; i++) {
+                HexEdge e = h.getEdge(i);
+                if( e.contains( type ) )//|| e.contains( HexEdgeType.Trail ) )
+                    roads.add(i);            
+            }
+
+            //if(roads.size() == 2) {
+            double cx = width/2.0, cy = height/2.0;
+            for(Integer dir : roads) {
+                double x = 0, y = 0;
+                switch(dir) {
+                    case 0: x = width*0.875; y = height*0.25; break;
+                    case 1: x = width*0.50;  y = 0;           break;
+                    case 2: x = width*0.125; y = height*0.25; break;
+                    case 3: x = width*0.125; y = height*0.75; break;
+                    case 4: x = width*0.50;  y = height;      break;
+                    case 5: x = width*0.875; y = height*0.75; break;
+                }
+                g2.setColor( c );
+                g2.setStroke( s );
+                g2.drawLine((int)x, (int)y, (int)cx, (int)cy);
+            }
+
+        }
     }
     
     /**
@@ -192,11 +239,16 @@ public class HexPainter {
                 g2.setStroke(new BasicStroke(3));
                 g2.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
                 break;
-            case Bridge:
+            case Wall:
                 g2.setColor( Color.BLACK );
                 g2.setStroke(new BasicStroke(3));
                 g2.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
                 break;
+            case Gate:
+                 g2.setColor( Color.LIGHT_GRAY );
+                g2.setStroke(new BasicStroke(3));
+                g2.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
+                break;               
             default:
                 //System.out.println("unhandled paintEdge case " + edge);
         }

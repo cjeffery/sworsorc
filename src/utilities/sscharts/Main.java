@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-package armycombatresultstable;
+package sscharts;
 
 import Units.Race;
-import static armycombatresultstable.ArmyCombatResultsTable.*;
+import static sscharts.ArmyCombatResultsTable.*;
 import Units.*;
 import ssterrain.*;
 import sshexmap.*;

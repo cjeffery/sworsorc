@@ -18,5 +18,6 @@ public enum HexEdgeType {
     Road,
     Stream,
     Trail,
-    Wall
+    Wall,
+    Gate
 }
