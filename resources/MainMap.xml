@@ -2044,11 +2044,11 @@
             <edgeAttribute>Pb</edgeAttribute>
           </northEastEdge>
           <southEastEdge>
-            <edgeAttribute>Rd</edgeAttribute>
+            <edgeAttribute>Tr</edgeAttribute>
           </southEastEdge>
           <northWestEdge>
             <edgeAttribute>Pb</edgeAttribute>
-            <edgeAttribute>Rd</edgeAttribute>
+            <edgeAttribute>Tr</edgeAttribute>
           </northWestEdge>
         </hexEdgeMap>
     </hex>
@@ -2591,9 +2591,6 @@
           <northEdge>
             <edgeAttribute>Pb</edgeAttribute>
           </northEdge>
-          <northEastEdge>
-            <edgeAttribute>Pb</edgeAttribute>
-          </northEastEdge>
           <southWestEdge>
             <edgeAttribute>Pb</edgeAttribute>
           </southWestEdge>
@@ -4662,10 +4659,10 @@
         
         <hexEdgeMap>
           <northEastEdge>
-            <edgeAttribute>Rd</edgeAttribute>
+            <edgeAttribute>Tr</edgeAttribute>
           </northEastEdge>
           <southWestEdge>
-            <edgeAttribute>Rd</edgeAttribute>
+            <edgeAttribute>Tr</edgeAttribute>
           </southWestEdge>
         </hexEdgeMap>
     </hex>
@@ -4951,14 +4948,14 @@
         <hexEdgeMap>
           <southEastEdge>
             <edgeAttribute>Pb</edgeAttribute>
-            <edgeAttribute>Rd</edgeAttribute>
+            <edgeAttribute>Tr</edgeAttribute>
           </southEastEdge>
           <southEdge>
             <edgeAttribute>Pb</edgeAttribute>
           </southEdge>
           <southWestEdge>
             <edgeAttribute>Pb</edgeAttribute>
-            <edgeAttribute>Rd</edgeAttribute>
+            <edgeAttribute>Tr</edgeAttribute>
           </southWestEdge>
         </hexEdgeMap>
     </hex>
