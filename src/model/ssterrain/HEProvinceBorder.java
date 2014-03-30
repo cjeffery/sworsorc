@@ -21,5 +21,20 @@ public class HEProvinceBorder extends EdgeElement {
         return HexEdgeType.ProvinceBorder;
     } 
 
-    
+    /*
+    @Override
+    public double getMovementCost(MoveableUnit unit) {
+        return 0;
+    }
+
+    @Override
+    public double getCombatMultiplier(MoveableUnit unit) {
+        return 1;
+    }
+
+    @Override
+    public String getCombatEffect(MoveableUnit unit) {
+        return "";
+    }
+    */
 }

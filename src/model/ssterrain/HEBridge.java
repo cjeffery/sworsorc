@@ -19,4 +19,27 @@ public class HEBridge extends EdgeElement {
     public HexEdgeType getEdgeType() {
         return HexEdgeType.Bridge;
     }
+    
+    /*
+    @Override
+    public double getMovementCost(MoveableUnit unit) {
+        ArrayList<HexEdgeType> list = new ArrayList<HexEdgeType>();
+        list.add(HexEdgeType.Bridge);
+        list.add(HexEdgeType.Road);
+        list.add(HexEdgeType.Ford);
+        list.add(HexEdgeType.Trail);
+        if(hex.checkIfCrossed(list)) return 1;
+        else return hex.getTerrainType().getMovementCost(unit);
+    }
+
+    @Override
+    public double getCombatMultiplier(MoveableUnit unit) {
+        return 0.5;
+    }
+
+    @Override
+    public String getCombatEffect(MoveableUnit unit) {
+        return "";
+    }
+    */
 }
