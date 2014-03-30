@@ -962,7 +962,7 @@
         <southHexNumber>0744</southHexNumber>
         <southWestHexNumber>0643</southWestHexNumber>
         <northWestHexNumber>0642</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         <vortexHex>true</vortexHex>
     </hex>
@@ -991,7 +991,7 @@
         <southHexNumber>0745</southHexNumber>
         <southWestHexNumber>0644</southWestHexNumber>
         <northWestHexNumber>0643</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         <vortexHex>true</vortexHex>
     </hex>
@@ -1023,7 +1023,7 @@
         <southHexNumber>0742</southHexNumber>
         <southWestHexNumber>0641</southWestHexNumber>
         <northWestHexNumber>0640</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         <vortexHex>true</vortexHex>
     </hex>
@@ -1081,7 +1081,7 @@
         <southHexNumber>0743</southHexNumber>
         <southWestHexNumber>0642</southWestHexNumber>
         <northWestHexNumber>0641</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         <vortexHex>true</vortexHex>
     </hex>
@@ -1129,7 +1129,7 @@
         <southHexNumber>0741</southHexNumber>
         <southWestHexNumber>0640</southWestHexNumber>
         <northWestHexNumber>0639</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         <vortexHex>true</vortexHex>
     </hex>
@@ -2374,7 +2374,7 @@
         <southHexNumber>0739</southHexNumber>
         <southWestHexNumber>0638</southWestHexNumber>
         <northWestHexNumber>0637</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         <vortexHex>true</vortexHex>
         <hexEdgeMap>
@@ -2394,7 +2394,7 @@
         <southHexNumber>0740</southHexNumber>
         <southWestHexNumber>0639</southWestHexNumber>
         <northWestHexNumber>0638</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>Cl</terrainKey>
         <providenceName>Minotaurus</providenceName>
         <vortexHex>true</vortexHex>
         <hexEdgeMap>
@@ -2913,7 +2913,7 @@
         <southHexNumber>0243</southHexNumber>
         <southWestHexNumber>0143</southWestHexNumber>
         <northWestHexNumber>0142</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -2925,7 +2925,7 @@
         <southHexNumber>0244</southHexNumber>
         <southWestHexNumber>0144</southWestHexNumber>
         <northWestHexNumber>0143</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -2949,7 +2949,7 @@
         <southHexNumber>0246</southHexNumber>
         <southWestHexNumber>0146</southWestHexNumber>
         <northWestHexNumber>0145</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -2961,7 +2961,7 @@
         <southHexNumber>0144</southHexNumber>
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -3297,7 +3297,7 @@
         <southHexNumber>0143</southHexNumber>
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -3309,7 +3309,7 @@
         <southHexNumber>0142</southHexNumber>
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -3827,7 +3827,7 @@
         <southHexNumber>0444</southHexNumber>
         <southWestHexNumber>0344</southWestHexNumber>
         <northWestHexNumber>0343</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -3899,7 +3899,7 @@
         <southHexNumber>0446</southHexNumber>
         <southWestHexNumber>0346</southWestHexNumber>
         <northWestHexNumber>0345</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -3911,7 +3911,7 @@
         <southHexNumber>0445</southHexNumber>
         <southWestHexNumber>0345</southWestHexNumber>
         <northWestHexNumber>0344</northWestHexNumber>
-        <terrainKey>V</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -5796,7 +5796,7 @@
         <southHexNumber>0347</southHexNumber>
         <southWestHexNumber>0246</southWestHexNumber>
         <northWestHexNumber>0245</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
@@ -5860,7 +5860,7 @@
         <southHexNumber>0345</southHexNumber>
         <southWestHexNumber>0244</southWestHexNumber>
         <northWestHexNumber>0243</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
+        <terrainKey>K</terrainKey>
         <providenceName>Minotaurus</providenceName>
         
     </hex>
