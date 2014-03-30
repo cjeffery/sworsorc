@@ -1,3 +1,6 @@
+/*
+ * If you're looking game hexes you want MapHex.java, which inherits this
+ */
 package sshexmap;
 
 /**

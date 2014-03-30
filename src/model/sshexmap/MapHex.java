@@ -348,9 +348,11 @@ public class MapHex extends Hex{
     }
 
     /**
+     * This function is currently incomplete, just copied pretty much verbatim
+     * Needs to take hex edge into account
      * 
      * @param unit The unit that is moving
-     * @param dir The direction the unit is moving
+     * @param dir The direction the unit is moving, 0 = NE, 1 = N, etc.
      *                 1
      *                2 0
      *                3 5
@@ -359,7 +361,6 @@ public class MapHex extends Hex{
      */
     public double getMovementCost(MoveableUnit unit, int dir){
         double move = terrainType.getMovementCost(unit);
-        /* TODO get the rest working 
         double override = 100;
         if(improvements.size() > 0)
             for(int i = 0; i < improvements.size(); i++){
@@ -369,12 +370,11 @@ public class MapHex extends Hex{
                         override = improvements.get(i).getMovementOverride(unit);
             }
         if(override > 0 && override < 100) move = override;
-        return move; */
         return move;
     }
     
     /**
-     * TODO: This will probably need some changes
+     * TODO: This will probably need some changes?
      * wrt having both an attacker, defender, what hex they're both on
      * and the hex edge between them
      * @param unit
