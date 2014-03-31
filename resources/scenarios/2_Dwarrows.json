@@ -12,7 +12,7 @@
     "nations": [
         {
             "name": "Elves",
-	    "player":1
+	    "player":1,
             "provinces": ["Vynar"],
             "setupOrder":3,
             "moveOrder":3,
@@ -34,7 +34,7 @@
         },
         {
             "name": "Black Dwarrows",
-	    "player":2
+	    "player":2,
             "provinces": ["Outer Krasnia","Intas"],
             "setupOrder": 1,
             "moveOrder": 1,
@@ -47,12 +47,12 @@
             "characters": [
                 "Gerudirr"
             ],
-	    "reinforcements":"0"
+	    "reinforcements":"0",
             "replacements":"1 in 3"
         },
         {
             "name": "The Dark Lord",
-	    "player":2
+	    "player":2,
             "provinces": ["Intas","Isle of Blood"],
             "setupOrder": 2,
             "moveOrder": 2,
@@ -67,7 +67,7 @@
                 "The Dark Lord",
 		"Ganab the Nasty"
             ],
-	    "reinforcements":"0"
+	    "reinforcements":"0",
             "replacements":"1 in 2"
         }
     ],
