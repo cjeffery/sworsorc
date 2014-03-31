@@ -1,0 +1,80 @@
+{
+    "scenarioName": "The War of the Black Dwarrows",
+    "gameLength":12,
+    "numberOfPlayers":2,
+    
+    "sunTrackSetting" : {
+        "yellow":1,
+        "blue":"F",
+        "red":"L"
+    },
+    
+    "nations": [
+        {
+            "name": "Elves",
+	    "player":1,
+            "provinces": ["Vynar"],
+            "setupOrder":3,
+            "moveOrder":3,
+            
+            "units": {
+              "Horse Archer":2,
+              "Light Horse":6,
+              "Light Sword":4,
+              "Light Bow":4,
+              "Medium Spear":4
+            },
+            
+            "characters": [
+                "Dalmilandril",
+                "Linfalas"
+            ],
+	    "reinforcements":"0",
+            "replacements":"1 in 2"
+        },
+        {
+            "name": "Black Dwarrows",
+	    "player":2,
+            "provinces": ["Outer Krasnia","Intas"],
+            "setupOrder": 1,
+            "moveOrder": 1,
+            "units": {
+              "Heavy Axe":11,
+              "Bowmen":2,
+              "Warg Riders":6
+            },
+            
+            "characters": [
+                "Gerudirr"
+            ],
+	    "reinforcements":"0",
+            "replacements":"1 in 3"
+        },
+        {
+            "name": "The Dark Lord",
+	    "player":2,
+            "provinces": ["Intas","Isle of Blood"],
+            "setupOrder": 2,
+            "moveOrder": 2,
+            "units": {
+              "Heavy Sword":4,
+	      "Light Horse":4,
+	      "Heavy Horse":2,
+	      "Light Spear":8
+            },
+            
+            "characters": [
+                "The Dark Lord",
+		"Ganab the Nasty"
+            ],
+	    "reinforcements":"0",
+            "replacements":"1 in 2"
+        }
+    ],
+    
+    "neutrals": [
+        
+    ]
+
+}
+

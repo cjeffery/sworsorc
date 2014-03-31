@@ -2,6 +2,7 @@ package sscharts;
 
 
 
+import Units.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
+
 /**
  *
  * @author Wayne Fuhrman
@@ -26,6 +28,9 @@ import org.json.simple.parser.*;
  */
 
 public class ScenarioConfigurationReader {
+    
+    UnitPool pool;                      // the pool of units in the scenario
+                                        // to be accessed by main Game class
     
      List<String> nationNames;
      List<String> neutralNames;
@@ -76,6 +81,22 @@ public class ScenarioConfigurationReader {
             System.out.println("Human sacrifice: " + acceptsSacrifice(neutral));
         }
     }
+    
+    public UnitPool populatePool() {
+        for (String nation : getNationNames() ) {
+            int player = getControllingPlayer(nation);
+            getUnits(nation);
+            /* iterate through and add to pool - fix this code to do that....
+            for (Object entry : nationUnitObject.entrySet()) {
+                    Map.Entry en = (Map.Entry) entry;
+                    String unitName = (String) en.getKey();
+                    int unitCount = ((Long) en.getValue()).intValue();
+                    nmap.put(unitName, unitCount);
+                }*/
+        }
+        return pool;
+    }
+    
 
     public ScenarioConfigurationReader(String configurationFileName) {
         //Attempts to read and store information from the given file.
@@ -149,12 +170,13 @@ public class ScenarioConfigurationReader {
                 JSONObject nationUnits = (JSONObject) nationObject.get("units");
 
                 Map<String, Integer> unitAndCount = new HashMap<>();
+                int unitCount = 0;
+                String unitName = "";
                 for (Object entry : nationUnits.entrySet()) {
                     Map.Entry en = (Map.Entry) entry;
-                    String unitName = (String) en.getKey();
-                    int unitCount = ((Long) en.getValue()).intValue();
+                    unitName = (String) en.getKey();
+                    unitCount = ((Long) en.getValue()).intValue();
                     unitAndCount.put(unitName, unitCount);
-
                 }
                 units.put(nationName, unitAndCount);
 
