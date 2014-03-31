@@ -29,6 +29,8 @@ public class HUD extends JFrame implements ActionListener {
         initComponents();
         jButton8.setActionCommand("EndPhase");
         jButton8.addActionListener(this);
+        jMenuItem5.setActionCommand("Exit");
+        jMenuItem5.addActionListener(this);
     }
 
     /**
@@ -477,201 +479,206 @@ public class HUD extends JFrame implements ActionListener {
     }//GEN-LAST:event_jLabel21ComponentResized
 
         public void actionPerformed(ActionEvent e){
-        if(e.getActionCommand().equals("EndPhase")){
-            if (SolarDayNum < 27) {
-            SolarDayNum++;
-            }
-            else {
-                SolarDayNum = 1;
-            }
-            if (RedSunVal < 12){
-                RedSunVal++;
-            }
-            else {
-                RedSunVal = 1;
-            }
-            if (BlueSunVal < 12){
-                BlueSunVal++;
-            }
-            else {
-                BlueSunVal = 1;
-            }
-            jLabel10.setText("Turn: " + SolarDayNum);
-            
-            switch (SolarDayNum){
-                case 1: case 2: case 27:
-                    if (RedSunVal > 2 && RedSunVal < 6){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 2 && BlueSunVal < 6){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
+            int returnCode = 1;
+        switch (e.getActionCommand()) {
+            case "Exit":
+                System.exit(0);
                 break;
-                case 3: case 4:
-                    if (RedSunVal > 3 && RedSunVal < 7){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 3 && BlueSunVal < 7){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+            case "EndPhase":
+                if (SolarDayNum < 27) {
+                    SolarDayNum++;
+                }
+                else {
+                    SolarDayNum = 1;
+                }
+                if (RedSunVal < 12){
+                    RedSunVal++;
+                }
+                else {
+                    RedSunVal = 1;
+                }
+                if (BlueSunVal < 12){
+                    BlueSunVal++;
+                }
+                else {
+                    BlueSunVal = 1;
+                }
+                jLabel10.setText("Turn: " + SolarDayNum);
+                
+                switch (SolarDayNum){
+                    case 1: case 2: case 27:
+                        if (RedSunVal > 2 && RedSunVal < 6){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 2 && BlueSunVal < 6){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
+                    case 3: case 4:
+                        if (RedSunVal > 3 && RedSunVal < 7){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 3 && BlueSunVal < 7){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 5: case 6:
-                    if (RedSunVal > 4 && RedSunVal < 8){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 4 && BlueSunVal < 8){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+                        if (RedSunVal > 4 && RedSunVal < 8){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 4 && BlueSunVal < 8){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 7: case 8: case 9:
-                    if (RedSunVal > 5 && RedSunVal < 9){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 5 && BlueSunVal < 9){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+                        if (RedSunVal > 5 && RedSunVal < 9){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 5 && BlueSunVal < 9){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 10: case 11:
-                    if (RedSunVal > 6 && RedSunVal < 10){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 6 && BlueSunVal < 10){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+                        if (RedSunVal > 6 && RedSunVal < 10){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 6 && BlueSunVal < 10){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 12: case 13:
-                    if (RedSunVal > 7 && RedSunVal < 11){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 7 && BlueSunVal < 11){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+                        if (RedSunVal > 7 && RedSunVal < 11){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 7 && BlueSunVal < 11){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 14: case 15:
-                    if (RedSunVal > 8 && RedSunVal < 12){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 8 && BlueSunVal < 12){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+                        if (RedSunVal > 8 && RedSunVal < 12){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 8 && BlueSunVal < 12){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 16: case 17:
-                    if (RedSunVal > 9 && RedSunVal < 13){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 9 && BlueSunVal < 13){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+                        if (RedSunVal > 9 && RedSunVal < 13){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 9 && BlueSunVal < 13){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 18: case 19: case 20:
-                    if (RedSunVal == 11 || RedSunVal == 12 
-                            || RedSunVal == 1){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal == 11 || BlueSunVal == 12 
-                            || BlueSunVal == 1){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+                        if (RedSunVal == 11 || RedSunVal == 12
+                                || RedSunVal == 1){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal == 11 || BlueSunVal == 12
+                                || BlueSunVal == 1){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 21: case 22:
-                    if (RedSunVal == 12 || RedSunVal == 1 
-                            || RedSunVal == 2){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal == 12 || BlueSunVal == 1 
-                            || BlueSunVal == 2){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+                        if (RedSunVal == 12 || RedSunVal == 1
+                                || RedSunVal == 2){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal == 12 || BlueSunVal == 1
+                                || BlueSunVal == 2){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 23: case 24:
-                    if (RedSunVal > 0 && RedSunVal < 4){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 0 && BlueSunVal < 4){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
+                        if (RedSunVal > 0 && RedSunVal < 4){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 0 && BlueSunVal < 4){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
                     case 25: case 26:
-                    if (RedSunVal > 1 && RedSunVal < 5){
-                        jLabel11.setText("Red Sun State: Ascension");
-                        jLabel12.setText("Blue Sun State: Descension");
-                    }
-                    else if (BlueSunVal > 1 && BlueSunVal < 5){
-                        jLabel11.setText("Red Sun State: Descension");
-                        jLabel12.setText("Blue Sun State: Ascension");
-                    }
-                    else{
-                        jLabel11.setText("Red Sun State: Equilibrium");
-                        jLabel12.setText("Blue Sun State: Equilibrium");
-                    }
-                break;
-            }
+                        if (RedSunVal > 1 && RedSunVal < 5){
+                            jLabel11.setText("Red Sun State: Ascension");
+                            jLabel12.setText("Blue Sun State: Descension");
+                        }
+                        else if (BlueSunVal > 1 && BlueSunVal < 5){
+                            jLabel11.setText("Red Sun State: Descension");
+                            jLabel12.setText("Blue Sun State: Ascension");
+                        }
+                        else{
+                            jLabel11.setText("Red Sun State: Equilibrium");
+                            jLabel12.setText("Blue Sun State: Equilibrium");
+                        }
+                        break;
+                }
         }
     }
     /**
