@@ -1,80 +1,120 @@
 {
-    "scenarioName": "The War of the Black Dwarrows",
-    "gameLength":12,
+    "scenarioName": "The War of the Great Sword",
+    "gameLength":14,
     "numberOfPlayers":2,
     
     "sunTrackSetting" : {
         "yellow":1,
-        "blue":"F",
-        "red":"L"
+        "blue":"H",
+        "red":"B"
     },
     
     "nations": [
         {
-            "name": "Elves",
+            "name": "Dark Lord",
 	    "player":1,
-            "provinces": ["Vynar"],
-            "setupOrder":3,
-            "moveOrder":3,
+            "provinces": ["Kelgarnth", "Citadel Isle", "Graumthog", "Sorcerak", "Zirkast", "Kananthar", "Ithilgil", "Intas", "Krasnia", "Dwarfhaven"],
+            "setupOrder":1,
+            "moveOrder":1,
+            
+            
+            ***************************************************************************************************
+            * There's no mechanism for specifying the races of the characters when it isn't obvious, as below *
+            * Also, figure out how to limit some units to specific regions in setup ***************************
+            ***************************************************************************************************
             
             "units": {
-              "Horse Archer":2,
-              "Light Horse":6,
-              "Light Sword":4,
-              "Light Bow":4,
-              "Medium Spear":4
+              "Warriors of the Web":4,
+              "Spider Legions":6,
+              "Heavy Spear":18,
+              ...*********************************************************************************************
             },
             
             "characters": [
-                "Dalmilandril",
-                "Linfalas"
+                ***** Is spider queen a character? **********************************************************
+                "Spider Queen", "Krawn the Crazy"
             ],
 	    "reinforcements":"0",
-            "replacements":"1 in 2"
+            "replacements":"1 in 1"
         },
         {
-            "name": "Black Dwarrows",
+            "name": "Empire",
 	    "player":2,
-            "provinces": ["Outer Krasnia","Intas"],
-            "setupOrder": 1,
-            "moveOrder": 1,
-            "units": {
-              "Heavy Axe":11,
-              "Bowmen":2,
-              "Warg Riders":6
-            },
-            
-            "characters": [
-                "Gerudirr"
-            ],
-	    "reinforcements":"0",
-            "replacements":"1 in 3"
-        },
-        {
-            "name": "The Dark Lord",
-	    "player":2,
-            "provinces": ["Intas","Isle of Blood"],
+            "provinces": ["The Empire", "Capella", "Ka-Chunk"],
             "setupOrder": 2,
             "moveOrder": 2,
             "units": {
-              "Heavy Sword":4,
-	      "Light Horse":4,
-	      "Heavy Horse":2,
-	      "Light Spear":8
+              ******************* same regions and races issue *************************
             },
             
             "characters": [
-                "The Dark Lord",
-		"Ganab the Nasty"
+                "Paladin Glade", "Paladin Curvenol", "Paladin Weldron", "Unamit ahezredit", "Peg-Leg Gonzo"
             ],
-	    "reinforcements":"0",
-            "replacements":"1 in 2"
+            **************************************************************************************
+            * reader won't accept the following string for reinforcement's value - fix mechanics *
+            **************************************************************************************
+	    "reinforcements":"4 Pike units - 2 each game turn",
+            "replacements":"2 in 1"
         }
     ],
     
     "neutrals": [
-        
+        {
+            "name": "Elves",
+            "provinces": ["Natilly Woods", "Vynar"],
+            "units": {
+              "Horse Archer":2,
+              "Light Horse":10,
+              "Light Bow":4,
+              "Light Sword":6
+            },
+            
+            "characters": [
+                "Gwaigillion Elengal", "Linfalas"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Empire",
+                "amount":2
+            }
+        },
+        {
+            "name": "Swamp-Creatures",
+            "provinces": ["The Swamps"],
+            "units": {
+              "Heavy Sword":6,
+              "Dinosaur Legions":4,
+              "Intelligent Mold":3
+            },
+            
+            "characters": [
+                "Sliggoth"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Empire",
+                "amount":0
+            }
+        },
+        {
+            "name": "Cronks",
+            "provinces": ["Aardvark Wallow"],
+            "units": {
+              "Heavy Pluglunk":10,
+              "Light Bow":4,
+              "Light Horse":2
+            },
+            
+            "characters": [
+                "Ramon Cronkevitch", "Svartz Tarnkap"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Empire",
+                "amount":1
+            }
+        },
     ]
 
 }
 
+**********************************************************************************
+* Find a general mechanic for special rules and victory conditions - seems tough *
+**********************************************************************************
