@@ -37,7 +37,7 @@ StellarConfiguration -down- SolarDisplay : The display depends on the configurat
 
 SolarDisplay -down- HUD : Hud displays the solar state
 
-HUD -down-MapView : The HUD surrounds the MapView during play
+HUD -down- MapView : The HUD surrounds the MapView during play
 
 HEExtensions -up-|> EdgeElement
 TTExtensions -up-|> TerrainType
@@ -135,5 +135,7 @@ class MapView #blue {
 
 class HexPainter #blue {
 }
+
+
 
 @enduml
