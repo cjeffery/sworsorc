@@ -44,7 +44,7 @@ public class Game {
         }
         void loadScenario(){
             unitPool = UnitPool.getInstance();
-            unitPool.clearPool();
+            unitPool.clearPool();               // why does it clear it right after loading it? -Tyler
         }
         void displayMainMap (){
                     /* Set the Nimbus look and feel */
