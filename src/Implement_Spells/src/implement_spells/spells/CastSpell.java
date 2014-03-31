@@ -6,6 +6,8 @@
 
 package implement_spells.spells;
 
+import character.Character;
+
 import implement_spells.spells.PL_1.*;
 import implement_spells.spells.PL_2.*;
 import implement_spells.spells.PL_3.*;
@@ -20,17 +22,18 @@ import implement_spells.spells.PL_7.*;
  * @author 张涛
  */
 public class CastSpell{
-    
-    String Name;
 
-    public CastSpell(String n){
-        Name = n;
+    public double TotalMannaCost;
+    
+    Character character;
+    
+    public CastSpell(Character c){
+        character = c;
     }
     
-    
-    public void call_spell(){
+    public void call_spell(String name){
         
-        switch(Name){
+        switch(name){
             //=======================
             // PL_1
             case "Teleportation Protection":
@@ -46,12 +49,13 @@ public class CastSpell{
             // PL_2
             case "Manna Transfer":
                 Manna_Transfer m_t = new Manna_Transfer();
+                TotalMannaCost = m_t.CostManna();
                 break;
             case "River Crossing":
                 River_Crossing r_c = new River_Crossing();
                 break;
             case "Morale":
-                Morale morale = new Morale();
+                Morale morale = new Morale(character);
                 break;
             case "Fear":
                 Fear fear = new Fear();
@@ -96,7 +100,7 @@ public class CastSpell{
             case "Ersatz Winter":
                 Ersatz_Winter e_w = new Ersatz_Winter();
                 break;
-            case "Teleportation Control":
+            case "Teleporation Control":
                 Teleporation_Control t_c = new Teleporation_Control();
                 break;
             case "Conjure Koboldic Infantry":
@@ -133,7 +137,7 @@ public class CastSpell{
             case "Berserkergang":
                 Berserkergang berserkergang = new Berserkergang();
                 break;
-            case "Conjure Demonic Infantry":
+            case "Conjure Demonice Infantry":
                 C_D_I c_d_i = new C_D_I();
                 break;
             // ===============================
