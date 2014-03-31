@@ -29,7 +29,6 @@ public abstract class EdgeElement {
             case "Wa": return makeEdgeElement( HexEdgeType.Wall );
             case "St": return makeEdgeElement( HexEdgeType.Stream );
             case "Ga": return makeEdgeElement( HexEdgeType.Gate );
-            case "Ro": return null; //TODO: what is Ro? We just don't know    
             
             default:
                 System.out.println("unhandled edge attr: " + attr);

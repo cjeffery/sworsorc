@@ -15,11 +15,6 @@ cliff7786 requests:
 /* A few assorted changes. I aint like a master of class diagrams or anything so 
    some of this could very well be horribly, terrible wrong */
    
-/* The MainMap class should be related to DiplomacyMap, again this makes drawing easier
-   and streamlines XML loading */
-MainMap inherits from HexMap
-DiplomacyMap inherits from HexMap
-
 /* From what I can tell the class diagrams are missing a view class for the map.
    Below is just based off of how I've implemented it in Java */
 Add MapView to StaticDataStructure (Or somewhere else?). MapView uses a HexMap for drawing.

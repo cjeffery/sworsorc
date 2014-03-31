@@ -284,7 +284,7 @@ public class ScenarioConfigurationReader {
     public static void main(String[] args) {
       /* System.out.println("Working Directory = " +
               System.getProperty("user.dir")); */
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("2_Dwarrows.json");
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/2_Dwarrows.json");
         reader.print();
     }
 }
