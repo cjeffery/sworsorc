@@ -1,0 +1,9 @@
+@startuml
+state "Move Units" as move
+move : Units are moved
+state "Unit is moved" as moveU
+state "End of Movement Phase" as moveE
+User1 --> move : 1. selectUnit()
+move -> moveU : 2. moveUnit()
+move --> moveE : 3. endPhase()
+@enduml
