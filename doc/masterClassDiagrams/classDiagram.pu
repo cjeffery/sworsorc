@@ -13,6 +13,7 @@ UnitHashMap -- MoveableUnit : Tracks MoveableUnits and their previous moves
 DiplomacyHex -up-|> Hex
 MapHex -up-|> Hex
 
+Character .up.|> MoveableUnit
 Monster .up.|> MoveableUnit 
 
 HexMap *-up- Hex 
@@ -57,6 +58,9 @@ Blue - Located in sworsorc/client
 Green - Located in sworsorc/model
 Yellow - Located in sworsorc/utilities
 end note
+
+class Character #green{
+}
 
 class MoveableUnit #green {
 }
@@ -112,7 +116,7 @@ class TTExtensions #green {
 class ITTExtensions #green {
 }
 
-class Monster #red {
+class Monster #green {
 }
 
 class BuildDiplomacyMapFile #red {
