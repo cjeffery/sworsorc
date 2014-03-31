@@ -152,7 +152,7 @@ public final class Implement_Spells {
     }
     
     public void getCharacter(){
-        PL = 1;
+        PL = 7;
         MagicPotential = 10;
     }
     
