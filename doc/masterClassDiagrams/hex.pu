@@ -6,6 +6,65 @@ MainMap *-- "1..*" MapHex
 Hex <|-- MapHex
 Hex <|-- DiplomacyHex
 DiplomacyMap *-- "1..*" DiplomacyHex
+HexMap *-- "0..*" Hex
+HexEdge *-- Hex
+EdgeElement "0..6" --o HexEdge
+EdgeElement "0..6" --o HexEdgeType
+Hex *-- TerrainType
+Hex o-- "0..*" ImprovedTerrainType
+
+class ImprovedTerrainType #529292{
++ImprovedTerrainType()
++ImprovedTerrainType(MapHex h)
++getMovementCost(MoveableUnit unit)
++getCombatMultiplier(MoveableUnit unit)
++getCombatEffect(MoveableUnit unit)
++getMovementOverride(MoveableUnit unit)
++makeImprovement(String code, MapHex h)
+}
+
+class TerrainType #529292{
++getMovementCost(MoveableUnit unit)
++getCombatMultiplier(MoveableUnit unit)
++getCombatEffect(MoveableUnit unit)
++makeTerrainType(String code)
+}
+
+class HexEdgeType #529292{
++enum HexEdgeType
+}
+
+class EdgeElement #529292{
++getEdgeType()
++makeEdgeElement(String attr)
++makeEdgeElement(HexEdgeType t)
+}
+
+class HexEdge #529292{
++HexEdge(String hex, int dir)
++put(EdgeElement e)
++get(HexEdgeType t)
++getEdgeID()
++contains(HexEdgeType t)
+}
+   
+
+class HexMap #529292{
+-DocumentBuilderFactory
+-DocumentBuilder
+-Document
+-file
+-BuildMap()
++GetHex(String)
++GetHex(int, int)
++GetRows()
++GetColumns
+-makeHex(Node)
++LowFirstRow()
++GetIDFromCoords(int, int)
++GetCoordsFromID(String)
+
+}
 
 
 class MainMap #529292 {
