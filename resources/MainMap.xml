@@ -5525,7 +5525,7 @@
           </northEdge>
           <northEastEdge>
             <edgeAttribute>Ga</edgeAttribute>
-            <edgeAttribute>Ro</edgeAttribute>
+            <edgeAttribute>Rd</edgeAttribute>
           </northEastEdge>
           <southEastEdge>
             <edgeAttribute>Wa</edgeAttribute>
