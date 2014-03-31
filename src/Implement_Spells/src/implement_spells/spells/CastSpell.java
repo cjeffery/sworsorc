@@ -96,7 +96,7 @@ public class CastSpell{
             case "Ersatz Winter":
                 Ersatz_Winter e_w = new Ersatz_Winter();
                 break;
-            case "Teleporation Control":
+            case "Teleportation Control":
                 Teleporation_Control t_c = new Teleporation_Control();
                 break;
             case "Conjure Koboldic Infantry":
@@ -133,7 +133,7 @@ public class CastSpell{
             case "Berserkergang":
                 Berserkergang berserkergang = new Berserkergang();
                 break;
-            case "Conjure Demonice Infantry":
+            case "Conjure Demonic Infantry":
                 C_D_I c_d_i = new C_D_I();
                 break;
             // ===============================
