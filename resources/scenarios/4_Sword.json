@@ -1,0 +1,120 @@
+{
+    "scenarioName": "The War of the Great Sword",
+    "gameLength":14,
+    "numberOfPlayers":2,
+    
+    "sunTrackSetting" : {
+        "yellow":1,
+        "blue":"H",
+        "red":"B"
+    },
+    
+    "nations": [
+        {
+            "name": "Dark Lord",
+	    "player":1,
+            "provinces": ["Kelgarnth", "Citadel Isle", "Graumthog", "Sorcerak", "Zirkast", "Kananthar", "Ithilgil", "Intas", "Krasnia", "Dwarfhaven"],
+            "setupOrder":1,
+            "moveOrder":1,
+            
+            
+            ***************************************************************************************************
+            * There's no mechanism for specifying the races of the characters when it isn't obvious, as below *
+            * Also, figure out how to limit some units to specific regions in setup ***************************
+            ***************************************************************************************************
+            
+            "units": {
+              "Warriors of the Web":4,
+              "Spider Legions":6,
+              "Heavy Spear":18,
+              ...*********************************************************************************************
+            },
+            
+            "characters": [
+                ***** Is spider queen a character? **********************************************************
+                "Spider Queen", "Krawn the Crazy"
+            ],
+	    "reinforcements":"0",
+            "replacements":"1 in 1"
+        },
+        {
+            "name": "Empire",
+	    "player":2,
+            "provinces": ["The Empire", "Capella", "Ka-Chunk"],
+            "setupOrder": 2,
+            "moveOrder": 2,
+            "units": {
+              ******************* same regions and races issue *************************
+            },
+            
+            "characters": [
+                "Paladin Glade", "Paladin Curvenol", "Paladin Weldron", "Unamit ahezredit", "Peg-Leg Gonzo"
+            ],
+            **************************************************************************************
+            * reader won't accept the following string for reinforcement's value - fix mechanics *
+            **************************************************************************************
+	    "reinforcements":"4 Pike units - 2 each game turn",
+            "replacements":"2 in 1"
+        }
+    ],
+    
+    "neutrals": [
+        {
+            "name": "Elves",
+            "provinces": ["Natilly Woods", "Vynar"],
+            "units": {
+              "Horse Archer":2,
+              "Light Horse":10,
+              "Light Bow":4,
+              "Light Sword":6
+            },
+            
+            "characters": [
+                "Gwaigillion Elengal", "Linfalas"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Empire",
+                "amount":2
+            }
+        },
+        {
+            "name": "Swamp-Creatures",
+            "provinces": ["The Swamps"],
+            "units": {
+              "Heavy Sword":6,
+              "Dinosaur Legions":4,
+              "Intelligent Mold":3
+            },
+            
+            "characters": [
+                "Sliggoth"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Empire",
+                "amount":0
+            }
+        },
+        {
+            "name": "Cronks",
+            "provinces": ["Aardvark Wallow"],
+            "units": {
+              "Heavy Pluglunk":10,
+              "Light Bow":4,
+              "Light Horse":2
+            },
+            
+            "characters": [
+                "Ramon Cronkevitch", "Svartz Tarnkap"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Empire",
+                "amount":1
+            }
+        },
+    ]
+
+}
+
+**********************************************************************************
+* Find a general mechanic for special rules and victory conditions - seems tough *
+**********************************************************************************

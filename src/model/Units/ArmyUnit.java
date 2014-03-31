@@ -11,6 +11,7 @@ package Units;
  *
  * @author John Goettsche
  * CS 383 Software Engineering
+ * tjasz: changed 'demorlized' to 'demoralized' before the problem spread
  */
 public class ArmyUnit extends MoveableUnit{   
     protected int strength;    
@@ -18,25 +19,25 @@ public class ArmyUnit extends MoveableUnit{
     protected int lifeCost;    
     
     protected boolean conjured;
-    protected boolean demorlized;
+    protected boolean demoralized;
     
     protected ArmyUnitType armyUnitType;
     
     
-    public void setDemorlized(boolean demorlized) {
-        this.demorlized = demorlized;
+    public void setDemoralized(boolean demoralized) {
+        this.demoralized = demoralized;
     }
     
     public ArmyUnitType getArmyUnitType(){
         return armyUnitType;
     }
     public ArmyUnit() {
-        this.demorlized = false;
+        this.demoralized = false;
         this.conjured = false;
     }
     
     public ArmyUnit(String location) {
-        this.demorlized = false;
+        this.demoralized = false;
         this.conjured = false;
         this.setLocation(location);
     }  
@@ -50,12 +51,12 @@ public class ArmyUnit extends MoveableUnit{
         return demoralizedStrength;
     }
 
-    public boolean isDemorlized() {
-        return demorlized;
+    public boolean isDemoralized() {
+        return demoralized;
     }
     
-    public void SetDemorlized(boolean x){
-        demorlized = x;
+    public void SetDemoralized(boolean x){
+        demoralized = x;
     }
     
     public void setLifeCost(int lifeCost) {

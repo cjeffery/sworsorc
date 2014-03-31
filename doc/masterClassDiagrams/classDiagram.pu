@@ -37,17 +37,17 @@ StellarConfiguration -down- SolarDisplay : The display depends on the configurat
 
 SolarDisplay -down- HUD : Hud displays the solar state
 
-HUD -down-MapView : The HUD surrounds the MapView during play
+HUD -down- MapView : The HUD surrounds the MapView during play
 
 HEExtensions -up-|> EdgeElement
 TTExtensions -up-|> TerrainType
 ITTExtensions -up-|> ImprovedTerrainType
 
 'package DisjointClasses <<Rect>> {
-'class ArmyCombatResultsTable #FFFF00 
-'class RandomEventTable #FFFF00 
-'class ScenarioConfigurationReader #FFFF00 
-'class Unit #999900 
+'class ArmyCombatResultsTable #blue 
+'class RandomEventTable #blue
+'class ScenarioConfigurationReader #blue 
+'class Unit #red
 '}
 
 note as N1
@@ -58,82 +58,84 @@ Green - Located in sworsorc/model
 Yellow - Located in sworsorc/utilities
 end note
 
-class MoveableUnit #999900 {
+class MoveableUnit #green {
 }
 
-class ArmyUnit #999900 {
+class ArmyUnit #green {
 }
 
-class Stack #999900 {
+class Stack #green {
 }
 
-class UnitHashMap #999900 {
+class UnitHashMap #green {
 }
 
-class Hex #66CC00 {
+class Hex #green {
 }
 
-class DiplomacyHex #66CC00 {
+class DiplomacyHex #green {
 }
 
-class MapHex #66CC00 {
+class MapHex #green {
 }
 
-class HexMap #66CC00 {
+class HexMap #green {
 }
 
-class MainMap #66CC00 {
+class MainMap #green {
 }
 
-class DiplomacyMap #66CC00 {
+class DiplomacyMap #green {
 }
 
-class EdgeElement #00CC00 {
+class EdgeElement #green {
 }
 
-class HexEdgeType #00CC00 {
+class HexEdgeType #green {
 }
 
-class HexEdge #00CC00 {
+class HexEdge #green {
 }
 
-class TerrainType #00CC00 {
+class TerrainType #green {
 }
 
-class ImprovedTerrainType #00CC00 {
+class ImprovedTerrainType #green {
 }
 
-class HEExtensions #00CC00 {
+class HEExtensions #green {
 }
 
-class TTExtensions #00CC00 {
+class TTExtensions #green {
 }
 
-class ITTExtensions #00CC00 {
+class ITTExtensions #green {
 }
 
-class Monster #F21818 {
+class Monster #red {
 }
 
-class BuildDiplomacyMapFile #F21818 {
+class BuildDiplomacyMapFile #red {
 }
 
-class HexPainter #F21818 {
+class HexPainter #red {
 }
 
-class SolarDisplay #3333FF {
+class SolarDisplay #blue {
 }
 
-class HUD #3333FF {
+class HUD #blue {
 }
 
-class StellarConfiguration #3333FF {
+class StellarConfiguration #blue {
 }
 
-class MapView #3333FF {
+class MapView #blue {
 }
 
-class HexPainter #3333FF {
+class HexPainter #blue {
 }
+
+
 
 @enduml

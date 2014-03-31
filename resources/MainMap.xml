@@ -11,7 +11,7 @@
   <!ELEMENT map (hex*)>
   <!ELEMENT hex (hexNumber, northHexNumber, northEastHexNumber,
                  southEastHexNumber, southHexNumber, southWestHexNumber,
-                 northWestHexNumber, terrainKey, providenceName, cityHex?,
+                 northWestHexNumber, terrainKey, provinceName, cityHex?,
                  vortexHex?, portalHex?, hexEdgeMap?, castleHex?, hexName?,
                  capitalHex?, townHex?)>
   <!ELEMENT capitalHex (#PCDATA)>
@@ -25,7 +25,7 @@
   <!ELEMENT southWestHexNumber (#PCDATA)>
   <!ELEMENT northWestHexNumber (#PCDATA)>
   <!ELEMENT terrainKey (#PCDATA)>
-  <!ELEMENT providenceName (#PCDATA)>
+  <!ELEMENT provinceName (#PCDATA)>
   <!ELEMENT cityHex (#PCDATA)>
   <!ELEMENT vortexHex (#PCDATA)>
   <!ELEMENT portalHex (#PCDATA)>
@@ -51,7 +51,7 @@
         <southWestHexNumber>0743</southWestHexNumber>
         <northWestHexNumber>0742</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -71,7 +71,7 @@
         <southWestHexNumber>0744</southWestHexNumber>
         <northWestHexNumber>0743</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -91,7 +91,7 @@
         <southWestHexNumber>0741</southWestHexNumber>
         <northWestHexNumber>0740</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -111,7 +111,7 @@
         <southWestHexNumber>0609</southWestHexNumber>
         <northWestHexNumber>0608</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -131,7 +131,7 @@
         <southWestHexNumber>0742</southWestHexNumber>
         <northWestHexNumber>0741</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -151,7 +151,7 @@
         <southWestHexNumber>0747</southWestHexNumber>
         <northWestHexNumber>0746</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
     </hex>
     <hex>
         <hexNumber>0847</hexNumber>
@@ -162,7 +162,7 @@
         <southWestHexNumber>0748</southWestHexNumber>
         <northWestHexNumber>0747</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
     </hex>
     <hex>
         <hexNumber>0844</hexNumber>
@@ -173,7 +173,7 @@
         <southWestHexNumber>0745</southWestHexNumber>
         <northWestHexNumber>0744</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -196,7 +196,7 @@
         <southWestHexNumber>0746</southWestHexNumber>
         <northWestHexNumber>0745</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         <hexEdgeMap>
           <northEdge>
             <edgeAttribute>Pb</edgeAttribute>
@@ -215,7 +215,7 @@
         <southWestHexNumber>0749</southWestHexNumber>
         <northWestHexNumber>0748</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         <hexEdgeMap>
           <southEdge>
             <edgeAttribute>Pb</edgeAttribute>
@@ -234,7 +234,7 @@
         <southWestHexNumber>0750</southWestHexNumber>
         <northWestHexNumber>0749</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         <hexEdgeMap>
           <northEdge>
             <edgeAttribute>Pb</edgeAttribute>
@@ -253,7 +253,7 @@
         <southWestHexNumber>0608</southWestHexNumber>
         <northWestHexNumber>0607</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -278,7 +278,7 @@
         <southWestHexNumber>0607</southWestHexNumber>
         <northWestHexNumber>0606</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -298,7 +298,7 @@
         <southWestHexNumber>0606</southWestHexNumber>
         <northWestHexNumber>0605</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -323,7 +323,7 @@
         <southWestHexNumber>0605</southWestHexNumber>
         <northWestHexNumber>0604</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Citadel of Blood</providenceName>
+        <provinceName>Citadel of Blood</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -349,7 +349,7 @@
         <southWestHexNumber>0604</southWestHexNumber>
         <northWestHexNumber>0603</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Citadel of Blood</providenceName>
+        <provinceName>Citadel of Blood</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -375,7 +375,7 @@
         <southWestHexNumber>0603</southWestHexNumber>
         <northWestHexNumber>0602</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Citadel of Blood</providenceName>
+        <provinceName>Citadel of Blood</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -401,7 +401,7 @@
         <southWestHexNumber>0602</southWestHexNumber>
         <northWestHexNumber>0601</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -413,7 +413,7 @@
         <southWestHexNumber>0601</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -425,7 +425,7 @@
         <southWestHexNumber>0751</southWestHexNumber>
         <northWestHexNumber>0750</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         <hexEdgeMap>
           <northEastEdge>
             <edgeAttribute>Rd</edgeAttribute>
@@ -444,7 +444,7 @@
         <southWestHexNumber>0752</southWestHexNumber>
         <northWestHexNumber>0751</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
     </hex>
     <hex>
         <hexNumber>0852</hexNumber>
@@ -455,7 +455,7 @@
         <southWestHexNumber>0753</southWestHexNumber>
         <northWestHexNumber>0752</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
     </hex>
     <hex>
         <hexNumber>0853</hexNumber>
@@ -466,7 +466,7 @@
         <southWestHexNumber>0754</southWestHexNumber>
         <northWestHexNumber>0753</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
     </hex>
     <hex>
         <hexNumber>0711</hexNumber>
@@ -477,7 +477,7 @@
         <southWestHexNumber>0611</southWestHexNumber>
         <northWestHexNumber>0610</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -497,7 +497,7 @@
         <southWestHexNumber>0610</southWestHexNumber>
         <northWestHexNumber>0609</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -517,7 +517,7 @@
         <southWestHexNumber>0617</southWestHexNumber>
         <northWestHexNumber>0616</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -540,7 +540,7 @@
         <southWestHexNumber>0616</southWestHexNumber>
         <northWestHexNumber>0615</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -557,7 +557,7 @@
         <southWestHexNumber>0619</southWestHexNumber>
         <northWestHexNumber>0618</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -580,7 +580,7 @@
         <southWestHexNumber>0618</southWestHexNumber>
         <northWestHexNumber>0617</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -603,7 +603,7 @@
         <southWestHexNumber>0613</southWestHexNumber>
         <northWestHexNumber>0612</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -623,7 +623,7 @@
         <southWestHexNumber>0612</southWestHexNumber>
         <northWestHexNumber>0611</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -635,7 +635,7 @@
         <southWestHexNumber>0615</southWestHexNumber>
         <northWestHexNumber>0614</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -647,7 +647,7 @@
         <southWestHexNumber>0614</southWestHexNumber>
         <northWestHexNumber>0613</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -667,7 +667,7 @@
         <southWestHexNumber>0704</southWestHexNumber>
         <northWestHexNumber>0703</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Citadel Of Blood</providenceName>
+        <provinceName>Citadel Of Blood</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -699,7 +699,7 @@
         <southWestHexNumber>0703</southWestHexNumber>
         <northWestHexNumber>0702</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Citadel Of Blood</providenceName>
+        <provinceName>Citadel Of Blood</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -725,7 +725,7 @@
         <southWestHexNumber>0702</southWestHexNumber>
         <northWestHexNumber>0701</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -745,7 +745,7 @@
         <southWestHexNumber>0708</southWestHexNumber>
         <northWestHexNumber>0707</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -757,7 +757,7 @@
         <southWestHexNumber>0707</southWestHexNumber>
         <northWestHexNumber>0706</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <cityHex>true</cityHex>
         <hexEdgeMap>
@@ -778,7 +778,7 @@
         <southWestHexNumber>0706</southWestHexNumber>
         <northWestHexNumber>0705</northWestHexNumber>
         <terrainKey>Br</terrainKey>
-        <providenceName>Citadel of Blood</providenceName>
+        <provinceName>Citadel of Blood</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -806,7 +806,7 @@
         <southWestHexNumber>0705</southWestHexNumber>
         <northWestHexNumber>0704</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Citadel of Blood</providenceName>
+        <provinceName>Citadel of Blood</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -838,7 +838,7 @@
         <southWestHexNumber>0649</southWestHexNumber>
         <northWestHexNumber>0648</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         <hexName>Glade Keep</hexName>
         <castleHex>true</castleHex>
         <hexEdgeMap>
@@ -859,7 +859,7 @@
         <southWestHexNumber>0647</southWestHexNumber>
         <northWestHexNumber>0646</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
     </hex>
     <hex>
@@ -871,7 +871,7 @@
         <southWestHexNumber>0502</southWestHexNumber>
         <northWestHexNumber>0501</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -883,7 +883,7 @@
         <southWestHexNumber>0648</southWestHexNumber>
         <northWestHexNumber>0647</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -903,7 +903,7 @@
         <southWestHexNumber>0645</southWestHexNumber>
         <northWestHexNumber>0644</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -923,7 +923,7 @@
         <southWestHexNumber>0646</southWestHexNumber>
         <northWestHexNumber>0645</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -943,7 +943,7 @@
         <southWestHexNumber>0505</southWestHexNumber>
         <northWestHexNumber>0504</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -962,8 +962,8 @@
         <southHexNumber>0744</southHexNumber>
         <southWestHexNumber>0643</southWestHexNumber>
         <northWestHexNumber>0642</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>Cl</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
     </hex>
     <hex>
@@ -975,7 +975,7 @@
         <southWestHexNumber>0506</southWestHexNumber>
         <northWestHexNumber>0505</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -991,8 +991,8 @@
         <southHexNumber>0745</southHexNumber>
         <southWestHexNumber>0644</southWestHexNumber>
         <northWestHexNumber>0643</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>Cl</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
     </hex>
     <hex>
@@ -1004,7 +1004,7 @@
         <southWestHexNumber>0503</southWestHexNumber>
         <northWestHexNumber>0502</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -1023,8 +1023,8 @@
         <southHexNumber>0742</southHexNumber>
         <southWestHexNumber>0641</southWestHexNumber>
         <northWestHexNumber>0640</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>Cl</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
     </hex>
     <hex>
@@ -1036,7 +1036,7 @@
         <southWestHexNumber>0709</southWestHexNumber>
         <northWestHexNumber>0708</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -1056,7 +1056,7 @@
         <southWestHexNumber>0504</southWestHexNumber>
         <northWestHexNumber>0503</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -1081,8 +1081,8 @@
         <southHexNumber>0743</southHexNumber>
         <southWestHexNumber>0642</southWestHexNumber>
         <northWestHexNumber>0641</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>Cl</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
     </hex>
     <hex>
@@ -1094,7 +1094,7 @@
         <southWestHexNumber>0710</southWestHexNumber>
         <northWestHexNumber>0709</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -1106,7 +1106,7 @@
         <southWestHexNumber>0509</southWestHexNumber>
         <northWestHexNumber>0508</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -1118,7 +1118,7 @@
         <southWestHexNumber>0510</southWestHexNumber>
         <northWestHexNumber>0509</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -1129,8 +1129,8 @@
         <southHexNumber>0741</southHexNumber>
         <southWestHexNumber>0640</southWestHexNumber>
         <northWestHexNumber>0639</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>Cl</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
     </hex>
     <hex>
@@ -1142,7 +1142,7 @@
         <southWestHexNumber>0507</southWestHexNumber>
         <northWestHexNumber>0506</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         <hexName>Gateway Of Evil</hexName>
     </hex>
     <hex>
@@ -1154,7 +1154,7 @@
         <southWestHexNumber>0508</southWestHexNumber>
         <northWestHexNumber>0507</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -1166,7 +1166,7 @@
         <southWestHexNumber>0713</southWestHexNumber>
         <northWestHexNumber>0712</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -1178,7 +1178,7 @@
         <southWestHexNumber>0712</southWestHexNumber>
         <northWestHexNumber>0711</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -1198,7 +1198,7 @@
         <southWestHexNumber>0715</southWestHexNumber>
         <northWestHexNumber>0714</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -1221,7 +1221,7 @@
         <southWestHexNumber>0714</southWestHexNumber>
         <northWestHexNumber>0713</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -1244,7 +1244,7 @@
         <southWestHexNumber>0717</southWestHexNumber>
         <northWestHexNumber>0716</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -1273,7 +1273,7 @@
         <southWestHexNumber>0716</southWestHexNumber>
         <northWestHexNumber>0715</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -1296,7 +1296,7 @@
         <southWestHexNumber>0719</southWestHexNumber>
         <northWestHexNumber>0718</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         <hexName>Balkathos</hexName>
         <capitalHex>true</capitalHex>
         <townHex>true</townHex>
@@ -1318,7 +1318,7 @@
         <southWestHexNumber>0718</southWestHexNumber>
         <northWestHexNumber>0717</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -1341,7 +1341,7 @@
         <southWestHexNumber>0711</southWestHexNumber>
         <northWestHexNumber>0710</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -1353,7 +1353,7 @@
         <southWestHexNumber>0511</southWestHexNumber>
         <northWestHexNumber>0510</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -1365,7 +1365,7 @@
         <southWestHexNumber>0512</southWestHexNumber>
         <northWestHexNumber>0511</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -1377,7 +1377,7 @@
         <southWestHexNumber>0513</southWestHexNumber>
         <northWestHexNumber>0512</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -1397,7 +1397,7 @@
         <southWestHexNumber>0720</southWestHexNumber>
         <northWestHexNumber>0719</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -1420,7 +1420,7 @@
         <southWestHexNumber>0514</southWestHexNumber>
         <northWestHexNumber>0513</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -1440,7 +1440,7 @@
         <southWestHexNumber>0652</southWestHexNumber>
         <northWestHexNumber>0651</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
     </hex>
     <hex>
@@ -1452,7 +1452,7 @@
         <southWestHexNumber>0515</southWestHexNumber>
         <northWestHexNumber>0514</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -1464,7 +1464,7 @@
         <southWestHexNumber>0653</southWestHexNumber>
         <northWestHexNumber>0652</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
     </hex>
     <hex>
@@ -1476,7 +1476,7 @@
         <southWestHexNumber>0516</southWestHexNumber>
         <northWestHexNumber>0515</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -1488,7 +1488,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0653</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
     </hex>
     <hex>
@@ -1500,7 +1500,7 @@
         <southWestHexNumber>0517</southWestHexNumber>
         <northWestHexNumber>0516</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -1512,7 +1512,7 @@
         <southWestHexNumber>0518</southWestHexNumber>
         <northWestHexNumber>0517</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -1529,7 +1529,7 @@
         <southWestHexNumber>0519</southWestHexNumber>
         <northWestHexNumber>0518</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -1549,7 +1549,7 @@
         <southWestHexNumber>0520</southWestHexNumber>
         <northWestHexNumber>0519</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -1566,7 +1566,7 @@
         <southWestHexNumber>0650</southWestHexNumber>
         <northWestHexNumber>0649</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
     </hex>
     <hex>
@@ -1578,7 +1578,7 @@
         <southWestHexNumber>0651</southWestHexNumber>
         <northWestHexNumber>0650</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -1598,7 +1598,7 @@
         <southWestHexNumber>0730</southWestHexNumber>
         <northWestHexNumber>0729</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1610,7 +1610,7 @@
         <southWestHexNumber>0729</southWestHexNumber>
         <northWestHexNumber>0728</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1622,7 +1622,7 @@
         <southWestHexNumber>0728</southWestHexNumber>
         <northWestHexNumber>0727</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1634,7 +1634,7 @@
         <southWestHexNumber>0727</southWestHexNumber>
         <northWestHexNumber>0726</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1646,7 +1646,7 @@
         <southWestHexNumber>0726</southWestHexNumber>
         <northWestHexNumber>0725</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1658,7 +1658,7 @@
         <southWestHexNumber>0725</southWestHexNumber>
         <northWestHexNumber>0724</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -1687,7 +1687,7 @@
         <southWestHexNumber>0724</southWestHexNumber>
         <northWestHexNumber>0723</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -1710,7 +1710,7 @@
         <southWestHexNumber>0723</southWestHexNumber>
         <northWestHexNumber>0722</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         
         <hexEdgeMap>
           <southWestEdge>
@@ -1730,7 +1730,7 @@
         <southWestHexNumber>0722</southWestHexNumber>
         <northWestHexNumber>0721</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         
         <hexEdgeMap>
           <southWestEdge>
@@ -1750,7 +1750,7 @@
         <southWestHexNumber>0721</southWestHexNumber>
         <northWestHexNumber>0720</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Krasnia</providenceName>
+        <provinceName>Krasnia</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -1776,7 +1776,7 @@
         <southWestHexNumber>0523</southWestHexNumber>
         <northWestHexNumber>0522</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -1788,7 +1788,7 @@
         <southWestHexNumber>0625</southWestHexNumber>
         <northWestHexNumber>0624</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -1811,7 +1811,7 @@
         <southWestHexNumber>0524</southWestHexNumber>
         <northWestHexNumber>0523</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -1828,7 +1828,7 @@
         <southWestHexNumber>0626</southWestHexNumber>
         <northWestHexNumber>0625</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1840,7 +1840,7 @@
         <southWestHexNumber>0521</southWestHexNumber>
         <northWestHexNumber>0520</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -1852,7 +1852,7 @@
         <southWestHexNumber>0623</southWestHexNumber>
         <northWestHexNumber>0622</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -1872,7 +1872,7 @@
         <southWestHexNumber>0522</southWestHexNumber>
         <northWestHexNumber>0521</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -1884,7 +1884,7 @@
         <southWestHexNumber>0624</southWestHexNumber>
         <northWestHexNumber>0623</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -1910,7 +1910,7 @@
         <southWestHexNumber>0629</southWestHexNumber>
         <northWestHexNumber>0628</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1922,7 +1922,7 @@
         <southWestHexNumber>0627</southWestHexNumber>
         <northWestHexNumber>0626</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1934,7 +1934,7 @@
         <southWestHexNumber>0628</southWestHexNumber>
         <northWestHexNumber>0627</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1946,7 +1946,7 @@
         <southWestHexNumber>0529</southWestHexNumber>
         <northWestHexNumber>0528</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1958,7 +1958,7 @@
         <southWestHexNumber>0530</southWestHexNumber>
         <northWestHexNumber>0529</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1970,7 +1970,7 @@
         <southWestHexNumber>0527</southWestHexNumber>
         <northWestHexNumber>0526</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -1982,7 +1982,7 @@
         <southWestHexNumber>0621</southWestHexNumber>
         <northWestHexNumber>0620</northWestHexNumber>
         <terrainKey>V</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         <vortexHex>true</vortexHex>
         <hexEdgeMap>
           <northEastEdge>
@@ -2002,7 +2002,7 @@
         <southWestHexNumber>0528</southWestHexNumber>
         <northWestHexNumber>0527</northWestHexNumber>
         <terrainKey>Po</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         <portalHex>3</portalHex>
     </hex>
     <hex>
@@ -2014,7 +2014,7 @@
         <southWestHexNumber>0622</southWestHexNumber>
         <northWestHexNumber>0621</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -2034,7 +2034,7 @@
         <southWestHexNumber>0525</southWestHexNumber>
         <northWestHexNumber>0524</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2061,7 +2061,7 @@
         <southWestHexNumber>0526</southWestHexNumber>
         <northWestHexNumber>0525</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -2073,7 +2073,7 @@
         <southWestHexNumber>0620</southWestHexNumber>
         <northWestHexNumber>0619</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2096,7 +2096,7 @@
         <southWestHexNumber>0739</southWestHexNumber>
         <northWestHexNumber>0738</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2119,7 +2119,7 @@
         <southWestHexNumber>0738</southWestHexNumber>
         <northWestHexNumber>0737</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2131,7 +2131,7 @@
         <southWestHexNumber>0740</southWestHexNumber>
         <northWestHexNumber>0739</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -2148,7 +2148,7 @@
         <southWestHexNumber>0735</southWestHexNumber>
         <northWestHexNumber>0734</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2165,7 +2165,7 @@
         <southWestHexNumber>0734</southWestHexNumber>
         <northWestHexNumber>0733</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -2188,7 +2188,7 @@
         <southWestHexNumber>0737</southWestHexNumber>
         <northWestHexNumber>0736</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2200,7 +2200,7 @@
         <southWestHexNumber>0736</southWestHexNumber>
         <northWestHexNumber>0735</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2212,7 +2212,7 @@
         <southWestHexNumber>0731</southWestHexNumber>
         <northWestHexNumber>0730</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -2224,7 +2224,7 @@
         <southWestHexNumber>0733</southWestHexNumber>
         <northWestHexNumber>0732</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -2236,7 +2236,7 @@
         <southWestHexNumber>0732</southWestHexNumber>
         <northWestHexNumber>0731</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -2248,7 +2248,7 @@
         <southWestHexNumber>0532</southWestHexNumber>
         <northWestHexNumber>0531</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -2260,7 +2260,7 @@
         <southWestHexNumber>0634</southWestHexNumber>
         <northWestHexNumber>0633</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <cityHex>true</cityHex>
         <hexEdgeMap>
@@ -2284,7 +2284,7 @@
         <southWestHexNumber>0533</southWestHexNumber>
         <northWestHexNumber>0532</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -2296,7 +2296,7 @@
         <southWestHexNumber>0635</southWestHexNumber>
         <northWestHexNumber>0634</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2308,7 +2308,7 @@
         <southWestHexNumber>0534</southWestHexNumber>
         <northWestHexNumber>0533</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -2328,7 +2328,7 @@
         <southWestHexNumber>0636</southWestHexNumber>
         <northWestHexNumber>0635</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2340,7 +2340,7 @@
         <southWestHexNumber>0535</southWestHexNumber>
         <northWestHexNumber>0534</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2363,7 +2363,7 @@
         <southWestHexNumber>0637</southWestHexNumber>
         <northWestHexNumber>0636</northWestHexNumber>
         <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
     </hex>
     <hex>
@@ -2374,8 +2374,8 @@
         <southHexNumber>0739</southHexNumber>
         <southWestHexNumber>0638</southWestHexNumber>
         <northWestHexNumber>0637</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>Cl</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
         <hexEdgeMap>
           <southEastEdge>
@@ -2394,8 +2394,8 @@
         <southHexNumber>0740</southHexNumber>
         <southWestHexNumber>0639</southWestHexNumber>
         <northWestHexNumber>0638</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>Cl</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
         <hexEdgeMap>
           <northEdge>
@@ -2415,7 +2415,7 @@
         <southWestHexNumber>0531</southWestHexNumber>
         <northWestHexNumber>0530</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <capitalHex>true</capitalHex>
     </hex>
@@ -2428,7 +2428,7 @@
         <southWestHexNumber>0540</southWestHexNumber>
         <northWestHexNumber>0539</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2445,7 +2445,7 @@
         <southWestHexNumber>0536</southWestHexNumber>
         <northWestHexNumber>0535</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northWestEdge>
@@ -2462,7 +2462,7 @@
         <southWestHexNumber>0630</southWestHexNumber>
         <northWestHexNumber>0629</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -2474,7 +2474,7 @@
         <southWestHexNumber>0537</southWestHexNumber>
         <northWestHexNumber>0536</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2486,7 +2486,7 @@
         <southWestHexNumber>0631</southWestHexNumber>
         <northWestHexNumber>0630</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -2498,7 +2498,7 @@
         <southWestHexNumber>0538</southWestHexNumber>
         <northWestHexNumber>0537</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2510,7 +2510,7 @@
         <southWestHexNumber>0632</southWestHexNumber>
         <northWestHexNumber>0631</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -2522,7 +2522,7 @@
         <southWestHexNumber>0539</southWestHexNumber>
         <northWestHexNumber>0538</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -2545,7 +2545,7 @@
         <southWestHexNumber>0633</southWestHexNumber>
         <northWestHexNumber>0632</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -2562,7 +2562,7 @@
         <southWestHexNumber>0548</southWestHexNumber>
         <northWestHexNumber>0547</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -2585,7 +2585,7 @@
         <southWestHexNumber>0547</southWestHexNumber>
         <northWestHexNumber>0546</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2608,7 +2608,7 @@
         <southWestHexNumber>0550</southWestHexNumber>
         <northWestHexNumber>0549</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
         <hexEdgeMap>
           <northWestEdge>
@@ -2625,7 +2625,7 @@
         <southWestHexNumber>0549</southWestHexNumber>
         <northWestHexNumber>0548</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2651,7 +2651,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2668,7 +2668,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -2688,7 +2688,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
     </hex>
     <hex>
@@ -2700,7 +2700,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -2720,7 +2720,7 @@
         <southWestHexNumber>0151</southWestHexNumber>
         <northWestHexNumber>0150</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -2743,7 +2743,7 @@
         <southWestHexNumber>0153</southWestHexNumber>
         <northWestHexNumber>0152</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -2760,7 +2760,7 @@
         <southWestHexNumber>0542</southWestHexNumber>
         <northWestHexNumber>0541</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2772,7 +2772,7 @@
         <southWestHexNumber>0152</southWestHexNumber>
         <northWestHexNumber>0151</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -2793,7 +2793,7 @@
         <southWestHexNumber>0541</southWestHexNumber>
         <northWestHexNumber>0540</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2805,7 +2805,7 @@
         <southWestHexNumber>0544</southWestHexNumber>
         <northWestHexNumber>0543</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2817,7 +2817,7 @@
         <southWestHexNumber>0543</southWestHexNumber>
         <northWestHexNumber>0542</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2829,7 +2829,7 @@
         <southWestHexNumber>0546</southWestHexNumber>
         <northWestHexNumber>0545</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -2849,7 +2849,7 @@
         <southWestHexNumber>0545</southWestHexNumber>
         <northWestHexNumber>0544</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2861,7 +2861,7 @@
         <southWestHexNumber>0147</southWestHexNumber>
         <northWestHexNumber>0146</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2873,7 +2873,7 @@
         <southWestHexNumber>0148</southWestHexNumber>
         <northWestHexNumber>0147</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2885,7 +2885,7 @@
         <southWestHexNumber>0149</southWestHexNumber>
         <northWestHexNumber>0148</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2897,7 +2897,7 @@
         <southWestHexNumber>0150</southWestHexNumber>
         <northWestHexNumber>0149</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -2913,8 +2913,8 @@
         <southHexNumber>0243</southHexNumber>
         <southWestHexNumber>0143</southWestHexNumber>
         <northWestHexNumber>0142</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2925,8 +2925,8 @@
         <southHexNumber>0244</southHexNumber>
         <southWestHexNumber>0144</southWestHexNumber>
         <northWestHexNumber>0143</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2938,7 +2938,7 @@
         <southWestHexNumber>0145</southWestHexNumber>
         <northWestHexNumber>0144</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2949,8 +2949,8 @@
         <southHexNumber>0246</southHexNumber>
         <southWestHexNumber>0146</southWestHexNumber>
         <northWestHexNumber>0145</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2961,8 +2961,8 @@
         <southHexNumber>0144</southHexNumber>
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2974,7 +2974,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2986,7 +2986,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -2998,7 +2998,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3010,7 +3010,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3022,7 +3022,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3034,7 +3034,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3046,7 +3046,7 @@
         <southWestHexNumber>0553</southWestHexNumber>
         <northWestHexNumber>0552</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
     </hex>
     <hex>
@@ -3058,7 +3058,7 @@
         <southWestHexNumber>0552</southWestHexNumber>
         <northWestHexNumber>0551</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -3079,7 +3079,7 @@
         <southWestHexNumber>0551</southWestHexNumber>
         <northWestHexNumber>0550</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
     </hex>
     <hex>
@@ -3091,7 +3091,7 @@
         <southWestHexNumber>0554</southWestHexNumber>
         <northWestHexNumber>0553</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>Capella</providenceName>
+        <provinceName>Capella</provinceName>
         
     </hex>
     <hex>
@@ -3103,7 +3103,7 @@
         <southWestHexNumber>0154</southWestHexNumber>
         <northWestHexNumber>0153</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -3125,7 +3125,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -3145,7 +3145,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -3157,7 +3157,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -3169,7 +3169,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -3181,7 +3181,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -3198,7 +3198,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -3218,7 +3218,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -3230,7 +3230,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -3242,7 +3242,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -3254,7 +3254,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -3266,7 +3266,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -3278,7 +3278,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -3297,8 +3297,8 @@
         <southHexNumber>0143</southHexNumber>
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3309,8 +3309,8 @@
         <southHexNumber>0142</southHexNumber>
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3322,7 +3322,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -3339,7 +3339,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3351,7 +3351,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -3371,7 +3371,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -3388,7 +3388,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -3408,7 +3408,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -3420,7 +3420,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -3432,7 +3432,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -3444,7 +3444,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -3456,7 +3456,7 @@
         <southWestHexNumber>0212</southWestHexNumber>
         <northWestHexNumber>0211</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -3482,7 +3482,7 @@
         <southWestHexNumber>0213</southWestHexNumber>
         <northWestHexNumber>0212</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <southWestEdge>
@@ -3502,7 +3502,7 @@
         <southWestHexNumber>0214</southWestHexNumber>
         <northWestHexNumber>0213</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northWestEdge>
@@ -3519,7 +3519,7 @@
         <southWestHexNumber>0215</southWestHexNumber>
         <northWestHexNumber>0214</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -3531,7 +3531,7 @@
         <southWestHexNumber>0210</southWestHexNumber>
         <northWestHexNumber>0209</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -3543,7 +3543,7 @@
         <southWestHexNumber>0211</southWestHexNumber>
         <northWestHexNumber>0210</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -3560,7 +3560,7 @@
         <southWestHexNumber>0216</southWestHexNumber>
         <northWestHexNumber>0215</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -3572,7 +3572,7 @@
         <southWestHexNumber>0217</southWestHexNumber>
         <northWestHexNumber>0216</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -3584,7 +3584,7 @@
         <southWestHexNumber>0218</southWestHexNumber>
         <northWestHexNumber>0217</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -3596,7 +3596,7 @@
         <southWestHexNumber>0219</southWestHexNumber>
         <northWestHexNumber>0218</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <capitalHex>true</capitalHex>
     </hex>
@@ -3609,7 +3609,7 @@
         <southWestHexNumber>0353</southWestHexNumber>
         <northWestHexNumber>0352</northWestHexNumber>
         <terrainKey>Ci</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         <hexName>City Of Urf Durfal</hexName>
         <cityHex>true</cityHex>
         <capitalHex>true</capitalHex>
@@ -3635,7 +3635,7 @@
         <southWestHexNumber>0352</southWestHexNumber>
         <northWestHexNumber>0351</northWestHexNumber>
         <terrainKey>Ci</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         <hexName>City Of Urf Durfal</hexName>
         <cityHex>true</cityHex>
         <hexEdgeMap>
@@ -3659,7 +3659,7 @@
         <southWestHexNumber>0354</southWestHexNumber>
         <northWestHexNumber>0353</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -3680,7 +3680,7 @@
         <southWestHexNumber>0203</southWestHexNumber>
         <northWestHexNumber>0202</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -3692,7 +3692,7 @@
         <southWestHexNumber>0204</southWestHexNumber>
         <northWestHexNumber>0203</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -3712,7 +3712,7 @@
         <southWestHexNumber>0201</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -3724,7 +3724,7 @@
         <southWestHexNumber>0202</southWestHexNumber>
         <northWestHexNumber>0201</northWestHexNumber>
         <terrainKey>Mo</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <capitalHex>true</capitalHex>
     </hex>
@@ -3737,7 +3737,7 @@
         <southWestHexNumber>0209</southWestHexNumber>
         <northWestHexNumber>0208</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -3749,7 +3749,7 @@
         <southWestHexNumber>0207</southWestHexNumber>
         <northWestHexNumber>0206</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -3761,7 +3761,7 @@
         <southWestHexNumber>0208</southWestHexNumber>
         <northWestHexNumber>0207</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -3773,7 +3773,7 @@
         <southWestHexNumber>0351</southWestHexNumber>
         <northWestHexNumber>0350</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -3796,7 +3796,7 @@
         <southWestHexNumber>0205</southWestHexNumber>
         <northWestHexNumber>0204</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -3816,7 +3816,7 @@
         <southWestHexNumber>0206</southWestHexNumber>
         <northWestHexNumber>0205</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -3827,8 +3827,8 @@
         <southHexNumber>0444</southHexNumber>
         <southWestHexNumber>0344</southWestHexNumber>
         <northWestHexNumber>0343</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3840,7 +3840,7 @@
         <southWestHexNumber>0343</southWestHexNumber>
         <northWestHexNumber>0342</northWestHexNumber>
         <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
     </hex>
     <hex>
@@ -3852,7 +3852,7 @@
         <southWestHexNumber>0342</southWestHexNumber>
         <northWestHexNumber>0341</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3864,7 +3864,7 @@
         <southWestHexNumber>0341</southWestHexNumber>
         <northWestHexNumber>0340</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3876,7 +3876,7 @@
         <southWestHexNumber>0348</southWestHexNumber>
         <northWestHexNumber>0347</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3888,7 +3888,7 @@
         <southWestHexNumber>0347</southWestHexNumber>
         <northWestHexNumber>0346</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3899,8 +3899,8 @@
         <southHexNumber>0446</southHexNumber>
         <southWestHexNumber>0346</southWestHexNumber>
         <northWestHexNumber>0345</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3911,8 +3911,8 @@
         <southHexNumber>0445</southHexNumber>
         <southWestHexNumber>0345</southWestHexNumber>
         <northWestHexNumber>0344</northWestHexNumber>
-        <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3924,7 +3924,7 @@
         <southWestHexNumber>0350</southWestHexNumber>
         <northWestHexNumber>0349</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -3944,7 +3944,7 @@
         <southWestHexNumber>0349</southWestHexNumber>
         <northWestHexNumber>0348</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -3956,7 +3956,7 @@
         <southWestHexNumber>0239</southWestHexNumber>
         <northWestHexNumber>0238</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -3979,7 +3979,7 @@
         <southWestHexNumber>0137</southWestHexNumber>
         <northWestHexNumber>0136</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -3999,7 +3999,7 @@
         <southWestHexNumber>0238</southWestHexNumber>
         <northWestHexNumber>0237</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4016,7 +4016,7 @@
         <southWestHexNumber>0136</southWestHexNumber>
         <northWestHexNumber>0135</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4028,7 +4028,7 @@
         <southWestHexNumber>0139</southWestHexNumber>
         <northWestHexNumber>0138</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -4040,7 +4040,7 @@
         <southWestHexNumber>0138</southWestHexNumber>
         <northWestHexNumber>0137</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4060,7 +4060,7 @@
         <southWestHexNumber>0133</southWestHexNumber>
         <northWestHexNumber>0132</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4072,7 +4072,7 @@
         <southWestHexNumber>0132</southWestHexNumber>
         <northWestHexNumber>0131</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4084,7 +4084,7 @@
         <southWestHexNumber>0135</southWestHexNumber>
         <northWestHexNumber>0134</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4096,7 +4096,7 @@
         <southWestHexNumber>0134</southWestHexNumber>
         <northWestHexNumber>0133</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4108,7 +4108,7 @@
         <southWestHexNumber>0231</southWestHexNumber>
         <northWestHexNumber>0230</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4120,7 +4120,7 @@
         <southWestHexNumber>0230</southWestHexNumber>
         <northWestHexNumber>0229</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4132,7 +4132,7 @@
         <southWestHexNumber>0233</southWestHexNumber>
         <northWestHexNumber>0232</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4144,7 +4144,7 @@
         <southWestHexNumber>0232</southWestHexNumber>
         <northWestHexNumber>0231</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4156,7 +4156,7 @@
         <southWestHexNumber>0235</southWestHexNumber>
         <northWestHexNumber>0234</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4168,7 +4168,7 @@
         <southWestHexNumber>0234</southWestHexNumber>
         <northWestHexNumber>0233</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4180,7 +4180,7 @@
         <southWestHexNumber>0140</southWestHexNumber>
         <northWestHexNumber>0139</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4203,7 +4203,7 @@
         <southWestHexNumber>0237</southWestHexNumber>
         <northWestHexNumber>0236</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -4226,7 +4226,7 @@
         <southWestHexNumber>0236</southWestHexNumber>
         <northWestHexNumber>0235</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4238,7 +4238,7 @@
         <southWestHexNumber>0430</southWestHexNumber>
         <northWestHexNumber>0429</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4250,7 +4250,7 @@
         <southWestHexNumber>0431</southWestHexNumber>
         <northWestHexNumber>0430</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4262,7 +4262,7 @@
         <southWestHexNumber>0338</southWestHexNumber>
         <northWestHexNumber>0337</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4282,7 +4282,7 @@
         <southWestHexNumber>0432</southWestHexNumber>
         <northWestHexNumber>0431</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4294,7 +4294,7 @@
         <southWestHexNumber>0339</southWestHexNumber>
         <northWestHexNumber>0338</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -4314,7 +4314,7 @@
         <southWestHexNumber>0433</southWestHexNumber>
         <northWestHexNumber>0432</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4326,7 +4326,7 @@
         <southWestHexNumber>0340</southWestHexNumber>
         <northWestHexNumber>0339</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4346,7 +4346,7 @@
         <southWestHexNumber>0434</southWestHexNumber>
         <northWestHexNumber>0433</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -4363,7 +4363,7 @@
         <southWestHexNumber>0240</southWestHexNumber>
         <northWestHexNumber>0239</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4380,7 +4380,7 @@
         <southWestHexNumber>0435</southWestHexNumber>
         <northWestHexNumber>0434</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -4403,7 +4403,7 @@
         <southWestHexNumber>0334</southWestHexNumber>
         <northWestHexNumber>0333</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4415,7 +4415,7 @@
         <southWestHexNumber>0436</southWestHexNumber>
         <northWestHexNumber>0435</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4438,7 +4438,7 @@
         <southWestHexNumber>0335</southWestHexNumber>
         <northWestHexNumber>0334</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4450,7 +4450,7 @@
         <southWestHexNumber>0437</southWestHexNumber>
         <northWestHexNumber>0436</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northWestEdge>
@@ -4467,7 +4467,7 @@
         <southWestHexNumber>0141</southWestHexNumber>
         <northWestHexNumber>0140</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -4479,7 +4479,7 @@
         <southWestHexNumber>0336</southWestHexNumber>
         <northWestHexNumber>0335</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -4496,7 +4496,7 @@
         <southWestHexNumber>0438</southWestHexNumber>
         <northWestHexNumber>0437</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -4513,7 +4513,7 @@
         <southWestHexNumber>0142</southWestHexNumber>
         <northWestHexNumber>0141</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -4525,7 +4525,7 @@
         <southWestHexNumber>0337</southWestHexNumber>
         <northWestHexNumber>0336</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -4548,7 +4548,7 @@
         <southWestHexNumber>0439</southWestHexNumber>
         <northWestHexNumber>0438</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4571,7 +4571,7 @@
         <southWestHexNumber>0331</southWestHexNumber>
         <northWestHexNumber>0330</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4583,7 +4583,7 @@
         <southWestHexNumber>0332</southWestHexNumber>
         <northWestHexNumber>0331</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4595,7 +4595,7 @@
         <southWestHexNumber>0333</southWestHexNumber>
         <northWestHexNumber>0332</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4607,7 +4607,7 @@
         <southWestHexNumber>0128</southWestHexNumber>
         <northWestHexNumber>0127</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4619,7 +4619,7 @@
         <southWestHexNumber>0229</southWestHexNumber>
         <northWestHexNumber>0228</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4631,7 +4631,7 @@
         <southWestHexNumber>0127</southWestHexNumber>
         <northWestHexNumber>0126</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4643,7 +4643,7 @@
         <southWestHexNumber>0228</southWestHexNumber>
         <northWestHexNumber>0227</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4655,7 +4655,7 @@
         <southWestHexNumber>0126</southWestHexNumber>
         <northWestHexNumber>0125</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -4675,7 +4675,7 @@
         <southWestHexNumber>0227</southWestHexNumber>
         <northWestHexNumber>0226</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4687,7 +4687,7 @@
         <southWestHexNumber>0125</southWestHexNumber>
         <northWestHexNumber>0124</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4707,7 +4707,7 @@
         <southWestHexNumber>0124</southWestHexNumber>
         <northWestHexNumber>0123</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -4727,7 +4727,7 @@
         <southWestHexNumber>0123</southWestHexNumber>
         <northWestHexNumber>0122</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -4739,7 +4739,7 @@
         <southWestHexNumber>0122</southWestHexNumber>
         <northWestHexNumber>0121</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -4751,7 +4751,7 @@
         <southWestHexNumber>0121</southWestHexNumber>
         <northWestHexNumber>0120</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -4763,7 +4763,7 @@
         <southWestHexNumber>0222</southWestHexNumber>
         <northWestHexNumber>0221</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -4775,7 +4775,7 @@
         <southWestHexNumber>0221</southWestHexNumber>
         <northWestHexNumber>0220</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -4787,7 +4787,7 @@
         <southWestHexNumber>0220</southWestHexNumber>
         <northWestHexNumber>0219</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -4799,7 +4799,7 @@
         <southWestHexNumber>0226</southWestHexNumber>
         <northWestHexNumber>0225</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4811,7 +4811,7 @@
         <southWestHexNumber>0225</southWestHexNumber>
         <northWestHexNumber>0224</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -4831,7 +4831,7 @@
         <southWestHexNumber>0224</southWestHexNumber>
         <northWestHexNumber>0223</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -4854,7 +4854,7 @@
         <southWestHexNumber>0130</southWestHexNumber>
         <northWestHexNumber>0129</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4866,7 +4866,7 @@
         <southWestHexNumber>0223</southWestHexNumber>
         <northWestHexNumber>0222</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -4883,7 +4883,7 @@
         <southWestHexNumber>0129</southWestHexNumber>
         <northWestHexNumber>0128</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4895,7 +4895,7 @@
         <southWestHexNumber>0420</southWestHexNumber>
         <northWestHexNumber>0419</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -4907,7 +4907,7 @@
         <southWestHexNumber>0329</southWestHexNumber>
         <northWestHexNumber>0328</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4919,7 +4919,7 @@
         <southWestHexNumber>0423</southWestHexNumber>
         <northWestHexNumber>0422</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -4931,7 +4931,7 @@
         <southWestHexNumber>0330</southWestHexNumber>
         <northWestHexNumber>0329</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4943,7 +4943,7 @@
         <southWestHexNumber>0424</southWestHexNumber>
         <northWestHexNumber>0423</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -4968,7 +4968,7 @@
         <southWestHexNumber>0327</southWestHexNumber>
         <northWestHexNumber>0326</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -4980,7 +4980,7 @@
         <southWestHexNumber>0421</southWestHexNumber>
         <northWestHexNumber>0420</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -4992,7 +4992,7 @@
         <southWestHexNumber>0328</southWestHexNumber>
         <northWestHexNumber>0327</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -5004,7 +5004,7 @@
         <southWestHexNumber>0422</southWestHexNumber>
         <northWestHexNumber>0421</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5016,7 +5016,7 @@
         <southWestHexNumber>0325</southWestHexNumber>
         <northWestHexNumber>0324</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -5040,7 +5040,7 @@
         <southWestHexNumber>0427</southWestHexNumber>
         <northWestHexNumber>0426</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -5052,7 +5052,7 @@
         <southWestHexNumber>0326</southWestHexNumber>
         <northWestHexNumber>0325</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -5064,7 +5064,7 @@
         <southWestHexNumber>0131</southWestHexNumber>
         <northWestHexNumber>0130</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -5076,7 +5076,7 @@
         <southWestHexNumber>0428</southWestHexNumber>
         <northWestHexNumber>0427</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -5088,7 +5088,7 @@
         <southWestHexNumber>0323</southWestHexNumber>
         <northWestHexNumber>0322</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5100,7 +5100,7 @@
         <southWestHexNumber>0425</southWestHexNumber>
         <northWestHexNumber>0424</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -5117,7 +5117,7 @@
         <southWestHexNumber>0324</southWestHexNumber>
         <northWestHexNumber>0323</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -5137,7 +5137,7 @@
         <southWestHexNumber>0426</southWestHexNumber>
         <northWestHexNumber>0425</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -5149,7 +5149,7 @@
         <southWestHexNumber>0321</southWestHexNumber>
         <northWestHexNumber>0320</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5161,7 +5161,7 @@
         <southWestHexNumber>0322</southWestHexNumber>
         <northWestHexNumber>0321</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5173,7 +5173,7 @@
         <southWestHexNumber>0429</southWestHexNumber>
         <northWestHexNumber>0428</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Nattily Woods</providenceName>
+        <provinceName>Nattily Woods</provinceName>
         
     </hex>
     <hex>
@@ -5185,7 +5185,7 @@
         <southWestHexNumber>0111</southWestHexNumber>
         <northWestHexNumber>0110</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -5197,7 +5197,7 @@
         <southWestHexNumber>0113</southWestHexNumber>
         <northWestHexNumber>0112</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -5217,7 +5217,7 @@
         <southWestHexNumber>0112</southWestHexNumber>
         <northWestHexNumber>0111</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -5234,7 +5234,7 @@
         <southWestHexNumber>0115</southWestHexNumber>
         <northWestHexNumber>0114</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -5254,7 +5254,7 @@
         <southWestHexNumber>0114</southWestHexNumber>
         <northWestHexNumber>0113</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -5277,7 +5277,7 @@
         <southWestHexNumber>0117</southWestHexNumber>
         <northWestHexNumber>0116</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5289,7 +5289,7 @@
         <southWestHexNumber>0116</southWestHexNumber>
         <northWestHexNumber>0115</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5301,7 +5301,7 @@
         <southWestHexNumber>0119</southWestHexNumber>
         <northWestHexNumber>0118</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5313,7 +5313,7 @@
         <southWestHexNumber>0118</southWestHexNumber>
         <northWestHexNumber>0117</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5325,7 +5325,7 @@
         <southWestHexNumber>0120</southWestHexNumber>
         <northWestHexNumber>0119</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5337,7 +5337,7 @@
         <southWestHexNumber>0253</southWestHexNumber>
         <northWestHexNumber>0252</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -5357,7 +5357,7 @@
         <southWestHexNumber>0252</southWestHexNumber>
         <northWestHexNumber>0251</northWestHexNumber>
         <terrainKey>Ci</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         <hexName>City Of Urf Durfal</hexName>
         <cityHex>true</cityHex>
         <hexEdgeMap>
@@ -5384,7 +5384,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0253</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -5404,7 +5404,7 @@
         <southWestHexNumber>0316</southWestHexNumber>
         <northWestHexNumber>0315</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5416,7 +5416,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0453</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
     </hex>
     <hex>
@@ -5428,7 +5428,7 @@
         <southWestHexNumber>0317</southWestHexNumber>
         <northWestHexNumber>0316</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5440,7 +5440,7 @@
         <southWestHexNumber>0318</southWestHexNumber>
         <northWestHexNumber>0317</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5452,7 +5452,7 @@
         <southWestHexNumber>0319</southWestHexNumber>
         <northWestHexNumber>0318</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5464,7 +5464,7 @@
         <southWestHexNumber>0320</southWestHexNumber>
         <northWestHexNumber>0319</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5476,7 +5476,7 @@
         <southWestHexNumber>0450</southWestHexNumber>
         <northWestHexNumber>0449</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -5496,7 +5496,7 @@
         <southWestHexNumber>0451</southWestHexNumber>
         <northWestHexNumber>0450</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -5516,7 +5516,7 @@
         <southWestHexNumber>0452</southWestHexNumber>
         <northWestHexNumber>0451</northWestHexNumber>
         <terrainKey>Ci</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         <hexName>City Of Urf Durfal</hexName>
         <cityHex>true</cityHex>
         <hexEdgeMap>
@@ -5525,7 +5525,7 @@
           </northEdge>
           <northEastEdge>
             <edgeAttribute>Ga</edgeAttribute>
-            <edgeAttribute>Ro</edgeAttribute>
+            <edgeAttribute>Rd</edgeAttribute>
           </northEastEdge>
           <southEastEdge>
             <edgeAttribute>Wa</edgeAttribute>
@@ -5544,7 +5544,7 @@
         <southWestHexNumber>0453</southWestHexNumber>
         <northWestHexNumber>0452</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -5564,7 +5564,7 @@
         <southWestHexNumber>0311</southWestHexNumber>
         <northWestHexNumber>0310</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -5576,7 +5576,7 @@
         <southWestHexNumber>0312</southWestHexNumber>
         <northWestHexNumber>0311</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -5596,7 +5596,7 @@
         <southWestHexNumber>0313</southWestHexNumber>
         <northWestHexNumber>0312</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -5616,7 +5616,7 @@
         <southWestHexNumber>0314</southWestHexNumber>
         <northWestHexNumber>0313</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5628,7 +5628,7 @@
         <southWestHexNumber>0315</southWestHexNumber>
         <northWestHexNumber>0314</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -5640,7 +5640,7 @@
         <southWestHexNumber>0102</southWestHexNumber>
         <northWestHexNumber>0101</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -5652,7 +5652,7 @@
         <southWestHexNumber>0106</southWestHexNumber>
         <northWestHexNumber>0105</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -5675,7 +5675,7 @@
         <southWestHexNumber>0105</southWestHexNumber>
         <northWestHexNumber>0104</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -5695,7 +5695,7 @@
         <southWestHexNumber>0104</southWestHexNumber>
         <northWestHexNumber>0103</northWestHexNumber>
         <terrainKey>Mo</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         <hexName>Mount Greymoor</hexName>
     </hex>
     <hex>
@@ -5707,7 +5707,7 @@
         <southWestHexNumber>0249</southWestHexNumber>
         <northWestHexNumber>0248</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -5724,7 +5724,7 @@
         <southWestHexNumber>0103</southWestHexNumber>
         <northWestHexNumber>0102</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -5736,7 +5736,7 @@
         <southWestHexNumber>0248</southWestHexNumber>
         <northWestHexNumber>0247</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -5748,7 +5748,7 @@
         <southWestHexNumber>0110</southWestHexNumber>
         <northWestHexNumber>0109</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northWestEdge>
@@ -5765,7 +5765,7 @@
         <southWestHexNumber>0247</southWestHexNumber>
         <northWestHexNumber>0246</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -5777,7 +5777,7 @@
         <southWestHexNumber>0109</southWestHexNumber>
         <northWestHexNumber>0108</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southWestEdge>
@@ -5796,8 +5796,8 @@
         <southHexNumber>0347</southHexNumber>
         <southWestHexNumber>0246</southWestHexNumber>
         <northWestHexNumber>0245</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -5809,7 +5809,7 @@
         <southWestHexNumber>0108</southWestHexNumber>
         <northWestHexNumber>0107</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southWestEdge>
@@ -5829,7 +5829,7 @@
         <southWestHexNumber>0245</southWestHexNumber>
         <northWestHexNumber>0244</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -5841,7 +5841,7 @@
         <southWestHexNumber>0107</southWestHexNumber>
         <northWestHexNumber>0106</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southWestEdge>
@@ -5860,8 +5860,8 @@
         <southHexNumber>0345</southHexNumber>
         <southWestHexNumber>0244</southWestHexNumber>
         <northWestHexNumber>0243</northWestHexNumber>
-        <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <terrainKey>K</terrainKey>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -5873,7 +5873,7 @@
         <southWestHexNumber>0243</southWestHexNumber>
         <northWestHexNumber>0242</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -5885,7 +5885,7 @@
         <southWestHexNumber>0242</southWestHexNumber>
         <northWestHexNumber>0241</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -5897,7 +5897,7 @@
         <southWestHexNumber>0241</southWestHexNumber>
         <northWestHexNumber>0240</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -5909,7 +5909,7 @@
         <southWestHexNumber>0307</southWestHexNumber>
         <northWestHexNumber>0306</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -5921,7 +5921,7 @@
         <southWestHexNumber>0250</southWestHexNumber>
         <northWestHexNumber>0249</northWestHexNumber>
         <terrainKey>Br</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         <hexName>Toll Troll</hexName>
         <hexEdgeMap>
           <northEdge>
@@ -5948,7 +5948,7 @@
         <southWestHexNumber>0445</southWestHexNumber>
         <northWestHexNumber>0444</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -5960,7 +5960,7 @@
         <southWestHexNumber>0308</southWestHexNumber>
         <northWestHexNumber>0307</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -5972,7 +5972,7 @@
         <southWestHexNumber>0251</southWestHexNumber>
         <northWestHexNumber>0250</northWestHexNumber>
         <terrainKey>Cu</terrainKey>
-        <providenceName>The Empire</providenceName>
+        <provinceName>The Empire</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -5996,7 +5996,7 @@
         <southWestHexNumber>0446</southWestHexNumber>
         <northWestHexNumber>0445</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -6013,7 +6013,7 @@
         <southWestHexNumber>0305</southWestHexNumber>
         <northWestHexNumber>0304</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -6033,7 +6033,7 @@
         <southWestHexNumber>0443</southWestHexNumber>
         <northWestHexNumber>0442</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -6045,7 +6045,7 @@
         <southWestHexNumber>0306</southWestHexNumber>
         <northWestHexNumber>0305</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6057,7 +6057,7 @@
         <southWestHexNumber>0444</southWestHexNumber>
         <northWestHexNumber>0443</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -6069,7 +6069,7 @@
         <southWestHexNumber>0441</southWestHexNumber>
         <northWestHexNumber>0440</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -6081,7 +6081,7 @@
         <southWestHexNumber>0442</southWestHexNumber>
         <northWestHexNumber>0441</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
     </hex>
     <hex>
@@ -6093,7 +6093,7 @@
         <southWestHexNumber>0309</southWestHexNumber>
         <northWestHexNumber>0308</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6105,7 +6105,7 @@
         <southWestHexNumber>0310</southWestHexNumber>
         <northWestHexNumber>0309</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6117,7 +6117,7 @@
         <southWestHexNumber>0440</southWestHexNumber>
         <northWestHexNumber>0439</northWestHexNumber>
         <terrainKey>V</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         <vortexHex>true</vortexHex>
     </hex>
     <hex>
@@ -6129,7 +6129,7 @@
         <southWestHexNumber>0303</southWestHexNumber>
         <northWestHexNumber>0302</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -6141,7 +6141,7 @@
         <southWestHexNumber>0449</southWestHexNumber>
         <northWestHexNumber>0448</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -6164,7 +6164,7 @@
         <southWestHexNumber>0304</southWestHexNumber>
         <northWestHexNumber>0303</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -6184,7 +6184,7 @@
         <southWestHexNumber>0447</southWestHexNumber>
         <northWestHexNumber>0446</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -6204,7 +6204,7 @@
         <southWestHexNumber>0302</southWestHexNumber>
         <northWestHexNumber>0301</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -6216,7 +6216,7 @@
         <southWestHexNumber>0448</southWestHexNumber>
         <northWestHexNumber>0447</northWestHexNumber>
         <terrainKey>Mrl</terrainKey>
-        <providenceName>Minotaurus</providenceName>
+        <provinceName>Minotaurus</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -6236,7 +6236,7 @@
         <southWestHexNumber>0801</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         <hexEdgeMap>
           <southEdge>
             <edgeAttribute>Pb</edgeAttribute>
@@ -6252,7 +6252,7 @@
         <southWestHexNumber>0419</southWestHexNumber>
         <northWestHexNumber>0418</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6264,7 +6264,7 @@
         <southWestHexNumber>0418</southWestHexNumber>
         <northWestHexNumber>0417</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6276,7 +6276,7 @@
         <southWestHexNumber>0417</southWestHexNumber>
         <northWestHexNumber>0416</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6288,7 +6288,7 @@
         <southWestHexNumber>0416</southWestHexNumber>
         <northWestHexNumber>0415</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6300,7 +6300,7 @@
         <southWestHexNumber>0415</southWestHexNumber>
         <northWestHexNumber>0414</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6312,7 +6312,7 @@
         <southWestHexNumber>0414</southWestHexNumber>
         <northWestHexNumber>0413</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6324,7 +6324,7 @@
         <southWestHexNumber>0413</southWestHexNumber>
         <northWestHexNumber>0412</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -6344,7 +6344,7 @@
         <southWestHexNumber>0412</southWestHexNumber>
         <northWestHexNumber>0411</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEdge>
@@ -6364,7 +6364,7 @@
         <southWestHexNumber>0411</southWestHexNumber>
         <northWestHexNumber>0410</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6376,7 +6376,7 @@
         <southWestHexNumber>0410</southWestHexNumber>
         <northWestHexNumber>0409</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6388,7 +6388,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -6411,7 +6411,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -6431,7 +6431,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -6451,7 +6451,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -6463,7 +6463,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <northEastEdge>
@@ -6483,7 +6483,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -6495,7 +6495,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -6507,7 +6507,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>D</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -6519,7 +6519,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Mo</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -6531,7 +6531,7 @@
         <southWestHexNumber>0408</southWestHexNumber>
         <northWestHexNumber>0407</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6543,7 +6543,7 @@
         <southWestHexNumber>0407</southWestHexNumber>
         <northWestHexNumber>0406</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6555,7 +6555,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6567,7 +6567,7 @@
         <southWestHexNumber>0409</southWestHexNumber>
         <northWestHexNumber>0408</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6579,7 +6579,7 @@
         <southWestHexNumber>0404</southWestHexNumber>
         <northWestHexNumber>0403</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -6599,7 +6599,7 @@
         <southWestHexNumber>0403</southWestHexNumber>
         <northWestHexNumber>0402</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -6619,7 +6619,7 @@
         <southWestHexNumber>0406</southWestHexNumber>
         <northWestHexNumber>0405</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6631,7 +6631,7 @@
         <southWestHexNumber>0405</southWestHexNumber>
         <northWestHexNumber>0404</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6643,7 +6643,7 @@
         <southWestHexNumber>0402</southWestHexNumber>
         <northWestHexNumber>0401</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -6655,7 +6655,7 @@
         <southWestHexNumber>0401</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Kelgarnth</providenceName>
+        <provinceName>Kelgarnth</provinceName>
         
     </hex>
     <hex>
@@ -6667,7 +6667,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6679,7 +6679,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6691,7 +6691,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <southEastEdge>
@@ -6711,7 +6711,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -6728,7 +6728,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Wo</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6740,7 +6740,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>Fore</terrainKey>
-        <providenceName>Vynar</providenceName>
+        <provinceName>Vynar</provinceName>
         
     </hex>
     <hex>
@@ -6752,7 +6752,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
         <hexEdgeMap>
           <northEdge>
@@ -6769,7 +6769,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6781,7 +6781,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
     <hex>
@@ -6793,7 +6793,7 @@
         <southWestHexNumber>0000</southWestHexNumber>
         <northWestHexNumber>0000</northWestHexNumber>
         <terrainKey>R</terrainKey>
-        <providenceName>Intas</providenceName>
+        <provinceName>Intas</provinceName>
         
     </hex>
 </map>

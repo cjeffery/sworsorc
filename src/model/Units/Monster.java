@@ -1,10 +1,12 @@
+package Units;
+
 /* Monster.java
 
    Created by Ian
 
 */
 
-public class Monster
+public class Monster extends MoveableUnit
 {
     int MagicPL;
     int MagicPotential;

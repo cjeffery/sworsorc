@@ -27,18 +27,18 @@ public class Main {
 
         ////////////////////////////////////
 
-        ArrayList<ArmyUnit> attackers = new ArrayList<>();
-        ArrayList<ArmyUnit> defencers = new ArrayList<>();
+        //ArrayList<ArmyUnit> attackers = new ArrayList<>();
+        //ArrayList<ArmyUnit> defencers = new ArrayList<>();
 
-        HashMap units = new HashMap();
-        Hex hex1 = new Hex();
-        TerrainType tt1 = new TTWoods();
-        hex1.setTerrainType(tt1);
+        //HashMap units = new HashMap();
+        //Hex hex1 = new Hex();
+        //TerrainType tt1 = new TTWoods();
+        //hex1.setTerrainType(tt1);
 
-        Create_unit1(Units1_name, Units1_racial, units, attackers);
-        Create_unit2(Units2_name, Units2_racial, units, attackers);
-        Create_unit3(Units3_name, Units3_racial, units, defencers);
-        Create_unit4(Units4_name, Units4_racial, units, defencers);
+        //Create_unit1(Units1_name, Units1_racial, units, attackers);
+        //Create_unit2(Units2_name, Units2_racial, units, attackers);
+        //Create_unit3(Units3_name, Units3_racial, units, defencers);
+        //Create_unit4(Units4_name, Units4_racial, units, defencers);
 
 
         

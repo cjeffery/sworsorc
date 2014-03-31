@@ -22,6 +22,7 @@ import Units.*;
         
 public class ArmyCombatResultsTable {
     
+    
     public static int [] PrepareAttackResults(ArrayList<ArmyUnit> defencers, ArrayList<ArmyUnit> defenders, 
             Hex defHex){
         int atk = 0;
