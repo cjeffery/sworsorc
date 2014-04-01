@@ -49,7 +49,6 @@ public class CastSpell{
             // PL_2
             case "Manna Transfer":
                 Manna_Transfer m_t = new Manna_Transfer();
-                TotalMannaCost = m_t.CostManna();
                 break;
             case "River Crossing":
                 River_Crossing r_c = new River_Crossing();

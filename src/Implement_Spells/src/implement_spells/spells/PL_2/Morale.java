@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -34,10 +35,8 @@ public final class Morale {
     public Morale(Character c){
         character = c;
         
-        GetInfo gi = new GetInfo();
-        gi.getTarget();
+        getTarget();
         
-        prepareGUI();
     }
     
     public void prepareGUI(){
@@ -99,13 +98,60 @@ public final class Morale {
         
         // set the target hex 
         
-        GetInfo gi = new GetInfo();
-        gi.getTarget();
+        final JFrame target_info = new JFrame("Target Info");
+        target_info.setSize(300,200);
         
+        target_info.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) { 
+                System.exit(0);
+            }
+
+        });
+        
+        target_info.setLayout(null);
+        target_info.setLocation(10,50);
+        
+        JLabel target_name = new JLabel("Target name: ");
+        target_name.setBounds(10, 20, 150, 20);
+        target_info.add(target_name);
+        // Textfield character name
+        final JTextField target_name_field = new JTextField();
+        target_name_field.setBounds(200, 20, 100, 20);
+        target_info.add(target_name_field);
+        
+        // Hex info
+        JLabel target_hex = new JLabel("Target Hex number:");
+        target_hex.setBounds(10,60,150,20);
+        target_info.add(target_hex);
+        // Textfield character hex
+        final JTextField target_hex_field = new JTextField();
+        target_hex_field.setBounds(200, 60, 100, 20);
+        target_info.add(target_hex_field);
+        
+        JButton get_t = new JButton("Get");
+        get_t.setBounds(150, 100, 50, 20);
+        target_info.add(get_t);
+        
+        get_t.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String target_n = target_name_field.getText();
+                
+                int target_h = Integer.parseInt(target_hex_field.getText());
+                
+                target_info.dispose();
+                
+                performSpellEffects();
+            }
+        });
+        
+        target_info.setVisible(true);
     }
     
     public boolean checkLimits(){
-        boolean limit = false;
+        boolean limit = true;
         
         //if( fit all the limits ){
           //  limit = true;
@@ -125,7 +171,7 @@ public final class Morale {
             // char or unit info, 
             // then we can just go into that file and change the data
             // then we read the file again for refresh the game data
-            
+            prepareGUI();
             
         }else{
             // show warning that it desn't fit all the limitations
