@@ -20,7 +20,7 @@ import Units.*;
  *   here, such as terrain key, portal number, vortex hex,  etc.
  * 
  *   Hex edges can have multiple attributes. For example a single hex edge could
- *   contain a Providence border, a bridge exit, a shoreline, and a gate.
+ *   contain a Province border, a bridge exit, a shoreline, and a gate.
  *   
  *   @author David Klingenberg 2/25/2014
  * 
@@ -105,7 +105,7 @@ public class MapHex extends Hex{
                 case "portalHex":
                     portalHex = Integer.parseInt(contents);
                     break;
-                case "providenceName": //FIXME typo in XML
+                case "provinceName": //FIXME typo in XML
                     provinceName = contents;
                     break;
                 case "castleHex":
@@ -265,8 +265,8 @@ public class MapHex extends Hex{
     /**
      * Sets the hexes province name
      */
-    private void SetProvinceName(String nameProvidence) {
-        provinceName = nameProvidence;
+    private void SetProvinceName(String nameProvince) {
+        provinceName = nameProvince;
     }
 
     /**
