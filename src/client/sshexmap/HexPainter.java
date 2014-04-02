@@ -15,13 +15,12 @@ import ssterrain.*;
     map you could probably use or tweak it */
 public class HexPainter {
     private final double hexRadius, width, height;
-    private final Path2D.Double hexShape;
+    private final Path2D.Double hexMask;
     private Map<String, BufferedImage> images;
-    String path = "resources/images/";
+    String path = "resources/images/hex/";
     
     private void loadImages() throws IOException {
         images = new TreeMap<String, BufferedImage>();
-        Class<? extends HexPainter> c = getClass();
         String[] types = {
             "clear", "broken", "cultivated", "forest", "karoo", "mountains",
             "rough", "swamp", "vortex", "water", "woods", "dragon tunnel",
@@ -46,16 +45,23 @@ public class HexPainter {
         width  = hexRadius*2;
         height = hexRadius*Math.sqrt(3);
         //not sure if this number should be 6 or 7
-        hexShape = new Path2D.Double(Path2D.WIND_NON_ZERO, 7);
-        hexShape.moveTo(0,          height*0.5);
-        hexShape.lineTo(width*0.25, 0);
-        hexShape.lineTo(width*0.75, 0);
-        hexShape.lineTo(width,      height*0.5);
-        hexShape.lineTo(width*0.75, height);
-        hexShape.lineTo(width*0.25, height);
-        hexShape.closePath();
+        hexMask = hexShape(hexRadius);
 
         loadImages();
+    }
+    
+    public static Path2D.Double hexShape(double hexRadius) {
+        double w  = hexRadius*2;
+        double h = hexRadius*Math.sqrt(3);
+        Path2D.Double hex_shape = new Path2D.Double(Path2D.WIND_NON_ZERO, 7);
+        hex_shape.moveTo(0,      h*0.5);
+        hex_shape.lineTo(w*0.25, 0    );
+        hex_shape.lineTo(w*0.75, 0    );
+        hex_shape.lineTo(w,      h*0.5);
+        hex_shape.lineTo(w*0.75, h    );
+        hex_shape.lineTo(w*0.25, h    );
+        hex_shape.closePath();     
+        return hex_shape;
     }
 
     /**
@@ -103,7 +109,7 @@ public class HexPainter {
                     str = h.GetHexName().toLowerCase() + "_hex.png";
             }
         }
-        drawImage(g2, str);
+        drawImage(g2, str, images);
     }
     
     public void paintRoad(Graphics2D g2, MapHex h) {
@@ -162,7 +168,7 @@ public class HexPainter {
         ArrayList<ImprovedTerrainType> improvements = h.getImprovements();
         for(ImprovedTerrainType i : improvements) {
             String str = i.toString().toLowerCase() + "_hex.png";
-            drawImage(g2, str);
+            drawImage(g2, str, images);
         }
     }
     
@@ -259,15 +265,17 @@ public class HexPainter {
      * @param g2 The Graphics object to draw on
      * @param imageID  The key for the image collection
      */
-    private void drawImage(Graphics2D g2, String imageID) {
-        if(!images.containsKey(imageID) || images.get(imageID) == null) {
-            System.out.println("Image " + path + imageID + " wasn't loaded");
-            return;
+    public static Boolean drawImage(Graphics2D g2, String imageID,
+                                    Map<String, BufferedImage> imageMap) {
+        if(!imageMap.containsKey(imageID) || imageMap.get(imageID) == null) {
+            //System.out.println("Image " + imageID + " wasn't loaded");
+            return false;
         }
         //TODO: coefficients should be based on radius (and zoom?)
         AffineTransform at = AffineTransform.getScaleInstance(.5, .5);
         //g2.drawImage(images.get(str), 0, 0, null);
-        g2.drawRenderedImage(images.get(imageID), at);   
+        g2.drawRenderedImage(imageMap.get(imageID), at);
+        return true;
     }
     
     public void paintDiplomacyHex(Graphics2D g2, DiplomacyHex h) {
@@ -282,18 +290,18 @@ public class HexPainter {
                 case "0104": s = "F"; break;
             }
             g2.setColor( new Color(255, 127, 127) );
-            g2.fill(hexShape);
+            g2.fill(hexMask);
             g2.setColor( Color.BLACK );
             g2.drawString(s, (int)(width / 2), (int)(height / 2));
         }
         else if(h.GetIsNeturalHex()) {
             g2.setColor( Color.RED );
-            g2.fill(hexShape);
+            g2.fill(hexMask);
             g2.setColor( Color.BLACK );
             g2.drawString("Neutral", (int)(width / 4), (int)(height / 2));
         }
         else
-            drawImage(g2, "clear_hex.png");
+            drawImage(g2, "clear_hex.png", images);
         
     }
     
@@ -303,6 +311,6 @@ public class HexPainter {
      */
     public void highlight(Graphics2D g2) {
         g2.setColor( new Color(0,0,255, 70) );
-        g2.fill(hexShape);
+        g2.fill(hexMask);
     }
 }
