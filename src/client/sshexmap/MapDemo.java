@@ -23,12 +23,11 @@ public class MapDemo implements MouseListener, KeyListener {
         UnitPool pool = UnitPool.getInstance();
         
         ArmyUnit unit = new LightSword();
-        unit.setLocation("0101");
-        pool.addUnit(0, unit, "0101");
-        ArrayList<String> units = pool.getUnitsInHex("0101");
-        if(units != null)
-            for(String s : units)
-                System.out.println(s);
+        pool.addUnit(0, unit, "0606");
+        //ArrayList<String> units = pool.getUnitsInHex("0606");
+        //if(units != null)
+        //    for(String s : units)
+        //        System.out.println(s);
 
         window.pack();
         window.setVisible(true);

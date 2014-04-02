@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.io.IOException;
 import java.awt.geom.AffineTransform;
 
+/**
+ * @author Colin Clifford
+ */
 public class MapView extends    JPanel
                      implements Scrollable {
     private HexMap map;
@@ -51,9 +54,11 @@ public class MapView extends    JPanel
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
       
-        double centerX = width*(0.5 + hexX*0.75);
-        double centerY = height*(0.5+hexY + (hexX%2)*0.5);
-        
+        //I can indulge in bad variable names on ocassion
+        int antilow = map.LowFirstRow() ? 0 : 1; 
+        double centerX =  width*( hexX*.75 - .25 );
+        double centerY = height*( hexY - 0.5 + ((antilow+hexX)%2)*0.5);
+        System.out.println("center: " + centerX + " " + centerY);
         //y-coordinate has been flipped here for a "sensible" angle
         //since down is positive
         double angle = Math.atan2(centerY - y, x - centerX) + 2*Math.PI;
