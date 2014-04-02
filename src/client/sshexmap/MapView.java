@@ -208,16 +208,16 @@ public class MapView extends    JPanel
                 if(pass == 0)
                     hp.paintHex(g2, map.GetHex(col+1,row+1));
 
-                //Second pass: edges
-                if(pass == 1 && map instanceof MainMap ) {
-                    hp.paintEdges(g2, (MapHex)map.GetHex(col+1, row+1));
-                }
-
-                //third pass, highlighting
-                if(pass == 2)
+                //highlighting
+                if(pass == 1)
                 if(highlightSet.contains(HexMap.GetIDFromCoords(col+1,
                                                                 row+1))){
                     hp.highlight(g2);
+                }
+                
+                //edges
+                if(pass == 2 && map instanceof MainMap ) {
+                    hp.paintEdges(g2, (MapHex)map.GetHex(col+1, row+1));
                 }
 
                 g2.translate(0, height);
