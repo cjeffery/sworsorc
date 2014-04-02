@@ -94,8 +94,11 @@ public class HexPainter {
     
     public void paintUnits(Graphics2D g2, MapHex h) {
         ArrayList<ArmyUnit> units = h.getUnits();
-        if(units != null && units.size() != 0)
+        if(units != null && units.size() != 0) {
+            System.out.println("WOWOWOWOW");
             up.paintUnits(g2, units);
+        }
+
     }
         
     /**

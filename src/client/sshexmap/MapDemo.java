@@ -1,11 +1,14 @@
 package sshexmap;
 
-import Units.UnitPool;
+import Units.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.TreeMap;
 import javax.swing.*;
 import mainswordsorcery.HUD;
+import sscharts.ScenarioConfigurationReader;
 
 public class MapDemo implements MouseListener, KeyListener {
     private MapView mapView;
@@ -16,10 +19,25 @@ public class MapDemo implements MouseListener, KeyListener {
         mapView = new MapView(MainMap.GetInstance());
         JScrollPane scrollPane = new JScrollPane(mapView);
         window.add(scrollPane);
+
+        UnitPool pool = UnitPool.getInstance();
+        
+        ArmyUnit unit = new LightSword();
+        unit.setLocation("0101");
+        pool.addUnit(0, unit, "0101");
+        ArrayList<String> units = pool.getUnitsInHex("0101");
+        if(units != null)
+            for(String s : units)
+                System.out.println(s);
+
         window.pack();
         window.setVisible(true);
     }
+
     public static void main(String[] args) {
+        //ScenarioConfigurationReader scenario;
+        //scenario = new ScenarioConfigurationReader("resources/scenarios/2_Dwarrows.json");
+       
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 MapDemo md = new MapDemo();
@@ -48,13 +66,8 @@ public class MapDemo implements MouseListener, KeyListener {
     @Override public void keyTyped(KeyEvent e) {}
     
     @Override public void keyPressed(KeyEvent e) {
-        /*int key = e.getKeyCode();
-        if(key == KeyEvent.VK_EQUALS) {
-            mapView.setZoom( mapView.getZoom() + 0.1 );
-        }
-        else if(key == KeyEvent.VK_MINUS) {
-            mapView.setZoom( mapView.getZoom() - 0.1);
-        }*/
+        /*int key = e.getKeyCode();*/
+
     }
 
     @Override public void keyReleased(KeyEvent e) {}

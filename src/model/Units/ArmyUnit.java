@@ -13,7 +13,7 @@ package Units;
  * CS 383 Software Engineering
  * tjasz: changed 'demorlized' to 'demoralized' before the problem spread
  */
-public class ArmyUnit extends MoveableUnit{   
+public class ArmyUnit extends MoveableUnit {   
     protected int strength;    
     protected int demoralizedStrength;
     protected int lifeCost;    
