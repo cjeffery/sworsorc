@@ -51,7 +51,6 @@ public class MapViewTest extends TestCase {
     public void testHexEdgeRegionAt() {
         MapView mv = new MapView(map);
         //just test hex "0104" for now
-        //init x and y to center
         double y = mv.height*(3.5);
         double x = mv.width / 2.0;
         
@@ -61,10 +60,6 @@ public class MapViewTest extends TestCase {
         for(int i = 0; i < 6; i++) {
             double dx = Math.cos(angle) * 5.0;
             double dy = -(Math.sin(angle) * 5.0);
-            System.out.println("i: " + i);
-            System.out.println("angle: " + angle);
-            System.out.println("orig: " + (int)(x) + " " + (int)(y));
-            System.out.println("diff: " + (int)(x+dx) + " " + (int)(y+dy));
             int res = mv.hexEdgeRegionAt((int)(x+dx),
                                          (int)(y+dy));
             assertEquals(i, res);

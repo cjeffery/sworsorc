@@ -58,7 +58,6 @@ public class MapView extends    JPanel
         int antilow = map.LowFirstRow() ? 0 : 1; 
         double centerX =  width*( hexX*.75 - .25 );
         double centerY = height*( hexY - 0.5 + ((antilow+hexX)%2)*0.5);
-        System.out.println("center: " + centerX + " " + centerY);
         //y-coordinate has been flipped here for a "sensible" angle
         //since down is positive
         double angle = Math.atan2(centerY - y, x - centerX) + 2*Math.PI;
