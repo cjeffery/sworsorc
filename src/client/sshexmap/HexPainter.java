@@ -1,5 +1,7 @@
 package sshexmap;
 
+import Units.ArmyUnit;
+import Units.UnitPainter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -18,6 +20,8 @@ public class HexPainter {
     private final Path2D.Double hexMask;
     private Map<String, BufferedImage> images;
     String path = "resources/images/hex/";
+    
+    private UnitPainter up;
     
     private void loadImages() throws IOException {
         images = new TreeMap<String, BufferedImage>();
@@ -48,6 +52,8 @@ public class HexPainter {
         hexMask = hexShape(hexRadius);
 
         loadImages();
+        
+        up = new UnitPainter(hexRadius);
     }
     
     public static Path2D.Double hexShape(double hexRadius) {
@@ -76,6 +82,7 @@ public class HexPainter {
             paintTerrain(g2, (MapHex)h);
             paintImprovements(g2, (MapHex)h);
             paintRoad(g2, (MapHex)h);
+            paintUnits(g2, (MapHex)h);
             //paintEdges(g2, (MapHex)h, edgeMask);
             //...
         }
@@ -83,6 +90,12 @@ public class HexPainter {
             paintDiplomacyHex(g2, (DiplomacyHex)h);
             //...
         }
+    }
+    
+    public void paintUnits(Graphics2D g2, MapHex h) {
+        ArrayList<ArmyUnit> units = h.getUnits();
+        if(units != null && units.size() != 0)
+            up.paintUnits(g2, units);
     }
         
     /**

@@ -43,6 +43,8 @@ public class MapHex extends Hex{
     private boolean townHex = false;
     private int portalHex = 0;
     
+    /* Hey look units! TODO: untested */
+    
     /**
      * An array of size 6 of HexEdge objects
      */
@@ -387,5 +389,31 @@ public class MapHex extends Hex{
             for(int i = 0; i < improvements.size(); i++)
                 mult *= improvements.get(i).getCombatMultiplier(unit);
         return mult;
+    }
+    
+    /**
+     * helper function around UnitPool. HEY KINDA LIKE PART OF A FASCADE :D
+     * See documentation for getUnitsInHex in UnitPool.java
+     * (or write it if it doesn't exist)
+     * @return arraylist of Unit IDs in the current hex
+     */
+    public ArrayList<String> getUnitIDs(){
+        return UnitPool.getInstance().getUnitsInHex( GetID() );
+    }
+    
+    /**
+     * helper function around UnitPool. HEY KINDA LIKE PART OF A FASCADE :D
+     * See documentation for getUnit in UnitPool.java
+     * (or write it if it doesn't exist)
+     * @return arraylist of Unis in the current hex
+     */
+    public ArrayList<ArmyUnit> getUnits() {
+        ArrayList<ArmyUnit> units = new ArrayList<ArmyUnit>();
+        ArrayList<String> ids = getUnitIDs();
+        if(ids == null)
+            return null;
+        for(String id : ids)
+            units.add( UnitPool.getInstance().getUnit(id) );
+        return units;
     }
 }
