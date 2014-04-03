@@ -17,6 +17,9 @@ package Units;
  * side of all basic units(ie not monsters and characters). This contains the 
  * the strength, demoralized strength, and other variables that are associated
  * and needed for army units.
+ * 
+ * The functions in this class are mostly getters and setters for the various 
+ * member variables in the class.
  */
 public class ArmyUnit extends MoveableUnit {   
     protected int strength;    
