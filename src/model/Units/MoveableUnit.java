@@ -7,6 +7,13 @@
 package Units;
 
 /**
+ * Moveable Units:
+ * This class contains information about the movement allocation, race, location,
+ * and the most basic type of a moveable unit(army unit, character, or monster).
+ * <p>
+ * 
+ * The functions in this class work by taking the movement data out of any of the
+ * types that extends this class. 
  *
  * @author matt
  */

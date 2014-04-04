@@ -9,17 +9,18 @@ package Units;
 
 /**
  *
- * @author John Goettsche
+ * 
  * CS 383 Software Engineering
  * changed 'demorlized' to 'demoralized' before the problem spread
- * 
+ * <p>
  * Army Unit extends the MoveableUnit class. This class addresses the combat
  * side of all basic units(ie not monsters and characters). This contains the 
  * the strength, demoralized strength, and other variables that are associated
  * and needed for army units.
- * 
+ * <p>
  * The functions in this class are mostly getters and setters for the various 
  * member variables in the class.
+ * @author John Goettsche
  */
 public class ArmyUnit extends MoveableUnit {   
     protected int strength;    
