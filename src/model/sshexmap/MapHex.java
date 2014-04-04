@@ -366,6 +366,9 @@ public class MapHex extends Hex{
      *                3 5
      *                 4
      * @return the cost to move the unit on to this hex
+     * 
+     * Note - This may not be needed due to the new methods below.
+     * 
      */
     public double getMovementCost(MoveableUnit unit, int dir){
         double move = terrainType.getMovementCost(unit); // 
