@@ -161,7 +161,7 @@ public class UnitPool {
         String unitClass;
         ArmyUnit unit;
         
-        playerId = Character.getNumericValue(unitId.charAt(0));
+        playerId = java.lang.Character.getNumericValue(unitId.charAt(0));
         unitClass = unitId.substring(unitId.indexOf("#") + 1, unitId.indexOf("@"));
         
         boolean test = false;
