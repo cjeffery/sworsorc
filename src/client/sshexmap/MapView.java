@@ -147,10 +147,23 @@ public class MapView extends    JPanel
      * to unhighlight use clearHighlights
      * Right now color is hardcoded, and you can't highlight multiple
      * colors at once. This could change in the future.
-     * @param hexes A Set of hex IDs
+     * @param hexes A Set of hex IDs 
      */
-    public void highlight(ArrayList<String> hexes) {
+    public void highlightIDs(ArrayList<String> hexes) {
         highlightSet.addAll(hexes);
+        repaint(); //fixme allow partial update
+    }
+    
+    /**
+     * highlight the set of given hexes. This adds to any previous highlights
+     * to unhighlight use clearHighlights
+     * Right now color is hardcoded, and you can't highlight multiple
+     * colors at once. This could change in the future.
+     * @param hexes A Set of hexes
+     */
+    public void highlight(ArrayList<MapHex> hexes) {
+        for(MapHex hex : hexes)
+            highlightSet.add(hex.GetID());
         repaint(); //fixme allow partial update
     }
  

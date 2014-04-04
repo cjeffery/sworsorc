@@ -47,7 +47,7 @@ public class UnitPool {
     }
     
     /**
-     * Sets the unit's ID to player#name@hashcode (clif7786 - why hashcode? could cause problems...)
+     * Sets the unit's ID to player#name@hashcode
      * Then adds it.
      * NOTE that this will NOT index the unit by the units current position 
      * so getUnitsInHex will NOT return it. (cliff7786 - maybe this should be changed?)
@@ -170,6 +170,7 @@ public class UnitPool {
     /**
      * Empty the pool
      * Does not empty hexList or unitMove, or hexVisited, or unitsInHex
+     * (Is this correct behavior?)
      */
     public void clearPool(){
         pool.clear();

@@ -403,7 +403,7 @@ public class MapHex extends Hex{
         double edgeCost = 0;
         double moveCost = 0;
         
-        ArrayList<MapHex> neighbors = null;
+        ArrayList<MapHex> neighbors = new ArrayList<MapHex>();
         // For each hex edge, 0-5, get the neighboring hex, if it's valid
         for(int i = 0; i < 6; i++ )
         {
