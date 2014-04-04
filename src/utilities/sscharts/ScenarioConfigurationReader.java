@@ -329,9 +329,14 @@ public class ScenarioConfigurationReader {
         return acceptsSacrifice.get(name);
     }
 
+    /**
+     * A simple main class for testing the reader on a specified file. It 
+     * simply reads and calls the stdout print function.
+     * 
+     * @author Wayne Fuhrman
+     * @param args there should be no command line args
+     */
     public static void main(String[] args) {
-      /* System.out.println("Working Directory = " +
-              System.getProperty("user.dir")); */
         ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/2_Dwarrows.json");
         reader.print();
     }

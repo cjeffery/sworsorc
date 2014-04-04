@@ -36,6 +36,8 @@ public class UnitPool {
     /**
      * Adds a unit to the pool. Setting it's location to the one specified
      * getUnitsInHex will return units added with this method.
+     * 
+     * @author David
      * @param playerID The ID of the player
      * @param unit The ArmyUnit to add to the pool
      * @param location The location to set the unit to
@@ -52,14 +54,14 @@ public class UnitPool {
      * Then adds it.
      * NOTE that this will NOT index the unit by the units current position 
      * so getUnitsInHex will NOT return it. (cliff7786 - maybe this should be changed?)
+     * 
+     * @author David
      * @param playerId The ID of the player
      * @param unit The ArmyUnit to add to the pool
      */
     public void addUnit(int playerId, ArmyUnit unit){
        unit.setID(Integer.toString(playerId) + "#" + unit.toString() + "@" + Integer.toString(unit.hashCode()));
        
-       
-        
        if (pool.containsKey(playerId)){
            if(pool.get(playerId).containsKey(unit.toString()))
                pool.get(playerId).get(unit.toString()).add(unit);
@@ -108,9 +110,11 @@ public class UnitPool {
     }
     
     /**
-     * return Units in the given hex
+     * This method will return an ArrayList of Units in the given hex.
      * NOTE: units must have been added with the method that has location as an
-     *       argument
+     *       argument.
+     * 
+     * @author David
      * @param hexId The Hex ID to look for units at
      * @return An ArrayList of the unit IDs
      */
@@ -125,6 +129,8 @@ public class UnitPool {
     /**
      * Get all the units that belong to a player
      * The key of the returned map appears to be unit type (like "LightSword")
+     * 
+     * @author David
      * @param playerId The ID of the player to get units for
      * @return A Map of the units
      */
@@ -134,6 +140,8 @@ public class UnitPool {
     
     /**
      * Get all the units that belong to a player of a given type (like "LightSword")
+     * 
+     * @author
      * @param playerId The ID of the player to get units for
      * @return An ArrayList of the units
      */
@@ -143,8 +151,10 @@ public class UnitPool {
     
     /**
      * gets the unit with the given ID
+     * 
+     * @author David
      * @param unitId Unit ID takes the form 
-     * @return 
+     * @return the unit with the given ID string, if it exists
      */
     public ArmyUnit getUnit(String unitId){
         int playerId;
@@ -172,6 +182,8 @@ public class UnitPool {
      * Empty the pool
      * Does not empty hexList or unitMove, or hexVisited, or unitsInHex
      * (Is this correct behavior?)
+     * 
+     * @author David
      */
     public void clearPool(){
         pool.clear();
