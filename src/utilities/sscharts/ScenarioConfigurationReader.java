@@ -1,7 +1,5 @@
 package sscharts;
 
-
-
 import Units.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,13 +16,16 @@ import org.json.simple.parser.*;
 
 
 /**
- *
- * @author Wayne Fuhrman
- *
- * This class reads a scenario configuration file. There a bunch of getters().
- * Look at the "print()" function as an example of the getters().
+ * This class reads a scenario configuration file from a configuration JSON 
+ * file. The class consists of many getters, an ASCII stdout print function, 
+ * and a function to populate a UnitPool from the class's unit hash.
+ * <p>
+ * Each method gives its own author. In some cases, I left Wayne Fuhrman as 
+ * the main author even though I made changes to a few lines. The ground work 
+ * was still laid by him.
  * 
- * It will be helpful to use the ScenarioReader run configuration to test this
+ * @author Wayne Fuhrman
+ * @author Tyler Jaszkowiak
  */
 
 public class ScenarioConfigurationReader {
@@ -57,6 +58,12 @@ public class ScenarioConfigurationReader {
      int numberOfPlayers;
      int gameLength; //Number of game turns
 
+    /**
+     * This method prints to standard out an ASCII representation of the data
+     * contained in the {@link ScenarioConfigurationReader} class.
+     * 
+     * @author Wayne Fuhrman
+     */
     public void print() {
         for (String nation : getNationNames()) {
             System.out.println();
@@ -82,6 +89,14 @@ public class ScenarioConfigurationReader {
         }
     }
     
+    /**
+     * This method, which is incomplete, is intended to populate and return a
+     * {@link UnitPool} for use in the main Game class. 
+     * 
+     * @author Tyler Jaszkowiak
+     * @return the pool of all units in this scenario at the game's start
+     * @see UnitPool
+     */
     public UnitPool populatePool() {
         for (String nation : getNationNames() ) {
             int player = getControllingPlayer(nation);
@@ -97,7 +112,18 @@ public class ScenarioConfigurationReader {
         return pool;
     }
     
-
+    /**
+     * This constructor for {@link ScenarioConfigurationReader} is intended to 
+     * read the configuration given by the specified file and use it to 
+     * populate all fields of the class to reflect that data.
+     * 
+     * @author Wayne Fuhrman
+     * @param configurationFileName the relative path of the config file
+     */
+    /* FIXME: THESE EXCEPTIONS ARE APPARENTLY 'UNKNOWN THROWABLES'
+     * @exception FileNotFoundException if the scenario config file was not found
+     * @exception IOException if the scenario config file could not be read from
+     */
     public ScenarioConfigurationReader(String configurationFileName) {
         //Attempts to read and store information from the given file.
 

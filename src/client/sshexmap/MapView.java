@@ -67,10 +67,13 @@ public class MapView extends JPanel
     }
     
     /** 
-     * Returns the direction to the closest hex-edge at the given coordinate
+     * This method returns the direction to the closest hex-edge at the given 
+     * pixel coordinates
+     * 
      * @param x The X pixel coordinate
      * @param y The Y pixel coordinate
-     * @@return A number between 0-5 where 0 is northeast, 5 is southeast */
+     * @return A number between 0-5 where 0 is northeast, 5 is southeast 
+     */
     public int hexEdgeRegionAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
@@ -278,8 +281,10 @@ public class MapView extends JPanel
 
     /** Return the rough amount to scroll for one unit amount
      * This isn't perfect because it returns an integer, and doesn't keep
-     * track of leftover amounts.
-     * @param Rectangle the visible area
+     * track of leftover amounts. FIXME: JavaDoc generator doesn't recognize
+     * parameter Rectangle.
+     * 
+     * @param visibleRect the visible area, a Rectangle
      * @param orientation either SwingConstants.HORIZONTAL
      *                    or SwingConstants.VERTICAL
      * @param direction currently unused. See java API docs for what it

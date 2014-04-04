@@ -19,6 +19,10 @@ import java.awt.event.*;
 
 public class SolarDisplay extends JFrame implements ActionListener{
     /**
+     * TODO: This is a javadoc for a field; how is taking arguments? Nothing 
+     * in this whole class seems to have a parameter called "args". This javadoc
+     * is the only instance of it in thefile
+     * 
      * @param args the command line arguments
      */
     

@@ -374,11 +374,16 @@ public class MapHex extends Hex{
     }
     
     /**
-     * TODO: This will probably need some changes?
+     * This method returns the combat multiplier advantage of the given unit
+     * for this terrain type. 
+     * <p>
+     * TODO: This will probably need some changes? Is the unit passed the 
+     * attacker or defender?
      * wrt having both an attacker, defender, what hex they're both on
      * and the hex edge between them
-     * @param unit
-     * @return 
+     * 
+     * @param unit the ...? unit
+     * @return the combat multiplier advantage of the given unit for this terrain
      */
     public double getCombatMultiplier(ArmyUnit unit){
         double mult = 1;
