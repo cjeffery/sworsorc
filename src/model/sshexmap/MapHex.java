@@ -72,6 +72,10 @@ public class MapHex extends Hex{
             if(hexItem.getNodeType() != Node.ELEMENT_NODE)
                 continue;
             String contents = hexItem.getTextContent();
+            
+            /**
+             * Giant switch statements checks for possible XML sub-nodes
+             */
             switch(hexItem.getNodeName()) {
                 case "hexNumber":
                     SetID(contents);
@@ -356,6 +360,7 @@ public class MapHex extends Hex{
     }
 
     /**
+     * This will be deleted, use getMoveCost 
      * This function is currently incomplete, just copied pretty much verbatim
      * Needs to take hex edge into account
      * 
@@ -370,7 +375,7 @@ public class MapHex extends Hex{
      * Note - This may not be needed due to the new methods below.
      * 
      */
-    public double getMovementCost(MoveableUnit unit, int dir){
+    /*public double getMovementCost(MoveableUnit unit, int dir){
         double move = terrainType.getMovementCost(unit); // 
         double override = 100;
         if(improvements.size() > 0)
@@ -382,7 +387,7 @@ public class MapHex extends Hex{
             }
         if(override > 0 && override < 100) move = override;
         return move;
-    }
+    }*/
     
     /**
      * Keith and Ian
