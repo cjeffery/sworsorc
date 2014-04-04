@@ -4,9 +4,14 @@
  */
 package MoveCalculator;
 
+import Units.MoveableUnit;
+import java.util.ArrayList;
+import sshexmap.MapHex;
+
 /**
- *
- * @author keith
+ * The movement calculator class handles calculating movement for a given unit, 
+ * and potentially, eventually, a stack (if stacks are implemented). 
+ * @author Keith/Ian
  */
 public class MovementCalculator {
       /**
@@ -20,7 +25,7 @@ public class MovementCalculator {
      * @param moveAllowance
      * @param validHexes 
      */
-    public void getValidMoves( MoveableUnit movingUnit, MapHex startHex, 
+    public static void getValidMoves( MoveableUnit movingUnit, MapHex startHex, 
             double moveAllowance, ArrayList<MapHex> validHexes )
     {
         double edgeCost = 0;

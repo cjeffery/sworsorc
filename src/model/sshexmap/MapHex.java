@@ -242,8 +242,9 @@ public class MapHex extends Hex{
         //edges.remove(deadEdge);
     //}
 
-     /**
-     * @return the base terrain type of the hex (not an improvement type)
+    /**
+     * 
+     * @return terrainType 
      */
     public TerrainType getTerrainType(){
         return terrainType;
