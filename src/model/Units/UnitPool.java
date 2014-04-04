@@ -11,7 +11,8 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
- *
+ * A pool of all units in play during this game. 
+ * 
  * @author David
  */
 public class UnitPool {
