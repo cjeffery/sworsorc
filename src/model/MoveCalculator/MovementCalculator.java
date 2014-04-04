@@ -10,7 +10,7 @@ import sshexmap.MapHex;
 
 /**
  * The movement calculator class handles calculating movement for a given unit, 
- * and potentially, eventually, a stack (if stacks are implemented). 
+ * and potentially, eventually, all units in a stack (if stacks are implemented). 
  * @author Keith/Ian
  */
 public class MovementCalculator {
