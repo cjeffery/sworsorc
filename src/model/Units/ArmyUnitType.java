@@ -9,6 +9,11 @@ package Units;
 /**
  *
  * @author matt
+ * 
+ * This enum is used to determine the basic types of each unit.
+ * 
+ * The intention is to use this enum for determining different types of 
+ * units with structures such switch statements. 
  */
 public enum ArmyUnitType {
     ranged,

@@ -53,8 +53,7 @@ public abstract class HexMap {
     }    
     
     /**
-     * get hex from integer coordinates. Right now this is 0-indexed, but should
-     * it be one indexed?
+     * get hex from integer coordinates. Right now this is 1-indexed
      */
     public Hex GetHex(int x, int y){
         return GetHex(GetIDFromCoords(x, y));
