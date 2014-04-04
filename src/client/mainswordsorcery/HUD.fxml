@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <ImageView fitHeight="766.0" fitWidth="1012.0" layoutX="1.0" layoutY="2.0" pickOnBounds="true" preserveRatio="false">
+      <image>
+        <Image url="@../../../../../AppData/Pictures/minimap.png" />
+      </image>
+    </ImageView>
+    <MenuBar layoutX="0.0" layoutY="2.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="Menu">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Options" />
+            <MenuItem mnemonicParsing="false" text="Exit" />
+          </items>
+        </Menu>
+        <Menu disable="false" mnemonicParsing="false" text="Scenario">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Goals" />
+            <MenuItem mnemonicParsing="false" text="Alliance" />
+            <MenuItem mnemonicParsing="false" text="Diplomacy" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <GridPane layoutX="1012.0" layoutY="2.0" prefHeight="766.0" prefWidth="354.0">
+      <children>
+        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+          <children>
+            <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+              <children>
+                <ImageView fitHeight="177.375" fitWidth="177.375" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                  <image>
+                    <Image url="@../../../../../AppData/Desktop/sun.png" />
+                  </image>
+                </ImageView>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                  <children>
+                    <Button layoutX="8.0" layoutY="9.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="158.0" text="End Phase">
+                      <font>
+                        <Font name="Palatino Linotype Bold" size="16.0" />
+                      </font>
+                    </Button>
+                  </children>
+                </AnchorPane>
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="179.0" minHeight="10.0" prefHeight="179.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+              <content>
+                <GridPane prefHeight="312.0" prefWidth="162.0">
+                  <children>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                      <children>
+                        <Text layoutX="38.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Unit" textAlignment="CENTER">
+                          <font>
+                            <Font name="System Bold" size="14.0" fx:id="x2" />
+                          </font>
+                        </Text>
+                      </children>
+                    </AnchorPane>
+                    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+                      <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                          <children>
+                            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owned by:" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                          <children>
+                            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit Race:" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                          <children>
+                            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit Type:" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                          <children>
+                            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movement:" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                          <children>
+                            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Combat:" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                          <children>
+                            <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stat:" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                          <children>
+                            <TextField alignment="CENTER_RIGHT" editable="false" layoutX="-3.0" layoutY="12.0" prefWidth="63.1162109375" text="Owner" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <children>
+                            <TextField alignment="CENTER_RIGHT" editable="false" layoutX="-3.0" layoutY="12.0" prefWidth="63.1162109375" text="Race" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                          <children>
+                            <TextField alignment="CENTER_RIGHT" editable="false" layoutX="-3.0" layoutY="11.0" prefWidth="63.1162109375" text="Type" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                          <children>
+                            <TextField alignment="CENTER_RIGHT" editable="false" layoutX="-3.0" layoutY="11.0" prefWidth="63.1162109375" text="Speed" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                          <children>
+                            <TextField alignment="CENTER_RIGHT" layoutX="-3.0" layoutY="11.0" prefWidth="63.1162109375" text="Strength" />
+                          </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                          <children>
+                            <TextField alignment="CENTER_RIGHT" layoutX="-3.0" layoutY="11.0" prefWidth="63.1162109375" text="Other" />
+                          </children>
+                        </AnchorPane>
+                      </children>
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="101.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="10.0" prefWidth="61.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints maxHeight="154.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="280.0" minHeight="10.0" prefHeight="279.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+              </content>
+            </ScrollPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <children>
+                <GridPane layoutX="0.0" layoutY="5.0" prefHeight="265.9999000000025" prefWidth="177.0">
+                  <children>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                      <children>
+                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Turn:">
+                          <font>
+                            <Font name="System Bold" size="12.0" fx:id="x1" />
+                          </font>
+                        </Text>
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                      <children>
+                        <Text font="$x1" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phase:" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                      <children>
+                        <Text font="$x1" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Red Sun:" />
+                        <Separator layoutX="0.0" layoutY="-100.0" orientation="VERTICAL" prefHeight="272.0" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                      <children>
+                        <Text font="$x1" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Blue Sun:" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                      <children>
+                        <Text font="$x1" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Victory Points:" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                      <children>
+                        <Text font="$x1" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Leading Points:" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                      <children>
+                        <Text layoutX="34.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Turn" textAlignment="RIGHT" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                      <children>
+                        <Text layoutX="26.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                      <children>
+                        <Text layoutX="0.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                      <children>
+                        <Text layoutX="0.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                      <children>
+                        <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Points" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                      <children>
+                        <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Points" />
+                      </children>
+                    </AnchorPane>
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="108.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="87.0" minWidth="10.0" prefWidth="69.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+              </children>
+            </AnchorPane>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="0">
+              <children>
+                <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+                  <children>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                      <children>
+                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Mana:" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                      <children>
+                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Magic Power Lvl:" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                      <children>
+                        <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Magic Potential:" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                      <children>
+                        <TextField alignment="CENTER_RIGHT" editable="false" layoutX="8.0" layoutY="12.0" prefWidth="32.0" text="10" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                      <children>
+                        <TextField alignment="CENTER_RIGHT" editable="false" layoutX="8.0" layoutY="12.0" prefWidth="32.0" text="9" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                      <children>
+                        <TextField alignment="CENTER_RIGHT" editable="false" layoutX="8.0" layoutY="12.0" prefWidth="32.0" text="3" />
+                      </children>
+                    </AnchorPane>
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="123.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="10.0" prefWidth="54.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                  <children>
+                    <Text font="$x2" layoutX="57.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Character" />
+                  </children>
+                </AnchorPane>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                  <children>
+                    <Button layoutX="39.0" layoutY="18.0" mnemonicParsing="false" text="Castable Spells" />
+                    <Separator layoutX="-11.0" layoutY="53.0" prefWidth="188.0" valignment="BOTTOM" />
+                  </children>
+                </AnchorPane>
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="136.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints maxHeight="332.0" minHeight="10.0" prefHeight="228.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="266.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+        </GridPane>
+        <ImageView fitHeight="150.75" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+          <content>
+            <AnchorPane prefHeight="342.0" prefWidth="342.0">
+              <children>
+                <ImageView fitHeight="282.0999150619938" fitWidth="340.7918701171875" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@../../../../../AppData/Pictures/minimap.png" />
+                  </image>
+                </ImageView>
+              </children>
+            </AnchorPane>
+          </content>
+        </ScrollPane>
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="494.0" minHeight="10.0" prefHeight="494.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="383.0" minHeight="10.0" prefHeight="272.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+    <Separator layoutX="1012.0" layoutY="3.0" minWidth="0.0" orientation="VERTICAL" prefHeight="838.0" prefWidth="0.0" />
+    <TextArea editable="false" focusTraversable="false" layoutX="0.0" layoutY="518.0" opacity="1.0" prefHeight="189.0" prefWidth="411.0" text="UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text" visible="true" wrapText="true" />
+    <TextField layoutX="0.0" layoutY="716.0" prefWidth="411.0" text="Your Message" />
+  </children>
+</AnchorPane>

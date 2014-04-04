@@ -4,14 +4,16 @@
  * and open the template in the editor.
  */
 
-/**
- *
- * @author Jay Drage
- */
 
 import mainswordsorcery.HUD;
 import Units.UnitPool;
 
+/** 
+ * This is a main game class for Swords & Sorcery. It consists of a menu state, 
+ * a {@link HUD} map and a {@link UnitPool}.
+ * 
+ * @author Jay Drage
+ */
 public class Game {
         int state = 2; //used for state switch in main()
                            // it will be changed with user actions in

@@ -4,7 +4,7 @@
  * extended by Ian
  */
 
-
+package Units;
 public class Character extends MoveableUnit {
 
     protected double CurrentMana;
@@ -12,19 +12,19 @@ public class Character extends MoveableUnit {
     protected int MagicPotential;
     protected int MagicLevel;
     protected int Attack;
-    protected bool Demorailzed;
+    protected boolean Demoralized;
 
     public Character()
     {
 	
     }
 
-    public bool getDemoralized()
+    public boolean getDemoralized()
     {
 	return Demoralized;
     }
 
-    public void setDemoralized(bool D)
+    public void setDemoralized(boolean D)
     {
 	Demoralized = D;
     }
@@ -61,13 +61,14 @@ public class Character extends MoveableUnit {
 
     public void CastSpell(Character c)
     {
-	Implement_Spells ImpSpell = new Implement_Spells(c);
-	ImpSpell.getSpellBook();
+    //FIXME
+	//Implement_Spells ImpSpell = new Implement_Spells(c);
+	//ImpSpell.getSpellBook();
     }
     
     public void CostManna(double mc)
     {
-	CurrentManna -= mc;
+	CurrentMana -= mc;
     }
     
 }

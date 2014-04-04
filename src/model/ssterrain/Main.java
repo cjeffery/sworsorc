@@ -35,9 +35,9 @@ public class Main {
                 System.out.println("\t" + hex1.getImprovements().get(i).toString());
         else System.out.println("Nothing");
         System.out.println("in the " + hex1.getTerrainType().toString());
-        //TODO calculate movement *between* two hexes
-        System.out.println("with a movement cost of: " + hex1.getMovementCost(unit1, 0));
-        System.out.println("and a combat bonus of: *" + hex1.getCombatMultiplier(unit1));
+        //TODO: update to fit new movement code
+        //System.out.println("with a movement cost of: " + hex1.getMovementCost(unit1, 0));
+        //System.out.println("and a combat bonus of: *" + hex1.getCombatMultiplier(unit1));
         
         System.out.println("\n\n");
         MapHex hex2 = new MapHex();
@@ -57,7 +57,7 @@ public class Main {
                 System.out.println("\t" + hex2.getImprovements().get(i).toString());
         else System.out.println("Nothing");
         System.out.println("in the " + hex2.getTerrainType().toString());
-        System.out.println("with a movement cost of: " + hex2.getMovementCost(unit2, 0));
-        System.out.println("and a combat bonus of: *" + hex2.getCombatMultiplier(unit2));
+        //System.out.println("with a movement cost of: " + hex2.getMovementCost(unit2, 0));
+        //System.out.println("and a combat bonus of: *" + hex2.getCombatMultiplier(unit2));
     }
 }
