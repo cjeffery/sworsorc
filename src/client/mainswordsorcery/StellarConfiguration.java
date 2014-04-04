@@ -12,7 +12,6 @@
  * @author David Klingenberg, klin7456@vandals.uidaho.edu
  */
 
-
 public class StellarConfiguration {
   int yellowSunPosition;
   char redSunPosition;

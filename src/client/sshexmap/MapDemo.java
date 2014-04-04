@@ -1,14 +1,9 @@
 package sshexmap;
 
 import Units.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TreeMap;
 import javax.swing.*;
-import mainswordsorcery.HUD;
-import sscharts.ScenarioConfigurationReader;
 
 public class MapDemo implements MouseListener, KeyListener {
     private MapView mapView;
