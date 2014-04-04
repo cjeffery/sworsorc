@@ -88,15 +88,6 @@ public class ChatClient {
             }
         }
 
-        //TODO: make standard message protocol function:
-        //TODO: cleanup, is this still needed?
-        private void receiveConnectionList() {
-            System.out.println("Users online:");
-            List<String> connections = MessageUtils.receiveMessage(streamIn);
-            for (String s : connections) {
-                System.out.println(s);
-            }
-        }
     }
 
     class WriterThread extends Thread {

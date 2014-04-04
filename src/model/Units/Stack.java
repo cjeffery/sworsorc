@@ -11,6 +11,8 @@ import java.util.ArrayList;
 /**
  *
  * @author matt
+ * 
+ * Pretty sure the stack class is going to be gone in the near future.
  */
 public class Stack {
     private final ArrayList<ArmyUnit> units;

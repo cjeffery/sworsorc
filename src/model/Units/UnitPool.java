@@ -25,7 +25,7 @@ public class UnitPool {
     
     private UnitPool() {
     
-}
+    }
     
     public static UnitPool getInstance(){
         if (INSTANCE == null)
@@ -33,13 +33,28 @@ public class UnitPool {
         return INSTANCE;
     }
             
+    /**
+     * Adds a unit to the pool. Setting it's location to the one specified
+     * getUnitsInHex will return units added with this method.
+     * @param playerID The ID of the player
+     * @param unit The ArmyUnit to add to the pool
+     * @param location The location to set the unit to
+     */
     public void addUnit(int playerID, ArmyUnit unit, String location){
         unit.setLocation(location);
         this.addUnit(playerID, unit);
         this.addToHex(hexList, unitsInHex, unit);
-       this.addToMove(unitMove, hexVisited, unit);
+        this.addToMove(unitMove, hexVisited, unit);
     }
     
+    /**
+     * Sets the unit's ID to player#name@hashcode
+     * Then adds it.
+     * NOTE that this will NOT index the unit by the units current position 
+     * so getUnitsInHex will NOT return it. (cliff7786 - maybe this should be changed?)
+     * @param playerId The ID of the player
+     * @param unit The ArmyUnit to add to the pool
+     */
     public void addUnit(int playerId, ArmyUnit unit){
        unit.setID(Integer.toString(playerId) + "#" + unit.toString() + "@" + Integer.toString(unit.hashCode()));
        
@@ -92,6 +107,13 @@ public class UnitPool {
         //To Do!!!!!
     }
     
+    /**
+     * return Units in the given hex
+     * NOTE: units must have been added with the method that has location as an
+     *       argument
+     * @param hexId The Hex ID to look for units at
+     * @return An ArrayList of the unit IDs
+     */
     public ArrayList<String> getUnitsInHex(String hexId){
         return hexList.get(hexId);
     }
@@ -100,14 +122,30 @@ public class UnitPool {
         return this.unitMove.get(unitId);
     }
     
+    /**
+     * Get all the units that belong to a player
+     * The key of the returned map appears to be unit type (like "LightSword")
+     * @param playerId The ID of the player to get units for
+     * @return A Map of the units
+     */
     public TreeMap<String,ArrayList<ArmyUnit>> getAllPlayerUnits(int playerId){
         return pool.get(playerId);
     }
     
+    /**
+     * Get all the units that belong to a player of a given type (like "LightSword")
+     * @param playerId The ID of the player to get units for
+     * @return An ArrayList of the units
+     */
     public ArrayList<ArmyUnit> getSpecificPlayerUnits(int playerId, String unitClassName){
         return pool.get(playerId).get(unitClassName);
     }
     
+    /**
+     * gets the unit with the given ID
+     * @param unitId Unit ID takes the form 
+     * @return 
+     */
     public ArmyUnit getUnit(String unitId){
         int playerId;
         String unitClass;
@@ -130,6 +168,11 @@ public class UnitPool {
             return null;
     }
     
+    /**
+     * Empty the pool
+     * Does not empty hexList or unitMove, or hexVisited, or unitsInHex
+     * (Is this correct behavior?)
+     */
     public void clearPool(){
         pool.clear();
     }
