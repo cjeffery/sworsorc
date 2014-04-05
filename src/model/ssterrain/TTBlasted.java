@@ -17,8 +17,8 @@ public class TTBlasted extends TerrainType{
 
     @Override
     public double getMovementCost(MoveableUnit unit) {
-        if(unit.getUnitType().equals(UnitType.Fighter)) return 3;
-        else if(unit.getUnitType().equals(UnitType.MagicUser)) return 2;
+        if(unit.getUnitType().equals(UnitType.ArmyUnit)) return 3;
+        else if(unit.getUnitType().equals(UnitType.Character)) return 2;
         else return 99;
     }
 
