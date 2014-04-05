@@ -19,7 +19,7 @@ package Units;
  */
 public class MoveableUnit {
     protected UnitType UnitType;
-    protected int movement;
+    protected double movement;
     protected Race race;
     protected String location;
     protected String ID;
@@ -56,7 +56,7 @@ public class MoveableUnit {
         return race;
     }
     
-    public int getMovement() {
+    public double getMovement() {
         return movement;
     }
 

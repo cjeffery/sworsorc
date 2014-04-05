@@ -14,7 +14,19 @@ import sshexmap.MapHex;
  * @author Keith/Ian
  */
 public class MovementCalculator {
-      /**
+
+    /**
+     * Private constructor throws an assertion error as this class should
+     * not be instantiated. This only provides utility, no purpose for instance.
+     * @author Keith Drew
+     */
+    private MovementCalculator()
+    {
+        // Enforce noninstantiability
+        throw new AssertionError();
+    }
+    
+    /**
      * Keith and Ian
      * This method returns void, but takes an empty ArrayList of MapHex objects
      * to be filled (by reference) during the recursive calls of this method. 
@@ -120,6 +132,8 @@ public class MovementCalculator {
     {
         // TODO
         double moveCost = 1;
+        
+        
         
         return moveCost;
     }
