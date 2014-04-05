@@ -5,8 +5,11 @@
 package MoveCalculator;
 
 import Units.MoveableUnit;
+import Units.Race;
+import Units.UnitType;
 import java.util.ArrayList;
 import sshexmap.MapHex;
+import ssterrain.TerrainType;
 
 /**
  * The movement calculator class handles calculating movement for a given unit, 
@@ -20,12 +23,11 @@ public class MovementCalculator {
      * not be instantiated. This only provides utility, no purpose for instance.
      * @author Keith Drew
      */
-    private MovementCalculator()
-    {
+    private MovementCalculator() {
         // Enforce noninstantiability
         throw new AssertionError();
     }
-    
+
     /**
      * Keith and Ian
      * This method returns void, but takes an empty ArrayList of MapHex objects
@@ -37,107 +39,91 @@ public class MovementCalculator {
      * @param moveAllowance
      * @param validHexes 
      */
-    public static void getValidMoves( MoveableUnit movingUnit, MapHex startHex, 
-            double moveAllowance, ArrayList<MapHex> validHexes )
+    public static void getValidMoves(MoveableUnit movingUnit, MapHex startHex,
+            double moveAllowance, ArrayList<MapHex> validHexes) 
     {
         double edgeCost = 0;
         double moveCost = 0;
-        
+        TerrainType destinationTerrainType;
+
         ArrayList<MapHex> neighbors = null;
         // For each hex edge, 0-5, get the neighboring hex, if it's valid
-        for(int i = 0; i < 6; i++ )
+        for (int i = 0; i < 6; i++) 
         {
             // Check if the hex is valid, null returned if hex neighbor no exist
-            if( startHex.getNeighbor( i ) != null )
+            if (startHex.getNeighbor(i) != null) 
             {
                 // add each valid neighbor to neighbors
-                neighbors.add( startHex.getNeighbor( i ) );
+                neighbors.add(startHex.getNeighbor(i));
             }
         }
-        
+
         // The recursion loop
-        for( int i = 0; i < neighbors.size(); i++ )
+        for (int i = 0; i < neighbors.size(); i++) 
         {
             // get the edgecost as returned from method for each iteration of 
             // loop and effectively each hex neighbor
-            edgeCost = getEdgeCost( startHex, neighbors.get(i) );
+            edgeCost = getEdgeCost(startHex, neighbors.get(i));
             // If edgeCost is 1, the edge represents a road/trail
-            if( edgeCost == 1 )
+            if (edgeCost == 1) 
             {
                 // If moveAllowance - 1 allows for the move, recurse accordingly
-                if( moveAllowance - edgeCost >= 0 )
+                if (moveAllowance - edgeCost >= 0) 
                 {
                     // Make sure the neighbor is not already in the list
-                    if( validHexes.contains( neighbors.get(i) ) )
-                        neighbors.remove(i);
-                    else 
+                    if (validHexes.contains(neighbors.get(i))) 
                     {
+                        neighbors.remove(i);
+                    } else {
                         // add the neighbor hex to valid hexes
-                        validHexes.add( neighbors.get(i) );
+                        validHexes.add(neighbors.get(i));
                         /* Recursion Step - Subtract the edge cost for 
                          * travelling over a road/trail.
                          */
-                        getValidMoves( movingUnit, neighbors.get(i), 
-                                moveAllowance - edgeCost, validHexes );
+                        getValidMoves(movingUnit, neighbors.get(i),
+                                moveAllowance - edgeCost, validHexes);
                     }
                 }
-            } 
-            /* If edgecost is 0, then the move is legal, if not affordable. 
+            } /* If edgecost is 0, then the move is legal, if not affordable. 
              * Determine move cost and recurse, if applicable.
-             */
-            else if( edgeCost == 0 )
+             */ 
+            else if (edgeCost == 0) 
             {
                 /*
                  * Get the movement cost of moving to neighbor i from current
-                 * location.
+                 * location then
+                 * Get destination terrain type, move cost for unit into that
+                 * terrain type
                  */
-                moveCost = getMoveCost( movingUnit, startHex, neighbors.get(i));
-                if( moveAllowance - moveCost >= 0 )
+
+                destinationTerrainType = neighbors.get(i).getTerrainType();
+                moveCost = destinationTerrainType.getMovementCost(movingUnit);
+
+                // Check if moving into destHex is possible by move type.
+                // if moveCost is 99, getMovementCost says it's an invalid move
+                if (moveAllowance - moveCost >= 0 && moveCost != 99.) 
                 {
                     // Make sure the neighbor is not already in the list
-                    if( validHexes.contains( neighbors.get(i) ) )
-                        neighbors.remove(i);
-                    else 
+                    if (validHexes.contains(neighbors.get(i))) 
                     {
+                        neighbors.remove(i);
+                    } else {
                         // add the neighbor hex to valid hexes
-                        validHexes.add( neighbors.get(i) );
+                        validHexes.add(neighbors.get(i));
                         /* Recursion Step - Subtract the move cost for moving 
                          * into the dest hex.
                          */
-                        getValidMoves( movingUnit, neighbors.get(i), 
-                                moveAllowance - edgeCost, validHexes );
+                        getValidMoves(movingUnit, neighbors.get(i),
+                                moveAllowance - moveCost, validHexes);
                     }
                 }
-            }
-            else if( edgeCost == -1 )
-            { 
+            } else if (edgeCost == -1) {
                 neighbors.remove(i);
             }
         }
-        
+
     }
-    
-    /**
-     * Keith and Ian
-     * This method should return the cost of moving from sourceHex to 
-     * destinationHex for the given unit, movingUnit. This is a helper function
-     * for the getValidMoves() method above.
-     * @param movingUnit
-     * @param sourceHex
-     * @param destinationHex
-     * @return moveCost
-     */
-    public static double getMoveCost( MoveableUnit movingUnit, MapHex sourceHex,
-                                        MapHex destinationHex )
-    {
-        // TODO
-        double moveCost = 1;
-        
-        
-        
-        return moveCost;
-    }
-    
+
     /**
      * Keith and Ian
      * This method returns -1 if the move between source and dest. is invalid,
@@ -148,14 +134,13 @@ public class MovementCalculator {
      * @param destinationHex
      * @return edgeCost 
      */
-    public static double getEdgeCost( MapHex sourceHex, MapHex destinationHex )
-    {
+    public static double getEdgeCost(MapHex sourceHex, MapHex destinationHex) {
         // TODO
         double edgeCost = 1;
-        
+
         return edgeCost;
     }
-    
+
     /**
      * Keith and Ian
      * This method takes a possible destination hex and a unit, who's valid moves
@@ -168,13 +153,11 @@ public class MovementCalculator {
      * @param movingUnit
      * @return enemyOccupied
      */
-    public static boolean isEnemyOccupiedHex( MapHex destinationHex, 
-                                            MoveableUnit movingUnit )
-    {
+    public static boolean isEnemyOccupiedHex(MapHex destinationHex,
+            MoveableUnit movingUnit) {
         // TODO
         boolean enemyOccupied = false;
 
         return enemyOccupied;
     }
-    
 }
