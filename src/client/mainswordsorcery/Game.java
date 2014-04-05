@@ -6,23 +6,35 @@
 
 package mainswordsorcery;
 
+/**
+ *
+ * @author higle_000
+ */
+import java.io.IOException;
+import java.util.Random;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Start the JavaFX application
+ *
+ * @author higle_000
  */
+
 public class Game extends Application {
+    
     @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("HUD.fxml"));
+    public void start(Stage stage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         
         Scene scene = new Scene(root);
         
+        stage.setTitle("Scenario");
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -37,5 +49,21 @@ public class Game extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
+    private static Game instance;
+    public Game() {
+           instance = this;
+    }
+    // static method to get instance of view
+    public static Game getInstance() {
+        return instance;
+    }
+    // returns a random number between 0 and 5
+    public int getNum(){
+        Random rand = new Random();
+        int x = rand.nextInt(9);
+        return x;
+    }
+  
     
 }

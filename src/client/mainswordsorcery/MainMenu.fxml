@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mainswordsorcery.MainMenuController">
+  <children>
+    <ImageView fitHeight="768.0" fitWidth="1366.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="file:/C:/Users/higle_000/Documents/GitHub/sworsorc/src/temp/dist/candidate2/resources/images/sands-small.jpg" />
+      </image>
+    </ImageView>
+    <GridPane alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="768.0" prefWidth="1365.760009765625">
+      <children>
+        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="New Game" GridPane.columnIndex="1" GridPane.rowIndex="1">
+          <font>
+            <Font name="JasmineUPC Bold" size="36.0" fx:id="x1" />
+          </font>
+        </Button>
+        <Button font="$x1" mnemonicParsing="false" onAction="#GotoGame" prefHeight="36.0" prefWidth="186.0" text="Load Game" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Button font="$x1" mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="Save Game" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Button font="$x1" mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="Options" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+        <Button font="$x1" mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="About" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        <Button font="$x1" mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="Quit" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+        <Text fill="#ebff99" scaleX="1.9656035152127502" scaleY="2.8168253766234694" strokeType="OUTSIDE" strokeWidth="0.0" text="Swords &amp; Sorcery" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0">
+          <font>
+            <Font name="JasmineUPC Bold" size="78.0" />
+          </font>
+        </Text>
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="10.0" prefWidth="261.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="309.0" minWidth="4.0" prefWidth="300.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="242.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="824.0" minWidth="10.0" prefWidth="300.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="0.0" prefWidth="263.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="283.0" minHeight="10.0" prefHeight="282.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="259.0" minHeight="10.0" prefHeight="67.0" valignment="CENTER" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="67.0" valignment="CENTER" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="408.0" minHeight="10.0" prefHeight="67.0" valignment="CENTER" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="285.0" minHeight="0.0" prefHeight="285.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+  </children>
+</AnchorPane>
