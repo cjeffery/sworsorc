@@ -19,6 +19,9 @@ import java.util.logging.Logger;
  * 
  * This function returns null if the object was not found in the project.
  * 
+ * Note: The class needs to be complied for the Creator to work. You may get an 
+ * error about this if the class is not compiled.
+ * 
  * @author Matt
  */
 public class ObjectCreator {
