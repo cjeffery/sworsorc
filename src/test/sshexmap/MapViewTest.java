@@ -25,6 +25,11 @@ public class MapViewTest extends TestCase {
         super.setUp();
          map = MainMap.GetInstance();
     }
+
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
     
     /*@Override
     protected void tearDown() throws Exception {
@@ -120,6 +125,54 @@ public class MapViewTest extends TestCase {
         assertEquals(mv.highlightSet.contains("1234"), true);        
         assertEquals(mv.highlightSet.contains("2345"), true);    
         
+    }
+
+    /**
+     * Test of highlightIDs method, of class MapView.
+     */
+    public void testHighlightIDs() {
+    }
+
+    /**
+     * Test of paintComponent method, of class MapView.
+     */
+    public void testPaintComponent() {
+    }
+
+    /**
+     * Test of getPreferredScrollableViewportSize method, of class MapView.
+     */
+    public void testGetPreferredScrollableViewportSize() {
+    }
+
+    /**
+     * Test of getPreferredSize method, of class MapView.
+     */
+    public void testGetPreferredSize() {
+    }
+
+    /**
+     * Test of getScrollableBlockIncrement method, of class MapView.
+     */
+    public void testGetScrollableBlockIncrement() {
+    }
+
+    /**
+     * Test of getScrollableUnitIncrement method, of class MapView.
+     */
+    public void testGetScrollableUnitIncrement() {
+    }
+
+    /**
+     * Test of getScrollableTracksViewportHeight method, of class MapView.
+     */
+    public void testGetScrollableTracksViewportHeight() {
+    }
+
+    /**
+     * Test of getScrollableTracksViewportWidth method, of class MapView.
+     */
+    public void testGetScrollableTracksViewportWidth() {
     }
 
 }

@@ -9,3 +9,6 @@ doc/masterClassDiagrams/Thumbs.db
 /build/
 /dist/
 /src/Implement_Spells/dist/
+/src/ChatClient/build/
+/src/ChatClient/dist/
+/src/ChatClient/nbproject/private/
