@@ -16,14 +16,16 @@ import ssterrain.TerrainType;
  * and potentially, eventually, all units in a stack (if stacks are implemented). 
  * @author Keith/Ian
  */
-public class MovementCalculator {
+public class MovementCalculator 
+{
 
     /**
      * Private constructor throws an assertion error as this class should
      * not be instantiated. This only provides utility, no purpose for instance.
      * @author Keith Drew
      */
-    private MovementCalculator() {
+    private MovementCalculator() 
+    {
         // Enforce noninstantiability
         throw new AssertionError();
     }
