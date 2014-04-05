@@ -48,7 +48,7 @@ public class MovementCalculator
         double moveCost = 0;
         TerrainType destinationTerrainType;
 
-        ArrayList<MapHex> neighbors = null;
+        ArrayList<MapHex> neighbors = new ArrayList<MapHex>();
         // For each hex edge, 0-5, get the neighboring hex, if it's valid
         for (int i = 0; i < 6; i++) 
         {
