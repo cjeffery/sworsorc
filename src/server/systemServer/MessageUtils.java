@@ -1,9 +1,11 @@
 package systemServer;
 
+import Units.MoveableUnit;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import sshexmap.MapHex;
 
 /**
  *
@@ -45,6 +47,10 @@ public class MessageUtils {
     static String REQUEST_GLOBAL_WHO = "globalwhoreqest"; //ask for all online usernames
     //static String LOBBY_WHO_REQUEST = "lobbywho"; //ask for user names in same lobby
 
+    //game actions
+    static String UPDATE_UNIT = "updateunit"; // client sends a unit update
+    static String UPDATE_HEX = "updatehex"; // client sends a hex update
+    
     static boolean debug = false; //Print everything!
 
     //client asks to create new lobby:
@@ -179,6 +185,26 @@ public class MessageUtils {
         message.add(handle);
         message.add(text);
 
+        return message;
+    }
+    
+    public static List<String> makeMoveableUnitUpdateMessage(MoveableUnit unit){
+        List<String> message = new ArrayList<>();
+        message.add(UPDATE_UNIT);
+        message.add(unit.getID());
+        message.add(unit.getLocation());
+        //message.add()
+              
+        return message;
+    }
+    
+    public static List<String> makeMapHexUpdateMessage(MapHex mapHex){
+        List<String> message = new ArrayList<>();
+        message.add(UPDATE_HEX);
+        message.add(mapHex.GetID());
+        for(int i = 0; i < mapHex.getImprovements().size(); i++)
+            message.add(mapHex.getImprovements().get(i).getClass().toString());
+              
         return message;
     }
 
