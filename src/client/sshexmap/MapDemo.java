@@ -1,5 +1,6 @@
 package sshexmap;
 
+import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class MapDemo implements MouseListener, KeyListener {
             selected_unit = units.get(units.size()-1); //hack for unitpool, list can contain nulls..
             System.out.println("Selected " + selected_unit + ", size of stack: " + hex.getUnits().size() );
             canMoveTo.clear();
-            hex.getValidMoves(selected_unit, hex, 5, canMoveTo );
+            MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
             mapView.highlight(canMoveTo);
         }
         else if( canMoveTo.contains(hex) ) {
