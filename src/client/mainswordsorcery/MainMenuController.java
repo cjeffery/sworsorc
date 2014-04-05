@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author higle_000
+ * @author Joe Higley
  */
 public class MainMenuController {
     

@@ -8,7 +8,7 @@ package mainswordsorcery;
 
 /**
  *
- * @author higle_000
+ * @author Joe Higley
  */
 import java.io.IOException;
 import java.util.Random;

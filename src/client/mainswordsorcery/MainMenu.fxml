@@ -12,7 +12,7 @@
   <children>
     <ImageView fitHeight="768.0" fitWidth="1366.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
       <image>
-        <Image url="file:/C:/Users/higle_000/Documents/GitHub/sworsorc/src/temp/dist/candidate2/resources/images/sands-small.jpg" />
+        <Image url="file:/C:/Users/higle_000/Documents/GitHub/sworsorc/src/client/mainswordsorcery/sands-small.jpg" />
       </image>
     </ImageView>
     <GridPane alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="768.0" prefWidth="1365.760009765625">

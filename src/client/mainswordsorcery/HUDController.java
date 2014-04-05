@@ -8,7 +8,7 @@ package mainswordsorcery;
 
 /**
  *
- * @author higle_000
+ * @author Joe Higley
  */
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
