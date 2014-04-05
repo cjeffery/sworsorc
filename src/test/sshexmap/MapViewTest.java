@@ -80,7 +80,7 @@ public class MapViewTest extends TestCase {
         ArrayList<String> list = new ArrayList<String>();
         list.add("1234");
         list.add("4321");
-        mv.highlight(list);
+        mv.highlightIDs(list);
         assertEquals(mv.highlightSet.size(), 2);
         assertEquals(mv.highlightSet.contains("1234"), true);        
         assertEquals(mv.highlightSet.contains("4321"), true);    
@@ -104,7 +104,7 @@ public class MapViewTest extends TestCase {
         ArrayList<String> list = new ArrayList<String>();
         list.add("1234");
         list.add("4321");
-        mv.highlight(list);
+        mv.highlightIDs(list);
         mv.highlight("2345");
         mv.clearHighlights();
         assertEquals(mv.highlightSet.size(), 0);
@@ -118,7 +118,7 @@ public class MapViewTest extends TestCase {
         ArrayList<String> list = new ArrayList<String>();
         list.add("1234");
         list.add("4321");
-        mv.highlight(list);
+        mv.highlightIDs(list);
         mv.highlight("2345");
         mv.clearHighlight("4321");
         assertEquals(mv.highlightSet.size(), 2);
