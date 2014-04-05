@@ -49,7 +49,7 @@ public class ObjectCreator {
         System.out.println(unit1.toString());
         System.out.println(unit1.getUnitType().toString());
         System.out.println(unit1.getStrength());
-    System.out.println(unit1.getArmyUnitType());
+        System.out.println(unit1.getArmyUnitType());
         System.out.println(unit1.getMovement());
     }
     
