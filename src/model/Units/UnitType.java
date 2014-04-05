@@ -15,7 +15,5 @@ package Units;
 public enum UnitType {
     Character,
     ArmyUnit,
-    MagicUser,
     Monster,
-    Fighter
 }

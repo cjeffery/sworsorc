@@ -36,7 +36,8 @@ public class SolarDisplay extends JFrame implements ActionListener{
     
     public SolarDisplay() {
         
-        setLayout(new GridLayout(6,1)); //6 rows, 1 column
+        getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.PAGE_AXIS));
+//        setLayout(new GridLayout(6,1)); //6 rows, 1 column
         
         Title = new JLabel ("Solar Display", SwingConstants.CENTER);
         Title.setFont(new java.awt.Font("Tahoma", 0, 18));
@@ -73,7 +74,8 @@ public class SolarDisplay extends JFrame implements ActionListener{
         add(SunImageLabel);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(0, 0, 250, 150);
+//        setBounds(0, 0, 250, 150);
+        pack();
         setLocationRelativeTo(null);
         setVisible(true);
 }
@@ -85,6 +87,9 @@ public class SolarDisplay extends JFrame implements ActionListener{
         return null;
     }
 }
+    
+    //for comparing strings, use if(string1.equals(string2))
+    
     public void actionPerformed(ActionEvent e){
         if(e.getActionCommand().equals("AddDay")){
             if (SolarDayNum < 27) {

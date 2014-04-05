@@ -24,6 +24,7 @@ import java.util.logging.Logger;
  * 
  * @author Matt
  */
+
 public class ObjectCreator {
     
     public static Object CreateObject(String type){
@@ -46,6 +47,8 @@ public class ObjectCreator {
         //ArmyUnit unit1 = new Bow();
         
         System.out.println(unit1.toString());
+        System.out.println(unit1.getUnitType().toString());
+        System.out.println(unit1.getStrength());
         System.out.println(unit1.getArmyUnitType());
         System.out.println(unit1.getMovement());
     }

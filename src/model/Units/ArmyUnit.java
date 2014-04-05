@@ -31,6 +31,10 @@ public class ArmyUnit extends MoveableUnit {
     protected boolean demoralized;
     
     protected ArmyUnitType armyUnitType;
+
+    public boolean isConjured() {
+        return conjured;
+    }
     
     
     public void setDemoralized(boolean demoralized) {
@@ -41,8 +45,10 @@ public class ArmyUnit extends MoveableUnit {
         return armyUnitType;
     }
     public ArmyUnit() {
+        super();
         this.demoralized = false;
         this.conjured = false;
+        this.UnitType = UnitType.ArmyUnit;
     }
     
     public ArmyUnit(String location) {
