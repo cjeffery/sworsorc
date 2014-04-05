@@ -75,7 +75,9 @@ public class MovementCalculator
                     // Make sure the neighbor is not already in the list
                     if (validHexes.contains(neighbors.get(i))) 
                     {
-                        neighbors.remove(i);
+                        //neighbors.remove(i);
+                        getValidMoves(movingUnit, neighbors.get(i),
+                                moveAllowance - edgeCost, validHexes);
                     } else {
                         // add the neighbor hex to valid hexes
                         validHexes.add(neighbors.get(i));
@@ -101,14 +103,18 @@ public class MovementCalculator
                 destinationTerrainType = neighbors.get(i).getTerrainType();
                 moveCost = destinationTerrainType.getMovementCost(movingUnit);
 
+                System.out.println("The movement cost: " + moveCost );
+                
                 // Check if moving into destHex is possible by move type.
                 // if moveCost is 99, getMovementCost says it's an invalid move
-                if (moveAllowance - moveCost >= 0 && moveCost != 99.) 
+                if ( moveAllowance - moveCost >= 0 && moveCost != 99 ) 
                 {
                     // Make sure the neighbor is not already in the list
-                    if (validHexes.contains(neighbors.get(i))) 
+                    if ( validHexes.contains( neighbors.get(i) ) ) 
                     {
-                        neighbors.remove(i);
+                        //neighbors.remove(i);
+                        getValidMoves(movingUnit, neighbors.get(i),
+                                moveAllowance - moveCost, validHexes);
                     } else {
                         // add the neighbor hex to valid hexes
                         validHexes.add(neighbors.get(i));
@@ -138,7 +144,7 @@ public class MovementCalculator
      */
     public static double getEdgeCost(MapHex sourceHex, MapHex destinationHex) {
         // TODO
-        double edgeCost = 1;
+        double edgeCost = 0;
 
         return edgeCost;
     }
