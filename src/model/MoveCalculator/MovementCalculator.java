@@ -5,8 +5,6 @@
 package MoveCalculator;
 
 import Units.MoveableUnit;
-import Units.Race;
-import Units.UnitType;
 import java.util.ArrayList;
 import sshexmap.MapHex;
 import ssterrain.TerrainType;
@@ -30,6 +28,78 @@ public class MovementCalculator
         throw new AssertionError();
     }
 
+    
+    /** 
+     * This may be a new version, but maybe not...testing
+     * @param movingUnit
+     * @param startHex
+     * @param moveAllowance
+     * @param validHexes 
+     */
+    public static void getValidMoves(MoveableUnit movingUnit, MapHex currentHex,
+            double moveAllowance, ArrayList<MapHex> validHexes) 
+    {
+        double edgeCost = 0;
+        double moveCost = 0;
+        TerrainType destinationTerrainType;
+        ArrayList<MapHex> neighbors = new ArrayList<MapHex>();
+
+        // For each hex edge, 0-5, get the neighboring hex, if it's valid
+        for (int i = 0; i < 6; i++) 
+        {
+            // Check if the hex is valid, null returned if hex neighbor no exist
+            if (currentHex.getNeighbor(i) != null) 
+            {
+                // add each valid neighbor to neighbors
+                neighbors.add(currentHex.getNeighbor(i));
+            }
+        }
+        
+        // Yo yo - this is the case where the move was legal :D
+        if( moveAllowance > 0 )
+        {            
+            validHexes.add(currentHex);
+            // recurse on neighbors here -- to be added
+
+            for( int i = 0; i < neighbors.size(); i++ )
+            {
+                edgeCost = getEdgeCost( currentHex, neighbors.get(i) );
+                
+                switch ( (int)edgeCost ) 
+                {
+                    case -1 :                         
+                        return;
+                    case 0 : 
+                        destinationTerrainType = neighbors.get(i).getTerrainType();
+                        moveCost = destinationTerrainType.getMovementCost(movingUnit);
+                        getValidMoves( movingUnit, neighbors.get(i), 
+                                moveAllowance - moveCost, validHexes);
+                        break;
+                    case 1 : 
+                        getValidMoves( movingUnit, neighbors.get(i), 
+                                moveAllowance - edgeCost, validHexes );
+                        break;
+                    default :
+                        System.out.println("Failure in Switch in MovementCalculator.getValidMoves");
+                }
+                
+            }                        
+        } else if( moveAllowance == 0 ) // move is exactly legal, add & return
+        {
+            
+            validHexes.add(currentHex);
+            return;
+            // do not recurse here - end of the line
+            
+        } else if( moveAllowance < 0 ) // ILLEGAL!!!! DO NOT ADD!!!
+        {
+            return;
+            // do not add, do not recurse, moving here is illegal
+        }
+    }
+    
+    
+    
     /**
      * Keith and Ian
      * This method returns void, but takes an empty ArrayList of MapHex objects
@@ -40,7 +110,7 @@ public class MovementCalculator
      * @param currentHex
      * @param moveAllowance
      * @param validHexes 
-     */
+     *
     public static void getValidMoves(MoveableUnit movingUnit, MapHex startHex,
             double moveAllowance, ArrayList<MapHex> validHexes) 
     {
@@ -75,36 +145,32 @@ public class MovementCalculator
                     // Make sure the neighbor is not already in the list
                     if (validHexes.contains(neighbors.get(i))) 
                     {
-                        //neighbors.remove(i);
-                        getValidMoves(movingUnit, neighbors.get(i),
-                                moveAllowance - edgeCost, validHexes);
+                        neighbors.remove(i);
                     } else {
                         // add the neighbor hex to valid hexes
                         validHexes.add(neighbors.get(i));
-                        /* Recursion Step - Subtract the edge cost for 
-                         * travelling over a road/trail.
-                         */
+                         //Recursion Step - Subtract the edge cost for 
+                          //travelling over a road/trail.
+                         
                         getValidMoves(movingUnit, neighbors.get(i),
                                 moveAllowance - edgeCost, validHexes);
                     }
                 }
-            } /* If edgecost is 0, then the move is legal, if not affordable. 
-             * Determine move cost and recurse, if applicable.
-             */ 
+            } // If edgecost is 0, then the move is legal, if not affordable. 
+             // Determine move cost and recurse, if applicable.
+              
             else if (edgeCost == 0) 
             {
-                /*
-                 * Get the movement cost of moving to neighbor i from current
-                 * location then
-                 * Get destination terrain type, move cost for unit into that
-                 * terrain type
-                 */
+                
+                 // Get the movement cost of moving to neighbor i from current
+                 // location then
+                 // Get destination terrain type, move cost for unit into that
+                 // terrain type
+                 //
 
                 destinationTerrainType = neighbors.get(i).getTerrainType();
                 moveCost = destinationTerrainType.getMovementCost(movingUnit);
 
-                System.out.println("The movement cost: " + moveCost );
-                
                 // Check if moving into destHex is possible by move type.
                 // if moveCost is 99, getMovementCost says it's an invalid move
                 if ( moveAllowance - moveCost >= 0 && moveCost != 99 ) 
@@ -112,15 +178,13 @@ public class MovementCalculator
                     // Make sure the neighbor is not already in the list
                     if ( validHexes.contains( neighbors.get(i) ) ) 
                     {
-                        //neighbors.remove(i);
-                        getValidMoves(movingUnit, neighbors.get(i),
-                                moveAllowance - moveCost, validHexes);
+                        neighbors.remove(i);
                     } else {
                         // add the neighbor hex to valid hexes
                         validHexes.add(neighbors.get(i));
-                        /* Recursion Step - Subtract the move cost for moving 
-                         * into the dest hex.
-                         */
+                        // Recursion Step - Subtract the move cost for moving 
+                         // into the dest hex.
+                         
                         getValidMoves(movingUnit, neighbors.get(i),
                                 moveAllowance - moveCost, validHexes);
                     }
@@ -131,9 +195,10 @@ public class MovementCalculator
         }
 
     }
-
+    
+    */
+    
     /**
-     * Keith and Ian
      * This method returns -1 if the move between source and dest. is invalid,
      * 0 if there is no road or trail between source and dest., and 
      * 1 if there IS a road/trail linking the hexes. This is a helper for the 
@@ -141,10 +206,11 @@ public class MovementCalculator
      * @param sourceHex
      * @param destinationHex
      * @return edgeCost 
+     * @author Keith and Ian
      */
     public static double getEdgeCost(MapHex sourceHex, MapHex destinationHex) {
         // TODO
-        double edgeCost = 0;
+        double edgeCost = 1;
 
         return edgeCost;
     }
