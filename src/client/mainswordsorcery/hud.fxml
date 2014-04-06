@@ -62,7 +62,7 @@
                     <Image url="@sun.png" />
                   </image>
                 </ImageView>
-                <Button mnemonicParsing="false" onAction="#DisplayStack" prefHeight="48.0" prefWidth="158.0" text="End Phase" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Button mnemonicParsing="false" onAction="#ChangeSun" prefHeight="48.0" prefWidth="158.0" text="End Phase" GridPane.columnIndex="0" GridPane.rowIndex="1">
                   <font>
                     <Font name="Palatino Linotype Bold" size="16.0" />
                   </font>
@@ -94,7 +94,7 @@
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Text fx:id="RedSun" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turn" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                   </children>

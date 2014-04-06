@@ -20,17 +20,21 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+
+import solardisplay.SolarDisplay;
  
 public class HUDController {
     @FXML private TabPane Units;
     @FXML private TabPane Targets;
-    @FXML private ImageView sun;
+    @FXML private ImageView sun_img;
+    @FXML private Text RedSun;
     
     @FXML protected void DisplayStack(ActionEvent event) {
         ClearTitles(event);
@@ -91,6 +95,13 @@ public class HUDController {
     
     @FXML protected void Quit(ActionEvent event) {
         System.exit(0);        
+    }
+    
+    //SolarDisplay code goes here
+    @FXML protected void ChangeSun(ActionEvent event) {
+  //      SolarDisplay.getInstance().function();
+  //      sun_img.setImage(new Image("@red_sun6.png")); //place holder
+  //      RedSun.setText(SolarDisplay.getInstance().getRedSun());
     }
 
 }

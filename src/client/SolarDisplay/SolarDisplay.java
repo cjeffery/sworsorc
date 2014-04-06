@@ -33,8 +33,16 @@ public class SolarDisplay extends JFrame implements ActionListener{
         int SolarDayNum = 1;
         int RedSunVal = 1;
         int BlueSunVal = 7;
+        
+    private static SolarDisplay instance;
+
+    // static method to get instance of view
+    public static SolarDisplay getInstance() {
+        return instance;
+    }
     
     public SolarDisplay() {
+        instance = this;   
         
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.PAGE_AXIS));
 //        setLayout(new GridLayout(6,1)); //6 rows, 1 column

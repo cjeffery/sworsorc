@@ -28,12 +28,14 @@ public class Game extends Application {
     
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        Parent main = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        Parent hud = FXMLLoader.load(getClass().getResource("hud.fxml"));
         
-        Scene scene = new Scene(root);
+        Scene mainMenu = new Scene(main);
+        Scene hudWindow = new Scene(hud);
         
         stage.setTitle("Scenario");
-        stage.setScene(scene);
+        stage.setScene(mainMenu);
         stage.setFullScreen(true);
         stage.show();
     }
@@ -49,7 +51,7 @@ public class Game extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+   
     private static Game instance;
     public Game() {
            instance = this;
@@ -57,7 +59,8 @@ public class Game extends Application {
     // static method to get instance of view
     public static Game getInstance() {
         return instance;
-    }
+    }  
+    
     // returns a random number between 0 and 5
     public int getNum(){
         Random rand = new Random();
