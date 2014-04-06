@@ -17,15 +17,15 @@
     </ImageView>
     <GridPane alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="768.0" prefWidth="1365.760009765625">
       <children>
-        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="New Game" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Button mnemonicParsing="false" onAction="#GotoGame" prefHeight="36.0" prefWidth="186.0" text="Start Game" GridPane.columnIndex="1" GridPane.rowIndex="1">
           
         </Button>
-        <Button mnemonicParsing="false" onAction="#GotoGame" prefHeight="36.0" prefWidth="186.0" text="Load Game" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Button mnemonicParsing="false" onAction="#LoadScenario" prefHeight="36.0" prefWidth="186.0" text="Select Scenario" GridPane.columnIndex="1" GridPane.rowIndex="2">
           <font>
             <Font name="JasmineUPC Bold" size="36.0" fx:id="x1" />
           </font>
         </Button>
-        <Button font="$x1" mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="Save Game" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Button font="$x1" mnemonicParsing="false" onAction="#GotoNetworkLobby"  prefHeight="36.0" prefWidth="186.0" text="Network" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Button font="$x1" mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="Options" GridPane.columnIndex="3" GridPane.rowIndex="1" />
         <Button font="$x1" mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="About" GridPane.columnIndex="3" GridPane.rowIndex="2" />
         <Button font="$x1" mnemonicParsing="false" onAction="#Quit" prefHeight="36.0" prefWidth="186.0" text="Quit" GridPane.columnIndex="3" GridPane.rowIndex="3" />

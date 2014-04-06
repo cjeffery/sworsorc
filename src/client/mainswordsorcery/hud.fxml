@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="768.0" prefWidth="1366.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mainswordsorcery.HUDController">
   <children>
-    <ScrollPane fx:id="MapView" layoutX="0.0" layoutY="0.0" prefHeight="765.0999145507812" prefWidth="1012.0">
+    <ScrollPane fx:id="map_view" layoutX="0.0" layoutY="0.0" prefHeight="765.0999145507812" prefWidth="1012.0">
       <content>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
       </content>
@@ -20,9 +20,9 @@
       <menus>
         <Menu mnemonicParsing="false" text="Menu">
           <items>
-            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" onAction="#Quit" text="Main Menu" fx:id="exit_btn" />
+            <MenuItem mnemonicParsing="false" text="Save Game" />
             <MenuItem mnemonicParsing="false" text="Options" />
-            <MenuItem mnemonicParsing="false" onAction="#Quit" text="Exit" fx:id="exit_btn" />
           </items>
         </Menu>
         <Menu disable="false" mnemonicParsing="false" text="Scenario">
@@ -142,7 +142,7 @@
           </rowConstraints>
         </GridPane>
         <ImageView fitHeight="150.75" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <ScrollPane fx:id="mini_map" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
           <content>
             <AnchorPane prefHeight="342.0" prefWidth="342.0">
               <children>

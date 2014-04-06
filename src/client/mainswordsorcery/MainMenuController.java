@@ -20,14 +20,28 @@ import javafx.stage.Stage;
  * @author Joe Higley
  */
 public class MainMenuController {
-    
+    //initialize() is used to connect GUI view elements with model elements
+    public void initialize(){
+        //example code in HUDController.java
+    }
+    //activated by "Start Game" button
     @FXML protected void GotoGame(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
         stage.setScene(Game.getInstance().getHudScene());
         stage.show();
     }
-    
+    //activated by "Load Scenario" button
+    @FXML protected void LoadScenario(ActionEvent event) {
+           //TODO change GUI to show possible scenario files and pass
+           //selected file to initScenario() below.
+           Game.getInstance().initScenario( "filename" );
+    }
+    //activated by "Network" button
+    @FXML protected void GotoNetworkLobby(ActionEvent event){
+            Game.getInstance().initNetwork();
+    }
+    //activated by "Quit" button
     @FXML protected void Quit(ActionEvent event) {
         System.exit(0);        
     }

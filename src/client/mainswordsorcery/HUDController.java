@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -38,8 +39,24 @@ public class HUDController {
     @FXML private MenuBar menuBar;
     @FXML private TextField message_box;
     @FXML private TextArea chat_box;
+    @FXML private ScrollPane map_view;
+    @FXML private ScrollPane mini_map;
 
-    
+    //initialize() is used to connect GUI view elements with model elements
+    public void initialize(){
+        //this adds mouse support to map_view, just a placeholder for now
+        map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
+		public void handle (MouseEvent mouseEvent) {
+			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
+		}
+	});
+        //this adds mouse support to mini_map
+        mini_map.setOnMousePressed(new EventHandler<MouseEvent>() {
+		public void handle (MouseEvent mouseEvent) {
+			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
+		}
+	});
+    }
     @FXML protected void DisplayStack(ActionEvent event) {
         ClearTitles(event);
         int x = Game.getInstance().getNum();

@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import Units.UnitPool;
 
 /**
  *
@@ -25,6 +26,8 @@ import javafx.stage.Stage;
  */
 
 public class Game extends Application {
+    //Global game content
+    UnitPool unitPool;
     
     //Stage setup content
     private Parent main;
@@ -46,7 +49,7 @@ public class Game extends Application {
         
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);
-        stage.setFullScreen(true);
+        stage.setFullScreen(false);
         stage.show();
     }
 
@@ -93,5 +96,26 @@ public class Game extends Application {
         return x;
     }
   
+    //used to initialize scenario. called from MainMenuController::LoadScenario()
+    //scenarioFile will be path/filename of which scenario is being loaded
+    public void initScenario(String scenarioFile){
+        //set to true to load sample scenario
+        //set to false to run actual initScenario
+        boolean testScenario = true;
+        unitPool = UnitPool.getInstance();
+        unitPool.clearPool();
+        if(testScenario){
+            //TODO load simple test scenario
+            
+        }
+        else{
+            //TODO implement real initScenario from scenario file
+        }
+    }
+    //used to initialize network. called from MainMenuController::GotoNetworkLobby()
+    public void initNetwork(){
+        //TODO connect to network
+        
+    }
     
 }
