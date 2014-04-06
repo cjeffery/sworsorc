@@ -33,5 +33,4 @@ public class MainMenuController {
     @FXML protected void Quit(ActionEvent event) {
         System.exit(0);        
     }
-    
 }

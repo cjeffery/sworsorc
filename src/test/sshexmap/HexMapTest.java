@@ -46,6 +46,28 @@ public class HexMapTest extends TestCase {
         assertEquals(HexMap.GetCoordsFromID("0102")[0], 1 );
         assertEquals(HexMap.GetCoordsFromID("0102")[1], 2 );
     }
+    
+    public void testDistance() {
+        //forward
+        assertEquals(HexMap.distance("0101", "3901"), 38);
+        assertEquals(HexMap.distance("0201", "3902"), 37);
+        assertEquals(HexMap.distance("0101", "3920"), 38);
+        assertEquals(HexMap.distance("0201", "3920"), 37);
+        assertEquals(HexMap.distance("1725", "1930"),  6);
+        assertEquals(HexMap.distance("1825", "1930"),  5);
+        assertEquals(HexMap.distance("1725", "1920"),  6);
+        assertEquals(HexMap.distance("1824", "1920"),  5);
+        
+        //reverse
+        assertEquals(HexMap.distance("3901", "0101"), 38);
+        assertEquals(HexMap.distance("3902", "0201"), 37);
+        assertEquals(HexMap.distance("3920", "0101"), 38);
+        assertEquals(HexMap.distance("3920", "0201"), 37);
+        assertEquals(HexMap.distance("1930", "1725"),  6);
+        assertEquals(HexMap.distance("1930", "1825"),  5);
+        assertEquals(HexMap.distance("1920", "1725"),  6);
+        assertEquals(HexMap.distance("1920", "1824"),  5);
+    }
 
     
 }
