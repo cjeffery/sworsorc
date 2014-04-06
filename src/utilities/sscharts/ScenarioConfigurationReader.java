@@ -347,6 +347,7 @@ public class ScenarioConfigurationReader {
      */
     public static void main(String[] args) {
         ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        reader.populatePool();
         reader.print();
     }
 }
