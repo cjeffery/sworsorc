@@ -42,7 +42,12 @@ public class HUDController {
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
 
-    //initialize() is used to connect GUI view elements with model elements
+    /** 
+     * initialize() is used to connect GUI view elements with model elements. 
+     * example code in HUDController.java
+     * 
+     * @author Jay Drage        
+     */
     public void initialize(){
         //this adds mouse support to map_view, just a placeholder for now
         map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -50,13 +55,17 @@ public class HUDController {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
 		}
 	});
-        //this adds mouse support to mini_map
+       //this adds mouse support to mini_map
         mini_map.setOnMousePressed(new EventHandler<MouseEvent>() {
 		public void handle (MouseEvent mouseEvent) {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
 		}
 	});
     }
+    /** 
+     * 
+     * @author Joe Higley      
+     */
     @FXML protected void DisplayStack(ActionEvent event) {
         ClearTitles(event);
         int x = Game.getInstance().getNum();
@@ -73,7 +82,10 @@ public class HUDController {
         Units.getTabs().addAll(ups);
         Targets.getTabs().addAll(tps);
     }
-    
+    /** 
+     * 
+     * @author Joe Higley      
+     */
     public void FillStats(Tab tp){
         ScrollPane scroll = new ScrollPane();
         GridPane grid = new GridPane();
@@ -108,25 +120,38 @@ public class HUDController {
         tp.setContent(scroll);
         
     }
-    
+    /** 
+     * 
+     * @author Joe Higley      
+     */    
     @FXML protected void ClearTitles(ActionEvent event) {
         Units.getTabs().clear();
         Targets.getTabs().clear();
     }
-    
+    /** 
+     * Displays user text in chat_box
+     * 
+     * @author Joe Higley      
+     */    
     @FXML protected void SubmitToChat(ActionEvent event) {
         chat_box.appendText("<username> " + message_box.getText() + "\n");
         message_box.clear();
     }
-    
-    //Return to main menu
+    /** 
+     * Changes current scene to main menu and shows main menu
+     * 
+     * @author Joe Higley      
+     */
     @FXML protected void Quit(ActionEvent event) {
         Stage stage = (Stage) menuBar.getScene().getWindow();
         stage.setScene(Game.getInstance().getMainScene());
         stage.show();    
     }
-    
-    //SolarDisplay code goes here
+    /** 
+     * SolarDisplay code goes here
+     * 
+     * @author Joe Higley      
+     */   
     @FXML protected void ChangeSun(ActionEvent event) {
   //      SolarDisplay.getInstance().function();
   //      sun_img.setImage(new Image("@red_sun6.png")); //place holder

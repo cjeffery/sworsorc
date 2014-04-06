@@ -26,13 +26,15 @@ import Units.UnitPool;
  */
 
 public class Game extends Application {
-    //Global game content
+    /** the singleton unit hash tree UnitPool variable */
     UnitPool unitPool;
     
     //Stage setup content
     private Parent main;
     private Parent hud;
+    /** JavaFX scene for the main menu */
     private Scene mainMenu;
+    /** JavaFX scene for the HUD window */
     private Scene hudWindow;
     
     @Override
@@ -69,35 +71,55 @@ public class Game extends Application {
     public Game() {
            instance = this;
     }
-    // static method to get instance of view
+   /**
+    * static method to get instance of view
+    * 
+    * @author Joe Higley
+    */     
     public static Game getInstance() {
         return instance;
     }  
-    
-    // Setup a scene with the correct fxml layout
+   /**
+    * Setup a scene with the correct fxml layout
+    * 
+    * @author Joe Higley
+    */    
     public Parent createScene(String str) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource(str));
         return root;
     }
-    
-    // Returns HudScene scene
+   /**
+    * Returns HudScene scene
+    * 
+    * @author Joe Higley
+    */     
     public Scene getHudScene(){
         return hudWindow;
     }
-    // Returns Main Menu scene
+   /**
+    * Returns Main Menu scene
+    * 
+    * @author Joe Higley
+    */    
     public Scene getMainScene(){
         return mainMenu;
     }
-    
-    // returns a random number between 0 and 5
+   /**
+    * SolarDisplay code goes here
+    * 
+    * @author Joe Higley
+    */
     public int getNum(){
         Random rand = new Random();
         int x = rand.nextInt(9);
         return x;
     }
-  
-    //used to initialize scenario. called from MainMenuController::LoadScenario()
-    //scenarioFile will be path/filename of which scenario is being loaded
+    /** 
+     * used to initialize scenario. called from MainMenuController::LoadScenario()
+     * 
+     * @author Jay Drage
+     * @param scenarioFile the path/filename of the scenario to be loaded.
+     */
     public void initScenario(String scenarioFile){
         //set to true to load sample scenario
         //set to false to run actual initScenario
@@ -112,10 +134,12 @@ public class Game extends Application {
             //TODO implement real initScenario from scenario file
         }
     }
-    //used to initialize network. called from MainMenuController::GotoNetworkLobby()
+    /** 
+     * used to initialize network. called from MainMenuController::GotoNetworkLobby()
+     * 
+     * @author Jay Drage        
+     */
     public void initNetwork(){
         //TODO connect to network
-        
     }
-    
 }

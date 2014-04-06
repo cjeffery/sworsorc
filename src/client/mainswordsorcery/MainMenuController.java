@@ -20,9 +20,13 @@ import javafx.stage.Stage;
  * @author Joe Higley
  */
 public class MainMenuController {
-    //initialize() is used to connect GUI view elements with model elements
+    /** 
+     * initialize() is used to connect GUI view elements with model elements. 
+     * example code in HUDController.java
+     * @author Jay Drage        
+     */
     public void initialize(){
-        //example code in HUDController.java
+        
     }
     //activated by "Start Game" button
     @FXML protected void GotoGame(ActionEvent event) throws IOException {
