@@ -51,6 +51,49 @@ public class MoveableUnit {
      public void setRace(Race newRace){
         this.race = newRace;
     }
+     /**
+      * Set the race of a MoveableUnit from a string. If the string 
+      * is not part of the {@link Race} enumerated list, it is set to 
+      * null.
+      * 
+      * @author Tyler Jaszkowiak
+      * @param raceStr the string identifying the unit's new race
+      */
+     public void setRace(String raceStr){
+        Race newRace;
+        switch (raceStr) {
+            case "Cronk":
+                newRace = Race.Cronk;
+                break;
+            case "Dragon":
+                newRace = Race.Dragon;
+                break;
+            case "Dwarrows":
+                newRace = Race.Dwarrows;
+                break;
+            case "Elves":
+                newRace = Race.Elves;
+                break;
+            case "Human":
+                newRace = Race.Human;
+                break;
+            case "KillerPenguin":
+                newRace = Race.KillerPenguin;
+                break;
+            case "Orc":
+                newRace = Race.Orc;
+                break;
+            case "Spiders":
+                newRace = Race.Spiders;
+                break;
+            case "SwampCreature":
+                newRace = Race.SwampCreature;
+                break;
+            default:
+                newRace = null;
+        }
+        this.race = newRace;
+    }
      
     public Race getRace(){
         return race;
