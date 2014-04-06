@@ -16,7 +16,7 @@
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
       </content>
     </ScrollPane>
-    <MenuBar layoutX="0.0" layoutY="2.0">
+    <MenuBar fx:id="menuBar" layoutX="0.0" layoutY="2.0">
       <menus>
         <Menu mnemonicParsing="false" text="Menu">
           <items>
