@@ -80,6 +80,14 @@ public abstract class HexMap {
         return res;
     }
     
+    /**
+     * return the distance (in hexagons) between two hexes.
+     * For instance if both hexes are the same the distance will be 0,
+     * while if the hexes are neighbors the distance will be 1.
+     * @param hex1 A hexagon
+     * @param hex2 Another hexagon!
+     * @return the distance between them!
+     **/
     public static int distance(String hex1, String hex2) {
         int[] coords1 = GetCoordsFromID(hex1);
         int[] coords2 = GetCoordsFromID(hex2);
