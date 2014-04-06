@@ -17,6 +17,11 @@ import sshexmap.MapHex;
 public class ITTRoad extends ImprovedTerrainType{
     MapHex hex;
     
+    public ITTRoad()
+    {
+        // fuuuuuuuuuu
+    }
+    
     public ITTRoad(MapHex thisHex){
         this.hex = thisHex;
     }
