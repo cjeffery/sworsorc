@@ -18,7 +18,7 @@
             "moveOrder":1,
             
             "units": {
-              "Horse Archer":2
+              "HorseArcher":2
             },
             
             "characters": [
@@ -28,13 +28,13 @@
             "replacements":"0"
         },
         {
-            "name": "Black Dwarrows",
+            "name": "Dwarrows",
 	    "player":2,
             "provinces": ["The Empire"],
             "setupOrder": 2,
             "moveOrder": 2,
             "units": {
-              "Bowmen":2
+              "Bow":2
             },
             
             "characters": [
