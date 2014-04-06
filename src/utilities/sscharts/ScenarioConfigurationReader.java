@@ -114,6 +114,7 @@ public class ScenarioConfigurationReader {
                 for (int i=0; i<unitQuant; i++) {
                     unit = (ArmyUnit) CreateObject(objectType);
                     unit.setRace(nation);
+                    pool.addUnit(player, unit); //TODO add location 
                 }
                 it.remove();
             }
