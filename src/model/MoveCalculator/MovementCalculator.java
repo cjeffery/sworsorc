@@ -7,7 +7,11 @@ package MoveCalculator;
 import Units.MoveableUnit;
 import java.util.ArrayList;
 import sshexmap.MapHex;
-import ssterrain.HexEdge;
+import ssterrain.ITTBridge;
+import ssterrain.ITTDragonTunnel;
+import ssterrain.ITTFord;
+import ssterrain.ITTRoad;
+import ssterrain.ITTTrail;
 import ssterrain.TerrainType;
 
 /**
@@ -87,7 +91,7 @@ public class MovementCalculator
                         getValidMoves( movingUnit, neighbors.get(i), 
                                 moveAllowance - moveCost, validHexes);
                         break;
-                    case 1 : 
+                    case 1 : case 3 : 
                         // Recurse on neighbor i with edge cost mod to movement
                         getValidMoves( movingUnit, neighbors.get(i), 
                                 moveAllowance - edgeCost, validHexes );
@@ -224,12 +228,37 @@ public class MovementCalculator
     public static double getEdgeCost(MapHex sourceHex, MapHex destinationHex,
                                 int sourceEdgeDirection ) 
     {
-        double edgeCost = 0;
+        double edgeCost = 1;
+
+        /* here are some attempts at success -- we need better stuff though
         int destEdgeDirection = (sourceEdgeDirection + 3)%6;
-        HexEdge sourceEdge = sourceHex.getEdge(sourceEdgeDirection);
+        ITTBridge bridge = new ITTBridge();
+        ITTDragonTunnel DTC = new ITTDragonTunnel();
+        ITTFord ford = new ITTFord();
+        ITTRoad road = new ITTRoad();
+        ITTTrail trail = new ITTTrail();
         
+        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(bridge) )
+        {
+            return 1;
+        }
+        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(DTC) )
+        {
+            return 1;
+        }
+        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(ford) )
+        {
+            return 3;
+        }
+        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(road) )
+            return 1;
+        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(trail) )
+            return 1;
+        
+        */
         // get HexEdgeType enum for sourceedge. switch on it...return according
         // to match against dest edge HexEdgeType. thanks for the enum...
+        
         
         
 

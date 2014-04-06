@@ -16,6 +16,11 @@ import sshexmap.MapHex;
 public class ITTFord extends ImprovedTerrainType{
     MapHex hex;
     
+    public ITTFord()
+    {
+        // bar bar bar
+    }
+    
     public ITTFord(MapHex thisHex){
         this.hex = thisHex;
     }

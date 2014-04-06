@@ -49,6 +49,8 @@ public class MapHex extends Hex{
      * An array of size 6 of HexEdge objects
      */
     private ArrayList<HexEdge> edgeList;
+    // If only this was here and working:
+    //private ArrayList<HexEdgeType> edgeTypes;
 
     /**
      * Don't actually use this constructor >_> except for mockups

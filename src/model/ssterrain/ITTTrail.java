@@ -17,6 +17,11 @@ import sshexmap.MapHex;
 public class ITTTrail extends ImprovedTerrainType{
     MapHex hex;
             
+    public ITTTrail()
+    {
+        // dirka dirka
+    }
+    
     public ITTTrail(MapHex thisHex){
         this.hex = thisHex;
     }

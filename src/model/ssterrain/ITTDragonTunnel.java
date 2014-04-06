@@ -17,6 +17,11 @@ import sshexmap.MapHex;
 public class ITTDragonTunnel extends ImprovedTerrainType{
     MapHex hex;
     
+    public ITTDragonTunnel()
+    {
+        // nur nur nur
+    }
+    
     public ITTDragonTunnel(MapHex thisHex){
         this.hex = thisHex;
     }
