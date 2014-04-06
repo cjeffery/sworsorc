@@ -99,15 +99,14 @@ public class MovementCalculator
             }                        
         } else if( moveAllowance == 0 ) // move is exactly legal, add & return
         {
-            
+            // do not recurse here - end of the line
             validHexes.add(currentHex);
             return;
-            // do not recurse here - end of the line
             
         } else if( moveAllowance < 0 ) // ILLEGAL!!!! DO NOT ADD!!!
         {
-            return;
             // do not add, do not recurse, moving here is illegal
+            return;
         }
     }
     
