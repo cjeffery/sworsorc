@@ -14,14 +14,11 @@
             "name": "Elves",
 	    "player":1,
             "provinces": ["Vynar"],
-            "setupOrder":3,
-            "moveOrder":3,
+            "setupOrder":1,
+            "moveOrder":1,
             
             "units": {
-              "Horse Archer":2,
-              "Light Horse":6,
-              "Light Sword":4,
-              "Light Bow":4
+              "Horse Archer":2
             },
             
             "characters": [
@@ -33,13 +30,11 @@
         {
             "name": "Black Dwarrows",
 	    "player":2,
-            "provinces": ["The Empire","Capella"],
-            "setupOrder": 1,
-            "moveOrder": 1,
+            "provinces": ["The Empire"],
+            "setupOrder": 2,
+            "moveOrder": 2,
             "units": {
-              "Heavy Axe":11,
-              "Bowmen":2,
-              "Medium Spear":4
+              "Bowmen":2
             },
             
             "characters": [

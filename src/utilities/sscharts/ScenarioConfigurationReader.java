@@ -1,11 +1,13 @@
 package sscharts;
 
+import static ObjectCreator.ObjectCreator.CreateObject;
 import Units.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -30,21 +32,18 @@ import org.json.simple.parser.*;
 
 public class ScenarioConfigurationReader {
     
-    UnitPool pool;                      // the pool of units in the scenario
-                                        // to be accessed by main Game class
-    
      List<String> nationNames;
      List<String> neutralNames;
 
     //Information storage for each nation:
      
     //The player nation or neutral name is the key for these hashmaps
-     Map<String, Integer> controllingPlayers;   //name -> controllingPlayer
-     Map<String, Integer> setupOrders;          //name -> order
-     Map<String, Integer> moveOrders;           //name -> order
-     Map<String, List<String>> provinces;       //name -> list of province names
-     Map<String, List<String>> characters;      //name -> list of character names
-     Map<String, Map<String, Integer>> units;   //name -> (unitName -> unitCount)
+     Map<String, Integer> controllingPlayers;   //nation -> controllingPlayer
+     Map<String, Integer> setupOrders;          //nation -> order
+     Map<String, Integer> moveOrders;           //nation -> order
+     Map<String, List<String>> provinces;       //nation -> list of province names
+     Map<String, List<String>> characters;      //nation -> list of character names
+     Map<String, Map<String, Integer>> units;   //nation -> (unitName -> unitCount)
      Map<String, String> replacements;          //nation -> description of replacement
      Map<String, String> reinforcements;        //nation -> description of reinforcements
 
@@ -90,26 +89,35 @@ public class ScenarioConfigurationReader {
     }
     
     /**
-     * This method, which is incomplete, is intended to populate and return a
+     * This method, which is incomplete, is intended to populate the singleton
      * {@link UnitPool} for use in the main Game class. 
      * 
      * @author Tyler Jaszkowiak
-     * @return the pool of all units in this scenario at the game's start
      * @see UnitPool
      */
-    public UnitPool populatePool() {
+    public void populatePool() {
+        UnitPool pool = UnitPool.getInstance();
         for (String nation : getNationNames() ) {
             int player = getControllingPlayer(nation);
-            getUnits(nation);
-            /* iterate through and add to pool - fix this code to do that....
-            for (Object entry : nationUnitObject.entrySet()) {
-                    Map.Entry en = (Map.Entry) entry;
-                    String unitName = (String) en.getKey();
-                    int unitCount = ((Long) en.getValue()).intValue();
-                    nmap.put(unitName, unitCount);
-                }*/
+            String unitType;
+            String objectType;
+            int unitQuant;
+            ArmyUnit unit;
+            // iterate through the map of this player's units
+            Map<String, Integer> playerUnits = getUnits(nation);
+            Iterator it = playerUnits.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pairs = (Map.Entry)it.next();
+                unitType = (String) pairs.getKey();
+                objectType = "Units." + unitType;
+                unitQuant = (int) pairs.getValue();
+                for (int i=0; i<unitQuant; i++) {
+                    unit = (ArmyUnit) CreateObject(objectType);
+                    unit.setRace(nation);
+                }
+                it.remove();
+            }
         }
-        return pool;
     }
     
     /**
@@ -337,7 +345,7 @@ public class ScenarioConfigurationReader {
      * @param args there should be no command line args
      */
     public static void main(String[] args) {
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/2_Dwarrows.json");
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
         reader.print();
     }
 }
