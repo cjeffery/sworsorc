@@ -15,7 +15,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -27,6 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import solardisplay.SolarDisplay;
  
@@ -35,6 +38,7 @@ public class HUDController {
     @FXML private TabPane Targets;
     @FXML private ImageView sun_img;
     @FXML private Text RedSun;
+    @FXML private MenuBar menuBar;
     
     @FXML protected void DisplayStack(ActionEvent event) {
         ClearTitles(event);
@@ -93,8 +97,11 @@ public class HUDController {
         Targets.getTabs().clear();
     }
     
+    //Return to main menu
     @FXML protected void Quit(ActionEvent event) {
-        System.exit(0);        
+        Stage stage = (Stage) menuBar.getScene().getWindow();
+        stage.setScene(Game.getInstance().getMainScene());
+        stage.show();    
     }
     
     //SolarDisplay code goes here
