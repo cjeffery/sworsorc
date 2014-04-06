@@ -7,6 +7,7 @@ package MoveCalculator;
 import Units.MoveableUnit;
 import java.util.ArrayList;
 import sshexmap.MapHex;
+import ssterrain.HexEdge;
 import ssterrain.TerrainType;
 
 /**
@@ -69,7 +70,7 @@ public class MovementCalculator
             for( int i = 0; i < neighbors.size(); i++ )
             {
                 // Get edge cost of moving from current hex to neighbor i
-                edgeCost = getEdgeCost( currentHex, neighbors.get(i) );
+                edgeCost = getEdgeCost( currentHex, neighbors.get(i) , i);
                 
                 // Switch case determines type of edge - (-1) is invalid, 0 
                 // means no bonus from edge, and 1 means the move costs one
@@ -220,9 +221,17 @@ public class MovementCalculator
      * @return edgeCost 
      * @author Keith and Ian
      */
-    public static double getEdgeCost(MapHex sourceHex, MapHex destinationHex) {
-        // TODO
-        double edgeCost = 1;
+    public static double getEdgeCost(MapHex sourceHex, MapHex destinationHex,
+                                int sourceEdgeDirection ) 
+    {
+        double edgeCost = 0;
+        int destEdgeDirection = (sourceEdgeDirection + 3)%6;
+        HexEdge sourceEdge = sourceHex.getEdge(sourceEdgeDirection);
+        
+        // get HexEdgeType enum for sourceedge. switch on it...return according
+        // to match against dest edge HexEdgeType. thanks for the enum...
+        
+        
 
         return edgeCost;
     }
