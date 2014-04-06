@@ -1,0 +1,57 @@
+{
+    "scenarioName": "The Dummy Scenario",
+    "gameLength":3,
+    "numberOfPlayers":2,
+    
+    "sunTrackSetting" : {
+        "yellow":1,
+        "blue":"F",
+        "red":"L"
+    },
+    
+    "nations": [
+        {
+            "name": "Elves",
+	    "player":1,
+            "provinces": ["Vynar"],
+            "setupOrder":3,
+            "moveOrder":3,
+            
+            "units": {
+              "Horse Archer":2,
+              "Light Horse":6,
+              "Light Sword":4,
+              "Light Bow":4
+            },
+            
+            "characters": [
+                "Dalmilandril"
+            ],
+	    "reinforcements":"0",
+            "replacements":"0"
+        },
+        {
+            "name": "Black Dwarrows",
+	    "player":2,
+            "provinces": ["The Empire","Capella"],
+            "setupOrder": 1,
+            "moveOrder": 1,
+            "units": {
+              "Heavy Axe":11,
+              "Bowmen":2,
+              "Medium Spear":4
+            },
+            
+            "characters": [
+                "Paladin Glade"
+            ],
+	    "reinforcements":"0",
+            "replacements":"0"
+        }
+    ],
+    
+    "neutrals": [
+        
+    ]
+
+}
