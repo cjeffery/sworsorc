@@ -26,13 +26,19 @@ import javafx.stage.Stage;
 
 public class Game extends Application {
     
+    //Stage setup content
+    private Parent main;
+    private Parent hud;
+    private Scene mainMenu;
+    private Scene hudWindow;
+    
     @Override
     public void start(Stage stage) throws IOException {
-        Parent main = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        Parent hud = FXMLLoader.load(getClass().getResource("hud.fxml"));
+        main = createScene("MainMenu.fxml");
+        hud = createScene("hud.fxml");
         
-        Scene mainMenu = new Scene(main);
-        Scene hudWindow = new Scene(hud);
+        mainMenu = new Scene(main);
+        hudWindow = new Scene(hud);
         
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);
@@ -60,6 +66,21 @@ public class Game extends Application {
     public static Game getInstance() {
         return instance;
     }  
+    
+    // Setup a scene with the correct fxml layout
+    public Parent createScene(String str) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource(str));
+        return root;
+    }
+    
+    // Returns HudScene scene
+    public Scene getHudScene(){
+        return hudWindow;
+    }
+    // Returns Main Menu scene
+    public Scene getMainScene(){
+        return mainMenu;
+    }
     
     // returns a random number between 0 and 5
     public int getNum(){

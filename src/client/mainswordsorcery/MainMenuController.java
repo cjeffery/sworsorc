@@ -22,11 +22,9 @@ import javafx.stage.Stage;
 public class MainMenuController {
     
     @FXML protected void GotoGame(ActionEvent event) throws IOException {
-        Node node=(Node) event.getSource();
+        Node node = (Node) event.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("hud.fxml"));/* Exception */
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+        stage.setScene(Game.getInstance().getHudScene());
         stage.show();
     }
     
