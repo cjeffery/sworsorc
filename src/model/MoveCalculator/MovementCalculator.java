@@ -30,11 +30,15 @@ public class MovementCalculator
 
     
     /** 
-     * This may be a new version, but maybe not...testing
+     * This method returns void, but takes an empty ArrayList of MapHex objects
+     * to be filled (by reference) during the recursive calls of this method. 
+     * The ArrayList will (after final return) hold all valid hex moves for the 
+     * moving unit, starting from the currentHex. (\/)..(;,,,;)..(\/)
      * @param movingUnit
      * @param startHex
      * @param moveAllowance
      * @param validHexes 
+     * @author Keith and Ian
      */
     public static void getValidMoves(MoveableUnit movingUnit, MapHex currentHex,
             double moveAllowance, ArrayList<MapHex> validHexes) 
@@ -55,31 +59,40 @@ public class MovementCalculator
             }
         }
         
-        // Yo yo - this is the case where the move was legal :D
+        // This is the case where the move was legal :D
         if( moveAllowance > 0 )
         {            
+            // Add the current hex
             validHexes.add(currentHex);
-            // recurse on neighbors here -- to be added
 
+            // Iterate over neighbors and recurse on them.
             for( int i = 0; i < neighbors.size(); i++ )
             {
+                // Get edge cost of moving from current hex to neighbor i
                 edgeCost = getEdgeCost( currentHex, neighbors.get(i) );
                 
+                // Switch case determines type of edge - (-1) is invalid, 0 
+                // means no bonus from edge, and 1 means the move costs one
+                //                     1 = (road/trail)
                 switch ( (int)edgeCost ) 
                 {
                     case -1 :                         
-                        return;
+                        return; // nothing to do here
                     case 0 : 
+                        // get the terrain type of the neighbor, determine cost
                         destinationTerrainType = neighbors.get(i).getTerrainType();
                         moveCost = destinationTerrainType.getMovementCost(movingUnit);
+                        // recurse on neighbor i with modified move cost
                         getValidMoves( movingUnit, neighbors.get(i), 
                                 moveAllowance - moveCost, validHexes);
                         break;
                     case 1 : 
+                        // Recurse on neighbor i with edge cost mod to movement
                         getValidMoves( movingUnit, neighbors.get(i), 
                                 moveAllowance - edgeCost, validHexes );
                         break;
                     default :
+                        // just a testing error message.
                         System.out.println("Failure in Switch in MovementCalculator.getValidMoves");
                 }
                 
@@ -216,7 +229,6 @@ public class MovementCalculator
     }
 
     /**
-     * Keith and Ian
      * This method takes a possible destination hex and a unit, who's valid moves
      * are being calculated, and determines if there are enemy units in that 
      * hex. If there are, the move is illegal and false is returned. Otherwise,
@@ -226,6 +238,7 @@ public class MovementCalculator
      * @param destinationHex
      * @param movingUnit
      * @return enemyOccupied
+     * @author Keith and Ian
      */
     public static boolean isEnemyOccupiedHex(MapHex destinationHex,
             MoveableUnit movingUnit) {
