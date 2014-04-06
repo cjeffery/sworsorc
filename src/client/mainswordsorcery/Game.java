@@ -37,7 +37,11 @@ public class Game extends Application {
         main = createScene("MainMenu.fxml");
         hud = createScene("hud.fxml");
         
+        String mainCSS = getClass().getResource("mainMenu.css").toExternalForm();
+        
         mainMenu = new Scene(main);
+        mainMenu.getStylesheets().add(mainCSS);
+        
         hudWindow = new Scene(hud);
         
         stage.setTitle("Scenario");

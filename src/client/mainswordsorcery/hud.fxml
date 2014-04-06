@@ -165,7 +165,7 @@
       </rowConstraints>
     </GridPane>
     <Separator layoutX="1010.0" layoutY="3.0" minWidth="0.0" orientation="VERTICAL" prefHeight="838.0" prefWidth="0.0" />
-    <TextArea fx:id="chat_box" editable="false" focusTraversable="false" layoutX="10.0" layoutY="538.0" opacity="1.0" prefHeight="189.0" prefWidth="411.0" text="UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text" visible="true" wrapText="true" />
-    <TextField fx:id="message_box" layoutX="10.0" layoutY="734.0" prefWidth="411.0" text="Your Message" />
+    <TextArea fx:id="chat_box" editable="false" focusTraversable="false" layoutX="10.0" layoutY="538.0" opacity="1.0" prefHeight="189.0" prefWidth="411.0" text="" visible="true" wrapText="true" />
+    <TextField fx:id="message_box" layoutX="10.0" layoutY="734.0" onAction="#SubmitToChat" prefWidth="411.0" text="Your Message" />
   </children>
 </AnchorPane>

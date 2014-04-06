@@ -11,19 +11,16 @@ package mainswordsorcery;
  * @author Joe Higley
  */
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -39,6 +36,9 @@ public class HUDController {
     @FXML private ImageView sun_img;
     @FXML private Text RedSun;
     @FXML private MenuBar menuBar;
+    @FXML private TextField message_box;
+    @FXML private TextArea chat_box;
+
     
     @FXML protected void DisplayStack(ActionEvent event) {
         ClearTitles(event);
@@ -95,6 +95,11 @@ public class HUDController {
     @FXML protected void ClearTitles(ActionEvent event) {
         Units.getTabs().clear();
         Targets.getTabs().clear();
+    }
+    
+    @FXML protected void SubmitToChat(ActionEvent event) {
+        chat_box.appendText("<username> " + message_box.getText() + "\n");
+        message_box.clear();
     }
     
     //Return to main menu
