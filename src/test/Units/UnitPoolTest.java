@@ -67,7 +67,7 @@ public class UnitPoolTest extends TestCase {
     
     //Update a unit position
     public void test03() {
-        ArrayList<String> list1, list2;
+        ArrayList<String> list1, list2, list3;
         ArmyUnit unit;
         
         UnitPool pool = UnitPool.getInstance();
@@ -85,6 +85,26 @@ public class UnitPoolTest extends TestCase {
         assertTrue(1 == list2.size());
         
         pool.addMove(unit, "0102");
+        pool.addMove(unit, "0103");
+        
+        list1 = pool.getUnitsInHex("0103");
+        list2 = pool.getUnitHexMoves(list1.get(list1.size() - 1));
+        assertTrue(1 == list1.size());
+        assertTrue(3 == list2.size());
+        
+        pool.addUnit(1,new Zeppelin(),"0102");
+        list1 = pool.getUnitsInHex("0102");
+        unit = pool.getUnit(list1.get(0));// If null, it would've thrown a null pointer exception.
+        
+        pool.addMove(unit, "0103");
+        
+        list1 = pool.getUnitsInHex("0103");
+        list2 = pool.getUnitHexMoves(list1.get(0));
+        list3 = pool.getUnitHexMoves(list1.get(1));
+        //unit = pool.getUnit(list1.get(0));// If null, it would've thrown a null pointer exception.
+        assertTrue(2 == list1.size());
+        assertTrue(3 == list2.size());
+        assertTrue(2 == list3.size());
         
 }
     
