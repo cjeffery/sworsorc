@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 
 /**
  * In UnitPool.java you need to make the pool variable nonprivate in order to 
- * successfully run the following tests.
+ * successfully run the junit tests.
  * 
  * 
  * @author David
@@ -65,9 +65,9 @@ public class UnitPoolTest extends TestCase {
         
     }
     
-    //Update a unit position
+    //Tests update a unit position, test end of movement phase. 
     public void test03() {
-        ArrayList<String> list1, list2, list3;
+        ArrayList<String> list1, list2, list3, list4;
         ArmyUnit unit;
         
         UnitPool pool = UnitPool.getInstance();
@@ -92,6 +92,10 @@ public class UnitPoolTest extends TestCase {
         assertTrue(1 == list1.size());
         assertTrue(3 == list2.size());
         
+        pool.addUnit(2,new Bow(),"0101");
+        list1 = pool.getUnitsInHex("0101");
+        
+        
         pool.addUnit(1,new Zeppelin(),"0102");
         list1 = pool.getUnitsInHex("0102");
         unit = pool.getUnit(list1.get(0));// If null, it would've thrown a null pointer exception.
@@ -101,11 +105,51 @@ public class UnitPoolTest extends TestCase {
         list1 = pool.getUnitsInHex("0103");
         list2 = pool.getUnitHexMoves(list1.get(0));
         list3 = pool.getUnitHexMoves(list1.get(1));
+        
         //unit = pool.getUnit(list1.get(0));// If null, it would've thrown a null pointer exception.
         assertTrue(2 == list1.size());
         assertTrue(3 == list2.size());
         assertTrue(2 == list3.size());
         
-}
+        list1 = pool.getUnitsInHex("0101");
+        list4 = pool.getUnitHexMoves(list1.get(0));
+        
+        pool.endMovementPhase();
+        
+        assertTrue(1 == list2.size());
+        assertTrue(1 == list3.size());
+        assertTrue(1 == list4.size());
+        
+    }
+    
+    public void test4(){
+        ArrayList<String> list1, list2, list3, list4;
+        ArmyUnit unit;
+        String currentHex;
+        
+        UnitPool pool = UnitPool.getInstance();
+        pool.clearPool();
+        assertTrue(pool != null);
+        
+        pool.addUnit(1,new LightSword(),"0101");
+        
+        list1 = pool.getUnitsInHex("0101");
+        list2 = pool.getUnitHexMoves(list1.get(list1.size() - 1));
+        unit = pool.getUnit(list1.get(0));// If null, it would've thrown a null pointer exception.
+        assertTrue(1 == list1.size());
+        assertTrue(1 == list2.size());
+        
+        pool.addMove(unit, "0102");
+        pool.addMove(unit, "0103");
+        pool.addMove(unit, "0104");
+        
+        assertTrue(4 == list2.size());
+        list1 = pool.getUnitsInHex("0104");
+        pool.undoMove(list1.get(0));
+        list2 = list2 = pool.getUnitHexMoves(list1.get(list1.size() - 1));
+        
+        assertTrue(3 == list2.size());
+        
+    }
     
 }

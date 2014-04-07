@@ -8,6 +8,7 @@ package Units;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -229,9 +230,36 @@ public class UnitPool {
      * This method is only used for junit tests. It ensures a empty unit pool.
      * It should not be used in the game for any reason.
      */
-    
     public void clearPool(){
         pool.clear();
+    }
+    
+    /**
+     * This function sets up the units for their next movement phase. It sets 
+     * the only hex in the list to the last hex entered.
+     */
+    public void endMovementPhase(){
+        
+        for (Map.Entry<String, ArrayList<String>> entry : this.unitMove.entrySet()){
+            if (entry.getValue().size() > 1){
+                 
+                int temp = entry.getValue().size();
+                for (int i = 0; i <= (temp - 2); i++)
+                   entry.getValue().remove(0);
+            }   
+        }
+    }
+
+    public String undoMove(String unitID){
+        
+        if (this.unitMove.get(unitID).size() > 1){
+            
+            unitMove.get(unitID).remove(unitMove.get(unitID).size() - 1);
+            this.getUnit(unitID).setLocation(unitMove.get(unitID).get(unitMove.get(unitID).size()-1));
+            
+        }
+        
+        return this.unitMove.get(unitID).get(unitMove.get(unitID).size() - 1);
     }
     
 }
