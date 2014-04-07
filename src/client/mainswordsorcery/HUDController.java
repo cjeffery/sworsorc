@@ -62,6 +62,14 @@ public class HUDController {
 		}
 	});
     }
+    
+    @FXML protected void DisplayUnits(ActionEvent event) {
+        
+    }
+    
+    @FXML protected void DisplayTargets(ActionEvent event) {
+        
+    }
     /** 
      * 
      * @author Joe Higley      

@@ -46,6 +46,7 @@
                     <Font name="System Bold" size="14.0" fx:id="x2" />
                   </font>
                 </Text>
+                <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#DisplayUnits" text="Stack" GridPane.columnIndex="0" GridPane.rowIndex="0" />
               </children>
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -121,6 +122,7 @@
               <children>
                 <TabPane fx:id="Targets" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                 <Text font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Target" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Button mnemonicParsing="false" onAction="#DisplayTargets" text="Target" GridPane.columnIndex="0" GridPane.rowIndex="0" />
               </children>
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
