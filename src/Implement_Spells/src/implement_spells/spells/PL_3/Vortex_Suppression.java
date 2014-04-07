@@ -53,7 +53,7 @@ public final class Vortex_Suppression {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 10;
         // get spells range
         return range;
     }
@@ -65,17 +65,14 @@ public final class Vortex_Suppression {
         return distance;        
     }
     
-    public void getTarget(){
+    public void getTargets(){
         // this function is used to get the target to cast spell
     }
     
     public boolean checkLimits(){
-        boolean limit = false;
+        boolean limit = true;
         
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
+        //no limits for this spell        
         return limit; 
     }
     
@@ -84,8 +81,11 @@ public final class Vortex_Suppression {
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
             // perform
+            getTargets();
             if(getDistance() <= getRange()){
                 //peform spell
+                //destroy each vortex that is specified(remove from map) 
+                //decrease mana by 2 for each vortex
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

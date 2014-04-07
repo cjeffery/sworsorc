@@ -51,18 +51,10 @@ public final class Enhance_Stature {
         return mana;
     }
     
-    //return spell range
-    public int getRange(){
-        int range = 0;
-        // get spells range
-        return range;
-    }
-    
-    //get distance to selected unit
-    public int getDistance(){
-        int distance = 0;
-        //get distance
-        return distance;        
+    public int getMana(){
+        int mana = 0;
+        //get characters mana available
+        return mana;
     }
     
     public void getTarget(){
@@ -79,14 +71,25 @@ public final class Enhance_Stature {
         return limit; 
     }
     
+    public int calculateMana(){
+        int change = 0;
+        //multiply number of game turns that the diplomacy rating is to be 
+        //increased by the number of Points by which it is to be increased.
+        
+        return change;
+    }
+    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
             // perform
-            if(getDistance() <= getRange()){
-                //peform spell
+            if(calculateMana() <= getMana()){
+                getTarget();
+                //increase diplomacy rating on desired target
+                //decrease mana of casting character
             }
+
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
             // char or unit info, 

@@ -55,6 +55,7 @@ public final class Monsoon {
     public int getRange(){
         int range = 0;
         // get spells range
+        //N/A for this spell
         return range;
     }
     
@@ -62,6 +63,7 @@ public final class Monsoon {
     public int getDistance(){
         int distance = 0;
         //get distance
+        //N/A for this spell
         return distance;        
     }
     
@@ -70,13 +72,22 @@ public final class Monsoon {
     }
     
     public boolean checkLimits(){
-        boolean limit = false;
+        boolean limit = true;
         
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
+        //No limits always return true
         return limit; 
+    }
+    
+    public void doubleMovementCost(){
+        //double movement cost for all units
+    }
+    
+    public void makeImpassable(){
+        //make stream hexsides impassable
+    }
+    
+    public void applyRandomEvent(){
+        //apply all effects of random event "H" immediately
     }
     
     public void performSpellEffects(){
@@ -84,9 +95,10 @@ public final class Monsoon {
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
             // perform
-            if(getDistance() <= getRange()){
-                //peform spell
-            }
+            doubleMovementCost();
+            makeImpassable();
+            applyRandomEvent();
+            
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
             // char or unit info, 

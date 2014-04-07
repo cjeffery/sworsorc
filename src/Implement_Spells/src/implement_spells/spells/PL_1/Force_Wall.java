@@ -52,7 +52,7 @@ public final class Force_Wall {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 7;
         // get spells range
         return range;
     }
@@ -64,8 +64,8 @@ public final class Force_Wall {
         return distance;        
     }
     
-    public void getTarget(){
-        // this function is used to get the target to cast spell
+    public void getHexSides(){
+        // get character input on which hex sides they want tomake impassable
     }
     
     public boolean checkLimits(){
@@ -84,7 +84,8 @@ public final class Force_Wall {
         if(checkLimits() == true && checkMana() == true){
             // perform
             if(getDistance() <= getRange()){
-                //peform spell
+                getHexSides();
+                //make specified edges impassable
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

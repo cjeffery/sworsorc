@@ -53,7 +53,7 @@ public final class River_Crossing {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 10;
         // get spells range
         return range;
     }
@@ -79,6 +79,10 @@ public final class River_Crossing {
         return limit; 
     }
     
+    public void getDesiredHexes(){
+        //get desired hexes to make passable
+    }
+    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
@@ -86,6 +90,10 @@ public final class River_Crossing {
             // perform
             if(getDistance() <= getRange()){
                 //peform spell
+                getDesiredHexes();
+                //make specified hexes passable
+                //Decrease characters mana
+                
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
