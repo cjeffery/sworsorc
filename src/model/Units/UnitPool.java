@@ -38,7 +38,8 @@ public class UnitPool {
     }
     
     /**
-     
+     * Used to add a new unit to the pool with an initial location.
+     * 
      * @param location : the hex the unit occupies. 
      */        
     public void addUnit(int playerID, ArmyUnit unit, String location){
@@ -82,7 +83,7 @@ public class UnitPool {
     }
     
     /**
-     * this adds a unit to the hex list tree.
+     * This adds a unit to the hex list tree.
      * 
      * @param tree : this should be hexList tree.
      * @param unit : the unit to be added
@@ -101,7 +102,7 @@ public class UnitPool {
     }
     
     /**
-     * this adds a unit to the hex move tree.
+     * This adds a unit to the hex move tree.
      * 
      * @param tree : this should be hex move tree.
      * @param unit : the unit whose new location is being added to 
