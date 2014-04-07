@@ -51,7 +51,7 @@ public class Game extends Application {
         
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);
-        stage.setFullScreen(false);
+        stage.setFullScreen(true);
         stage.show();
     }
 
