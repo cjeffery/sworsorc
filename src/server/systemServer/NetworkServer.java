@@ -2,45 +2,56 @@ package systemServer;
 
 import java.net.*;
 import java.io.*;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.Map;
 
 public class NetworkServer {
 
-    //TODO: have clientObjects remove themselves on disconnect:
     protected static List<ClientObject> clientObjects; //"Packaged sockets"
     protected static List<Lobby> lobbies;
-    
-    
+
     protected static int DEFAULT_PORT = 25565;
     protected static String DEFAULT_IP = "76.178.139.129";
 
-    public static void createNewLobby(String name){
-        //TODO: Enforce unique names?
-       Lobby lobby = new Lobby(name);
-       lobbies.add(lobby);
+    public static boolean canCreateNewLobby(String name) {
+        //check if lobby name is unique.
+        //we might have to add other conditions?
+
+        for (Lobby lobby : lobbies) {
+            if (lobby.name.equals(name)) {
+                return false;
+            }
+        }
+        return true;
     }
-    
-    public static void joinLobby(String lobbyName, ClientObject client){
-        for (Lobby l : lobbies){
-            if (l.name.equals(lobbyName)){
+
+    public static void createNewLobby(String name) {
+        //TODO: Enforce unique names?
+        Lobby lobby = new Lobby(name);
+        lobbies.add(lobby);
+    }
+
+    public static void joinLobby(String lobbyName, ClientObject client) {
+        for (Lobby l : lobbies) {
+            if (l.name.equals(lobbyName)) {
                 l.join(client);
                 return;
             }
         }
         //If we're here, we didn't find the name!
+        //TODO: make a canJoinLobby() function or request/deny messages
+        //(e.g. what if the game is in session?)
         System.err.println("Error: Couldn't find lobby: " + lobbyName + " to join.");
     }
-    
-    public static void leaveLobby(ClientObject client){
-        
-        for (Lobby l : lobbies){
-            if (l.lobbyClients.contains(client)){
+
+    public static void leaveLobby(ClientObject client) {
+
+        for (Lobby l : lobbies) {
+            if (l.lobbyClients.contains(client)) {
                 l.leave(client);
-                if (l.lobbyClients.isEmpty()){
+                if (l.lobbyClients.isEmpty()) {
                     //For now, just kill lobbies when everyone leaves
                     lobbies.remove(l);
                 }
@@ -50,39 +61,38 @@ public class NetworkServer {
         //If we're here, we didn't find the name!
         System.err.println("Requested to leave lobby from client not in lobby");
     }
-    
-    public static List<String> getAllUserNames(){
+
+    public static List<String> getAllUserNames() {
         List<String> handles = new ArrayList<>();
         for (ClientObject obj : NetworkServer.clientObjects) {
-             handles.add(obj.getHandle());
+            handles.add(obj.getHandle());
         }
         return handles;
     }
-    
+
     //Forward the message to all ClientObjects, which will send to their Clients:
     public static void sendToAllClients(List<String> message) {
         for (ClientObject client : clientObjects) {
-             client.send(message);           
+            client.send(message);
         }
     }
-    
-    public static void clientDisconnected(int clientId){
+
+    public static void clientDisconnected(int clientId) {
         //clientObject will call this on a planned or unplanned disconnection
-        
+
         ClientObject dearlyDeparted = null;
-        
-        for (int i = 0; i < clientObjects.size(); i++){
-            if (clientObjects.get(i).clientID == clientId){
+
+        for (int i = 0; i < clientObjects.size(); i++) {
+            if (clientObjects.get(i).clientID == clientId) {
                 dearlyDeparted = clientObjects.get(i);
                 break;
             }
         }
-        
+
         leaveLobby(dearlyDeparted);
         clientObjects.remove(dearlyDeparted);
         sendToAllClients(MessageUtils.makeDisconnectAnnouncementMessage(dearlyDeparted.getHandle()));
-        
-        
+
     }
 
     public static void main(String args[]) {
@@ -127,39 +137,65 @@ public class NetworkServer {
 }
 
 class Lobby {
+
     List<ClientObject> lobbyClients;
-    static int lobbyCounter = 0;
+
+    static int lobbyCounter = 0; //used to assign unique lobbyId's
     int lobbyId;
+
     String name;
-    
-    public Lobby(String name){
+
+    ClientObject current; //Whose turn is it? See: advanceTurn()
+
+    public void beginGame() {
+        //start with the first player in list:
+        current = lobbyClients.get(0);
+        sendToEntireLobby(MessageUtils.makeNextTurnMessage(current.getHandle(), current.clientID));
+    }
+
+    public Lobby(String name) {
         lobbyClients = new ArrayList<>();
+
         this.name = name;
         this.lobbyId = lobbyCounter++;
     }
-    
-    public void sendToEntireLobby(List<String> message){
-        for (ClientObject client: lobbyClients){
+
+    public void sendToEntireLobby(List<String> message) {
+        for (ClientObject client : lobbyClients) {
             client.send(message);
         }
     }
-    
-    public List<String> getUserNames(){
+
+    public List<String> getUserNames() {
         List<String> handles = new ArrayList<>();
-        for (ClientObject client : lobbyClients){
+        for (ClientObject client : lobbyClients) {
             handles.add(client.getHandle());
         }
         return handles;
     }
-    
-    public void join(ClientObject client){
+
+    public void join(ClientObject client) {
         lobbyClients.add(client);
+        client.setCurrentLobby(this);
         //TODO: announce join to other connected clients
     }
-    
-    public void leave(ClientObject client){
+
+    public void leave(ClientObject client) {
         lobbyClients.remove(client);
         //TODO: announce leave to other connected clients
+    }
+
+    public void advanceGameTurn() {
+        
+        //Moves the game turn in a "cycle" using the lobbyClients list
+        //TODO: we can set the order of turn by rearranging the order of the lobbyClient list
+        int nextIndex = lobbyClients.indexOf(current) + 1;
+        if (nextIndex == lobbyClients.size()) {
+            nextIndex = 0; //TODO: This means we have a finished an entire "game pass"! Do something special?
+        }
+
+        current = lobbyClients.get(nextIndex);
+        sendToEntireLobby(MessageUtils.makeNextTurnMessage(current.getHandle(), current.clientID));
     }
 }
 
@@ -174,9 +210,11 @@ class ClientObject {
 
     ListenerThread listenerThread;
     WriterThread writerThread; //this is "pretend" for now. 
-    
+
     List<String> file;
-    
+
+    Lobby currentLobby = null; //Clients need to be able to talk just to their lobbies
+
     //We need a PrintWriter to standardize the printMessage functions:
     PrintWriter consoleOut = new PrintWriter(System.out, true);
 
@@ -189,9 +227,13 @@ class ClientObject {
         return handle;
     }
 
+    public void setCurrentLobby(Lobby lobby) {
+        this.currentLobby = lobby;
+    }
+
     class WriterThread extends Thread {
         //Writer thread waits around until it has something to write
-        
+        //If we need it, we can use a synchronized message queue to handle requests to write messages
         PrintWriter writer; //Connection to socket
 
         public WriterThread() {
@@ -202,11 +244,6 @@ class ClientObject {
             }
         }
 
-        public void write(String message) {
-            writer.println(message);
-            writer.flush();
-        }
- 
         public void write(List<String> message) {
             //Write to socket outoing connection, hide the protocol details:
             MessageUtils.sendMessage(writer, message);
@@ -234,7 +271,7 @@ class ClientObject {
 
     class ListenerThread extends Thread {
         //Makes the blocking receive until a message arrives
-        
+
         BufferedReader streamIn; //socket incoming
 
         public ListenerThread() {
@@ -245,106 +282,139 @@ class ClientObject {
             }
         }
 
-        
         public void run() {
-            //This run method DOES matter
             while (true) {
                 try {
                     //Blocking read: (messageUtil will return null if socket closed)
                     List<String> message = MessageUtils.receiveMessage(streamIn);
-                    
+
                     // Socket closed OR Client requested disconnect
                     if (message == null || message.get(0).equals(MessageUtils.DISCONNECT_REQUEST)) {
                         //connection broken (does NOT throw an exception)
-                        System.out.println("Client " + clientID + " (" + handle + "): disconnected" );
-                        
+                        System.out.println("Client " + clientID + " (" + handle + "): disconnected");
+
                         NetworkServer.clientDisconnected(clientID);
-                        
+
                         //TODO: Exit and die
                         close();
                         break;
-                        
+
                     }
-                    
+
                     //what type of message did we get?
                     //For now, the first element of the parsed array (from messageUtils),
                     //will tell us:
                     String TAG = message.get(0);
-                    if (TAG.equals(MessageUtils.GLOBAL_CHAT)){
+                    if (TAG.equals(MessageUtils.GLOBAL_CHAT)) {
                         //Prints to _server_ console:
                         MessageUtils.printChat(consoleOut, message);
-   
+
                         //Send to all connected clients:
                         NetworkServer.sendToAllClients(message);
-                    }
-                   
-                    else if (TAG.equals(MessageUtils.FILE)){
+                    } else if (TAG.equals(MessageUtils.FILE)) {
                         System.out.println("Receiving file " + message.get(1));
                         file = new ArrayList<String>();
-                    }
-                    else if (TAG.equals(MessageUtils.FILE_LINE)){
-                        if(file != null){
+                    } else if (TAG.equals(MessageUtils.FILE_LINE)) {
+                        if (file != null) {
                             file.add(message.get(2));
                             System.out.println(message.get(2));
                         } else {
                             System.err.println("No file created to receive!");
                         }
-                    }
-                    else if (TAG.equals(MessageUtils.PRINT_FILE)){
-                        if (file != null){
-                            for (int i = 0; i < file.size(); i++){
+                    } else if (TAG.equals(MessageUtils.PRINT_FILE)) {
+                        if (file != null) {
+                            for (int i = 0; i < file.size(); i++) {
                                 System.out.println(file.get(i));
                             }
                         } else {
                             System.err.println("No file loaded!");
                         }
-                    }
-                    else if (TAG.equals(MessageUtils.REQUEST_GLOBAL_WHO)){
+                    } else if (TAG.equals(MessageUtils.REQUEST_GLOBAL_WHO)) {
                         //Client asked for list of current connected users
-                        List<String> handles = NetworkServer.getAllUserNames();   
+                        List<String> handles = NetworkServer.getAllUserNames();
                         writerThread.write(MessageUtils.makeGlobalWhoListMessage(handles));
-                    }
-                    else if (TAG.equals(MessageUtils.CREATE_NEW_LOBBY)){
+                    } else if (TAG.equals(MessageUtils.REQUEST_BEGIN_GAME)) {
+                        //Client asked agree to start the game
+                        //TODO: Voting here? Right now, we start when any single client requests
+
+                        if (currentLobby == null){
+                            MessageUtils.sendMessage(writerThread.writer, 
+                              MessageUtils.makeNagMessage("You requested to start the game, but you aren't even in a lobby!"));
+                        }
+                        else {
+
+                            System.out.println("Client " + handle + " requested to start game in lobby " + currentLobby.name);
+
+                            currentLobby.beginGame();
+                            currentLobby.sendToEntireLobby(MessageUtils.makeGameBegunMessage());
+                        }
+
+                    } else if (TAG.equals(MessageUtils.CREATE_NEW_LOBBY_REQUEST)) {
                         //client asks to create new lobby, and provided name
-                        System.out.println("Received request to create lobby: "+ message.get(1));
-                        NetworkServer.createNewLobby(message.get(1));
-                        NetworkServer.joinLobby(message.get(1), ClientObject.this);
-                        
-                    }
-                    else if (TAG.equals(MessageUtils.REQUEST_LOBBY_INFO)){
+
+                        String requestedLobbyName = message.get(1);
+                        System.out.println("Received request to create lobby: " + requestedLobbyName);
+
+                        if (NetworkServer.canCreateNewLobby(requestedLobbyName)) {
+                            NetworkServer.createNewLobby(message.get(1));
+                            NetworkServer.joinLobby(message.get(1), ClientObject.this);
+                            MessageUtils.sendMessage(writerThread.writer,
+                                    MessageUtils.makeNewLobbyRequestAcceptedMessage());
+                        } else {
+                            MessageUtils.sendMessage(writerThread.writer,
+                                    MessageUtils.makeNewLobbyRequestDeniedMessage());
+                        }
+
+                    } else if (TAG.equals(MessageUtils.REQUEST_LOBBY_INFO)) {
                         //client asks to create new lobby, and provided name
                         //System.out.println("Received request to create lobby: "+ message.get(1));
-                               //Send current lobbies to client:
-                      for (Lobby lobby: NetworkServer.lobbies){
-                        MessageUtils.sendMessage(writerThread.writer, 
-                        MessageUtils.makeLobbyInfoMessage(lobby.name, lobby.getUserNames()));
-                      }
-                        
-                    }
-                    else if (TAG.equals(MessageUtils.JOIN_LOBBY_REQUEST)){
+                        //Send current lobbies to client:
+                        for (Lobby lobby : NetworkServer.lobbies) {
+                            MessageUtils.sendMessage(writerThread.writer,
+                                    MessageUtils.makeLobbyInfoMessage(lobby.name, lobby.getUserNames()));
+                        }
+
+                    } else if (TAG.equals(MessageUtils.JOIN_LOBBY_REQUEST)) {
                         //client requested to join lobby.
-                        System.out.println("Received request to join lobby: "+ message.get(1));
+                        System.out.println("Received request to join lobby: " + message.get(1));
                         NetworkServer.joinLobby(message.get(1), ClientObject.this);
-                        //TODO: Send a accept/reject message
-                    }
-                    else if (TAG.equals(MessageUtils.LEAVE_LOBBY_REQUEST)){
+                        //TODO: implement/send an accept/reject message
+                    } else if (TAG.equals(MessageUtils.LEAVE_LOBBY_REQUEST)) {
                         System.out.println(handle + " has requested to leave lobby");
                         NetworkServer.leaveLobby(ClientObject.this);
-                        
-                        
-                    }
-                    else if (TAG.equals(MessageUtils.SEND_HANDLE)){
+                        currentLobby = null;
+
+                    } else if (TAG.equals(MessageUtils.SEND_HANDLE)) {
                         //client has sent us their new handle:
                         handle = message.get(1);
                         System.out.println("Assigning handle " + handle + " to client " + clientID);
-                        
+
                         NetworkServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
+
+                    } else if (TAG.equals(MessageUtils.YIELD_TURN)) {
+                        //client has sent us their new handle:
+                        //handle = message.get(1);
+                        System.out.println("Client " + handle + " (id  " + clientID + " ) yielded turn");
+
                         
-                    }
-                    else {
+                        if (currentLobby == null) {
+                            //client requested to change turns, but it's not their turn!
+                            MessageUtils.sendMessage(writerThread.writer,
+                                    MessageUtils.makeNagMessage("You requested to yield your turn, but you're not even in lobby!"));
+                        } 
+                        else if (currentLobby.current.clientID != clientID) {
+                            //client requested to change turns, but it's not their turn!
+                            MessageUtils.sendMessage(writerThread.writer,
+                                    MessageUtils.makeNagMessage("Requested to yield turn, but it's not your turn!"));
+                        } else {
+                            currentLobby.advanceGameTurn(); //tell lobby handler to advance game turn
+                        }
+                        //NetworkServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
+
+                    } else {
                         //will add other protocols 
                         System.err.println("Unknown tag! Printing message...");
-                        for (String s : message){
+                        for (String s : message) {
                             System.err.println(s + " ");
                         }
                         System.err.println("End of unknown message");
@@ -355,9 +425,9 @@ class ClientObject {
                     close();
                     break;
 
-                } 
+                }
             }
-            
+
         }
 
         public void close() {
@@ -372,7 +442,7 @@ class ClientObject {
                 System.err.println(e);
             }
         }
-        
+
     }
 
     public ClientObject(Socket socket) {
@@ -389,9 +459,6 @@ class ClientObject {
         //Send the list of online users to the newly connected client:
         //List<String> handles = ChatServer.getAllUserNames();                  
         //MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeGlobalWhoListMessage(handles));
-        
- 
-
         //Start threads:
         writerThread.start();
         listenerThread.start();

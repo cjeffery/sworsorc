@@ -10,7 +10,9 @@ public class NetworkClient {
 
     // Command list. For those of us who forget commands. Also reference.
     // Better way to do this? Go ahead!
-    static String HELP = "/disconnect \n/newLobby \n/joinLobby <lobbyName> \n/leaveLobby \n/showLobbies \n/newLobby <lobbyName> \n/file <filename> \n";
+    static String HELP = "/disconnect \n/newLobby \n/joinLobby <lobbyName> \n/leaveLobby" +
+                            "\n/showLobbies \n/newLobby <lobbyName> \n/file <filename> \n/yieldTurn" + 
+            "\n/beginGame \n/globalWho";
     
     private Socket socket = null;
     private BufferedReader consoleIn = null;
@@ -60,6 +62,25 @@ public class NetworkClient {
                     }
                     else  if (message.get(0).equals(MessageUtils.LOBBY_INFO)){                       
                         MessageUtils.printLobbyInfo(consoleOut, message);
+                    }
+                    else  if (message.get(0).equals(MessageUtils.APROVE_NEW_LOBBY_REQUEST)){                       
+                        consoleOut.println("Lobby created!");
+                    }
+                    else  if (message.get(0).equals(MessageUtils.GAME_BEGUN)){                       
+                        consoleOut.println("Game has begun!");
+                    }
+                    else  if (message.get(0).equals(MessageUtils.DENY_NEW_LOBBY_REQUEST)){                       
+                        consoleOut.print(("Could not create lobby: (Duplicated name?)"));
+                    }
+                    else  if (message.get(0).equals(MessageUtils.NAG)){                       
+                        System.err.println("NAG: " + message.get(1));
+                    }
+                    else  if (message.get(0).equals(MessageUtils.NEXT_TURN_INFO)){
+                        if (username.equals(message.get(1))){
+                            //it's my turn!
+                            consoleOut.println("It is now my turn!");
+                        }
+                        consoleOut.println("It is now " + message.get(1) + "'s turn!");
                     }
                     else {
                         //This shouldn't ever happen!
@@ -142,7 +163,7 @@ public class NetworkClient {
                         }
                         else if ("/newLobby".equals(parsedString[0])){
                             String lobbyName = parsedString[1];
-                            MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyMessage(lobbyName));
+                            MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyRequestMessage(lobbyName));
                         }
                         else if ("/joinLobby".equals(parsedString[0])){
                             String lobbyName = parsedString[1];
@@ -164,6 +185,12 @@ public class NetworkClient {
                         }
                         else if ("/disconnect".equals(parsedString[0])){ // manual client disconnect
                             MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
+                        }
+                        else if ("/yieldTurn".equals(parsedString[0])){ // client turn over
+                            MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
+                        }
+                        else if ("/beginGame".equals(parsedString[0])){ // request to start game
+                            MessageUtils.sendMessage(writer, MessageUtils.makeBeginGameRequestMessage());
                         }
                         else if ("/help".equals(parsedString[0])) {
                             System.out.println(HELP);
