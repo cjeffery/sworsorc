@@ -8,8 +8,10 @@
 package sschartstests;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import junit.framework.TestCase;
+import sscharts.ScenarioConfigurationReader;
 
 /**
  * A test case for the src/utilities/sscharts/ScenarioConfigurationReader.java
@@ -23,10 +25,39 @@ public class ScenReaderTest extends TestCase {
         super(testName);
     }
     
-    /* // this will become a test one day soon
-    public void test01() {
-         
-        assertFalse(test);
-    }*/
+    // test that the scenario name was read correctly
+    public void testScenarioName() {
+        boolean test;
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        test = reader.getScenarioName().equals("The Dummy Scenario");
+        assertTrue(test);
+    }
+    
+    // test that the scenario number of players was read correctly
+    public void testNumberofPlayers() {
+        boolean test;
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        test = reader.getNumberOfPlayers() == 2;
+        assertTrue(test);
+    }
+    
+    // test that the scenario game length was read correctly
+    public void testGameLength() {
+        boolean test;
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        test = reader.getGameLength() == 3;
+        assertTrue(test);
+    }
+    
+    // test that the nation names were read correctly
+    public void testNationNames() {
+        boolean test;
+        List<String> nations = null;
+        nations.add("Elves");
+        nations.add("Dwarrows");
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        test = reader.getNationNames() == nations;
+        assertTrue(test);
+    }
     
 }

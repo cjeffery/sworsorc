@@ -56,6 +56,7 @@ public class ScenarioConfigurationReader {
      String scenarioName;
      int numberOfPlayers;
      int gameLength; //Number of game turns
+     
 
     /**
      * This method prints to standard out an ASCII representation of the data
@@ -275,23 +276,50 @@ public class ScenarioConfigurationReader {
          }
     }
     
-    public int getControllingPlayer(String name) {
-        return controllingPlayers.get(name);
-    }
     
+    /**
+      * A getter for the scenarioName field.
+      * 
+      * @author Wayne Fuhrman
+      * @return the scenario's name as a String
+      */
     public String getScenarioName() {
         return scenarioName;
     }
 
+    /**
+      * A getter for the number of players in the scenario.
+      * 
+      * @author Wayne Fuhrman
+      * @return the number of players in the scenario
+      */
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
+    /**
+      * A getter for the game length of the scenario.
+      * 
+      * @author Wayne Fuhrman
+      * @return the game length of the scenario
+      */
     public int getGameLength() {
         return gameLength;
     }
+    
     public List<String> getNationNames() {
         return nationNames;
+    }
+    
+    /**
+      * A getter for the controlling player of a given nation.
+      * 
+      * @author Tyler Jaszkowiak
+      * @param name the name of the nation in question
+      * @return the number of the player controlling the nation
+      */
+    public int getControllingPlayer(String name) {
+        return controllingPlayers.get(name);
     }
 
     public List<String> getNeutralNames() {
