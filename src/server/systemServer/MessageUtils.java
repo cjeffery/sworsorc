@@ -7,22 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import sshexmap.MapHex;
 
-/**
- *
- * This is an experiment with packing/unpacking messages
- *
- * Right now, this literally sends stuff in an array one string at a time.
- *
- * It is not efficient, but it's very easy to make new message types.
- *
- * If we make sure to pack/unpack messages here, we can easy switch out the
- * logic and make it more efficient later!
- */
 public class MessageUtils {
 
     //End of message (last element of any array):
     static String DONE = "donesignalthingy";
-    
+
+    static String NAG = "nag"; //Server will send this to the client if the client does something
+    //that the client code shouldn't allow given the current game state
+    //(like requests to change game turn when it's not their turn, start game but not in lobby, etc) 
+
     //Opening string to tell receiver how to interpret message contents.
     //This will be the first element of every message:
     static String GLOBAL_CHAT = "chat"; //Normal chat message:
@@ -33,7 +26,9 @@ public class MessageUtils {
     static String FILE_LINE = "fileLine";
     static String PRINT_FILE = "printFile";
 
-    static String CREATE_NEW_LOBBY = "createNewLobby"; //client requests a new lobby
+    static String CREATE_NEW_LOBBY_REQUEST = "createNewLobbyRequest"; //client requests a new lobby
+    static String APROVE_NEW_LOBBY_REQUEST = "approveNewLobbyRequest"; //server has created lobby
+    static String DENY_NEW_LOBBY_REQUEST = "denyNewLobbyRequest"; //request denied (e.g. duplicate name)
     static String JOIN_LOBBY_REQUEST = "joinLobby"; //client requests to join an existing lobby
     static String LEAVE_LOBBY_REQUEST = "leaveLobby"; //client requests to leave lobby
     static String LOBBY_INFO = "lobbyNameAndUsers"; //send info about a lobby
@@ -47,17 +42,72 @@ public class MessageUtils {
     static String REQUEST_GLOBAL_WHO = "globalwhoreqest"; //ask for all online usernames
     //static String LOBBY_WHO_REQUEST = "lobbywho"; //ask for user names in same lobby
 
+    static String YIELD_TURN = "yieldTurn"; //Sent by client when yielding game turn
+    static String NEXT_TURN_INFO = "nextTurnInfo"; //Sent by server when turn changes
+
+    static String REQUEST_BEGIN_GAME = "requestBeginGame"; //sent by client, votes to start game
+    static String GAME_BEGUN = "gameBegun"; //sent by server when game is started
+    //static String WAITING_TO_BEGIN_GAME = "waitingForVotesBeforeStarting"; //wait for everyone to agree to start
+
     //game actions
     static String UPDATE_UNIT = "updateunit"; // client sends a unit update
     static String UPDATE_HEX = "updatehex"; // client sends a hex update
-    
+
     static boolean debug = false; //Print everything!
 
-    //client asks to create new lobby:
-    public static List<String> makeNewLobbyMessage(String lobbyName) {
+    //yell at the client:
+    public static List<String> makeNagMessage(String message) {
+        List<String> innerMessage = new ArrayList<>();
+        innerMessage.add(NAG);
+        innerMessage.add(message);
+        return innerMessage;
+    }
+
+    public static List<String> makeNextTurnMessage(String nextHandle, int nextId) {
         List<String> message = new ArrayList<>();
-        message.add(CREATE_NEW_LOBBY);
+        message.add(NEXT_TURN_INFO);
+        message.add(nextHandle);
+        message.add(Integer.toString(nextId));
+        return message;
+    }
+
+    public static List<String> makeYieldTurnMessage() {
+        List<String> message = new ArrayList<>();
+        message.add(YIELD_TURN);
+        return message;
+    }
+
+    public static List<String> makeBeginGameRequestMessage() {
+        List<String> message = new ArrayList<>();
+        message.add(REQUEST_BEGIN_GAME);
+        return message;
+    }
+
+    public static List<String> makeGameBegunMessage() {
+        List<String> message = new ArrayList<>();
+        message.add(GAME_BEGUN);
+        return message;
+    }
+
+    //client asks to create new lobby:
+    public static List<String> makeNewLobbyRequestMessage(String lobbyName) {
+        List<String> message = new ArrayList<>();
+        message.add(CREATE_NEW_LOBBY_REQUEST);
         message.add(lobbyName);
+        return message;
+    }
+
+    //client asks to create new lobby:
+    public static List<String> makeNewLobbyRequestDeniedMessage() {
+        List<String> message = new ArrayList<>();
+        message.add(DENY_NEW_LOBBY_REQUEST);
+        return message;
+    }
+
+    //client asks to create new lobby:
+    public static List<String> makeNewLobbyRequestAcceptedMessage() {
+        List<String> message = new ArrayList<>();
+        message.add(APROVE_NEW_LOBBY_REQUEST);
         return message;
     }
 
@@ -125,7 +175,7 @@ public class MessageUtils {
         message.add(DISCONNECT_REQUEST);
         return message;
     }
-    
+
     //Send a list (from server to client) of all online users:
     public static List<String> makeGlobalWhoListMessage(List<String> users) {
         List<String> message = new ArrayList<>();
@@ -187,24 +237,25 @@ public class MessageUtils {
 
         return message;
     }
-    
-    public static List<String> makeMoveableUnitUpdateMessage(MoveableUnit unit){
+
+    public static List<String> makeMoveableUnitUpdateMessage(MoveableUnit unit) {
         List<String> message = new ArrayList<>();
         message.add(UPDATE_UNIT);
         message.add(unit.getID());
         message.add(unit.getLocation());
         //message.add()
-              
+
         return message;
     }
-    
-    public static List<String> makeMapHexUpdateMessage(MapHex mapHex){
+
+    public static List<String> makeMapHexUpdateMessage(MapHex mapHex) {
         List<String> message = new ArrayList<>();
         message.add(UPDATE_HEX);
         message.add(mapHex.GetID());
-        for(int i = 0; i < mapHex.getImprovements().size(); i++)
+        for (int i = 0; i < mapHex.getImprovements().size(); i++) {
             message.add(mapHex.getImprovements().get(i).getClass().toString());
-              
+        }
+
         return message;
     }
 
