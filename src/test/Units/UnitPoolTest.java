@@ -33,7 +33,7 @@ public class UnitPoolTest extends TestCase {
         assertFalse(test);
     }
     
-        // testing multable additions.
+    // testing multable additions.
     public void test02() {
         UnitPool pool = UnitPool.getInstance();
         pool.clearPool();
@@ -122,6 +122,7 @@ public class UnitPoolTest extends TestCase {
         
     }
     
+    //Tests undo move.
     public void test4(){
         ArrayList<String> list1, list2, list3, list4;
         ArmyUnit unit;
