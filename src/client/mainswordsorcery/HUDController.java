@@ -19,8 +19,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -28,9 +26,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.util.ArrayList;
+import java.util.List;
 
 import solardisplay.SolarDisplay;
-import Units.MoveableUnit;
+import Units.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
  
 public class HUDController {
     @FXML private TabPane Units;
@@ -42,6 +45,10 @@ public class HUDController {
     @FXML private TextArea chat_box;
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
+    
+    ArmyUnit bow = new Bow();
+    ArmyUnit lightsword = new LightSword();
+    ArmyUnit pike = new PikeMan();
 
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
@@ -65,28 +72,36 @@ public class HUDController {
     }
     
     //called when clicking a friendly hex
-    @FXML protected void DisplayUnits(ActionEvent event) {
-        DisplayStack(Units /*,stack*/);
+    @FXML protected void DisplayUnits(ActionEvent event) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        List <ArmyUnit> AU = new ArrayList <>();
+        AU.add(bow);
+        AU.add(lightsword);
+        AU.add(pike);
+        DisplayStack(Units, AU);
     }
     
     //called when clicking an enemy hex
-    @FXML protected void DisplayTargets(ActionEvent event) {
-        DisplayStack(Targets /*,stack*/);
+    @FXML protected void DisplayTargets(ActionEvent event) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        List <ArmyUnit> AU = new ArrayList <>();
+        AU.add(lightsword);
+        AU.add(pike);
+        DisplayStack(Targets, AU);
     }
     
     /** 
      * constructs the tab pane for the selected hex
      * @author Joe Higley      
      */
-    protected void DisplayStack(TabPane tp /*,stack*/) {
+    protected void DisplayStack(TabPane tp, List <ArmyUnit> AU) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         ClearTitles(tp); //empty the tab pane
-        int x = Game.getInstance().getNum(); //this is just a random number of units, will be replaced later
+        int x = AU.size();
+//        int x = Game.getInstance().getNum(); //this is just a random number of units, will be replaced later
         //create array of tabs
         Tab[] tabs = new Tab[x];
         for(int i=0; i < x; i++) {
             tabs[i] = new Tab();
-            tabs[i].setText("Unit " + i);
-            FillStats(tabs[i]); //add contents of the tab
+            tabs[i].setText(AU.get(i).toString());
+            FillStats(tabs[i], AU.get(i)); //add contents of the tab
         }
         //add tabs to tab pane
         tp.getTabs().addAll(tabs);
@@ -97,7 +112,7 @@ public class HUDController {
      * with unit stats.
      * @author Joe Higley      
      */
-    public void FillStats(Tab tp){
+    public void FillStats(Tab tp, ArmyUnit AU) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
         //stats are kept in a GridPane inside a ScrollPane in case of more stats than space
         ScrollPane scroll = new ScrollPane();
         GridPane grid = new GridPane();
@@ -118,12 +133,17 @@ public class HUDController {
         column2.setPercentWidth(50);
         grid.getColumnConstraints().add(column2);
         
+        //labels and function names
+        List <String> stats = new ArrayList<>(Arrays.asList("Race: ", "Demoralized: ", "Strength: ", "Movement: "));
+        List <String> funcs = new ArrayList<>(Arrays.asList("getRace", "isDemoralized", "getStrength", "getMovement"));
         //adds stats to GridPane (will be replaced with call to unit stats)
-        for(int i=0; i < 8; i++){
-            Label l = new Label("Field #" + i +": ");
+        for(int i=0; i < stats.size(); i++){
+            Label l = new Label(stats.get(i));
             l.setFont(Font.font(null, FontWeight.BOLD, 12));
-            
-            TextField tf = new TextField("Stat #" + i);
+            //"get" method to be called
+            Method method = AU.getClass().getMethod(funcs.get(i));
+            Object b = method.invoke(AU); //get desired data
+            TextField tf = new TextField(String.valueOf(b));
             tf.setAlignment(Pos.CENTER_RIGHT);
             
             //add stats to new row of GridPane
