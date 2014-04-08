@@ -245,7 +245,7 @@ public class UnitPool {
      * This method is only used for junit tests. It ensures a empty unit pool.
      * It should not be used in the game for any reason.
      */
-    public void clearPool(){
+    public void clear(){
         this.pool.clear();
         this.hexList.clear();
         this.hexVisited.clear();

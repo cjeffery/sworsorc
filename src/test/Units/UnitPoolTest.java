@@ -27,7 +27,7 @@ public class UnitPoolTest extends TestCase {
     // test adding a unit to a null UnitPool.
     public void test01() {
         UnitPool pool = UnitPool.getInstance();
-        pool.clearPool();
+        pool.clear();
         pool.addUnit(1,new LightSword());
         boolean test = pool.pool.get(1).get("LightSword").isEmpty(); 
         assertFalse(test);
@@ -36,7 +36,7 @@ public class UnitPoolTest extends TestCase {
     // testing multable additions.
     public void test02() {
         UnitPool pool = UnitPool.getInstance();
-        pool.clearPool();
+        pool.clear();
         
         
         pool.addUnit(1,new LightSword());
@@ -71,7 +71,7 @@ public class UnitPoolTest extends TestCase {
         ArmyUnit unit;
         
         UnitPool pool = UnitPool.getInstance();
-        pool.clearPool();
+        pool.clear();
         assertTrue(pool != null);
         
         pool.addUnit(1,new LightSword(),"0101");
@@ -129,7 +129,7 @@ public class UnitPoolTest extends TestCase {
         String currentHex;
         
         UnitPool pool = UnitPool.getInstance();
-        pool.clearPool();
+        pool.clear();
         assertTrue(pool != null);
         
         pool.addUnit(1,new LightSword(),"0101");
