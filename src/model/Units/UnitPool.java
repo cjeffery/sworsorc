@@ -6,23 +6,37 @@
 
 package Units;
 
+
 import java.lang.Character; // used on line 213
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
  * Unit pool tracks all the units that have been created in the game.  
  * Unit pool is a singleton that is created by calling getInstance().
- * @author David
+ * 
+ * 
+ * @author David Klingenberg
  */
 public class UnitPool {
-    TreeMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>> pool = new TreeMap(); 
-    private TreeMap<String, ArrayList<String>> hexList = new TreeMap();
-    private TreeMap<String, ArrayList<String>> unitMove = new TreeMap();
-    private ArrayList<String> hexVisited = new ArrayList();
-    private ArrayList<String> unitsInHex = new ArrayList();
+    //SortedMap m = Collections.synchronizedSortedMap(new TreeMap(...));
+    //TreeMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>> pool = new TreeMap(); 
+    //SortedMap temp = Collections.synchronizedSortedMap(new TreeMap<String,ArrayList<ArmyUnit>>());
+    SortedMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>> pool = Collections.synchronizedSortedMap(new TreeMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>>());
+    //TreeMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>> pool = new TreeMap(); 
+    private SortedMap<String, ArrayList<String>> hexList = Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());
+    //private TreeMap<String, ArrayList<String>> hexList = new TreeMap();
+    private SortedMap<String, ArrayList<String>> unitMove = Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());;
+    //private TreeMap<String, ArrayList<String>> unitMove = new TreeMap();
+    private List<String> hexVisited = Collections.synchronizedList(new ArrayList<String>());
+    //private ArrayList<String> hexVisited = new ArrayList();
+    private List<String> unitsInHex = Collections.synchronizedList(new ArrayList<String>());
+    //private ArrayList<String> unitsInHex = new ArrayList();
     private static UnitPool INSTANCE;
     
     private UnitPool() {
@@ -65,7 +79,7 @@ public class UnitPool {
        
         
        if (pool.containsKey(playerId)){
-           if(pool.get(playerId).containsKey(unit.toString()))
+           if(pool.get(playerId). containsKey(unit.toString()))
                pool.get(playerId).get(unit.toString()).add(unit);
             else{
                ArrayList<ArmyUnit> unitList = new ArrayList();
@@ -90,7 +104,7 @@ public class UnitPool {
      * @param tree : this should be hexList tree.
      * @param unit : the unit to be added
      */
-    private void addToHex(TreeMap<String,ArrayList<String>> tree, ArmyUnit unit) {
+    private void addToHex(SortedMap<String, ArrayList<String>> tree, ArmyUnit unit) {
         if (tree.containsKey(unit.getLocation())){
             if(!tree.get(unit.getLocation()).contains(unit.getID()))
                 tree.get(unit.getLocation()).add(unit.getID());
@@ -111,7 +125,7 @@ public class UnitPool {
      *               its array list.
      */
     
-    private void addToUnit(TreeMap<String,ArrayList<String>> tree, ArmyUnit unit) {
+    private void addToUnit(SortedMap<String, ArrayList<String>> tree, ArmyUnit unit) {
         if (tree.containsKey(unit.getID())){
             if(!tree.get(unit.getID()).contains(unit.getLocation()))
                 tree.get(unit.getID()).add(unit.getLocation());
@@ -232,7 +246,11 @@ public class UnitPool {
      * It should not be used in the game for any reason.
      */
     public void clearPool(){
-        pool.clear();
+        this.pool.clear();
+        this.hexList.clear();
+        this.hexVisited.clear();
+        this.unitMove.clear();
+        this.unitsInHex.clear();
     }
     
     /**
