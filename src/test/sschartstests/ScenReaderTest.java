@@ -52,11 +52,12 @@ public class ScenReaderTest extends TestCase {
     // test that the nation names were read correctly
     public void testNationNames() {
         boolean test;
-        List<String> nations = null;
+        List<String> nations;
+        nations = new ArrayList<>();
         nations.add("Elves");
         nations.add("Dwarrows");
         ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
-        test = reader.getNationNames() == nations;
+        test = reader.getNationNames().equals(nations);
         assertTrue(test);
     }
     
