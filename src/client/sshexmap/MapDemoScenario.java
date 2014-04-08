@@ -43,7 +43,7 @@ public class MapDemoScenario implements MouseListener, KeyListener {
         
         /* ArmyUnit unit = new LightSword();
         pool.addUnit(0, unit, "0606"); */
-        ArrayList<ArmyUnit> units = pool.getSpecificPlayerUnits(2,"Bow");
+        ArrayList<ArmyUnit> units = pool.getPlayerSpecificUnits(2,"Bow");
         if(units != null)
             for(ArmyUnit s : units)
                 s.printSelf();
