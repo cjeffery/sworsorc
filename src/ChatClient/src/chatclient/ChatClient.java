@@ -1,4 +1,8 @@
-
+/**
+ * The Chat Client
+ * <p>
+ * Handles client-side communication
+ */
 package chatclient;
 
 import java.net.*;
@@ -6,66 +10,69 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.List;
 
+/**
+ * God-class for the Chat client
+ */
 public class ChatClient {
 
-    // Command list. For those of us who forget commands. Also reference.
-    // Better way to do this? Go ahead!
-    static String HELP = "/disconnect \n/newLobby \n/joinLobby <lobbyName> \n/leaveLobby \n/showLobbies \n/newLobby <lobbyName> \n/file <filename> \n";
-    
+    // iNet variables
     private Socket socket = null;
+    private static int port = 25565; // anti-magicnumbers league
+    private static String serverName;
+
+    // Read/write streams
     private BufferedReader consoleIn = null;
     private PrintWriter consoleOut = new PrintWriter(System.out, true);
-    
-    private static String ipAddress;
-    final private static int port = 25565; // anti-magicnumbers league
+
+    // Client info
     private static String username;
 
+    // Threads
     ListenerThread listenerThread;
     WriterThread writerThread;
 
+    /**
+     * ListenerThread spins off threads to handle incoming communication for
+     * ChatClient
+     */
     class ListenerThread extends Thread {
 
-        BufferedReader streamIn;
+        private BufferedReader streamIn;
 
         public ListenerThread() {
-            try {
-                streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            } catch (IOException e) {
-                System.err.println("Error : Opening reading stream from socket. Error thrown: " + e );
-            }
+            // empty constructor
         }
 
+        public void createStream() throws IOException
+        {
+            streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));    
+        }
+        
         public void run() {
             try {
                 while (true) {
-                    
+
                     List<String> message = MessageUtils.receiveMessage(streamIn);
-                    if (message == null){
+                    if (message == null) {
                         break;
                     }
                     //first element of the parsed message array will tell us
                     //what type of message it is:
-                    if (message.get(0).equals(MessageUtils.GLOBAL_CHAT)){
+                    if (message.get(0).equals(MessageUtils.GLOBAL_CHAT)) {
                         //Printing methods can be centralized!
                         MessageUtils.printChat(consoleOut, message);
-                    }
-                    else  if (message.get(0).equals(MessageUtils.DISCONNECT_ANNOUNCEMENT)){                       
+                    } else if (message.get(0).equals(MessageUtils.DISCONNECT_ANNOUNCEMENT)) {
                         MessageUtils.printDisconnect(consoleOut, message);
-                    }
-                    else  if (message.get(0).equals(MessageUtils.CONNECT_ANNOUNCEMENT)){                       
+                    } else if (message.get(0).equals(MessageUtils.CONNECT_ANNOUNCEMENT)) {
                         MessageUtils.printConnectionMessage(consoleOut, message);
-                    }
-                    else  if (message.get(0).equals(MessageUtils.GLOBAL_WHO_LIST)){                       
+                    } else if (message.get(0).equals(MessageUtils.GLOBAL_WHO_LIST)) {
                         MessageUtils.printGlobalWhoList(consoleOut, message);
-                    }
-                    else  if (message.get(0).equals(MessageUtils.LOBBY_INFO)){                       
+                    } else if (message.get(0).equals(MessageUtils.LOBBY_INFO)) {
                         MessageUtils.printLobbyInfo(consoleOut, message);
-                    }
-                    else {
+                    } else {
                         //This shouldn't ever happen!
                         System.err.println("Unknown tag: " + message.get(0));
                     }
-                    
 
                 }
             } catch (Exception e) {
@@ -84,129 +91,44 @@ public class ChatClient {
                     streamIn.close();
                 }
             } catch (IOException e) {
-                System.err.println("Error closing listener! Error thrown: " + e );
+                System.err.println("Error closing listener! Error thrown: " + e);
             }
         }
 
-    }
+    } // end class
 
+    /**
+     * WriterThread spins off threads to send messages to server
+     */
     class WriterThread extends Thread {
 
-        PrintWriter writer;
+        private PrintWriter writer;
 
         public WriterThread() {
-            try {
-                writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
-            } catch (IOException e) {
-                System.err.println("Error : Creating output stream for socket");
-            }
+            // empty constructor
+        } // end constructor
 
+        public void createStream() throws IOException
+        {
+            writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
         }
-
+        
         public void write(String message) { //if we want to programmatically write something
             writer.println(message);
             writer.flush();
         }
-        
-        public void sendFile(String fileName){
+
+        public void sendFile(String fileName) {
             String line;
-            try{
-                BufferedReader file = new BufferedReader(new InputStreamReader
-                    (new FileInputStream(fileName), Charset.forName("UTF-8")));
+            try {
+                BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.forName("UTF-8")));
                 MessageUtils.sendMessage(writer, MessageUtils.makeIncomingFileMessage(fileName));
-                while ((line = file.readLine()) != null){
+                while ((line = file.readLine()) != null) {
                     MessageUtils.sendMessage(writer, MessageUtils.makeFileLineMessage(fileName, line));
                 }
-            }catch(IOException e){
-                System.out.println("Could not open file! Error thrown: " + e );
+            } catch (IOException e) {
+                System.out.println("Could not open file! Error thrown: " + e);
             }
-        }
-
-        public void run() {
-            String[] parsedString;
-            while (true) {
-                try {
-                    String line = consoleIn.readLine();
-                    
-                    // Connection terminated
-                    // Note: Will not terminate writer on broken connection, ONLY on user-specified exit or exception!
-                    if (line == null){
-                        System.err.println("line == null...");
-                    }
-                    
-                    parsedString = line.split("\\s+"); //Split line by whitespace
-                    
-                    if(parsedString.length == 2){
-                        if("/file".equals(parsedString[0])){
-                            sendFile(parsedString[1]);
-                        }
-                        else if ("/newLobby".equals(parsedString[0])){
-                            String lobbyName = parsedString[1];
-                            MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyMessage(lobbyName));
-                        }
-                        else if ("/joinLobby".equals(parsedString[0])){
-                            String lobbyName = parsedString[1];
-                            MessageUtils.sendMessage(writer, MessageUtils.makeJoinLobbyRequestMessage(lobbyName));
-                        }
-                    }
-                    else if(parsedString.length == 1){
-                        if("/printFile".equals(parsedString[0])){
-                            write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
-                        }
-                        else if("/globalWho".equals(parsedString[0])){
-                            MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
-                        }
-                        else if ("/leaveLobby".equals(parsedString[0])){
-                            MessageUtils.sendMessage(writer, MessageUtils.makeLeaveLobbyMessage());
-                        }
-                        else if ("/showLobbies".equals(parsedString[0])){
-                            MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage()); // TODO: working lobby info request
-                        }
-                        else if ("/disconnect".equals(parsedString[0])){ // manual client disconnect
-                            MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
-                        }
-                        else if ("/help".equals(parsedString[0])) {
-                            System.out.println(HELP);
-                        }
-                    }
-                    
-                    if(socket.isConnected()) {
-                        //System.out.println("Its connected");
-                        MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, line));
-                    }              
-                    
-                    // Finally realized how many streams socket is connected to
-                    // Reconnection is going to require a lot more work...
-                    /*else {
-                        System.out.println("Connection terminated. Would you like to reconnect? (Yes/No)");
-                        line = consoleIn.readLine();
-                        if( line.equals("Yes")) {
-                            socket = connect( ipAddress, port );
-                        }
-                        else {
-                            System.out.println("Would you like to connect to a different server? (Yes/No ");
-                            line = consoleIn.readLine();
-                            if( line.equals("Yes")) {
-                                System.out.println("IP address: ");
-                                ipAddress = consoleIn.readLine();
-                                socket = connect( ipAddress, port );
-                            }
-                            else {
-                                close();
-                                break;
-                            }
-                        }                        
-                    }*/
-                    
-                    
-                } catch (IOException e) {
-                    System.out.println("Error sending message! Error thrown: " + e );
-                    close();
-                    break;
-                }
-            }
-
-
         }
 
         public void close() {
@@ -218,28 +140,85 @@ public class ChatClient {
                     writer.close();
                 }
             } catch (IOException e) {
-                System.err.println("Error closing writer! Error thrown: " + e );
+                System.err.println("Error closing writer! Error thrown: " + e);
             }
         }
 
-    }
-
-    public ChatClient(String serverName, int serverPort) throws IOException {
-
-        try {
-            socket = connect( serverName, serverPort );
-        } catch ( NullPointerException e) {
-            System.err.println("Error: null socket!");
+        public PrintWriter getWriter() {
+            return writer;
         }
-        
+
+    } // end class
+
+    /**
+     * Prints list of commands from commands.txt file
+     */
+    void printCommandList() throws IOException {
+        String inputline;
+        String filename = "commands.txt";
+        try {
+            BufferedReader input = new BufferedReader(new FileReader(filename));
+            
+            while ((inputline = input.readLine()) != null) {
+            System.out.println(inputline);
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + filename + "\nException: " + e);
+        }
+
+    } // end method
+
+    /**
+     * Create a new ChatClient object, the interface for all network operations
+     * client-side
+     *
+     * @param sName Name of the server AKA the IP Address
+     * @param serverPort Port number of the server (ex: 25565)
+     * @throws IOException
+     */
+    public ChatClient(String sName, int serverPort) throws IOException {
+
+        // sets server iNet info
+        port = serverPort;
+        serverName = sName;
+
         //Reads from stdin:
         consoleIn = new BufferedReader(new InputStreamReader(System.in));
 
+        // sets Read/Write threads
         listenerThread = new ListenerThread();
         writerThread = new WriterThread();
 
+    } // end constructor
+
+    /**
+     * Creates a new connection to the server, call this before
+     * {@link #start start()}
+     *
+     * @return boolean
+     * @throws IOException
+     * @author Christopher Goes
+     */
+    public boolean connect() throws IOException {
+        try {
+            socket = connectToServer(serverName, port);
+            return true;
+        } catch (NullPointerException e) {
+            System.err.println("Error: null socket!");
+            return false;
+        }
+    } // end method
+
+    /**
+     * Starts activity to server, including threads, and command input loop
+     *
+     * @author Christopher Goes
+     * @throws Exception
+     */
+    public void start() throws Exception {
+        
+        startThreads();
         //first message is handle:
-        //writerThread.write(username);
         MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeSendHandleMessage(username));
 
         //request list of clients:
@@ -248,29 +227,114 @@ public class ChatClient {
         //request list of lobbies:
         MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeRequestLobbyInfoMessage());
 
-        
-        writerThread.start();
-        listenerThread.start();
-    }
+        //startThreads(); // why are messages sent before threads started?
 
-    // moved socket creation into method, so can call outside of constructor, mainly for reconnect.
-    public static Socket connect(String serverName, int serverPort ) throws IOException {
+    } // end method
+
+    private void runClient() throws Exception {
+        String[] parsedString;
+        String line;
+        PrintWriter writer = writerThread.getWriter();
+        while (true) {
+            try {
+                
+                // Note: Will not terminate writer on broken connection, ONLY on user-specified exit or exception!
+                if ( (line = consoleIn.readLine()) == null ) {
+                    System.err.println("line == null...");
+                }
+                
+                parsedString = line.split("\\s+"); //Split line by whitespace
+
+                if (parsedString.length == 2) {
+                    if ("/file".equals(parsedString[0])) {
+                        writerThread.sendFile(parsedString[1]);
+                        
+                    } else if ("/newLobby".equals(parsedString[0])) {
+                        String lobbyName = parsedString[1];
+                        MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyMessage(lobbyName));
+                        
+                    } else if ("/joinLobby".equals(parsedString[0])) {
+                        String lobbyName = parsedString[1];
+                        MessageUtils.sendMessage(writer, MessageUtils.makeJoinLobbyRequestMessage(lobbyName));
+                    }
+                    
+                } else if (parsedString.length == 1) {
+                    if ("/printFile".equals(parsedString[0])) {
+                        writerThread.write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
+                    
+                    } else if ("/globalWho".equals(parsedString[0])) {
+                        MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
+                        
+                    } else if ("/leaveLobby".equals(parsedString[0])) {
+                        MessageUtils.sendMessage(writer, MessageUtils.makeLeaveLobbyMessage());
+                        
+                    } else if ("/showLobbies".equals(parsedString[0])) {
+                        MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage()); // TODO: working lobby info request
+                    
+                    } else if ("/disconnect".equals(parsedString[0])) { // manual client disconnect
+                        MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
+                        
+                    } else if ("/help".equals(parsedString[0])) {
+                        printCommandList();
+                    } // end elif
+                } // end if
+
+                if (socket.isConnected()) {
+                    //System.out.println("Its connected");
+                    MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, line));
+                }
+                
+            } catch (IOException e) {
+                System.out.println("Error sending message! Error thrown: " + e);
+                writerThread.close();
+                break;
+            } // end catch
+
+        } // end while
+
+    } // end method
+
+    /**
+     * Starts {@link WriterThread writerThread} and
+     * {@link ListenerThread listenerThread}
+     *
+     * @author Christopher Goes
+     * @throws Exception
+     */
+    private void startThreads() throws Exception {
+        writerThread.createStream();
+        writerThread.start();
+        
+        listenerThread.createStream();
+        listenerThread.start();
+    } // end method
+
+    /**
+     * Attempts connection to the server, and returns socket if successful
+     *
+     * @author Christopher Goes
+     * @param sName
+     * @param serverPort
+     * @return
+     * @throws IOException
+     */
+    private static Socket connectToServer(String sName, int serverPort) throws IOException {
         Socket tempsock = null;
         System.out.println("Connecting! Please Wait!");
         try {
-            tempsock = new Socket(serverName, serverPort);
+            tempsock = new Socket(sName, serverPort);
         } catch (UnknownHostException e) {
             System.err.println("Error : Unknown host!");
         } catch (ConnectException e) {
             System.err.println("Error : Connection Refused!");
         }
-        
+
         System.out.println("Connected: " + tempsock);
         return tempsock;
-        
-    }
-    
-    public void stop() { // cleanup: is this needed? where?
+
+    } // end method
+
+    public void stop() {
         try {
             if (consoleIn != null) {
                 consoleIn.close();
@@ -283,6 +347,7 @@ public class ChatClient {
         }
     }
 
+    // For testing of ChatClient
     public static void main(String[] args) throws IOException {
 
         ClientData clientData = new ClientData();
@@ -296,11 +361,25 @@ public class ChatClient {
 
         System.out.flush(); // I was losing input is the JDialog crashed
 
-        ipAddress = clientData.getIPAddress();
+        String sName = clientData.getIPAddress();
         username = clientData.getUsername();
 
-        ChatClient client = null;
-        client = new ChatClient(ipAddress, port);
+        ChatClient client = new ChatClient(sName, 25565);
+        
+        try {
+            if( client.connect() ) {
+                 client.start();
+                 client.runClient();
+            } 
+            else {
+                System.err.println("Client failed to connect! Oh noes!");
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error starting client from main! Exception thrown: " + e);
+        }
+  
+        
     }
 
-}
+} // end god class ChatClient
