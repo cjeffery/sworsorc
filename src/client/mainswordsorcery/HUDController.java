@@ -125,12 +125,12 @@ public class HUDController {
         //set column1 format
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHalignment(HPos.LEFT);
-        column1.setPercentWidth(50);
+        column1.setPercentWidth(65);
         grid.getColumnConstraints().add(column1); 
         //set column2 format
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setHalignment(HPos.RIGHT);
-        column2.setPercentWidth(50);
+        column2.setPercentWidth(35);
         grid.getColumnConstraints().add(column2);
         
         //labels and function names
