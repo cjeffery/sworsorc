@@ -1,7 +1,7 @@
 /**
- * The Chat Client
+ * The Network Client
  * <p>
- * Handles client-side communication
+ * Handles client-side communication with the server
  */
 package systemServer;
 
@@ -11,7 +11,9 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 /**
- * Handles communication to server from client
+ * The primary class for the Network Client, handles data and communication thread(s)
+ * <p>
+ * Don't create more than one of these on a single client unless you now what you're doing
  */
 public class NetworkClient {
 
@@ -27,15 +29,17 @@ public class NetworkClient {
     // Client info
     private static String username;
 
-    // Threads
-    ListenerThread listenerThread;
-    //WriterThread writerThread;
-    private PrintWriter writer = null;
+    // Thread(s)
+    private ListenerThread listenerThread;
+    private PrintWriter writer = null; // Was WriterThread writerThread;
+    
+    // set default help file
+    private String helpfile = "commands.txt"; 
 
     /**
      * Listens for and handles incoming communications for Network Client
      */
-    class ListenerThread extends Thread {
+    protected class ListenerThread extends Thread {
 
         private BufferedReader streamIn;
         private boolean killed = false;
@@ -115,62 +119,20 @@ public class NetworkClient {
 
     }
 
-    /**class WriterThread extends Thread {
-
-        private PrintWriter writer;
-
-        public WriterThread() {
-            // empty constructor
-        }
-
-        protected void createStream() throws IOException {
-            writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
-        }
-
-        protected void write(String message) { //if we want to programmatically write something
-            writer.println(message);
-            writer.flush();
-        }
-
-        protected void sendFile(String fileName) {
-            String line;
-            try {
-                BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.forName("UTF-8")));
-                MessageUtils.sendMessage(writer, MessageUtils.makeIncomingFileMessage(fileName));
-                while ((line = file.readLine()) != null) {
-                    MessageUtils.sendMessage(writer, MessageUtils.makeFileLineMessage(fileName, line));
-                }
-            } catch (IOException e) {
-                System.err.println("Could not open file! Error thrown: " + e);
-            }
-        }
-
-        public void run() {
-
-        }
-
-        public void close() {
-            try {
-                
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (Exception e) {
-                System.err.println("Error closing writer! Error thrown: " + e);
-            }
-        }
-
-        public PrintWriter getWriter() {
-            return writer;
-        }
-
-    } // end class 
-    */
-
-    protected void setWriter() throws IOException {
+    
+    /**
+     * Initializes writer with a new stream
+     * @author Christopher Goes
+     * @throws IOException 
+     */
+    private void setWriter() throws IOException {
         writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
     }
 
+    /**
+     * Send a file to the server
+     * @param fileName Name of file to be sent
+     */
     protected void sendFile(String fileName) {
         String line;
         try {
@@ -184,25 +146,29 @@ public class NetworkClient {
         }
     }
 
-    protected void write(String message) { //if we want to programmatically write something
+    /**
+     * If we want to programmatically write something
+     * @param message Message to write
+     */
+    protected void write(String message) { //
         writer.println(message);
         writer.flush();
     }
 
     /**
-     * Prints list of commands from commands.txt file
+     * Prints list of commands and what they do from a text file
+     * @author Christopher Goes
      */
     private void printCommandList() throws IOException {
         String inputline;
-        String filename = "commands.txt";
         try {
-            BufferedReader input = new BufferedReader(new FileReader(filename));
+            BufferedReader input = new BufferedReader(new FileReader(helpfile));
 
             while ((inputline = input.readLine()) != null) {
                 System.out.println(inputline);
             }
         } catch (FileNotFoundException e) {
-            System.err.println("File not found: " + filename + "\nException: " + e);
+            System.err.println("File not found: " + helpfile + "\nException: " + e);
         }
 
     } // end method
@@ -222,13 +188,11 @@ public class NetworkClient {
         port = serverPort;
         serverName = sName;
 
+        // Set client username
         username = uName;
+        
         //Reads from stdin:
         consoleIn = new BufferedReader(new InputStreamReader(System.in));
-
-        // sets Read/Write threads
-        //listenerThread = new ListenerThread();
-       // writerThread = new WriterThread();
 
     } // end constructor
 
@@ -240,7 +204,9 @@ public class NetworkClient {
      */
     public void start() throws Exception {
 
+        // Start thread(s)
         startThreads();
+        
         //first message is handle:
         MessageUtils.sendMessage(writer, MessageUtils.makeSendHandleMessage(username));
 
@@ -249,8 +215,7 @@ public class NetworkClient {
 
         //request list of lobbies:
         MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage());
-
-        //startThreads(); // why are messages sent before threads started?
+      
     } // end method    
 
     /**
@@ -404,6 +369,10 @@ public class NetworkClient {
         listenerThread.start();
     } // end method
 
+    /**
+     * Kills thread(s) and resets writer stream
+     * @author Christopher Goes
+     */
     private void stopThreads() {
         //writerThread.close();
         writer = null;
@@ -432,10 +401,12 @@ public class NetworkClient {
 
         System.out.println("Connected: " + tempsock);
         return tempsock;
-
     }
 
-    protected void stop() { // private?
+    /**
+     * Closes all open streams, and kills all active threads
+     */
+    private void stop() {
         try {
             if (consoleIn != null) {
                 consoleIn.close();
@@ -443,9 +414,6 @@ public class NetworkClient {
             if (socket != null) {
                 socket.close();
             }
-            /*if (writerThread.isAlive() || listenerThread.isAlive()) {
-                stopThreads();
-            }*/
             if( listenerThread.isAlive()) {
                 stopThreads();
             }
@@ -454,6 +422,11 @@ public class NetworkClient {
         }
     }
 
+    /**
+     * Used to test the Network Client
+     * @param args
+     * @throws IOException 
+     */
     public static void main(String[] args) throws IOException {
 
         ClientData clientData = new ClientData();
@@ -485,4 +458,4 @@ public class NetworkClient {
         }
     }
 
-}
+} // end class
