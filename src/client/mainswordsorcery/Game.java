@@ -125,7 +125,7 @@ public class Game extends Application {
         //set to false to run actual initScenario
         boolean testScenario = true;
         unitPool = UnitPool.getInstance();
-        unitPool.clearPool();
+        unitPool.clear();
         if(testScenario){
             //TODO load simple test scenario
             
