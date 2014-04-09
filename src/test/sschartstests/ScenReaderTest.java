@@ -110,4 +110,21 @@ public class ScenReaderTest extends TestCase {
         test = test && reader.getProvinces("Dwarrows").equals(dwarfProvinces);
         assertTrue(test);
     }
+    
+    // test that the nation provinces were read correctly
+    public void testCharacters() {
+        boolean test;
+        List<String> elvishChars;
+        List<String> dwarfChars;
+        elvishChars = new ArrayList<>();
+        elvishChars.add("Dalmilandril");
+        elvishChars.add("Linfalas");
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        test = reader.getCharacters("Elves").equals(elvishChars);
+        dwarfChars = new ArrayList<>();
+        dwarfChars.add("Paladin Glade");
+        test = test && reader.getCharacters("Dwarrows").equals(dwarfChars);
+        assertTrue(test);
+    }
+    
 }

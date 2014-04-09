@@ -368,10 +368,26 @@ public class ScenarioConfigurationReader {
         return provinces.get(name);
     }
 
+    /**
+     * Return a list of names of the characters in a nation.
+     * <p>
+     * TODO: change this to return Characters instead of strings?
+     * 
+     * @param name the name of the nation in question
+     * @return a list of names of the characters in the nation
+     */
     public List<String> getCharacters(String name) {
         return characters.get(name);
     }
 
+    /**
+     * Return a list of names of the units in a nation.
+     * <p>
+     * TODO: change this to return ArmyUnits instead of strings?
+     * 
+     * @param name the name of the nation in question
+     * @return a list of names of the units in the nation
+     */
     public Map<String, Integer> getUnits(String name) {
         return units.get(name);
     }
@@ -400,7 +416,7 @@ public class ScenarioConfigurationReader {
      * A simple main class for testing the reader on a specified file. It 
      * simply reads and calls the stdout print function.
      * 
-     * @author Wayne Fuhrman
+     * @author Tyler Jaszkowiak
      * @param args there should be no command line args
      */
     public static void main(String[] args) {
