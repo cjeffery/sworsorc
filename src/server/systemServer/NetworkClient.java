@@ -66,7 +66,9 @@ public class NetworkClient {
                     }
                     List<String> message = MessageUtils.receiveMessage(streamIn);
                     if (message == null) {
-                        break;
+                        System.err.println("Null message from server!");
+                        close();
+                        return;
                     }
                     //first element of the parsed message array will tell us
                     //what type of message it is:
@@ -307,14 +309,14 @@ public class NetworkClient {
                 } // end catch
             } // end if
             else { // This runs when client is disconnected. Its ugly, but works.
-                if ((line = consoleIn.readLine()) == null) {
+                if ((line = consoleIn.readLine()) == null ) {
                     System.err.println("line == null! Eeek!");
                     stop();
                     break;
                 }
 
                 parsedString = line.split("\\s+"); //Split line by whitespace
-
+               
                 if ("/reconnect".equals(parsedString[0])) {
                     consoleOut.println("Attempting to reconnect...");
                     if (connect()) {
