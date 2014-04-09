@@ -68,7 +68,7 @@ public class ChatClient {
                     } else if (message.get(0).equals(MessageUtils.GLOBAL_WHO_LIST)) {
                         MessageUtils.printGlobalWhoList(consoleOut, message);
                     } else if (message.get(0).equals(MessageUtils.LOBBY_INFO)) {
-                        MessageUtils.printLobbyInfo(consoleOut, message);
+                        MessageUtils.printGameInfo(consoleOut, message);
                     } else {
                         //This shouldn't ever happen!
                         System.err.println("Unknown tag: " + message.get(0));
@@ -225,7 +225,7 @@ public class ChatClient {
         MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeGlobalWhoRequestMessage());
 
         //request list of lobbies:
-        MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeRequestLobbyInfoMessage());
+        MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeRequestGameInfoMessage());
 
         //startThreads(); // why are messages sent before threads started?
 
@@ -249,13 +249,13 @@ public class ChatClient {
                     if ("/file".equals(parsedString[0])) {
                         writerThread.sendFile(parsedString[1]);
                         
-                    } else if ("/newLobby".equals(parsedString[0])) {
+                    } else if ("/newGame".equals(parsedString[0])) {
                         String lobbyName = parsedString[1];
-                        MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyMessage(lobbyName));
+                        MessageUtils.sendMessage(writer, MessageUtils.makeNewGameMessage(lobbyName));
                         
-                    } else if ("/joinLobby".equals(parsedString[0])) {
+                    } else if ("/joinGame".equals(parsedString[0])) {
                         String lobbyName = parsedString[1];
-                        MessageUtils.sendMessage(writer, MessageUtils.makeJoinLobbyRequestMessage(lobbyName));
+                        MessageUtils.sendMessage(writer, MessageUtils.makeJoinGameRequestMessage(lobbyName));
                     }
                     
                 } else if (parsedString.length == 1) {
@@ -265,11 +265,11 @@ public class ChatClient {
                     } else if ("/globalWho".equals(parsedString[0])) {
                         MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
                         
-                    } else if ("/leaveLobby".equals(parsedString[0])) {
-                        MessageUtils.sendMessage(writer, MessageUtils.makeLeaveLobbyMessage());
+                    } else if ("/leaveGame".equals(parsedString[0])) {
+                        MessageUtils.sendMessage(writer, MessageUtils.makeLeaveGameMessage());
                         
                     } else if ("/showLobbies".equals(parsedString[0])) {
-                        MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage()); // TODO: working lobby info request
+                        MessageUtils.sendMessage(writer, MessageUtils.makeRequestGameInfoMessage()); // TODO: working lobby info request
                     
                     } else if ("/disconnect".equals(parsedString[0])) { // manual client disconnect
                         MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
