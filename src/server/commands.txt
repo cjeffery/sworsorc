@@ -1,0 +1,5 @@
+Commands:
+    /help - This list of commands
+    /disconnect - Disconnects from server
+    /reconnect - Reconnect to server after being disconnected
+    /quit - Quits out of the client
