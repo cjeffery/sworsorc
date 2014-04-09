@@ -6422,6 +6422,9 @@
         <terrainKey>R</terrainKey>
         <provinceName>Kelgarnth</provinceName>
         <hexEdgeMap>
+          <northEastEdge>
+              <edgeAttribute>Pb</edgeAttribute>
+          </northEastEdge>
           <southEastEdge>
             <edgeAttribute>Pb</edgeAttribute>
           </southEastEdge>
