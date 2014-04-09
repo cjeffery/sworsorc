@@ -35,7 +35,8 @@ public class NetworkClient {
     
     // set default help file
     private String helpfile = "commands.txt"; 
-
+    private String dir = System.getProperty("user.dir"); // set every time method called
+    
     /**
      * Listens for and handles incoming communications for Network Client
      */
@@ -161,14 +162,19 @@ public class NetworkClient {
      */
     private void printCommandList() throws IOException {
         String inputline;
+        String tempfile;
+        
+        // change src and server to variables when project is nearing completion
+        tempfile = dir + File.separator + "src" + File.separator + "server" + File.separator + helpfile;
+        
         try {
-            BufferedReader input = new BufferedReader(new FileReader(helpfile));
+            BufferedReader input = new BufferedReader(new FileReader(tempfile));
 
             while ((inputline = input.readLine()) != null) {
                 System.out.println(inputline);
             }
         } catch (FileNotFoundException e) {
-            System.err.println("File not found: " + helpfile + "\nException: " + e);
+            System.err.println("File not found: " + tempfile + "\nException: " + e);
         }
 
     } // end method
@@ -289,7 +295,7 @@ public class NetworkClient {
                         }
                     } // end if
 
-                    if (socket.isConnected() && !(socket.isClosed())) {
+                    if (!(socket.isClosed()) && socket.isConnected()) {
                         MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, line));
                     }
 
