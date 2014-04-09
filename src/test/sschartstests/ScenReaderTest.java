@@ -17,6 +17,10 @@ import sscharts.ScenarioConfigurationReader;
  * A test case for the src/utilities/sscharts/ScenarioConfigurationReader.java
  * class. It runs a few simple JUnit tests to determine if the scenario reader 
  * behaves as expected.
+ * <p>
+ * TODO: This only tests the data and the getters under ideal input.
+ * Error handling needs to be done in the reader and tests for it should
+ * be added here.
  * 
  * @author Tyler
  */
@@ -61,4 +65,49 @@ public class ScenReaderTest extends TestCase {
         assertTrue(test);
     }
     
+    // test that the controlling player is correct
+    public void testGetControllingPlayer() {
+        boolean test;
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        test = (reader.getControllingPlayer("Elves") == 1) &&
+                (reader.getControllingPlayer("Dwarrows") == 2);
+        assertTrue(test);
+    }
+    
+    // TODO: since neutrals are not yet in Dummy or handled by the pool populator, 
+    // they will be tested later.
+    
+    // test that the setup order is correct
+    public void testGetSetupOrder() {
+        boolean test;
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        test = (reader.getSetupOrder("Dwarrows") == 2) && 
+               (reader.getSetupOrder("Elves") == 1);
+        assertTrue(test);
+    }
+    
+    // test that the move order is correct
+    public void testGetMoveOrder() {
+        boolean test;
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        test = reader.getMoveOrder("Dwarrows") == 2 && 
+               (reader.getMoveOrder("Elves") == 1);
+        assertTrue(test);
+    }
+    
+    // test that the nation provinces were read correctly
+    public void testProvinces() {
+        boolean test;
+        List<String> elvishProvinces;
+        List<String> dwarfProvinces;
+        elvishProvinces = new ArrayList<>();
+        elvishProvinces.add("Vynar");
+        elvishProvinces.add("Nattily Woods");
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        test = reader.getProvinces("Elves").equals(elvishProvinces);
+        dwarfProvinces = new ArrayList<>();
+        dwarfProvinces.add("The Empire");
+        test = test && reader.getProvinces("Dwarrows").equals(dwarfProvinces);
+        assertTrue(test);
+    }
 }

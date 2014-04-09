@@ -25,6 +25,8 @@ import org.json.simple.parser.*;
  * Each method gives its own author. In some cases, I left Wayne Fuhrman as 
  * the main author even though I made changes to a few lines. The ground work 
  * was still laid by him.
+ * <p>
+ * TODO: Input error handling and null pointer checking, etc.
  * 
  * @author Wayne Fuhrman
  * @author Tyler Jaszkowiak
@@ -307,6 +309,11 @@ public class ScenarioConfigurationReader {
         return gameLength;
     }
     
+    /** return the list of nation names.
+     * 
+     * @author Tyler Jaszkowiak
+     * @return a list of nations in the scenario
+     */
     public List<String> getNationNames() {
         return nationNames;
     }
@@ -322,18 +329,41 @@ public class ScenarioConfigurationReader {
         return controllingPlayers.get(name);
     }
 
+    /** 
+     * Gets the names of the neutrals in the scenario and returns them as a list.
+     * 
+     * @author Wayne Fuhrman
+     * @return a list of neutrals in the scenario
+     */
     public List<String> getNeutralNames() {
         return neutralNames;
     }
 
+    /** Gets the setup order of a specific nation in the scenario
+     * 
+     * @param name name of the nation being queried about
+     * @return the setup order of the nation in question
+     */
     public Integer getSetupOrder(String name) {
         return setupOrders.get(name);
     }
 
+    /**
+     * Gets the move order of a specific nation in the scenario.
+     * 
+     * @param name name of the nation being queried about
+     * @return the setup order of the nation in question
+     */
     public Integer getMoveOrder(String name) {
         return moveOrders.get(name);
     }
 
+    /**
+     * Get the provinces a nation is allowed to set up in
+     * 
+     * @param name name of the nation in question
+     * @return a list of the names of these provinces TODO: find a Province object?
+     */
     public List<String> getProvinces(String name) {
         return provinces.get(name);
     }

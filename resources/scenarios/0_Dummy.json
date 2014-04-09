@@ -13,7 +13,7 @@
         {
             "name": "Elves",
 	    "player":1,
-            "provinces": ["Vynar"],
+            "provinces": ["Vynar","Nattily Woods"],
             "setupOrder":1,
             "moveOrder":1,
             
