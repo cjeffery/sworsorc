@@ -179,6 +179,15 @@ public class HUDController {
         }
     }
     
+    /**
+     * Undo the last move made
+     * Not functional need to talk to whoever coded Unit.UnitPool.undoMove(String)
+     * @param event 
+     */
+    @FXML protected void undoMove(ActionEvent event) {
+        UnitPool.getInstance().undoMove(null);
+    }
+    
     /** 
      * Changes current scene to main menu and shows main menu     * 
      * @author Joe Higley      
@@ -188,6 +197,7 @@ public class HUDController {
         stage.setScene(Game.getInstance().getMainScene());
         stage.show();    
     }
+    
     /** 
      * SolarDisplay code goes here
      * 
