@@ -230,38 +230,8 @@ public class MovementCalculator
     {
         double edgeCost = 1;
 
-        /* here are some attempts at success -- we need better stuff though
-        int destEdgeDirection = (sourceEdgeDirection + 3)%6;
-        ITTBridge bridge = new ITTBridge();
-        ITTDragonTunnel DTC = new ITTDragonTunnel();
-        ITTFord ford = new ITTFord();
-        ITTRoad road = new ITTRoad();
-        ITTTrail trail = new ITTTrail();
+        // Need logic here for edge-hopping TODO
         
-        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(bridge) )
-        {
-            return 1;
-        }
-        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(DTC) )
-        {
-            return 1;
-        }
-        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(ford) )
-        {
-            return 3;
-        }
-        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(road) )
-            return 1;
-        if( sourceHex.getImprovements().get(sourceEdgeDirection).equals(trail) )
-            return 1;
-        
-        */
-        // get HexEdgeType enum for sourceedge. switch on it...return according
-        // to match against dest edge HexEdgeType. thanks for the enum...
-        
-        
-        
-
         return edgeCost;
     }
 
