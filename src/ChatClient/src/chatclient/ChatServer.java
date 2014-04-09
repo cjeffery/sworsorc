@@ -12,43 +12,43 @@ public class ChatServer {
 
     //TODO: have clientObjects remove themselves on disconnect:
     protected static List<ClientObject> clientObjects; //"Packaged sockets"
-    protected static List<Lobby> lobbies;
+    protected static List<Game> games;
     
     
     protected static int DEFAULT_PORT = 25565;
     protected static String DEFAULT_IP = "76.178.139.129";
 
-    public static void createNewLobby(String name){
+    public static void createNewGame(String name){
         //TODO: Enforce unique names?
-       Lobby lobby = new Lobby(name);
-       lobbies.add(lobby);
+       Game game = new Game(name);
+       games.add(game);
     }
     
-    public static void joinLobby(String lobbyName, ClientObject client){
-        for (Lobby l : lobbies){
-            if (l.name.equals(lobbyName)){
+    public static void joinGame(String gameName, ClientObject client){
+        for (Game l : games){
+            if (l.name.equals(gameName)){
                 l.join(client);
                 return;
             }
         }
         //If we're here, we didn't find the name!
-        System.err.println("Error: Couldn't find lobby: " + lobbyName + " to join.");
+        System.err.println("Error: Couldn't find game: " + gameName + " to join.");
     }
     
-    public static void leaveLobby(ClientObject client){
+    public static void leaveGame(ClientObject client){
         
-        for (Lobby l : lobbies){
-            if (l.lobbyClients.contains(client)){
+        for (Game l : games){
+            if (l.gameClients.contains(client)){
                 l.leave(client);
-                if (l.lobbyClients.isEmpty()){
-                    //For now, just kill lobbies when everyone leaves
-                    lobbies.remove(l);
+                if (l.gameClients.isEmpty()){
+                    //For now, just kill games when everyone leaves
+                    games.remove(l);
                 }
                 return;
             }
         }
         //If we're here, we didn't find the name!
-        System.err.println("Requested to leave lobby from client not in lobby");
+        System.err.println("Requested to leave game from client not in game");
     }
     
     public static List<String> getAllUserNames(){
@@ -78,7 +78,7 @@ public class ChatServer {
             }
         }
         
-        leaveLobby(dearlyDeparted);
+        leaveGame(dearlyDeparted);
         clientObjects.remove(dearlyDeparted);
         sendToAllClients(MessageUtils.makeDisconnectAnnouncementMessage(dearlyDeparted.getHandle()));
         
@@ -87,7 +87,7 @@ public class ChatServer {
 
     public static void main(String args[]) {
         clientObjects = new ArrayList<>();
-        lobbies = new ArrayList<>();
+        games = new ArrayList<>();
 
         System.out.println("Server starting. . .");
 
@@ -126,39 +126,39 @@ public class ChatServer {
 
 }
 
-class Lobby {
-    List<ClientObject> lobbyClients;
-    static int lobbyCounter = 0;
-    int lobbyId;
+class Game {
+    List<ClientObject> gameClients;
+    static int gameCounter = 0;
+    int gameId;
     String name;
     
-    public Lobby(String name){
-        lobbyClients = new ArrayList<>();
+    public Game(String name){
+        gameClients = new ArrayList<>();
         this.name = name;
-        this.lobbyId = lobbyCounter++;
+        this.gameId = gameCounter++;
     }
     
-    public void sendToEntireLobby(List<String> message){
-        for (ClientObject client: lobbyClients){
+    public void sendToEntireGame(List<String> message){
+        for (ClientObject client: gameClients){
             client.send(message);
         }
     }
     
     public List<String> getUserNames(){
         List<String> handles = new ArrayList<>();
-        for (ClientObject client : lobbyClients){
+        for (ClientObject client : gameClients){
             handles.add(client.getHandle());
         }
         return handles;
     }
     
     public void join(ClientObject client){
-        lobbyClients.add(client);
+        gameClients.add(client);
         //TODO: announce join to other connected clients
     }
     
     public void leave(ClientObject client){
-        lobbyClients.remove(client);
+        gameClients.remove(client);
         //TODO: announce leave to other connected clients
     }
 }
@@ -305,31 +305,31 @@ class ClientObject {
                         writerThread.write(MessageUtils.makeGlobalWhoListMessage(handles));
                     }
                     else if (TAG.equals(MessageUtils.CREATE_NEW_LOBBY)){
-                        //client asks to create new lobby, and provided name
-                        System.out.println("Received request to create lobby: "+ message.get(1));
-                        ChatServer.createNewLobby(message.get(1));
-                        ChatServer.joinLobby(message.get(1), ClientObject.this);
+                        //client asks to create new game, and provided name
+                        System.out.println("Received request to create game: "+ message.get(1));
+                        ChatServer.createNewGame(message.get(1));
+                        ChatServer.joinGame(message.get(1), ClientObject.this);
                         
                     }
                     else if (TAG.equals(MessageUtils.REQUEST_LOBBY_INFO)){
-                        //client asks to create new lobby, and provided name
-                        //System.out.println("Received request to create lobby: "+ message.get(1));
-                               //Send current lobbies to client:
-                      for (Lobby lobby: ChatServer.lobbies){
+                        //client asks to create new game, and provided name
+                        //System.out.println("Received request to create game: "+ message.get(1));
+                               //Send current games to client:
+                      for (Game game: ChatServer.games){
                         MessageUtils.sendMessage(writerThread.writer, 
-                        MessageUtils.makeLobbyInfoMessage(lobby.name, lobby.getUserNames()));
+                        MessageUtils.makeGameInfoMessage(game.name, game.getUserNames()));
                       }
                         
                     }
                     else if (TAG.equals(MessageUtils.JOIN_LOBBY_REQUEST)){
-                        //client requested to join lobby.
-                        System.out.println("Received request to join lobby: "+ message.get(1));
-                        ChatServer.joinLobby(message.get(1), ClientObject.this);
+                        //client requested to join game.
+                        System.out.println("Received request to join game: "+ message.get(1));
+                        ChatServer.joinGame(message.get(1), ClientObject.this);
                         //TODO: Send a accept/reject message
                     }
                     else if (TAG.equals(MessageUtils.LEAVE_LOBBY_REQUEST)){
-                        System.out.println(handle + " has requested to leave lobby");
-                        ChatServer.leaveLobby(ClientObject.this);
+                        System.out.println(handle + " has requested to leave game");
+                        ChatServer.leaveGame(ClientObject.this);
                         
                         
                     }

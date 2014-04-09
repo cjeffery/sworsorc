@@ -31,65 +31,65 @@ public class MessageUtils {
     static String FILE_LINE = "fileLine";
     static String PRINT_FILE = "printFile";
 
-    static String CREATE_NEW_LOBBY = "createNewLobby"; //client requests a new lobby
-    static String JOIN_LOBBY_REQUEST = "joinLobby"; //client requests to join an existing lobby
-    static String LEAVE_LOBBY_REQUEST = "leaveLobby"; //client requests to leave lobby
-    static String LOBBY_INFO = "lobbyNameAndUsers"; //send info about a lobby
-    static String REQUEST_LOBBY_INFO = "requestLobbyInfo";
-    //static String ANNOUNCE_NEW_LOBBY = "announceNewLobby"; //tell your friends!
+    static String CREATE_NEW_LOBBY = "createNewGame"; //client requests a new game
+    static String JOIN_LOBBY_REQUEST = "joinGame"; //client requests to join an existing game
+    static String LEAVE_LOBBY_REQUEST = "leaveGame"; //client requests to leave game
+    static String LOBBY_INFO = "gameNameAndUsers"; //send info about a game
+    static String REQUEST_LOBBY_INFO = "requestGameInfo";
+    //static String ANNOUNCE_NEW_LOBBY = "announceNewGame"; //tell your friends!
 
     static String SEND_HANDLE = "sendHandle"; //client sending handle to server
 
     static String DISCONNECT_REQUEST = "disconnectrequest"; // client requests soft disconnect (Breakup is sitll a breakup, but this is nicer)
     static String GLOBAL_WHO_LIST = "globalwholist"; //send list of all online users
     static String REQUEST_GLOBAL_WHO = "globalwhoreqest"; //ask for all online usernames
-    //static String LOBBY_WHO_REQUEST = "lobbywho"; //ask for user names in same lobby
+    //static String LOBBY_WHO_REQUEST = "gamewho"; //ask for user names in same game
 
     static boolean debug = false; //Print everything!
 
-    //client asks to create new lobby:
-    public static List<String> makeNewLobbyMessage(String lobbyName) {
+    //client asks to create new game:
+    public static List<String> makeNewGameMessage(String gameName) {
         List<String> message = new ArrayList<>();
         message.add(CREATE_NEW_LOBBY);
-        message.add(lobbyName);
+        message.add(gameName);
         return message;
     }
 
-    //Request to join lobby
-    public static List<String> makeJoinLobbyRequestMessage(String lobbyName) {
+    //Request to join game
+    public static List<String> makeJoinGameRequestMessage(String gameName) {
         List<String> message = new ArrayList<>();
         message.add(JOIN_LOBBY_REQUEST);
-        message.add(lobbyName);
+        message.add(gameName);
         return message;
     }
 
-    //client request to leave lobby
-    public static List<String> makeLeaveLobbyMessage() {
+    //client request to leave game
+    public static List<String> makeLeaveGameMessage() {
         List<String> message = new ArrayList<>();
         message.add(LEAVE_LOBBY_REQUEST);
         return message;
     }
 
     //request current list of lobbies and info
-    public static List<String> makeRequestLobbyInfoMessage() {
+    public static List<String> makeRequestGameInfoMessage() {
         List<String> message = new ArrayList<>();
         message.add(REQUEST_LOBBY_INFO);
         return message;
     }
 
-    //send info about a lobby to a client
-    public static List<String> makeLobbyInfoMessage(String lobbyName, List<String> handles) {
+    //send info about a game to a client
+    public static List<String> makeGameInfoMessage(String gameName, List<String> handles) {
         List<String> message = new ArrayList<>();
         message.add(LOBBY_INFO);
-        message.add(lobbyName);
+        message.add(gameName);
         for (String handle : handles) {
             message.add(handle);
         }
         return message;
     }
 
-    public static void printLobbyInfo(PrintWriter write, List<String> message) {
-        String build = "Lobby " + message.get(1) + ", Users: ";
+    public static void printGameInfo(PrintWriter write, List<String> message) {
+        String build = "Game " + message.get(1) + ", Users: ";
 
         for (int i = 2; i < message.size() - 1; i++) {
             build += message.get(i) + ", ";

@@ -11,7 +11,6 @@ package Units;
  *
  * 
  * CS 383 Software Engineering
- * changed 'demorlized' to 'demoralized' before the problem spread
  * <p>
  * Army Unit extends the MoveableUnit class. This class addresses the combat
  * side of all basic units(ie not monsters and characters). This contains the 

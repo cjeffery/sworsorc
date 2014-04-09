@@ -11,18 +11,18 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="768.0" prefWidth="1366.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mainswordsorcery.HUDController">
   <children>
-    <ScrollPane fx:id="MapView" layoutX="0.0" layoutY="0.0" prefHeight="765.0999145507812" prefWidth="1012.0">
+    <ScrollPane fx:id="map_view" layoutX="0.0" layoutY="0.0" prefHeight="765.0999145507812" prefWidth="1012.0">
       <content>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
       </content>
     </ScrollPane>
-    <MenuBar layoutX="0.0" layoutY="2.0">
+    <MenuBar fx:id="menuBar" layoutX="0.0" layoutY="2.0">
       <menus>
         <Menu mnemonicParsing="false" text="Menu">
           <items>
-            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" onAction="#Quit" text="Main Menu" fx:id="exit_btn" />
+            <MenuItem mnemonicParsing="false" text="Save Game" />
             <MenuItem mnemonicParsing="false" text="Options" />
-            <MenuItem mnemonicParsing="false" onAction="#Quit" text="Exit" fx:id="exit_btn" />
           </items>
         </Menu>
         <Menu disable="false" mnemonicParsing="false" text="Scenario">
@@ -46,6 +46,7 @@
                     <Font name="System Bold" size="14.0" fx:id="x2" />
                   </font>
                 </Text>
+                <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#DisplayUnits" text="Stack" GridPane.columnIndex="0" GridPane.rowIndex="0" />
               </children>
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -62,7 +63,7 @@
                     <Image url="@sun.png" />
                   </image>
                 </ImageView>
-                <Button mnemonicParsing="false" onAction="#DisplayStack" prefHeight="48.0" prefWidth="158.0" text="End Phase" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Button mnemonicParsing="false" onAction="#ChangeSun" prefHeight="48.0" prefWidth="158.0" text="End Phase" GridPane.columnIndex="0" GridPane.rowIndex="1">
                   <font>
                     <Font name="Palatino Linotype Bold" size="16.0" />
                   </font>
@@ -94,7 +95,7 @@
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Text fx:id="RedSun" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turn" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                   </children>
@@ -121,6 +122,7 @@
               <children>
                 <TabPane fx:id="Targets" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                 <Text font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Target" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Button mnemonicParsing="false" onAction="#DisplayTargets" text="Target" GridPane.columnIndex="0" GridPane.rowIndex="0" />
               </children>
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -142,7 +144,7 @@
           </rowConstraints>
         </GridPane>
         <ImageView fitHeight="150.75" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <ScrollPane fx:id="mini_map" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
           <content>
             <AnchorPane prefHeight="342.0" prefWidth="342.0">
               <children>
@@ -165,7 +167,8 @@
       </rowConstraints>
     </GridPane>
     <Separator layoutX="1010.0" layoutY="3.0" minWidth="0.0" orientation="VERTICAL" prefHeight="838.0" prefWidth="0.0" />
-    <TextArea fx:id="chat_box" editable="false" focusTraversable="false" layoutX="10.0" layoutY="538.0" opacity="1.0" prefHeight="189.0" prefWidth="411.0" text="UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text&#10;UserName&gt; Message Text" visible="true" wrapText="true" />
-    <TextField fx:id="message_box" layoutX="10.0" layoutY="734.0" prefWidth="411.0" text="Your Message" />
+    <TextArea fx:id="chat_box" editable="false" focusTraversable="false" layoutX="10.0" layoutY="538.0" opacity="1.0" prefHeight="189.0" prefWidth="411.0" text="" visible="true" wrapText="true" />
+    <TextField fx:id="message_box" layoutX="10.0" layoutY="734.0" onAction="#SubmitToChat" prefWidth="411.0" promptText="Your Message Here" text="" />
+    <Button layoutX="909.0" layoutY="17.0" mnemonicParsing="false" text="Undo Move" />
   </children>
 </AnchorPane>

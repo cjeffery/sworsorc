@@ -79,5 +79,46 @@ public abstract class HexMap {
         res[1] = (i % 100);
         return res;
     }
+    
+    /**
+     * return the distance (in hexagons) between two hexes.
+     * For instance if both hexes are the same the distance will be 0,
+     * while if the hexes are neighbors the distance will be 1.
+     * @param hex1 A hexagon
+     * @param hex2 Another hexagon!
+     * @return the distance between them!
+     **/
+    public static int distance(String hex1, String hex2) {
+        int[] coords1 = GetCoordsFromID(hex1);
+        int[] coords2 = GetCoordsFromID(hex2);
+        int x1 = coords1[0], x2 = coords2[0];
+        int y1 = coords1[1], y2 = coords2[1];
+        int xd = Math.abs( x2 - x1 );
+        int yd = Math.abs( y2 - y1 );
+        
+        //if both hexes are in same column, return y distance
+        if(xd == 0) {
+            return yd;
+        }
+        
+        //if both hexes are in different columns, things are more complicated
+        //hopefully this works, really I'm just making stuff up
+        //that's what unit tests are for, right?
+        int min_y = y1 - (xd+((x1  )%2)) / 2;
+        int max_y = y1 + (xd+((x1+1)%2)) / 2;
+        
+        if(y2 < min_y) {
+            return xd + min_y - y2;
+        }
+        else if(y2 <= max_y) {
+            return xd;
+        }
+        else {
+            return xd + (y2 - max_y);
+        }
+    }
+    public static int distance(Hex hex1, Hex hex2) {
+        return distance(hex1.GetID(), hex2.GetID());
+    }
   
 }

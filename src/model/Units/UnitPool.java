@@ -6,64 +6,80 @@
 
 package Units;
 
+
+import java.lang.Character; // used on line 213
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- * A pool of all units in play during this game. 
+ * Unit pool tracks all the units that have been created in the game.  
+ * Unit pool is a singleton that is created by calling getInstance().
  * 
- * @author David
+ * 
+ * @author David Klingenberg
  */
 public class UnitPool {
-    TreeMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>> pool = new TreeMap(); 
-    private TreeMap<String, ArrayList<String>> hexList = new TreeMap();
-    private TreeMap<String, ArrayList<String>> unitMove = new TreeMap();
-    private ArrayList<String> hexVisited = new ArrayList();
-    private ArrayList<String> unitsInHex = new ArrayList();
+    //SortedMap m = Collections.synchronizedSortedMap(new TreeMap(...));
+    //TreeMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>> pool = new TreeMap(); 
+    //SortedMap temp = Collections.synchronizedSortedMap(new TreeMap<String,ArrayList<ArmyUnit>>());
+    SortedMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>> pool = Collections.synchronizedSortedMap(new TreeMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>>());
+    //TreeMap<Integer, TreeMap<String,ArrayList<ArmyUnit>>> pool = new TreeMap(); 
+    private SortedMap<String, ArrayList<String>> hexList = Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());
+    //private TreeMap<String, ArrayList<String>> hexList = new TreeMap();
+    private SortedMap<String, ArrayList<String>> unitMove = Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());;
+    //private TreeMap<String, ArrayList<String>> unitMove = new TreeMap();
+    private List<String> hexVisited = Collections.synchronizedList(new ArrayList<String>());
+    //private ArrayList<String> hexVisited = new ArrayList();
+    private List<String> unitsInHex = Collections.synchronizedList(new ArrayList<String>());
+    //private ArrayList<String> unitsInHex = new ArrayList();
     private static UnitPool INSTANCE;
     
     private UnitPool() {
     
-    }
-    
+}
+    /**
+     * This creates or returns the unit pool singleton.
+     * 
+     * @return 
+     */
     public static UnitPool getInstance(){
         if (INSTANCE == null)
             INSTANCE = new UnitPool();
         return INSTANCE;
     }
-            
+    
     /**
-     * Adds a unit to the pool. Setting it's location to the one specified
-     * getUnitsInHex will return units added with this method.
+     * Used to add a new unit to the pool with an initial location.
      * 
-     * @author David
-     * @param playerID The ID of the player
-     * @param unit The ArmyUnit to add to the pool
-     * @param location The location to set the unit to
-     */
+     * @param location : the hex the unit occupies. 
+     */        
     public void addUnit(int playerID, ArmyUnit unit, String location){
         unit.setLocation(location);
         this.addUnit(playerID, unit);
-        this.addToHex(hexList, unitsInHex, unit);
-        this.addToMove(unitMove, hexVisited, unit);
+        this.addToHex(hexList, unit);
+        this.addToUnit(unitMove, unit);
     }
     
     /**
-     * Sets the unit's ID to player#name@hashcode
-     * Then adds it.
-     * NOTE that this will NOT index the unit by the units current position 
-     * so getUnitsInHex will NOT return it. (cliff7786 - maybe this should be changed?)
+     * Used to add a new unit to the pool.
+     * Example:
+     * pool.addUnit (1, new LightSword, "0101");
      * 
-     * @author David
-     * @param playerId The ID of the player
-     * @param unit The ArmyUnit to add to the pool
+     * @param playerID : the player number or unique ID
+     * @param unit     : an instance of some army unit  
      */
     public void addUnit(int playerId, ArmyUnit unit){
        unit.setID(Integer.toString(playerId) + "#" + unit.toString() + "@" + Integer.toString(unit.hashCode()));
        
+       
+        
        if (pool.containsKey(playerId)){
-           if(pool.get(playerId).containsKey(unit.toString()))
+           if(pool.get(playerId). containsKey(unit.toString()))
                pool.get(playerId).get(unit.toString()).add(unit);
             else{
                ArrayList<ArmyUnit> unitList = new ArrayList();
@@ -81,87 +97,134 @@ public class UnitPool {
            pool.put(playerId, unitMap);
        }     
     }
-
-    private void addToHex(TreeMap<String,ArrayList<String>> tree, ArrayList<String> list, ArmyUnit unit) {
+    
+    /**
+     * This adds a unit to the hex list tree.
+     * 
+     * @param tree : this should be hexList tree.
+     * @param unit : the unit to be added
+     */
+    private void addToHex(SortedMap<String, ArrayList<String>> tree, ArmyUnit unit) {
         if (tree.containsKey(unit.getLocation())){
             if(!tree.get(unit.getLocation()).contains(unit.getID()))
                 tree.get(unit.getLocation()).add(unit.getID());
         }
         else{
+            ArrayList<String> list = new ArrayList();
+            
             list.add(unit.getID());
             tree.put(unit.getLocation(), list);
         }
     }
     
-    private void addToMove(TreeMap<String,ArrayList<String>> tree, ArrayList<String> list, ArmyUnit unit) {
+    /**
+     * This adds a unit to the hex move tree.
+     * 
+     * @param tree : this should be hex move tree.
+     * @param unit : the unit whose new location is being added to 
+     *               its array list.
+     */
+    
+    private void addToUnit(SortedMap<String, ArrayList<String>> tree, ArmyUnit unit) {
         if (tree.containsKey(unit.getID())){
             if(!tree.get(unit.getID()).contains(unit.getLocation()))
                 tree.get(unit.getID()).add(unit.getLocation());
         }
         else{
+            ArrayList<String> list = new ArrayList();
             list.add(unit.getLocation());
             tree.put(unit.getID(), list);
         }
     }
     
+    /**
+     * Is used to update the unit location and all of its associated trees.
+     * 
+     * Example: 
+     * addMove(getUnitsInHex("0101").get(0),"0102");
+     * 
+     * @param unit  : A valid instance of a army units class.
+     * @param hexId : The hex the unit is moving into.
+     */
+    
     public void addMove(ArmyUnit unit, String hexId){
-        this.unitMove.get(unit.getID()).add(hexId);
-        //To Do!!!!!
+        
+        // This horific looking line removes the unit from its current location.
+        hexList.get(unit.getLocation()).remove(hexList.get(unit.getLocation()).indexOf(unit.getID()));
+        
+        unit.setLocation(hexId);
+        this.addToHex(hexList, unit);
+        this.addToUnit(unitMove, unit);
+    
+        
     }
     
     /**
-     * This method will return an ArrayList of Units in the given hex.
-     * NOTE: units must have been added with the method that has location as an
-     *       argument.
+     * Returns a list that contains all the units currently occupying a hex.
      * 
-     * @author David
-     * @param hexId The Hex ID to look for units at
-     * @return An ArrayList of the unit IDs
-     */
+     * Example:
+     * someList = getUnitsInHex("0101");
+     * 
+     * @param hexId      : The hex the lookup is needed on.
+     * @return 
+     */    
     public ArrayList<String> getUnitsInHex(String hexId){
         return hexList.get(hexId);
     }
     
+    /**
+     * Returns a list that contains all the moves again it has conducted in its 
+     * current move phase or after a teleport.
+     * 
+     * Example:
+     * someList = getUnitHexMoves(someUnit.getID()); someUnit is typically 
+     * obtained from parsing a unit out of the getUnitsInHex method.
+     * 
+     * @param unitId             : The valid ID of a unit. Typically obtained 
+     *                             by calling someUnit.getID().
+     * @return 
+     */
     public ArrayList<String> getUnitHexMoves(String unitId){
         return this.unitMove.get(unitId);
     }
     
     /**
-     * Get all the units that belong to a player
-     * The key of the returned map appears to be unit type (like "LightSword")
+     * Returns all the units that a player currently owns.
      * 
-     * @author David
-     * @param playerId The ID of the player to get units for
-     * @return A Map of the units
+     * @param playerId : player one would be be 1 for example.
+     * @return
      */
     public TreeMap<String,ArrayList<ArmyUnit>> getAllPlayerUnits(int playerId){
         return pool.get(playerId);
     }
     
     /**
-     * Get all the units that belong to a player of a given type (like "LightSword")
+     * Returns all units of a player specific units type. For instance if you 
+     * wanted all of the players current light swords this function would return 
+     * them to you in the form of an array list.
      * 
-     * @author
-     * @param playerId The ID of the player to get units for
-     * @return An ArrayList of the units
+     * @param playerId
+     * @param unitClassName
+     * @return 
      */
-    public ArrayList<ArmyUnit> getSpecificPlayerUnits(int playerId, String unitClassName){
+    public ArrayList<ArmyUnit> getPlayerSpecificUnits(int playerId, String unitClassName){
         return pool.get(playerId).get(unitClassName);
     }
     
     /**
-     * gets the unit with the given ID
+     * Given a unit ID, this method would get tat instance of a ArmyUnit class.
+     * A unit ID is typically obtained from parsing a unit out of the 
+     * getUnitsInHex method.
      * 
-     * @author David
-     * @param unitId Unit ID takes the form 
-     * @return the unit with the given ID string, if it exists
+     * @param unitId : The unique ID of army unit.
+     * @return 
      */
     public ArmyUnit getUnit(String unitId){
         int playerId;
         String unitClass;
         ArmyUnit unit;
         
-        playerId = java.lang.Character.getNumericValue(unitId.charAt(0));
+        playerId = Character.getNumericValue(unitId.charAt(0));
         unitClass = unitId.substring(unitId.indexOf("#") + 1, unitId.indexOf("@"));
         
         boolean test = false;
@@ -179,14 +242,43 @@ public class UnitPool {
     }
     
     /**
-     * Empty the pool
-     * Does not empty hexList or unitMove, or hexVisited, or unitsInHex
-     * (Is this correct behavior?)
-     * 
-     * @author David
+     * This method is only used for junit tests. It ensures a empty unit pool.
+     * It should not be used in the game for any reason.
      */
-    public void clearPool(){
-        pool.clear();
+    public void clear(){
+        this.pool.clear();
+        this.hexList.clear();
+        this.hexVisited.clear();
+        this.unitMove.clear();
+        this.unitsInHex.clear();
+    }
+    
+    /**
+     * This function sets up the units for their next movement phase. It sets 
+     * the only hex in the list to the last hex entered.
+     */
+    public void endMovementPhase(){
+        
+        for (Map.Entry<String, ArrayList<String>> entry : this.unitMove.entrySet()){
+            if (entry.getValue().size() > 1){
+                 
+                int temp = entry.getValue().size();
+                for (int i = 0; i <= (temp - 2); i++)
+                   entry.getValue().remove(0);
+            }   
+        }
+    }
+
+    public String undoMove(String unitID){
+        
+        if (this.unitMove.get(unitID).size() > 1){
+            
+            unitMove.get(unitID).remove(unitMove.get(unitID).size() - 1);
+            this.getUnit(unitID).setLocation(unitMove.get(unitID).get(unitMove.get(unitID).size()-1));
+            
+        }
+        
+        return this.unitMove.get(unitID).get(unitMove.get(unitID).size() - 1);
     }
     
 }

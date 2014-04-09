@@ -1,0 +1,52 @@
+{
+    "scenarioName": "The Dummy Scenario",
+    "gameLength":3,
+    "numberOfPlayers":2,
+    
+    "sunTrackSetting" : {
+        "yellow":1,
+        "blue":"F",
+        "red":"L"
+    },
+    
+    "nations": [
+        {
+            "name": "Elves",
+	    "player":1,
+            "provinces": ["Vynar","Nattily Woods"],
+            "setupOrder":1,
+            "moveOrder":1,
+            
+            "units": {
+              "HorseArcher":2
+            },
+            
+            "characters": [
+                "Dalmilandril"
+            ],
+	    "reinforcements":"0",
+            "replacements":"0"
+        },
+        {
+            "name": "Dwarrows",
+	    "player":2,
+            "provinces": ["The Empire"],
+            "setupOrder": 2,
+            "moveOrder": 2,
+            "units": {
+              "Bow":2
+            },
+            
+            "characters": [
+                "Paladin Glade"
+            ],
+	    "reinforcements":"0",
+            "replacements":"0"
+        }
+    ],
+    
+    "neutrals": [
+        
+    ]
+
+}

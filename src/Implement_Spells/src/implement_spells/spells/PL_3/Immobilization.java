@@ -53,7 +53,7 @@ public final class Immobilization {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 7;
         // get spells range
         return range;
     }
@@ -65,17 +65,17 @@ public final class Immobilization {
         return distance;        
     }
     
-    public void getTarget(){
+    public void getTargetHexes(){
         // this function is used to get the target to cast spell
     }
     
+    public void selectUnits(){
+        //select desired units for each hex
+    }
+    
     public boolean checkLimits(){
-        boolean limit = false;
-        
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
+        boolean limit = true;
+        //no limits for this spell
         return limit; 
     }
     
@@ -84,8 +84,11 @@ public final class Immobilization {
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
             // perform
+            getTargetHexes();
             if(getDistance() <= getRange()){
                 //peform spell
+                selectUnits();
+                //immobalize all selected units
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

@@ -69,11 +69,9 @@ public final class C_C_C {
     }
     
     public boolean checkLimits(){
-        boolean limit = false;
+        boolean limit = true;
         
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
+        //no limits always return true
         
         return limit; 
     }

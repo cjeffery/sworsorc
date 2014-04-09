@@ -51,24 +51,6 @@ public final class Dispell_Magicks {
         return mana;
     }
     
-    //return spell range
-    public int getRange(){
-        int range = 0;
-        // get spells range
-        return range;
-    }
-    
-    //get distance to selected unit
-    public int getDistance(){
-        int distance = 0;
-        //get distance
-        return distance;        
-    }
-    
-    public void getTarget(){
-        // this function is used to get the target to cast spell
-    }
-    
     public boolean checkLimits(){
         boolean limit = false;
         
@@ -79,14 +61,59 @@ public final class Dispell_Magicks {
         return limit; 
     }
     
+    //get power level of spell being dispelled
+    public int getPowerLevel(){
+        int pwrLevel = 0;
+        
+        return pwrLevel;
+    }
+    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
             // perform
-            if(getDistance() <= getRange()){
-                //peform spell
+            int powerLevel = getPowerLevel();
+            if(powerLevel == 1){
+                //automatically dispell
             }
+            if(powerLevel == 2){
+                int x = 1 + (int)(Math.random() * ((6 - 1) + 1));
+                if(x <= 5){
+                    //dispell magicks
+                }
+            }
+            if(powerLevel == 3){
+                int x = 1 + (int)(Math.random() * ((6 - 1) + 1));
+                if(x <= 4){
+                    //dispell magicks
+                }
+            }
+            if(powerLevel == 4){
+                int x = 1 + (int)(Math.random() * ((6 - 1) + 1));
+                if(x <= 3){
+                    //dispell magicks
+                }
+            }
+            if(powerLevel == 5){
+                int x = 1 + (int)(Math.random() * ((6 - 1) + 1));
+                if(x <= 2){
+                    //dispell magicks
+                }
+            }
+            if(powerLevel == 6){
+                int x = 1 + (int)(Math.random() * ((6 - 1) + 1));
+                if(x <= 1){
+                    //dispell magicks
+                }
+            }
+            if(powerLevel == 7){
+                int x = 1 + (int)(Math.random() * ((6 - 1) + 1));
+                if(x == 0){
+                    //can't dispell magicks
+                }
+            }
+                         
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
             // char or unit info, 

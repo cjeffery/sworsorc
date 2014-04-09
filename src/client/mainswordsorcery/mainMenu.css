@@ -1,0 +1,18 @@
+/* 
+    Created on : Apr 5, 2014, 9:17:01 PM
+    Author     : Joe Higley
+*/
+
+.button {
+    -fx-font-size: 22px;
+    -fx-font-family: "Times New Roman", "Courier New";
+    -fx-font-weight: bold; 
+/*    -fx-font-size-adjust: 0.297; */
+}
+
+Text {
+    -fx-font-size: 78pt;
+    -fx-font-family: JasmineUPC, "Times New Roman";
+    -fx-font-weight: BOLD;
+    -fx-font-size-adjust: 0.297;
+}

@@ -53,12 +53,12 @@ public final class Fear {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 7;
         // get spells range
         return range;
     }
     
-    //get distance to selected unit
+    //get desired range
     public int getDistance(){
         int distance = 0;
         //get distance
@@ -79,6 +79,11 @@ public final class Fear {
         return limit; 
     }
     
+    public void selectUnits(){
+        //of the units in the desired range specify which units you
+        //want demoralized
+    }
+    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
@@ -86,6 +91,8 @@ public final class Fear {
             // perform
             if(getDistance() <= getRange()){
                 //peform spell
+                selectUnits();
+                //demoralize selected units
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

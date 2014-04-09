@@ -1,11 +1,13 @@
 package sscharts;
 
+import static ObjectCreator.ObjectCreator.CreateObject;
 import Units.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -23,6 +25,8 @@ import org.json.simple.parser.*;
  * Each method gives its own author. In some cases, I left Wayne Fuhrman as 
  * the main author even though I made changes to a few lines. The ground work 
  * was still laid by him.
+ * <p>
+ * TODO: Input error handling and null pointer checking, etc.
  * 
  * @author Wayne Fuhrman
  * @author Tyler Jaszkowiak
@@ -30,21 +34,18 @@ import org.json.simple.parser.*;
 
 public class ScenarioConfigurationReader {
     
-    UnitPool pool;                      // the pool of units in the scenario
-                                        // to be accessed by main Game class
-    
      List<String> nationNames;
      List<String> neutralNames;
 
     //Information storage for each nation:
      
     //The player nation or neutral name is the key for these hashmaps
-     Map<String, Integer> controllingPlayers;   //name -> controllingPlayer
-     Map<String, Integer> setupOrders;          //name -> order
-     Map<String, Integer> moveOrders;           //name -> order
-     Map<String, List<String>> provinces;       //name -> list of province names
-     Map<String, List<String>> characters;      //name -> list of character names
-     Map<String, Map<String, Integer>> units;   //name -> (unitName -> unitCount)
+     Map<String, Integer> controllingPlayers;   //nation -> controllingPlayer
+     Map<String, Integer> setupOrders;          //nation -> order
+     Map<String, Integer> moveOrders;           //nation -> order
+     Map<String, List<String>> provinces;       //nation -> list of province names
+     Map<String, List<String>> characters;      //nation -> list of character names
+     Map<String, Map<String, Integer>> units;   //nation -> (unitName -> unitCount)
      Map<String, String> replacements;          //nation -> description of replacement
      Map<String, String> reinforcements;        //nation -> description of reinforcements
 
@@ -57,6 +58,7 @@ public class ScenarioConfigurationReader {
      String scenarioName;
      int numberOfPlayers;
      int gameLength; //Number of game turns
+     
 
     /**
      * This method prints to standard out an ASCII representation of the data
@@ -90,26 +92,36 @@ public class ScenarioConfigurationReader {
     }
     
     /**
-     * This method, which is incomplete, is intended to populate and return a
+     * This method, which is incomplete, is intended to populate the singleton
      * {@link UnitPool} for use in the main Game class. 
      * 
      * @author Tyler Jaszkowiak
-     * @return the pool of all units in this scenario at the game's start
      * @see UnitPool
      */
-    public UnitPool populatePool() {
+    public void populatePool() {
+        UnitPool pool = UnitPool.getInstance();
         for (String nation : getNationNames() ) {
             int player = getControllingPlayer(nation);
-            getUnits(nation);
-            /* iterate through and add to pool - fix this code to do that....
-            for (Object entry : nationUnitObject.entrySet()) {
-                    Map.Entry en = (Map.Entry) entry;
-                    String unitName = (String) en.getKey();
-                    int unitCount = ((Long) en.getValue()).intValue();
-                    nmap.put(unitName, unitCount);
-                }*/
+            String unitType;
+            String objectType;
+            int unitQuant;
+            ArmyUnit unit;
+            // iterate through the map of this player's units
+            Map<String, Integer> playerUnits = getUnits(nation);
+            Iterator it = playerUnits.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pairs = (Map.Entry)it.next();
+                unitType = (String) pairs.getKey();
+                objectType = "Units." + unitType;
+                unitQuant = (int) pairs.getValue();
+                for (int i=0; i<unitQuant; i++) {
+                    unit = (ArmyUnit) CreateObject(objectType);
+                    unit.setRace(nation);
+                    pool.addUnit(player, unit); //TODO add location 
+                }
+                it.remove();
+            }
         }
-        return pool;
     }
     
     /**
@@ -266,37 +278,92 @@ public class ScenarioConfigurationReader {
          }
     }
     
-    public int getControllingPlayer(String name) {
-        return controllingPlayers.get(name);
-    }
     
+    /**
+      * A getter for the scenarioName field.
+      * 
+      * @author Wayne Fuhrman
+      * @return the scenario's name as a String
+      */
     public String getScenarioName() {
         return scenarioName;
     }
 
+    /**
+      * A getter for the number of players in the scenario.
+      * 
+      * @author Wayne Fuhrman
+      * @return the number of players in the scenario
+      */
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
+    /**
+      * A getter for the game length of the scenario.
+      * 
+      * @author Wayne Fuhrman
+      * @return the game length of the scenario
+      */
     public int getGameLength() {
         return gameLength;
     }
+    
+    /** return the list of nation names.
+     * 
+     * @author Tyler Jaszkowiak
+     * @return a list of nations in the scenario
+     */
     public List<String> getNationNames() {
         return nationNames;
     }
+    
+    /**
+      * A getter for the controlling player of a given nation.
+      * 
+      * @author Tyler Jaszkowiak
+      * @param name the name of the nation in question
+      * @return the number of the player controlling the nation
+      */
+    public int getControllingPlayer(String name) {
+        return controllingPlayers.get(name);
+    }
 
+    /** 
+     * Gets the names of the neutrals in the scenario and returns them as a list.
+     * 
+     * @author Wayne Fuhrman
+     * @return a list of neutrals in the scenario
+     */
     public List<String> getNeutralNames() {
         return neutralNames;
     }
 
+    /** Gets the setup order of a specific nation in the scenario
+     * 
+     * @param name name of the nation being queried about
+     * @return the setup order of the nation in question
+     */
     public Integer getSetupOrder(String name) {
         return setupOrders.get(name);
     }
 
+    /**
+     * Gets the move order of a specific nation in the scenario.
+     * 
+     * @param name name of the nation being queried about
+     * @return the setup order of the nation in question
+     */
     public Integer getMoveOrder(String name) {
         return moveOrders.get(name);
     }
 
+    /**
+     * Get the provinces a nation is allowed to set up in
+     * 
+     * @param name name of the nation in question
+     * @return a list of the names of these provinces TODO: find a Province object?
+     */
     public List<String> getProvinces(String name) {
         return provinces.get(name);
     }
@@ -337,7 +404,8 @@ public class ScenarioConfigurationReader {
      * @param args there should be no command line args
      */
     public static void main(String[] args) {
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/2_Dwarrows.json");
+        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        reader.populatePool();
         reader.print();
     }
 }

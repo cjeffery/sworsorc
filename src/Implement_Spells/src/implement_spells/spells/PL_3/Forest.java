@@ -53,7 +53,7 @@ public final class Forest {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 5;
         // get spells range
         return range;
     }
@@ -65,16 +65,14 @@ public final class Forest {
         return distance;        
     }
     
-    public void getTarget(){
+    public void getTargets(){
         // this function is used to get the target to cast spell
     }
     
     public boolean checkLimits(){
-        boolean limit = false;
+        boolean limit = true;
         
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
+        //no limits for this function
         
         return limit; 
     }
@@ -86,6 +84,9 @@ public final class Forest {
             // perform
             if(getDistance() <= getRange()){
                 //peform spell
+                getTargets();
+                //make each specified target a forest hex
+                //decrease mana by 2 for each desired target
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
