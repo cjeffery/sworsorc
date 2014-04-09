@@ -60,7 +60,11 @@ public class MapDemo implements MouseListener, KeyListener {
             System.out.println("highlighting moves");
             canMoveTo = new ArrayList<MapHex>();
             ArrayList<ArmyUnit> units = hex.getUnits();
-            selected_unit = units.get(units.size()-1); //hack for unitpool, list can contain nulls..
+            selected_unit = null;
+            for( ArmyUnit u : units) {
+                if(u != null)
+                    selected_unit = u;
+            }
             System.out.println("Selected " + selected_unit + ", size of stack: " + hex.getUnits().size() );
             canMoveTo.clear();
             MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
@@ -72,7 +76,8 @@ public class MapDemo implements MouseListener, KeyListener {
             //pool.clearPool();
             
             mapView.clearHighlights();
-            pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
+            pool.addMove((ArmyUnit)selected_unit, hex.GetID());
+            //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
             mapView.repaint();
             selected_unit = null;
         }
