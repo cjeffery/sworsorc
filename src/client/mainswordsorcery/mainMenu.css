@@ -3,16 +3,14 @@
     Author     : Joe Higley
 */
 
-.button {
+button {
     -fx-font-size: 22px;
-    -fx-font-family: "Times New Roman", "Courier New";
-    -fx-font-weight: bold; 
-/*    -fx-font-size-adjust: 0.297; */
+    -fx-font-family: ups;
+/*    -fx-font-weight: upcjb */
 }
 
-Text {
+text {
     -fx-font-size: 78pt;
-    -fx-font-family: JasmineUPC, "Times New Roman";
-    -fx-font-weight: BOLD;
-    -fx-font-size-adjust: 0.297;
+    -fx-font-family: ups;
+/*    -fx-font-weight: BOLD; */
 }

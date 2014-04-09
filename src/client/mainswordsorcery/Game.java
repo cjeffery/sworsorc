@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Units.UnitPool;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -42,6 +43,11 @@ public class Game extends Application {
         main = createScene("MainMenu.fxml");
         hud = createScene("hud.fxml");
         
+        // load the Main Menu font.
+        Font.loadFont(
+            Game.class.getResource("ups.ttf").toExternalForm(), 
+            10
+        );
         String mainCSS = getClass().getResource("mainMenu.css").toExternalForm();
         
         mainMenu = new Scene(main);
