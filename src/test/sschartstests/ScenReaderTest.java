@@ -9,7 +9,6 @@ package sschartstests;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import junit.framework.TestCase;
 import sscharts.ScenarioConfigurationReader;
 
