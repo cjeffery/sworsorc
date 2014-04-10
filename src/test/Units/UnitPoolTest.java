@@ -8,6 +8,7 @@ package Units;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import junit.framework.TestCase;
 
 /**
@@ -68,7 +69,7 @@ public class UnitPoolTest extends TestCase {
     //Tests update a unit position, test end of movement phase. 
     public void test03() {
         ArrayList<String> list1, list2, list3, list4;
-        ArmyUnit unit;
+        MoveableUnit unit;
         
         UnitPool pool = UnitPool.getInstance();
         pool.clear();
@@ -123,9 +124,9 @@ public class UnitPoolTest extends TestCase {
     }
     
     //Tests undo move.
-    public void test4(){
+    public void test04(){
         ArrayList<String> list1, list2, list3, list4;
-        ArmyUnit unit;
+        MoveableUnit unit;
         String currentHex;
         
         UnitPool pool = UnitPool.getInstance();
@@ -153,4 +154,48 @@ public class UnitPoolTest extends TestCase {
         
     }
     
+    public void test05(){
+        Random rNum = new Random();
+        int a,b,b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,b7=0; 
+        UnitPool pool = UnitPool.getInstance();
+        pool.clear();
+        
+        for ( int i = 0; i < 1000; i++){
+            a = rNum.nextInt(10);
+            b = rNum.nextInt(7);
+            switch(b){
+                
+                case 0: 
+                    b0++;
+                    break;
+                case 1: 
+                    b1++;
+                    break;
+                case 2: 
+                    b2++;
+                    break;
+                case 3: 
+                    b3++;
+                    break;
+                case 4:
+                    b4++;
+                    break;
+                case 5:
+                    b5++;
+                    break;
+                case 6:
+                    b6++;
+                    break;
+            }
+            
+            
+            switch(a){
+                case 0: 
+                    pool.addUnit(b, new LightSword(),"0101");
+                    break;
+            }
+        }
+        
+        
+    }
 }
