@@ -13,7 +13,8 @@ import junit.framework.TestCase;
 
 /**
  * In UnitPool.java you need to make the pool variable nonprivate in order to 
- * successfully run the junit tests.
+ * successfully run the junit tests.  Add some example cast for anyone who may
+ * need to cast into ArmyUnit.
  * 
  * 
  * @author David
@@ -28,10 +29,29 @@ public class UnitPoolTest extends TestCase {
     // test adding a unit to a null UnitPool.
     public void test01() {
         UnitPool pool = UnitPool.getInstance();
+        ArmyUnit aUnit;
+        MoveableUnit mUnit;
+        
         pool.clear();
         pool.addUnit(1,new LightSword());
         boolean test = pool.pool.get(1).get("LightSword").isEmpty(); 
         assertFalse(test);
+        
+        
+        //Example 1 cast.
+        mUnit = pool.pool.get(1).get("LightSword").get(0);
+        
+        if (mUnit instanceof ArmyUnit)
+            aUnit = (ArmyUnit)mUnit;
+        else
+            aUnit = null;
+        
+        assertTrue(aUnit.getStrength() == 3);
+        
+        //Example 2 cast.
+        assertTrue(((ArmyUnit)mUnit).getStrength() == 3);
+        
+        
     }
     
     // testing multable additions.

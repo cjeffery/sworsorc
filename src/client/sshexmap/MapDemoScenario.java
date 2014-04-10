@@ -41,12 +41,12 @@ public class MapDemoScenario implements MouseListener, KeyListener {
         ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
         reader.populatePool();
         
-        /* ArmyUnit unit = new LightSword();
+        /* MoveableUnit unit = new LightSword();
         pool.addUnit(0, unit, "0606"); */
-        ArrayList<ArmyUnit> units = pool.getPlayerSpecificUnits(2,"Bow");
+        ArrayList<MoveableUnit> units = pool.getPlayerSpecificUnits(2,"Bow");
         if(units != null)
-            for(ArmyUnit s : units)
-                s.printSelf();
+            for(MoveableUnit s : units)
+                ((ArmyUnit)s).printSelf();
 
         window.pack();
         window.setVisible(true);
