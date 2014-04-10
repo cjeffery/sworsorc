@@ -22,10 +22,19 @@ import java.util.TreeMap;
  * 
  * In UnitPoolTest are some example cast for anyone who needs ArmyUnit.
  * 
- * 
+ * Example
+ * void someMeathod (MovibalUnit mUnit){
+ *
+ * unit.setLocation("0534")
+ *     if( unit instanceof ArmyUnit){
+ *         ArmyUnit aUnit = (ArmyUnit)mUnit;
+ *         aUnit.attack(); // Now you can call attack.
+ *     }
+ * }
  * 
  * @author David Klingenberg
  */
+
 public class UnitPool {   
     SortedMap<Integer, TreeMap<String,ArrayList<MoveableUnit>>> pool = Collections.synchronizedSortedMap(new TreeMap<Integer, TreeMap<String,ArrayList<MoveableUnit>>>());
     //TreeMap<Integer, TreeMap<String,ArrayList<MoveableUnit>>> pool = new TreeMap(); 
