@@ -45,7 +45,7 @@ public class Game extends Application {
         hud = createScene("hud.fxml");
         
         // load the Main Menu font.
-        URL fontURL = new URL("file:resources/font/ups.ttf");
+        URL fontURL = new URL("file:resources/font/upcjb.ttf");
         Font.loadFont(
             fontURL.toExternalForm(), 
             10

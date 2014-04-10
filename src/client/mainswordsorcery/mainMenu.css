@@ -3,6 +3,12 @@
     Author     : Joe Higley
 */
 
+BorderPane {
+    -fx-background-image: url("file:resources/images/minimap.png");
+    -fx-background-size: 100%, 100%;
+    -fx-background-repeat: no-repeat;
+}
+
 Button {
     -fx-font-size: 36px;
     -fx-font-family: 'JasmineUPC';
