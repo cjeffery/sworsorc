@@ -249,6 +249,11 @@ public class MapHex extends Hex{
      * @return terrainType 
      */
     public TerrainType getTerrainType(){
+        if(terrainType == null) {
+            System.out.println("Warning, missing terrain type on hex "
+                               + GetID() + "!!!!");
+            return TerrainType.makeTerrainType("Cl");
+        }
         return terrainType;
     }
     
