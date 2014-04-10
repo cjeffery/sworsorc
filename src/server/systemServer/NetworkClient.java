@@ -40,7 +40,7 @@ public class NetworkClient {
     /**
      * Listens for and handles incoming communications for Network Client
      */
-    protected class ListenerThread extends Thread {
+    private class ListenerThread extends Thread {
 
         private BufferedReader streamIn;
         private boolean killed = false;
@@ -53,7 +53,7 @@ public class NetworkClient {
             streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         }
 
-        protected void killThread() {
+        private void killThread() {
             killed = true;
         }
         public void run() {
@@ -124,7 +124,7 @@ public class NetworkClient {
 
     
     /**
-     * Initializes writer with a new stream
+     * Initializes writer with a new stream. Socket must be set before calling this!
      * @author Christopher Goes
      * @throws IOException 
      */
@@ -136,7 +136,7 @@ public class NetworkClient {
      * Send a file to the server
      * @param fileName Name of file to be sent
      */
-    protected void sendFile(String fileName) {
+    private void sendFile(String fileName) {
         String line;
         try {
             BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.forName("UTF-8")));
@@ -153,7 +153,7 @@ public class NetworkClient {
      * If we want to programmatically write something
      * @param message Message to write
      */
-    protected void write(String message) { //
+    private void write(String message) { //
         writer.println(message);
         writer.flush();
     }
@@ -239,7 +239,7 @@ public class NetworkClient {
         //PrintWriter writer = writerThread.getWriter();
 
         while (true) {
-            if (!(socket.isClosed())) {
+            if (!(socket.isClosed()) && socket.isConnected()) {
                 try {
 
                     if ((line = consoleIn.readLine()) == null) {
@@ -294,12 +294,11 @@ public class NetworkClient {
                             consoleOut.println("Exiting...");
                             stop();
                             break;
+                        } else {
+                            MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, line));
+                            
                         }
-                    } // end if
-
-                    if (!(socket.isClosed()) && socket.isConnected()) {
-                        MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, line));
-                    }
+                    } // end if              
 
                 } catch (IOException e) {
                     System.err.println("Error sending message! Error thrown: " + e);
@@ -396,7 +395,7 @@ public class NetworkClient {
      * @return Socket
      * @throws IOException
      */
-    private static Socket connectToServer(String sName, int serverPort) throws IOException {
+    private Socket connectToServer(String sName, int serverPort) throws IOException {
         Socket tempsock = null;
         System.out.println("Connecting! Please Wait!");
         try {
