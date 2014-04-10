@@ -430,8 +430,8 @@ public class MapHex extends Hex{
      * (or write it if it doesn't exist)
      * @return arraylist of Unis in the current hex
      */
-    public ArrayList<ArmyUnit> getUnits() {
-        ArrayList<ArmyUnit> units = new ArrayList<ArmyUnit>();
+    public ArrayList<MoveableUnit> getUnits() {
+        ArrayList<MoveableUnit> units = new ArrayList<MoveableUnit>();
         ArrayList<String> ids = getUnitIDs();
         if(ids == null)
             return null;

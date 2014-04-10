@@ -78,7 +78,7 @@ public class MapDemoScenario implements MouseListener, KeyListener {
             }
             System.out.println("highlighting moves");
             canMoveTo = new ArrayList<MapHex>();
-            ArrayList<ArmyUnit> units = hex.getUnits();
+            ArrayList<MoveableUnit> units = hex.getUnits();
             selected_unit = units.get(units.size()-1); //hack for unitpool, list can contain nulls..
             System.out.println("Selected " + selected_unit + ", size of stack: " + hex.getUnits().size() );
             canMoveTo.clear();
