@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Units.UnitPool;
+import java.net.URL;
 import javafx.scene.text.Font;
 
 /**
@@ -44,8 +45,9 @@ public class Game extends Application {
         hud = createScene("hud.fxml");
         
         // load the Main Menu font.
+        URL fontURL = new URL("file:resources/font/ups.ttf");
         Font.loadFont(
-            Game.class.getResource("ups.ttf").toExternalForm(), 
+            fontURL.toExternalForm(), 
             10
         );
         // get the css file
