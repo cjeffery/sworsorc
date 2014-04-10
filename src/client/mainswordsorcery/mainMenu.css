@@ -4,12 +4,14 @@
 */
 
 BorderPane {
-    -fx-background-image: url("file:resources/images/minimap.png");
-    -fx-background-size: 100%, 100%;
+    -fx-background-image: url("sands.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
     -fx-background-repeat: no-repeat;
 }
 
 Button {
+    -fx-size: 80%, 50%;
     -fx-font-size: 36px;
     -fx-font-family: 'JasmineUPC';
 }

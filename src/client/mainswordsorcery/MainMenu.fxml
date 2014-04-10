@@ -2,44 +2,46 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mainswordsorcery.MainMenuController">
-    <children>
-    <ImageView fitHeight="768.0" fitWidth="1366.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-        <Image url="file:resources/images/sands.jpg" />
-      </image>
-    </ImageView>
-    <GridPane alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="768.0" prefWidth="1365.760009765625">
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mainswordsorcery.MainMenuController">
+  <center>
+    <GridPane alignment="CENTER">
       <children>
-        <Button mnemonicParsing="false" onAction="#GotoGame" prefHeight="36.0" prefWidth="186.0" text="Start Game" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Button mnemonicParsing="false" onAction="#GotoGame" prefHeight="36.0" prefWidth="186.0" text="Start Game" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Button mnemonicParsing="false" onAction="#LoadScenario" prefHeight="36.0" prefWidth="186.0" text="Scenario" GridPane.columnIndex="1" GridPane.rowIndex="2">
+          <font>
+            <Font size="12.0" fx:id="x1" />
+          </font>
         </Button>
-        <Button font="$x1" mnemonicParsing="false" onAction="#LoadScenario" prefHeight="36.0" prefWidth="186.0" text="Scenario" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Button font="$x1" mnemonicParsing="false" onAction="#GotoNetworkLobby" prefHeight="36.0" prefWidth="186.0" text="Network" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Button font="$x1" mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="Options" GridPane.columnIndex="3" GridPane.rowIndex="1" />
         <Button font="$x1" mnemonicParsing="false" prefHeight="36.0" prefWidth="186.0" text="About" GridPane.columnIndex="3" GridPane.rowIndex="2" />
         <Button font="$x1" mnemonicParsing="false" onAction="#Quit" prefHeight="36.0" prefWidth="186.0" text="Quit" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-        <Label text="Swords &amp; Sorcery" textFill="#ebff99" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="0" />
+        <Label text="Swords &amp; Sorcery" textFill="#ebff99" GridPane.columnIndex="0" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="0">
+          <GridPane.margin>
+            <Insets />
+          </GridPane.margin>
+        </Label>
       </children>
       <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="10.0" prefWidth="261.0" />
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="309.0" minWidth="4.0" prefWidth="300.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="242.0" />
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="824.0" minWidth="10.0" prefWidth="300.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="0.0" prefWidth="263.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" percentWidth="15.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-1.0" minWidth="4.0" percentWidth="27.5" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" percentWidth="15.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" percentWidth="27.5" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="0.0" percentWidth="15.0" />
       </columnConstraints>
       <rowConstraints>
-        <RowConstraints maxHeight="283.0" minHeight="10.0" prefHeight="282.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="259.0" minHeight="10.0" prefHeight="67.0" valignment="CENTER" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="67.0" valignment="CENTER" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="408.0" minHeight="10.0" prefHeight="67.0" valignment="CENTER" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="285.0" minHeight="0.0" prefHeight="285.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-1.0" minHeight="10.0" percentHeight="35.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-1.0" minHeight="10.0" percentHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="261.0" minHeight="10.0" percentHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="408.0" minHeight="10.0" percentHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-1.0" minHeight="0.0" percentHeight="35.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
-  </children>
-</AnchorPane>
+  </center>
+</BorderPane>
