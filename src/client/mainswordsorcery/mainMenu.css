@@ -3,14 +3,12 @@
     Author     : Joe Higley
 */
 
-button {
-    -fx-font-size: 22px;
-    -fx-font-family: ups;
-/*    -fx-font-weight: upcjb */
+Button {
+    -fx-font-size: 36px;
+    -fx-font-family: 'JasmineUPC';
 }
 
-text {
-    -fx-font-size: 78pt;
-    -fx-font-family: ups;
-/*    -fx-font-weight: BOLD; */
+Label {
+    -fx-font-size: 150pt;
+    -fx-font-family: 'JasmineUPC';
 }

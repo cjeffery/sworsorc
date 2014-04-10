@@ -48,10 +48,12 @@ public class Game extends Application {
             Game.class.getResource("ups.ttf").toExternalForm(), 
             10
         );
+        // get the css file
         String mainCSS = getClass().getResource("mainMenu.css").toExternalForm();
         
+        main.getStylesheets().add(mainCSS);
         mainMenu = new Scene(main);
-        mainMenu.getStylesheets().add(mainCSS);
+//        mainMenu.getStylesheets().add(mainCSS);
         
         hudWindow = new Scene(hud);
         
