@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import javax.swing.*;
 
 /**
- * View closs that can display the game world or the diplomacy map in a
+ * View class that can display the game world or the diplomacy map in a
  * scrollable window. 
  */
 public class MapView extends JPanel {
