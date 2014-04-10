@@ -20,6 +20,8 @@ import java.util.TreeMap;
  * Unit pool tracks all the units that have been created in the game.  
  * Unit pool is a singleton that is created by calling getInstance().
  * 
+ * In UnitPoolTest are some example cast for anyone who needs ArmyUnit.
+ * 
  * 
  * 
  * @author David Klingenberg
