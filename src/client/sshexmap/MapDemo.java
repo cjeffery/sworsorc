@@ -50,6 +50,8 @@ public class MapDemo implements MouseListener, KeyListener {
     public void mouseClicked(MouseEvent e) {
         String hexID = mapView.hexAt(e.getX(), e.getY());
         MapHex hex = map.GetHex(hexID);
+        if(hex == null)
+            return;
         System.out.println("===START===");
         if(selected_unit == null) {
             System.out.println("no unit selected");
