@@ -51,7 +51,7 @@
         <southWestHexNumber>1312</southWestHexNumber>
         <northWestHexNumber>1311</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <provinceName>Intas</provinceName>
+        <provinceName>Ithilgil</provinceName>
     </hex>
     <hex>
         <hexNumber>1410</hexNumber>
@@ -62,7 +62,7 @@
         <southWestHexNumber>1311</southWestHexNumber>
         <northWestHexNumber>1310</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <provinceName>Intas</provinceName>
+        <provinceName>Ithilgil</provinceName>
     </hex>
     <hex>
         <hexNumber>0842</hexNumber>
@@ -132,7 +132,7 @@
         <southWestHexNumber>1314</southWestHexNumber>
         <northWestHexNumber>1313</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <provinceName>Intas</provinceName>
+        <provinceName>Ithilgil</provinceName>
         <hexEdgeMap>
           <southEastEdge>
             <edgeAttribute>Tr</edgeAttribute>
@@ -213,7 +213,7 @@
         <southWestHexNumber>1313</southWestHexNumber>
         <northWestHexNumber>1312</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <provinceName>Intas</provinceName>
+        <provinceName>Ithilgil</provinceName>
     </hex>
     <hex>
         <hexNumber>1317</hexNumber>
@@ -3115,7 +3115,7 @@
         <southWestHexNumber>1310</southWestHexNumber>
         <northWestHexNumber>1309</northWestHexNumber>
         <terrainKey>Bro</terrainKey>
-        <provinceName>Intas</provinceName>
+        <provinceName>Ithilgil</provinceName>
         <hexEdgeMap>
           <northEdge>
             <edgeAttribute>Pb</edgeAttribute>
