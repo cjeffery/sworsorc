@@ -127,7 +127,7 @@ public class UnitPoolTest extends TestCase {
     public void test04(){
         ArrayList<String> list1, list2, list3, list4;
         MoveableUnit unit;
-        String currentHex;
+       
         
         UnitPool pool = UnitPool.getInstance();
         pool.clear();
