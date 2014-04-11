@@ -3,84 +3,85 @@
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-1.0" maxWidth="-1.0" prefHeight="768.0" prefWidth="1366.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mainswordsorcery.HUDController">
-  <children>
-    <ScrollPane fx:id="map_view" layoutX="0.0" layoutY="0.0" prefHeight="765.0999145507812" prefWidth="1012.0">
-      <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-      </content>
-    </ScrollPane>
-    <MenuBar fx:id="menuBar" layoutX="0.0" layoutY="2.0">
-      <menus>
-        <Menu mnemonicParsing="false" text="Menu">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#Quit" text="Main Menu" fx:id="exit_btn" />
-            <MenuItem mnemonicParsing="false" text="Save Game" />
-            <MenuItem mnemonicParsing="false" text="Options" />
-          </items>
-        </Menu>
-        <Menu disable="false" mnemonicParsing="false" text="Scenario">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Goals" />
-            <MenuItem mnemonicParsing="false" text="Alliance" />
-            <MenuItem mnemonicParsing="false" text="Diplomacy" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-    <GridPane layoutX="1012.0" layoutY="2.0" prefHeight="766.0" prefWidth="354.0">
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mainswordsorcery.HUDController">
+  <center>
+    <GridPane prefHeight="452.0" prefWidth="594.0">
       <children>
-        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <GridPane minHeight="452.0" prefHeight="452.0" prefWidth="446.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
           <children>
-            <GridPane id="grid_Stack" prefHeight="36.0" prefWidth="177.0" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0" GridPane.rowSpan="5">
               <children>
-                <TabPane fx:id="Units" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Stack" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                  <font>
-                    <Font name="System Bold" size="14.0" fx:id="x2" />
-                  </font>
-                </Text>
-                <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#DisplayUnits" text="Stack" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <ScrollPane fx:id="map_view">
+                  <content>
+                    <AnchorPane prefHeight="6000.0" prefWidth="6000.0" />
+                  </content>
+                </ScrollPane>
               </children>
+            </StackPane>
+            <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="154.0" minHeight="10.0" prefHeight="36.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="280.0" minHeight="10.0" prefHeight="218.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <GridPane GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <TextArea fx:id="chat_box" editable="false" focusTraversable="false" opacity="1.0" prefHeight="189.0" prefWidth="411.0" text="" visible="true" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+              <GridPane.margin>
+                <Insets left="5.0" fx:id="x4" />
+              </GridPane.margin>
+            </TextArea>
+            <TextField fx:id="message_box" onAction="#SubmitToChat" prefWidth="411.0" promptText="Your Message Here" text="" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.margin="$x4" GridPane.rowIndex="3" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
               <children>
-                <ImageView id="sun_display" fx:id="sun_img" fitHeight="177.375" fitWidth="177.375" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                  <image>
-                    <Image url="@sun.png" />
-                  </image>
-                </ImageView>
-                <Button mnemonicParsing="false" onAction="#ChangeSun" prefHeight="48.0" prefWidth="158.0" text="End Phase" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                  <font>
-                    <Font name="Palatino Linotype Bold" size="16.0" />
-                  </font>
-                </Button>
-                <Separator prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
+                <MenuBar fx:id="menuBar" layoutX="0.0" layoutY="1.0" prefWidth="-1.0">
+                  <menus>
+                    <Menu mnemonicParsing="false" text="Menu">
+                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#Quit" text="Main Menu" />
+                        <MenuItem mnemonicParsing="false" text="Save Game" />
+                        <MenuItem mnemonicParsing="false" text="Options" />
+                      </items>
+                    </Menu>
+                    <Menu disable="false" mnemonicParsing="false" text="Scenario">
+                      <items>
+                        <MenuItem mnemonicParsing="false" text="Goals" />
+                        <MenuItem mnemonicParsing="false" text="Alliance" />
+                        <MenuItem mnemonicParsing="false" text="Diplomacy" />
+                      </items>
+                    </Menu>
+                  </menus>
+                </MenuBar>
               </children>
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="179.0" minHeight="10.0" prefHeight="179.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="87.0" valignment="CENTER" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            </AnchorPane>
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="26.0" prefWidth="-1.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="34.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="-1.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints maxHeight="151.0" minHeight="10.0" percentHeight="5.56792873051225" prefHeight="12.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="257.0" minHeight="10.0" percentHeight="67.41186374648882" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="257.0" minHeight="10.0" percentHeight="20.211665775689514" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="149.0" minHeight="0.0" percentHeight="4.829336070297495" prefHeight="5.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="149.0" minHeight="0.0" percentHeight="2.5041001845987014" prefHeight="0.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+        </GridPane>
+        <GridPane minHeight="452.0" prefHeight="452.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+          <children>
+            <GridPane minHeight="299.0" minWidth="149.0" prefHeight="299.0" prefWidth="149.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
               <children>
-                <GridPane fx:id="overview" layoutX="0.0" layoutY="5.0" prefHeight="235.0" prefWidth="177.0">
+                <GridPane id="overview" minWidth="75.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                   <children>
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Game Turn:" GridPane.columnIndex="0" GridPane.rowIndex="0">
                       <font>
@@ -95,80 +96,123 @@
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Text fx:id="RedSun" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Text id="RedSun" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turn" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                   </children>
                   <columnConstraints>
-                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="108.0" />
-                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="87.0" minWidth="10.0" prefWidth="69.0" />
+                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" percentWidth="65.0" prefWidth="-1.0" />
+                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="87.0" minWidth="10.0" percentWidth="35.0" prefWidth="-1.0" />
                   </columnConstraints>
                   <padding>
                     <Insets left="10.0" right="10.0" />
                   </padding>
                   <rowConstraints>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="67.0" minHeight="10.0" percentHeight="16.67" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="47.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="50.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="50.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="50.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="49.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
                   </rowConstraints>
                 </GridPane>
-                <Separator layoutX="0.0" layoutY="0.0" prefWidth="177.0" />
-              </children>
-            </AnchorPane>
-            <GridPane id="grid_Target" prefHeight="204.0" prefWidth="177.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-              <children>
-                <TabPane fx:id="Targets" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Text font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Target" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <Button mnemonicParsing="false" onAction="#DisplayTargets" text="Target" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <GridPane id="grid_Target" minHeight="149.0" minWidth="75.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                  <children>
+                    <TabPane fx:id="Targets" prefHeight="161.0" prefWidth="103.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Target" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                      <font>
+                        <Font name="System Bold" size="14.0" fx:id="x2" />
+                      </font>
+                    </Text>
+                    <Button mnemonicParsing="false" onAction="#DisplayTargets" text="Target" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" percentWidth="100.0" prefWidth="-1.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints maxHeight="90.0" minHeight="10.0" percentHeight="10.0" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="219.0" minHeight="10.0" percentHeight="90.0" prefHeight="-1.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+                <GridPane id="grid_Stack" minHeight="150.0" minWidth="75.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                  <children>
+                    <TabPane fx:id="Units" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Text font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Stack" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#DisplayUnits" text="Stack" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" percentWidth="100.0" prefWidth="-1.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints maxHeight="154.0" minHeight="10.0" percentHeight="10.0" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="280.0" minHeight="10.0" percentHeight="90.0" prefHeight="-1.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+                <GridPane minHeight="150.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                  <children>
+                    <ImageView id="sun_display" fitHeight="177.375" fitWidth="177.375" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                      <image>
+                        <Image url="@sun.png" />
+                      </image>
+                    </ImageView>
+                    <Button mnemonicParsing="false" onAction="#ChangeSun" prefHeight="48.0" prefWidth="158.0" text="End Phase" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                      <font>
+                        <Font name="Palatino Linotype Bold" size="16.0" />
+                      </font>
+                    </Button>
+                    <Separator prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints maxHeight="179.0" minHeight="10.0" percentHeight="70.0" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="122.0" minHeight="10.0" percentHeight="30.0" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
               </children>
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="-1.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="-1.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="36.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="219.0" minHeight="10.0" prefHeight="218.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="-1.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="-1.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ScrollPane fx:id="mini_map" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+              <content>
+                <AnchorPane prefHeight="342.0" prefWidth="342.0">
+                  <children>
+                    <ImageView fitHeight="282.0999150619938" fitWidth="340.7918701171875" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@minimap.png" />
+                      </image>
+                    </ImageView>
+                  </children>
+                </AnchorPane>
+              </content>
+            </ScrollPane>
           </children>
           <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           </columnConstraints>
           <rowConstraints>
-            <RowConstraints maxHeight="332.0" minHeight="10.0" prefHeight="254.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="240.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="66.0" prefHeight="-1.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="33.0" prefHeight="-1.0" vgrow="SOMETIMES" />
           </rowConstraints>
         </GridPane>
-        <ImageView fitHeight="150.75" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <ScrollPane fx:id="mini_map" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
-          <content>
-            <AnchorPane prefHeight="342.0" prefWidth="342.0">
-              <children>
-                <ImageView fitHeight="282.0999150619938" fitWidth="340.7918701171875" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                    <Image url="@minimap.png" />
-                  </image>
-                </ImageView>
-              </children>
-            </AnchorPane>
-          </content>
-        </ScrollPane>
       </children>
       <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="-1.0" prefWidth="-1.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" percentWidth="-1.0" prefWidth="350.0" />
       </columnConstraints>
       <rowConstraints>
-        <RowConstraints maxHeight="494.0" minHeight="10.0" prefHeight="494.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="383.0" minHeight="10.0" prefHeight="272.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
       </rowConstraints>
+      <BorderPane.margin>
+        <Insets fx:id="x3" />
+      </BorderPane.margin>
     </GridPane>
-    <Separator layoutX="1010.0" layoutY="3.0" minWidth="0.0" orientation="VERTICAL" prefHeight="838.0" prefWidth="0.0" />
-    <TextArea fx:id="chat_box" editable="false" focusTraversable="false" layoutX="10.0" layoutY="538.0" opacity="1.0" prefHeight="189.0" prefWidth="411.0" text="" visible="true" wrapText="true" />
-    <TextField fx:id="message_box" layoutX="10.0" layoutY="734.0" onAction="#SubmitToChat" prefWidth="411.0" promptText="Your Message Here" text="" />
-    <Button layoutX="909.0" layoutY="17.0" mnemonicParsing="false" onAction="#undoMove" text="Undo Move" />
-  </children>
-</AnchorPane>
+  </center>
+</BorderPane>

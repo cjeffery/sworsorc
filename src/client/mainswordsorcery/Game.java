@@ -20,7 +20,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Units.UnitPool;
 import java.net.URL;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 
 /**
  *
@@ -41,7 +43,14 @@ public class Game extends Application {
     
     @Override
     public void start(Stage stage) throws IOException {
-        main = createScene("MainMenu.fxml");
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        //set Stage boundaries to visible bounds of the main screen
+        stage.setX(screenBounds.getMinX());
+        stage.setY(screenBounds.getMinY());
+        stage.setWidth(screenBounds.getWidth());
+        stage.setHeight(screenBounds.getHeight());
+        
+        main = createScene("mainMenu.fxml");
         hud = createScene("hud.fxml");
         
         // load the Main Menu font.
@@ -54,10 +63,9 @@ public class Game extends Application {
         String mainCSS = getClass().getResource("mainMenu.css").toExternalForm();
         
         main.getStylesheets().add(mainCSS);
-        mainMenu = new Scene(main);
-//        mainMenu.getStylesheets().add(mainCSS);
-        
-        hudWindow = new Scene(hud);
+//        hud.getStylesheets().add(mainCSS);
+        mainMenu = new Scene(main, screenBounds.getWidth(), screenBounds.getHeight());        
+        hudWindow = new Scene(hud, screenBounds.getWidth(), screenBounds.getHeight());
         
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);

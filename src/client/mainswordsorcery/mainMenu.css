@@ -4,7 +4,7 @@
 */
 
 BorderPane {
-    -fx-background-image: url("sands.jpg");
+    -fx-background-image: url("../images/sands.jpg");
     -fx-background-size: cover;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
