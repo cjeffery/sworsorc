@@ -33,12 +33,14 @@ public class NetworkClient {
 
     // Thread(s)
     private ListenerThread listenerThread;
-    private PrintWriter writer = null; // Was WriterThread writerThread;
+    private PrintWriter writer = null;
 
     // set default help file
     private String helpfile = "commands.txt";
     private String dir = System.getProperty("user.dir"); // set every time method called
 
+    private Conductor jarvis; // Our conductor object
+    
     /**
      * Listens for and handles incoming communications for Network Client
      */
@@ -51,17 +53,28 @@ public class NetworkClient {
             // empty constructor
         }
 
-        protected void createStream() throws IOException {
+        /**
+         * Creates input stream, and connects to socket
+         * <p>
+         * NOTE: Must be called when creating thread!
+         * @author Christopher Goes
+         * @throws IOException 
+         */
+        private void createStream() throws IOException {
             streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         }
 
+        /**
+         * Marks thread for death, causing it to close, return, and die
+         * 
+         * @author Christopher Goes
+         */
         private void killThread() {
             killed = true;
         }
 
         @Override
         public void run() {
-            try {
                 while (true) {
 
                     if (killed) {
@@ -102,18 +115,16 @@ public class NetworkClient {
                         }
                         consoleOut.println("It is now " + message.get(1) + "'s turn!");
                     } else {
-                        //This shouldn't ever happen!
-                        System.err.println("Unknown tag: " + message.get(0));
-                    }
+                        // its not a network message, therefore NC doesn't care, and has Jarvis take out the trash
+                        jarvis.processMessage( message.subList(1, message.size()), message.get(0) );
+                        //System.err.println("Unknown tag: " + message.get(0));
+                    } // end else
+                } // end while
+        } // end method
 
-                }
-            } catch (Exception e) {
-                System.err.println("Client " + " error: " + e);
-            } finally {
-                close();
-            }
-        }
-
+        /**
+         * Always run this before returning from {@link #run run}!
+         */
         private void close() {
             try {
                 if (streamIn != null) {
@@ -157,7 +168,7 @@ public class NetworkClient {
 
     /**
      * If we want to programmatically write something
-     *
+     * 
      * @param message Message to write
      */
     private void write(String message) { //
@@ -167,8 +178,9 @@ public class NetworkClient {
 
     /**
      * Prints list of commands and what they do from a text file
-     *
+     * 
      * @author Christopher Goes
+     * @throws IOException
      */
     private void printCommandList() throws IOException {
         String inputline;
@@ -272,7 +284,6 @@ public class NetworkClient {
      * @param command
      * @return boolean True if execute normally, False if quit or exception
      * @throws IOException
-     * @throws Exception
      */
     private boolean processInput(String command) throws IOException {
 
@@ -320,20 +331,23 @@ public class NetworkClient {
                 printCommandList();
 
             } else if ("/reconnect".equals(parsedString[0])) {
+                // MAKE SURE USER CANT CLONE THEMSELVES!
                 consoleOut.println("Attempting to reconnect...");
                 if (connect()) {
                     start();
                     setWriter();
-                    //writer = writerThread.getWriter();
                 } else {
                     consoleOut.println("Reconnect failed");
                 }
 
             } else if ("/quit".equals(parsedString[0])) {
                 consoleOut.println("Exiting...");
+                // add if still connected, calls to make softer quitting
                 stop();
                 return false;
             } else {
+                // sends chat message to server, which broadcasts to all clients
+                // TODO: have client ignore a message it sent, so user doesn't see what he typed twice
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
 
             }
@@ -381,11 +395,11 @@ public class NetworkClient {
 
     /**
      * Kills thread(s) and resets writer stream
-     *
+     * <p>
+     * NOTE: Call this BEFORE restarting threads with new socket!
      * @author Christopher Goes
      */
     private void stopThreads() {
-        //writerThread.close();
         writer = null;
         listenerThread.killThread();
     }
@@ -465,7 +479,7 @@ public class NetworkClient {
                 System.err.println("Client failed to connect! Oh noes!");
             }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("Error starting client from main!\nException thrown: " + e);
         }
     }
