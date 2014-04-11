@@ -21,18 +21,18 @@ public class NetworkClient {
 
     // iNet variables
     private Socket socket = null;
-    private static int port = 25565; // anti-magicnumbers league
-    private static String serverName;
+    private static int port = 25565; 
+    private static String serverName = "127.0.0.1";
 
     // Read/write streams
     private BufferedReader consoleIn = null;
     private PrintWriter consoleOut = null;
 
     // Client info
-    private static String username;
+    private static String username = null;
 
     // Thread(s)
-    private ListenerThread listenerThread;
+    private ListenerThread listenerThread = null;
     private PrintWriter writer = null;
 
     // set default help file
@@ -40,6 +40,107 @@ public class NetworkClient {
     private String dir = System.getProperty("user.dir"); // set every time method called
 
     //private Conductor jarvis; // Our conductor object
+    
+    /* CONSTRUCTOR */
+    
+     /**
+     * Create a new ChatClient object, the interface for all network operations
+     * client-side
+     *
+     * @param sName Name of the server AKA the IP Address
+     * @param serverPort Port number of the server (ex: 25565)
+     * @param uName Username of client
+     * @throws IOException
+     */
+    public NetworkClient(String sName, int serverPort, String uName) throws IOException {
+
+        // sets server iNet info
+        port = serverPort;
+        serverName = sName;
+
+        // Set client username
+        username = uName;
+
+        //Reads from stdin:
+        consoleIn = new BufferedReader(new InputStreamReader(System.in));
+        consoleOut = new PrintWriter(System.out, true);
+
+    } // end constructor
+    
+    /* PUBLIC METHODS */
+    
+    /**
+     * Creates a new connection to the server, call this before
+     * {@link #start start()}
+     *
+     * @return boolean True if successful, false if not
+     * @author Christopher Goes
+     */
+    public boolean connect() {
+        try {
+            socket = connectToServer(serverName, port);
+            return true;
+        } catch (NullPointerException | IOException e) {
+            System.err.println("Error in connect!\nException: " + e);
+            return false;
+        }
+    } // end method
+    
+    /**
+     * Starts activity to server, including threads, and command input loop
+     *
+     * @author Christopher Goes
+     * @throws IOException
+     */
+    public void start() throws IOException {
+
+        // Start thread(s)
+        startThreads();
+
+        //first message is handle:
+        MessageUtils.sendMessage(writer, MessageUtils.makeSendHandleMessage(username));
+
+        //request list of clients:
+        MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
+
+        //request list of lobbies:
+        MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage());
+
+    } // end method
+    
+    /**
+     * Main execution thread for the Network Client
+     * <p>
+     * This reads from consoleIn, connect user input to that stream
+     *
+     * @author Christopher Goes
+     */
+    public void runClient() {
+        String line;
+        
+        while (true) {
+            try {
+                line = consoleIn.readLine();
+                if ( line == null) {
+                    System.err.println("line == null! Eeek!");
+                    stop();
+                    break;
+                }
+                if (!(processInput(line))) {
+                    stop();
+                    break;
+                }
+
+            } catch (IOException e) {
+                System.err.println("Error sending message! Error thrown: " + e);
+                stop();
+                break;
+            } // end catch   
+        } // end while
+        
+    } // end method  
+    
+    /* LISTENERTHREAD */
     
     /**
      * Listens for and handles incoming communications for Network Client
@@ -156,7 +257,9 @@ public class NetworkClient {
             }
         }
 
-    }
+    }  
+    
+    /* PRIVATE METHODS */
 
     /**
      * Initializes writer with a new stream. 
@@ -224,84 +327,6 @@ public class NetworkClient {
         }
 
     } // end method
-
-    /**
-     * Create a new ChatClient object, the interface for all network operations
-     * client-side
-     *
-     * @param sName Name of the server AKA the IP Address
-     * @param serverPort Port number of the server (ex: 25565)
-     * @param uName Username of client
-     * @throws IOException
-     */
-    public NetworkClient(String sName, int serverPort, String uName) throws IOException {
-
-        // sets server iNet info
-        port = serverPort;
-        serverName = sName;
-
-        // Set client username
-        username = uName;
-
-        //Reads from stdin:
-        consoleIn = new BufferedReader(new InputStreamReader(System.in));
-        consoleOut = new PrintWriter(System.out, true);
-
-    } // end constructor
-
-    /**
-     * Starts activity to server, including threads, and command input loop
-     *
-     * @author Christopher Goes
-     * @throws IOException
-     */
-    public void start() throws IOException {
-
-        // Start thread(s)
-        startThreads();
-
-        //first message is handle:
-        MessageUtils.sendMessage(writer, MessageUtils.makeSendHandleMessage(username));
-
-        //request list of clients:
-        MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
-
-        //request list of lobbies:
-        MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage());
-
-    } // end method    
-
-    /**
-     * Main execution thread for the Network Client
-     * <p>
-     * This reads from consoleIn, connect user input to that stream
-     *
-     * @author Christopher Goes
-     */
-    public void runClient() {
-        String line;
-        
-        while (true) {
-            try {
-                line = consoleIn.readLine();
-                if ( line == null) {
-                    System.err.println("line == null! Eeek!");
-                    stop();
-                    break;
-                }
-                if (!(processInput(line))) {
-                    stop();
-                    break;
-                }
-
-            } catch (IOException e) {
-                System.err.println("Error sending message! Error thrown: " + e);
-                stop();
-                break;
-            } // end catch   
-        } // end while
-        
-    } // end method  
 
     /**
      * Parses user input, executes commands, and sends messages to server
@@ -392,23 +417,6 @@ public class NetworkClient {
     }
 
     /**
-     * Creates a new connection to the server, call this before
-     * {@link #start start()}
-     *
-     * @return boolean True if successful, false if not
-     * @author Christopher Goes
-     */
-    public boolean connect() {
-        try {
-            socket = connectToServer(serverName, port);
-            return true;
-        } catch (NullPointerException | IOException e) {
-            System.err.println("Error in connect!\nException: " + e);
-            return false;
-        }
-    } // end method
-
-    /**
      * Starts {@link WriterThread writerThread} and
      * {@link ListenerThread listenerThread}
      *
@@ -461,6 +469,12 @@ public class NetworkClient {
         return tempsock;
     }
 
+    /**
+     * Checks if client is connected to server
+     * 
+     * @author Christopher Goes
+     * @return boolean True if connected, False if not
+     */
     private boolean isConnected() {
         if ( socket != null && !(socket.isClosed()) && socket.isConnected()) {
             return true;
@@ -469,6 +483,11 @@ public class NetworkClient {
         }
     }
     
+    /**
+     * Disconnects client from server
+     * 
+     * @author Christopher Goes
+     */
     private void disconnectFromServer() {
         consoleOut.println("Disconnecting from server.");
         MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
@@ -476,6 +495,12 @@ public class NetworkClient {
         stopThreads();
         killSocket();
     }
+    
+    /**
+     * Closes and nulls socket
+     * 
+     * @author Christopher Goes
+     */
     private void killSocket() {
         try { 
             if( socket != null && !(socket.isClosed())) {
@@ -508,6 +533,8 @@ public class NetworkClient {
         }
     }
 
+    /* MAIN */
+    
     /**
      * Used to test the Network Client
      *
