@@ -2,17 +2,26 @@ package ssterrain;
 
 /**
  *
- * @author John Goettsche
+ * @author John Goettsche, Colin Clifford
  * CS 383 Software Engineering
  */
 import Units.*;
 import java.util.ArrayList;
 import sshexmap.MainMap;
 import sshexmap.MapHex;
+
+/**
+ * This class represents a single element of an edge.
+ * A HexEdge will contain a collection of these
+ */
 public abstract class EdgeElement {
     //public abstract double getMovementCost(MoveableUnit unit);
     //public abstract double getCombatMultiplier(MoveableUnit unit);
     //public abstract String getCombatEffect(MoveableUnit unit);
+    
+    /**
+     * @return the (enum) type of the edge
+     */
     public abstract HexEdgeType getEdgeType();
 
     /**

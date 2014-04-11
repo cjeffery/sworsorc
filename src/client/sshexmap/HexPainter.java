@@ -1,6 +1,7 @@
 package sshexmap;
 
 import Units.ArmyUnit;
+import Units.MoveableUnit;
 import Units.UnitPainter;
 import javax.swing.*;
 import java.awt.*;
@@ -93,7 +94,7 @@ public class HexPainter {
     }
     
     public void paintUnits(Graphics2D g2, MapHex h) {
-        ArrayList<ArmyUnit> units = h.getUnits();
+        ArrayList<MoveableUnit> units = h.getUnits();
         if(units != null && units.size() != 0) {
             up.paintUnits(g2, units);
         }

@@ -53,7 +53,7 @@ public class UnitPainter {
                  AT the hex to draw on
      * @param units The units to draw
      */
-    public void paintUnits(Graphics2D g2, ArrayList<ArmyUnit> units) {
+    public void paintUnits(Graphics2D g2, ArrayList<MoveableUnit> units) {
         HexPainter.drawImage(g2, "fighter.png", images);
     }
 }

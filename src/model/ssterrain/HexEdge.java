@@ -2,8 +2,15 @@ package ssterrain;
 
 import java.util.TreeMap;
 import sshexmap.*;
+
+/**
+ * An actual edge between two hexes,
+ * contains a collection of EdgeElements
+ */
 public class HexEdge {
     String hex1, hex2;
+    
+    //elements are stored by type, for fast queries
     public TreeMap<HexEdgeType, EdgeElement> elements;
     
     //public HexEdge() {
@@ -27,11 +34,20 @@ public class HexEdge {
         }
     }
     
+    /**
+     * add an element to the given edge
+     * @param e The new edge element to add
+     */
     public void put(EdgeElement e) {
         HexEdgeType t = e.getEdgeType();
         elements.put( t, e );
     }
     
+    /**
+     * If the edge has an element of the given type, return it
+     * @param t the type to check for
+     * @return the element with the specified type
+     */
     public EdgeElement get(HexEdgeType t) {
         return elements.get(t);
     }

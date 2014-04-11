@@ -51,6 +51,8 @@ public class MapDemo implements MouseListener, KeyListener {
     public void mouseClicked(MouseEvent e) {
         String hexID = mapView.hexAt(e.getX(), e.getY());
         MapHex hex = map.GetHex(hexID);
+        if(hex == null)
+            return;
         System.out.println("===START===");
         if(selected_unit == null) {
             System.out.println("no unit selected");
@@ -60,9 +62,9 @@ public class MapDemo implements MouseListener, KeyListener {
             }
             System.out.println("highlighting moves");
             canMoveTo = new ArrayList<MapHex>();
-            ArrayList<ArmyUnit> units = hex.getUnits();
+            ArrayList<MoveableUnit> units = hex.getUnits();
             selected_unit = null;
-            for( ArmyUnit u : units) {
+            for( MoveableUnit u : units) {
                 if(u != null)
                     selected_unit = u;
             }

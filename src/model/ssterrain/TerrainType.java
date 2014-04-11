@@ -25,24 +25,24 @@ public abstract class TerrainType {
      */
     public static TerrainType makeTerrainType(String code) {
         switch(code) {
-            case "Bl": return new TTBlasted();
-            //case "Br": return new TTBridge();
-            case "Bro": return new TTBroken();
-            //case "Ci": return new TTCity();
-            case "Cl": return new TTClear();
-            case "Cu": return new TTCultivated();
-            //case "D": return new TTDragonTunnel();
-            case "Fore": return new TTForest();
-            case "G": return new TTGlacier();
-            case "K": return new TTKaroo();
-            case "Mrl": return new TTWater();
-            case "Mo": return new TTMountains();
-            //case "Po": return new TTPortal();
-            case "R": return new TTRough();
+            /* blasted       */ case "Bl":   return new TTBlasted();
+            /* bridge        */ case "Br":   return new TTWater();
+            /* broken        */ case "Bro":  return new TTBroken();
+            /* city          */ case "Ci":   return new TTClear();
+            /* clear         */ case "Cl":   return new TTClear();
+            /* cultivated    */ case "Cu":   return new TTCultivated();
+            /* dragon tunnel */ case "D":    return new TTMountains();
+            /* forest        */ case "Fore": return new TTForest();
+            /* glacier       */ case "G":    return new TTGlacier();
+            /* karoo         */ case "K":    return new TTKaroo();
+            /* water         */ case "Mrl":  return new TTWater();
+            /* mountains     */ case "Mo":   return new TTMountains();
+            /* clear         */ case "Po":   return new TTClear();
+            /* rough         */ case "R":    return new TTRough();
+            /* swamp         */ case "Sw":   return new TTSwamp();
+            /* clear         */ case "V":    return new TTClear();
+            /* woods         */ case "Wo":   return new TTWoods();
             //case "Sh": "Special Hex"; 
-            case "Sw": return new TTSwamp();
-            //case "V": return new TTVortex();
-            case "Wo": return new TTWoods();
         }
         return null;
     }    

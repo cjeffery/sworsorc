@@ -13,7 +13,8 @@ import junit.framework.TestCase;
 
 /**
  * In UnitPool.java you need to make the pool variable nonprivate in order to 
- * successfully run the junit tests.
+ * successfully run the junit tests.  Add some example cast for anyone who may
+ * need to cast into ArmyUnit.
  * 
  * 
  * @author David
@@ -28,10 +29,29 @@ public class UnitPoolTest extends TestCase {
     // test adding a unit to a null UnitPool.
     public void test01() {
         UnitPool pool = UnitPool.getInstance();
+        ArmyUnit aUnit;
+        MoveableUnit mUnit;
+        
         pool.clear();
         pool.addUnit(1,new LightSword());
         boolean test = pool.pool.get(1).get("LightSword").isEmpty(); 
         assertFalse(test);
+        
+        
+        //Example 1 cast.
+        mUnit = pool.pool.get(1).get("LightSword").get(0);
+        
+        if (mUnit instanceof ArmyUnit)
+            aUnit = (ArmyUnit)mUnit;
+        else
+            aUnit = null;
+        
+        assertTrue(aUnit.getStrength() == 3);
+        
+        //Example 2 cast.
+        assertTrue(((ArmyUnit)mUnit).getStrength() == 3);
+        
+        
     }
     
     // testing multable additions.
@@ -153,7 +173,7 @@ public class UnitPoolTest extends TestCase {
         assertTrue(3 == list2.size());
         
     }
-    
+    /*
     public void test05(){
         Random rNum = new Random();
         int a,b,b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,b7=0; 
@@ -197,5 +217,57 @@ public class UnitPoolTest extends TestCase {
         }
         
         
+    }*/
+
+    /**
+     * John's example code.  READ ALL // COMENTS IN CODE.
+     */
+    public void JohnGoettscheExample(){
+        //This is just some starting data.
+        ArrayList<String> list1, list2 = new ArrayList(), list3, list4;
+        MoveableUnit unit;
+        UnitPool pool = UnitPool.getInstance();
+        pool.clear();// YOU WILL NOT NEED THIS JOHN AS IT IS ONLY NEED FOR JUNIT FOR THIS TEST.
+        
+        pool.addUnit(1,new Bow(), "1010");//addUnit(playerNum,a MovableUnit class, hex number)
+        pool.addUnit(1,new Bow(), "1010");
+        pool.addUnit(1,new LightSword(), "1010");
+        
+        pool.addUnit(2,new Bow(), "2010");
+        pool.addUnit(2,new Bow(), "2010");
+        pool.addUnit(2,new LightSword(), "2010");
+        
+        pool.addUnit(3,new Bow(), "5010");
+        pool.addUnit(3,new Bow(), "5010");
+        pool.addUnit(3,new LightSword(), "5010");
+        
+        //The meat of the matter.
+        
+        list2.add("1010"); 
+        list2.add("5010");
+        
+        
+        //Demorilising everyone in a stack or in this case 2 stacks.
+        for (String z : list2){
+            list1 = pool.getUnitsInHex(z);
+            for (String i : list1){
+                unit = pool.getUnit(i);
+                ((ArmyUnit)unit).SetDemoralized(true);
+                assertTrue(((ArmyUnit)unit).isDemoralized());
+            }
+        }    
+        
+        // Moves the stack to a new hex.
+        list3 = pool.getUnitsInHex("2010");
+        for (String i : list3){
+            unit = pool.getUnit(i);
+            pool.addMove(unit, "2311");
+            assertTrue("2311".equals(unit.getLocation()));
+        }
+        pool.endMovementPhase(); //This is importan to stop anyone from trying to undo moves after they have been commited.
+                                 //Should be last step at the end of any player turn or server update to a client. 
+            
+        
     }
+    
 }

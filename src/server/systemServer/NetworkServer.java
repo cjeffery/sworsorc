@@ -3,17 +3,15 @@ package systemServer;
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class NetworkServer {
 
-    protected static List<ClientObject> clientObjects; //"Packaged sockets"
+    private static List<ClientObject> clientObjects; //"Packaged sockets"
     protected static List<Lobby> lobbies;
 
-    protected static int DEFAULT_PORT = 25565;
-    protected static String DEFAULT_IP = "76.178.139.129";
+    private static int DEFAULT_PORT = 25565;
+    private static String DEFAULT_IP = "76.178.139.129";
 
     public static boolean canCreateNewLobby(String name) {
         //check if lobby name is unique.
@@ -33,6 +31,9 @@ public class NetworkServer {
         lobbies.add(lobby);
     }
 
+    // TODO: There is a netbeans warning "exporting non-public type through public api"
+    // Meaning ClientObject is private, but method is public, so paramter can't be seen by caller
+    // Might want to reorganize either as subclasses of server, or into seperate .java files?
     public static void joinLobby(String lobbyName, ClientObject client) {
         for (Lobby l : lobbies) {
             if (l.name.equals(lobbyName)) {
@@ -70,15 +71,21 @@ public class NetworkServer {
         return handles;
     }
 
-    //Forward the message to all ClientObjects, which will send to their Clients:
+    /**
+     * Forward the message to all ClientObjects, which will send to their Clients
+     * @param message 
+     */
     public static void sendToAllClients(List<String> message) {
         for (ClientObject client : clientObjects) {
             client.send(message);
         }
     }
 
+    /**
+     * clientObject will call this on a planned or unplanned disconnection
+     * @param clientId 
+     */
     public static void clientDisconnected(int clientId) {
-        //clientObject will call this on a planned or unplanned disconnection
 
         ClientObject dearlyDeparted = null;
 
@@ -105,15 +112,15 @@ public class NetworkServer {
 
         try {
             System.out.println("Server started (" + InetAddress.getLocalHost() + ")");
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (UnknownHostException e) {
+            System.err.println("Error when starting server!\nException: " + e );
         }
 
         ServerSocket listen = null;
         try {
             listen = new ServerSocket(DEFAULT_PORT);
             //listen = new ServerSocket(DEFAULT_PORT, 0, InetAddress.getByName(DEFAULT_IP));
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("Error : While creating ServerSocket\n" + e);
             System.exit(-1);
         }
@@ -126,15 +133,15 @@ public class NetworkServer {
 
                 //The constructor of ClientObject will create the new threads:
                 clientObjects.add(new ClientObject(socket));
-            } catch (Exception e) {
-                System.out.println("Server failed to accept client!");
+            } catch (IOException e) {
+                System.err.println("Server failed to accept client!\nException: " + e );
                 break;
             }
         }
 
     }
 
-}
+} // end NetworkServer
 
 class Lobby {
 
@@ -231,7 +238,7 @@ class ClientObject {
         this.currentLobby = lobby;
     }
 
-    class WriterThread extends Thread {
+    private class WriterThread extends Thread {
         //Writer thread waits around until it has something to write
         //If we need it, we can use a synchronized message queue to handle requests to write messages
         PrintWriter writer; //Connection to socket
@@ -239,7 +246,7 @@ class ClientObject {
         public WriterThread() {
             try {
                 writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println("Error : Creating output writer for client:" + clientID);
             }
         }
@@ -249,6 +256,7 @@ class ClientObject {
             MessageUtils.sendMessage(writer, message);
         }
 
+        @Override
         public void run() {
             //This is a "pretend" thread for now, since we will always just
             //call the "write()" method directly at the moment.
@@ -263,13 +271,13 @@ class ClientObject {
                 if (writer != null) {
                     writer.close();
                 }
-            } catch (Exception e) {
-                System.err.println(e);
+            } catch (IOException e) {
+                System.err.println("Error closing writerthread!\nException: " + e );
             }
         }
     }
 
-    class ListenerThread extends Thread {
+    private class ListenerThread extends Thread {
         //Makes the blocking receive until a message arrives
 
         BufferedReader streamIn; //socket incoming
@@ -282,11 +290,13 @@ class ClientObject {
             }
         }
 
+        @Override
         public void run() {
+            List<String> message;
             while (true) {
                 try {
                     //Blocking read: (messageUtil will return null if socket closed)
-                    List<String> message = MessageUtils.receiveMessage(streamIn);
+                    message = MessageUtils.receiveMessage(streamIn);
 
                     // Socket closed OR Client requested disconnect
                     if (message == null || message.get(0).equals(MessageUtils.DISCONNECT_REQUEST)) {
@@ -297,7 +307,7 @@ class ClientObject {
 
                         //TODO: Exit and die
                         close();
-                        break;
+                        return;
 
                     }
 
@@ -423,7 +433,7 @@ class ClientObject {
                 } catch (Exception e) {
                     System.out.println("Client " + clientID + " error: " + e);
                     close();
-                    break;
+                    return;
 
                 }
             }
@@ -460,8 +470,9 @@ class ClientObject {
         //List<String> handles = ChatServer.getAllUserNames();                  
         //MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeGlobalWhoListMessage(handles));
         //Start threads:
-        writerThread.start();
-        listenerThread.start();
+        // TODO: remove thread starting from constructor
+        writerThread.start(); // TODO: evaluate whether writerThread is needed
+        listenerThread.start(); 
 
         //System console message:
         System.out.println("Opened connection from: " + handle);
