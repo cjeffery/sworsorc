@@ -34,7 +34,6 @@ import Units.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import javafx.scene.layout.AnchorPane;
  
 public class HUDController {
     @FXML private TabPane Units;
@@ -58,6 +57,7 @@ public class HUDController {
      * @author Jay Drage        
      */
     public void initialize(){
+        
         //this adds mouse support to map_view, just a placeholder for now
         map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
 		public void handle (MouseEvent mouseEvent) {
