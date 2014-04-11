@@ -75,18 +75,28 @@ public class NetworkClient {
 
         @Override
         public void run() {
+            List<String> message; // incoming message from server. First string is message tag.
+            
                 while (true) {
 
                     if (killed) {
                         close();
                         return;
+                    } else if (!(socket.isClosed()) && socket.isConnected()) {
+                        message = MessageUtils.receiveMessage(streamIn);                   
+                    } else {
+                        continue;
                     }
-                    List<String> message = MessageUtils.receiveMessage(streamIn);
+                                       
                     if (message == null) {
                         System.err.println("Null message from server!");
                         close();
                         return;
+                    } else if ( message.isEmpty() ) {
+                        System.err.println("Empty message from server!");
+                        continue; // since this isn't a critical error, no reason to kill the thread yet...
                     }
+                    
                     //first element of the parsed message array will tell us
                     //what type of message it is:
                     if (message.get(0).equals(MessageUtils.GLOBAL_CHAT)) {
@@ -263,7 +273,6 @@ public class NetworkClient {
                     stop();
                     break;
                 }
-                //if (!(socket.isClosed()) && socket.isConnected()) {
                 if (!(processInput(line))) {
                     stop();
                     break;
@@ -345,11 +354,13 @@ public class NetworkClient {
                 // add if still connected, calls to make softer quitting
                 stop();
                 return false;
-            } else {
+            } else if (!(socket.isClosed()) && socket.isConnected()) {
                 // sends chat message to server, which broadcasts to all clients
                 // TODO: have client ignore a message it sent, so user doesn't see what he typed twice
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
 
+            } else {
+                consoleOut.println("Invalid command, try again, or type /help for a list of commands.");
             }
         }
         return true;
