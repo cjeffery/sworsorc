@@ -41,12 +41,12 @@ public class MapDemoScenario implements MouseListener, KeyListener {
         ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
         reader.populatePool();
         
-        /* ArmyUnit unit = new LightSword();
+        /* MoveableUnit unit = new LightSword();
         pool.addUnit(0, unit, "0606"); */
-        ArrayList<ArmyUnit> units = pool.getPlayerSpecificUnits(2,"Bow");
+        ArrayList<MoveableUnit> units = pool.getPlayerSpecificUnits(2,"Bow");
         if(units != null)
-            for(ArmyUnit s : units)
-                s.printSelf();
+            for(MoveableUnit s : units)
+                ((ArmyUnit)s).printSelf();
 
         window.pack();
         window.setVisible(true);
@@ -78,7 +78,7 @@ public class MapDemoScenario implements MouseListener, KeyListener {
             }
             System.out.println("highlighting moves");
             canMoveTo = new ArrayList<MapHex>();
-            ArrayList<ArmyUnit> units = hex.getUnits();
+            ArrayList<MoveableUnit> units = hex.getUnits();
             selected_unit = units.get(units.size()-1); //hack for unitpool, list can contain nulls..
             System.out.println("Selected " + selected_unit + ", size of stack: " + hex.getUnits().size() );
             canMoveTo.clear();
