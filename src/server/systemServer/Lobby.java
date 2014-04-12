@@ -20,7 +20,7 @@ public class Lobby {
     protected List<ClientObject> lobbyClients;
 
     private static int lobbyCounter = 0; //used to assign unique lobbyId's
-    private int lobbyId;
+    final private int lobbyId;
 
     protected String name;
 
@@ -80,4 +80,5 @@ public class Lobby {
         current = lobbyClients.get(nextIndex);
         sendToEntireLobby(MessageUtils.makeNextTurnMessage(current.getHandle(), current.clientID));
     }
-}
+    
+} // end class

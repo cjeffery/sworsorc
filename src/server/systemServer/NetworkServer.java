@@ -5,6 +5,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Network Server, a singleton class that is your lord and master
+ * Also handles all client-to-client communication as a side-job
+ */
 public class NetworkServer {
 
     private static List<ClientObject> clientObjects; //"Packaged sockets"
@@ -89,9 +93,9 @@ public class NetworkServer {
 
         ClientObject dearlyDeparted = null;
 
-        for (int i = 0; i < clientObjects.size(); i++) {
-            if (clientObjects.get(i).clientID == clientId) {
-                dearlyDeparted = clientObjects.get(i);
+        for (ClientObject clientObject : clientObjects) {
+            if (clientObject.clientID == clientId) {
+                dearlyDeparted = clientObject;
                 break;
             }
         }
@@ -119,20 +123,22 @@ public class NetworkServer {
         ServerSocket listen = null;
         try {
             listen = new ServerSocket(DEFAULT_PORT);
-            //listen = new ServerSocket(DEFAULT_PORT, 0, InetAddress.getByName(DEFAULT_IP));
         } catch (IOException e) {
             System.err.println("Error : While creating ServerSocket\n" + e);
             System.exit(-1);
         }
-
+        
+        Socket tempsock;
+        ClientObject tempclient;
         //Spins off new client connections:
         while (true) {
             try {
                 System.err.println("Waiting for next client...");
-                Socket socket = listen.accept(); //Get socket (blocking)
-
+                tempsock = listen.accept(); //Get socket (blocking)
+                tempclient = new ClientObject(tempsock);
+                tempclient.startClient();
                 //The constructor of ClientObject will create the new threads:
-                clientObjects.add(new ClientObject(socket));
+                clientObjects.add(tempclient);
             } catch (IOException e) {
                 System.err.println("Server failed to accept client!\nException: " + e );
                 break;

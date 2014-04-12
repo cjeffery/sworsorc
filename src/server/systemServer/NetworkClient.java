@@ -30,11 +30,11 @@ public class NetworkClient {
     // Client info
     private static String username = "default_user";
 
-    // Thread(s)
+    // Streams & Threads
     private ListenerThread listenerThread = null;
     private PrintWriter writer = null;
 
-    // set default help file
+    // Set default help file
     final private String helpfile = "commands.txt";
     final private String dir = System.getProperty("user.dir");
 
@@ -255,7 +255,9 @@ public class NetworkClient {
                     }
                 }
                 else {
-                    System.err.println("Error in ListenerThread close, socket still connected!");
+                    disconnectFromServer();
+                    streamIn.close();
+                    streamIn = null;
                 }
             } catch (IOException e) {
                 System.err.println("Error closing listener! Error thrown: " + e);
