@@ -234,6 +234,9 @@ public class NetworkClient {
                             consoleOut.println("It is now my turn!");
                         }
                         consoleOut.println("It is now " + message.get(1) + "'s turn!");
+                    //Added by John Goettsche (I hope this is where it goes    
+                    } else if (message.get(0).equals(MessageUtils.UPDATE_UNIT)){
+                        
                     } else {
                         // its not a network message, therefore NC doesn't care, and has Jarvis take out the trash
                         //jarvis.processMessage( message.subList(1, message.size()), message.get(0) );
