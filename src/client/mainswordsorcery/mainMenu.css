@@ -5,8 +5,8 @@
 
 BorderPane {
     -fx-background-image: url("../images/sands.jpg");
-    -fx-background-size: cover;
-    -fx-background-position: center;
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
 
@@ -17,6 +17,6 @@ Button {
 }
 
 Label {
-    -fx-font-size: 150pt;
+    -fx-font-size: 100pt;
     -fx-font-family: 'JasmineUPC';
 }

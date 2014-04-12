@@ -10,30 +10,23 @@ package mainswordsorcery;
  *
  * @author Joe Higley
  */
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import java.util.ArrayList;
-import java.util.List;
-
-import solardisplay.SolarDisplay;
 import Units.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.*;
 import java.util.Arrays;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.geometry.*;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.stage.Stage;
+
+import solardisplay.SolarDisplay;
  
 public class HUDController {
     @FXML private TabPane Units;
@@ -196,7 +189,8 @@ public class HUDController {
     @FXML protected void Quit(ActionEvent event) {
         Stage stage = (Stage) menuBar.getScene().getWindow();
         stage.setScene(Game.getInstance().getMainScene());
-        stage.show();    
+        stage.setFullScreen(true);
+        stage.show();
     }
     
     /** 

@@ -29,14 +29,14 @@
         </Label>
       </children>
       <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" percentWidth="15.0" />
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-1.0" minWidth="4.0" percentWidth="27.5" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" percentWidth="15.0" />
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-1.0" minWidth="10.0" percentWidth="27.5" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="-1.0" percentWidth="15.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-1.0" minWidth="0.0" percentWidth="27.5" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="-1.0" percentWidth="15.0" />
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-1.0" minWidth="0.0" percentWidth="27.5" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="-1.0" minWidth="0.0" percentWidth="15.0" />
       </columnConstraints>
       <rowConstraints>
-        <RowConstraints maxHeight="-1.0" minHeight="10.0" percentHeight="35.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-1.0" minHeight="-1.0" percentHeight="35.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="-1.0" minHeight="10.0" percentHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="261.0" minHeight="10.0" percentHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="408.0" minHeight="10.0" percentHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
