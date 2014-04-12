@@ -29,15 +29,15 @@ public class NetworkClient {
     private PrintWriter consoleOut = null;
 
     // Client info
-    private static String username = null;
+    private static String username = "default_user";
 
     // Thread(s)
     private ListenerThread listenerThread = null;
     private PrintWriter writer = null;
 
     // set default help file
-    private String helpfile = "commands.txt";
-    private String dir = System.getProperty("user.dir"); // set every time method called
+    final private String helpfile = "commands.txt";
+    final private String dir = System.getProperty("user.dir");
 
     //private Conductor jarvis; // Our conductor object
     
@@ -54,14 +54,20 @@ public class NetworkClient {
      */
     public NetworkClient(String sName, int serverPort, String uName) throws IOException {
 
-        // sets server iNet info
-        port = serverPort;
-        serverName = sName;
+        if( sName == null || serverPort < 1024 || uName == null ) {
+            System.err.println("Invalid parameters, please pass correct ones!\nsName: " + 
+                    sName + "\nserverPort (Must be > 1023): " + serverPort + "\nuName: " + uName );
+        } else {
+            
+            // sets server iNet info
+            port = serverPort;
+            serverName = sName;
 
-        // Set client username
-        username = uName;
-
-        //Reads from stdin:
+            // Set client username
+            username = uName;
+        }
+        
+        // Standard In/Out
         consoleIn = new BufferedReader(new InputStreamReader(System.in));
         consoleOut = new PrintWriter(System.out, true);
 
@@ -84,7 +90,7 @@ public class NetworkClient {
             System.err.println("Error in connect!\nException: " + e);
             return false;
         }
-    } // end method
+    }
     
     /**
      * Starts activity to server, including threads, and command input loop
@@ -106,7 +112,7 @@ public class NetworkClient {
         //request list of lobbies:
         MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage());
 
-    } // end method
+    }
     
     /**
      * Main execution thread for the Network Client
@@ -132,15 +138,15 @@ public class NetworkClient {
                 }
 
             } catch (IOException e) {
-                System.err.println("Error sending message! Error thrown: " + e);
+                System.err.println("Error sending message!\nException: " + e);
                 stop();
                 break;
             } // end catch   
         } // end while
         
-    } // end method  
+    }  
     
-    /* LISTENERTHREAD */
+    /* THREAD N' STREAM STUFF */
     
     /**
      * Listens for and handles incoming communications for Network Client
@@ -150,7 +156,7 @@ public class NetworkClient {
         private BufferedReader streamIn;
         private boolean killed = false;
 
-        public ListenerThread() {
+        private ListenerThread() {
             // empty constructor
         }
 
@@ -259,8 +265,35 @@ public class NetworkClient {
 
     }  
     
-    /* PRIVATE METHODS */
+    /**
+     * Starts {@link WriterThread writerThread} and
+     * {@link ListenerThread listenerThread}
+     *
+     * @author Christopher Goes
+     * @throws Exception
+     */
+    private void startThreads() throws IOException { // assumes socket set
 
+        setWriter();
+
+        listenerThread = new ListenerThread();
+        listenerThread.createStream();
+        listenerThread.start();
+    }
+    
+    /**
+     * Kills thread(s) and resets writer stream.
+     * <p>
+     * NOTE: Call this BEFORE restarting threads with new socket!
+     * WARNING: This will close any associated sockets!
+     * @author Christopher Goes
+     */
+    private void stopThreads() {   
+        listenerThread.killThread();
+        listenerThread = null;
+        writer = null;
+    }
+    
     /**
      * Initializes writer with a new stream. 
      * <p>
@@ -273,6 +306,111 @@ public class NetworkClient {
         if( isConnected() ) {
             writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
         }
+    }
+    
+    /* COMMAND PROCESSING/EXECUTION METHODS */
+
+    /**
+     * Parses user input, executes commands, and sends messages to server
+     *
+     * @author Christopher Goes
+     * @param command
+     * @return boolean True if execute normally, False if quit or exception
+     * @throws IOException
+     */
+    private boolean processInput(String command) throws IOException {
+
+        if( command == null ) {
+            System.err.println("Null string passed to processInput!");
+            return false;
+        }
+        
+        String[] parsedString;
+        parsedString = command.split("\\s+"); //Split line by whitespace
+
+        if (parsedString.length == 2) {
+            if ("/file".equals(parsedString[0])) {
+                sendFile(parsedString[1]);
+
+            } else if ("/newLobby".equals(parsedString[0])) { // TODO: remove user from current lobby if they create a new lobby
+                String lobbyName = parsedString[1];
+                MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyRequestMessage(lobbyName));
+
+            } else if ("/joinLobby".equals(parsedString[0])) { // TODO: stop a user for "cloning" themselves by rejoining the same lobby
+                String lobbyName = parsedString[1];
+                MessageUtils.sendMessage(writer, MessageUtils.makeJoinLobbyRequestMessage(lobbyName));
+            } else if ( isConnected()) {
+                // sends chat message to server, which broadcasts to all clients
+                // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
+                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
+            }
+
+        } else if (parsedString.length == 1) {
+            if ("/printFile".equals(parsedString[0])) {
+                write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
+
+            } else if ("/globalWho".equals(parsedString[0])) {
+                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
+
+            } else if ("/leaveLobby".equals(parsedString[0])) {
+                MessageUtils.sendMessage(writer, MessageUtils.makeLeaveLobbyMessage());
+
+            } else if ("/showLobbies".equals(parsedString[0])) { // TODO: message if no lobbies available, command to create lobby
+                MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage()); // TODO: working lobby info request
+
+            } else if ("/disconnect".equals(parsedString[0])) { // manual client disconnect
+                if( isConnected() ) {
+                    disconnectFromServer();
+                } else {
+                    consoleOut.println("Can't disconnect when you're not connected!");
+                }             
+                
+            } else if ("/yieldTurn".equals(parsedString[0])) { // client turn over
+                MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
+
+            } else if ("/beginGame".equals(parsedString[0])) { // request to start game
+                MessageUtils.sendMessage(writer, MessageUtils.makeBeginGameRequestMessage());
+
+            } else if ("/help".equals(parsedString[0])) {
+                printCommandList();
+
+            } else if ("/reconnect".equals(parsedString[0])) {
+                // MAKE SURE USER CANT CLONE THEMSELVES!
+                if ( isConnected() ) {
+                    consoleOut.println("Already connected!");
+                    return true;
+                }
+                consoleOut.println("Attempting to reconnect...");
+                if (connect()) {
+                    start();
+                    
+                } else {
+                    consoleOut.println("Reconnect failed");
+                }
+
+            } else if ("/quit".equals(parsedString[0])) {
+                consoleOut.println("Exiting...");
+                if ( isConnected() ) {
+                    disconnectFromServer();
+                }
+                stop();
+                return false;
+            } else if ( isConnected()) {
+                // sends chat message to server, which broadcasts to all clients
+                // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
+                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
+
+            } else {
+                consoleOut.println("Invalid command, try again, or type /help for a list of commands.");
+            }
+        } else {
+            if ( isConnected()) {
+                // sends chat message to server, which broadcasts to all clients
+                // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
+                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
+            }
+        }
+        return true;
     }
 
     /**
@@ -326,125 +464,8 @@ public class NetworkClient {
             System.err.println("File not found: " + tempfile + "\nException: " + e);
         }
 
-    } // end method
-
-    /**
-     * Parses user input, executes commands, and sends messages to server
-     *
-     * @author Christopher Goes
-     * @param command
-     * @return boolean True if execute normally, False if quit or exception
-     * @throws IOException
-     */
-    private boolean processInput(String command) throws IOException {
-
-        String[] parsedString;
-        parsedString = command.split("\\s+"); //Split line by whitespace
-
-        if (parsedString.length == 2) {
-            if ("/file".equals(parsedString[0])) {
-                sendFile(parsedString[1]);
-
-            } else if ("/newLobby".equals(parsedString[0])) {
-                String lobbyName = parsedString[1];
-                MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyRequestMessage(lobbyName));
-
-            } else if ("/joinLobby".equals(parsedString[0])) {
-                String lobbyName = parsedString[1];
-                MessageUtils.sendMessage(writer, MessageUtils.makeJoinLobbyRequestMessage(lobbyName));
-            }
-
-        } else if (parsedString.length == 1) {
-            if ("/printFile".equals(parsedString[0])) {
-                write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
-
-            } else if ("/globalWho".equals(parsedString[0])) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
-
-            } else if ("/leaveLobby".equals(parsedString[0])) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeLeaveLobbyMessage());
-
-            } else if ("/showLobbies".equals(parsedString[0])) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage()); // TODO: working lobby info request
-
-            } else if ("/disconnect".equals(parsedString[0])) { // manual client disconnect
-                if( isConnected() ) {
-                    disconnectFromServer();
-                } else {
-                    consoleOut.println("Can't disconnect when you're not connected!");
-                }             
-                
-            } else if ("/yieldTurn".equals(parsedString[0])) { // client turn over
-                MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
-
-            } else if ("/beginGame".equals(parsedString[0])) { // request to start game
-                MessageUtils.sendMessage(writer, MessageUtils.makeBeginGameRequestMessage());
-
-            } else if ("/help".equals(parsedString[0])) {
-                printCommandList();
-
-            } else if ("/reconnect".equals(parsedString[0])) {
-                // MAKE SURE USER CANT CLONE THEMSELVES!
-                if ( isConnected() ) {
-                    consoleOut.println("Already connected!");
-                    return true;
-                }
-                consoleOut.println("Attempting to reconnect...");
-                if (connect()) {
-                    start();
-                    
-                } else {
-                    consoleOut.println("Reconnect failed");
-                }
-
-            } else if ("/quit".equals(parsedString[0])) {
-                consoleOut.println("Exiting...");
-                if ( isConnected() ) {
-                    disconnectFromServer();
-                }
-                stop();
-                return false;
-            } else if ( isConnected()) {
-                // sends chat message to server, which broadcasts to all clients
-                // TODO: have client ignore a message it sent, so user doesn't see what he typed twice
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
-
-            } else {
-                consoleOut.println("Invalid command, try again, or type /help for a list of commands.");
-            }
-        }
-        return true;
     }
-
-    /**
-     * Starts {@link WriterThread writerThread} and
-     * {@link ListenerThread listenerThread}
-     *
-     * @author Christopher Goes
-     * @throws Exception
-     */
-    private void startThreads() throws IOException { // assumes socket set
-
-        setWriter();
-
-        listenerThread = new ListenerThread();
-        listenerThread.createStream();
-        listenerThread.start();
-    } // end method
-
-    /**
-     * Kills thread(s) and resets writer stream.
-     * <p>
-     * NOTE: Call this BEFORE restarting threads with new socket!
-     * WARNING: This will close any associated sockets!
-     * @author Christopher Goes
-     */
-    private void stopThreads() {   
-        listenerThread.killThread();
-        listenerThread = null;
-        writer = null;
-    }
-
+    
     /**
      * Attempts connection to the server, and returns socket if successful
      *
@@ -454,7 +475,7 @@ public class NetworkClient {
      * @return Socket
      * @throws IOException
      */
-    private Socket connectToServer(String sName, int serverPort) throws IOException {
+    private static Socket connectToServer(String sName, int serverPort) throws IOException {
         Socket tempsock = null;
         System.out.println("Connecting! Please Wait!");
         try {
@@ -468,6 +489,8 @@ public class NetworkClient {
         System.out.println("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
         return tempsock;
     }
+    
+    /* UTILITY METHODS */
 
     /**
      * Checks if client is connected to server
@@ -476,11 +499,7 @@ public class NetworkClient {
      * @return boolean True if connected, False if not
      */
     private boolean isConnected() {
-        if ( socket != null && !(socket.isClosed()) && socket.isConnected()) {
-            return true;
-        } else {
-            return false;
-        }
+        return socket != null && !(socket.isClosed()) && socket.isConnected();
     }
     
     /**
@@ -522,9 +541,9 @@ public class NetworkClient {
             if (consoleIn != null) {
                 consoleIn.close();
             }
-            if (socket != null) {
-                socket.close();
-            }
+            
+            killSocket();
+            
             if (listenerThread.isAlive() || writer != null) {
                 stopThreads();
             }
@@ -536,8 +555,9 @@ public class NetworkClient {
     /* MAIN */
     
     /**
-     * Used to test the Network Client
-     *
+     * Opens dialog box(s), creates NetworkClient instance, and executes public methods
+     * <p>
+     * NOTE: This is mainly for testing purposes, should not be in final build
      * @param args
      * @throws IOException
      */
