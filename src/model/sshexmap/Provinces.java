@@ -13,7 +13,7 @@ import java.util.*;
  * simple wrapper class for provinces
  * give it a province name and it will give you a set of hexes
  * see example code at bottom
- * TODO: add unit tests
+ * TODO: add unit tests. Make less horrifying(?)
  */
 class Provinces {
     //key is province ID
@@ -56,6 +56,9 @@ class Provinces {
         //convert set to arraylist, because arraylist
         //is probably easier for people to work with
         ArrayList res = new ArrayList<String>();
+        TreeSet<String> hexes = provinceMap.get(province_name);
+        if(hexes == null)
+            return null;
         res.addAll( provinceMap.get(province_name) );
         return res;
     }   
