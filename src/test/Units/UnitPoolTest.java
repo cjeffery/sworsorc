@@ -26,7 +26,7 @@ public class UnitPoolTest extends TestCase {
     }
 
     
-    // test adding a unit to a null UnitPool.
+  /*  // test adding a unit to a null UnitPool.
     public void test01() {
         UnitPool pool = UnitPool.getInstance();
         ArmyUnit aUnit;
@@ -173,58 +173,15 @@ public class UnitPoolTest extends TestCase {
         assertTrue(3 == list2.size());
         
     }
-    /*
-    public void test05(){
-        Random rNum = new Random();
-        int a,b,b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,b7=0; 
-        UnitPool pool = UnitPool.getInstance();
-        pool.clear();
-        
-        for ( int i = 0; i < 1000; i++){
-            a = rNum.nextInt(10);
-            b = rNum.nextInt(7);
-            switch(b){
-                
-                case 0: 
-                    b0++;
-                    break;
-                case 1: 
-                    b1++;
-                    break;
-                case 2: 
-                    b2++;
-                    break;
-                case 3: 
-                    b3++;
-                    break;
-                case 4:
-                    b4++;
-                    break;
-                case 5:
-                    b5++;
-                    break;
-                case 6:
-                    b6++;
-                    break;
-            }
-            
-            
-            switch(a){
-                case 0: 
-                    pool.addUnit(b, new LightSword(),"0101");
-                    break;
-            }
-        }
-        
-        
-    }*/
+  
 
     /**
      * John's example code.  READ ALL // COMENTS IN CODE.
      */
-    public void JohnGoettscheExample(){
+    
+    public void test05(){//JohnGoettscheExample
         //This is just some starting data.
-        ArrayList<String> list1, list2 = new ArrayList(), list3, list4;
+        ArrayList<String> list1, list2 = new ArrayList(), list3;
         MoveableUnit unit;
         UnitPool pool = UnitPool.getInstance();
         pool.clear();// YOU WILL NOT NEED THIS JOHN AS IT IS ONLY NEED FOR JUNIT FOR THIS TEST.
@@ -258,12 +215,18 @@ public class UnitPoolTest extends TestCase {
         }    
         
         // Moves the stack to a new hex.
-        list3 = pool.getUnitsInHex("2010");
-        for (String i : list3){
-            unit = pool.getUnit(i);
-            pool.addMove(unit, "2311");
-            assertTrue("2311".equals(unit.getLocation()));
-        }
+        
+        pool.addMoveStack("2010", "2311");
+        
+        assertTrue(pool.getUnitsInHex("2010").size() == 0);
+        assertTrue(pool.getUnitsInHex("2311").size() == 3);
+        
+        
+        //for (String i : list3){
+        //    unit = pool.getUnit(i);
+        //    pool.addMove(unit, "2311");
+        //    assertTrue("2311".equals(unit.getLocation()));
+        //}
         pool.endMovementPhase(); //This is importan to stop anyone from trying to undo moves after they have been commited.
                                  //Should be last step at the end of any player turn or server update to a client. 
             
