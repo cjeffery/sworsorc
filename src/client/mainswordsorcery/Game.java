@@ -50,7 +50,7 @@ public class Game extends Application {
         stage.setWidth(screenBounds.getWidth());
         stage.setHeight(screenBounds.getHeight());
         
-        main = createScene("mainMenu.fxml");
+        main = createScene("MainMenu.fxml");
         hud = createScene("hud.fxml");
         
         // load the Main Menu font.
