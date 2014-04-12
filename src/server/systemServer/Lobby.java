@@ -22,14 +22,14 @@ public class Lobby {
     private static int lobbyCounter = 0; //used to assign unique lobbyId's
     final private int lobbyId;
 
-    protected String name;
+    private String name;
 
     protected ClientObject current; //Whose turn is it? See: advanceTurn()
 
     public void beginGame() {
         //start with the first player in list:
         current = lobbyClients.get(0);
-        sendToEntireLobby(MessageUtils.makeNextTurnMessage(current.getHandle(), current.clientID));
+        sendToEntireLobby(MessageUtils.makeNextTurnMessage(current.getHandle(), current.getClientID()));
     }
 
     /** 
@@ -63,9 +63,11 @@ public class Lobby {
         //TODO: announce join to other connected clients
     }
 
+    public String getName() {
+        return name;
+    }
     public void leave(ClientObject client) {
         lobbyClients.remove(client);
-        //TODO: announce leave to other connected clients
     }
 
     public void advanceGameTurn() {
@@ -78,7 +80,7 @@ public class Lobby {
         }
 
         current = lobbyClients.get(nextIndex);
-        sendToEntireLobby(MessageUtils.makeNextTurnMessage(current.getHandle(), current.clientID));
+        sendToEntireLobby(MessageUtils.makeNextTurnMessage(current.getHandle(), current.getClientID()));
     }
     
 } // end class

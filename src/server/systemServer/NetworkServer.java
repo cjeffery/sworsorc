@@ -22,26 +22,23 @@ public class NetworkServer {
         //we might have to add other conditions?
 
         for (Lobby lobby : lobbies) {
-            if (lobby.name.equals(name)) {
+            if (lobby.getName().equals(name)) {
                 return false;
             }
         }
         return true;
     }
 
-    public static void createNewLobby(String name) {
-        //TODO: Enforce unique names?
-        Lobby lobby = new Lobby(name);
-        lobbies.add(lobby);
+    public static void createNewLobby(String lobbyName) {
+            Lobby lobby = new Lobby(lobbyName);
+            lobbies.add(lobby); 
     }
-
-    // TODO: There is a netbeans warning "exporting non-public type through public api"
-    // Meaning ClientObject is private, but method is public, so paramter can't be seen by caller
-    // Might want to reorganize either as subclasses of server, or into seperate .java files?
+    
     public static void joinLobby(String lobbyName, ClientObject client) {
         for (Lobby l : lobbies) {
-            if (l.name.equals(lobbyName)) {
+            if (l.getName().equals(lobbyName)) {
                 l.join(client);
+                sendToAllClients(MessageUtils.makeJoinedLobbyMessage(lobbyName, client.getHandle()));
                 return;
             }
         }
@@ -56,9 +53,9 @@ public class NetworkServer {
         for (Lobby l : lobbies) {
             if (l.lobbyClients.contains(client)) {
                 l.leave(client);
+                sendToAllClients(MessageUtils.makeLeftLobbyMessage(l.getName(), client.getHandle()));
                 if (l.lobbyClients.isEmpty()) {
-                    //For now, just kill lobbies when everyone leaves
-                    lobbies.remove(l);
+                    lobbies.remove(l); //For now, just kill lobbies when everyone leaves
                 }
                 return;
             }
@@ -94,15 +91,15 @@ public class NetworkServer {
         ClientObject dearlyDeparted = null;
 
         for (ClientObject clientObject : clientObjects) {
-            if (clientObject.clientID == clientId) {
+            if (clientObject.getClientID() == clientId) {
                 dearlyDeparted = clientObject;
                 break;
             }
         }
 
         leaveLobby(dearlyDeparted);
-        clientObjects.remove(dearlyDeparted);
         sendToAllClients(MessageUtils.makeDisconnectAnnouncementMessage(dearlyDeparted.getHandle()));
+        clientObjects.remove(dearlyDeparted);
 
     }
 
@@ -131,14 +128,14 @@ public class NetworkServer {
         Socket tempsock;
         ClientObject tempclient;
         //Spins off new client connections:
+        // TODO: we need a way to break out without exception or manual termination
         while (true) {
             try {
                 System.err.println("Waiting for next client...");
                 tempsock = listen.accept(); //Get socket (blocking)
                 tempclient = new ClientObject(tempsock);
-                tempclient.startClient();
-                //The constructor of ClientObject will create the new threads:
-                clientObjects.add(tempclient);
+                tempclient.startClient(); // Start the connection
+                clientObjects.add(tempclient); // add the active client to list
             } catch (IOException e) {
                 System.err.println("Server failed to accept client!\nException: " + e );
                 break;

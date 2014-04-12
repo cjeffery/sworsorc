@@ -290,7 +290,9 @@ public class NetworkClient {
      * @author Christopher Goes
      */
     private void stopThreads() {   
-        listenerThread.killThread();
+        if( listenerThread != null) {
+            listenerThread.killThread();
+        }
         listenerThread = null;
         writer = null;
     }
@@ -345,7 +347,7 @@ public class NetworkClient {
                 // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
             }
-
+            // TODO: LEFT LOBBY + JOINED LOBBY
         } else if (parsedString.length == 1) {
             if ("/printFile".equals(parsedString[0])) {
                 write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
@@ -546,7 +548,7 @@ public class NetworkClient {
             
             killSocket();
             
-            if (listenerThread.isAlive() || writer != null) {
+            if (listenerThread != null || writer != null) {
                 stopThreads();
             }
         } catch (IOException e) {

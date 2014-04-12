@@ -22,14 +22,13 @@ import java.util.List;
 public class ClientObject {
 
     private static int totalClients = 0;
-    protected int clientID; // TODO: put into a get method
+    final private int clientID;
 
     private String handle; //username
 
     final private Socket socket;
 
     final private ListenerThread listenerThread;
-    //private WriterThread writerThread; //this is "pretend" for now. 
 
     private PrintWriter writer = null;
     private List<String> file;
@@ -38,6 +37,8 @@ public class ClientObject {
 
     //We need a PrintWriter to standardize the printMessage functions:
     private PrintWriter consoleOut = new PrintWriter(System.out, true);
+    
+    /* CONSTRUCTOR */
     
     /**
      * ClientObject constructor
@@ -55,6 +56,8 @@ public class ClientObject {
         listenerThread = new ListenerThread();
     }
     
+    /* PUBLIC METHODS */
+    
     /**
      * Starts the ClientObject, opening the connection
      * 
@@ -66,20 +69,53 @@ public class ClientObject {
         System.out.println("Opened connection from client " + clientID + " at address " + socket.getInetAddress());
     }
     
-    //Inform the writer thread that it's time to do his job:
+    /**
+     * Send a message to client
+     * <p>
+     * This is just a public wrapper for {@link #write write()}
+     * @param message Message to send
+     */
     public void send(List<String> message) {
         write(message);
     }
-
+    
+    /* GETTERS & SETTERS */
+    
+    /**
+     * Gets the handle of client object
+     * @return handle Username of client
+     * @author Christopher Goes
+    */
     public String getHandle() {
         return handle;
     }
 
+    /**
+     * Gets the clientID of client object
+     * @return clientID Unique ID of client
+     */
+    public int getClientID() {
+        return clientID;
+    }
+    
+    /**
+     * Sets current lobby of client object
+     * @param lobby
+     */
     public void setCurrentLobby(Lobby lobby) {
         this.currentLobby = lobby;
     }
 
+    /**
+     * Creates a new writer stream off of the socket
+     * NOTE: Socket must be set before calling this method!
+     * @author Christopher Goes
+     */
     public void setWriter() {
+        if( socket == null ) {
+            System.err.println("Error in setWriter: null socket!");
+            return;
+        }
         try {
             writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
@@ -88,20 +124,34 @@ public class ClientObject {
         }
     }
     
+    /* UTILITY METHODS */
+    
     /**
      * Writes to socket outgoing connection, hides the protocol details
-     * @param message 
+     * @param message Message to send
      */
-    public void write(List<String> message) {    
+    private void write(List<String> message) {    
         MessageUtils.sendMessage(writer, message);
-    }
+    }    
     
+    /* LISTENERTHREAD */
+    
+    /**
+     * Makes the blocking receive until a message arrives
+     */
     private class ListenerThread extends Thread {
-        //Makes the blocking receive until a message arrives
 
         BufferedReader streamIn; //socket incoming
 
+        /**
+         * Constructor for ListenerThread, creates stream and object
+         * NOTE: Socket must be set before creating a ListenerThread object!
+         */
         private ListenerThread() {
+            if( socket == null ) {
+                System.err.println("Error in ListenerThread constructor: null socket!");
+                return;
+            }
             try {
                 streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             } catch (IOException e) {
@@ -124,7 +174,6 @@ public class ClientObject {
 
                         NetworkServer.clientDisconnected(clientID);
 
-                        //TODO: Exit and die
                         close();
                         return;
 
@@ -172,7 +221,7 @@ public class ClientObject {
                         }
                         else {
 
-                            System.out.println("Client " + handle + " requested to start game in lobby " + currentLobby.name);
+                            System.out.println("Client " + handle + " requested to start game in lobby " + currentLobby.getName());
 
                             currentLobby.beginGame();
                             currentLobby.sendToEntireLobby(MessageUtils.makeGameBegunMessage());
@@ -200,7 +249,7 @@ public class ClientObject {
                         //Send current lobbies to client:
                         for (Lobby lobby : NetworkServer.lobbies) {
                             MessageUtils.sendMessage(writer,
-                                    MessageUtils.makeLobbyInfoMessage(lobby.name, lobby.getUserNames()));
+                                    MessageUtils.makeLobbyInfoMessage(lobby.getName(), lobby.getUserNames()));
                         }
 
                     } else if (TAG.equals(MessageUtils.JOIN_LOBBY_REQUEST)) {
@@ -261,18 +310,20 @@ public class ClientObject {
 
         public void close() {
             try {
-                if (socket != null) {
+                if (!(socket.isClosed())) {
                     socket.close();
                 }
                 if (streamIn != null) {
                     streamIn.close();
+                    streamIn = null;
                 }
+                
             } catch (IOException e) {
                 System.err.println(e);
             }
         }
 
-    }
+    } // end class
 
 
 } // end class
