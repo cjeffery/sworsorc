@@ -11,11 +11,10 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 /**
- * The primary class for the Network Client, handles data and communication
+ * The singleton class for the Network Client, handles data and communication
  * thread(s)
  * <p>
- * Don't create more than one of these on a single client unless you now what
- * you're doing
+ * NOTE: This is a singleton, DO NOT MAKE MORE THAN ONE NetworkClient!
  */
 public class NetworkClient {
 
@@ -388,7 +387,7 @@ public class NetworkClient {
                     consoleOut.println("Reconnect failed");
                 }
 
-            } else if ("/quit".equals(parsedString[0])) {
+            } else if ("/quit".equals(parsedString[0])) { // TODO: nullpointer problem on quit
                 consoleOut.println("Exiting...");
                 if ( isConnected() ) {
                     disconnectFromServer();
@@ -407,6 +406,7 @@ public class NetworkClient {
             if ( isConnected()) {
                 // sends chat message to server, which broadcasts to all clients
                 // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
+                // TODO: append lobby client before all messages recieved
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
             }
         }
