@@ -113,8 +113,9 @@ public class MapHex extends Hex{
                 case "portalHex":
                     portalHex = Integer.parseInt(contents);
                     break;
-                case "provinceName": //FIXME typo in XML
+                case "provinceName":
                     provinceName = contents;
+                    Provinces.addHex(GetID(), provinceName);
                     break;
                 case "castleHex":
                     castleHex = contents.equals("true");

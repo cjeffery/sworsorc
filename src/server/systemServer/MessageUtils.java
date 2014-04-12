@@ -19,13 +19,18 @@ public class MessageUtils {
     //Opening string to tell receiver how to interpret message contents.
     //This will be the first element of every message:
     static String GLOBAL_CHAT = "chat"; //Normal chat message:
+    
+    /* CONNECTION THINGS */
     static String DISCONNECT_ANNOUNCEMENT = "disconnectAnnounce"; //Announcement message
     static String CONNECT_ANNOUNCEMENT = "connect"; //Announcement message
+    static String DISCONNECT_REQUEST = "disconnectrequest"; // client requests soft disconnect (Breakup is sitll a breakup, but this is nicer)
 
+    /* FILE THINGS */
     static String FILE = "file";
     static String FILE_LINE = "fileLine";
     static String PRINT_FILE = "printFile";
 
+    /* LOBBY THINGS */
     static String CREATE_NEW_LOBBY_REQUEST = "createNewLobbyRequest"; //client requests a new lobby
     static String APROVE_NEW_LOBBY_REQUEST = "approveNewLobbyRequest"; //server has created lobby
     static String DENY_NEW_LOBBY_REQUEST = "denyNewLobbyRequest"; //request denied (e.g. duplicate name)
@@ -33,28 +38,36 @@ public class MessageUtils {
     static String LEAVE_LOBBY_REQUEST = "leaveLobby"; //client requests to leave lobby
     static String LOBBY_INFO = "lobbyNameAndUsers"; //send info about a lobby
     static String REQUEST_LOBBY_INFO = "requestLobbyInfo";
+    static String JOINED_LOBBY = "joinedLobby"; // a client joined a lobby
+    static String LEFT_LOBBY = "leftLobby"; // a client left a lobby
+    // TODO: localized broadcasts for lobby joins/leaves within lobby?
     //static String ANNOUNCE_NEW_LOBBY = "announceNewLobby"; //tell your friends!
 
     static String SEND_HANDLE = "sendHandle"; //client sending handle to server
 
-    static String DISCONNECT_REQUEST = "disconnectrequest"; // client requests soft disconnect (Breakup is sitll a breakup, but this is nicer)
+    /* WHO REQUEST THINGYS */
     static String GLOBAL_WHO_LIST = "globalwholist"; //send list of all online users
     static String REQUEST_GLOBAL_WHO = "globalwhoreqest"; //ask for all online usernames
     //static String LOBBY_WHO_REQUEST = "lobbywho"; //ask for user names in same lobby
 
+    /* TURN STUFF */
     static String YIELD_TURN = "yieldTurn"; //Sent by client when yielding game turn
     static String NEXT_TURN_INFO = "nextTurnInfo"; //Sent by server when turn changes
 
+    /* GAME STATE STUFF */
     static String REQUEST_BEGIN_GAME = "requestBeginGame"; //sent by client, votes to start game
     static String GAME_BEGUN = "gameBegun"; //sent by server when game is started
     //static String WAITING_TO_BEGIN_GAME = "waitingForVotesBeforeStarting"; //wait for everyone to agree to start
 
-    //game actions
+    /* GAMEY ACTIONS */
     static String UPDATE_UNIT = "updateunit"; // client sends a unit update
     static String UPDATE_HEX = "updatehex"; // client sends a hex update
 
+    /* KILL THE BUGS! */
     static boolean debug = false; //Print everything!
-
+    static String ERROR_MESSAGE = "errorMessage"; // generic error message, communicate things client does wrong
+    
+    
     //yell at the client:
     public static List<String> makeNagMessage(String message) {
         List<String> innerMessage = new ArrayList<>();
@@ -63,6 +76,7 @@ public class MessageUtils {
         return innerMessage;
     }
 
+    /* TURN METHODS */
     public static List<String> makeNextTurnMessage(String nextHandle, int nextId) {
         List<String> message = new ArrayList<>();
         message.add(NEXT_TURN_INFO);
@@ -77,6 +91,7 @@ public class MessageUtils {
         return message;
     }
 
+    /* GAME METHODS */
     public static List<String> makeBeginGameRequestMessage() {
         List<String> message = new ArrayList<>();
         message.add(REQUEST_BEGIN_GAME);
@@ -89,6 +104,7 @@ public class MessageUtils {
         return message;
     }
 
+    /* LOBBY METHODS */
     //client asks to create new lobby:
     public static List<String> makeNewLobbyRequestMessage(String lobbyName) {
         List<String> message = new ArrayList<>();
@@ -154,6 +170,23 @@ public class MessageUtils {
         write.println(build);
     }
 
+    public static List<String> makeJoinedLobbyMessage(String lobbyName, String handle ) {
+        List<String> message = new ArrayList<>();
+        message.add(JOINED_LOBBY);
+        message.add(lobbyName);
+        message.add(handle);
+        return message;
+    }
+    
+    public static List<String> makeLeftLobbyMessage( String lobbyName, String handle ) {
+        List<String> message = new ArrayList<>();
+        message.add(LOBBY_INFO);
+        message.add(lobbyName);
+        message.add(handle);
+        return message;
+    }
+    
+    /* WHO REQUEST METHODS */
     //Request a list of all online users:
     public static List<String> makeGlobalWhoRequestMessage() {
         List<String> message = new ArrayList<>();
@@ -276,6 +309,13 @@ public class MessageUtils {
         write.println("User: " + array.get(1) + " has disconnected.");
     }
 
+    public static List<String> makeErrorMessage( String errormessage ) {
+        List<String> message = new ArrayList<>();
+        message.add(ERROR_MESSAGE);
+        message.add(errormessage);
+        return message;
+    }
+    
     //Send the array, ending with the DONE string:
     public static void sendMessage(PrintWriter write, List<String> message) {
         if (debug) {

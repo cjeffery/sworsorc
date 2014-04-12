@@ -1,5 +1,19 @@
 Commands:
-    /help - This list of commands
-    /disconnect - Disconnects from server
+    /disconnect - Disconnect from server
     /reconnect - Reconnect to server after being disconnected
-    /quit - Quits out of the client
+    /quit - Exits out of the client
+
+    /showLobbies - List the lobbies available
+    /newLobby <lobbyname> - Creates a new lobby
+    /joinLobby <lobbyname> - Joins named lobby
+    /leaveLobby - Leave the current lobby
+
+    /globalWho - List of current users (connected or in lobby, not sure)
+
+    /yieldTurn - End your turn
+    /beginGame - Request to start game
+
+    /file <filename> - Sends file to server
+    /printFile - Not sure what this does...
+    
+    /help - This list of commands

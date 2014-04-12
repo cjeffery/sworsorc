@@ -33,6 +33,7 @@ public class MainMenuController {
         Node node = (Node) event.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
         stage.setScene(Game.getInstance().getHudScene());
+        stage.setFullScreen(true);
         stage.show();
     }
     //activated by "Load Scenario" button

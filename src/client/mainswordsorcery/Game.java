@@ -70,6 +70,7 @@ public class Game extends Application {
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);
         stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
         stage.show();
     }
 

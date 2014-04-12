@@ -153,17 +153,33 @@ public class UnitPool {
      * @param hexId : The hex the unit is moving into.
      */
     
-    public void addMove(MoveableUnit unit, String hexId){
+    public void addMove(MoveableUnit unit, String destinationHexID){
         
         // This horific looking line removes the unit from its current location.
         hexList.get(unit.getLocation()).remove(hexList.get(unit.getLocation()).indexOf(unit.getID()));
         
-        unit.setLocation(hexId);
+        unit.setLocation(destinationHexID);
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
     
         
     }
+    
+    public void addMoveStack(String StartHexID,String destinationHexID){
+        MoveableUnit unit;
+        ArrayList<String> list = this.getUnitsInHex(StartHexID);
+        
+        unit = this.getUnit(list.get(0));
+        
+        hexList.get(unit.getLocation()).remove(hexList.get(unit.getLocation()).indexOf(unit.getID()));
+        unit.setLocation(destinationHexID);
+        this.addToHex(hexList, unit);
+        this.addToUnit(unitMove, unit);
+        
+        if (list.size() > 0)
+            addMoveStack(StartHexID,destinationHexID);
+    }
+            
     
     /**
      * Returns a list that contains all the units currently occupying a hex.
