@@ -53,6 +53,8 @@ class Provinces {
             System.out.println("Did you call provinces before map was loaded?");
             return null;
         }
+        //convert set to arraylist, because arraylist
+        //is probably easier for people to work with
         ArrayList res = new ArrayList<String>();
         res.addAll( provinceMap.get(province_name) );
         return res;
