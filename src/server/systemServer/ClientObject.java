@@ -22,108 +22,136 @@ import java.util.List;
 public class ClientObject {
 
     private static int totalClients = 0;
-    protected int clientID; // TODO: put into a get method
+    final private int clientID;
 
     private String handle; //username
 
-    private Socket socket;
+    final private Socket socket;
 
-    private ListenerThread listenerThread;
-    private WriterThread writerThread; //this is "pretend" for now. 
+    final private ListenerThread listenerThread;
 
-    List<String> file;
+    private PrintWriter writer = null;
+    private List<String> file;
 
     private Lobby currentLobby = null; //Clients need to be able to talk just to their lobbies
 
     //We need a PrintWriter to standardize the printMessage functions:
     private PrintWriter consoleOut = new PrintWriter(System.out, true);
-
+    
+    /* CONSTRUCTOR */
+    
     /**
      * ClientObject constructor
-     * @param socket The Socket associated with a single client connection
+     * Call {@link #startClient startClient()} to activate the object
+     * @param sock The Socket associated with a single client connection
      */
-    public ClientObject(Socket socket) {
+    public ClientObject(Socket sock) {
         //Given instance it's own ID:
         clientID = totalClients;
         totalClients++;
         handle = "UnknownHandle"; //client will tell us by message
 
-        this.socket = socket;
+        this.socket = sock;
 
         listenerThread = new ListenerThread();
-        writerThread = new WriterThread();
-
-        //Send the list of online users to the newly connected client:
-        //List<String> handles = ChatServer.getAllUserNames();                  
-        //MessageUtils.sendMessage(writerThread.writer, MessageUtils.makeGlobalWhoListMessage(handles));
-        //Start threads:
-        // TODO: remove thread starting from constructor?
-        writerThread.start(); // TODO: evaluate whether writerThread is needed
-        listenerThread.start(); 
-
-        //System console message:
-        System.out.println("Opened connection from: " + handle);
-
     }
     
-    //Inform the writer thread that it's time to do his job:
-    public void send(List<String> message) {
-        writerThread.write(message); //"Pretend"... 
+    /* PUBLIC METHODS */
+    
+    /**
+     * Starts the ClientObject, opening the connection
+     * 
+     * @author Christopher Goes
+     */
+    public void startClient() {
+        setWriter();
+        listenerThread.start();
+        System.out.println("Opened connection from client " + clientID + " at address " + socket.getInetAddress());
     }
-
+    
+    /**
+     * Send a message to client
+     * <p>
+     * This is just a public wrapper for {@link #write write()}
+     * @param message Message to send
+     */
+    public void send(List<String> message) {
+        write(message);
+    }
+    
+    /* GETTERS & SETTERS */
+    
+    /**
+     * Gets the handle of client object
+     * @return handle Username of client
+     * @author Christopher Goes
+    */
     public String getHandle() {
         return handle;
     }
 
+    /**
+     * Gets the clientID of client object
+     * @return clientID Unique ID of client
+     */
+    public int getClientID() {
+        return clientID;
+    }
+    
+    /**
+     * Sets current lobby of client object
+     * @param lobby
+     */
     public void setCurrentLobby(Lobby lobby) {
         this.currentLobby = lobby;
     }
 
-    private class WriterThread extends Thread {
-        //Writer thread waits around until it has something to write
-        //If we need it, we can use a synchronized message queue to handle requests to write messages
-        PrintWriter writer; //Connection to socket
-
-        private WriterThread() {
-            try {
-                writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
-            } catch (IOException e) {
-                System.err.println("Error : Creating output writer for client:" + clientID);
-            }
+    /**
+     * Creates a new writer stream off of the socket
+     * NOTE: Socket must be set before calling this method!
+     * @author Christopher Goes
+     */
+    public void setWriter() {
+        if( socket == null ) {
+            System.err.println("Error in setWriter: null socket!");
+            return;
         }
-
-        public void write(List<String> message) {
-            //Write to socket outoing connection, hide the protocol details:
-            MessageUtils.sendMessage(writer, message);
-        }
-
-        @Override
-        public void run() {
-            //This is a "pretend" thread for now, since we will always just
-            //call the "write()" method directly at the moment.
-            //idk if we really need this or not?
-        }
-
-        public void close() {
-            try {
-                if (socket != null) {
-                    socket.close();
-                }
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException e) {
-                System.err.println("Error closing writerthread!\nException: " + e );
-            }
+        try {
+            writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
+        } catch (IOException e) {
+            System.err.println("Error : Creating output writer for client:" 
+                    + clientID + "\nException: " + e );
         }
     }
-
+    
+    /* UTILITY METHODS */
+    
+    /**
+     * Writes to socket outgoing connection, hides the protocol details
+     * @param message Message to send
+     */
+    private void write(List<String> message) {    
+        MessageUtils.sendMessage(writer, message);
+    }    
+    
+    /* LISTENERTHREAD */
+    
+    /**
+     * Makes the blocking receive until a message arrives
+     */
     private class ListenerThread extends Thread {
-        //Makes the blocking receive until a message arrives
 
         BufferedReader streamIn; //socket incoming
 
+        /**
+         * Constructor for ListenerThread, creates stream and object
+         * NOTE: Socket must be set before creating a ListenerThread object!
+         */
         private ListenerThread() {
+            if( socket == null ) {
+                System.err.println("Error in ListenerThread constructor: null socket!");
+                return;
+            }
             try {
                 streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             } catch (IOException e) {
@@ -146,7 +174,6 @@ public class ClientObject {
 
                         NetworkServer.clientDisconnected(clientID);
 
-                        //TODO: Exit and die
                         close();
                         return;
 
@@ -183,18 +210,18 @@ public class ClientObject {
                     } else if (TAG.equals(MessageUtils.REQUEST_GLOBAL_WHO)) {
                         //Client asked for list of current connected users
                         List<String> handles = NetworkServer.getAllUserNames();
-                        writerThread.write(MessageUtils.makeGlobalWhoListMessage(handles));
+                        write(MessageUtils.makeGlobalWhoListMessage(handles));
                     } else if (TAG.equals(MessageUtils.REQUEST_BEGIN_GAME)) {
                         //Client asked agree to start the game
                         //TODO: Voting here? Right now, we start when any single client requests
 
                         if (currentLobby == null){
-                            MessageUtils.sendMessage(writerThread.writer, 
+                            MessageUtils.sendMessage(writer, 
                               MessageUtils.makeNagMessage("You requested to start the game, but you aren't even in a lobby!"));
                         }
                         else {
 
-                            System.out.println("Client " + handle + " requested to start game in lobby " + currentLobby.name);
+                            System.out.println("Client " + handle + " requested to start game in lobby " + currentLobby.getName());
 
                             currentLobby.beginGame();
                             currentLobby.sendToEntireLobby(MessageUtils.makeGameBegunMessage());
@@ -209,10 +236,10 @@ public class ClientObject {
                         if (NetworkServer.canCreateNewLobby(requestedLobbyName)) {
                             NetworkServer.createNewLobby(message.get(1));
                             NetworkServer.joinLobby(message.get(1), ClientObject.this);
-                            MessageUtils.sendMessage(writerThread.writer,
+                            MessageUtils.sendMessage(writer,
                                     MessageUtils.makeNewLobbyRequestAcceptedMessage());
                         } else {
-                            MessageUtils.sendMessage(writerThread.writer,
+                            MessageUtils.sendMessage(writer,
                                     MessageUtils.makeNewLobbyRequestDeniedMessage());
                         }
 
@@ -221,8 +248,8 @@ public class ClientObject {
                         //System.out.println("Received request to create lobby: "+ message.get(1));
                         //Send current lobbies to client:
                         for (Lobby lobby : NetworkServer.lobbies) {
-                            MessageUtils.sendMessage(writerThread.writer,
-                                    MessageUtils.makeLobbyInfoMessage(lobby.name, lobby.getUserNames()));
+                            MessageUtils.sendMessage(writer,
+                                    MessageUtils.makeLobbyInfoMessage(lobby.getName(), lobby.getUserNames()));
                         }
 
                     } else if (TAG.equals(MessageUtils.JOIN_LOBBY_REQUEST)) {
@@ -250,12 +277,12 @@ public class ClientObject {
                         
                         if (currentLobby == null) {
                             //client requested to change turns, but it's not their turn!
-                            MessageUtils.sendMessage(writerThread.writer,
+                            MessageUtils.sendMessage(writer,
                                     MessageUtils.makeNagMessage("You requested to yield your turn, but you're not even in lobby!"));
                         } 
                         else if (currentLobby.current.clientID != clientID) {
                             //client requested to change turns, but it's not their turn!
-                            MessageUtils.sendMessage(writerThread.writer,
+                            MessageUtils.sendMessage(writer,
                                     MessageUtils.makeNagMessage("Requested to yield turn, but it's not your turn!"));
                         } else {
                             currentLobby.advanceGameTurn(); //tell lobby handler to advance game turn
@@ -283,18 +310,20 @@ public class ClientObject {
 
         public void close() {
             try {
-                if (socket != null) {
+                if (!(socket.isClosed())) {
                     socket.close();
                 }
                 if (streamIn != null) {
                     streamIn.close();
+                    streamIn = null;
                 }
+                
             } catch (IOException e) {
                 System.err.println(e);
             }
         }
 
-    }
+    } // end class
 
 
-}
+} // end class

@@ -20,5 +20,6 @@ public enum Race {
     KillerPenguin,
     Orc,
     Spiders,
-    SwampCreature
+    SwampCreature,
+    Goblins
 }

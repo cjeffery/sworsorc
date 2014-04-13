@@ -5,6 +5,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Network Server, a singleton class that is your lord and master
+ * Also handles all client-to-client communication as a side-job
+ */
 public class NetworkServer {
 
     private static List<ClientObject> clientObjects; //"Packaged sockets"
@@ -18,26 +22,23 @@ public class NetworkServer {
         //we might have to add other conditions?
 
         for (Lobby lobby : lobbies) {
-            if (lobby.name.equals(name)) {
+            if (lobby.getName().equals(name)) {
                 return false;
             }
         }
         return true;
     }
 
-    public static void createNewLobby(String name) {
-        //TODO: Enforce unique names?
-        Lobby lobby = new Lobby(name);
-        lobbies.add(lobby);
+    public static void createNewLobby(String lobbyName) {
+            Lobby lobby = new Lobby(lobbyName);
+            lobbies.add(lobby); 
     }
-
-    // TODO: There is a netbeans warning "exporting non-public type through public api"
-    // Meaning ClientObject is private, but method is public, so paramter can't be seen by caller
-    // Might want to reorganize either as subclasses of server, or into seperate .java files?
+    
     public static void joinLobby(String lobbyName, ClientObject client) {
         for (Lobby l : lobbies) {
-            if (l.name.equals(lobbyName)) {
+            if (l.getName().equals(lobbyName)) {
                 l.join(client);
+                sendToAllClients(MessageUtils.makeJoinedLobbyMessage(lobbyName, client.getHandle()));
                 return;
             }
         }
@@ -52,9 +53,9 @@ public class NetworkServer {
         for (Lobby l : lobbies) {
             if (l.lobbyClients.contains(client)) {
                 l.leave(client);
+                sendToAllClients(MessageUtils.makeLeftLobbyMessage(l.getName(), client.getHandle()));
                 if (l.lobbyClients.isEmpty()) {
-                    //For now, just kill lobbies when everyone leaves
-                    lobbies.remove(l);
+                    lobbies.remove(l); //For now, just kill lobbies when everyone leaves
                 }
                 return;
             }
@@ -89,16 +90,16 @@ public class NetworkServer {
 
         ClientObject dearlyDeparted = null;
 
-        for (int i = 0; i < clientObjects.size(); i++) {
-            if (clientObjects.get(i).clientID == clientId) {
-                dearlyDeparted = clientObjects.get(i);
+        for (ClientObject clientObject : clientObjects) {
+            if (clientObject.getClientID() == clientId) {
+                dearlyDeparted = clientObject;
                 break;
             }
         }
 
         leaveLobby(dearlyDeparted);
-        clientObjects.remove(dearlyDeparted);
         sendToAllClients(MessageUtils.makeDisconnectAnnouncementMessage(dearlyDeparted.getHandle()));
+        clientObjects.remove(dearlyDeparted);
 
     }
 
@@ -119,20 +120,22 @@ public class NetworkServer {
         ServerSocket listen = null;
         try {
             listen = new ServerSocket(DEFAULT_PORT);
-            //listen = new ServerSocket(DEFAULT_PORT, 0, InetAddress.getByName(DEFAULT_IP));
         } catch (IOException e) {
             System.err.println("Error : While creating ServerSocket\n" + e);
             System.exit(-1);
         }
-
+        
+        Socket tempsock;
+        ClientObject tempclient;
         //Spins off new client connections:
+        // TODO: we need a way to break out without exception or manual termination
         while (true) {
             try {
                 System.err.println("Waiting for next client...");
-                Socket socket = listen.accept(); //Get socket (blocking)
-
-                //The constructor of ClientObject will create the new threads:
-                clientObjects.add(new ClientObject(socket));
+                tempsock = listen.accept(); //Get socket (blocking)
+                tempclient = new ClientObject(tempsock);
+                tempclient.startClient(); // Start the connection
+                clientObjects.add(tempclient); // add the active client to list
             } catch (IOException e) {
                 System.err.println("Server failed to accept client!\nException: " + e );
                 break;

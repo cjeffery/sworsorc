@@ -29,6 +29,7 @@ public class HexPainter {
         String[] types = {
             "clear", "broken", "cultivated", "forest", "karoo", "mountains",
             "rough", "swamp", "vortex", "water", "woods", "dragon tunnel",
+            "glacier",
             "bridge", "portal", "city", "castle", "mount greymoor",
             "glade keep"
             //"gateway of evil", "balkathos"
@@ -38,6 +39,20 @@ public class HexPainter {
             BufferedImage img = ImageIO.read(f);
             images.put(s + "_hex.png", img);
         }
+        
+        //hax for special hexes. make them look like castles until they're ready
+        String[] special = {
+            "gateway of evil", "balkathos", "citadel of blood", 
+            "gateway to the empire", "castle of brandon", 
+            "battleaxe stronghold", "the ruins", "castle krawn",
+            "the bottomless plungehole", "citadel of ice",
+            "city of urf durfal"
+        };
+        for(String s : special) {
+            File f = new File( path + "castle" + "_hex.png" );
+            BufferedImage img = ImageIO.read(f);
+            images.put(s + "_hex.png", img);
+        }             
     }
     
     /**
@@ -115,10 +130,6 @@ public class HexPainter {
             switch(h.GetHexName()) {
                 //certain named hexes maybe(?) can just be drawn as default
                 case "Toll Troll":
-                    break;
-                case "Gateway Of Evil":
-                case "Balkathos":
-                    str = "castle_hex.png";
                     break;
                 //otherwise load a specific image for them
                 default:
@@ -284,7 +295,7 @@ public class HexPainter {
     public static Boolean drawImage(Graphics2D g2, String imageID,
                                     Map<String, BufferedImage> imageMap) {
         if(!imageMap.containsKey(imageID) || imageMap.get(imageID) == null) {
-            //System.out.println("Image " + imageID + " wasn't loaded");
+            System.out.println("Image " + imageID + " wasn't loaded");
             return false;
         }
         //TODO: coefficients should be based on radius (and zoom?)

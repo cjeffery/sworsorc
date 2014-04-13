@@ -22,6 +22,35 @@ package Units;
  * @author John Goettsche
  */
 public class ArmyUnit extends MoveableUnit {   
+/*
+ * List of ArmyUnit subclasses:
+ * Cavalry        - HeavyHorse
+ *                - LightHorse
+ * Conjured       - CentauroidCavalry
+ *                - DemonicInfantry
+ *                - KoboldicInfantry
+ *                - WraithTroops
+ *                - ZombieInfantry
+ * LandUnit       - DinosaurLegion
+ *                - HeavyAxe
+ *                - HeavyPluglunk
+ *                - HeavySword
+ *                - IntelligentMold
+ *                - LightSpear
+ *                - LightSword
+ *                - MediumSpear
+ *                - PikeMan
+ *                - SpiderLegion
+ *                - WargRider
+ *                - WebWarriors
+ * RangedLandUnit - HorseArcher
+ *                - LightBow
+                  - Bow
+ * FlyingConjured - WyvernAirtroops
+ * FlyingUnit     - RocRider
+ *                - Zeppelin
+ */
+    
     protected int strength;    
     protected int demoralizedStrength;
     protected int lifeCost;    
@@ -43,6 +72,7 @@ public class ArmyUnit extends MoveableUnit {
     public ArmyUnitType getArmyUnitType(){
         return armyUnitType;
     }
+    
     public ArmyUnit() {
         super();
         this.demoralized = false;
@@ -55,7 +85,6 @@ public class ArmyUnit extends MoveableUnit {
         this.conjured = false;
         this.setLocation(location);
     }  
-
 
     public int getStrength() {
         return strength;

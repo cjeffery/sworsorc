@@ -30,11 +30,11 @@ public class NetworkClient {
     // Client info
     private static String username = "default_user";
 
-    // Thread(s)
+    // Streams & Threads
     private ListenerThread listenerThread = null;
     private PrintWriter writer = null;
 
-    // set default help file
+    // Set default help file
     final private String helpfile = "commands.txt";
     final private String dir = System.getProperty("user.dir");
 
@@ -255,7 +255,9 @@ public class NetworkClient {
                     }
                 }
                 else {
-                    System.err.println("Error in ListenerThread close, socket still connected!");
+                    disconnectFromServer();
+                    streamIn.close();
+                    streamIn = null;
                 }
             } catch (IOException e) {
                 System.err.println("Error closing listener! Error thrown: " + e);
@@ -288,7 +290,9 @@ public class NetworkClient {
      * @author Christopher Goes
      */
     private void stopThreads() {   
-        listenerThread.killThread();
+        if( listenerThread != null) {
+            listenerThread.killThread();
+        }
         listenerThread = null;
         writer = null;
     }
@@ -343,7 +347,7 @@ public class NetworkClient {
                 // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
             }
-
+            // TODO: LEFT LOBBY + JOINED LOBBY
         } else if (parsedString.length == 1) {
             if ("/printFile".equals(parsedString[0])) {
                 write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
@@ -544,7 +548,7 @@ public class NetworkClient {
             
             killSocket();
             
-            if (listenerThread.isAlive() || writer != null) {
+            if (listenerThread != null || writer != null) {
                 stopThreads();
             }
         } catch (IOException e) {
