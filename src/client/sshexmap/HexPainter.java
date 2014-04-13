@@ -26,6 +26,23 @@ public class HexPainter {
     
     private void loadImages() throws IOException {
         images = new TreeMap<String, BufferedImage>();
+
+        //hax for special hexes. make them look like castles until they're ready
+        String[] special = {
+            "gateway of evil", "balkathos", "citadel of blood", 
+            "gateway to the empire", "castle of brandon", 
+            "battleaxe stronghold", "the ruins", "castle krawn",
+            "the bottomless plungehole", "citadel of ice",
+            "city of urf durfal", "temple of the corflu cultists",
+            "fountain of health", "castle dalarna", "the iron fortress",
+            "castle gund", "strakhenville"
+        };
+        for(String s : special) {
+            File f = new File( path + "castle" + "_hex.png" );
+            BufferedImage img = ImageIO.read(f);
+            images.put(s + "_hex.png", img);
+        }     
+        
         String[] types = {
             "clear", "broken", "cultivated", "forest", "karoo", "mountains",
             "rough", "swamp", "vortex", "water", "woods", "dragon tunnel",
@@ -39,20 +56,6 @@ public class HexPainter {
             BufferedImage img = ImageIO.read(f);
             images.put(s + "_hex.png", img);
         }
-        
-        //hax for special hexes. make them look like castles until they're ready
-        String[] special = {
-            "gateway of evil", "balkathos", "citadel of blood", 
-            "gateway to the empire", "castle of brandon", 
-            "battleaxe stronghold", "the ruins", "castle krawn",
-            "the bottomless plungehole", "citadel of ice",
-            "city of urf durfal"
-        };
-        for(String s : special) {
-            File f = new File( path + "castle" + "_hex.png" );
-            BufferedImage img = ImageIO.read(f);
-            images.put(s + "_hex.png", img);
-        }             
     }
     
     /**
