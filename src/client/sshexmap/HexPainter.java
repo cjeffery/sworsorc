@@ -237,20 +237,6 @@ public class HexPainter {
         res[2] = x2; res[3] = y2;
         return res;
     }
-    /**
-     * Render the edges of a hex.
-     * @param g2 The Graphics object to draw on
-     * @param hex The hex to draw (Maybe make this a MapHex?)
-     */
-    public void paintEdges(Graphics2D g2, Hex hex) {
-        if( !(hex instanceof MapHex) )
-            return;
-        MapHex h = (MapHex)hex;
-        for(int i = 0; i < 6; i++) {
-            HexEdge edge = h.getEdge(i);
-            paintEdge(g2, h, i);
-        }        
-    }
     
     /**
      * Renders a simple edge type between the given coordinates
