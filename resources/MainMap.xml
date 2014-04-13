@@ -9074,6 +9074,10 @@
           <northWestEdge>
             <edgeAttribute>Pb</edgeAttribute>
           </northWestEdge>
+          <southEdge>
+            <edgeAttribute>St</edgeAttribute>
+          </southEdge>
+
         </hexEdgeMap>
     </hex>
     <hex>
