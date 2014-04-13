@@ -45,7 +45,8 @@ public class HexPainter {
             "gateway of evil", "balkathos", "citadel of blood", 
             "gateway to the empire", "castle of brandon", 
             "battleaxe stronghold", "the ruins", "castle krawn",
-            "the bottomless plungehole", "citadel of ice"
+            "the bottomless plungehole", "citadel of ice",
+            "city of urf durfal"
         };
         for(String s : special) {
             File f = new File( path + "castle" + "_hex.png" );
