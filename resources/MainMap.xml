@@ -11513,11 +11513,6 @@
         <terrainKey>Cl</terrainKey>
         <provinceName>Minotaurus</provinceName>
         
-        <hexEdgeMap>
-          <northEdge>
-            <edgeAttribute>Pb</edgeAttribute>
-          </northEdge>
-        </hexEdgeMap>
     </hex>
     <hex>
         <hexNumber>0635</hexNumber>
