@@ -85,7 +85,7 @@ public class UnitPoolTest extends TestCase {
         assertTrue(test);
         
     }
-    
+    */
     //Tests update a unit position, test end of movement phase. 
     public void test03() {
         ArrayList<String> list1, list2, list3, list4;
@@ -116,7 +116,7 @@ public class UnitPoolTest extends TestCase {
         pool.addUnit(2,new Bow(),"0101");
         list1 = pool.getUnitsInHex("0101");
         
-        
+        //John look at this bit of code
         pool.addUnit(1,new Zeppelin(),"0102");
         list1 = pool.getUnitsInHex("0102");
         unit = pool.getUnit(list1.get(0));// If null, it would've thrown a null pointer exception.
@@ -142,7 +142,7 @@ public class UnitPoolTest extends TestCase {
         assertTrue(1 == list4.size());
         
     }
-    
+    /*
     //Tests undo move.
     public void test04(){
         ArrayList<String> list1, list2, list3, list4;
