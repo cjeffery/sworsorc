@@ -27261,14 +27261,6 @@
         <terrainKey>Bro</terrainKey>
         <provinceName>Graumthog</provinceName>
         
-        <hexEdgeMap>
-          <northEdge>
-            <edgeAttribute>Pb</edgeAttribute>
-          </northEdge>
-          <northWestEdge>
-            <edgeAttribute>Pb</edgeAttribute>
-          </northWestEdge>
-        </hexEdgeMap>
     </hex>
     <hex>
         <hexNumber>3518</hexNumber>
