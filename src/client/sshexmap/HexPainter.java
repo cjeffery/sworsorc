@@ -35,7 +35,8 @@ public class HexPainter {
             "the bottomless plungehole", "citadel of ice",
             "city of urf durfal", "temple of the corflu cultists",
             "fountain of health", "castle dalarna", "the iron fortress",
-            "castle gund", "strakhenville"
+            "castle gund", "strakhenville", "altar of the elder gods",
+            "the tombs of the damned", "gerlod"
         };
         for(String s : special) {
             File f = new File( path + "castle" + "_hex.png" );
