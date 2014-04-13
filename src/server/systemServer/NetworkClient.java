@@ -5,6 +5,8 @@
  */
 package systemServer;
 
+import Units.MoveableUnit;
+import Units.UnitPool;
 import java.net.*;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -236,7 +238,10 @@ public class NetworkClient {
                         consoleOut.println("It is now " + message.get(1) + "'s turn!");
                     //Added by John Goettsche (I hope this is where it goes    
                     } else if (message.get(0).equals(MessageUtils.UPDATE_UNIT)){
-                        
+                        UnitPool pool = UnitPool.getInstance();
+                        MoveableUnit unit = pool.getUnit(message.get(1));
+                        String location = message.get(2);
+                        pool.addMove(unit, location);
                     } else {
                         // its not a network message, therefore NC doesn't care, and has Jarvis take out the trash
                         //jarvis.processMessage( message.subList(1, message.size()), message.get(0) );
