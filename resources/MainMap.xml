@@ -16520,7 +16520,6 @@
         <hexEdgeMap>
           <southEastEdge>
             <edgeAttribute>Tr</edgeAttribute>
-            <edgeAttribute>Pb</edgeAttribute>
           </southEastEdge>
           <southEdge>
             <edgeAttribute>Pb</edgeAttribute>
