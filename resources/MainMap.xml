@@ -11910,8 +11910,6 @@
         <provinceName>Rhiannon</provinceName>
         <hexEdgeMap>
           <southEastEdge>
-            <edgeAttribute>Tr</edgeAttribute>
-            <edgeAttribute>Pb</edgeAttribute>
             <edgeAttribute>Pb</edgeAttribute>
           </southEastEdge>
           <southEdge>
