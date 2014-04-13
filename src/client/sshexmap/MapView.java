@@ -193,6 +193,27 @@ public class MapView extends    JPanel
     }
     
     /**
+     * determine if the edge has already been drawn
+     * if painting is happening down the columns, left to right
+     * @param x hex x coordinate
+     * @param y hex y coordinate
+     * @param direction edge direction
+     * @return true for needs drawing
+     */
+    boolean edgeNeedsDrawing(int x, int y, int direction) {
+        if(direction == 0 || direction == 4 || direction == 5)
+            return true;
+        else if(direction == 1)
+            return (y == 1);
+        else if(direction == 2)
+            return (y == 1) && ((x % 2) == 0);
+        else if(direction == 3)
+            return (x == 1);
+        assert(false);
+        return true;
+    }
+    
+    /**
      * This method draws the hexmap as part of the java swing drawing
      * process.
      * It draws everything it needs to in several passes, first hexes,
@@ -215,7 +236,7 @@ public class MapView extends    JPanel
          * first pass for hexes, second pass for hex edges */
 
         for(int pass = 0; pass < 3; pass++)
-        for(int col = hexRect.x; col <= hexRect.getMaxX(); col++) {
+        for(int col = hexRect.x; col < hexRect.getMaxX(); col++) {
             //translate to first hex in row that needs drawing
             g2.setTransform( identity );
             int par = map.LowFirstRow() ? 1 : 0; //map "parity"
@@ -223,7 +244,10 @@ public class MapView extends    JPanel
                          height*(hexRect.y + ((col%2)*0.5) - par*0.5));
 
             //draw all the hexes in the row
-            for(int row = hexRect.y; row <= hexRect.getMaxY(); row++) {
+            for(int row = hexRect.y; row < hexRect.getMaxY(); row++) {
+                if( map.GetHex(col+1,row+1) == null )
+                    continue;
+                
                 //First pass: hexagons
                 if(pass == 0)
                     hp.paintHex(g2, map.GetHex(col+1,row+1));
@@ -237,7 +261,10 @@ public class MapView extends    JPanel
                 
                 //edges
                 if(pass == 2 && map instanceof MainMap ) {
-                    hp.paintEdges(g2, (MapHex)map.GetHex(col+1, row+1));
+                    for(int i = 0; i < 6; i++) {
+                        if(edgeNeedsDrawing(col+1, row+1, i))
+                            hp.paintEdge(g2, (MapHex)map.GetHex(col+1,row+1), i);
+                    }
                 }
 
                 g2.translate(0, height);
