@@ -5,6 +5,7 @@ import Units.*;
 import com.sun.beans.WeakCache;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.*;
 
 public class UnitRenderDemo implements MouseListener, KeyListener {
@@ -62,6 +63,7 @@ public class UnitRenderDemo implements MouseListener, KeyListener {
                         Race.SwampCreature, Race.Cronk, Race.Human,
                         Race.Dwarrows, Race.Spiders};
         int x = 1, y = 1;
+        Random r = new Random();
         for(int i = 0; i < armies.length; i++) {
             y = 1;
             ArmyUnit[] army = armies[i];
@@ -76,6 +78,7 @@ public class UnitRenderDemo implements MouseListener, KeyListener {
                     u.setRace(Race.Elves);
                 else
                     u.setRace(race);
+                u.setDemoralized(r.nextBoolean());
                 pool.addUnit(1, u, HexMap.GetIDFromCoords(x, y));
                 y++;
             }
@@ -83,8 +86,8 @@ public class UnitRenderDemo implements MouseListener, KeyListener {
             x++;
         }
         
-        ArmyUnit unit = new LightSword();
-        unit.setRace(Race.Elves);
+        ArmyUnit unit = new PikeMan();
+        unit.setRace(Race.Human);
         pool.addUnit(0, unit, "0101");
 
         window.pack();

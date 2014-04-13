@@ -26,7 +26,8 @@ public class UnitPainter {
             "KoboldicInfantry", "WyvernAirtroops", "CentauroidCavalry",
             "ZombieInfantry", "HeavyPluglunk", "IntelligentMold",
             "DinosaurLegion", "HeavySword", "LightSword", "WargRider",
-            "LightSpear", "MediumSpear", "HorseArcher", "Zeppelin", "RocRider"
+            "LightSpear", "MediumSpear", "HorseArcher", "Zeppelin", "RocRider",
+            "stack_badge", "demoralized_badge"
         };
         for(String s : types) {            
             BufferedImage img = null;
@@ -68,10 +69,11 @@ public class UnitPainter {
         if(units == null || units.size() == 0)
             return;
         MoveableUnit unit = units.get(0);
-        paintUnit(g2, unit);
+        boolean stacked = units.size() > 1;
+        paintUnit(g2, unit, stacked );
     }
     
-    private void paintUnit(Graphics2D g2, MoveableUnit unit) {
+    private void paintUnit(Graphics2D g2, MoveableUnit unit, boolean stacked) {
         UnitType t = unit.getUnitType();
         if(t == null) {
             System.out.println("Cannot draw unit " + unit.toString()
@@ -80,7 +82,7 @@ public class UnitPainter {
         }
         switch( unit.getUnitType() ) {
             case ArmyUnit:
-                paintArmyUnit(g2, (ArmyUnit)unit);
+                paintArmyUnit(g2, (ArmyUnit)unit, stacked);
                 return;
             case Character:
                 System.out.println("Drawing characters isn't supported yet");
@@ -156,7 +158,7 @@ public class UnitPainter {
                   + (int)unit.getMovement();
     }
     
-    private void paintArmyUnit(Graphics2D g2, ArmyUnit unit) {
+    private void paintArmyUnit(Graphics2D g2, ArmyUnit unit, boolean stacked) {
         Color bgColor = getBGColor(unit);
         String status = getArmyUnitStatusLine(unit);
         
@@ -170,6 +172,11 @@ public class UnitPainter {
         g2.fill(hexMask);
         
         HexPainter.drawImage(g2, unit.toString(), images);
+        
+        if(stacked)
+            HexPainter.drawImage(g2, "stack_badge", images );
+        if(unit.isDemoralized())
+            HexPainter.drawImage(g2, "demoralized_badge", images );            
         
         g2.setColor( Color.BLACK );
         g2.drawString(status,
