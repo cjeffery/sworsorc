@@ -29,6 +29,7 @@ public class HexPainter {
         String[] types = {
             "clear", "broken", "cultivated", "forest", "karoo", "mountains",
             "rough", "swamp", "vortex", "water", "woods", "dragon tunnel",
+            "glacier",
             "bridge", "portal", "city", "castle", "mount greymoor",
             "glade keep"
             //"gateway of evil", "balkathos"
