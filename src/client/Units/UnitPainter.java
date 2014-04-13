@@ -11,9 +11,7 @@ import javax.imageio.*;
 import sshexmap.HexPainter;
 import ssterrain.*;
 
-/** A class that does nothing but draw hexes! Right now it's somewhat closely
-    tied to MapWidget, but if you ever need to draw hexes outside of the 
-    map you could probably use or tweak it */
+/** A class that does nothing but draw units! */
 public class UnitPainter {
     private final double hexRadius, width, height;
     private final Path2D.Double hexMask;
@@ -23,10 +21,10 @@ public class UnitPainter {
     private void loadImages() throws IOException {
         images = new TreeMap<String, BufferedImage>();
         String[] types = {
-            "fighter.png"
+            "LightBow", "PikeMan", "HeavyHorse"
         };
         for(String s : types) {
-            File f = new File( path + s );
+            File f = new File( path + s + ".png" );
             BufferedImage img = ImageIO.read(f);
             images.put(s, img);
         }
@@ -54,6 +52,119 @@ public class UnitPainter {
      * @param units The units to draw
      */
     public void paintUnits(Graphics2D g2, ArrayList<MoveableUnit> units) {
-        HexPainter.drawImage(g2, "fighter.png", images);
+        //HexPainter.drawImage(g2, "fighter.png", images);
+        //only draw one unit for now
+        if(units == null || units.size() == 0)
+            return;
+        MoveableUnit unit = units.get(0);
+        paintUnit(g2, unit);
+    }
+    
+    private void paintUnit(Graphics2D g2, MoveableUnit unit) {
+        UnitType t = unit.getUnitType();
+        if(t == null) {
+            System.out.println("Cannot draw unit " + unit.toString()
+                               + " as it has no unit type");
+            return;
+        }
+        switch( unit.getUnitType() ) {
+            case ArmyUnit:
+                paintArmyUnit(g2, (ArmyUnit)unit);
+                return;
+            case Character:
+                System.out.println("Drawing characters isn't supported yet");
+                return;
+            case Monster:
+                System.out.println("Drawing monsters isn't supported yet");
+                return;
+        }
+    }
+
+    private Color getBGColor(MoveableUnit unit ) {
+        //for now set bg color based on race
+        //this isn't totally correct, but it's
+        //hard to see what needs to be done from here
+        Color bgColor;
+        
+        /* special cases */
+        //conjured units are a variety of races
+        if(unit instanceof Conjured || unit instanceof FlyingConjured) {
+            /* conjured - red */
+            bgColor = new Color(0xff4346);            
+            return bgColor;
+        }
+        //roc riders are human color
+        if(unit instanceof RocRider) {
+            /* imperial - blue */ 
+            bgColor = new Color(0x467ed1);                    
+            return bgColor;
+        }        
+
+        switch( unit.getRace() ) {
+            case Human:
+                /* imperial - blue */ 
+                bgColor = new Color(0x467ed1);
+                break;
+            case Elves:
+                /* elves - dark green */
+                bgColor = new Color(0x3f7750);
+                break;
+            case Orc:
+                /* o.r.c - yellow */
+                bgColor = new Color(0xfdd22e);
+                break;
+            case SwampCreature:
+                /* swamp - light green */
+                bgColor = new Color(0xaeb35f);
+                break;
+            case Cronk:
+                /* cronk - orange */
+                bgColor = new Color(0xFFA500);
+                break;
+            case Dragon:
+            case Dwarrows:
+            case KillerPenguin:
+            case Spiders:
+            default:
+                /* hell if I know - white */
+                bgColor = new Color(0xffffff);
+                break;            
+        }
+        return bgColor;
+    }
+    
+    private String getArmyUnitStatusLine(ArmyUnit unit) {
+        boolean defense_halved;
+        defense_halved = (unit instanceof HeavyHorse);
+        int strength = unit.isDemoralized() ? unit.getDemoralizedStrength()
+                                            : unit.getStrength();        
+        return "" + (defense_halved ? "(" : "")
+                  + strength
+                  + (defense_halved ? ")" : "")
+                  +      unit.getRaceCode()
+                  + (int)unit.getMovement();
+    }
+    
+    private void paintArmyUnit(Graphics2D g2, ArmyUnit unit) {
+        Color bgColor = getBGColor(unit);
+        String status = getArmyUnitStatusLine(unit);
+        
+        //used for positioning text
+        //no idea how fast this is, it could be cached if needed
+        FontMetrics fm = g2.getFontMetrics();
+        int status_w = fm.stringWidth( status );
+        //int status_h = fm.getHeight();
+        
+        g2.setColor( bgColor ); 
+        g2.fill(hexMask);
+        
+        HexPainter.drawImage(g2, unit.toString(), images);
+        
+        g2.setColor( Color.BLACK );
+        g2.drawString(status,
+                      (int)(width/2.0 - status_w/2.0),
+                      (int)(height - 8 ));        
     }
 }
+
+

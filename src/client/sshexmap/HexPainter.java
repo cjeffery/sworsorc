@@ -284,7 +284,7 @@ public class HexPainter {
     public static Boolean drawImage(Graphics2D g2, String imageID,
                                     Map<String, BufferedImage> imageMap) {
         if(!imageMap.containsKey(imageID) || imageMap.get(imageID) == null) {
-            //System.out.println("Image " + imageID + " wasn't loaded");
+            System.out.println("Image " + imageID + " wasn't loaded");
             return false;
         }
         //TODO: coefficients should be based on radius (and zoom?)

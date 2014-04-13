@@ -103,10 +103,16 @@ public class MoveableUnit {
         return movement;
     }
 
+    /**
+     * @return UnitType enum: Character, ArmyUnit, Monster, etc
+     */
     public UnitType getUnitType() {
         return UnitType;
     }
 
+    /**
+     * Sets the UnitTYpe enum: Character, ArmyUnit, Monster, etc
+     */
     public void setUnitType(UnitType UnitType) {
         this.UnitType = UnitType;
     }
@@ -114,5 +120,27 @@ public class MoveableUnit {
     @Override
     public String toString(){
         return getClass().getSimpleName();
+    }
+    
+    public String getRaceCode() {
+        if( getRace() == null ) {
+            System.out.println("Unit has no race? D:");
+            return "~";
+        }
+        switch( getRace() ) {
+            case Cronk:         return "c";
+            case Dragon:        return "w";
+            case Dwarrows:      return "d";
+            case Elves:         return "e";
+            case Human:         return "m";
+            case KillerPenguin: return "o"; //rules shows penguins as orcs
+            case Orc:           return "o";
+            case Spiders:       return "a";
+            case SwampCreature: return "s";
+            case Goblins: return "g";
+            default:
+                System.out.println("Unit has unknown race: " + getRace());  
+                return "?";
+        }
     }
 }
