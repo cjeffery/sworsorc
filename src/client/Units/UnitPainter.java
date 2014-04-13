@@ -21,11 +21,22 @@ public class UnitPainter {
     private void loadImages() throws IOException {
         images = new TreeMap<String, BufferedImage>();
         String[] types = {
-            "LightBow", "PikeMan", "HeavyHorse"
+            "LightBow", "PikeMan", "HeavyHorse", "SpiderLegion", "WebWarriors",
+            "LightHorse", "HeavyAxe", "Bow", "DemonicInfantry", "WraithTroops",
+            "KoboldicInfantry", "WyvernAirtroops", "CentauroidCavalry",
+            "ZombieInfantry", "HeavyPluglunk", "IntelligentMold",
+            "DinosaurLegion", "HeavySword", "LightSword", "WargRider",
+            "LightSpear", "MediumSpear", "HorseArcher", "Zeppelin", "RocRider"
         };
-        for(String s : types) {
-            File f = new File( path + s + ".png" );
-            BufferedImage img = ImageIO.read(f);
+        for(String s : types) {            
+            BufferedImage img = null;
+            try {
+                File f = new File( path + s + ".png" );
+                img = ImageIO.read(f);
+            } catch(IOException e) {
+                File f = new File( path + "generic.png" );
+                img = ImageIO.read(f);
+            }
             images.put(s, img);
         }
     }
