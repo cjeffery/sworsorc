@@ -2000,6 +2000,7 @@
           </southEastEdge>
           <southEdge>
             <edgeAttribute>Pb</edgeAttribute>
+            <edgeAttribute>St</edgeAttribute>
           </southEdge>
           <southWestEdge>
             <edgeAttribute>Pb</edgeAttribute>
