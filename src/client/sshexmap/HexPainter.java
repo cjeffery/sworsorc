@@ -46,7 +46,7 @@ public class HexPainter {
             "gateway to the empire", "castle of brandon", 
             "battleaxe stronghold", "the ruins", "castle krawn",
             "the bottomless plungehole", "citadel of ice"
-        }
+        };
         for(String s : special) {
             File f = new File( path + "castle" + "_hex.png" );
             BufferedImage img = ImageIO.read(f);
