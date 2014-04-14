@@ -73,39 +73,39 @@ public class MoveableUnit {
       * @param raceStr the string identifying the unit's new race
       */
      public void setRace(String raceStr){
-        Race newRace;
         switch (raceStr) {
             case "Cronk":
-                newRace = Race.Cronk;
+                setRace(Race.Cronk);
                 break;
             case "Dragon":
-                newRace = Race.Dragon;
+                setRace(Race.Dragon);
                 break;
             case "Dwarrows":
-                newRace = Race.Dwarrows;
+                setRace(Race.Dwarrows);
                 break;
             case "Elves":
-                newRace = Race.Elves;
+                setRace(Race.Elves);
                 break;
             case "Human":
-                newRace = Race.Human;
+                setRace(Race.Human);
                 break;
             case "KillerPenguin":
-                newRace = Race.KillerPenguin;
+                setRace(Race.KillerPenguin);
                 break;
             case "Orc":
-                newRace = Race.Orc;
+                setRace(Race.Orc);
                 break;
             case "Spiders":
-                newRace = Race.Spiders;
+                setRace(Race.Spiders);
                 break;
             case "SwampCreature":
-                newRace = Race.SwampCreature;
+                setRace(Race.SwampCreature);
                 break;
             default:
-                newRace = null;
+                System.err.println("Incorrect Race sent to setRace(String)");
+                System.err.println("Recieved: " + raceStr);
+                setRace((Race)null);
         }
-        this.race = newRace;
     }
      
     public Race getRace(){
