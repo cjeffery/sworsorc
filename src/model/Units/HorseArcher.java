@@ -17,7 +17,6 @@ public class HorseArcher extends RangedLandUnit{
         strength = 2;
         movement = 9;
         demoralizedStrength = 1;
-        ranged = true;
     }
     
 }

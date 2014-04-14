@@ -13,15 +13,15 @@ package ssterrain;
  */
 import Units.*;
 import sshexmap.MapHex;
-public class HEProvinceBorder extends HexEdge{
-    MapHex hex;
-    int edge;
-    
-    public HEProvinceBorder(MapHex thisHex, int thisEdge){
-        this.hex = thisHex;
-        this.edge = thisEdge;
-    }
+public class HEProvinceBorder extends EdgeElement {
+    //public HEProvinceBorder(){
 
+    @Override
+    public HexEdgeType getEdgeType() {
+        return HexEdgeType.ProvinceBorder;
+    } 
+
+    /*
     @Override
     public double getMovementCost(MoveableUnit unit) {
         return 0;
@@ -36,15 +36,5 @@ public class HEProvinceBorder extends HexEdge{
     public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
-
-    @Override
-    public HexEdgeType getEdgeType() {
-        return HexEdgeType.ProvinceBorder;
-    } 
-
-    @Override
-    public int getEdge() {
-        return edge;
-    }
-    
+    */
 }

@@ -17,6 +17,11 @@ import sshexmap.MapHex;
 public class ITTTrail extends ImprovedTerrainType{
     MapHex hex;
             
+    public ITTTrail()
+    {
+        // dirka dirka
+    }
+    
     public ITTTrail(MapHex thisHex){
         this.hex = thisHex;
     }
@@ -43,13 +48,7 @@ public class ITTTrail extends ImprovedTerrainType{
 
     @Override
     public double getMovementOverride(MoveableUnit unit) {
-        ArrayList<HexEdgeType> list = new ArrayList<HexEdgeType>();
-        list.add(HexEdgeType.Bridge);
-        list.add(HexEdgeType.Road);
-        list.add(HexEdgeType.Ford);
-        list.add(HexEdgeType.Trail);
-        if(hex.checkIfCrossed(list)) return 1;
-        else return 0;
+        return 0;
     }
     
 }

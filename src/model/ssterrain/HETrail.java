@@ -13,15 +13,13 @@ package ssterrain;
  */
 import Units.*;
 import sshexmap.MapHex;
-public class HETrail extends HexEdge{
-    MapHex hex;
-    int edge;
-    
-    public HETrail(MapHex thisHex, int thisEdge){
-        this.hex = thisHex;
-        this.edge = thisEdge;
+public class HETrail extends EdgeElement {
+    @Override
+    public HexEdgeType getEdgeType() {
+        return HexEdgeType.Trail;
     }
-
+    
+    /*
     @Override
     public double getMovementCost(MoveableUnit unit) {
         return 0;
@@ -36,14 +34,5 @@ public class HETrail extends HexEdge{
     public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
-
-    @Override
-    public HexEdgeType getEdgeType() {
-        return HexEdgeType.Trail;
-    }
-
-    @Override
-    public int getEdge() {
-        return edge;
-    }
+    */
 }

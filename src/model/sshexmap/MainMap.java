@@ -5,7 +5,7 @@ import org.w3c.dom.Node;
 /**
  * 
  *   Email me at klin7456@vandals.uidaho.edu if you hove questions or need help
- * 
+ *   Or Colin at clif7786@vandals.uidaho.edu
  * @author David Klingenberg: 
  */
 public class MainMap extends HexMap {
@@ -13,7 +13,6 @@ public class MainMap extends HexMap {
     
     private MainMap(){
         super("resources/MainMap.xml");
-        BuildMap();
     }
 
     @Override
@@ -26,8 +25,10 @@ public class MainMap extends HexMap {
     }
     
     public static MainMap GetInstance(){
-      if (INSTANCE == null)
+      if (INSTANCE == null) {
           INSTANCE =  new MainMap();
+          INSTANCE.BuildMap();
+      }
       return INSTANCE;
     }
 

@@ -1,183 +1,143 @@
 @startuml
 hide circle
-title <b>Master Class Diagram<b> Authors: Keith Drew, Ian Westrope
+title <b>Master Class Diagram<b>\nAuthors: Keith Drew, Ian Westrope
 
-Game *-- MainMap
-Game *-- "2..7" Player
-Game *-- "0..*" Alliance 
-Game - Scenario : Scenario Initiates\nGame
-Scenario "14" -* StaticDataStructure
-Alliance <|-down- NPCAlliance
-Alliance - Player : An alliance links two\nplayers/NPC turns together
-Province "25" -down-* MainMap
-Hex "0..*" -down-* Province
-SpecialHex -up-|> Hex
-TeleportHex -up-|> SpecialHex
-VortexHex -up-|> SpecialHex
-PlungeholeHex -up-|> SpecialHex
-Town -up-|> SpecialHex
-City -up-|> SpecialHex
-Castle -up-|> SpecialHex
-Capital -up-|> SpecialHex
+Stack -right* Hex
 
-Stack -right-* Hex
-MoveableUnit "0..*" -down-o Stack
+MoveableUnit "0..*" --o Stack
 
-Vortex -up-|> MoveableUnit
-Monster -up-|> MoveableUnit
 ArmyUnit -up-|> MoveableUnit
-FlyingUnit -up-|> MoveableUnit
-Character -left-|> Monster
-RangedArmyUnit -up-|> ArmyUnit
-MeleeArmyUnit -up-|> ArmyUnit
-Dragon -up-|> Monster
-Demon -up-|> Monster
-Troll -up-|> Monster
-KillerPenguin -up-|> Monster
-TyrannosauriReges -up-|> Monster
-Spectre -up-|> Monster
-FlyingUnit -- Dragon : Dragons are\nflying monsters
-TalismanOfOrb -up-o Character
-CasterCharacter -up-|> Character
-FighterCharacter -up-|> Character
 
-StaticDataStructure *- "7" GameChart
+UnitHashMap -- MoveableUnit : Tracks MoveableUnits and their previous moves
 
-GameTerrainChart -up-|> GameChart
-GameCombatResultsChart -up-|> GameChart
-GameRandomEventChart -up-|> GameChart
-GameSpellChart --up-|> GameChart
-GameKillerPenguinEntryChart --up-|> GameChart
-GameEmissaryResultsChart --up-|> GameChart
-GameDiplomaticGroupChart --up-|> GameChart
+DiplomacyHex -up-|> Hex
+MapHex -up-|> Hex
 
-class Game #529292 {
+Character .up.|> MoveableUnit
+Monster .up.|> MoveableUnit 
+
+HexMap *-up- Hex 
+
+MainMap -up-|> HexMap
+
+DiplomacyMap -up-|> HexMap
+DiplomacyMap -- BuildDiplomacyMapFile : The built file initializes the map (?)
+
+HexPainter -up- Hex : HexPainter paints the hex images
+
+HexEdge -* Hex
+
+EdgeElement "0..6" -up-o HexEdge
+HexEdgeType "0..6" -up-o HexEdge
+
+TerrainType -down-* Hex
+
+ImprovedTerrainType "0..*" -down-o Hex
+
+StellarConfiguration -down- SolarDisplay : The display depends on the configuration
+
+SolarDisplay -down- HUD : Hud displays the solar state
+
+HUD -down- MapView : The HUD surrounds the MapView during play
+
+HEExtensions -up-|> EdgeElement
+TTExtensions -up-|> TerrainType
+ITTExtensions -up-|> ImprovedTerrainType
+
+'package DisjointClasses <<Rect>> {
+'class ArmyCombatResultsTable #blue 
+'class RandomEventTable #blue
+'class ScenarioConfigurationReader #blue 
+'class Unit #red
+'}
+
+note as N1
+Color coded to packages
+Red - Located in a <default package>
+Blue - Located in sworsorc/client
+Green - Located in sworsorc/model
+Yellow - Located in sworsorc/utilities
+end note
+
+class Character #green{
 }
 
-class MainMap #529292 {
+class MoveableUnit #green {
 }
 
-class Player #529292 {
+class ArmyUnit #green {
 }
 
-class Alliance #529292 {
+class Stack #green {
 }
 
-class NPCAlliance #529292 {
+class UnitHashMap #green {
 }
 
-class Province #529292 {
+class Hex #green {
 }
 
-class Hex #529292 {
+class DiplomacyHex #green {
 }
 
-class SpecialHex #529292 {
+class MapHex #green {
 }
 
-class TeleportHex #529292 {
+class HexMap #green {
 }
 
-class VortexHex #529292 {
+class MainMap #green {
 }
 
-class PlungeholeHex #529292 {
+class DiplomacyMap #green {
 }
 
-class Town #529292 {
+class EdgeElement #green {
 }
 
-class Castle #529292 {
+class HexEdgeType #green {
 }
 
-class Capital #529292 {
+class HexEdge #green {
 }
 
-class City #529292 {
+class TerrainType #green {
 }
 
-class Stack #529292 {
+class ImprovedTerrainType #green {
 }
 
-class MoveableUnit #529292 {
+class HEExtensions #green {
 }
 
-class Vortex #529292 {
+class TTExtensions #green {
 }
 
-class FlyingUnit #529292 {
+class ITTExtensions #green {
 }
 
-class ArmyUnit #529292 {
+class Monster #green {
 }
 
-class MeleeArmyUnit #529292 {
+class BuildDiplomacyMapFile #red {
 }
 
-class RangedArmyUnit #529292 {
+class HexPainter #red {
 }
 
-class Monster #529292 {
+class SolarDisplay #blue {
 }
 
-class Dragon #529292 {
+class HUD #blue {
 }
 
-class Demon #529292 {
+class StellarConfiguration #blue {
 }
 
-class Troll #529292 {
+class MapView #blue {
 }
 
-class TyrannosauriReges #529292 {
-}
-
-class Spectre #529292 {
-}
-
-class KillerPenguin #529292 {
-}
-
-class Character #529292 {
-}
-
-class CasterCharacter #529292 {
-}
-
-class FighterCharacter #529292 {
-}
-
-class TalismanOfOrb #529292 {
-}
-
-class Scenario #529292 {
-}
-
-class StaticDataStructure #529292 {
-}
-
-class GameChart #529292 {
-}
-
-class GameTerrainChart #529292 {
-}
-
-class GameCombatResultsChart #529292 {
-}
-
-class GameRandomEventChart #529292 {
-}
-
-class GameSpellChart #529292 {
-}
-
-class GameKillerPenguinEntryChart #529292 {
-}
-
-class GameEmissaryResultsChart #529292 {
-}
-
-class GameDiplomaticGroupChart #529292 {
+class HexPainter #blue {
 }
 
 

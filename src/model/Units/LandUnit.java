@@ -18,6 +18,7 @@ public class LandUnit extends ArmyUnit{
     
     public LandUnit() {
         super();
+        armyUnitType = ArmyUnitType.land;
     }
     
 }

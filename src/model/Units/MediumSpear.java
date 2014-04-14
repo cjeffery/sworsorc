@@ -17,7 +17,6 @@ public class MediumSpear extends LandUnit{
         strength = 6;
         movement = 4;
         demoralizedStrength = 3;
-        ranged = false;
     }
     
     

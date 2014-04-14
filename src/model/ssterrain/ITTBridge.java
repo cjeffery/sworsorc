@@ -16,6 +16,10 @@ import sshexmap.MapHex;
 public class ITTBridge extends ImprovedTerrainType {
     MapHex hex;
     
+    public ITTBridge()
+    {}
+    
+    
     public ITTBridge(MapHex thisHex){
         this.hex = thisHex;
     }

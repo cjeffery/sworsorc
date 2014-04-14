@@ -10,3 +10,4 @@ Example:
 Add subclass to MoveableUnit called Cavalry. 
 Add subclass to Cavalry, RangedCavalry.
 End Example
+

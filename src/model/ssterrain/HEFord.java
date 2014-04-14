@@ -14,15 +14,13 @@ import sshexmap.MapHex;
  * @author John Goettsche
  * CS 383 Software Engineering
  */
-public class HEFord extends HexEdge{
-    MapHex hex;
-    int edge;
-    
-    public HEFord(MapHex thisHex, int thisEdge){
-        this.hex = thisHex;
-        this.edge = thisEdge;
+public class HEFord extends EdgeElement {
+    @Override
+    public HexEdgeType getEdgeType() {
+        return HexEdgeType.Ford;
     }
-
+    
+    /*
     @Override
     public double getMovementCost(MoveableUnit unit) {
         ArrayList<HexEdgeType> list = new ArrayList<HexEdgeType>();
@@ -43,15 +41,5 @@ public class HEFord extends HexEdge{
     public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
-
-    @Override
-    public HexEdgeType getEdgeType() {
-        return HexEdgeType.Ford;
-    }
-
-    @Override
-    public int getEdge() {
-        return edge;
-    }
-    
+    */
 }

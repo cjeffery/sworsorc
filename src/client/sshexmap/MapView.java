@@ -1,156 +1,37 @@
 package sshexmap;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import javax.swing.*;
+import java.io.IOException;
+import java.awt.geom.AffineTransform;
 
 /**
- * View class that can display the game world or the diplomacy map in a
- * scrollable window. 
+ * @author Colin Clifford
  */
-public class MapView extends JPanel {
-    /**
-     * This inner class is what's contained inside the scrollbar. It's only
-     * public for if you need to set up mouse listeners or something.
-     * For the most part you shouldn't have to interact with it directly,
-     * and it might be made private in the future
-     */
-    public class MapSurface extends JComponent
-                             implements Scrollable {
-        /**
-         * This method draws the hexmap as part of the java swing drawing
-         * process.
-         * It draws everything it needs to in several passes, first hexes,
-         * then hex-edges, etc.
-         * @param g the Graphics2D object to draw on.
-         */
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D)g;
-
-            /* Get what hexes are in view */
-            Rectangle hexRect = hexBounds(g2.getClip().getBounds());
-
-            /* effective origin from whatever graphics object we're given */
-            AffineTransform identity = g2.getTransform();
-
-            //determine the furthest hex that needs drawing in the row
-            int max_row = (int)(hexRect.y+hexRect.height);
-            max_row = Math.min(max_row, map.GetRows()-1);
-                
-            /* For each hex, translate it and then draw it with HexPainter
-             * first pass for hexes, second pass for hex edges */
-            for(int edge = 0; edge < 2; edge++)
-            for(int col = hexRect.x; col <= hexRect.x+hexRect.width; col++) {
-                //translate to first hex in row that needs drawing
-                g2.setTransform( identity );
-                int par = map.LowFirstRow() ? 1 : 0; //map "parity"
-                g2.translate(width*col*0.75,
-                             height*(hexRect.y + ((col%2)*0.5) - par*0.5));
-
-                int topleftmask = 0x3F;
-                //draw all the hexes in the row
-                for(int row = hexRect.y; row <= max_row; row++) {
-                    if(edge == 0)
-                        hp.paintHex(g2, map.GetHex(col,row));
-                    else
-                        hp.paintEdges(g2, (MapHex)map.GetHex(col, row));
-                    g2.translate(0, height);
-                }
-            }
-        }
-
-        /** @return JScrollPane uses this to determine scrollbar dimensions. */        
-        @Override
-        public Dimension getPreferredScrollableViewportSize() {
-            return getPreferredSize();
-        }
-        /** @return The actual size of the map in pixels */
-        public Dimension getPreferredSize() {
-            return new Dimension((int)(width*((map.GetColumns()-1)*.75+1)),
-                                 (int)(height*map.GetRows()));
-        }
-
-        /** Scroll roughly one screens worth of hexes */
-        @Override
-        public int getScrollableBlockIncrement(Rectangle visibleRect,
-                                               int orientation, int direction)
-        {
-            double coef = 1.0;
-            if(orientation == SwingConstants.HORIZONTAL)
-                coef = visibleRect.width / width;
-            else
-                coef = visibleRect.height / height;
-
-            return (int)(coef*getScrollableUnitIncrement(visibleRect,
-                                                         orientation,
-                                                         direction));
-        }
-
-        /** Return the rough amount to scroll for one unit amount
-         * This isn't perfect because it returns an integer, and doesn't keep
-         * track of leftover amounts.
-         * @param Rectangle the visible area
-         * @param orientation either SwingConstants.HORIZONTAL
-         *                    or SwingConstants.VERTICAL
-         * @param direction currently unused. See java API docs for what it
-         *                  means
-         * @return the rough amount of pixelsto scroll for one unit amount */
-        @Override
-        public int getScrollableUnitIncrement(Rectangle visibleRect,
-                                              int orientation, int direction)
-        {
-            if(orientation == SwingConstants.HORIZONTAL)
-                    return (int)(Math.ceil(0.75*width));
-            else
-                    return (int)(Math.ceil(height));
-        }
-
-        /** Currently unused.
-         * @return false */
-        @Override
-        public boolean getScrollableTracksViewportHeight() {
-        return false;
-        }
-
-        /** Currently unused
-         * @return false */
-        @Override
-        public boolean getScrollableTracksViewportWidth() {
-            return false;
-        }
-    }
-    
+public class MapView extends    JPanel
+                     implements Scrollable {
     private HexMap map;
     private HexPainter hp;
-    public MapSurface surface;
     public TreeSet<String> highlightSet;
-    double radius, width, height;    
-   
+    double radius, width, height;
+    
     /**
      * Creates a new MapView class given a map to show.
      * @param map The map to show. Either a world map or diplomacy map
-     * @throws IOException 
      */
-    public MapView(HexMap map) throws IOException {
-        super(new BorderLayout());
-        this.highlightSet = new TreeSet<String>();
+    public MapView(HexMap map)  {
+        highlightSet = new TreeSet<String>();
         this.map = map;
-        this.radius = 32;
+        radius = 32;
         width  = radius*2;
         height = radius*Math.sqrt(3);
-        hp = new HexPainter(radius);   
-        surface = new MapSurface();
-        
-        JScrollPane scrollPane = new JScrollPane(surface);
-        scrollPane.setPreferredSize(new Dimension(800,600));
-        //scrollPane.setWheelScrollingEnabled(false);
-        add(scrollPane);        
+        try {
+            hp = new HexPainter(radius);   
+        }
+        catch(IOException e) {
+            System.out.println("Hexpainter threw an IO exception :(");
+        }
     }
 
     /** 
@@ -160,21 +41,26 @@ public class MapView extends JPanel {
     public String hexAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
+        System.out.println("" + hexX + " " + hexY);
         return HexMap.GetIDFromCoords(hexX, hexY);
     }
     
     /** 
-     * Returns the direction to the closest hex-edge at the given coordinate
+     * This method returns the direction to the closest hex-edge at the given 
+     * pixel coordinates
+     * 
      * @param x The X pixel coordinate
      * @param y The Y pixel coordinate
-     * @@return A number between 0-5 where 0 is northeast, 5 is southeast */
+     * @return A number between 0-5 where 0 is northeast, 5 is southeast 
+     */
     public int hexEdgeRegionAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
       
-        double centerX = width*(0.5 + hexX*0.75);
-        double centerY = height*(0.5+hexY + (hexX%2)*0.5);
-        
+        //I can indulge in bad variable names on ocassion
+        int antilow = map.LowFirstRow() ? 0 : 1; 
+        double centerX =  width*( hexX*.75 - .25 );
+        double centerY = height*( hexY - 0.5 + ((antilow+hexX)%2)*0.5);
         //y-coordinate has been flipped here for a "sensible" angle
         //since down is positive
         double angle = Math.atan2(centerY - y, x - centerX) + 2*Math.PI;
@@ -198,13 +84,15 @@ public class MapView extends JPanel {
         int min_col = (int)((x1-width*.25)/(width*.75));
         int max_col = (int)(x2/(width*.75));
         int min_row = (int)((y1-0.5*height)/height);
-        int max_row = (int)(y2/height);
+        int max_row = 1 + (int)(y2/height);
         min_col = Math.max(min_col, 0);
         min_row = Math.max(min_row, 0);
         max_col = Math.min(max_col, map.GetColumns()-1);  
         max_row = Math.min(max_row, map.GetRows()-1);
-        return new Rectangle(        min_col,         min_row,
-                             max_col-min_col, max_row-min_row);
+        //TODO: uncomment this
+        //return new Rectangle(        min_col,         min_row,
+        //                     max_col-min_col, max_row-min_row);
+        return new Rectangle(1, 1, map.GetColumns(), map.GetRows());
     }
         
     /** 
@@ -253,23 +141,207 @@ public class MapView extends JPanel {
         int hexY = (j - i%2);
         //conditional is needed for detecting negative y coordinate hex
         hexY = (hexY == -1) ? -1 : (hexY / 2);
-        int[] res = {hexX, hexY};
+        int[] res = {hexX+1, hexY+1};
         return res;        
     }
     
     /**
-     * highlight the set of given hexes, pass null to unhighlight.
+     * highlight the set of given hexes. This adds to any previous highlights
+     * to unhighlight use clearHighlights
      * Right now color is hardcoded, and you can't highlight multiple
      * colors at once. This could change in the future.
-     * @param hexes A Set of hex IDs
+     * @param hexes A Set of hex IDs 
      */
-    public void highlight(Set<String> hexes) {
+    public void highlightIDs(ArrayList<String> hexes) {
         highlightSet.addAll(hexes);
+        repaint(); //fixme allow partial update
     }
+    
     /**
-     * Unhighlight all currently highlighted hexes
+     * highlight the set of given hexes. This adds to any previous highlights
+     * to unhighlight use clearHighlights
+     * Right now color is hardcoded, and you can't highlight multiple
+     * colors at once. This could change in the future.
+     * @param hexes A Set of hexes
+     */
+    public void highlight(ArrayList<MapHex> hexes) {
+        for(MapHex hex : hexes)
+            highlightSet.add(hex.GetID());
+        repaint(); //fixme allow partial update
+    }
+ 
+    /**
+     * highlight the given hex. Adds to any previous highlights.
+     * @param hex A hex ID to highlight
+     */
+    public void highlight(String hex) {
+        highlightSet.add(hex);
+        repaint(); //fixme allow partial update
+    }
+    
+    /**
+     * Clear all currently highlighted hexes
      */
     public void clearHighlights() {
         highlightSet.clear();
+        repaint(); //fixme allow partial update
+    }
+    
+    public void clearHighlight(String hex) {
+        highlightSet.remove(hex);
+        repaint(); //fixme allow partial update
+    }
+    
+    /**
+     * determine if the edge has already been drawn
+     * if painting is happening down the columns, left to right
+     * @param x hex x coordinate
+     * @param y hex y coordinate
+     * @param direction edge direction
+     * @return true for needs drawing
+     */
+    boolean edgeNeedsDrawing(int x, int y, int direction) {
+        if(direction == 0 || direction == 4 || direction == 5)
+            return true;
+        else if(direction == 1)
+            return (y == 1);
+        else if(direction == 2)
+            return (y == 1) && ((x % 2) == 0);
+        else if(direction == 3)
+            return (x == 1);
+        assert(false);
+        return true;
+    }
+    
+    /**
+     * This method draws the hexmap as part of the java swing drawing
+     * process.
+     * It draws everything it needs to in several passes, first hexes,
+     * then hex-edges, etc.
+     * @param g the Graphics2D object to draw on.
+     */
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D)g;
+
+        /* Get what hexes are in view */
+        Rectangle hexRect = hexBounds(g2.getClip().getBounds());
+        hexRect.x--;
+        hexRect.y--;
+        /* effective origin from whatever graphics object we're given */
+        AffineTransform identity = g2.getTransform();
+
+        /* For each hex, translate it and then draw it with HexPainter
+         * first pass for hexes, second pass for hex edges */
+
+        for(int pass = 0; pass < 3; pass++)
+        for(int col = hexRect.x; col < hexRect.getMaxX(); col++) {
+            //translate to first hex in row that needs drawing
+            g2.setTransform( identity );
+            int par = map.LowFirstRow() ? 1 : 0; //map "parity"
+            g2.translate(width*col*0.75,
+                         height*(hexRect.y + ((col%2)*0.5) - par*0.5));
+
+            //draw all the hexes in the row
+            for(int row = hexRect.y; row < hexRect.getMaxY(); row++) {
+                if( map.GetHex(col+1,row+1) == null )
+                    continue;
+                
+                //First pass: hexagons
+                if(pass == 0)
+                    hp.paintHex(g2, map.GetHex(col+1,row+1));
+
+                //highlighting
+                if(pass == 1)
+                if(highlightSet.contains(HexMap.GetIDFromCoords(col+1,
+                                                                row+1))){
+                    hp.highlight(g2);
+                }
+                
+                //edges
+                if(pass == 2 && map instanceof MainMap ) {
+                    for(int i = 0; i < 6; i++) {
+                        if(edgeNeedsDrawing(col+1, row+1, i))
+                            hp.paintEdge(g2, (MapHex)map.GetHex(col+1,row+1), i);
+                    }
+                }
+
+                g2.translate(0, height);
+            }
+        }
+    }
+
+    /**
+     * @return JScrollPane uses this to determine scrollbar dimensions.
+     */        
+    @Override
+    public Dimension getPreferredScrollableViewportSize() {
+        return getPreferredSize();
+    }
+    /**
+     * @return The actual size of the map in pixels
+     */
+    public Dimension getPreferredSize() {
+        return new Dimension((int)(width*((map.GetColumns()-1)*.75+1)),
+                             (int)(height*map.GetRows()));
+    }
+
+    /**
+     * Scroll roughly one screens worth of hexes
+     */
+    @Override
+    public int getScrollableBlockIncrement(Rectangle visibleRect,
+                                           int orientation, int direction)
+    {
+        double coef = 1.0;
+        if(orientation == SwingConstants.HORIZONTAL)
+            coef = visibleRect.width / width;
+        else
+            coef = visibleRect.height / height;
+
+        return (int)(coef*getScrollableUnitIncrement(visibleRect,
+                                                     orientation,
+                                                     direction));
+    }
+
+    /**
+     * Return the rough amount to scroll for one unit amount
+     * This isn't perfect because it returns an integer, and doesn't keep
+     * track of leftover amounts. FIXME: JavaDoc generator doesn't recognize
+     * parameter Rectangle.
+     * 
+     * @param visibleRect the visible area, a Rectangle
+     * @param orientation either SwingConstants.HORIZONTAL
+     *                    or SwingConstants.VERTICAL
+     * @param direction currently unused. See java API docs for what it
+     *                  means
+     * @return the rough amount of pixelsto scroll for one unit amount */
+    @Override
+    public int getScrollableUnitIncrement(Rectangle visibleRect,
+                                          int orientation, int direction)
+    {
+        if(orientation == SwingConstants.HORIZONTAL)
+                return (int)(Math.ceil(0.75*width));
+        else
+                return (int)(Math.ceil(height));
+    }
+
+    /**
+     * Currently unused.
+     * @return false
+     */
+    @Override
+    public boolean getScrollableTracksViewportHeight() {
+    return false;
+    }
+
+    /**
+     * Currently unused
+     * @return false
+     */
+    @Override
+    public boolean getScrollableTracksViewportWidth() {
+        return false;
     }
 }

@@ -14,15 +14,13 @@ import sshexmap.MapHex;
  * @author John Goettsche
  * CS 383 Software Engineering
  */
-public class HEStream extends HexEdge{
-    MapHex hex;
-    int edge;
-    
-    public HEStream(MapHex thisHex, int thisEdge){
-        this.hex = thisHex;
-        this.edge = thisEdge;
+public class HEStream extends EdgeElement {
+    @Override
+    public HexEdgeType getEdgeType() {
+        return HexEdgeType.Stream;
     }
-
+    
+    /*
     @Override
     public double getMovementCost(MoveableUnit unit) {
         ArrayList<HexEdgeType> thisEdge = hex.getEdgeType(edge);
@@ -42,14 +40,5 @@ public class HEStream extends HexEdge{
     public String getCombatEffect(MoveableUnit unit) {
         return "";
     }
-
-    @Override
-    public HexEdgeType getEdgeType() {
-        return HexEdgeType.Stream;
-    }
-
-    @Override
-    public int getEdge() {
-        return edge;
-    }
+    */
 }

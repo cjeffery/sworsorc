@@ -16,6 +16,5 @@ public class WraithTroops extends Conjured{
         strength = 6;
         movement = 3;
         demoralizedStrength = 3;
-        ranged = false;
     }    
 }

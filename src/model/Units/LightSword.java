@@ -17,7 +17,6 @@ public class LightSword extends LandUnit{
         strength = 3;
         movement = 5;
         demoralizedStrength = 1;
-        ranged = false;
     }
     
     

@@ -10,14 +10,13 @@ package Units;
  *
  * @author Matt
  */
-public class LightHorse extends Calvery{
+public class LightHorse extends Cavalry{
 
     public LightHorse() {
         super();
         strength = 2;
         movement = 9;
         demoralizedStrength = 1;
-        ranged = false;
     }
     
 }
