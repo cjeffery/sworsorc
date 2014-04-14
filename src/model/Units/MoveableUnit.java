@@ -127,6 +127,9 @@ public class MoveableUnit {
             System.out.println("Unit has no race? D:");
             return "~";
         }
+        
+        if(this instanceof FlyingUnit)
+            return "w";
         switch( getRace() ) {
             case Cronk:         return "c";
             case Dragon:        return "w";
