@@ -29,6 +29,18 @@ public class MoveableUnit {
         
     }
     
+    public void ResetWorkingMovement(){
+        workingMovement = movement;
+    }
+
+    public double getWorkingMovement() {
+        return workingMovement;
+    }
+
+    public void setWorkingMovement(double workingMovement) {
+        this.workingMovement = workingMovement;
+    }   
+    
     public MoveableUnit(String location){
         this.location = location;
     }
