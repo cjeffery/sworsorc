@@ -20,6 +20,7 @@ package Units;
 public class MoveableUnit {
     protected UnitType UnitType;
     protected double movement;
+    protected double workingMovement;
     protected Race race;
     protected String location;
     protected String ID;
