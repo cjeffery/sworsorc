@@ -1,0 +1,51 @@
+Jay Drage
+
+state chart for keyboard and mouse GUI in main map area
+
+@startuml
+title Keyboard and Mouse buttons GUI statechart\nJay Drage
+
+state "Main Game Map" as Map
+Map : mouse in main map panel
+state "Main Game Map" as Main
+Main : show main menu popup
+state "Unit Selected" as Selected
+Selected : highlight selected unit
+state "Display Unit Info" as Display
+state "Unit Ready to Attack" as AttackReady
+state "Complete Attack" as Attack
+state "Unit Ready to Move" as MoveReady
+MoveReady : show range of movement
+state "Move Unit" as Move
+state "Unit Ready to Cast" as CastReady
+CastReady : show available spells
+state "Cast Spell" as Cast
+
+[*] --> Map
+
+Map -left-> Main : [esc]
+Main --> Map : [esc]
+Main -left-> [*] : select end game
+
+Map -down-> Selected : left mouse
+Selected --> Map : [esc]
+
+Selected --> Display : [d]
+Display --> Selected : [esc]
+
+Selected --> CastReady : [c]
+CastReady --> Selected : [esc]
+CastReady --> Cast : select spell
+Cast --> Selected : after spell
+
+Selected --> MoveReady : [m]
+MoveReady --> Selected : [esc]
+MoveReady --> Move : left mouse target hex
+Move --> Selected : after move
+
+Selected --> AttackReady : [a]
+AttackReady --> Selected : [esc]
+AttackReady --> Attack : left mouse target hex
+Attack --> Map : after attack
+
+@enduml

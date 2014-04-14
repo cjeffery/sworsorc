@@ -1,0 +1,22 @@
+/* 
+    Created on : Apr 5, 2014, 9:17:01 PM
+    Author     : Joe Higley
+*/
+
+BorderPane {
+    -fx-background-image: url("../images/sands.jpg");
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+Button {
+    -fx-size: 80%, 50%;
+    -fx-font-size: 36px;
+    -fx-font-family: 'JasmineUPC';
+}
+
+Label {
+    -fx-font-size: 100pt;
+    -fx-font-family: 'JasmineUPC';
+}

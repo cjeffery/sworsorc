@@ -1,0 +1,18 @@
+1 2 15 1 Q Conflict of Will
+1 1 0 0 A Conjure Zombie Infantry
+1 1 5 0 Q Detection of Mana Foci
+1 2 7 0 A Force Wall
+1 1 100 0 Q Magical Search
+1 1 4 1 P Magic Blow
+1 1 100 0 Q Search Confusion
+1 3 2 0 P Strength
+1 2 0 0 A Teleportation Protection
+1 2 6 1 P Weakness
+2 1 0 0 A Conjure Centauroid Cavalry
+2 3 7 0 A Fear
+2 1 0 0 Q Fly
+2 2 0 0 Q Invisibility
+2 2 5 1 P Magic Lance
+2 2 0 0 A Manna Transfer
+2 3 7 0 C Morale
+2 2 10 0 A River Crossing

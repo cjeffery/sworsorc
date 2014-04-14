@@ -1,0 +1,13 @@
+This is a file that holds changes that need to be made to the master class diagram.
+Please use the following format, and leave spaces between change requests,
+to indicate changes requested as follows:
+
+Example:
+/* Add a c-style multi-line comment that explains your rationale and any extra
+ *   details needed to understand the change/update you are requesting.
+ *   Add the literal changes below:
+ */ 
+Add subclass to MoveableUnit called Cavalry. 
+Add subclass to Cavalry, RangedCavalry.
+End Example
+

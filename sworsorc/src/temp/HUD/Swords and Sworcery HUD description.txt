@@ -1,0 +1,45 @@
+I was thinking there would be a panel on the right of the "active map."
+
+Minimap:
+
+None.
+
+After re-evaluating the portion of the map a user will see at all times I believe that a minimap would be unneeded and
+simply scrolling around would be more user friendly.
+
+Scenario Goals:
+
+The goal button would open up your scenario objective according to what player you are in
+that scenario.
+
+Main Menu:
+
+The main menu button would simply take you to the options menu with options to quit, save, or
+change settings.
+
+Redo and Undo:
+
+These buttons would allow you to quickly undo whatever your last movement was or replay a 
+movement you didnt mean to undo.
+
+Diplomacy and Alliances:
+
+The original rules make a distinction between these two so I decided to make them two separate 
+buttons until we have decided otherwise.
+
+The diplomacy button will either take you to the chart or it will simply tell you how close you are
+to allying with a neutral.
+
+The Alliances button will remind the player of alliances currently in play if there are any.
+
+End Current Phase:
+
+This button will display the name of the Current Phase and will be how a player progresses 
+to the next phase of his turn. It might also remind him of units he has forgotten to move and such.
+
+INFO:
+
+I decided to include some extra information after your suggestion in class such as:
+
+The current Game Turn, any ascendant moons in effect, max game turns for certain scenario, and 
+victory points of both you and the highest opponent.

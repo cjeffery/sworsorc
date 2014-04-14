@@ -1,0 +1,81 @@
+@startuml
+title Keith Drew & Tyler Jaszkowiak Class Diagrams\nMap Related
+hide circle
+class Board #529292 {
+      List Provinces
+      RandomEventFlags (misc)
+      int gameTurn
+      int gameTurnLimit
+}
+class Province #529292 {
+      String provinceName
+      String GetName()
+      List Allies
+      HexContainer Hexes
+}
+note right of Province #red
+     Provinces may only have one Capitol
+     type hex in it's composition.
+end note 
+class Hex #529292 {
+      int hexID
+      double moveCost
+      double terrainID
+      UnitStack units
+      double GetTerrainID()
+      int GetHexID()
+      void ChangeTerrainType()
+}
+class Stack #529292 {
+      List Units
+      List Characters
+      Stack SelectSubStack()
+      void RemoveExcessUnits()
+}
+class SpecialHex #529292 {
+      String name
+      String hexType
+      String GetHexType()
+      String GetName()
+}
+class ResidentialHex #529292 {
+      int leadershipRating
+      double initialDefenseRating
+      double defenseRating
+      double GetDefenseRating()
+}
+class BottomlessPlungeHole #529292 {
+      void DestroyStack()
+}
+note left of BottomlessPlungeHole #red
+     If any units move here, 
+     they are destroyed.
+end note 
+class VortexHex #529292 {
+      void SpawnVortex()
+}
+class TeleportHex #529292 {
+      void TeleportUnits()
+      int teleportID
+}
+class Vortex #529292 {
+      double moveableUnitID
+      void RandomMovement()
+      void DamageUnits()
+      void Move()
+}
+
+Board *-right- "22" Province 
+Province *-down- "1..*" Hex
+Hex <|-down- SpecialHex
+Vortex .up. VortexHex
+note right on link #red
+     This is where vortices come
+     from, other than spells.
+end note  
+TeleportHex --up|> SpecialHex
+VortexHex --left|> SpecialHex
+BottomlessPlungeHole --right|> SpecialHex
+ResidentialHex --up|> SpecialHex
+Stack "1" -lefto Hex
+@enduml

@@ -1,0 +1,105 @@
+@startuml
+hide circles
+title <b>Unit Class Diagram<b> Author: Ian Westrope
+
+class MoveableUnit #529292 {
+      +Int Movement_Allowance
+      +Int Combat_Strength
+      +Bool Flying_Unit
+}
+
+class Character #529292 {
+      +Char Race
+      +Int Magic_PL
+      +Int Magic_Potential
+      +Int Magic_Color
+      +Int Home_Hex
+      +Int Magic_Profile
+      +Int Magic_Resistance
+      +Int Leadership
+      +Int Diplomatic
+      +Int Fighting
+      +Int Endurance
+}
+
+class ArmyUnit #529292 {
+      +Char Unit_Type
+      +Char Unit_Race
+      +Int Demoralized_Strength
+}
+
+class MeeleeArmyUnit #529292 {
+      +void Charge()
+}
+
+class RangedArmyUnit #529292 {
++attackFlyingUnit()
++attackBridgedUnit()
+}
+
+
+class Monster #529292 {
+      -talismanOfOrb
+      +Int Magic_PL
+      +Int Magic_Potential
+      +Int Magic_Color
+      +Int Magic_Resitance
+      +Int Fighting
+      +Int Endurance
+      +Int Combat_Strenght
+      +Char Owner
+      +void ChangeOwner()
+}
+
+class Demon #529292 {
+      +Bool Bound
+}
+
+class Dragon #529292 {
+      +void Breathe_Fire()
+}
+
+class Troll #529292 {
+      +void Regenerate()
+}
+
+class KillerPenguin #529292 {
+-hexLocation
+}
+
+class Spectre #529292 {
+}
+
+class TyrannosauriRegs #529292 {
+}
+
+class TalismanOfOrb #529292 {
+-orbEffectModifiers
++useOrbSpell()
+}
+
+Class FlyingUnit #529292 {
+-moveableUnit[]
++carryUnit
+}
+
+MoveableUnit <|-- Monster
+MoveableUnit <|-- FlyingUnit
+MoveableUnit <|-- ArmyUnit
+
+Monster <|-- Character
+Monster <|-- Demon
+Monster <|-- Troll
+Monster <|-- TyrannosauriRegs
+Monster <|-- Spectre
+Monster <|-- Dragon
+Monster <|-- KillerPenguin
+
+ArmyUnit <|-- RangedArmyUnit
+ArmyUnit <|-- MeeleeArmyUnit
+
+Character o-- TalismanOfOrb
+
+FlyingUnit <|-- Dragon
+
+@enduml

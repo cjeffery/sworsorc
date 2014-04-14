@@ -1,0 +1,126 @@
+{
+    "scenarioName": "Gundarchuksson's Weird",
+    "gameLength":7,
+    "numberOfPlayers":2,
+    
+    "sunTrackSetting" : {
+        "yellow":1,
+        "blue":"J",
+        "red":"D"
+    },
+    
+    "nations": [
+        {
+	    "player":1,
+            "name": "Snorri",
+            "provinces": ["UrfDurfal"],
+            "setupOrder":2,
+            "moveOrder":1,
+            
+            "units": {
+              "Heavy Horse":5,
+              "Heavy Sword":4,
+              "Bow":2,
+              "Light Spear":4
+            },
+            
+            "characters": [
+                "Snorri",
+                "Therefond"
+            ],
+	    "reinforcements":"0",
+            "replacements":"1 in 3"
+        },
+        {
+	    "player":2,
+            "name": "Goblin State",
+            "provinces": ["Endore"],
+            "setupOrder": 1,
+            "moveOrder": 2,
+            "units": {
+              "Goblin Light Spear":8,
+              "Human Heavy Horse":2,
+              "Human Heavy Sword":2
+            },
+            
+            "characters": [
+                "Ganab the Nasty"
+            ],
+	    "reinforcements":"0",
+            "replacements":"1 in 3"
+        }
+    ],
+    
+    "neutrals": [
+        {
+            "name": "Aardvark Wallow",
+            "provinces": ["Aardvark Wallow"],
+            "units": {
+              "Heavy Pluglunk":10,
+              "Light Bow":4,
+              "Light Horse":2
+            },
+            
+            "characters": [
+                "Raman Cronkevitch",
+                "Svartz Tarnkap"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Snorri",
+                "amount":3
+            }
+        },
+        {
+            "name": "Swamp Creatures",
+            "provinces": ["The Swamps"],
+            "units": {
+              "Heavy Sword":6,
+              "Dinosaur Legions":4,
+              "Intelligent Mold":3
+            },
+            
+            "characters": [
+                "Sligoth"
+            ],
+            "diplomacy": {
+                "humanSacrifice":"true"
+            }
+        },
+        {
+            "name": "Corflu Cultists",
+            "provinces": ["Ka-Chunk"],
+            "units": {
+              "Light Horse":2,
+              "Heavy Sword":8,
+              "Airship":4
+            },
+            
+            "characters": [
+                "Unamit Ahazredit"
+            ],
+            
+            "diplomacy": {
+                "leaningTowards": "Goblins",
+                "amount":2
+            }
+        },
+        {
+            "name": "Zirkast",
+            "provinces": ["Zirkast, Kanathar"],
+            "units": {
+              "Heavy Axe":4
+            },
+            
+            "characters": [
+                "Raman Cronkevitch",
+                "Svartz Tarnkap"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Snorri",
+                "amount":3
+            }
+        }
+    ]
+
+}
+

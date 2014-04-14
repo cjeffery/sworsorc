@@ -1,0 +1,85 @@
+/---Brainstorm on integrating message sending with game code
+
+I'm not sure how to best integrate incoming messages, but I have a
+proposal for outgoing messages:
+
+First, we shouldn't have everyone use MessageUtils directly:
+
+- It requires a reference to the (wrapped) socket.
+
+- It has a bunch of junk that we've been using, but that the client
+  code doesn't need to care about. 
+
+Instead: How about we make a NetworkConnection class (or something
+like OutgoingConnection). Each Game can have an instance. The instance
+can manage the outgoing socket, and have a public interface for only
+the messages the client code needs to send. We can use existing
+NetworkClient and MessageUtil code for almost all the implementation.
+
+So when you move a unit, you might call:
+
+Game.outgoingReferenceName.unitMoved(int unitId, int hexId) //reference in Game
+
+or
+
+OutgoingConnectionClass.unitMoved(int unitId, int hexId) //With a static class
+
+which doesn't expose the thread, avoids putting almost any code
+into the main Game class, and can be called anywhere without passing reference
+to every class.
+
+Also:
+
+- We can decide whether or not to actually send the message inside the
+  class. Then, coders can insert the calls for messages in the game
+  code without ever breaking anything, because we can do "dummy"
+  actions if we're not ready for that message type yet. We can
+  provide a switch to turn actual networking on/off to ease
+  developement on a single machine.
+
+Here's a mockup of the public interface. Please add ideas:
+
+public class OutgoingConnection {
+
+//Connection wrangling, meta-state:
+
+public bool connectToRemote(String handle, int serverId); //bool for accept/reject, sends a bunch of secret messages
+public bool connectToLocal(String handle); //bool for accept/reject
+public void setMessagingOn(bool state); //turn the networking switch on/off, without changing any other code, for serverless dev
+public void setDebugging(bool state); //option to print a log of outgoing network activity
+
+//Game and Lobby creation 
+
+public bool createNewGame(<scenario?>); //start a lobby. can we have a default scenario or set-up right now? 
+                                       
+public bool loadSavedGame(); //not high priority
+public bool joinGame(); 
+
+public void startGame(); 
+
+//Normal chat:
+
+public void sendChatMessage(String message); //prob the first thing to hook-up
+
+//Turns:
+
+public void turnFinished(); //user clicked "done" 
+
+//Basic Unit Actions:
+public void unitCreated(String unitType, int unitId, int hexId); //There is a factory for making units from a string
+public void unitRemoved(int unitIdp); //by user decision or battle. see UnitPool
+public void unitMoved(int unitId, int hexId); //retreat, advance, portals, etc. see UnitPool
+public void unitDemoralized(int unitId); 
+
+//Battles:
+
+public void hexAttacked(<some id for attackers>, int hexId); //turn control over to defender
+public void unitsRetreat(<path info?>); //there were some rules allowing pursuit, can't remember the details.
+
+//Magic stuff:
+
+public void hexStateChanged(<a string, an enum? idk>);
+
+//Diplomacy stuff: (Should we plan on diplomacy? I'm not sure how the time frame is looking...)
+
+}

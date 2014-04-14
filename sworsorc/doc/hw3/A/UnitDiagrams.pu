@@ -1,0 +1,152 @@
+'this is the comment syntax
+
+@startuml
+hide circle
+
+MovableUnit <|- ArmyUnit
+MovableUnit <|- Character
+MovableUnit <|- Monster
+MovableUnit <|- ArmyUnit
+FlyingUnit -|> MovableUnit
+Monster <|- Demon
+Monster <|- KillerPenguin
+Monster <|- Dragon
+
+FlyingUnit --  Character : Carries
+ArmyUnit -- FlyingUnit : Carries
+
+AttackingGroup o- MovableUnit
+MovableUnit -o DefendingGroup
+
+class AttackingGroup{
++ Participants
++ Attack()
+}
+
+class DefendingGroup{
++ Participants
++ Defend()
+}
+
+class ArmyUnit { 
+
++ Unit Type 
++ CanAttack
++ CanBeAttacked
++ CanAttackBridge
++ CanAttackFlying
++ CanCharge
++ IsDemoralized
+
+- Attacking Strength
+- Defending Strength
+- Demoralized Strength
+
++ GetAttackingStrength()
++ GetDefendingStrength()
++ Join AttackingGroup
++ Join DefendingGroup
++ Retreat()
++ Die()
+
+}
+
+
+class FlyingUnit {
++ CharactersCarrying
++ ArmyUnitsCarrying
++ PickUpUnit()
++ DropUnit()
+}
+
+class MovableUnit {
++ RacialType
++ MovementAllowance
++ Move()
+}
+
+class Character {
++ Unique ID
++ Name
++ Subtitle
++ HomeHex
++ MagicProfile
++ MagicResistence
++ MagicPowerLevel
++ MagicPotential
++ MagicColor
++ Leadership
++ Diplomacy
++ Fighting
++ Endurance
++ HasTalisman
++ IsCaptured
+
++ AttemptEscape()
++ AffectCombatMagically()
+}
+
+class Monster {
++ Name
++ MagicResistence
++ MagicPowerLevel
++ MagicPotential
++ MagicColor
++ Fighting
++ Endurance
+
++ Eliminated()
++ Retreat()
+}
+
+class Demon {
++ BoundCharacter
+
++ AttemptBind()
+}
+
+class KillerPenguin {
++ PlayerControlled
++ ControllingPlayer
+
++ RandomMove()
++ AttackAdjacent()
+
+}
+
+class Dragon {
++ BlockadeComplex()
+}
+@enduml
+
+
+'Writeup: Putting this here for now:
+
+' A movable unit is something with a race that a player can move.
+
+' An army unit is something that attacks and defends directly. Army
+' units are mostly differentiated by their fixed attacking and defending
+' strengths, and by restrictions on what sort of units and terrain they
+' can attack. Each individual army unit may be in several different
+' states. IsDemoralized is a state that can persist between game turns.
+' CanAttack and CanBeAttacked are states that are reset each game turn,
+' (these states stem from the rule that each unit can only participate
+' in a single attack each game turn).
+
+' What can an ArmyUnit do? Attack, defend, retreat and die. The games
+' rules are best reflected by considring attacking and defending as
+' group operations (possibly in a group of size 1). The AttackingGroup
+' and DefendingGroup classes capture this.
+
+' FlyingUnits are a subclass of normal ArmyUnits, but they can carry a
+' single unit or any number of characters.
+
+' Characters are independant units with unique stats depending on character ID.
+' They can be attached to armies, or move independantly
+' Stats are set depending on the character card, of which there are 40. Characters can be
+' captured by an enemy army. If captured, capturing player can eliminate character, take any talismans that
+' character may possess, and move with and between armies. Moving army that is holding captured character without
+' explicitly stating to bring said character, is considored implictly to release said character.
+
+' Monsters are also independant units, and are either autonomous or controlled by a player, depending on Monster
+' race and scenario settings.

@@ -1,0 +1,37 @@
+@startuml
+title Terrain Magic / Random Effects
+
+state "Forested Devastation" as ForestedDevastation
+state "Frozen Bridged" as FrozenBridged
+[*] --> Normal
+Normal --> Frozen : Ersatz Winter
+Normal --> Devastated : Windstorm
+Normal --> Forested : Forest
+Normal --> Melted : Drought
+Normal --> Blasted : Firestorm
+Normal --> Bridged : Building
+Normal --> Crossable : River Crossing
+
+Devastated --> ForestedDevastation : Forest
+ForestedDevastation --> Devastated : Wizard Wheel
+ForestedDevastation --> Blasted : FireStorm
+Devastated --> Blasted : Firestorm
+
+Forested --> Blasted : Firestorm
+Forested --> Normal : Wizard Wheel
+
+Frozen --> FrozenBridged : Building
+Frozen --> Normal : Wizard Wheel / End of Winter
+
+Bridged --> FrozenBridged : Ersatz Winter
+Bridged --> Normal : Wizard Wheel / Disintegration 
+Crossable --> Normal : Wizard Wheel / Timeout / Dismissed
+Crossable --> Frozen : Ersatz Winter
+
+FrozenBridged --> Bridged : End of Winter
+FrozenBridged --> Frozen : Disintegration
+FrozenBridged --> Normal : Wizard Wheel
+
+Melted --> Normal : End of Drought
+
+@enduml

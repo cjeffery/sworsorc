@@ -1,0 +1,42 @@
+@startuml
+title Sequence of Play \n by Cameron Simon
+
+scale 600 width
+
+[*] -down-> Random_Event_Determination_InterPhase
+Random_Event_Determination_InterPhase -down-> Player_Order_Determination_InterPhase : Succeeded
+'Random_Event_Determination_InterPhase --> [*] : Aborted
+state "Generated_Player_List" as PlayerList
+PlayerList: This is a generated list of players for this game turn.
+Player_Order_Determination_InterPhase --> PlayerList : Succeeded
+PlayerList --> Player_Game_Phases : Succeeded
+'Player_Order_Determination_InterPhase --> [*] : Aborted
+state Player_Game_Phases {
+  [*] --> Movement_Phase
+  Movement_Phase --> Magic_Phase
+  state Magic_Phase{
+        [*] --> Spell_Segment
+        [*] --> Counterspell_Segment
+        [*] --> Character_cast
+  }
+  Magic_Phase --> Combat_Phase
+  state Combat_Phase{
+        [*] --> Unit_Rallying_Segment
+        [*] --> Magic_Allocation_Segment
+        [*] --> Personal_Combat_Segment
+        [*] --> Combat_Resolution_Segment
+  }
+}
+state "Player Remaining?" as checkList
+Player_Game_Phases --> checkList : Succeeded
+checkList --> PlayerList : Yes
+'Player_Game_Phases --> [*] : Aborted
+checkList --> Random_Movement_Interphase : No
+'Random_Movement_Interphase --> [*] : Aborted
+Random_Movement_Interphase --> Diplomacy_Interphase : Succeeded
+'Diplomacy_Interphase --> [*] : Aborted
+Diplomacy_Interphase --> Manna_Regeneration_Interphase : Succeeded
+'Manna_Regeneration_Interphase --> [*] : Aborted
+Manna_Regeneration_Interphase --> Random_Event_Determination_InterPhase : Succeeded
+
+@enduml

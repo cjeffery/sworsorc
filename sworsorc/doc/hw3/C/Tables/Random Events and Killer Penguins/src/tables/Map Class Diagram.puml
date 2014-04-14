@@ -1,0 +1,32 @@
+@startuml
+hide circles
+
+title Map Class Diagram
+note "Author: Cameron Simon \nEdited by: Joe Higley" as n1
+
+Map *-- "1..*" Provinces : contains
+Provinces *-- "1..*" Hexes : contains
+Hexes o-- "0..*" Characters
+    Characters <|-- Sorcerers
+Hexes o-- "0..2" Army_Units
+    Army_Units <|-- Imperial_Army 
+    Army_Units <|-- Elven 
+    Army_Units <|-- O.R.C.
+    Army_Units <|-right- etc.
+
+Hexes o-- "0..3" Monsters
+    Monsters <|-- Demons
+    Monsters <|-- KillerPenguins
+    Monsters <|-- Dragons
+
+Hexes *-right- "1" Terrain
+    Terrain <|-- Swamp
+    Terrain <|-- Glacier
+    Terrain <|-- Moat_or_River
+    Terrain <|-right- etc..
+    Terrain <|-up- SpecialTerrain
+        SpecialTerrain <|-up- Portal_and_Vortex
+        SpecialTerrain <|-up- SpecialHexes
+        SpecialTerrain <|-up- TunnelComplexes
+
+@enduml

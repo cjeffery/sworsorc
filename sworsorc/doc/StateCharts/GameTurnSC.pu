@@ -1,0 +1,30 @@
+' Keith Drew - Statechart for HW 5
+' For the general game turn
+@startuml
+title StateChart for phases of game-play by Keith Drew
+[*] --> RandomEventDetermination : Begin Game
+RandomEventDetermination : Determine Event, Apply Effects
+
+RandomEventDetermination --> PlayerOrderDetermination : The random event\nis determined
+PlayerOrderDetermination : Determine this Game-turn's alliances and player order
+PlayerOrderDetermination : Alliances fixed for game-turn
+
+PlayerOrderDetermination -down-> PlayerTurn : Turn order is finalized,\nalliances made 
+state PlayerTurn {
+[*] -> MovementPhase 
+MovementPhase -> MagicPhase : Confirmed unit movement.
+MagicPhase -down-> CombatPhase : Spells and Counterspells resolved.
+CombatPhase -> [*] : All combat steps are resolved\nand finalized.
+} 
+
+PlayerTurn -> PlayerTurn : Another player has yet to\ntake his/her turn.
+PlayerTurn -> RandomMovement : All player turns are finished\nfor this game-turn
+RandomMovement --> DiplomacyInterphase : All random movement for game-turn completed
+RandomMovement : Any random movement effects (vortices, KPs)\ntake place and their results\nare resolved.
+
+
+DiplomacyInterphase : Players/system determine diplomacy effects
+DiplomacyInterphase -> MannaRegenerationInterphase : Diplomacy for game-turn completed
+MannaRegenerationInterphase -up-> RandomEventDetermination : Manna Regeneration Finished\nBegin new game turn
+MannaRegenerationInterphase -> [*] : Final game turn completed
+@enduml

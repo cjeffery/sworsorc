@@ -1,0 +1,49 @@
+@startuml
+
+[*] --> InitializeCommand : user makes a command
+
+state "Command Initiated" as InitializeCommand{
+InitializeCommand : DAO converts command to Message String
+}
+
+InitializeCommand --> SendToServer : Message String converted
+
+state "Sending to Server" as SendToServer {
+SendToServer : send Message String to Server
+}
+
+SendToServer --> Forward : Message at Server
+
+state "Forward Message" as Forward {
+Forward : forward message to all clients
+}
+
+Forward --> ClientDisplay : Message at client
+
+state "Clients display message" as ClientDisplay {
+}
+
+Forward --> Resolution : Message sent to clients
+
+state Resolution {
+    [*] --> Parse
+    
+    state "Parse Message" as Parse {
+    Parse : tokenize message and disect command
+    }
+
+    Parse --> CalcResult
+
+    state "Calculate Result" as CalcResult{
+    }
+    
+    CalcResult --> SendResult : Result determined
+
+    state "Send Result" as SendResult {
+    SendResult : message of the result is sent to all clients
+    }
+
+    SendResult --> ClientDisplay : Message at Client
+}
+
+@enduml
