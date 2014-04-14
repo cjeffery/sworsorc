@@ -60,12 +60,22 @@ public class Lobby {
     public void join(ClientObject client) {
         lobbyClients.add(client);
         client.setCurrentLobby(this);
-        //TODO: announce join to other connected clients
+        //TODO: make join messages lobbycast instead of broadcast
     }
 
     public String getName() {
         return name;
     }
+    
+    public boolean isInLobby( String handle ) {
+        for (ClientObject client : lobbyClients ) {
+            if (client.getHandle().equals(handle)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void leave(ClientObject client) {
         lobbyClients.remove(client);
     }

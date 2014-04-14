@@ -43,9 +43,16 @@ public class NetworkServer {
     public static void joinLobby(String lobbyName, ClientObject client) {
         for (Lobby l : lobbies) {
             if (l.getName().equals(lobbyName)) {
-                l.join(client);
-                sendToAllClients(MessageUtils.makeJoinedLobbyMessage(lobbyName, client.getHandle()));
-                return;
+                if (l.isInLobby(client.getHandle())) {
+                    client.send(MessageUtils.makeErrorMessage("Cannot join lobby, you're already in it!"));
+                    return;
+                } else {
+                    leaveLobby(client);
+                    l.join(client);
+                    sendToAllClients(MessageUtils.makeJoinedLobbyMessage(lobbyName, client.getHandle()));
+                    
+                    return;
+                }
             }
         }
         //If we're here, we didn't find the name!

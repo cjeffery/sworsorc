@@ -39,7 +39,7 @@ public class NetworkClient {
     final private String dir = System.getProperty("user.dir");
 
     //private Conductor jarvis; // Our conductor object
-    // TODO: MAKE THIS WHOLE ENCHALADA STATIC!
+    // TODO: MAKE THIS WHOLE ENCHALADA STATIC! Maybe...
     /* CONSTRUCTOR */
     
     /**
@@ -137,6 +137,9 @@ public class NetworkClient {
                     stopClient();
                     consoleOut.println("Later gator!");
                     return;
+                } else {
+                    consoleOut.print(username + ": ");
+                    consoleOut.flush();
                 }
 
             } catch (IOException ex) {
@@ -227,8 +230,13 @@ public class NetworkClient {
                     //first element of the parsed message array will tell us
                     //what type of message it is:
                     if (message.get(0).equals(MessageUtils.GLOBAL_CHAT)) {
-                        //Printing methods can be centralized!
-                        MessageUtils.printChat(consoleOut, message);
+                        if ( message.get(1).equals(username) ) {
+                            // suppress message
+                        } else {
+                            // TODO: ADD CHAT "PRIVACY" TAG. EX: (Global), (<lobby>), etc
+                            // TODO: ADD CONNECTION STATUS TAG. EX: (CONNECTED), (DISCONNECTED), other states
+                            MessageUtils.printChat(consoleOut, message);
+                        }
                     } else if (message.get(0).equals(MessageUtils.DISCONNECT_ANNOUNCEMENT)) {
                         MessageUtils.printDisconnect(consoleOut, message);
                     } else if (message.get(0).equals(MessageUtils.CONNECT_ANNOUNCEMENT)) {
@@ -251,6 +259,12 @@ public class NetworkClient {
                             consoleOut.println("It is now my turn!");
                         }
                         consoleOut.println("It is now " + message.get(1) + "'s turn!");
+                    } else if (message.get(0).equals(MessageUtils.JOINED_LOBBY) ) {
+                            consoleOut.println("Client " + message.get(2) + " has joined lobby "
+                            + message.get(1) );
+                    } else if (message.get(0).equals(MessageUtils.LEFT_LOBBY) ) {
+                            consoleOut.println("Client " + message.get(2) + " has left lobby "
+                            + message.get(1) );                       
                     } else {
                         // its not a network message, therefore NC doesn't care, and has Jarvis take out the trash
                         //jarvis.processMessage( message.subList(1, message.size()), message.get(0) );
@@ -353,7 +367,7 @@ public class NetworkClient {
      * <p>
      * @author Christopher Goes
      * @param command
-     * @return boolean True if execute normally, False if quit or exception
+     * @return boolean True if executed normally, False if quit or exception
      */
     private boolean processInput(String command) {
 
@@ -369,21 +383,19 @@ public class NetworkClient {
             if ("/file".equals(parsedString[0])) {
                 sendFile(parsedString[1]);
 
-            } else if ("/newLobby".equals(parsedString[0])) { // TODO: remove user from current lobby if they create a new lobby
+            } else if ("/newLobby".equals(parsedString[0])) {
                 String lobbyName = parsedString[1];
                 MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyRequestMessage(lobbyName));
 
-            } else if ("/joinLobby".equals(parsedString[0])) { // TODO: stopClient a user for "cloning" themselves by rejoining the same lobby
+            } else if ("/joinLobby".equals(parsedString[0])) {
                 String lobbyName = parsedString[1];
                 MessageUtils.sendMessage(writer, MessageUtils.makeJoinLobbyRequestMessage(lobbyName));
             } else if (isConnected()) {
                 // sends chat message to server, which broadcasts to all clients
-                // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
             }
-            // TODO: LEFT LOBBY + JOINED LOBBY
         } else if (parsedString.length == 1) {
-            if ("/printFile".equals(parsedString[0])) {
+            if ("/printFile".equals(parsedString[0])) { // TODO: What does this do?
                 write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
 
             } else if ("/globalWho".equals(parsedString[0])) {
@@ -405,20 +417,20 @@ public class NetworkClient {
             } else if ("/yieldTurn".equals(parsedString[0])) { // client turn over
                 MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
 
-            } else if ("/beginGame".equals(parsedString[0])) { // request to startClient game
+            } else if ("/beginGame".equals(parsedString[0])) { // request to start game
                 MessageUtils.sendMessage(writer, MessageUtils.makeBeginGameRequestMessage());
 
             } else if ("/help".equals(parsedString[0])) {
                 printCommandList();
 
             } else if ("/reconnect".equals(parsedString[0])) {
-                // MAKE SURE USER CANT CLONE THEMSELVES!
-                if (isConnected()) {
+                if (isConnected()) { // Anti-clone League of Uganda certified
                     consoleOut.println("Already connected!");
                     return true;
                 }
-                consoleOut.println("Attempting to reconnect...");
+                consoleOut.print("Attempting to reconnect...");
                 if (connect()) {
+                    consoleOut.println("Successfully reconnected!");
                     startClient();
 
                 } else {
@@ -433,8 +445,6 @@ public class NetworkClient {
                 }
                 return false;
             } else if (isConnected()) {
-                // sends chat message to server, which broadcasts to all clients
-                // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
 
             } else {
@@ -442,10 +452,9 @@ public class NetworkClient {
             }
         } else {
             if (isConnected()) {
-                // sends chat message to server, which broadcasts to all clients
-                // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
-                // TODO: append lobby client before all messages recieved
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
+            } else {
+                return false;
             }
         }
         return true;

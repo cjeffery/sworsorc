@@ -36,7 +36,7 @@ public class ClientObject {
     private Lobby currentLobby = null; //Clients need to be able to talk just to their lobbies
 
     //We need a PrintWriter to standardize the printMessage functions:
-    private PrintWriter consoleOut = new PrintWriter(System.out, true);
+    private PrintWriter consoleOut = null;
     
     /* CONSTRUCTOR */
     
@@ -53,6 +53,7 @@ public class ClientObject {
 
         this.socket = sock;
 
+        consoleOut  = new PrintWriter(System.out, true);
         listenerThread = new ListenerThread();
     }
     
@@ -280,7 +281,7 @@ public class ClientObject {
                             MessageUtils.sendMessage(writer,
                                     MessageUtils.makeNagMessage("You requested to yield your turn, but you're not even in lobby!"));
                         } 
-                        else if (currentLobby.current.clientID != clientID) {
+                        else if (currentLobby.current.getClientID() != clientID) {
                             //client requested to change turns, but it's not their turn!
                             MessageUtils.sendMessage(writer,
                                     MessageUtils.makeNagMessage("Requested to yield turn, but it's not your turn!"));
