@@ -155,7 +155,7 @@ public class MoveableUnit {
             case SwampCreature: return "s";
             case Goblins: return "g";
             default:
-                System.out.println("Unit has unknown race: " + getRace());  
+                System.out.println("Unit has unknown race: " + getRace().toString());  
                 return "?";
         }
     }
