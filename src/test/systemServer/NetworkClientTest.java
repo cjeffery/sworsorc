@@ -18,47 +18,41 @@ import junit.framework.TestCase;
  */
 public class NetworkClientTest extends TestCase {
     
+    public NetworkClient instance = null;
+
     public NetworkClientTest(String testName) {
         super(testName);
+        instance = new NetworkClient("127.0.0.1", 25565, "default_user");
     }
     
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        NetworkServer.main(null);
+        
     }
     
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
+        NetworkServer.stopServer();
+        
     }
 
     /**
      * Test of connect method, of class NetworkClient.
      */
     public void testConnect() {
-        System.out.println("connect() test");
-        NetworkClient instance = null;
-        try {
-            instance = new NetworkClient("127.0.0.1", 25565, "default_user");
-        } catch (IOException e) {
-            
-        }
-        boolean expResult = false;
-        instance.connect();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("connect() test");           
+        assertTrue(instance.connect());
     }
 
     /**
      * Test of startClient method, of class NetworkClient.
      */
-    public void testStartClient() throws Exception {
+    public void testStartClient() {
         System.out.println("start");
-        NetworkClient instance = null;
         instance.startClient();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -66,21 +60,16 @@ public class NetworkClientTest extends TestCase {
      */
     public void testRunClient() {
         System.out.println("runClient");
-        NetworkClient instance = null;
         instance.runClient();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of main method, of class NetworkClient.
      */
-    public void testMain() throws Exception {
+    public void testMain() {
         System.out.println("main");
         String[] args = null;
         NetworkClient.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

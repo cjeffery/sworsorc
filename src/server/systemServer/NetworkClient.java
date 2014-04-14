@@ -9,8 +9,6 @@ import java.net.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * The singleton class for the Network Client, handles data and communication
@@ -41,7 +39,7 @@ public class NetworkClient {
     final private String dir = System.getProperty("user.dir");
 
     //private Conductor jarvis; // Our conductor object
-    
+    // TODO: MAKE THIS WHOLE ENCHALADA STATIC!
     /* CONSTRUCTOR */
     
     /**
@@ -521,7 +519,7 @@ public class NetworkClient {
      * @return Socket
      * @throws IOException
      */
-    private static Socket connectToServer(String sName, int serverPort) throws IOException {
+    private Socket connectToServer(String sName, int serverPort) throws IOException {
         Socket tempsock = null;
         System.out.println("Connecting! Please Wait!");
         try {

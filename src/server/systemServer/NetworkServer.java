@@ -14,9 +14,15 @@ public class NetworkServer {
     private static List<ClientObject> clientObjects; //"Packaged sockets"
     protected static List<Lobby> lobbies;
 
+    private static boolean stopped = false;
+    
     private static final int DEFAULT_PORT = 25565;
     private static final String DEFAULT_IP = "76.178.139.129";
 
+    public static void stopServer() {
+        stopped = true;
+    }
+    
     public static boolean canCreateNewLobby(String name) {
         //check if lobby name is unique.
         //we might have to add other conditions?
@@ -138,7 +144,10 @@ public class NetworkServer {
                 clientObjects.add(tempclient); // add the active client to list
             } catch (IOException e) {
                 System.err.println("Server failed to accept client!\nException: " + e );
-                break;
+                return;
+            }
+            if( stopped ) {
+                return;
             }
         }
 
