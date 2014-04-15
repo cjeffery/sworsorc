@@ -15,7 +15,7 @@ public class LightSword extends LandUnit{
     public LightSword() {
         super();
         strength = 3;
-        movement = 5;
+        movement = 5; // temp change for testing = reset to 5 'minder
         demoralizedStrength = 1;
     }
     
