@@ -34,6 +34,11 @@ public class MapView extends    JPanel
         }
     }
 
+    public static MapView getMapView()
+    {
+        MapView hex_map = new MapView(MainMap.GetInstance());
+        return hex_map;
+    }
     /** 
      * @param x The X pixel coordinate
      * @param y The Y pixel coordinate

@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Arrays;
+import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 
 import solardisplay.SolarDisplay;
+import sshexmap.MapView;
  
 public class HUDController {
     @FXML private TabPane Units;
@@ -38,10 +40,12 @@ public class HUDController {
     @FXML private TextArea chat_box;
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
+    @FXML private SwingNode hex_map;
     
     ArmyUnit bow = new Bow();
     ArmyUnit lightsword = new LightSword();
     ArmyUnit pike = new PikeMan();
+    MapView hmap = MapView.getMapView();
 
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
@@ -51,8 +55,12 @@ public class HUDController {
      */
     public void initialize(){
         
+        hex_map.setContent(hmap);
+        //map_view.getChildren().add(hex_map); //getChildren() error <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        
         //this adds mouse support to map_view, just a placeholder for now
         map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
 		public void handle (MouseEvent mouseEvent) {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
 		}
@@ -64,6 +72,7 @@ public class HUDController {
 		}
 	});
     }
+   
     
     //called when clicking a friendly hex
     @FXML protected void DisplayUnits(ActionEvent event) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
