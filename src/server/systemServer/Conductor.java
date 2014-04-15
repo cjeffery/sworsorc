@@ -34,7 +34,7 @@ import java.util.Map;
  * 
  * <p>
  * 
- * Other stuff:
+ * Other potential traps:
  * 
  * Some of the messages we send over the network are just networking related, and
  * some of the functions in this class might actually be called after a "back and forth"
@@ -47,6 +47,7 @@ import java.util.Map;
 public class Conductor { // Should this be a static singleton?
     
     // Put singletons and other objects here, so conductor can access their methods
+    //Can we do "register" methods? We have access to singletons everywhere already
     
     /**
      * Constructor
@@ -66,7 +67,6 @@ public class Conductor { // Should this be a static singleton?
      * @param tag The message tag
      */
     public void processMessage( List<String> message, String tag ) {
-        //Should this go here? Or do we want to determine which function to call inside NeworkClient?
         if (message.get(0).equals(MessageUtils.UPDATE_UNIT)){
             UnitPool pool = UnitPool.getInstance();
             MoveableUnit unit = pool.getUnit(message.get(1));
@@ -85,7 +85,6 @@ public class Conductor { // Should this be a static singleton?
     
     // For each major part of the game, put a different method that calls those object's methods
     // The method is passed the message recieved, which is a list of strings List<String>
-    
     
     /**
      * Called at the start of the user's Player-Turn.
@@ -134,7 +133,7 @@ public class Conductor { // Should this be a static singleton?
      * scenario file, this gives information about what troops you get, 
      * what provinces, etc.
      * 
-     * All players get this message at the same time. 
+     * All players get this message at the same time. TODO on actual setup handling...
      * 
      * @param playerRoles A map from usernames to nations
      * @param userNation For convenience, this is the user's nation.
@@ -147,7 +146,7 @@ public class Conductor { // Should this be a static singleton?
     /**
      * Called at the start of each Game-Turn
      * <p>
-     * All users in the game will execute this function at the start of each
+     * All users in the game will execute this function at the start o
      * each new Game-Turn (before any inter-phase is executed).
      * 
      * Note that a Game-Turn is NOT the same as a Player-Turn. This function
@@ -168,7 +167,8 @@ public class Conductor { // Should this be a static singleton?
      * The server is informing you of the turn-orders for the next game-turn.
      * The player with turn-order 1 will move first, and so on.
      * 
-     * This function is NOT a signal to start doing turn stuff. 
+     * This function is NOT a signal to start doing turn stuff, even if you
+     * see that you'll be moving first.
      * 
      * @param playerOrders A map from usernames to turn orders
      * @param yourOrder For convenience, this is your player order.
@@ -193,6 +193,7 @@ public class Conductor { // Should this be a static singleton?
     
     /**
      * This stub is a placeholder for any random events we end up supporting.
+     * Not sure how many separate methods or handlers we'll need.
      * 
      * @param eventCode Some sort of identifier for the event
      */

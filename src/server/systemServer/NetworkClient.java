@@ -21,6 +21,7 @@ import Units.Race;
  * thread(s)
  * <p>
  * NOTE: This is a singleton, DO NOT MAKE MORE THAN ONE NetworkClient!
+ * TODO: We can enforce this if we want with a static self-reference pattern?
  */
 public class NetworkClient {
 
@@ -128,7 +129,7 @@ public class NetworkClient {
      * <p>
      * @author Christopher Goes
      */
-    public void runClient() {
+     public void runClient() { //Does this need to be public?
         String line;
 
         while (true) {
