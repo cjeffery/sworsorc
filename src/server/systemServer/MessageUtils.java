@@ -281,6 +281,18 @@ public class MessageUtils {
 
         return message;
     }
+    
+    public static List<String> makeAddUnitMessage(MoveableUnit unit) {
+        List<String> message = new ArrayList<>();
+        message.add(ADD_UNIT);
+        message.add(unit.getID());
+        message.add(unit.getRace().toString());
+        message.add(unit.getUnitType().toString());
+        message.add(unit.getLocation());
+        //message.add()
+
+        return message;
+    }
 
     public static List<String> makeMapHexUpdateMessage(MapHex mapHex) {
         List<String> message = new ArrayList<>();

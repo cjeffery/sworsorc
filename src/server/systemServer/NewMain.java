@@ -8,7 +8,7 @@ package systemServer;
 
 /**
  *
- * @author John
+ * @author John Goettsche
  */
 public class NewMain {
 
