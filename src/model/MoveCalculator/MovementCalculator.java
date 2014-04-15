@@ -49,10 +49,10 @@ public class MovementCalculator
         TerrainType destinationTerrainType;
         ArrayList<MapHex> neighbors = new ArrayList<MapHex>();
 
-        // For each hex edge, 0-5, get the neighboring hex, if it's valid
+        //For each hex edge, 0-5, get the neighboring hex, if it's valid
         for (int i = 0; i < 6; i++) 
         {
-            // Check if the hex is valid, null returned if hex neighbor no exist
+            //Check if the hex is valid, null returned if hex neighbor no exist
             if (currentHex.getNeighbor(i) != null) 
             {
                 // add each valid neighbor to neighbors
