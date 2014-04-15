@@ -35,10 +35,10 @@ public class MovementCalculator
      * to be filled (by reference) during the recursive calls of this method. 
      * The ArrayList will (after final return) hold all valid hex moves for the 
      * moving unit, starting from the currentHex. (\/)..(;,,,;)..(\/)
-     * @param movingUnit
-     * @param startHex
-     * @param moveAllowance
-     * @param validHexes 
+     * @param movingUnit - the unit to be moved 
+     * @param currentHex - the current hex location of the moving unit
+     * @param moveAllowance - the unit's movement allowance.
+     * @param validHexes  - an empty ArrayList holding type MapHex
      * @author Keith and Ian
      */
     public static void getValidMoves(MoveableUnit movingUnit, MapHex currentHex,
