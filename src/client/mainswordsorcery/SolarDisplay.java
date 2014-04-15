@@ -13,13 +13,6 @@ package mainswordsorcery;
 * 2/27/2014
 */
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class SolarDisplay {
     /**
@@ -29,9 +22,9 @@ public class SolarDisplay {
 
         static String SunImage, BlueState, RedState;
         
-        int SolarDayNum = 1;
-        int RedSunVal = 1;
-        int BlueSunVal = 7;
+        static int SolarDayNum = 1;
+        static int RedSunVal = 1;
+        static int BlueSunVal = 7;
         
     private static SolarDisplay instance;
 
@@ -56,7 +49,7 @@ public class SolarDisplay {
         return SunImage;
     }
     
-    public void SunCalc() {
+    public static void SunCalc() {
             if (SolarDayNum < 27) {
             SolarDayNum++;
             }

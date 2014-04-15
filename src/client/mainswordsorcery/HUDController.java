@@ -212,6 +212,7 @@ public class HUDController {
      * @author Joe Higley      
      */   
     @FXML protected void ChangeSun(ActionEvent event) {
+        SolarDisplay.SunCalc();
         Image Sun = new Image(SolarDisplay.GetSunImage());
         SunImage.setImage(Sun);
         
