@@ -60,6 +60,7 @@ public class MessageUtils {
     //static String WAITING_TO_BEGIN_GAME = "waitingForVotesBeforeStarting"; //wait for everyone to agree to start
 
     /* GAMEY ACTIONS */
+    static String ADD_UNIT = "addunit";
     static String UPDATE_UNIT = "updateunit"; // client sends a unit update
     static String UPDATE_HEX = "updatehex"; // client sends a hex update
 
@@ -271,6 +272,20 @@ public class MessageUtils {
         return message;
     }
 
+    public static List<String> makeAddMoveableUnitMessage(MoveableUnit unit) {
+        List<String> message = new ArrayList<>();
+        message.add(ADD_UNIT);
+        message.add(unit.getID());
+        message.add(unit.getRace().toString());
+        message.add(unit.getUnitType().toString());
+        message.add(unit.getLocation());
+        //need to add player ID
+        //message.add()
+        //message.add()
+
+        return message;
+    }
+    
     public static List<String> makeMoveableUnitUpdateMessage(MoveableUnit unit) {
         List<String> message = new ArrayList<>();
         message.add(UPDATE_UNIT);
