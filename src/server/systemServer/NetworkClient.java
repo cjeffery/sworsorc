@@ -1,7 +1,10 @@
 /**
- * The Network Client
+ * NetworkClient manages a client computer's connection with the server,
+ * and provides an interface for sending messages over the network.
  * <p>
- * Handles client-side communication with the server
+ * 
+ * Can we get a "what you need to know" overview here?
+ * 
  */
 package systemServer;
 
@@ -141,7 +144,8 @@ public class NetworkClient {
                     consoleOut.println("Later gator!");
                     return;
                 } else {
-                    consoleOut.print(username + ": ");
+                    //consoleOut.print(username + ": "); This was confusing me when I was working with echoed message. 
+                                                        //Feel free to switch this back on.
                     consoleOut.flush();
                 }
 
@@ -155,6 +159,31 @@ public class NetworkClient {
             } // end catch   
         } // end while
 
+    }
+    
+    /**
+     * Sends a "chat" message to the other users. The received message will
+     * be displayed (along with the sender's username) in the chat box of the 
+     * other connected players.
+     * 
+     * @param message The message to display to other users
+     */
+    
+    public void sendChatMessage(String message){
+      MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, message));
+      //TODO: World-wide or lobby-wide?
+    }
+    
+    /**
+     * Inform the server that this user has finished all phases of their current player turn.
+     * <p>
+     * This shouldn't be called when it isn't the user's game turn.
+     * <p>
+     * For context: After this message is sent, the server may pass control to the next user, or
+     * the next game turn may start, or the game may end.
+     */
+    public void endTurn(){
+        MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
     }
 
     /* THREAD N' STREAM STUFF */
@@ -432,7 +461,8 @@ public class NetworkClient {
                 }
 
             } else if ("/yieldTurn".equals(parsedString[0])) { // client turn over
-                MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
+                endTurn();
+                
 
             } else if ("/beginGame".equals(parsedString[0])) { // request to start game
                 MessageUtils.sendMessage(writer, MessageUtils.makeBeginGameRequestMessage());
@@ -461,15 +491,14 @@ public class NetworkClient {
                     disconnectFromServer();
                 }
                 return false;
-            } else if (isConnected()) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
-
-            } else {
+            }
+            else {
                 consoleOut.println("Invalid command, try again, or type /help for a list of commands.");
             }
         } else {
             if (isConnected()) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
+                sendChatMessage(command);
+                
             } else {
                 return false;
             }
