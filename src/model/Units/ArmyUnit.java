@@ -45,7 +45,7 @@ public class ArmyUnit extends MoveableUnit {
  *                - WebWarriors
  * RangedLandUnit - HorseArcher
  *                - LightBow
-                  - Bow
+ *                - Bow
  * FlyingConjured - WyvernAirtroops
  * FlyingUnit     - RocRider
  *                - Zeppelin

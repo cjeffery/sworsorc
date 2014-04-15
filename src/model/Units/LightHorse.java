@@ -19,4 +19,27 @@ public class LightHorse extends Cavalry{
         demoralizedStrength = 1;
     }
     
+    @Override
+    public void setRace(Race newRace){
+        this.race = newRace;
+        switch(race){
+            case Elves:
+            case Dwarrows:
+                strength = 2;
+                movement = 9;
+                demoralizedStrength = 1;
+                break;
+            case Cronk:
+                strength = 1;
+                movement = 9;
+                demoralizedStrength = 1;
+                break;
+            case Human:
+                strength = 2;
+                movement = 7;
+                demoralizedStrength = 1;
+                break;
+        }
+    }
+    
 }

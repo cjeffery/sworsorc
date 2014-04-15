@@ -19,5 +19,16 @@ public class LightSword extends LandUnit{
         demoralizedStrength = 1;
     }
     
+    @Override
+    public void setRace(Race r){
+        this.race = r;
+        switch(race){
+            case Elves:
+                movement = 5;
+            case Orc:
+                movement = 4;
+        }
+    }
+    
     
 }

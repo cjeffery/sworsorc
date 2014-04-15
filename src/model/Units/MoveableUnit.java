@@ -61,7 +61,7 @@ public class MoveableUnit {
         this.location = location;
     }
     
-     public void setRace(Race newRace){
+    public void setRace(Race newRace){
         this.race = newRace;
     }
      /**
