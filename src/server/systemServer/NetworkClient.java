@@ -11,6 +11,7 @@ import java.net.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.List;
+import Units.Race;
 
 /**
  * The singleton class for the Network Client, handles data and communication
@@ -242,6 +243,14 @@ public class NetworkClient {
                         MoveableUnit unit = pool.getUnit(message.get(1));
                         String location = message.get(2);
                         pool.addMove(unit, location);
+                    } else if (message.get(0).equals(MessageUtils.ADD_UNIT)){
+                        UnitPool pool = UnitPool.getInstance();
+                        MoveableUnit unit = pool.getUnit(message.get(1));
+                        unit.setRace(message.get(2));
+                        unit.setUnitType(message.get(3));            
+                        String location = message.get(4);
+                        //needs player ID
+                        //pool.addUnit(port, unit);
                     } else {
                         // its not a network message, therefore NC doesn't care, and has Jarvis take out the trash
                         //jarvis.processMessage( message.subList(1, message.size()), message.get(0) );
