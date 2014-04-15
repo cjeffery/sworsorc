@@ -2,7 +2,6 @@ package sshexmap;
 
 import MoveCalculator.MovementCalculator;
 import Units.*;
-import com.sun.beans.WeakCache;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
