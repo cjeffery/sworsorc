@@ -55,7 +55,7 @@ public class HUDController {
      */
     public void initialize(){
         
-        hex_map.setContent(hmap);
+        //hex_map.setContent(hmap);
         //map_view.getChildren().add(hex_map); //getChildren() error <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         
         //this adds mouse support to map_view, just a placeholder for now
