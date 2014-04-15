@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -211,7 +212,11 @@ public class HUDController {
      * @author Joe Higley      
      */   
     @FXML protected void ChangeSun(ActionEvent event) {
-        SunImage.setImage(getSunImage);
+        Image Sun = new Image(SolarDisplay.GetSunImage());
+        SunImage.setImage(Sun);
+        
+        RedState.setText(SolarDisplay.GetRedState());
+        BlueState.setText(SolarDisplay.GetBlueState());
     }
 
 }

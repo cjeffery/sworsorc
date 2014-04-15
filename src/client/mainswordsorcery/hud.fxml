@@ -148,7 +148,7 @@
                   <children>
                     <ImageView id="sun_display" fx:id="SunImage" fitHeight="177.375" fitWidth="177.375" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                       <image>
-                        <Image url="@sun.png" />
+                        <Image url="file:resources/images/YellowSun.png" />
                       </image>
                     </ImageView>
                     <Button mnemonicParsing="false" onAction="#ChangeSun" prefHeight="48.0" prefWidth="158.0" text="End Phase" GridPane.columnIndex="0" GridPane.rowIndex="1">
