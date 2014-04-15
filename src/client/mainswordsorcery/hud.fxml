@@ -17,11 +17,7 @@
           <children>
             <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0" GridPane.rowSpan="5">
               <children>
-                <ScrollPane fx:id="map_view">
-                  <content>
-                    <AnchorPane prefHeight="6000.0" prefWidth="6000.0" />
-                  </content>
-                </ScrollPane>
+                <ScrollPane fx:id="map_view" content="$null" />
               </children>
             </StackPane>
             <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
@@ -41,7 +37,7 @@
               </GridPane.margin>
             </TextArea>
             <TextField fx:id="message_box" onAction="#SubmitToChat" prefWidth="411.0" promptText="Your Message Here" text="" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.margin="$x4" GridPane.rowIndex="3" />
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <AnchorPane prefHeight="26.0" prefWidth="118.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
               <children>
                 <MenuBar fx:id="menuBar" layoutX="0.0" layoutY="1.0" prefWidth="-1.0">
                   <menus>
@@ -150,7 +146,7 @@
                 </GridPane>
                 <GridPane minHeight="150.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
                   <children>
-                    <ImageView id="sun_display" fitHeight="177.375" fitWidth="177.375" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <ImageView id="sun_display" fitHeight="177.375" fitWidth="177.375" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                       <image>
                         <Image url="@sun.png" />
                       </image>

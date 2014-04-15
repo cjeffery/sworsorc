@@ -26,8 +26,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
+import javax.swing.JFrame;
 
 import solardisplay.SolarDisplay;
+import sshexmap.MapDemo;
 import sshexmap.MapView;
  
 public class HUDController {
@@ -45,7 +47,6 @@ public class HUDController {
     ArmyUnit bow = new Bow();
     ArmyUnit lightsword = new LightSword();
     ArmyUnit pike = new PikeMan();
-    MapView hmap = MapView.getMapView();
 
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
@@ -55,8 +56,10 @@ public class HUDController {
      */
     public void initialize(){
         
-        //hex_map.setContent(hmap);
-        //map_view.getChildren().add(hex_map); //getChildren() error <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        //Display map in map_view
+        SwingNode hmap = new SwingNode();
+        hmap.setContent(MapView.getMapView());
+        map_view.setContent(hmap);
         
         //this adds mouse support to map_view, just a placeholder for now
         map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
