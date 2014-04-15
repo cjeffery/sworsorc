@@ -14,9 +14,15 @@ public class NetworkServer {
     private static List<ClientObject> clientObjects; //"Packaged sockets"
     protected static List<Lobby> lobbies;
 
+    private static boolean stopped = false;
+    
     private static final int DEFAULT_PORT = 25565;
     private static final String DEFAULT_IP = "76.178.139.129";
 
+    public static void stopServer() {
+        stopped = true;
+    }
+    
     public static boolean canCreateNewLobby(String name) {
         //check if lobby name is unique.
         //we might have to add other conditions?
@@ -37,9 +43,16 @@ public class NetworkServer {
     public static void joinLobby(String lobbyName, ClientObject client) {
         for (Lobby l : lobbies) {
             if (l.getName().equals(lobbyName)) {
-                l.join(client);
-                sendToAllClients(MessageUtils.makeJoinedLobbyMessage(lobbyName, client.getHandle()));
-                return;
+                if (l.isInLobby(client.getHandle())) {
+                    client.send(MessageUtils.makeErrorMessage("Cannot join lobby, you're already in it!"));
+                    return;
+                } else {
+                    leaveLobby(client);
+                    l.join(client);
+                    sendToAllClients(MessageUtils.makeJoinedLobbyMessage(lobbyName, client.getHandle()));
+                    
+                    return;
+                }
             }
         }
         //If we're here, we didn't find the name!
@@ -138,7 +151,10 @@ public class NetworkServer {
                 clientObjects.add(tempclient); // add the active client to list
             } catch (IOException e) {
                 System.err.println("Server failed to accept client!\nException: " + e );
-                break;
+                return;
+            }
+            if( stopped ) {
+                return;
             }
         }
 

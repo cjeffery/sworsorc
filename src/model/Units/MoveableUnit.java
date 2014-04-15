@@ -20,6 +20,7 @@ package Units;
 public class MoveableUnit {
     protected UnitType UnitType;
     protected double movement;
+    protected double workingMovement;
     protected Race race;
     protected String location;
     protected String ID;
@@ -27,6 +28,18 @@ public class MoveableUnit {
     public MoveableUnit(){
         
     }
+    
+    public void ResetWorkingMovement(){
+        workingMovement = movement;
+    }
+
+    public double getWorkingMovement() {
+        return workingMovement;
+    }
+
+    public void setWorkingMovement(double workingMovement) {
+        this.workingMovement = workingMovement;
+    }   
     
     public MoveableUnit(String location){
         this.location = location;
@@ -60,39 +73,39 @@ public class MoveableUnit {
       * @param raceStr the string identifying the unit's new race
       */
      public void setRace(String raceStr){
-        Race newRace;
         switch (raceStr) {
             case "Cronk":
-                newRace = Race.Cronk;
+                setRace(Race.Cronk);
                 break;
             case "Dragon":
-                newRace = Race.Dragon;
+                setRace(Race.Dragon);
                 break;
             case "Dwarrows":
-                newRace = Race.Dwarrows;
+                setRace(Race.Dwarrows);
                 break;
             case "Elves":
-                newRace = Race.Elves;
+                setRace(Race.Elves);
                 break;
             case "Human":
-                newRace = Race.Human;
+                setRace(Race.Human);
                 break;
             case "KillerPenguin":
-                newRace = Race.KillerPenguin;
+                setRace(Race.KillerPenguin);
                 break;
             case "Orc":
-                newRace = Race.Orc;
+                setRace(Race.Orc);
                 break;
             case "Spiders":
-                newRace = Race.Spiders;
+                setRace(Race.Spiders);
                 break;
             case "SwampCreature":
-                newRace = Race.SwampCreature;
+                setRace(Race.SwampCreature);
                 break;
             default:
-                newRace = null;
+                System.err.println("Incorrect Race sent to setRace(String)");
+                System.err.println("Recieved: " + raceStr);
+                setRace((Race)null);
         }
-        this.race = newRace;
     }
      
     public Race getRace(){
@@ -103,10 +116,16 @@ public class MoveableUnit {
         return movement;
     }
 
+    /**
+     * @return UnitType enum: Character, ArmyUnit, Monster, etc
+     */
     public UnitType getUnitType() {
         return UnitType;
     }
 
+    /**
+     * Sets the UnitTYpe enum: Character, ArmyUnit, Monster, etc
+     */
     public void setUnitType(UnitType UnitType) {
         this.UnitType = UnitType;
     }
@@ -132,5 +151,30 @@ public class MoveableUnit {
     @Override
     public String toString(){
         return getClass().getSimpleName();
+    }
+    
+    public String getRaceCode() {
+        if( getRace() == null ) {
+            System.out.println("Unit has no race? D:");
+            return "~";
+        }
+        
+        if(this instanceof FlyingUnit)
+            return "w";
+        switch( getRace() ) {
+            case Cronk:         return "c";
+            case Dragon:        return "w";
+            case Dwarrows:      return "d";
+            case Elves:         return "e";
+            case Human:         return "m";
+            case KillerPenguin: return "o"; //rules shows penguins as orcs
+            case Orc:           return "o";
+            case Spiders:       return "a";
+            case SwampCreature: return "s";
+            case Goblins: return "g";
+            default:
+                System.out.println("Unit has unknown race: " + getRace().toString());  
+                return "?";
+        }
     }
 }

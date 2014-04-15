@@ -26,9 +26,28 @@ public class HexPainter {
     
     private void loadImages() throws IOException {
         images = new TreeMap<String, BufferedImage>();
+
+        //hax for special hexes. make them look like castles until they're ready
+        String[] special = {
+            "gateway of evil", "balkathos", "citadel of blood", 
+            "gateway to the empire", "castle of brandon", 
+            "battleaxe stronghold", "the ruins", "castle krawn",
+            "the bottomless plungehole", "citadel of ice",
+            "city of urf durfal", "temple of the corflu cultists",
+            "fountain of health", "castle dalarna", "the iron fortress",
+            "castle gund", "strakhenville", "altar of the elder gods",
+            "the tombs of the damned", "gerlod"
+        };
+        for(String s : special) {
+            File f = new File( path + "castle" + "_hex.png" );
+            BufferedImage img = ImageIO.read(f);
+            images.put(s + "_hex.png", img);
+        }     
+        
         String[] types = {
             "clear", "broken", "cultivated", "forest", "karoo", "mountains",
             "rough", "swamp", "vortex", "water", "woods", "dragon tunnel",
+            "glacier",
             "bridge", "portal", "city", "castle", "mount greymoor",
             "glade keep"
             //"gateway of evil", "balkathos"
@@ -116,10 +135,6 @@ public class HexPainter {
                 //certain named hexes maybe(?) can just be drawn as default
                 case "Toll Troll":
                     break;
-                case "Gateway Of Evil":
-                case "Balkathos":
-                    str = "castle_hex.png";
-                    break;
                 //otherwise load a specific image for them
                 default:
                     str = h.GetHexName().toLowerCase() + "_hex.png";
@@ -188,55 +203,39 @@ public class HexPainter {
         }
     }
     
-    /**
-     * Render the edges of a hex.
-     * @param g2 The Graphics object to draw on
-     * @param hex The hex to draw (Maybe make this a MapHex?)
-     */
-    public void paintEdges(Graphics2D g2, Hex hex) {
-        if( !(hex instanceof MapHex) )
-            return;
-        MapHex h = (MapHex)hex;
-        for(int i = 0; i < 6; i++) {
-            //if(!( (edgeMask & (1 << i)) == 0))
-            //    continue;
-            double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-            /* TODO remove duplicate coordinate code */
-            switch(i) {
-                case 0: 
-                    x1 = width*.75; x2 = width;
-                    y1 = 0;         y2 = height/2;
-                    break;
-                case 1:
-                    x1 = width*.25; x2 = width*.75;
-                    y1 = 0;         y2 = 0;
-                    break;
-                case 2:
-                    x1 = 0;         x2 = width*.25;
-                    y1 = height/2;  y2 = 0;
-                    break;
-                case 3:
-                    x1 = 0;         x2 = width*.25;
-                    y1 = height/2;  y2 = height;
-                    break;
-                case 4:
-                    x1 = width*.25; x2 = width*.75;
-                    y1 = height;    y2 = height;
-                    break;
-                case 5: 
-                    x1 = width*.75; x2 = width;
-                    y1 = height;    y2 = height/2;
-                    break;
-            }
-            HexEdge edge = h.getEdge(i);
-            for(EdgeElement e : edge.elements.values()) {
-                if(e != null) {
-                    paintEdge(g2, e.getEdgeType(), x1, y1, x2, y2);
-                }
-                //else System.out.println( edgeTypes.size() );
-                
-            }
-        }        
+    public double[] edgeEndpoints(int direction) {
+        double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+        /* TODO remove duplicate coordinate code */
+        switch(direction) {
+            case 0: 
+                x1 = width*.75; x2 = width;
+                y1 = 0;         y2 = height/2;
+                break;
+            case 1:
+                x1 = width*.25; x2 = width*.75;
+                y1 = 0;         y2 = 0;
+                break;
+            case 2:
+                x1 = 0;         x2 = width*.25;
+                y1 = height/2;  y2 = 0;
+                break;
+            case 3:
+                x1 = 0;         x2 = width*.25;
+                y1 = height/2;  y2 = height;
+                break;
+            case 4:
+                x1 = width*.25; x2 = width*.75;
+                y1 = height;    y2 = height;
+                break;
+            case 5: 
+                x1 = width*.75; x2 = width;
+                y1 = height;    y2 = height/2;
+                break;
+        }
+        double[] res = new double[4];
+        res[0] = x1; res[1] = y1;
+        res[2] = x2; res[3] = y2;
+        return res;
     }
     
     /**
@@ -248,31 +247,57 @@ public class HexPainter {
      * @param x2
      * @param y2 
      */
-    public void paintEdge(Graphics2D g2, HexEdgeType edge,
-                          double x1, double y1, double x2, double y2) {
-        switch(edge) {
-            case ProvinceBorder:
-                g2.setColor( Color.RED );
-                g2.setStroke(new BasicStroke(3));
-                g2.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
-                break;
-            case Stream:
-                g2.setColor( Color.BLUE );
-                g2.setStroke(new BasicStroke(3));
-                g2.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
-                break;
-            case Wall:
-                g2.setColor( Color.BLACK );
-                g2.setStroke(new BasicStroke(3));
-                g2.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
-                break;
-            case Gate:
-                 g2.setColor( Color.LIGHT_GRAY );
-                g2.setStroke(new BasicStroke(3));
-                g2.drawLine((int)x1, (int)y1, (int)x2, (int)y2);
-                break;               
-            default:
-                //System.out.println("unhandled paintEdge case " + edge);
+    public void paintEdge(Graphics2D g2, MapHex h, int direction) {
+        HexEdge edge = h.getEdge(direction);
+        int size = edge.elements.size();
+        int i = 0;
+        double[] points = edgeEndpoints(direction);
+        double x1 = points[0], y1 = points[1];
+        double x2 = points[2], y2 = points[3];
+        
+        for(HexEdgeType edge_t : edge.elements.keySet()) {
+            //original 
+            boolean drawEdge = true;
+            switch(edge_t) {
+                case ProvinceBorder:
+                    g2.setColor( Color.RED );
+                    break;
+                case Stream:
+                    g2.setColor( Color.BLUE );
+                    g2.setStroke(new BasicStroke(3));
+                    break;
+                case Wall:
+                    g2.setColor( Color.BLACK );
+                    g2.setStroke(new BasicStroke(3));
+                    break;
+                case Gate:
+                     g2.setColor( Color.LIGHT_GRAY );
+                    g2.setStroke(new BasicStroke(3));
+                    break;               
+                default:
+                    drawEdge = false;
+                    //System.out.println("unhandled paintEdge case " + edge);
+            }
+            if(drawEdge) {
+                //offset is the position to draw in: 0, 1, -1, 2, -2, 3, -3
+                int offset = (i+1)/2;
+                offset *= ( (i%2 == 1) ? 1 : -1 );
+
+                //angle is the angle that corresponds to the direction
+                //px and py are the xy angle coefficients for that angle
+                double angle = direction*(Math.PI / 3) + (Math.PI / 6);
+
+                //dx, dy will be the offset to avoid overlapping multiple elements
+                //width is the brush width
+                int width = 3;
+                double dx =  Math.cos(angle)*offset*width;
+                double dy = -Math.sin(angle)*offset*width;  
+
+                g2.setStroke(new BasicStroke(width));
+                g2.drawLine((int)(x1+dx), (int)(y1+dy),
+                            (int)(x2+dx), (int)(y2+dy));
+                i++;
+            }
         }
     }
     
@@ -284,7 +309,7 @@ public class HexPainter {
     public static Boolean drawImage(Graphics2D g2, String imageID,
                                     Map<String, BufferedImage> imageMap) {
         if(!imageMap.containsKey(imageID) || imageMap.get(imageID) == null) {
-            //System.out.println("Image " + imageID + " wasn't loaded");
+            System.out.println("Image " + imageID + " wasn't loaded");
             return false;
         }
         //TODO: coefficients should be based on radius (and zoom?)

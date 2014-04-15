@@ -23,7 +23,7 @@ public class NetworkClient {
 
     // iNet variables
     private Socket socket = null;
-    private static int port = 25565; 
+    private static int port = 25565;
     private static String serverName = "127.0.0.1";
 
     // Read/write streams
@@ -42,25 +42,24 @@ public class NetworkClient {
     final private String dir = System.getProperty("user.dir");
 
     //private Conductor jarvis; // Our conductor object
-    
+    // TODO: MAKE THIS WHOLE ENCHALADA STATIC! Maybe...
     /* CONSTRUCTOR */
     
-     /**
+    /**
      * Create a new ChatClient object, the interface for all network operations
      * client-side
-     *
-     * @param sName Name of the server AKA the IP Address
+     * <p>
+     * @param sName      Name of the server AKA the IP Address
      * @param serverPort Port number of the server (ex: 25565)
-     * @param uName Username of client
-     * @throws IOException
+     * @param uName      Username of client
      */
-    public NetworkClient(String sName, int serverPort, String uName) throws IOException {
+    public NetworkClient(String sName, int serverPort, String uName) {
 
-        if( sName == null || serverPort < 1024 || uName == null ) {
-            System.err.println("Invalid parameters, please pass correct ones!\nsName: " + 
-                    sName + "\nserverPort (Must be > 1023): " + serverPort + "\nuName: " + uName );
+        if (sName == null || serverPort < 1024 || uName == null) {
+            System.err.println("Invalid parameters, please pass correct ones!\nsName: "
+                    + sName + "\nserverPort (Must be > 1023): " + serverPort + "\nuName: " + uName);
         } else {
-            
+
             // sets server iNet info
             port = serverPort;
             serverName = sName;
@@ -68,19 +67,19 @@ public class NetworkClient {
             // Set client username
             username = uName;
         }
-        
+
         // Standard In/Out
         consoleIn = new BufferedReader(new InputStreamReader(System.in));
         consoleOut = new PrintWriter(System.out, true);
 
     } // end constructor
-    
+
     /* PUBLIC METHODS */
     
     /**
      * Creates a new connection to the server, call this before
-     * {@link #start start()}
-     *
+     * {@link #startClient startClient()}
+     * <p>
      * @return boolean True if successful, false if not
      * @author Christopher Goes
      */
@@ -88,21 +87,23 @@ public class NetworkClient {
         try {
             socket = connectToServer(serverName, port);
             return true;
-        } catch (NullPointerException | IOException e) {
-            System.err.println("Error in connect!\nException: " + e);
+        } catch (NullPointerException | IOException ex) {
+            //System.err.println("Error in connect!\nException: " + e);
+            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+            ex.printStackTrace();
             return false;
         }
     }
-    
+
     /**
      * Starts activity to server, including threads, and command input loop
-     *
+     * <p>
      * @author Christopher Goes
-     * @throws IOException
+     * @return boolean True if successful, false if runtime error/exception
      */
-    public void start() throws IOException {
+    public boolean startClient() {
 
-        // Start thread(s)
         startThreads();
 
         //first message is handle:
@@ -114,42 +115,49 @@ public class NetworkClient {
         //request list of lobbies:
         MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage());
 
+        return true;
     }
-    
+
     /**
      * Main execution thread for the Network Client
      * <p>
      * This reads from consoleIn, connect user input to that stream
-     *
+     * <p>
      * @author Christopher Goes
      */
     public void runClient() {
         String line;
-        
+
         while (true) {
             try {
                 line = consoleIn.readLine();
-                if ( line == null) {
+                if (line == null) {
                     System.err.println("line == null! Eeek!");
-                    stop();
+                    stopClient();
                     break;
                 }
                 if (!(processInput(line))) {
-                    stop();
-                    break;
+                    stopClient();
+                    consoleOut.println("Later gator!");
+                    return;
+                } else {
+                    consoleOut.print(username + ": ");
+                    consoleOut.flush();
                 }
 
-            } catch (IOException e) {
-                System.err.println("Error sending message!\nException: " + e);
-                stop();
-                break;
+            } catch (IOException ex) {
+                //System.err.println("Error sending message!\nException: " + e);
+                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                ex.printStackTrace();
+                stopClient();
+                return;
             } // end catch   
         } // end while
-        
-    }  
-    
+
+    }
+
     /* THREAD N' STREAM STUFF */
-    
     /**
      * Listens for and handles incoming communications for Network Client
      */
@@ -166,20 +174,26 @@ public class NetworkClient {
          * Creates input stream, and connects to socket
          * <p>
          * NOTE: Must be called when creating thread!
+         * <p>
          * @author Christopher Goes
-         * @throws IOException 
          */
-        private void createStream() throws IOException {
-            if( isConnected() ) {
-                streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        private void createStream() {
+            if (isConnected()) {
+                try {
+                    streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                } catch (IOException ex) {
+                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                    ex.printStackTrace();
+                }
             } else {
-                System.err.println("Error creating ListenerThread stream!");
+                System.err.println("Error creating listen stream: socket isn't connected!");
             }
-        }    
+        }
 
         /**
          * Marks thread for death, causing it to close, return, and die
-         * 
+         * <p>
          * @author Christopher Goes
          */
         private void killThread() {
@@ -188,33 +202,44 @@ public class NetworkClient {
 
         @Override
         public void run() {
-            List<String> message; // incoming message from server. First string is message tag.
-            
+            List<String> message = null; // incoming message from server. First string is message tag.
+            try {
                 while (!killed) {
 
                     if (killed) {
                         close();
                         return;
-                    } else if ( isConnected() ) {
-                        message = MessageUtils.receiveMessage(streamIn);                   
+                    } else if (isConnected() && streamIn != null ) {
+                        while (!streamIn.ready()) { // This fixed it!
+                            if(killed) {
+                                close();
+                                return;
+                            }
+                        }
+                        message = MessageUtils.receiveMessage(streamIn);
                     } else {
                         continue;
                     }
-                                       
+
                     if (message == null) {
-                        System.err.println("Null message from server!");
+                        System.err.println("Null message from server, or default never changed!");
                         close();
                         return;
-                    } else if ( message.isEmpty() ) {
+                    } else if (message.isEmpty()) {
                         System.err.println("Empty message from server!");
                         continue; // since this isn't a critical error, no reason to kill the thread yet...
                     }
-                    
+
                     //first element of the parsed message array will tell us
                     //what type of message it is:
                     if (message.get(0).equals(MessageUtils.GLOBAL_CHAT)) {
-                        //Printing methods can be centralized!
-                        MessageUtils.printChat(consoleOut, message);
+                        if ( message.get(1).equals(username) ) {
+                            // suppress message
+                        } else {
+                            // TODO: ADD CHAT "PRIVACY" TAG. EX: (Global), (<lobby>), etc
+                            // TODO: ADD CONNECTION STATUS TAG. EX: (CONNECTED), (DISCONNECTED), other states
+                            MessageUtils.printChat(consoleOut, message);
+                        }
                     } else if (message.get(0).equals(MessageUtils.DISCONNECT_ANNOUNCEMENT)) {
                         MessageUtils.printDisconnect(consoleOut, message);
                     } else if (message.get(0).equals(MessageUtils.CONNECT_ANNOUNCEMENT)) {
@@ -251,46 +276,64 @@ public class NetworkClient {
                         String location = message.get(4);
                         //needs player ID
                         //pool.addUnit(port, unit);
+                    } else if (message.get(0).equals(MessageUtils.JOINED_LOBBY) ) {
+                            consoleOut.println("Client " + message.get(2) + " has joined lobby "
+                            + message.get(1) );
+                    } else if (message.get(0).equals(MessageUtils.LEFT_LOBBY) ) {
+                            consoleOut.println("Client " + message.get(2) + " has left lobby "
+                            + message.get(1) );                       
                     } else {
                         // its not a network message, therefore NC doesn't care, and has Jarvis take out the trash
                         //jarvis.processMessage( message.subList(1, message.size()), message.get(0) );
                         System.err.println("Unknown tag: " + message.get(0));
                     } // end else
                 } // end while
+            } catch (IOException ex) {
+                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                ex.printStackTrace();
                 close();
-        } // end method
+                return;
+            } // end catch
+
+            close();
+        }
 
         /**
          * Always run this before returning from {@link #run run}!
          */
         private void close() {
             try {
-                if( !(isConnected()) ) {
+                if (!(isConnected())) {
                     if (streamIn != null) {
                         streamIn.close();
                         streamIn = null;
                     }
-                }
-                else {
+                } else {
                     disconnectFromServer();
-                    streamIn.close();
-                    streamIn = null;
+                    if( streamIn != null) {
+                        streamIn.close();
+                        streamIn = null;
+                    }
+                    
                 }
-            } catch (IOException e) {
-                System.err.println("Error closing listener! Error thrown: " + e);
+            } catch (IOException ex) {
+                //System.err.println("Error closing listener! Error thrown: " + e);
+                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                ex.printStackTrace();
             }
         }
 
-    }  
-    
+    }
+
     /**
      * Starts {@link WriterThread writerThread} and
      * {@link ListenerThread listenerThread}
-     *
+     * <p>
      * @author Christopher Goes
-     * @throws Exception
      */
-    private void startThreads() throws IOException { // assumes socket set
+    private void startThreads() {
 
         setWriter();
 
@@ -298,53 +341,58 @@ public class NetworkClient {
         listenerThread.createStream();
         listenerThread.start();
     }
-    
+
     /**
      * Kills thread(s) and resets writer stream.
      * <p>
-     * NOTE: Call this BEFORE restarting threads with new socket!
-     * WARNING: This will close any associated sockets!
+     * NOTE: Call this BEFORE restarting threads with new socket! WARNING: This
+     * will close any associated sockets!
+     * <p>
      * @author Christopher Goes
      */
-    private void stopThreads() {   
-        if( listenerThread != null) {
+    private void stopThreads() {
+        if (listenerThread != null) {
             listenerThread.killThread();
         }
         listenerThread = null;
         writer = null;
     }
-    
+
     /**
-     * Initializes writer with a new stream. 
+     * Initializes writer with a new stream.
      * <p>
      * NOTE: Socket must be set before calling this!
-     *
+     * <p>
      * @author Christopher Goes
-     * @throws IOException
      */
-    private void setWriter() throws IOException {
-        if( isConnected() ) {
-            writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
+    private void setWriter() {
+        if (isConnected()) {
+            try {
+                writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
+            } catch (IOException ex) {
+                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                ex.printStackTrace();
+            }
         }
     }
-    
-    /* COMMAND PROCESSING/EXECUTION METHODS */
 
+    /* COMMAND PROCESSING/EXECUTION METHODS */
+    
     /**
      * Parses user input, executes commands, and sends messages to server
-     *
+     * <p>
      * @author Christopher Goes
      * @param command
-     * @return boolean True if execute normally, False if quit or exception
-     * @throws IOException
+     * @return boolean True if executed normally, False if quit or exception
      */
-    private boolean processInput(String command) throws IOException {
+    private boolean processInput(String command) {
 
-        if( command == null ) {
+        if (command == null) {
             System.err.println("Null string passed to processInput!");
             return false;
         }
-        
+
         String[] parsedString;
         parsedString = command.split("\\s+"); //Split line by whitespace
 
@@ -352,21 +400,19 @@ public class NetworkClient {
             if ("/file".equals(parsedString[0])) {
                 sendFile(parsedString[1]);
 
-            } else if ("/newLobby".equals(parsedString[0])) { // TODO: remove user from current lobby if they create a new lobby
+            } else if ("/newLobby".equals(parsedString[0])) {
                 String lobbyName = parsedString[1];
                 MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyRequestMessage(lobbyName));
 
-            } else if ("/joinLobby".equals(parsedString[0])) { // TODO: stop a user for "cloning" themselves by rejoining the same lobby
+            } else if ("/joinLobby".equals(parsedString[0])) {
                 String lobbyName = parsedString[1];
                 MessageUtils.sendMessage(writer, MessageUtils.makeJoinLobbyRequestMessage(lobbyName));
-            } else if ( isConnected()) {
+            } else if (isConnected()) {
                 // sends chat message to server, which broadcasts to all clients
-                // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
             }
-            // TODO: LEFT LOBBY + JOINED LOBBY
         } else if (parsedString.length == 1) {
-            if ("/printFile".equals(parsedString[0])) {
+            if ("/printFile".equals(parsedString[0])) { // TODO: What does this do?
                 write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
 
             } else if ("/globalWho".equals(parsedString[0])) {
@@ -379,12 +425,12 @@ public class NetworkClient {
                 MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage()); // TODO: working lobby info request
 
             } else if ("/disconnect".equals(parsedString[0])) { // manual client disconnect
-                if( isConnected() ) {
+                if (isConnected()) {
                     disconnectFromServer();
                 } else {
                     consoleOut.println("Can't disconnect when you're not connected!");
-                }             
-                
+                }
+
             } else if ("/yieldTurn".equals(parsedString[0])) { // client turn over
                 MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
 
@@ -395,40 +441,37 @@ public class NetworkClient {
                 printCommandList();
 
             } else if ("/reconnect".equals(parsedString[0])) {
-                // MAKE SURE USER CANT CLONE THEMSELVES!
-                if ( isConnected() ) {
+                if (isConnected()) { // Anti-clone League of Uganda certified
                     consoleOut.println("Already connected!");
                     return true;
                 }
-                consoleOut.println("Attempting to reconnect...");
+                consoleOut.print("Attempting to reconnect...");
                 if (connect()) {
-                    start();
-                    
+                    consoleOut.println("Successfully reconnected!");
+                    startClient();
+
                 } else {
                     consoleOut.println("Reconnect failed");
                 }
 
-            } else if ("/quit".equals(parsedString[0])) { // TODO: nullpointer problem on quit
-                consoleOut.println("Exiting...");
-                if ( isConnected() ) {
+            } else if ("/quit".equals(parsedString[0])) {
+                consoleOut.print("Exiting client...");
+                if (isConnected()) {
+                    consoleOut.println("Still connected to server, disconnecting");
                     disconnectFromServer();
                 }
-                stop();
                 return false;
-            } else if ( isConnected()) {
-                // sends chat message to server, which broadcasts to all clients
-                // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
+            } else if (isConnected()) {
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
 
             } else {
                 consoleOut.println("Invalid command, try again, or type /help for a list of commands.");
             }
         } else {
-            if ( isConnected()) {
-                // sends chat message to server, which broadcasts to all clients
-                // TODO: have client ignore a message it sent, so user doesn't see what they typed twice
-                // TODO: append lobby client before all messages recieved
+            if (isConnected()) {
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
+            } else {
+                return false;
             }
         }
         return true;
@@ -436,7 +479,7 @@ public class NetworkClient {
 
     /**
      * Send a file to the server
-     *
+     * <p>
      * @param fileName Name of file to be sent
      */
     private void sendFile(String fileName) {
@@ -454,7 +497,7 @@ public class NetworkClient {
 
     /**
      * If we want to programmatically write something
-     * 
+     * <p>
      * @param message Message to write
      */
     private void write(String message) { //
@@ -464,11 +507,11 @@ public class NetworkClient {
 
     /**
      * Prints list of commands and what they do from a text file
-     * 
+     * <p>
      * @author Christopher Goes
      * @throws IOException
      */
-    private void printCommandList() throws IOException {
+    private void printCommandList() {
         String inputline;
         String tempfile;
 
@@ -478,25 +521,31 @@ public class NetworkClient {
         try {
             BufferedReader input = new BufferedReader(new FileReader(tempfile));
 
-            while ((inputline = input.readLine()) != null) {
-                System.out.println(inputline);
+            try {
+                while ((inputline = input.readLine()) != null) {
+                    System.out.println(inputline);
+                }
+            } catch (IOException ex) {
+                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                ex.printStackTrace();
             }
         } catch (FileNotFoundException e) {
             System.err.println("File not found: " + tempfile + "\nException: " + e);
         }
 
     }
-    
+
     /**
      * Attempts connection to the server, and returns socket if successful
-     *
+     * <p>
      * @author Christopher Goes
      * @param sName
      * @param serverPort
      * @return Socket
      * @throws IOException
      */
-    private static Socket connectToServer(String sName, int serverPort) throws IOException {
+    private Socket connectToServer(String sName, int serverPort) throws IOException {
         Socket tempsock = null;
         System.out.println("Connecting! Please Wait!");
         try {
@@ -510,79 +559,77 @@ public class NetworkClient {
         System.out.println("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
         return tempsock;
     }
-    
-    /* UTILITY METHODS */
 
+    /* UTILITY METHODS */
+    
     /**
      * Checks if client is connected to server
-     * 
+     * <p>
      * @author Christopher Goes
      * @return boolean True if connected, False if not
      */
     private boolean isConnected() {
         return socket != null && !(socket.isClosed()) && socket.isConnected();
     }
-    
+
     /**
      * Disconnects client from server
-     * 
+     * <p>
      * @author Christopher Goes
      */
     private void disconnectFromServer() {
-        consoleOut.println("Disconnecting from server.");
-        MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
-        writer.flush();
+        consoleOut.print("Disconnecting from server...");
+        if (isConnected()) {
+            MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
+            writer.flush();
+        }
+
         stopThreads();
         killSocket();
+        consoleOut.println("Disconnected!");
     }
-    
+
     /**
      * Closes and nulls socket
-     * 
+     * <p>
      * @author Christopher Goes
      */
     private void killSocket() {
-        try { 
-            if( socket != null && !(socket.isClosed())) {
+        try {
+            if (socket != null && !(socket.isClosed())) {
                 socket.close();
                 socket = null;
-            } else if( socket != null ) {
+            } else if (socket != null) {
                 socket = null;
             }
-        } catch (IOException e ){
-            System.err.println("Error in killSocket!\nException: " + e );
+        } catch (IOException ex) {
+            //System.err.println("Error in killSocket!\nException: " + e);
+            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+            ex.printStackTrace();
         }
     }
-    
+
     /**
      * Closes all open streams, and kills all active threads
      */
-    private void stop() {
-        try {
-            if (consoleIn != null) {
-                consoleIn.close();
-            }
-            
-            killSocket();
-            
-            if (listenerThread != null || writer != null) {
-                stopThreads();
-            }
-        } catch (IOException e) {
-            System.err.println("Error closing connection!\nException: " + e);
+    private void stopClient() {
+        killSocket();
+        if (listenerThread != null || writer != null) {
+            stopThreads();
         }
     }
 
     /* MAIN */
-    
     /**
-     * Opens dialog box(s), creates NetworkClient instance, and executes public methods
+     * Opens dialog box(s), creates NetworkClient instance, and executes public
+     * methods
      * <p>
      * NOTE: This is mainly for testing purposes, should not be in final build
+     * <p>
      * @param args
-     * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         ClientData clientData = new ClientData();
         ClientDataForm clientDataForm = new ClientDataForm(clientData);
@@ -599,12 +646,15 @@ public class NetworkClient {
         String uName = clientData.getUsername(); // this needs to be set in constructor
 
         NetworkClient client = new NetworkClient(sName, 25565, uName);
-    
+
         if (client.connect()) {
-            client.start();
-            client.runClient();
+            if (client.startClient()) {
+                client.runClient();
+            } else {
+                System.err.println("Client failed to start from main!");
+            }
         } else {
-             System.err.println("Client failed to connect! Oh noes!");
+            System.err.println("Client failed to connect from main!");
         }
     } // end main
 
