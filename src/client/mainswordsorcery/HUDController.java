@@ -28,15 +28,15 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
 
-import solardisplay.SolarDisplay;
 import sshexmap.MapDemo;
 import sshexmap.MapView;
  
 public class HUDController {
     @FXML private TabPane Units;
     @FXML private TabPane Targets;
-    @FXML private ImageView sun_img;
-    @FXML private Text RedSun;
+    @FXML private ImageView SunImage;
+    @FXML private Text RedState;
+    @FXML private Text BlueState;
     @FXML private MenuBar menuBar;
     @FXML private TextField message_box;
     @FXML private TextArea chat_box;
@@ -211,9 +211,7 @@ public class HUDController {
      * @author Joe Higley      
      */   
     @FXML protected void ChangeSun(ActionEvent event) {
-  //      SolarDisplay.getInstance().function();
-  //      sun_img.setImage(new Image("@red_sun6.png")); //place holder
-  //      RedSun.setText(SolarDisplay.getInstance().getRedSun());
+        SunImage.setImage(getSunImage);
     }
 
 }
