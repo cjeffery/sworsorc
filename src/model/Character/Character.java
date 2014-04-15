@@ -7,6 +7,7 @@
 package Character;
 
 import Spells.Spell_Book;
+import Units.MoveableUnit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -20,14 +21,14 @@ import javax.swing.JTextField;
  *
  * @author 张涛
  */
-public final class Character {
+public final class Character extends MoveableUnit{
     public String  Name;
     // a character's magic power level may differ from his average MagicPL
     public int     MagicPL;
     public int     MagicPotential;
     public double  CurrentManna;
     
-    public int  CurrentHex;
+    //public int CurrentHex;
     
     public Character(){
         //GetInfo gi = new GetInfo();
@@ -42,13 +43,13 @@ public final class Character {
     }
     
     
-    public Character(String a, int b, double c, int h) {
+    public Character(String a, int b, double c, /*int h*/ String h) {
         Name        = a;
         MagicPL     = b;
         //MagicPotential  = c;
         CurrentManna = c; //(double)MagicPotential;
         
-        CurrentHex = h;
+        location = h;
     }
     
     
@@ -126,7 +127,8 @@ public final class Character {
                 c.Name = char_name_field.getText();
                 c.MagicPL = Integer.parseInt(char_PL_field.getText());
                 c.CurrentManna = Double.parseDouble(char_CM_field.getText());
-                c.CurrentHex = Integer.parseInt(char_hex_field.getText());
+                c.location = char_hex_field.getText();
+                //c.CurrentHex = Integer.parseInt(char_hex_field.getText());
                 
                 char_info.dispose();
                 
