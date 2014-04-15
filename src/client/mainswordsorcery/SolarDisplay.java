@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class SolarDisplay implements ActionListener{
+public class SolarDisplay {
     /**
 * @param args the command line arguments
 */
@@ -106,7 +106,7 @@ public class SolarDisplay implements ActionListener{
 }
 */    
     //for comparing strings, use if(string1.equals(string2))
-    
+    }
     public void SunCalc() {
             if (SolarDayNum < 27) {
             SolarDayNum++;
