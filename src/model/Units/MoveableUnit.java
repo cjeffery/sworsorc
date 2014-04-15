@@ -130,6 +130,24 @@ public class MoveableUnit {
         this.UnitType = UnitType;
     }
     
+    public void setUnitType(String unitTypeStr){
+        UnitType newUnitType;
+        switch (unitTypeStr) {
+            case "ArmyUnit":
+                newUnitType = UnitType.ArmyUnit;
+                break;
+            case "Character":
+                newUnitType = UnitType.Character;
+                break;
+            case "Monster":
+                newUnitType = UnitType.Monster;
+                break;
+            default:
+                newUnitType = null;
+        }
+        this.UnitType = newUnitType;
+    }
+    
     @Override
     public String toString(){
         return getClass().getSimpleName();
@@ -155,7 +173,7 @@ public class MoveableUnit {
             case SwampCreature: return "s";
             case Goblins: return "g";
             default:
-                System.out.println("Unit has unknown race: " + getRace());  
+                System.out.println("Unit has unknown race: " + getRace().toString());  
                 return "?";
         }
     }

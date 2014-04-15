@@ -270,6 +270,10 @@ public class ClientObject {
 
                         NetworkServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
 
+                    } else if (TAG.equals(MessageUtils.ADD_UNIT)) {
+                        NetworkServer.sendToAllClients(message);
+                    } else if (TAG.equals(MessageUtils.UPDATE_UNIT)) {
+                         NetworkServer.sendToAllClients(message);
                     } else if (TAG.equals(MessageUtils.YIELD_TURN)) {
                         //client has sent us their new handle:
                         //handle = message.get(1);
