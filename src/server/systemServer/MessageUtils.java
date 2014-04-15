@@ -60,6 +60,7 @@ public class MessageUtils {
     //static String WAITING_TO_BEGIN_GAME = "waitingForVotesBeforeStarting"; //wait for everyone to agree to start
 
     /* GAMEY ACTIONS */
+    static String ADD_UNIT = "addunit";
     static String UPDATE_UNIT = "updateunit"; // client sends a unit update
     static String UPDATE_HEX = "updatehex"; // client sends a hex update
 
