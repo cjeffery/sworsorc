@@ -10,7 +10,7 @@ package mainswordsorcery;
 *
 * @author Johnathan Flake
 * CS 383 - University of Idaho
-* 2/27/2014
+* 2/27/2014 - 4/15/2014
 */
 
 
@@ -22,9 +22,13 @@ public class SolarDisplay {
 
         static String SunImage, BlueState, RedState;
         
-        static int SolarDayNum = 1;
-        static int RedSunVal = 1;
-        static int BlueSunVal = 7;
+        static int RedSunStart = 1;
+        static int BlueSunStart = 7;
+        static int YellowSunStart = 1;
+        
+        static int SolarDayNum = YellowSunStart;
+        static int RedSunVal = RedSunStart;
+        static int BlueSunVal = BlueSunStart;
         
     private static SolarDisplay instance;
 
@@ -36,7 +40,6 @@ public class SolarDisplay {
     public SolarDisplay() {
         instance = this;   
            
-    //for comparing strings, use if(string1.equals(string2))
     }
     
     public static String GetRedState(){
@@ -282,8 +285,4 @@ public class SolarDisplay {
             }
     }
     
-    
-    public static void main(String[] args) {
-       new SolarDisplay();
-    }
 }
