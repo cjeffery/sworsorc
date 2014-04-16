@@ -36,10 +36,13 @@ public class Game extends Application {
     //Stage setup content
     private Parent main;
     private Parent hud;
+    private Parent diplo;
     /** JavaFX scene for the main menu */
     private Scene mainMenu;
     /** JavaFX scene for the HUD window */
     private Scene hudWindow;
+    /** JavaFX scene for the Diplomacy window */
+    private Scene Diplomacy;
     
     @Override
     public void start(Stage stage) throws IOException {
@@ -52,6 +55,7 @@ public class Game extends Application {
         
         main = createScene("MainMenu.fxml");
         hud = createScene("hud.fxml");
+        diplo = createScene("Diplomacy.fxml");
         
         // load the Main Menu font.
         URL fontURL = new URL("file:resources/font/upcjb.ttf");
@@ -66,6 +70,7 @@ public class Game extends Application {
 //        hud.getStylesheets().add(mainCSS);
         mainMenu = new Scene(main, screenBounds.getWidth(), screenBounds.getHeight());        
         hudWindow = new Scene(hud, screenBounds.getWidth(), screenBounds.getHeight());
+        Diplomacy = new Scene(diplo, 500, 500);
         
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);
@@ -122,6 +127,14 @@ public class Game extends Application {
     */    
     public Scene getMainScene(){
         return mainMenu;
+    }
+    /**
+    * Returns Diplomacy Map scene
+    * 
+    * @author Sean Shepherd
+    */   
+    public Scene getDiploScene(){
+        return Diplomacy;
     }
    /**
     * SolarDisplay code goes here

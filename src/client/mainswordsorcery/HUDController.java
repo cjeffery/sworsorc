@@ -27,9 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-import javax.swing.JFrame;
 
-import sshexmap.MapDemo;
 import sshexmap.MapView;
  
 public class HUDController {
@@ -49,6 +47,8 @@ public class HUDController {
     ArmyUnit bow = new Bow();
     ArmyUnit lightsword = new LightSword();
     ArmyUnit pike = new PikeMan();
+    SwingNode hdip = new SwingNode();
+        
 
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
@@ -57,6 +57,8 @@ public class HUDController {
      * @author Jay Drage        
      */
     public void initialize(){
+        
+        hdip.setContent(MapView.getDipView());
         
         //Display map in map_view
         SwingNode hmap = new SwingNode();
@@ -239,5 +241,10 @@ public class HUDController {
         }
         
     }
-
+    
+    @FXML protected void DisplayDiplomacy(ActionEvent event) {
+        Stage stage = (Stage) menuBar.getScene().getWindow();
+        stage.setScene(Game.getInstance().getDiploScene());
+        stage.show();
+    }
 }
