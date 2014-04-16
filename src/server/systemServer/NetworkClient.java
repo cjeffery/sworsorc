@@ -125,6 +125,31 @@ public class NetworkClient {
         } // end while
 
     }
+    
+    /**
+     * Sends a "chat" message to the other users. The received message will
+     * be displayed (along with the sender's username) in the chat box of the 
+     * other connected players.
+     * 
+     * @param message The message to display to other users
+     */
+    public static void sendChatMessage(String message){
+      MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, message));
+      //TODO: World-wide or lobby-wide?
+    }
+
+    /**
+     * Inform the server that this user has finished all phases of their current player turn.
+     * <p>
+     * This shouldn't be called when it isn't the user's game turn.
+     * <p>
+     * For context: After this message is sent, the server may pass control to the next user, or
+     * the next game turn may start, or the game may end.
+     */
+
+    public static void endTurn(){
+        MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
+    }
 
     /* GETTERS/SETTERS */
     public static void setServerName(String sName) {
@@ -470,8 +495,7 @@ public class NetworkClient {
                 }
 
             } else if ("/yieldTurn".equals(parsedString[0])) { // client turn over
-                MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
-
+                endTurn();
             } else if ("/beginGame".equals(parsedString[0])) { // request to start game
                 MessageUtils.sendMessage(writer, MessageUtils.makeBeginGameRequestMessage());
 
@@ -499,15 +523,13 @@ public class NetworkClient {
                     disconnectFromServer();
                 }
                 return false;
-            } else if (isConnected()) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
-
-            } else {
+            }  
+            else {
                 consoleOut.println("Invalid command, try again, or type /help for a list of commands.");
             }
         } else {
             if (isConnected()) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
+                sendChatMessage(command);
             } else {
                 return false;
             }
