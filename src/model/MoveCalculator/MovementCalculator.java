@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import sshexmap.MapHex;
 import ssterrain.HexEdge;
 import ssterrain.HexEdgeType;
+import ssterrain.ITTVortex;
 import ssterrain.TerrainType;
 
 /**
@@ -58,12 +59,12 @@ public class MovementCalculator
                 //Check if the hex is valid, null returned if hex neighbor no exist
                 if( currentHex.getNeighbor(i) != null ) 
                 {
-                    // add each valid neighbor to neighbors
+                    // add each valid neighbor to neighbors if not vortex hex
                     neighbors.add(currentHex.getNeighbor(i));
                 }
             }
             // Add the current hex
-            if( !validHexes.contains(currentHex) )
+            if( !validHexes.contains(currentHex) && !currentHex.IsVortexHex() )
                 validHexes.add(currentHex);
 
             
@@ -107,6 +108,8 @@ public class MovementCalculator
                     default : // Case where no hex edge applies.
                         destinationTerrainType = neighbors.get(i).getTerrainType();
                         moveCost = destinationTerrainType.getMovementCost(movingUnit);
+                        if( moveCost == 99. )
+                            break;
                         getValidMoves( movingUnit, neighbors.get(i),
                                 moveAllowance - moveCost, validHexes );
                         break;
@@ -116,7 +119,8 @@ public class MovementCalculator
         } else if( moveAllowance == 0 ) // move is exactly legal, add & return
         {
             // do not recurse here - end of the line
-            validHexes.add(currentHex);
+            if( !currentHex.IsVortexHex() )
+                validHexes.add(currentHex);
             return;
             
         } else if( moveAllowance < 0 ) // ILLEGAL!!!! DO NOT ADD!!!
