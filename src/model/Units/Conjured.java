@@ -19,10 +19,5 @@ public class Conjured extends ArmyUnit{
         this.lifeCost = lc;
         conjured = true;
     }   
-    
-    public Conjured() {
-        super();
-        conjured = true;
-    }
   
 }
