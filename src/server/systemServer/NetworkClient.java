@@ -524,12 +524,15 @@ public class NetworkClient {
                 }
                 return false;
             }  
-            else {
+            else if (parsedString[0].length() != 0 && "/".equals(parsedString[0].charAt(0))){
                 consoleOut.println("Invalid command, try again, or type /help for a list of commands.");
+            }
+            else {
+                sendChatMessage(command);
             }
         } else {
             if (isConnected()) {
-                sendChatMessage(command);
+                    sendChatMessage(command);
             } else {
                 return false;
             }
