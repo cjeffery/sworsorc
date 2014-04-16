@@ -39,6 +39,7 @@ public class MapView extends    JPanel
         MapView hex_map = new MapView(MainMap.GetInstance());
         return hex_map;
     }
+    
     /** 
      * @param x The X pixel coordinate
      * @param y The Y pixel coordinate
@@ -288,8 +289,10 @@ public class MapView extends    JPanel
      * @return The actual size of the map in pixels
      */
     public Dimension getPreferredSize() {
+        //TODO: 350 is just a quick hack to prevent GUI textbox from obscuring
+        //the lower tiles
         return new Dimension((int)(width*((map.GetColumns()-1)*.75+1)),
-                             (int)(height*map.GetRows()));
+                             (int)(350+height*map.GetRows()));
     }
 
     /**
