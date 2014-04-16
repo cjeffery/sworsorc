@@ -151,7 +151,7 @@
                         <Image url="file:resources/images/YellowSun.png" />
                       </image>
                     </ImageView>
-                    <Button mnemonicParsing="false" onAction="#ChangeSun" prefHeight="48.0" prefWidth="158.0" text="End Phase" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Button fx:id="phaseButton" mnemonicParsing="false" onAction="#ChangePhase" prefHeight="48.0" prefWidth="158.0" text="End Movement Phase" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
                       <font>
                         <Font name="Palatino Linotype Bold" size="16.0" />
                       </font>

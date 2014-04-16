@@ -44,6 +44,7 @@ public class HUDController {
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
     @FXML private SwingNode hex_map;
+    @FXML private Button phaseButton;
     
     ArmyUnit bow = new Bow();
     ArmyUnit lightsword = new LightSword();
@@ -211,13 +212,32 @@ public class HUDController {
      * 
      * @author Joe Higley      
      */   
-    @FXML protected void ChangeSun(ActionEvent event) {
-        SolarDisplay.SunCalc();
-        Image Sun = new Image(SolarDisplay.GetSunImage());
-        SunImage.setImage(Sun);
+    @FXML protected void ChangePhase(ActionEvent event) {
+        switch(phaseButton.getText()){
+            case "End Movement Phase":
+                phaseButton.setText("End Spell Phase");
+                break;
         
-        RedState.setText(SolarDisplay.GetRedState());
-        BlueState.setText(SolarDisplay.GetBlueState());
+            case "End Spell Phase":
+                phaseButton.setText("End Combat Phase");
+                break;
+            
+            case "End Combat Phase":
+                phaseButton.setText("End Turn");
+                break;
+                
+            case "End Turn":
+                phaseButton.setText("End Movement Phase");
+                
+                SolarDisplay.SunCalc();
+                Image Sun = new Image(SolarDisplay.GetSunImage());
+                SunImage.setImage(Sun);
+        
+                RedState.setText(SolarDisplay.GetRedState());
+                BlueState.setText(SolarDisplay.GetBlueState());
+                break;
+        }
+        
     }
 
 }
