@@ -53,7 +53,9 @@ public class ArmyUnit extends MoveableUnit {
     
     protected int strength;    
     protected int demoralizedStrength;
-    protected int lifeCost;    
+    protected int lifeCost;
+    
+    protected Character conjuror;
     
     protected boolean conjured;
     protected boolean demoralized;
@@ -63,7 +65,6 @@ public class ArmyUnit extends MoveableUnit {
     public boolean isConjured() {
         return conjured;
     }
-    
     
     public void setDemoralized(boolean demoralized) {
         this.demoralized = demoralized;

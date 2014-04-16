@@ -12,7 +12,8 @@ package Units;
  */
 public class CentauroidCavalry extends Conjured{
 
-    public CentauroidCavalry() {
+    public CentauroidCavalry(Character c, int lc) {
+        super(c, lc);
         strength = 3;
         movement = 9;
         demoralizedStrength = 1;

@@ -12,7 +12,8 @@ package Units;
  */
 public class ZombieInfantry extends Conjured{
 
-    public ZombieInfantry() {
+    public ZombieInfantry(Character c, int LifeCost) {
+        super(c, LifeCost);
         strength = 2;
         movement = 3;
         demoralizedStrength = 1;

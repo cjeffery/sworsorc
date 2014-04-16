@@ -12,10 +12,11 @@ package Units;
  * More will go here but this is good for now
  */
 public class Conjured extends ArmyUnit{
-
-
-    public Conjured() {
+    
+    public Conjured(Character c, int lc) {
         super();
+        this.conjuror = c;
+        this.lifeCost = lc;
         conjured = true;
     }   
   
