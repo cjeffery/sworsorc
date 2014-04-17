@@ -11,6 +11,8 @@ package mainswordsorcery;
  * @author Joe Higley
  */
 import Units.*;
+import static java.lang.Integer.parseInt;
+import static java.lang.String.valueOf;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -35,20 +37,26 @@ import sshexmap.MapView;
 public class HUDController {
     @FXML private TabPane Units;
     @FXML private TabPane Targets;
-    @FXML private ImageView SunImage;
-    @FXML private Text RedState;
-    @FXML private Text BlueState;
     @FXML private MenuBar menuBar;
     @FXML private TextField message_box;
     @FXML private TextArea chat_box;
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
     @FXML private SwingNode hex_map;
+    
+    @FXML private ImageView SunImage;
     @FXML private Button phaseButton;
+    @FXML private Text turn;
+    @FXML private Text phase;
+    @FXML private Text RedState;
+    @FXML private Text BlueState;
     
     ArmyUnit bow = new Bow();
     ArmyUnit lightsword = new LightSword();
     ArmyUnit pike = new PikeMan();
+    
+    SwingNode hmap = new SwingNode();
+    
 
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
@@ -59,12 +67,14 @@ public class HUDController {
     public void initialize(){
         
         //Display map in map_view
-        SwingNode hmap = new SwingNode();
         hmap.setContent(MapView.getMapView());
         map_view.setContent(hmap);
+        UnitPool pool = UnitPool.getInstance();
+        pike.setRace(Race.Human);
+        pool.addUnit(0, pike, "0606");
         
         //this adds mouse support to map_view, just a placeholder for now
-        map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
+        hmap.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
 		public void handle (MouseEvent mouseEvent) {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
@@ -216,18 +226,25 @@ public class HUDController {
         switch(phaseButton.getText()){
             case "End Movement Phase":
                 phaseButton.setText("End Spell Phase");
+                phase.setText("Spell");
                 break;
         
             case "End Spell Phase":
                 phaseButton.setText("End Combat Phase");
+                phase.setText("Combat");
                 break;
             
             case "End Combat Phase":
                 phaseButton.setText("End Turn");
+                phase.setText("End");
                 break;
                 
             case "End Turn":
                 phaseButton.setText("End Movement Phase");
+                phase.setText("Movement");
+                int x = parseInt(turn.getText());
+                x++;
+                turn.setText(Integer.toString(x));
                 
                 SolarDisplay.SunCalc();
                 Image Sun = new Image(SolarDisplay.GetSunImage());
