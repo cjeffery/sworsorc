@@ -6,6 +6,8 @@
 
 package Units;
 
+import Character.Character;
+
 /**
  *
  * @author Matt

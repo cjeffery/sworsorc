@@ -5,6 +5,7 @@
  */
 
 package Units;
+import Character.Character;
 
 /**
  *

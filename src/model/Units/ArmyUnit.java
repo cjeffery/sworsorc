@@ -6,10 +6,10 @@
 
 package Units;
 
+import Character.Character;
+
 
 /**
- *
- * 
  * CS 383 Software Engineering
  * <p>
  * Army Unit extends the MoveableUnit class. This class addresses the combat
@@ -115,6 +115,12 @@ public class ArmyUnit extends MoveableUnit {
         System.out.println(armyUnitType + "" + race +" " + strength + " " + movement);
         if(this.conjured){
             System.out.println("Life Cost: " + lifeCost);
+        }
+    }
+    
+    public void takeLifeCost(){
+        if(this.conjured){
+            this.conjuror.decreaseManna(this.lifeCost);
         }
     }
     
