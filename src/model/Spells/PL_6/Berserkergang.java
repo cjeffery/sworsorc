@@ -53,7 +53,7 @@ public final class Berserkergang {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 7;
         // get spells range
         return range;
     }
@@ -69,24 +69,27 @@ public final class Berserkergang {
         // this function is used to get the target to cast spell
     }
     
-    public boolean checkLimits(){
-        boolean limit = false;
-        
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
-    }
-    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
+            getTarget();
             if(getDistance() <= getRange()){
                 //peform spell
+                /*
+                    -All units on whom the Spell is cast have their Combat Strength 
+                        doubled for the next Combat Phase.
+                    -Any number of units within range of the caster may be affected,
+                        as long as the caster expends 2 Manna Points per unit affected.
+                    -Caster specifies which units. 
+                */
             }
+            else{
+                //not in range
+            }
+            
+            
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
             // char or unit info, 

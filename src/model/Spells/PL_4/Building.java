@@ -67,25 +67,49 @@ public final class Building {
     
     public void getTarget(){
         // this function is used to get the target to cast spell
+        // choose hexside to build wall on 
     }
     
-    public boolean checkLimits(){
-        boolean limit = false;
+    public int getChoice(){
         
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
+        /* Present All options
+            A. Create a Wall hexside on some hexside that is adjacent to a hex
+                within 5 hexes of the caster.
+            B. Seal an entrance to a Dragon's Tunnel Complex    
+            C. Build a bridge on some River hex within 5 hexes.   
+           
+        if(//option "A")
+            return 1;
+        if(//option "B")
+            return 2;
+        if(//option "C")
+            return 3;
+        */
+        return 0;
     }
     
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
+            int choice = 0;
+            choice = getChoice();
+            getTarget();
             if(getDistance() <= getRange()){
                 //peform spell
+                if(choice  == 0){
+                    //cancel spell cast
+                }
+                if(choice  == 1){
+                    //Perform affects of A on target
+                }
+                if(choice  == 2){
+                    //Perform affects of B on target
+                }
+                if(choice  == 3){
+                    //Perform affects of C on target
+                }
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
