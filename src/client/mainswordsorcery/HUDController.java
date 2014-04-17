@@ -33,6 +33,10 @@ import javax.swing.JFrame;
 
 import sshexmap.MapDemo;
 import sshexmap.MapView;
+
+import systemServer.ClientData;
+import systemServer.ClientDataForm;
+import systemServer.NetworkClient;
  
 public class HUDController {
     @FXML private TabPane Units;
@@ -56,6 +60,9 @@ public class HUDController {
     ArmyUnit pike = new PikeMan();
     
     SwingNode hmap = new SwingNode();
+    
+    String username, ipAddress;
+    boolean usernameEntered, ipEntered, connectedToServer;
     
 
     /** 
@@ -86,6 +93,9 @@ public class HUDController {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
 		}
 	});
+        
+        connectedToServer = usernameEntered = ipEntered = false;
+        chat_box.setText("Enter your username!");
     }
    
     
@@ -191,8 +201,23 @@ public class HUDController {
      * @author Joe Higley      
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
-        if(!"".equals(message_box.getText())) {
-            chat_box.appendText("<username> " + message_box.getText() + "\n");
+        if (!usernameEntered) {
+            if (!"".equals(message_box.getText())) {
+                username = message_box.getText();
+                usernameEntered = true;
+                chat_box.setText("Enter the server's IP address.");
+                message_box.clear();
+            }
+        } else if (!ipEntered) {
+            if (!"".equals(message_box.getText())) {
+                ipAddress = message_box.getText();
+                ipEntered = true;
+                message_box.clear();
+                chat_box.clear();
+                connectedToServer = connectToServer();
+            }
+        } else if (!"".equals(message_box.getText())) {
+            NetworkClient.sendChatMessage(message_box.getText());
             message_box.clear();
         }
     }
@@ -269,6 +294,33 @@ public class HUDController {
                 break;
         }
         
+    }
+    
+    /**
+     * Connect to server
+     *
+     * @author Gabe Pearhill
+     */
+    public boolean connectToServer() {
+        // 25565 is sworsorc default server port
+        NetworkClient.setServerName(ipAddress);
+        NetworkClient.setServerPort(25565);
+        NetworkClient.setUsername(username);
+
+        if (NetworkClient.connect()) {
+            if (NetworkClient.startClient()) {
+                NetworkClient.runClient(true);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    public void postMessage(String message){
+        chat_box.appendText(message + "\n");
     }
 
 }

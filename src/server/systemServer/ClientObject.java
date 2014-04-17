@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import mainswordsorcery.Game;
 
 /**
  * Manages the connection for a client connected to server
@@ -187,6 +188,7 @@ public class ClientObject {
                     if (TAG.equals(MessageUtils.GLOBAL_CHAT)) {
                         //Prints to _server_ console:
                         MessageUtils.printChat(consoleOut, message);
+                        Game.getInstance().hudController.postMessage(message.get(1) + ": " + message.get(2));
 
                         //Send to all connected clients:
                         NetworkServer.sendToAllClients(message);
