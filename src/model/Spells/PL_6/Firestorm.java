@@ -53,7 +53,7 @@ public final class Firestorm {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 5;
         // get spells range
         return range;
     }
@@ -69,23 +69,29 @@ public final class Firestorm {
         // this function is used to get the target to cast spell
     }
     
-    public boolean checkLimits(){
-        boolean limit = false;
-        
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
-    }
-    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
+            getTarget();
             if(getDistance() <= getRange()){
                 //peform spell
+                /*
+                    -Decrease mana by 10
+                    -Spell cast at a single hex.
+                    -All units in target hex destroyed.
+                    -All characters in the hex must remain in the hex without 
+                        moving, attacking or casting Spells for one full Game-Turn 
+                        (until the caster's next Friendly Magic Phase)
+                    -During this Game_turn no Enemy CHaracters of units may move 
+                        into the Blasted hex.
+                    -Hex becomes a Blasted terrain hex unless it was a River or Lake hex.
+                    -Place a Blasted counter in the hex. 
+                */
+            }
+            else{
+                //out of range
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

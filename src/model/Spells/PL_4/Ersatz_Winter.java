@@ -51,13 +51,6 @@ public final class Ersatz_Winter {
         return mana;
     }
     
-    //return spell range
-    public int getRange(){
-        int range = 0;
-        // get spells range
-        return range;
-    }
-    
     //get distance to selected unit
     public int getDistance(){
         int distance = 0;
@@ -69,24 +62,23 @@ public final class Ersatz_Winter {
         // this function is used to get the target to cast spell
     }
     
-    public boolean checkLimits(){
-        boolean limit = false;
-        
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
-    }
-    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
-            if(getDistance() <= getRange()){
-                //peform spell
-            }
+           /*
+                -Triple movement point cost for all terrain for next Game-Turn
+                -No dragons, spiders or swamp creatures units or characters may 
+                    move or attack until the end of the next game-turn; units in 
+                    such hexes may not move, no flying units may move.
+                -All lake and moat hexes north of hexrow xx27 become passable as 
+                    clear terrain (but units may not end their movement in such hexes).
+                -All stream hexsides have no effect
+                -Killer penguins pay normal movement costs, and have their combat 
+                    strength doubled until the end of the next game-turn.
+                   
+           */        
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
             // char or unit info, 

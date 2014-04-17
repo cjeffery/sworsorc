@@ -69,23 +69,29 @@ public final class Teleporation_Control {
         // this function is used to get the target to cast spell
     }
     
-    public boolean checkLimits(){
-        boolean limit = false;
-        
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
-    }
-    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
+            getTarget();
             if(getDistance() <= getRange()){
                 //peform spell
+                /*
+                    -Decrease mana 4 points
+                    -Affects all characters and/or units in the caster's hex.
+                    -Affects last until the end of the Game-Turn
+                    -If during the friendly movement phase in which the character
+                        casts the spell, the units/characters on which it is cast 
+                        move through a Portal, the Player who owns the casting
+                        character may choose which portal becomes the moveing 
+                        units/characters' destination portal.
+                    -Die roll to determine whether the characters/units eliminated 
+                        by teleportation.
+                    -This die-roll may be dispensed with if Teleportation Protection 
+                        is cast.  
+                    -The spell must be cast in the friendly movement phase.
+                */        
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

@@ -128,6 +128,9 @@ public final class TP_Protection {
             if(getDistance() <= getRange()){
                 //peform spell
             }
+            else{
+                //not in range
+            }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
             // char or unit info, 
