@@ -53,7 +53,7 @@ public final class B_C_T {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 7;
         // get spells range
         return range;
     }
@@ -84,8 +84,18 @@ public final class B_C_T {
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
             // perform
+            getTarget();
             if(getDistance() <= getRange()){
                 //peform spell
+                /*
+                    -Decrease mana by 3 (for each unit)
+                    -Can affect all units created by the Conjure-type Spells 
+                        (no affect on Demons)
+                */
+                
+            }
+            else{
+                //not in range
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

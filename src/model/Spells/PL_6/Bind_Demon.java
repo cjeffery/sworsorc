@@ -53,7 +53,7 @@ public final class Bind_Demon {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 15;
         // get spells range
         return range;
     }
@@ -69,23 +69,33 @@ public final class Bind_Demon {
         // this function is used to get the target to cast spell
     }
     
-    public boolean checkLimits(){
-        boolean limit = false;
-        
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
-    }
-    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
             if(getDistance() <= getRange()){
                 //peform spell
+                /*
+                    -Expend 4 manna points every Game-Turn ot retain control of the
+                        Demon and must remain within 15 hexes of the Demon at all
+                        times; if these conditions are not met the Demon is unbound.
+                    -On the Game-Turn that a Character summons a Demon, he may 
+                        attempt to bind the Demon.
+                    -May also attempt to find another demon on the map that has
+                        not been previously bound.
+                    -Determine Magic Resistance.
+                        int x = 1 + (int)(Math.random() * ((6 - 1) + 1));
+                        if(x+2 >= Demons's magic resistance){
+                            //spell succeeds
+                        }
+                        else{
+                            //spell fails and demon remains unbound
+                        }
+                */        
+            }
+            else{
+                //out of range
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

@@ -71,7 +71,7 @@ public final class Summon_Force {
     
     public boolean checkLimits(){
         boolean limit = false;
-        
+        //Spell may only be cast when the casting character is in hex 0606 (the gateway of evil)
         //if( fit all the limits ){
           //  limit = true;
         //}
@@ -86,6 +86,31 @@ public final class Summon_Force {
             // perform
             if(getDistance() <= getRange()){
                 //peform spell
+                /*
+                    -Costs all mana points (min of 5)
+                    int x = 1 + (int)(Math.random() * ((6 - 1) + 1));
+                    if(x == 1){
+                        //Continental Siege Machine (3 Game-Turns)
+                    }
+                    if(x == 2){
+                        //SS Wiking Division (4 Game-Turns)
+                    }
+                    if(x == 3){
+                        //Legions of the Dead (6 Game-Turns)
+                    }
+                    if(x == 4){
+                        //Demon (5 Game-Turns)
+                    }
+                    if(x == 5){
+                        //No effect
+                    }
+                    if(x == 6){
+                        //Caster struck dead; remove from play
+                    }
+                */
+            }
+            else{
+                //out of range
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

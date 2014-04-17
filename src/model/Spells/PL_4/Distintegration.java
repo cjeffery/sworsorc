@@ -69,23 +69,48 @@ public final class Distintegration {
         // this function is used to get the target to cast spell
     }
     
-    public boolean checkLimits(){
-        boolean limit = false;
+    public int getChoice(){
         
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
+        /* Present All options
+            A. Destroy any one Wall of Force Wall hexside with 5 hexes.  
+                The wall ceases to exist, and the hexside becomes passable
+            B. Create an entrance to a Dragon's Tunnel COmplex.  THe entrance 
+                may be created in any Tunnel hex within 5 hexes of the caster.    
+            C. Destroy a bridge within 5 hexes.  The bridge ceases to exist and 
+                the River hex becomes impassable.    
+           
+        if(//option "A")
+            return 1;
+        if(//option "B")
+            return 2;
+        if(//option "C")
+            return 3;
+        */
+        return 0;
     }
     
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
+            int choice = 0;
+            choice = getChoice();
+            getTarget();
             if(getDistance() <= getRange()){
                 //peform spell
+                if(choice  == 0){
+                    //cancel spell cast
+                }
+                if(choice  == 1){
+                    //Perform affects of A on target
+                }
+                if(choice  == 2){
+                    //Perform affects of B on target
+                }
+                if(choice  == 3){
+                    //Perform affects of C on target
+                }
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
