@@ -25,7 +25,7 @@ import static sscharts.Main.*;
 import ssterrain.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import sshexmap.MapHex;
 /**
  *
  * @author chishaung
@@ -357,7 +357,7 @@ public class CombatSimulated extends javax.swing.JFrame {
         ArrayList<ArmyUnit> defencers = new ArrayList<>();
 
         HashMap units = new HashMap();
-        Hex hex1 = new Hex();
+        MapHex hex1 = new MapHex();
         TerrainType tt1 = null;
 
 

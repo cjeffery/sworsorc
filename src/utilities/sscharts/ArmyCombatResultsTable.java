@@ -18,13 +18,13 @@ import java.util.Random;
 import java.util.ArrayList;
 import ssterrain.*;
 import Units.*;
-
+import sshexmap.MapHex;
         
 public class ArmyCombatResultsTable {
     
     
     public static int [] PrepareAttackResults(ArrayList<ArmyUnit> defencers, ArrayList<ArmyUnit> defenders, 
-            Hex defHex){
+            MapHex defHex){
         int atk = 0;
         int def = 0;
         int after_def = 0;
