@@ -223,6 +223,20 @@ public class HUDController {
      * @author Joe Higley      
      */   
     @FXML protected void ChangePhase(ActionEvent event) {
+        
+        /* This if-else is a test that Game's hudController reference actually
+         * refers to the right instance. It's an ackward place,
+         * but putting the code here guarantees that we
+         * are checking against the proper instance. This code should have no
+         * effect besides printing to System.out: 
+         */
+        if (Game.getInstance().hudController == this){
+            System.out.println("Game's hudController reference is correct!");
+        }
+        else {
+            System.out.println("Game's hudController reference is NOT correct!");
+        }
+        
         switch(phaseButton.getText()){
             case "End Movement Phase":
                 phaseButton.setText("End Spell Phase");

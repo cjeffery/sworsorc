@@ -28,8 +28,16 @@ public final class Test_Spells {
         //ch.CastSpell(ch);
         //System.out.println("Character CurrentManna: "+ ch.CurrentManna);
     
-        Character c = new Character();
-        c.getCharacter(c);
+        //Character c = new Character();
+        //c.getCharacter(c);
         //c.CastSpell(c);
+        
+        Character char1 = new Character("Matt", 7, 20, "11051");
+        
+        
+        
+        //char1.setMagicPL(0);
+        
+        char1.CastSpell();
     }
 }

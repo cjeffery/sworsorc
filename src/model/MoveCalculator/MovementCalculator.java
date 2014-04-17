@@ -63,8 +63,11 @@ public class MovementCalculator
                     neighbors.add(currentHex.getNeighbor(i));
                 }
             }
+            
+            if( currentHex.IsVortexHex())
+                return;
             // Add the current hex
-            if( !validHexes.contains(currentHex) && !currentHex.IsVortexHex() )
+            if( !validHexes.contains(currentHex) )
                 validHexes.add(currentHex);
 
             

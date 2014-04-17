@@ -98,6 +98,7 @@ public class UnitRenderDemo implements MouseListener, KeyListener {
         //scenario = new ScenarioConfigurationReader("resources/scenarios/2_Dwarrows.json");
        
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 UnitRenderDemo md = new UnitRenderDemo();
                 md.mapView.addMouseListener(md);
