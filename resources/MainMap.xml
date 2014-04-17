@@ -2205,7 +2205,7 @@
         <northWestHexNumber>0642</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
         <provinceName>Minotaurus</provinceName>
-        <vortexHex>true</vortexHex>
+        <vortexHex>false</vortexHex>
     </hex>
     <hex>
         <hexNumber>2103</hexNumber>
@@ -2258,7 +2258,7 @@
         <northWestHexNumber>0643</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
         <provinceName>Minotaurus</provinceName>
-        <vortexHex>true</vortexHex>
+        <vortexHex>false</vortexHex>
     </hex>
     <hex>
         <hexNumber>2104</hexNumber>
@@ -2299,7 +2299,7 @@
         <northWestHexNumber>0640</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
         <provinceName>Minotaurus</provinceName>
-        <vortexHex>true</vortexHex>
+        <vortexHex>false</vortexHex>
     </hex>
     <hex>
         <hexNumber>2101</hexNumber>
@@ -2340,7 +2340,7 @@
         <northWestHexNumber>0641</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
         <provinceName>Minotaurus</provinceName>
-        <vortexHex>true</vortexHex>
+        <vortexHex>false</vortexHex>
     </hex>
     <hex>
         <hexNumber>2102</hexNumber>
@@ -2415,7 +2415,7 @@
         <northWestHexNumber>0639</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
         <provinceName>Minotaurus</provinceName>
-        <vortexHex>true</vortexHex>
+        <vortexHex>false</vortexHex>
     </hex>
     <hex>
         <hexNumber>2108</hexNumber>
@@ -3626,7 +3626,7 @@
         <northWestHexNumber>0637</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
         <provinceName>Minotaurus</provinceName>
-        <vortexHex>true</vortexHex>
+        <vortexHex>false</vortexHex>
         <hexEdgeMap>
           <southEastEdge>
             <edgeAttribute>St</edgeAttribute>
@@ -3646,7 +3646,7 @@
         <northWestHexNumber>0638</northWestHexNumber>
         <terrainKey>Cl</terrainKey>
         <provinceName>Minotaurus</provinceName>
-        <vortexHex>true</vortexHex>
+        <vortexHex>false</vortexHex>
         <hexEdgeMap>
           <northEdge>
             <edgeAttribute>St</edgeAttribute>
