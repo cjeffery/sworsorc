@@ -120,7 +120,9 @@ public class ArmyUnit extends MoveableUnit {
     
     public void takeLifeCost(){
         if(this.conjured){
-            this.conjuror.decreaseManna(this.lifeCost);
+            if(!this.conjuror.decreaseManna(this.lifeCost)){
+                //
+            }                
         }
     }
     
