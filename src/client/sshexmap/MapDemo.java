@@ -23,7 +23,7 @@ public class MapDemo implements MouseListener, KeyListener {
         pool = UnitPool.getInstance();
         
         ArmyUnit unit = new LightSword();
-        unit.setRace(Race.Human);
+        unit.setRace(Race.Elves);
         pool.addUnit(0, unit, "0606");
         //ArrayList<String> units = pool.getUnitsInHex("0606");
         //if(units != null)
