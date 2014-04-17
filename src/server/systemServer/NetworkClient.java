@@ -120,7 +120,7 @@ public class NetworkClient {
                     } else {
                         consoleOut.print(username + ": ");
                         consoleOut.flush();
-                        //Game.getInstance().getHUDInstance().postMessage(username + ": " + line);
+                        Game.getInstance().hudController.postMessage(username + ": " + line);
                     }
 
                 } catch (IOException ex) {
@@ -222,7 +222,7 @@ public class NetworkClient {
                         consoleOut.print(username + ": ");
                         consoleOut.flush();
                     }
-                    Game.getInstance().hudController.postMessage(username + ": " + line);
+                    //Game.getInstance().hudController.postMessage(username + ": " + line);
 
                 } catch (IOException ex) {
                     //System.err.println("Error sending message!\nException: " + e);

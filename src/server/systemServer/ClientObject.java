@@ -188,7 +188,7 @@ public class ClientObject {
                     if (TAG.equals(MessageUtils.GLOBAL_CHAT)) {
                         //Prints to _server_ console:
                         MessageUtils.printChat(consoleOut, message);
-                        Game.getInstance().hudController.postMessage(message.get(1) + ": " + message.get(2));
+                        //Game.getInstance().hudController.postMessage(message.get(1) + ": " + message.get(2));
 
                         //Send to all connected clients:
                         NetworkServer.sendToAllClients(message);
