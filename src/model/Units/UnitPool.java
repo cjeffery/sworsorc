@@ -317,7 +317,7 @@ public class UnitPool {
             destinationHex = teleportDestinationLogic(portalNum);
             
             if (destinationHex == unit.getLocation()){
-                removeUnit(unit);
+//                removeUnit(unit);
                 return false;
             }
             this.addMove(unit, destinationHex);
