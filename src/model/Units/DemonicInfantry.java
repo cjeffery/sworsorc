@@ -5,6 +5,7 @@
  */
 
 package Units;
+import Character.Character;
 
 /**
  *
@@ -12,7 +13,8 @@ package Units;
  */
 public class DemonicInfantry extends Conjured{
 
-    public DemonicInfantry() {
+    public DemonicInfantry(Character c, int lc) {
+        super(c, lc);
         strength = 8;
         movement = 3;
         demoralizedStrength = 4;

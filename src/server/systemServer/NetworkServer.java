@@ -19,6 +19,10 @@ public class NetworkServer {
     private static final int DEFAULT_PORT = 25565;
     private static final String DEFAULT_IP = "76.178.139.129";
 
+    /**
+     * Stops server execution
+     * @author Christopher Goes
+     */
     public static void stopServer() {
         stopped = true;
     }
@@ -61,6 +65,10 @@ public class NetworkServer {
         System.err.println("Error: Couldn't find lobby: " + lobbyName + " to join.");
     }
 
+    /**
+     * Removes a client from a lobby
+     * @param client 
+     */
     public static void leaveLobby(ClientObject client) {
 
         for (Lobby l : lobbies) {
@@ -74,6 +82,7 @@ public class NetworkServer {
             }
         }
         //If we're here, we didn't find the name!
+        // TODO: solve why its hitting this so often
         System.err.println("Requested to leave lobby from client not in lobby");
     }
 
@@ -116,6 +125,10 @@ public class NetworkServer {
 
     }
 
+    /**
+     * Network Server main, primary execution happens here
+     * @param args
+     */
     public static void main(String args[]) {
         clientObjects = new ArrayList<>();
         lobbies = new ArrayList<>();
@@ -130,6 +143,7 @@ public class NetworkServer {
             System.err.println("Error when starting server!\nException: " + e );
         }
 
+        // TODO: SSLServerSocket()?
         ServerSocket listen = null;
         try {
             listen = new ServerSocket(DEFAULT_PORT);
@@ -140,13 +154,13 @@ public class NetworkServer {
         
         Socket tempsock;
         ClientObject tempclient;
-        //Spins off new client connections:
+        //Spins off new client connections
         // TODO: we need a way to break out without exception or manual termination
         while (true) {
             try {
                 System.err.println("Waiting for next client...");
                 tempsock = listen.accept(); //Get socket (blocking)
-                tempclient = new ClientObject(tempsock);
+                tempclient = new ClientObject(tempsock); // generate new client
                 tempclient.startClient(); // Start the connection
                 clientObjects.add(tempclient); // add the active client to list
             } catch (IOException e) {

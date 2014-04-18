@@ -20,5 +20,5 @@ public class LightBow extends RangedLandUnit{
         movement = 5;
         demoralizedStrength = 1;
     }
-    
+       
 }

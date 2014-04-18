@@ -1,0 +1,30 @@
+    // TODO: MAKE THIS WHOLE ENCHALADA STATIC! Maybe...
+
+    /**
+     * Create a new ChatClient object, the interface for all network operations
+     * client-side
+     * <p>
+     * @param sName      Name of the server AKA the IP Address
+     * @param serverPort Port number of the server (ex: 25565)
+     * @param uName      Username of client
+     */
+    public NetworkClient(String sName, int serverPort, String uName) {
+
+        if (sName == null || serverPort < 1024 || uName == null) {
+            System.err.println("Invalid parameters, please pass correct ones!\nsName: "
+                    + sName + "\nserverPort (Must be > 1023): " + serverPort + "\nuName: " + uName);
+        } else {
+
+            // sets server iNet info
+            port = serverPort;
+            serverName = sName;
+
+            // Set client username
+            username = uName;
+        }
+
+        // Standard In/Out
+        consoleIn = new BufferedReader(new InputStreamReader(System.in));
+        consoleOut = new PrintWriter(System.out, true);
+
+    } // end constructor

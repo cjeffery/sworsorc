@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -299,6 +300,62 @@ public class UnitPool {
         }
         
         return this.unitMove.get(unitID).get(unitMove.get(unitID).size() - 1);
+    }
+    public boolean teleport(MoveableUnit unit){
+        return this.teleport(unit, false, 7);
+    }
+    
+    
+    public boolean teleport(MoveableUnit unit,boolean safeTeleport, int portalNum){
+        String destinationHex;
+        
+        if (safeTeleport){
+            Random rNum = new Random();
+            portalNum = rNum.nextInt(6);
+            
+            
+            destinationHex = teleportDestinationLogic(portalNum);
+            
+            if (destinationHex == unit.getLocation()){
+//                removeUnit(unit);
+                return false;
+            }
+            this.addMove(unit, destinationHex);
+            return true;
+        
+        }
+        else{
+            destinationHex = this.teleportDestinationLogic(portalNum);
+            this.addMove(unit, destinationHex);
+            return true;
+        }
+        
+        
+    }
+
+    private String teleportDestinationLogic(int destinationPortal) {
+        String destinationHex = "";
+        switch (destinationPortal){
+            case 0 :
+                destinationHex = "0101";
+                break;
+            case 1 :
+                destinationHex = "0102";
+                break;
+            case 2 :
+                destinationHex = "0103";
+                break;
+            case 3 :
+                destinationHex = "0104";
+                break;
+            case 4 :
+                destinationHex = "0105";
+                break;
+            case 5 :
+                destinationHex = "0106";
+                break;
+        }
+        return destinationHex;
     }
     
 }

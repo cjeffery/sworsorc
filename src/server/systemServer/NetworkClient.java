@@ -7,75 +7,48 @@ package systemServer;
 
 import Units.MoveableUnit;
 import Units.UnitPool;
-import java.net.*;
 import java.io.*;
+import java.net.*;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
-import Units.Race;
+
+import mainswordsorcery.Game;
 
 /**
- * The singleton class for the Network Client, handles data and communication
- * thread(s)
+ * The Infamous Network Client, handles communication to/from Network Server
  * <p>
- * NOTE: This is a singleton, DO NOT MAKE MORE THAN ONE NetworkClient!
+ * NOTE: This is a static singleton. 
+ * Don't fool around trying to create instances, you hear now?
  */
 public class NetworkClient {
+// TODO: New messaging protocol, one that doesn't cause carpal tunnel syndrome from sheer amount of characters
 
     // iNet variables
-    private Socket socket = null;
+    private static Socket socket = null;
     private static int port = 25565;
     private static String serverName = "127.0.0.1";
 
     // Read/write streams
-    private BufferedReader consoleIn = null;
-    private PrintWriter consoleOut = null;
+    private static BufferedReader consoleIn = null;
+    private static PrintWriter consoleOut = null;
 
     // Client info
     private static String username = "default_user";
 
     // Streams & Threads
-    private ListenerThread listenerThread = null;
-    private PrintWriter writer = null;
+    private static ListenerThread listenerThread = null;
+    private static PrintWriter writer = null;
 
     // Set default help file
-    final private String helpfile = "commands.txt";
-    final private String dir = System.getProperty("user.dir");
+    final private static String helpfile = "commands.txt";
+    final private static String dir = System.getProperty("user.dir");
+    
+    private static ClientThread clientThread;
 
     //private Conductor jarvis; // Our conductor object
-    // TODO: MAKE THIS WHOLE ENCHALADA STATIC! Maybe...
-    /* CONSTRUCTOR */
-    
-    /**
-     * Create a new ChatClient object, the interface for all network operations
-     * client-side
-     * <p>
-     * @param sName      Name of the server AKA the IP Address
-     * @param serverPort Port number of the server (ex: 25565)
-     * @param uName      Username of client
-     */
-    public NetworkClient(String sName, int serverPort, String uName) {
-
-        if (sName == null || serverPort < 1024 || uName == null) {
-            System.err.println("Invalid parameters, please pass correct ones!\nsName: "
-                    + sName + "\nserverPort (Must be > 1023): " + serverPort + "\nuName: " + uName);
-        } else {
-
-            // sets server iNet info
-            port = serverPort;
-            serverName = sName;
-
-            // Set client username
-            username = uName;
-        }
-
-        // Standard In/Out
-        consoleIn = new BufferedReader(new InputStreamReader(System.in));
-        consoleOut = new PrintWriter(System.out, true);
-
-    } // end constructor
 
     /* PUBLIC METHODS */
-    
     /**
      * Creates a new connection to the server, call this before
      * {@link #startClient startClient()}
@@ -83,12 +56,11 @@ public class NetworkClient {
      * @return boolean True if successful, false if not
      * @author Christopher Goes
      */
-    public boolean connect() {
+    public static boolean connect() { // TODO: connect pass arguments, or no longer public?
         try {
             socket = connectToServer(serverName, port);
             return true;
         } catch (NullPointerException | IOException ex) {
-            //System.err.println("Error in connect!\nException: " + e);
             System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
                     + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
             ex.printStackTrace();
@@ -102,10 +74,11 @@ public class NetworkClient {
      * @author Christopher Goes
      * @return boolean True if successful, false if runtime error/exception
      */
-    public boolean startClient() {
+    public static boolean startClient() {
 
-        startThreads();
-
+        startRemoteStreams();
+        startLocalStreams();
+        
         //first message is handle:
         MessageUtils.sendMessage(writer, MessageUtils.makeSendHandleMessage(username));
 
@@ -125,43 +98,144 @@ public class NetworkClient {
      * <p>
      * @author Christopher Goes
      */
-    public void runClient() {
-        String line;
+    public static void runClient(boolean threaded) {
+        if (threaded) {
+            clientThread = new ClientThread();
+            clientThread.start();
+        } else {
+            String line;
 
-        while (true) {
-            try {
-                line = consoleIn.readLine();
-                if (line == null) {
-                    System.err.println("line == null! Eeek!");
+            while (true) {
+                try {
+                    line = consoleIn.readLine();
+                    if (line == null) {
+                        System.err.println("line == null! Eeek!");
+                        stopClient();
+                        break;
+                    }
+                    if (!(processInput(line))) {
+                        stopClient();
+                        consoleOut.println("Later gator!");
+                        return;
+                    } else {
+                        consoleOut.print(username + ": ");
+                        consoleOut.flush();
+                        Game.getInstance().hudController.postMessage(username + ": " + line);
+                    }
+
+                } catch (IOException ex) {
+                    //System.err.println("Error sending message!\nException: " + e);
+                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                    ex.printStackTrace();
                     stopClient();
-                    break;
-                }
-                if (!(processInput(line))) {
-                    stopClient();
-                    consoleOut.println("Later gator!");
                     return;
-                } else {
-                    consoleOut.print(username + ": ");
-                    consoleOut.flush();
-                }
+                } // end catch   
+            }
+        }
+    }
+    
+    /**
+     * Sends a "chat" message to the other users. The received message will
+     * be displayed (along with the sender's username) in the chat box of the 
+     * other connected players.
+     * 
+     * @param message The message to display to other users
+     */
+    public static void sendChatMessage(String message){
+      MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, message));
+      //TODO: World-wide or lobby-wide?
+    }
 
-            } catch (IOException ex) {
-                //System.err.println("Error sending message!\nException: " + e);
-                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
-                ex.printStackTrace();
-                stopClient();
-                return;
-            } // end catch   
-        } // end while
+    /**
+     * Inform the server that this user has finished all phases of their current player turn.
+     * <p>
+     * This shouldn't be called when it isn't the user's game turn.
+     * <p>
+     * For context: After this message is sent, the server may pass control to the next user, or
+     * the next game turn may start, or the game may end.
+     */
 
+    public static void endTurn(){
+        MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
+    }
+
+    /* GETTERS/SETTERS */
+    public static void setServerName(String sName) {
+        if (sName == null || sName.isEmpty()) {
+            System.err.println("Invalid server name!");
+        } else {
+            serverName = sName;
+        }
+    }
+
+    public static void setServerPort(int sPort) {
+        if (sPort < 1024) {
+            System.err.println("Invalid port!");
+        } else {
+            port = sPort;
+        }
+    }
+
+    public static void setUsername(String uName) {
+        if (uName == null || uName.isEmpty()) {
+            System.err.println("Invalid server name!");
+        } else {
+            username = uName;
+        }
+    }
+
+    public static String getServerName() {
+        return serverName;
+    }
+
+    public static int getServerPort() {
+        return port;
+    }
+
+    public static String getUsername() {
+        return username;
     }
 
     /* THREAD N' STREAM STUFF */
     /**
      * Listens for and handles incoming communications for Network Client
      */
-    private class ListenerThread extends Thread {
+    private static class ClientThread extends Thread {
+
+        public void run() {
+            String line;
+
+            while (true) {
+                try {
+                    line = consoleIn.readLine();
+                    if (line == null) {
+                        System.err.println("line == null! Eeek!");
+                        stopClient();
+                        break;
+                    }
+                    if (!(processInput(line))) {
+                        stopClient();
+                        consoleOut.println("Later gator!");
+                        return;
+                    } else {
+                        consoleOut.print(username + ": ");
+                        consoleOut.flush();
+                    }
+                    //Game.getInstance().hudController.postMessage(username + ": " + line);
+
+                } catch (IOException ex) {
+                    //System.err.println("Error sending message!\nException: " + e);
+                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                    ex.printStackTrace();
+                    stopClient();
+                    return;
+                } // end catch   
+            }
+        }
+    }
+    private static class ListenerThread extends Thread {
 
         private BufferedReader streamIn;
         private boolean killed = false;
@@ -209,9 +283,9 @@ public class NetworkClient {
                     if (killed) {
                         close();
                         return;
-                    } else if (isConnected() && streamIn != null ) {
+                    } else if (isConnected() && streamIn != null) {
                         while (!streamIn.ready()) { // This fixed it!
-                            if(killed) {
+                            if (killed) {
                                 close();
                                 return;
                             }
@@ -233,7 +307,7 @@ public class NetworkClient {
                     //first element of the parsed message array will tell us
                     //what type of message it is:
                     if (message.get(0).equals(MessageUtils.GLOBAL_CHAT)) {
-                        if ( message.get(1).equals(username) ) {
+                        if (message.get(1).equals(username)) {
                             // suppress message
                         } else {
                             // TODO: ADD CHAT "PRIVACY" TAG. EX: (Global), (<lobby>), etc
@@ -262,26 +336,26 @@ public class NetworkClient {
                             consoleOut.println("It is now my turn!");
                         }
                         consoleOut.println("It is now " + message.get(1) + "'s turn!");
-                    //Added by John Goettsche (I hope this is where it goes    
-                    } else if (message.get(0).equals(MessageUtils.UPDATE_UNIT)){
+                        //Added by John Goettsche (I hope this is where it goes    
+                    } else if (message.get(0).equals(MessageUtils.UPDATE_UNIT)) {
                         UnitPool pool = UnitPool.getInstance();
                         MoveableUnit unit = pool.getUnit(message.get(1));
                         String location = message.get(2);
                         pool.addMove(unit, location);
-                    } else if (message.get(0).equals(MessageUtils.ADD_UNIT)){
+                    } else if (message.get(0).equals(MessageUtils.ADD_UNIT)) {
                         UnitPool pool = UnitPool.getInstance();
                         MoveableUnit unit = pool.getUnit(message.get(1));
                         unit.setRace(message.get(2));
-                        unit.setUnitType(message.get(3));            
+                        unit.setUnitType(message.get(3));
                         String location = message.get(4);
                         //needs player ID
                         //pool.addUnit(port, unit);
-                    } else if (message.get(0).equals(MessageUtils.JOINED_LOBBY) ) {
-                            consoleOut.println("Client " + message.get(2) + " has joined lobby "
-                            + message.get(1) );
-                    } else if (message.get(0).equals(MessageUtils.LEFT_LOBBY) ) {
-                            consoleOut.println("Client " + message.get(2) + " has left lobby "
-                            + message.get(1) );                       
+                    } else if (message.get(0).equals(MessageUtils.JOINED_LOBBY)) {
+                        consoleOut.println("Client " + message.get(2) + " has joined lobby "
+                                + message.get(1));
+                    } else if (message.get(0).equals(MessageUtils.LEFT_LOBBY)) {
+                        consoleOut.println("Client " + message.get(2) + " has left lobby "
+                                + message.get(1));
                     } else {
                         // its not a network message, therefore NC doesn't care, and has Jarvis take out the trash
                         //jarvis.processMessage( message.subList(1, message.size()), message.get(0) );
@@ -311,11 +385,11 @@ public class NetworkClient {
                     }
                 } else {
                     disconnectFromServer();
-                    if( streamIn != null) {
+                    if (streamIn != null) {
                         streamIn.close();
                         streamIn = null;
                     }
-                    
+
                 }
             } catch (IOException ex) {
                 //System.err.println("Error closing listener! Error thrown: " + e);
@@ -328,29 +402,32 @@ public class NetworkClient {
     }
 
     /**
-     * Starts {@link WriterThread writerThread} and
-     * {@link ListenerThread listenerThread}
+     * Starts {@link ListenerThread listenerThread} and sets
+     * {@link #setWriter() writer stream}
+     * <p>
      * <p>
      * @author Christopher Goes
      */
-    private void startThreads() {
+    private static void startRemoteStreams() {
 
         setWriter();
 
+         
         listenerThread = new ListenerThread();
+        
         listenerThread.createStream();
         listenerThread.start();
     }
 
     /**
-     * Kills thread(s) and resets writer stream.
+     * Kills ListenerThread and resets writer stream.
      * <p>
      * NOTE: Call this BEFORE restarting threads with new socket! WARNING: This
      * will close any associated sockets!
      * <p>
      * @author Christopher Goes
      */
-    private void stopThreads() {
+    private static void killRemoteStreams() {
         if (listenerThread != null) {
             listenerThread.killThread();
         }
@@ -365,7 +442,7 @@ public class NetworkClient {
      * <p>
      * @author Christopher Goes
      */
-    private void setWriter() {
+    private static void setWriter() {
         if (isConnected()) {
             try {
                 writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
@@ -377,8 +454,37 @@ public class NetworkClient {
         }
     }
 
-    /* COMMAND PROCESSING/EXECUTION METHODS */
+    /**
+     * Initializes console Input/Output streams
+     * <p>
+     * @author Christopher Goes
+     */
+    private static void startLocalStreams() {
+        consoleIn = new BufferedReader(new InputStreamReader(System.in));
+        consoleOut = new PrintWriter(System.out, true);
+    }
+
+    /**
+     * Kills local Input/Output streams
+     * 
+     * @author Christopher Goes
+     */
+    private static void killLocalStreams() {
+        try {
+            consoleIn.close();
+            consoleIn = null;
+            consoleOut.close();
+            consoleOut = null;
+        } catch (IOException ex) {
+            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+            ex.printStackTrace();
+        }
+
+    }
     
+    /* COMMAND PROCESSING/EXECUTION METHODS */
+
     /**
      * Parses user input, executes commands, and sends messages to server
      * <p>
@@ -386,7 +492,7 @@ public class NetworkClient {
      * @param command
      * @return boolean True if executed normally, False if quit or exception
      */
-    private boolean processInput(String command) {
+    private static boolean processInput(String command) {
 
         if (command == null) {
             System.err.println("Null string passed to processInput!");
@@ -412,8 +518,8 @@ public class NetworkClient {
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
             }
         } else if (parsedString.length == 1) {
-            if ("/printFile".equals(parsedString[0])) { // TODO: What does this do?
-                write(MessageUtils.PRINT_FILE); //TODO: No "Done" string?
+            if ("/printFile".equals(parsedString[0])) {
+                sendMessage(MessageUtils.PRINT_FILE);
 
             } else if ("/globalWho".equals(parsedString[0])) {
                 MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
@@ -432,8 +538,7 @@ public class NetworkClient {
                 }
 
             } else if ("/yieldTurn".equals(parsedString[0])) { // client turn over
-                MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
-
+                endTurn();
             } else if ("/beginGame".equals(parsedString[0])) { // request to start game
                 MessageUtils.sendMessage(writer, MessageUtils.makeBeginGameRequestMessage());
 
@@ -461,15 +566,16 @@ public class NetworkClient {
                     disconnectFromServer();
                 }
                 return false;
-            } else if (isConnected()) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
-
-            } else {
+            }  
+            else if (parsedString[0].length() != 0 && "/".equals(parsedString[0].charAt(0))){
                 consoleOut.println("Invalid command, try again, or type /help for a list of commands.");
+            }
+            else {
+                sendChatMessage(command);
             }
         } else {
             if (isConnected()) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
+                    sendChatMessage(command);
             } else {
                 return false;
             }
@@ -482,7 +588,7 @@ public class NetworkClient {
      * <p>
      * @param fileName Name of file to be sent
      */
-    private void sendFile(String fileName) {
+    private static void sendFile(String fileName) {
         String line;
         try {
             BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.forName("UTF-8")));
@@ -500,9 +606,10 @@ public class NetworkClient {
      * <p>
      * @param message Message to write
      */
-    private void write(String message) { //
-        writer.println(message);
-        writer.flush();
+    private static void sendMessage(String message) {
+        List<String> temp = new ArrayList<>();
+        temp.add(message);
+        MessageUtils.sendMessage(writer, temp);
     }
 
     /**
@@ -511,11 +618,11 @@ public class NetworkClient {
      * @author Christopher Goes
      * @throws IOException
      */
-    private void printCommandList() {
+    private static void printCommandList() {
         String inputline;
         String tempfile;
 
-        // change src and server to variables when project is nearing completion
+        // TODO: change src and server to variables when project is nearing completion
         tempfile = dir + File.separator + "src" + File.separator + "server" + File.separator + helpfile;
 
         try {
@@ -523,7 +630,7 @@ public class NetworkClient {
 
             try {
                 while ((inputline = input.readLine()) != null) {
-                    System.out.println(inputline);
+                    consoleOut.println(inputline);
                 }
             } catch (IOException ex) {
                 System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
@@ -545,30 +652,32 @@ public class NetworkClient {
      * @return Socket
      * @throws IOException
      */
-    private Socket connectToServer(String sName, int serverPort) throws IOException {
+    private static Socket connectToServer(String sName, int serverPort) throws IOException {
         Socket tempsock = null;
         System.out.println("Connecting! Please Wait!");
+        Game.getInstance().hudController.postMessage("Connecting! Please Wait!");
         try {
             tempsock = new Socket(sName, serverPort);
         } catch (UnknownHostException e) {
             System.err.println("Error : Unknown host!\nException: " + e);
+            Game.getInstance().hudController.postMessage("Error : Unknown host!\nException: " + e);
         } catch (ConnectException e) {
             System.err.println("Error : Connection Refused!\nException: " + e);
+            Game.getInstance().hudController.postMessage("Error : Connection Refused!\nException: " + e);
         }
-
+        Game.getInstance().hudController.postMessage("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
         System.out.println("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
         return tempsock;
     }
 
     /* UTILITY METHODS */
-    
     /**
      * Checks if client is connected to server
      * <p>
      * @author Christopher Goes
      * @return boolean True if connected, False if not
      */
-    private boolean isConnected() {
+    private static boolean isConnected() {
         return socket != null && !(socket.isClosed()) && socket.isConnected();
     }
 
@@ -577,16 +686,18 @@ public class NetworkClient {
      * <p>
      * @author Christopher Goes
      */
-    private void disconnectFromServer() {
+    private static void disconnectFromServer() {
         consoleOut.print("Disconnecting from server...");
+        Game.getInstance().hudController.postMessage("Disconnecting from server...");
         if (isConnected()) {
             MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
             writer.flush();
         }
 
-        stopThreads();
+        killRemoteStreams();
         killSocket();
         consoleOut.println("Disconnected!");
+        Game.getInstance().hudController.postMessage("Disconnect!");
     }
 
     /**
@@ -594,7 +705,7 @@ public class NetworkClient {
      * <p>
      * @author Christopher Goes
      */
-    private void killSocket() {
+    private static void killSocket() {
         try {
             if (socket != null && !(socket.isClosed())) {
                 socket.close();
@@ -613,19 +724,22 @@ public class NetworkClient {
     /**
      * Closes all open streams, and kills all active threads
      */
-    private void stopClient() {
+    private static void stopClient() {
         killSocket();
         if (listenerThread != null || writer != null) {
-            stopThreads();
+            killRemoteStreams();
+        }
+        if (consoleIn != null || consoleOut != null ) {
+            killLocalStreams();
         }
     }
 
     /* MAIN */
     /**
-     * Opens dialog box(s), creates NetworkClient instance, and executes public
+     * Opens dialog box(s), creates NetworkClient instance, and executes startup
      * methods
      * <p>
-     * NOTE: This is mainly for testing purposes, should not be in final build
+     * NOTE: Kill when client closes
      * <p>
      * @param args
      */
@@ -640,16 +754,19 @@ public class NetworkClient {
 
         System.out.println("Login Dialog Finished");
 
-        System.out.flush(); // I was losing input is the JDialog crashed
+        System.out.flush();
 
         String sName = clientData.getIPAddress();
-        String uName = clientData.getUsername(); // this needs to be set in constructor
+        String uName = clientData.getUsername();
 
-        NetworkClient client = new NetworkClient(sName, 25565, uName);
+        // 25565 is sworsorc default server port
+        NetworkClient.setServerName(sName);
+        NetworkClient.setServerPort(25565);
+        NetworkClient.setUsername(uName);
 
-        if (client.connect()) {
-            if (client.startClient()) {
-                client.runClient();
+        if (NetworkClient.connect()) {
+            if (NetworkClient.startClient()) {
+                NetworkClient.runClient(false);
             } else {
                 System.err.println("Client failed to start from main!");
             }

@@ -6,10 +6,10 @@
 
 package Units;
 
+import Character.Character;
+
 
 /**
- *
- * 
  * CS 383 Software Engineering
  * <p>
  * Army Unit extends the MoveableUnit class. This class addresses the combat
@@ -45,7 +45,7 @@ public class ArmyUnit extends MoveableUnit {
  *                - WebWarriors
  * RangedLandUnit - HorseArcher
  *                - LightBow
-                  - Bow
+ *                - Bow
  * FlyingConjured - WyvernAirtroops
  * FlyingUnit     - RocRider
  *                - Zeppelin
@@ -53,7 +53,9 @@ public class ArmyUnit extends MoveableUnit {
     
     protected int strength;    
     protected int demoralizedStrength;
-    protected int lifeCost;    
+    protected int lifeCost;
+    
+    protected Character conjuror;
     
     protected boolean conjured;
     protected boolean demoralized;
@@ -63,7 +65,6 @@ public class ArmyUnit extends MoveableUnit {
     public boolean isConjured() {
         return conjured;
     }
-    
     
     public void setDemoralized(boolean demoralized) {
         this.demoralized = demoralized;
@@ -114,6 +115,14 @@ public class ArmyUnit extends MoveableUnit {
         System.out.println(armyUnitType + "" + race +" " + strength + " " + movement);
         if(this.conjured){
             System.out.println("Life Cost: " + lifeCost);
+        }
+    }
+    
+    public void takeLifeCost(){
+        if(this.conjured){
+            if(!this.conjuror.decreaseManna(this.lifeCost)){
+                //
+            }                
         }
     }
     

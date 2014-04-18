@@ -5,6 +5,7 @@
  */
 
 package Units;
+import Character.Character;
 
 /**
  *
@@ -12,7 +13,8 @@ package Units;
  */
 public class WraithTroops extends Conjured{
 
-    public WraithTroops() {
+    public WraithTroops(Character c, int lc) {
+        super(c, lc);
         strength = 6;
         movement = 3;
         demoralizedStrength = 3;
