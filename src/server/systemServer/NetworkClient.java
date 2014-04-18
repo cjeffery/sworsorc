@@ -148,6 +148,13 @@ public class NetworkClient {
       //TODO: World-wide or lobby-wide?
     }
 
+    /**
+     * Post the string "lastMessage" to the GUI chat box. The message has be
+     * sent in this way so that the listener thread can communicate with
+     * this JavaFX thread. Otherwise an exception will be thrown.
+     * 
+     * @author Gabe Pearhill
+     */
     public static void postMessage() {
         Platform.runLater(new Runnable() {
             @Override

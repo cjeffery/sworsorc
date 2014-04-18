@@ -201,7 +201,7 @@ public class HUDController {
     /** 
      * Displays user text in chat_box
      * 
-     * @author Joe Higley      
+     * @author Joe Higley, Gabe Pearhill      
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
         if (!usernameEntered) {
@@ -329,6 +329,13 @@ public class HUDController {
         }
     }
     
+    /**
+     * A simple function to post a message to the chat box from outside of the 
+     * class. This function is used by the networking software in order to post
+     * an incoming chat message.
+     * 
+     * @author Gabe Pearhill
+     */
     public void postMessage(String message){
         chat_box.appendText(message + "\n");
     }
