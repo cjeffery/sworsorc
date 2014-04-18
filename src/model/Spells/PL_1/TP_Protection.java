@@ -24,7 +24,7 @@ public final class TP_Protection {
     
     public TP_Protection(){
         prepareGUI();
-        
+        performSpellEffects();
         checkLimits();
     }
     
@@ -48,7 +48,7 @@ public final class TP_Protection {
     
     //check mana available
     public boolean checkMana(){
-        boolean mana = false;
+        boolean mana = true;
         
         //if( enough mana ){
           //  mana = true;
@@ -77,8 +77,22 @@ public final class TP_Protection {
     }
     
     public boolean checkLimits(){
-        boolean limit = false;
-        tempPhaseCheck tempChecker = new tempPhaseCheck();
+        boolean limit = true;
+        //if( fit all the limits ){
+          //  limit = true;
+        //}
+        return limit; 
+    }
+        
+    
+    public void performSpellEffects(){
+        // this function is used to perform the spell effects
+        // like cost mana, or the real effects described in rules
+        if(checkLimits() == true && checkMana() == true){
+            // perform
+            if(getDistance() <= getRange()){
+                //peform spell
+                tempPhaseCheck tempChecker = new tempPhaseCheck();
         
         //check current phase
         if(tempChecker.movement() == true && tempChecker.combat() == false
@@ -112,21 +126,11 @@ public final class TP_Protection {
             ok_button.setBounds(0,0,150,20);
             frame.add(ok_button);
             frame.setVisible(true);
-          //if( fit all the limits ){
-          //  limit = true;
-        //}
+          
         }
-        return limit; 
-    }
-        
-    
-    public void performSpellEffects(){
-        // this function is used to perform the spell effects
-        // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
-            // perform
-            if(getDistance() <= getRange()){
-                //peform spell
+            }
+            else{
+                //not in range
             }
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the

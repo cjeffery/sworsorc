@@ -18,37 +18,42 @@ import java.util.Random;
 import java.util.ArrayList;
 import ssterrain.*;
 import Units.*;
-import sshexmap.*;
-
+import sshexmap.MapHex;
         
 public class ArmyCombatResultsTable {
     
-    public static int [] PrepareAttackResults(ArrayList<ArmyUnit> attackers, ArrayList<ArmyUnit> defenders, MapHex defHex){
+    
+    public static int [] PrepareAttackResults(ArrayList<ArmyUnit> defencers, ArrayList<ArmyUnit> defenders, 
+            MapHex defHex){
         int atk = 0;
         int def = 0;
+        int after_def = 0;
         int index;
         double ratio;
         
-        for (ArmyUnit attacker : attackers) {
+        for (ArmyUnit attacker : defencers) {
             atk += attacker.getStrength();
         }
         
         System.out.println("Total Attackers Strength: " + atk);
         
+        
         for (ArmyUnit defender : defenders){
             def += defender.getStrength();
         }
-        
+        after_def = def;
         System.out.println("Total Defenders Strength before terrain bonus: " + def);
         
-        def *= defHex.getCombatMultiplier(defenders.get(0));
+        after_def *= defHex.getCombatMultiplier(defenders.get(0));
         
-        System.out.println("Total Defenders Strength after terrain bonus: " + def);
+        System.out.println("Total Defenders Strength after terrain bonus: " + after_def);
         
-        ratio = (double)atk/(double)def;
+        ratio = (double)atk/(double)after_def;
         
-        System.out.println("Ratio: " + atk + "/" + def);
+        System.out.println("Ratio: " + atk + "/" + after_def);
         System.out.println("Ratio: " + ratio);
+        
+        Show(atk, def, after_def,ratio);
         
         index = 12;
         if(ratio < 6)
@@ -95,6 +100,14 @@ public class ArmyCombatResultsTable {
         */
     }
 
+    public static void Show(int atk, int def, int after_def,double ratio) {
+        javax.swing.JOptionPane.showMessageDialog(null,"Total Attackers Strength: " + atk + 
+                         "\nTotal Defenders Strength before terrain bonus: " + def +
+                         "\nTotal Defenders Strength after terrain bonus: " + after_def + 
+                         "\nRatio: " + atk + "/" + after_def +
+                         "\nRatio: " + ratio);
+    }
+    
     public static int [] TableLookup(int index){
         int [] results = new int[2];
         

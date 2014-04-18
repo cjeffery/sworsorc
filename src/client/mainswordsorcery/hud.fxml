@@ -91,8 +91,8 @@
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <Text fx:id="BlueState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <Text id="RedSun" fx:id="RedState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turn" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Text fx:id="phase" strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Text fx:id="turn" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" percentWidth="65.0" prefWidth="-1.0" />

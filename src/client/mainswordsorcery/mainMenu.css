@@ -16,6 +16,11 @@ Button {
     -fx-font-family: 'JasmineUPC';
 }
 
+ImageView {
+    -fx-image: url("../images/gold-button.png");
+    -fx-size: 80%, 50%;
+}
+
 Label {
     -fx-font-size: 100pt;
     -fx-font-family: 'JasmineUPC';

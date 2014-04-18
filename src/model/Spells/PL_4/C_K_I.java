@@ -69,20 +69,10 @@ public final class C_K_I {
         // this function is used to get the target to cast spell
     }
     
-    public boolean checkLimits(){
-        boolean limit = false;
-        
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
-    }
-    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
             if(getDistance() <= getRange()){
                 //peform spell

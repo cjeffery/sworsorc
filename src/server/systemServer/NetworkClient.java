@@ -13,6 +13,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import mainswordsorcery.Game;
+
 /**
  * The Infamous Network Client, handles communication to/from Network Server
  * <p>
@@ -41,6 +43,8 @@ public class NetworkClient {
     // Set default help file
     final private static String helpfile = "commands.txt";
     final private static String dir = System.getProperty("user.dir");
+    
+    private static ClientThread clientThread;
 
     //private Conductor jarvis; // Our conductor object
 
@@ -94,36 +98,41 @@ public class NetworkClient {
      * <p>
      * @author Christopher Goes
      */
-    public static void runClient() {
-        String line;
+    public static void runClient(boolean threaded) {
+        if (threaded) {
+            clientThread = new ClientThread();
+            clientThread.start();
+        } else {
+            String line;
 
-        while (true) {
-            try {
-                line = consoleIn.readLine();
-                if (line == null) {
-                    System.err.println("line == null! Eeek!");
+            while (true) {
+                try {
+                    line = consoleIn.readLine();
+                    if (line == null) {
+                        System.err.println("line == null! Eeek!");
+                        stopClient();
+                        break;
+                    }
+                    if (!(processInput(line))) {
+                        stopClient();
+                        consoleOut.println("Later gator!");
+                        return;
+                    } else {
+                        consoleOut.print(username + ": ");
+                        consoleOut.flush();
+                        Game.getInstance().hudController.postMessage(username + ": " + line);
+                    }
+
+                } catch (IOException ex) {
+                    //System.err.println("Error sending message!\nException: " + e);
+                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                    ex.printStackTrace();
                     stopClient();
-                    break;
-                }
-                if (!(processInput(line))) {
-                    stopClient();
-                    consoleOut.println("Later gator!");
                     return;
-                } else {
-                    consoleOut.print(username + ": ");
-                    consoleOut.flush();
-                }
-
-            } catch (IOException ex) {
-                //System.err.println("Error sending message!\nException: " + e);
-                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
-                ex.printStackTrace();
-                stopClient();
-                return;
-            } // end catch   
-        } // end while
-
+                } // end catch   
+            }
+        }
     }
     
     /**
@@ -192,6 +201,40 @@ public class NetworkClient {
     /**
      * Listens for and handles incoming communications for Network Client
      */
+    private static class ClientThread extends Thread {
+
+        public void run() {
+            String line;
+
+            while (true) {
+                try {
+                    line = consoleIn.readLine();
+                    if (line == null) {
+                        System.err.println("line == null! Eeek!");
+                        stopClient();
+                        break;
+                    }
+                    if (!(processInput(line))) {
+                        stopClient();
+                        consoleOut.println("Later gator!");
+                        return;
+                    } else {
+                        consoleOut.print(username + ": ");
+                        consoleOut.flush();
+                    }
+                    //Game.getInstance().hudController.postMessage(username + ": " + line);
+
+                } catch (IOException ex) {
+                    //System.err.println("Error sending message!\nException: " + e);
+                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                    ex.printStackTrace();
+                    stopClient();
+                    return;
+                } // end catch   
+            }
+        }
+    }
     private static class ListenerThread extends Thread {
 
         private BufferedReader streamIn;
@@ -612,14 +655,17 @@ public class NetworkClient {
     private static Socket connectToServer(String sName, int serverPort) throws IOException {
         Socket tempsock = null;
         System.out.println("Connecting! Please Wait!");
+        Game.getInstance().hudController.postMessage("Connecting! Please Wait!");
         try {
             tempsock = new Socket(sName, serverPort);
         } catch (UnknownHostException e) {
             System.err.println("Error : Unknown host!\nException: " + e);
+            Game.getInstance().hudController.postMessage("Error : Unknown host!\nException: " + e);
         } catch (ConnectException e) {
             System.err.println("Error : Connection Refused!\nException: " + e);
+            Game.getInstance().hudController.postMessage("Error : Connection Refused!\nException: " + e);
         }
-
+        Game.getInstance().hudController.postMessage("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
         System.out.println("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
         return tempsock;
     }
@@ -642,6 +688,7 @@ public class NetworkClient {
      */
     private static void disconnectFromServer() {
         consoleOut.print("Disconnecting from server...");
+        Game.getInstance().hudController.postMessage("Disconnecting from server...");
         if (isConnected()) {
             MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
             writer.flush();
@@ -650,6 +697,7 @@ public class NetworkClient {
         killRemoteStreams();
         killSocket();
         consoleOut.println("Disconnected!");
+        Game.getInstance().hudController.postMessage("Disconnect!");
     }
 
     /**
@@ -718,7 +766,7 @@ public class NetworkClient {
 
         if (NetworkClient.connect()) {
             if (NetworkClient.startClient()) {
-                NetworkClient.runClient();
+                NetworkClient.runClient(false);
             } else {
                 System.err.println("Client failed to start from main!");
             }

@@ -71,6 +71,7 @@ public final class Vortex_Creation {
     
     public boolean checkLimits(){
         boolean limit = false;
+        //No more than one Vortex may be created in each Vortex hex
         
         //if( fit all the limits ){
           //  limit = true;
@@ -84,9 +85,14 @@ public final class Vortex_Creation {
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
             // perform
+            getTarget();
+            //check to make sure chosen target is a vortex hex
+            //if not return error
             if(getDistance() <= getRange()){
-                //peform spell
-            }
+                //create vortex
+                    //remove 2 manna points per vortex created
+                
+                
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
             // char or unit info, 
@@ -94,11 +100,11 @@ public final class Vortex_Creation {
             // then we read the file again for refresh the game data
             
             
-        }else{
+            }else{
             // show warning that it desn't fit all the limitations
-        }
+            }
         
-        
+        }  
         
     }
         
