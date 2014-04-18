@@ -6,35 +6,6 @@ Version 1.1, October 2013
 
 \ 
 
-{\centering\selectlanguage{english}\bfseries\color{black}
-FOREWORD
-\par}
-
-{\selectlanguage{english}\color{black}
-This template was created to provide system and software development
-projects with a model Test Plan (TP) document template.
-The template is based on IEEE 829 Format.
-It has been edited and updated by
-Dr. Clint Jeffery for use in UI CS 383.}
-
-{\selectlanguage{english}\color{black}
-The TP template begins on the next page. \ Just throw away this page
-and enter your project specifications into the following template.
-\ Don{\textquoteright}t forget to change the headers and footers as
-necessary. \ The following conventions are used to guide you in
-developing your TP:}
-
-{\selectlanguage{english}\color{black}
-\foreignlanguage{english}{[ Text
-]\ \ }\foreignlanguage{english}{\textbf{Replace}}\foreignlanguage{english}{
-this text with your project design text.}}
-
-{\selectlanguage{english}\color{black}
-\foreignlanguage{english}{\textit{\ }}\foreignlanguage{english}{\textit{text
-in italics }}\foreignlanguage{english}{\ \ Notes/instructions to the
-author. }\foreignlanguage{english}{\textbf{Delete in your finished
-document.}}}
-
 
 \bigskip
 
@@ -49,7 +20,7 @@ FOR
 \bigskip
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-[ state program/system name here ]
+Swords and Sorcery Networking 
 \par}
 
 
@@ -63,7 +34,7 @@ FOR
 
 \begin{figure}
 \centering
-\includegraphics[width=3.4354in,height=0.6126in]{uislogan.png}
+%% \includegraphics[width=3.4354in,height=0.6126in]{uislogan.png}
 \end{figure}
 
 \bigskip
@@ -78,11 +49,11 @@ FOR
 \bigskip
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-Version [[insert version number]]
+Version 1
 \par}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-[[insert date]]
+April 18, 2014
 \par}
 
 
@@ -96,7 +67,7 @@ Prepared for:
 \par}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-[ state customer name(s) here ]
+Software Engineering: CS 383
 \par}
 
 
@@ -110,7 +81,7 @@ Prepared by:
 \par}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-[insert your name(s)]
+Chris, Gabe, John, Wayne
 \par}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
@@ -490,7 +461,7 @@ approved\\
 A - ADDED \ M - MODIFIED \ D -- DELETED}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-[ put program /system name here ]
+Swords and Sorcery
 \par}
 
 \pagebreak
@@ -514,43 +485,28 @@ Section\ \ Page}
 \section[IDENTIFIER]{\selectlanguage{english}\bfseries\color{black}
 TEST PLAN IDENTIFIER}
 
-{\selectlanguage{english}\itshape\color{black}
-Some type of unique company generated number to identify this test
-plan, its level and the level of software that it is related
-to. Preferably the test plan level will be the same as the related
-software level. The number may also identify whether the test plan is
-a Master plan, a Level plan, an integration plan or whichever plan
-level it represents. This is to assist in coordinating software and
-testware versions within configuration management.
-}
 
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+Networking TP 1.
+}
 
 
 \section[REFERENCES]{\selectlanguage{english}\bfseries\color{black}
 REFERENCES}
 
-{\selectlanguage{english}\itshape\color{black}
-List all documents that support this test plan. Refer to the actual
-version/release number of the document as stored in the configuration
-management system. Do not duplicate the text from other documents as
-this will reduce the viability of this document and increase the
-maintenance effort.
-}
-
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+This test plans make no references (?)
+}
 
 
 
 \section[INTRODUCTION]{\bfseries\color{black} INTRODUCTION}
 
-{\selectlanguage{english}\itshape\color{black}
+{\selectlanguage{english}\color{black}
 
-State the purpose of the Plan, possibly identifying the level of the
-plan (master etc.). This is essentially the executive summary part of
-the plan. 
+This is an intial test plan for only the networking portion of the
+project. It will outline how we test networking, and how we'll test
+integration of networking into other code.
 
 }
 
@@ -564,25 +520,22 @@ inventories as well as other sources of documentation and information.
 }
 
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+This is the important section!
+
+}
 
 \section[SOFTWARE RISK ISSUES]{\bfseries\color{black} SOFTWARE RISK ISSUES}
-{\selectlanguage{english}\itshape\color{black}
 
-Identify what software is to be tested and what the critical areas
-are, such as:
+{\selectlanguage{english}\color{black}
 
 \begin{itemize}
-\item   1. Delivery of a third party product.
-\item   2. New version of interfacing software
-\item   3. Ability to use and understand a new package/tool, etc.
-\item   4. Extremely complex functions
-\item   5. Modifications to components with a past history of failure
-\item   6. Poorly documented modules or change requests 
+\item   Connection Failures: For whatever reason, we have no access to a server, or can't connect over user's network.
+\item   Networking code is unable to connect with other code elements.
+\item   Networking code can be integrated, but is too complicated for anyone to work with.
 \end{itemize}
+
 }
-{\selectlanguage{english}\color{black}
-[Insert text here.]}
 
 \section[FEATURES TO BE TESTED]{\bfseries\color{black} FEATURES TO BE TESTED}
 {\selectlanguage{english}\itshape\color{black}
@@ -593,7 +546,14 @@ software, but a USERS view of the functions.
 
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+\begin{itemize}
+\item   The user can initiate connection and disconnection from the server.
+\item   The user can...
+\end{itemize}
+  
+
+}
 
 \section[FEATURES NOT TO BE TESTED]{\bfseries\color{black}
 	 FEATURES NOT TO BE TESTED}
@@ -606,7 +566,11 @@ of the software, but a USERS view of the functions.
 
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+\begin{itemize}
+\item   Thing one.
+\item   Thing two.
+\end{itemize}
+}
 
 \section[APPROACH]{\bfseries\color{black} APPROACH}
 {\selectlanguage{english}\itshape\color{black}
@@ -624,7 +588,10 @@ plans. Overall rules and processes should be identified.
 \end{itemize}
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+
+
+}
 
 \section[ITEM PASS/FAIL CRITERIA]{\bfseries\color{black}
 	 ITEM PASS/FAIL CRITERIA}
@@ -633,7 +600,10 @@ What are the Completion criteria for this plan? This is a critical
 aspect of any test plan and should be appropriate to the level of the plan.
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+  
+
+}
 
 \section[SUSPENSION CRITERIA]{\bfseries\color{black}
 	 SUSPENSION CRITERIA AND RESUMPTION REQUIREMENTS}
@@ -647,7 +617,12 @@ what is the acceptable level of defects that will allow the testing to
 proceed past the defects. 
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+  Failure to connect is a suspension criterion. Without a connection
+  established, we won't be able to test most of the networking
+  functions.
+
+}
 
 \section[TEST DELIVERABLES]{\bfseries\color{black} TEST DELIVERABLES}
 {\selectlanguage{english}\itshape\color{black}
@@ -662,7 +637,11 @@ One thing that is not a test deliverable is the software itself that
 is listed under test items and is delivered by development.
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+  
+
+
+}
 
 \section[REMAINING TEST TASKS]{\bfseries\color{black} REMAINING TEST TASKS}
 {\selectlanguage{english}\itshape\color{black}
@@ -674,31 +653,25 @@ functions. This will also allow the users and testers to avoid
 incomplete functions and prevent waste of resources chasing non-defects.
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
 
-\section[ENVIRONMENTAL NEEDS]{\bfseries\color{black} ENVIRONMENTAL NEEDS}
-{\selectlanguage{english}\itshape\color{black}
-Are there any special requirements for this test plan, such as:
-
-\begin{itemize}
-\item Special hardware such as simulators, static generators etc.
-\item How will test data be provided. Are there special collection
-	requirements or specific ranges of data that must be provided? 
-\end{itemize}
+  We anticipate unexpected integration requirements to be added to the test plan.
 
 }
+
+\section[ENVIRONMENTAL NEEDS]{\bfseries\color{black} ENVIRONMENTAL NEEDS}
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+  In the final test, we'll need a remote machine to host the server code.
+
+}
 
 \section[STAFFING AND TRAINING NEEDS]{\bfseries\color{black}
 	 STAFFING AND TRAINING NEEDS}
-{\selectlanguage{english}\itshape\color{black}
-Training on the application/system.
-
-Training for any test tools to be used. 
-}
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+  There is no need for special staffing.
+
+}
 
 \section[RESPONSIBILITIES]{\bfseries\color{black} RESPONSIBILITIES}
 {\selectlanguage{english}\itshape\color{black}
@@ -712,7 +685,10 @@ This issue includes all areas of the plan. Here are some examples:
 \end{itemize}
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+  In a four-person group, we'll delegate responsibilty as needed?
+
+}
 
 \section[SCHEDULE]{\bfseries\color{black} SCHEDULE}
 {\selectlanguage{english}\itshape\color{black}
@@ -723,7 +699,10 @@ project plan will slip and the testing is part of the overall project plan.
 
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+  As soon as possible?
+
+}
 
 \section[PLANNING RISKS AND CONTINGENCIES]{\bfseries\color{black}
 	 PLANNING RISKS AND CONTINGENCIES}
@@ -734,7 +713,10 @@ testing process? Specify what will be done for various risk events.
 
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+???
+
+}
 
 \section[APPROVALS]{\bfseries\color{black} APPROVALS}
 {\selectlanguage{english}\itshape\color{black}
@@ -744,18 +726,17 @@ proceed to the next level (depending on the level of the plan)?
 
 }
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
 
-\section[GLOSSARY]{\bfseries\color{black} GLOSSARY}
-
-{\selectlanguage{english}\itshape\color{black}
-
-Used to define terms and acronyms used in the document, and testing in
-general, to eliminate confusion and promote consistent communications.
+  
 
 }
+
+\section[GLOSSARY]{\bfseries\color{black} GLOSSARY}
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+
+  No special terms are used.
+
+}
 
 
 
