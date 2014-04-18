@@ -319,7 +319,7 @@ public class HUDController {
 
         if (NetworkClient.connect()) {
             if (NetworkClient.startClient()) {
-                NetworkClient.runClient(true);
+                //NetworkClient.runClient(true);
                 return true;
             } else {
                 return false;

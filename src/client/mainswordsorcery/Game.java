@@ -30,7 +30,6 @@ import javafx.stage.Screen;
  *
  * @author higle_000
  */
-
 public class Game extends Application {
     /** the singleton unit hash tree UnitPool variable */
     UnitPool unitPool;

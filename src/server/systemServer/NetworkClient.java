@@ -12,7 +12,7 @@ import java.net.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
+import javafx.application.Platform;
 import mainswordsorcery.Game;
 
 /**
@@ -45,6 +45,8 @@ public class NetworkClient {
     final private static String dir = System.getProperty("user.dir");
     
     private static ClientThread clientThread;
+    
+    public static String lastMessage;
 
     //private Conductor jarvis; // Our conductor object
 
@@ -120,7 +122,6 @@ public class NetworkClient {
                     } else {
                         consoleOut.print(username + ": ");
                         consoleOut.flush();
-                        Game.getInstance().hudController.postMessage(username + ": " + line);
                     }
 
                 } catch (IOException ex) {
@@ -145,6 +146,15 @@ public class NetworkClient {
     public static void sendChatMessage(String message){
       MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, message));
       //TODO: World-wide or lobby-wide?
+    }
+
+    public static void postMessage() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Game.getInstance().hudController.postMessage(lastMessage);
+            }
+        });
     }
 
     /**
@@ -304,38 +314,60 @@ public class NetworkClient {
                         continue; // since this isn't a critical error, no reason to kill the thread yet...
                     }
 
+                    lastMessage = message.toString();
                     //first element of the parsed message array will tell us
                     //what type of message it is:
                     if (message.get(0).equals(MessageUtils.GLOBAL_CHAT)) {
                         if (message.get(1).equals(username)) {
                             // suppress message
+                            lastMessage = message.get(1) + ": " + message.get(2);
+                            postMessage();
                         } else {
                             // TODO: ADD CHAT "PRIVACY" TAG. EX: (Global), (<lobby>), etc
                             // TODO: ADD CONNECTION STATUS TAG. EX: (CONNECTED), (DISCONNECTED), other states
                             MessageUtils.printChat(consoleOut, message);
+                            lastMessage = message.get(1) + ": " + message.get(2);
+                            postMessage();
                         }
                     } else if (message.get(0).equals(MessageUtils.DISCONNECT_ANNOUNCEMENT)) {
-                        MessageUtils.printDisconnect(consoleOut, message);
+                        lastMessage = MessageUtils.printDisconnect(consoleOut, message);
+                        postMessage();
                     } else if (message.get(0).equals(MessageUtils.CONNECT_ANNOUNCEMENT)) {
-                        MessageUtils.printConnectionMessage(consoleOut, message);
+                        lastMessage = MessageUtils.printConnectionMessage(consoleOut, message);
+                        postMessage();
                     } else if (message.get(0).equals(MessageUtils.GLOBAL_WHO_LIST)) {
-                        MessageUtils.printGlobalWhoList(consoleOut, message);
+                        lastMessage = MessageUtils.printGlobalWhoList(consoleOut, message);
+                        postMessage();
                     } else if (message.get(0).equals(MessageUtils.LOBBY_INFO)) {
                         MessageUtils.printLobbyInfo(consoleOut, message);
+                        lastMessage = message.get(1) + ": " + message.get(2);
+                        postMessage();
                     } else if (message.get(0).equals(MessageUtils.APROVE_NEW_LOBBY_REQUEST)) {
                         consoleOut.println("Lobby created!");
+                        lastMessage = "Lobby created!";
+                        postMessage();
                     } else if (message.get(0).equals(MessageUtils.GAME_BEGUN)) {
                         consoleOut.println("Game has begun!");
+                        lastMessage = "Game has begun!";
+                        postMessage();
                     } else if (message.get(0).equals(MessageUtils.DENY_NEW_LOBBY_REQUEST)) {
                         consoleOut.print(("Could not create lobby: (Duplicated name?)"));
+                        lastMessage = "Could not create lobby: (Duplicated name?)";
+                        postMessage();
                     } else if (message.get(0).equals(MessageUtils.NAG)) {
                         System.err.println("NAG: " + message.get(1));
+                        lastMessage = ("NAG: " + message.get(1));
+                        postMessage();
                     } else if (message.get(0).equals(MessageUtils.NEXT_TURN_INFO)) {
                         if (username.equals(message.get(1))) {
                             //it's my turn!
                             consoleOut.println("It is now my turn!");
+                            lastMessage = ("It is now my turn!");
+                            postMessage();
                         }
                         consoleOut.println("It is now " + message.get(1) + "'s turn!");
+                        lastMessage = ("It is now " + message.get(1) + "'s turn!");
+                        postMessage();
                         //Added by John Goettsche (I hope this is where it goes    
                     } else if (message.get(0).equals(MessageUtils.UPDATE_UNIT)) {
                         UnitPool pool = UnitPool.getInstance();
@@ -353,9 +385,15 @@ public class NetworkClient {
                     } else if (message.get(0).equals(MessageUtils.JOINED_LOBBY)) {
                         consoleOut.println("Client " + message.get(2) + " has joined lobby "
                                 + message.get(1));
+                        lastMessage = ("Client " + message.get(2) + " has joined lobby "
+                                + message.get(1));
+                        postMessage();
                     } else if (message.get(0).equals(MessageUtils.LEFT_LOBBY)) {
                         consoleOut.println("Client " + message.get(2) + " has left lobby "
                                 + message.get(1));
+                        lastMessage = ("Client " + message.get(2) + " has left lobby "
+                                + message.get(1));
+                        postMessage();
                     } else {
                         // its not a network message, therefore NC doesn't care, and has Jarvis take out the trash
                         //jarvis.processMessage( message.subList(1, message.size()), message.get(0) );
