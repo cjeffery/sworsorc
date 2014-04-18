@@ -33,7 +33,17 @@ public class MapView extends    JPanel
             System.out.println("Hexpainter threw an IO exception :(");
         }
     }
-
+    /**
+     * returns private variable map
+     * is used in HUDController.java
+     * @return map
+     * @author Jay Drage
+     */
+    public HexMap GetHexMap()
+    {
+        return map;
+    }
+    
     public static MapView getMapView()
     {
         MapView hex_map = new MapView(MainMap.GetInstance());
