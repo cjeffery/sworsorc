@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import sshexmap.MapHex;
 import ssterrain.HexEdge;
 import ssterrain.HexEdgeType;
+import ssterrain.ITTVortex;
 import ssterrain.TerrainType;
 
 /**
@@ -35,112 +36,94 @@ public class MovementCalculator
      * to be filled (by reference) during the recursive calls of this method. 
      * The ArrayList will (after final return) hold all valid hex moves for the 
      * moving unit, starting from the currentHex. (\/)..(;,,,;)..(\/)
-     * @param movingUnit
-     * @param startHex
-     * @param moveAllowance
-     * @param validHexes 
+     * @param movingUnit - the unit to be moved 
+     * @param currentHex - the current hex location of the moving unit
+     * @param moveAllowance - the unit's movement allowance.
+     * @param validHexes  - an empty ArrayList holding type MapHex
      * @author Keith and Ian
      */
     public static void getValidMoves(MoveableUnit movingUnit, MapHex currentHex,
             double moveAllowance, ArrayList<MapHex> validHexes) 
     {
-        double edgeCost = 0;
+        int edgeSignal = 0;
         double moveCost = 0;
         TerrainType destinationTerrainType;
         ArrayList<MapHex> neighbors = new ArrayList<MapHex>();
-
-        // For each hex edge, 0-5, get the neighboring hex, if it's valid
-        for (int i = 0; i < 6; i++) 
-        {
-            // Check if the hex is valid, null returned if hex neighbor no exist
-            if (currentHex.getNeighbor(i) != null) 
-            {
-                // add each valid neighbor to neighbors
-                neighbors.add(currentHex.getNeighbor(i));
-            }
-        }
         
         // This is the case where the move was legal :D
         if( moveAllowance > 0 )
-        {            
+        {  
+            //For each hex edge, 0-5, get the neighboring hex, if it's valid
+            for (int i = 0; i < 6; i++) 
+            {
+                //Check if the hex is valid, null returned if hex neighbor no exist
+                if( currentHex.getNeighbor(i) != null ) 
+                {
+                    // add each valid neighbor to neighbors if not vortex hex
+                    neighbors.add(currentHex.getNeighbor(i));
+                }
+            }
+            
+            if( currentHex.IsVortexHex())
+                return;
             // Add the current hex
-            validHexes.add(currentHex);
+            if( !validHexes.contains(currentHex) )
+                validHexes.add(currentHex);
 
-            // Iterate over neighbors and recurse on them.
+            
+            // Let the recursion begin...
             for( int i = 0; i < neighbors.size(); i++ )
             {
-                // Get edge cost of moving from current hex to neighbor i
-                edgeCost = getEdgeCost( currentHex, neighbors.get(i) , i);
+                edgeSignal = getEdgeSignal( currentHex, i ); 
                 
-                // Switch case determines type of edge - (-1) is invalid, 0 
-                // means no bonus from edge, and 1 means the move costs one
-                //                     1 = (road/trail)
-                switch ( (int)edgeCost ) 
-                {
-                    case -1 :                         
-                        return; // nothing to do here
-                    case 0 : 
-                        // get the terrain type of the neighbor, determine cost
+                switch (edgeSignal) {
+                    case 1 : // Subtract one for moving over bridge edge
+                        getValidMoves( movingUnit, neighbors.get(i),
+                                moveAllowance - 1, validHexes );
+                        break;
+                    case 2 : // Subtract 3 for moving over ford edge.
+                        getValidMoves( movingUnit, neighbors.get(i), 
+                                moveAllowance - 3, validHexes );
+                        break;
+                    case 3 : // Subtract 1 for moving through gate, like bridge
+                        getValidMoves( movingUnit, neighbors.get(i), 
+                                moveAllowance - 1, validHexes );
+                        break;
+                    case 4 : // Subtract .5 for moving along a road
+                        getValidMoves( movingUnit, neighbors.get(i),
+                                moveAllowance - .5, validHexes );
+                        break;
+                    case 5 : // Stream hexside - get terrain cost and add one, recurse
                         destinationTerrainType = neighbors.get(i).getTerrainType();
                         moveCost = destinationTerrainType.getMovementCost(movingUnit);
-                        // If the moveCost is 99, the move is illegal
-                        if( moveCost == 99 )
-                            break;
-                        // recurse on neighbor i with modified move cost
-                        if( neighbors.get(i) != null )
-                        {
-                            getValidMoves( movingUnit, neighbors.get(i), 
+                        moveCost = moveCost + 1.;
+                        getValidMoves( movingUnit, neighbors.get(i),
                                 moveAllowance - moveCost, validHexes );
-                        }
                         break;
-                    case 1 : case 3 : 
-                        // Recurse on neighbor i with edge cost mod to movement
-                        if( neighbors.get(i) != null )
-                        {
-                            getValidMoves( movingUnit, neighbors.get(i), 
-                                moveAllowance - edgeCost, validHexes );
-                        }
+                    case 6 : // Subtrace only one from move cost for trail
+                        getValidMoves( movingUnit, neighbors.get(i),
+                                moveAllowance - 1, validHexes );
                         break;
-                    case -5 : // Signals the special case of a +1 edge cost for streams
-                        // Get neighbor terrain type, determine cost
+                    case 7 : // break without recursion for case of wall
+                        break;
+                    case 8 : // break without recursion for case of enemy unit
+                        break;
+                    default : // Case where no hex edge applies.
                         destinationTerrainType = neighbors.get(i).getTerrainType();
                         moveCost = destinationTerrainType.getMovementCost(movingUnit);
-                        // If the moveCost is 99, move is illegal
-                        if( moveCost == 99 )
+                        if( moveCost == 99. )
                             break;
-                        moveCost++; // Increment by 1 for stream hexside
-                        // recurse on neighbor i with modified move cost
-                        if( neighbors.get(i) != null )
-                        {
-                            getValidMoves( movingUnit, neighbors.get(i),
+                        getValidMoves( movingUnit, neighbors.get(i),
                                 moveAllowance - moveCost, validHexes );
-                        }
                         break;
-                    case -3 : // Handle the case of road where move cost is .5
-                        // Get neighbor terrain type, determine cost
-                        destinationTerrainType = neighbors.get(i).getTerrainType();
-                        moveCost = destinationTerrainType.getMovementCost(movingUnit);
-                        // If the moveCost is 99, move is illegal
-                        if( moveCost == 99 )
-                            break;
-                        moveCost = .5; // Increment by 1 for stream hexside
-                        // recurse on neighbor i with modified move cost
-                        if( neighbors.get(i) != null )
-                        {
-                            getValidMoves( movingUnit, neighbors.get(i),
-                                moveAllowance - moveCost, validHexes );
-                        }
-                        break;
-                    default :
-                        // just a testing error message.
-                        System.out.println("Failure in Switch in MovementCalculator.getValidMoves");
                 }
-                
-            }                        
+            }
+        
         } else if( moveAllowance == 0 ) // move is exactly legal, add & return
         {
             // do not recurse here - end of the line
-            validHexes.add(currentHex);
+            if( !currentHex.IsVortexHex() )
+                validHexes.add(currentHex);
             return;
             
         } else if( moveAllowance < 0 ) // ILLEGAL!!!! DO NOT ADD!!!
@@ -161,48 +144,47 @@ public class MovementCalculator
      * @return edgeCost 
      * @author Keith and Ian
      */
-    public static double getEdgeCost(MapHex sourceHex, MapHex destinationHex,
-                                int sourceEdgeDirection ) 
+    public static int getEdgeSignal(MapHex sourceHex, int sourceEdgeDirection ) 
     {
         // allocate and initialize return variable and HexEdge being examined
-        double edgeCost = 0;
+        int edgeSignal = 0;
         HexEdge edge = sourceHex.getEdge(sourceEdgeDirection);
         
         
         if( edge.contains( HexEdgeType.Bridge ) ) 
         {
             //System.out.println( "Bridge" );
-            edgeCost = 1;
+            edgeSignal = 1;
         }
         else if( edge.contains( HexEdgeType.Ford ) )
         {
             //System.out.println( "Ford" );
-            edgeCost = 3;
+            edgeSignal = 2;
         }        
         else if( edge.contains( HexEdgeType.Gate ) )
         {
             //System.out.println( "Gate" );
-            edgeCost = 1;
+            edgeSignal = 3;
         }
         else if( edge.contains( HexEdgeType.Road ) )
         {
             //System.out.println( "Road" );
-            edgeCost = -3;
+            edgeSignal = 4;
         }
         else if( edge.contains( HexEdgeType.Stream ) )
         {
             //System.out.println( "Stream" );
-            edgeCost = -5;
+            edgeSignal = 5;
         }
         else if( edge.contains( HexEdgeType.Trail ) )
         {
             //System.out.println( "Trail" );
-            edgeCost = 1;
+            edgeSignal = 6;
         }
         else if( edge.contains( HexEdgeType.Wall ) )
         {
             //System.out.println( "Wall" );
-            edgeCost = -1;
+            edgeSignal = 7;
         }
         else 
         {
@@ -210,10 +192,11 @@ public class MovementCalculator
             // Here should be a check to see if there are enemy units in the 
             // neighbor hex - for now, just return 0 to indicate terrain should
             // be used for movement cost.
-            edgeCost = 1;
+            //edgeSignal = 8;
+            edgeSignal = 9;
         }
         
-        return edgeCost;
+        return edgeSignal;
     }
 
     /**
