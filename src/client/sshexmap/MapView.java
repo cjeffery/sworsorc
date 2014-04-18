@@ -34,10 +34,12 @@ public class MapView extends    JPanel
         }
     }
 
+    static MapView hex_map_instance;
     public static MapView getMapView()
     {
-        MapView hex_map = new MapView(MainMap.GetInstance());
-        return hex_map;
+        if(hex_map_instance == null)
+            hex_map_instance = new MapView(MainMap.GetInstance());
+        return hex_map_instance;
     }
     
     public static MapView getDipView()

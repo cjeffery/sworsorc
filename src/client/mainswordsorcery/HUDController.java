@@ -10,6 +10,7 @@ package mainswordsorcery;
  *
  * @author Joe Higley
  */
+import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,7 +28,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-
+import sshexmap.MainMap;
+import sshexmap.MapHex;
 import sshexmap.MapView;
  
 public class HUDController {
@@ -48,6 +50,10 @@ public class HUDController {
     ArmyUnit lightsword = new LightSword();
     ArmyUnit pike = new PikeMan();
     SwingNode hdip = new SwingNode();
+
+    MainMap mainmap = MainMap.GetInstance();
+    MapView mapview = MapView.getMapView();
+    MoveableUnit selected_unit;
         
 
     /** 
@@ -57,19 +63,61 @@ public class HUDController {
      * @author Jay Drage        
      */
     public void initialize(){
+        MapView m = MapView.getMapView();
+        
+        //temporary code for movemment demo
+        UnitPool pool = UnitPool.getInstance();
+        ArmyUnit u = new LightSword();
+        u.setRace(Race.Elves);
+        pool.addUnit(0, u, "0606");
         
         hdip.setContent(MapView.getDipView());
         
         //Display map in map_view
         SwingNode hmap = new SwingNode();
-        hmap.setContent(MapView.getMapView());
+        hmap.setContent(m);
         map_view.setContent(hmap);
         
         //this adds mouse support to map_view, just a placeholder for now
         map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
 		public void handle (MouseEvent mouseEvent) {
-			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
+                        String hexID = mapview.hexAt((int)mouseEvent.getX(),
+                                                     (int)mouseEvent.getY());
+                        System.out.println("clicked hex " + hexID);
+                        MapHex hex = mainmap.GetHex(hexID);
+                        System.out.println("Got hex " + hex);
+                        if(hex == null) {
+                            System.out.println("No hex at " + hexID + "???");
+                        }
+                        
+                        if(selected_unit == null) {
+                            System.out.println("Checking for unit");
+                            ArrayList<MoveableUnit> units = hex.getUnits();
+                            if(units == null || units.size() == 0) {
+                                return;
+                            }
+                            System.out.println("Found unit " + units.get(0));
+                            selected_unit = units.get(0);
+
+                            if(selected_unit == null) {
+                                System.out.println("Something went horribly wrong");
+                            }
+                                                        
+                            ArrayList<MapHex> canMoveTo = new ArrayList<MapHex>();
+                            
+                            MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
+                            System.out.println("Found " + canMoveTo.size() + " reachable hexes");
+                            mapview.highlight(canMoveTo);
+                        }
+                        else {
+                            mapview.clearHighlights();
+                            UnitPool pool = UnitPool.getInstance();
+                            pool.addMove(selected_unit, hexID);
+                            selected_unit = null;
+                        }
+                        
+                        
 		}
 	});
        //this adds mouse support to mini_map
