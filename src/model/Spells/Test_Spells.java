@@ -32,7 +32,7 @@ public final class Test_Spells {
         //c.getCharacter(c);
         //c.CastSpell(c);
         
-        Character char1 = new Character("Matt", 7, 20, "11051");
+       Character char1 = new Character("Matt", 7, 20, "11051");
         
         
         
