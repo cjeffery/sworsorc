@@ -45,12 +45,12 @@ public class UnitRenderDemo implements MouseListener, KeyListener {
             new HeavyPluglunk(), new Bow(), new LightHorse()
         };
         ArmyUnit[] conjured = {
-            new ZombieInfantry(), new CentauroidCavalry(),
+            /* new ZombieInfantry(), new CentauroidCavalry(),
             new WyvernAirtroops(), new KoboldicInfantry(), new WraithTroops(),
             new DemonicInfantry()     
             new ZombieInfantry(null, 0), new CentauroidCavalry(null, 0),
             new WyvernAirtroops(), new KoboldicInfantry(null, 0), new WraithTroops(null, 0),
-            new DemonicInfantry(null, 0)     
+            new DemonicInfantry(null, 0) */    
         };
         ArmyUnit[] dwarvish = {
             new Bow(), new HeavyAxe(), new LightHorse()
