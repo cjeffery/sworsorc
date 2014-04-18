@@ -58,11 +58,11 @@ public class Game extends Application {
         stage.setWidth(screenBounds.getWidth());
         stage.setHeight(screenBounds.getHeight());
         
-<<<<<<< HEAD
+
         main = createScene("MainMenu.fxml");
         hud = createScene("hud.fxml");
         diplo = createScene("Diplomacy.fxml");
-=======
+
         //We can create main normally:
         main = createScene("MainMenu.fxml");         
         
@@ -75,7 +75,7 @@ public class Game extends Application {
         fxmlLoader.setLocation(url);
         
         hud = fxmlLoader.load(url.openStream()); //Load the hud, call this only once!
->>>>>>> 4ea3525afadb91e4abdde9d961befde49e5e3211
+
         
         //Use the same loader to get a reference to the actual controller instance:
         hudController = (HUDController) fxmlLoader.getController();
@@ -93,12 +93,10 @@ public class Game extends Application {
 //        hud.getStylesheets().add(mainCSS);
         mainMenu = new Scene(main, screenBounds.getWidth(), screenBounds.getHeight());        
         hudWindow = new Scene(hud, screenBounds.getWidth(), screenBounds.getHeight());
-<<<<<<< HEAD
+
         Diplomacy = new Scene(diplo, 500, 500);
         
-=======
 
->>>>>>> 4ea3525afadb91e4abdde9d961befde49e5e3211
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);
         stage.setFullScreen(true);

@@ -56,17 +56,15 @@ public class HUDController {
     ArmyUnit bow = new Bow();
     ArmyUnit lightsword = new LightSword();
     ArmyUnit pike = new PikeMan();
-<<<<<<< HEAD
-    SwingNode hdip = new SwingNode();
-        
-=======
+
+    SwingNode hdip = new SwingNode();      
+
     
     SwingNode hmap = new SwingNode();
     
     String username, ipAddress;
     boolean usernameEntered, ipEntered, connectedToServer;
     
->>>>>>> 4ea3525afadb91e4abdde9d961befde49e5e3211
 
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
@@ -301,13 +299,13 @@ public class HUDController {
         
     }
     
-<<<<<<< HEAD
+
     @FXML protected void DisplayDiplomacy(ActionEvent event) {
         Stage stage = (Stage) menuBar.getScene().getWindow();
         stage.setScene(Game.getInstance().getDiploScene());
         stage.show();
     }
-=======
+
     /**
      * Connect to server
      *
@@ -335,5 +333,5 @@ public class HUDController {
         chat_box.appendText(message + "\n");
     }
 
->>>>>>> 4ea3525afadb91e4abdde9d961befde49e5e3211
+ 
 }
