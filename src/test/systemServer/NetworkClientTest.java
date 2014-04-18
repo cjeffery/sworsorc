@@ -22,7 +22,6 @@ public class NetworkClientTest extends TestCase {
 
     public NetworkClientTest(String testName) {
         super(testName);
-        //instance = new NetworkClient("127.0.0.1", 25565, "default_user");
     }
     
     @Override
@@ -69,7 +68,8 @@ public class NetworkClientTest extends TestCase {
     public void testMain() {
         System.out.println("main");
         String[] args = null;
-        NetworkClient.main(args);
+        NetworkClient.main(args); // all my code for command line testing is gone now...
+        // All gone....
     }
     
     
