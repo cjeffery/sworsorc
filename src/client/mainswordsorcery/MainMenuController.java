@@ -32,7 +32,6 @@ public class MainMenuController {
     @FXML protected void GotoGame(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
-    
         stage.setScene(Game.getInstance().getHudScene());
         stage.setFullScreen(true);
         stage.show();

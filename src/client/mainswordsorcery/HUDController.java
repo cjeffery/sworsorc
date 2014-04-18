@@ -11,8 +11,6 @@ package mainswordsorcery;
  * @author Joe Higley
  */
 import Units.*;
-import static java.lang.Integer.parseInt;
-import static java.lang.String.valueOf;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -29,41 +27,28 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-import javax.swing.JFrame;
 
-import sshexmap.MapDemo;
 import sshexmap.MapView;
-
-import systemServer.ClientData;
-import systemServer.ClientDataForm;
-import systemServer.NetworkClient;
  
 public class HUDController {
     @FXML private TabPane Units;
     @FXML private TabPane Targets;
+    @FXML private ImageView SunImage;
+    @FXML private Text RedState;
+    @FXML private Text BlueState;
     @FXML private MenuBar menuBar;
     @FXML private TextField message_box;
     @FXML private TextArea chat_box;
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
     @FXML private SwingNode hex_map;
-    
-    @FXML private ImageView SunImage;
     @FXML private Button phaseButton;
-    @FXML private Text turn;
-    @FXML private Text phase;
-    @FXML private Text RedState;
-    @FXML private Text BlueState;
     
     ArmyUnit bow = new Bow();
     ArmyUnit lightsword = new LightSword();
     ArmyUnit pike = new PikeMan();
-    
-    SwingNode hmap = new SwingNode();
-    
-    String username, ipAddress;
-    boolean usernameEntered, ipEntered, connectedToServer;
-    
+    SwingNode hdip = new SwingNode();
+        
 
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
@@ -73,15 +58,15 @@ public class HUDController {
      */
     public void initialize(){
         
+        hdip.setContent(MapView.getDipView());
+        
         //Display map in map_view
+        SwingNode hmap = new SwingNode();
         hmap.setContent(MapView.getMapView());
         map_view.setContent(hmap);
-        UnitPool pool = UnitPool.getInstance();
-        pike.setRace(Race.Human);
-        pool.addUnit(0, pike, "0606");
         
         //this adds mouse support to map_view, just a placeholder for now
-        hmap.setOnMousePressed(new EventHandler<MouseEvent>() {
+        map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
 		public void handle (MouseEvent mouseEvent) {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
@@ -93,9 +78,6 @@ public class HUDController {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
 		}
 	});
-        
-        connectedToServer = usernameEntered = ipEntered = false;
-        chat_box.setText("Enter your username!");
     }
    
     
@@ -201,23 +183,8 @@ public class HUDController {
      * @author Joe Higley      
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
-        if (!usernameEntered) {
-            if (!"".equals(message_box.getText())) {
-                username = message_box.getText();
-                usernameEntered = true;
-                chat_box.setText("Enter the server's IP address.");
-                message_box.clear();
-            }
-        } else if (!ipEntered) {
-            if (!"".equals(message_box.getText())) {
-                ipAddress = message_box.getText();
-                ipEntered = true;
-                message_box.clear();
-                chat_box.clear();
-                connectedToServer = connectToServer();
-            }
-        } else if (!"".equals(message_box.getText())) {
-            NetworkClient.sendChatMessage(message_box.getText());
+        if(!"".equals(message_box.getText())) {
+            chat_box.appendText("<username> " + message_box.getText() + "\n");
             message_box.clear();
         }
     }
@@ -248,42 +215,21 @@ public class HUDController {
      * @author Joe Higley      
      */   
     @FXML protected void ChangePhase(ActionEvent event) {
-        
-        /* This if-else is a test that Game's hudController reference actually
-         * refers to the right instance. It's an ackward place,
-         * but putting the code here guarantees that we
-         * are checking against the proper instance. This code should have no
-         * effect besides printing to System.out: 
-         */
-        if (Game.getInstance().hudController == this){
-            System.out.println("Game's hudController reference is correct!");
-        }
-        else {
-            System.out.println("Game's hudController reference is NOT correct!");
-        }
-        
         switch(phaseButton.getText()){
             case "End Movement Phase":
                 phaseButton.setText("End Spell Phase");
-                phase.setText("Spell");
                 break;
         
             case "End Spell Phase":
                 phaseButton.setText("End Combat Phase");
-                phase.setText("Combat");
                 break;
             
             case "End Combat Phase":
                 phaseButton.setText("End Turn");
-                phase.setText("End");
                 break;
                 
             case "End Turn":
                 phaseButton.setText("End Movement Phase");
-                phase.setText("Movement");
-                int x = parseInt(turn.getText());
-                x++;
-                turn.setText(Integer.toString(x));
                 
                 SolarDisplay.SunCalc();
                 Image Sun = new Image(SolarDisplay.GetSunImage());
@@ -296,31 +242,9 @@ public class HUDController {
         
     }
     
-    /**
-     * Connect to server
-     *
-     * @author Gabe Pearhill
-     */
-    public boolean connectToServer() {
-        // 25565 is sworsorc default server port
-        NetworkClient.setServerName(ipAddress);
-        NetworkClient.setServerPort(25565);
-        NetworkClient.setUsername(username);
-
-        if (NetworkClient.connect()) {
-            if (NetworkClient.startClient()) {
-                NetworkClient.runClient(true);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+    @FXML protected void DisplayDiplomacy(ActionEvent event) {
+        Stage stage = (Stage) menuBar.getScene().getWindow();
+        stage.setScene(Game.getInstance().getDiploScene());
+        stage.show();
     }
-    
-    public void postMessage(String message){
-        chat_box.appendText(message + "\n");
-    }
-
 }

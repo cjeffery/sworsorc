@@ -40,6 +40,12 @@ public class MapView extends    JPanel
         return hex_map;
     }
     
+    public static MapView getDipView()
+    {
+        MapView dip_map = new MapView(DiplomacyMap.GetInstance());
+        return dip_map;
+    }
+    
     /** 
      * @param x The X pixel coordinate
      * @param y The Y pixel coordinate
