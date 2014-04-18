@@ -72,4 +72,18 @@ public class NetworkClientTest extends TestCase {
         NetworkClient.main(args);
     }
     
+    
+    /**
+     * Send one of each (public) message in the NetworkClient interface.
+     * <p>
+     * This doesn't check that the message does anything in particular, but
+     * it should eventually run a pretty good chunk of MessageUtils, NetworkClient, and
+     * maybe even NetworkServer, and catch any outright exceptions/crashes.
+     */
+    public void testMessageDriver(){
+        NetworkClient.endTurn();
+        NetworkClient.sendChatMessage("Chatter chatter!");
+        //other messages here!
+    }
+    
 }
