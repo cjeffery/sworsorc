@@ -191,7 +191,7 @@ public class Game extends Application {
             ArmyUnit pike = new PikeMan();
             //add units to unit pool
             pike.setRace(Race.Human);
-            lightsword.setRace(Race.Human);
+            lightsword.setRace(Race.Elves);
             unitPool.addUnit(0, pike, "0606");
             unitPool.addUnit(1, lightsword, "0607");
             //scenario loading complete
