@@ -96,26 +96,21 @@ public class HUDController {
         map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
         @Override
         public void handle (MouseEvent mouseEvent) {
-            System.out.println("ALL THE WORLD");
             MapView mapview = MapView.getMapView();
             MainMap mainmap = MainMap.GetInstance();
             
             String hexID = mapview.hexAt((int)mouseEvent.getX(),
                                          (int)mouseEvent.getY());
-            System.out.println("clicked hex " + hexID);
             MapHex hex = mainmap.GetHex(hexID);
-            System.out.println("Got hex " + hex);
             if(hex == null) {
                 System.out.println("No hex at " + hexID + "???");
             }
 
             if(selected_unit == null) {
-                System.out.println("Checking for unit");
                 ArrayList<MoveableUnit> units = hex.getUnits();
                 if(units == null || units.size() == 0) {
                     return;
                 }
-                System.out.println("Found unit " + units.get(0));
                 selected_unit = units.get(0);
 
                 if(selected_unit == null) {
@@ -125,12 +120,10 @@ public class HUDController {
                 canMoveTo = new ArrayList<MapHex>();
 
                 MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
-                System.out.println("Found " + canMoveTo.size() + " reachable hexes");
                 mapview.highlight(canMoveTo);
             }
             else {
                 if(canMoveTo.contains(hex)) {
-                    System.out.println("Got here");
                     mapview.clearHighlights();
                     UnitPool pool = UnitPool.getInstance();
                     pool.addMove(selected_unit, hexID);
