@@ -16,6 +16,8 @@ public class MapView extends    JPanel
     public TreeSet<String> highlightSet;
     double radius, width, height;
     
+    static MapView instance;
+    
     /**
      * Creates a new MapView class given a map to show.
      * @param map The map to show. Either a world map or diplomacy map
@@ -36,8 +38,9 @@ public class MapView extends    JPanel
 
     public static MapView getMapView()
     {
-        MapView hex_map = new MapView(MainMap.GetInstance());
-        return hex_map;
+        if(instance == null)
+            instance = new MapView(MainMap.GetInstance());
+        return instance;
     }
     
     public static MapView getDipView()

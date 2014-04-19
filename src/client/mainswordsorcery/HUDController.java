@@ -10,6 +10,7 @@ package mainswordsorcery;
  *
  * @author Joe Higley
  */
+import MoveCalculator.MovementCalculator;
 import Units.*;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.valueOf;
@@ -29,6 +30,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
+import sshexmap.MainMap;
+import sshexmap.MapHex;
 
 import sshexmap.MapView;
 
@@ -65,6 +68,10 @@ public class HUDController {
     String username, ipAddress;
     boolean usernameEntered, ipEntered, connectedToServer;
     
+    //stuff for movement demo hax
+    MoveableUnit selected_unit;
+    ArrayList<MapHex> canMoveTo;
+    
 
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
@@ -81,8 +88,58 @@ public class HUDController {
         map_view.setContent(hmap);
         UnitPool pool = UnitPool.getInstance();
         pike.setRace(Race.Human);
-        pool.addUnit(0, pike, "0606");
-        
+        pool.addUnit(0, pike, "0607");
+
+        /**
+         * hacked in movement demo, needs to merge into game flow
+         */
+        map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle (MouseEvent mouseEvent) {
+            System.out.println("ALL THE WORLD");
+            MapView mapview = MapView.getMapView();
+            MainMap mainmap = MainMap.GetInstance();
+            
+            String hexID = mapview.hexAt((int)mouseEvent.getX(),
+                                         (int)mouseEvent.getY());
+            System.out.println("clicked hex " + hexID);
+            MapHex hex = mainmap.GetHex(hexID);
+            System.out.println("Got hex " + hex);
+            if(hex == null) {
+                System.out.println("No hex at " + hexID + "???");
+            }
+
+            if(selected_unit == null) {
+                System.out.println("Checking for unit");
+                ArrayList<MoveableUnit> units = hex.getUnits();
+                if(units == null || units.size() == 0) {
+                    return;
+                }
+                System.out.println("Found unit " + units.get(0));
+                selected_unit = units.get(0);
+
+                if(selected_unit == null) {
+                    System.out.println("Something went horribly wrong");
+                }
+
+                canMoveTo = new ArrayList<MapHex>();
+
+                MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
+                System.out.println("Found " + canMoveTo.size() + " reachable hexes");
+                mapview.highlight(canMoveTo);
+            }
+            else {
+                if(canMoveTo.contains(hex)) {
+                    System.out.println("Got here");
+                    mapview.clearHighlights();
+                    UnitPool pool = UnitPool.getInstance();
+                    pool.addMove(selected_unit, hexID);
+                    selected_unit = null;
+                }
+            }
+        }
+        });
+                
         //this adds mouse support to map_view, just a placeholder for now
         hmap.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
