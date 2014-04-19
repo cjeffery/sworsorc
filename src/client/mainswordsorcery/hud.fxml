@@ -112,7 +112,7 @@
                 </GridPane>
                 <GridPane id="grid_Target" minHeight="149.0" minWidth="75.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                   <children>
-                    <TabPane fx:id="Targets" prefHeight="161.0" prefWidth="103.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TabPane fx:id="TargetsPane" prefHeight="161.0" prefWidth="103.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Target" GridPane.columnIndex="0" GridPane.rowIndex="0">
                       <font>
                         <Font name="System Bold" size="14.0" fx:id="x2" />
