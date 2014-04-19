@@ -130,7 +130,7 @@
                 </GridPane>
                 <GridPane id="grid_Stack" minHeight="150.0" minWidth="75.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                   <children>
-                    <TabPane fx:id="Units" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TabPane fx:id="UnitsPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Text font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Stack" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#DisplayUnits" text="Stack" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                   </children>

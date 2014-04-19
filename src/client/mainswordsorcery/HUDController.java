@@ -18,6 +18,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,6 +35,7 @@ import javafx.stage.Stage;
 import sshexmap.MainMap;
 import sshexmap.MapHex;
 
+
 import sshexmap.MapView;
 
 import systemServer.ClientData;
@@ -40,7 +43,7 @@ import systemServer.ClientDataForm;
 import systemServer.NetworkClient;
  
 public class HUDController {
-    @FXML private TabPane Units;
+    @FXML private TabPane UnitsPane;
     @FXML private TabPane Targets;
     @FXML private MenuBar menuBar;
     @FXML private TextField message_box;
@@ -56,92 +59,124 @@ public class HUDController {
     @FXML private Text RedState;
     @FXML private Text BlueState;
     
-    ArmyUnit bow = new Bow();
-    ArmyUnit lightsword = new LightSword();
-    ArmyUnit pike = new PikeMan();
-
-    SwingNode hdip = new SwingNode();      
+    //currently selected unit
+    MoveableUnit selected_unit;
+    //currently selected stack of units
+    List <MoveableUnit> selected_stack;
+    //holds valid hexes for selected_unit movement
+    private ArrayList<MapHex> canMoveTo;
+    
 
     
     SwingNode hmap = new SwingNode();
     
     String username, ipAddress;
     boolean usernameEntered, ipEntered, connectedToServer;
-    
-    //stuff for movement demo hax
-    MoveableUnit selected_unit;
-    ArrayList<MapHex> canMoveTo;
-    
 
+    public HUDController() {
+        selected_stack = new ArrayList <>();
+        this.selected_unit = null;
+
+    }
+    
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
-     * example code in HUDController.java
      * 
      * @author Jay Drage        
      */
     public void initialize(){
         
-        hdip.setContent(MapView.getDipView());
+        //hdip.setContent(MapView.getDipView());
         
+        phase.setText("Movement");
         //Display map in map_view
         hmap.setContent(MapView.getMapView());
+        //hmapContent is the MapView set in hmap
+        final MapView hmapContent = (MapView)hmap.getContent();
         map_view.setContent(hmap);
-        UnitPool pool = UnitPool.getInstance();
-        pike.setRace(Race.Human);
-        pool.addUnit(0, pike, "0607");
 
-        /**
-         * hacked in movement demo, needs to merge into game flow
-         */
-        map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
-        @Override
-        public void handle (MouseEvent mouseEvent) {
-            MapView mapview = MapView.getMapView();
-            MainMap mainmap = MainMap.GetInstance();
-            
-            String hexID = mapview.hexAt((int)mouseEvent.getX(),
-                                         (int)mouseEvent.getY());
-            MapHex hex = mainmap.GetHex(hexID);
-            if(hex == null) {
-                System.out.println("No hex at " + hexID + "???");
-            }
-
-            if(selected_unit == null) {
-                ArrayList<MoveableUnit> units = hex.getUnits();
-                if(units == null || units.size() == 0) {
-                    return;
-                }
-                selected_unit = units.get(0);
-
-                if(selected_unit == null) {
-                    System.out.println("Something went horribly wrong");
-                }
-
-                canMoveTo = new ArrayList<MapHex>();
-
-                MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
-                mapview.highlight(canMoveTo);
-            }
-            else {
-                if(canMoveTo.contains(hex)) {
-                    mapview.clearHighlights();
-                    UnitPool pool = UnitPool.getInstance();
-                    pool.addMove(selected_unit, hexID);
-                    selected_unit = null;
-                }
-            }
-        }
-        });
-                
-        //this adds mouse support to map_view, just a placeholder for now
+        final UnitPool pool = UnitPool.getInstance();
+        
+        //adds mouse support to hmap
         hmap.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
 		public void handle (MouseEvent mouseEvent) {
-			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
-		}
+                    //finds out at which hex a mouse event occured
+                    String hexID = hmapContent.hexAt((int)mouseEvent.getX(), (int)mouseEvent.getY());
+                    MapHex hex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);
+                    //allows deselecting of unit with left mouse button
+                    if( mouseEvent.isPrimaryButtonDown() && selected_unit != null){
+                        hmapContent.clearHighlights();
+                        selected_unit = null;
+                        selected_stack.clear();
+                        //update target stack panel
+                        try {
+                            DisplayStack(UnitsPane, selected_stack);
+                        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+                            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }           
+                    //select a unit if none previously selected
+                    else if( mouseEvent.isPrimaryButtonDown()){
+                        if(hex == null){
+                            return;
+                        }
+                        //check if there is a previously selected unit
+                        //return if hex is empty of units
+                        if(hex.getUnits() == null) {
+                            return;
+                        }
+                        //highlight valid hexes
+                        canMoveTo = new ArrayList<>();
+                        ArrayList<MoveableUnit> units = hex.getUnits();
+                        selected_unit = null;
+                        for( MoveableUnit u : units) {
+                            if(u != null)
+                                selected_unit = u;
+                        }
+                        System.out.println("Selected " + selected_unit + ", size of stack: " + hex.getUnits().size() );
+                        canMoveTo.clear();
+                        MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
+                        if(phase.getText().equalsIgnoreCase("MOvement")){
+                            hmapContent.highlight(canMoveTo);
+                        }
+                        selected_stack = units;
+                        //update target stack panel
+                        try {
+                            DisplayStack(UnitsPane, selected_stack);
+                        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+                            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }             
+                    //move unit with right mouse button
+                    else if( mouseEvent.isSecondaryButtonDown() && selected_unit != null && phase.getText().equalsIgnoreCase("Movement")){
+                        if( canMoveTo.contains(hex) ) {
+                            //hack because unitpool isn't finished
+                            //pool.clearPool();
+
+                            hmapContent.clearHighlights();
+                            pool.addMove((ArmyUnit)selected_unit, hex.GetID());
+                            //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
+                            hmapContent.repaint();
+                            selected_unit = null;
+                            selected_stack.clear();
+                            //update target stack panel
+                            try {
+                                DisplayStack(UnitsPane, selected_stack);
+                            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+                                Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    else {
+                        }
+                        //JOptionPane.showMessageDialog(null, "" + res.size() );                          
+                    }
+                }
+                
 	});
        //this adds mouse support to mini_map
         mini_map.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
 		public void handle (MouseEvent mouseEvent) {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
 		}
@@ -151,21 +186,15 @@ public class HUDController {
         chat_box.setText("Enter your username!");
     }
    
-    
     //called when clicking a friendly hex
     @FXML protected void DisplayUnits(ActionEvent event) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        List <ArmyUnit> AU = new ArrayList <>();
-        AU.add(bow);
-        AU.add(lightsword);
-        AU.add(pike);
-        DisplayStack(Units, AU);
+        List <MoveableUnit> AU = new ArrayList <>();
+        AU.add(selected_unit);
+        DisplayStack(UnitsPane, AU);
     }
-    
     //called when clicking an enemy hex
     @FXML protected void DisplayTargets(ActionEvent event) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        List <ArmyUnit> AU = new ArrayList <>();
-        AU.add(lightsword);
-        AU.add(pike);
+        List <MoveableUnit> AU = new ArrayList <>();
         DisplayStack(Targets, AU);
     }
     
@@ -173,7 +202,7 @@ public class HUDController {
      * constructs the tab pane for the selected hex
      * @author Joe Higley      
      */
-    protected void DisplayStack(TabPane tp, List <ArmyUnit> AU) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    protected void DisplayStack(TabPane tp, List <MoveableUnit> AU) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         ClearTitles(tp); //empty the tab pane
         int x = AU.size();
 //        int x = Game.getInstance().getNum(); //this is just a random number of units, will be replaced later
@@ -193,7 +222,7 @@ public class HUDController {
      * with unit stats.
      * @author Joe Higley      
      */
-    public void FillStats(Tab tp, ArmyUnit AU) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
+    public void FillStats(Tab tp, MoveableUnit AU) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
         //stats are kept in a GridPane inside a ScrollPane in case of more stats than space
         ScrollPane scroll = new ScrollPane();
         GridPane grid = new GridPane();
@@ -237,7 +266,6 @@ public class HUDController {
         scroll.setContent(grid);
         //add ScrollPane to Tab
         tp.setContent(scroll);
-        
     }
     
     /** 

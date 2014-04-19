@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Units.UnitPool;
+import Units.*;
 import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.geometry.Rectangle2D;
@@ -31,9 +32,10 @@ import javafx.stage.Screen;
  * @author higle_000
  */
 public class Game extends Application {
+    /** true if a scenario is loaded */
+    boolean scenarioLoaded;
     /** the singleton unit hash tree UnitPool variable */
     UnitPool unitPool;
-    
     //Stage setup content
     private Parent main;
     private Parent hud;
@@ -117,6 +119,7 @@ public class Game extends Application {
    
     private static Game instance;
     public Game() {
+           scenarioLoaded = false;
            instance = this;
     }
    /**
@@ -183,8 +186,16 @@ public class Game extends Application {
         unitPool = UnitPool.getInstance();
         unitPool.clear();
         if(testScenario){
-            //TODO load simple test scenario
-            
+            ArmyUnit bow = new Bow();
+            ArmyUnit lightsword = new LightSword();
+            ArmyUnit pike = new PikeMan();
+            //add units to unit pool
+            pike.setRace(Race.Human);
+            lightsword.setRace(Race.Human);
+            unitPool.addUnit(0, pike, "0606");
+            unitPool.addUnit(1, lightsword, "0607");
+            //scenario loading complete
+            scenarioLoaded = true;
         }
         else{
             //TODO implement real initScenario from scenario file
