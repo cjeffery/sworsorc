@@ -4,7 +4,6 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>sworsorc</name>
-            <explicit-platform explicit-source-supported="true"/>
             <source-roots>
                 <root id="src.utilities.dir" name="utilities"/>
                 <root id="src.dir" name="client"/>
