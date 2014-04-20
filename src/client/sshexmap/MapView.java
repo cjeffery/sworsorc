@@ -44,7 +44,7 @@ public class MapView extends    JPanel
      * @return map
      * @author Jay Drage
      */
-    public HexMap GetHexMap()
+    public synchronized HexMap GetHexMap()
     {
         return map;
     }
@@ -78,7 +78,7 @@ public class MapView extends    JPanel
      * @param x The X pixel coordinate
      * @param y The Y pixel coordinate
      * @return The hex ID at the given coordinates or null */
-    public String hexAt(int x, int y) {
+    public synchronized String hexAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
         System.out.println("" + hexX + " " + hexY);
@@ -93,7 +93,7 @@ public class MapView extends    JPanel
      * @param y The Y pixel coordinate
      * @return A number between 0-5 where 0 is northeast, 5 is southeast 
      */
-    public int hexEdgeRegionAt(int x, int y) {
+    public synchronized int hexEdgeRegionAt(int x, int y) {
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
       
@@ -192,7 +192,7 @@ public class MapView extends    JPanel
      * colors at once. This could change in the future.
      * @param hexes A Set of hex IDs 
      */
-    public void highlightIDs(ArrayList<String> hexes) {
+    public synchronized void highlightIDs(ArrayList<String> hexes) {
         highlightSet.addAll(hexes);
         repaint(); //fixme allow partial update
     }
@@ -204,7 +204,7 @@ public class MapView extends    JPanel
      * colors at once. This could change in the future.
      * @param hexes A Set of hexes
      */
-    public void highlight(ArrayList<MapHex> hexes) {
+    public synchronized void highlight(ArrayList<MapHex> hexes) {
         for(MapHex hex : hexes)
             highlightSet.add(hex.GetID());
         repaint(); //fixme allow partial update
@@ -214,7 +214,7 @@ public class MapView extends    JPanel
      * highlight the given hex. Adds to any previous highlights.
      * @param hex A hex ID to highlight
      */
-    public void highlight(String hex) {
+    public synchronized void highlight(String hex) {
         highlightSet.add(hex);
         repaint(); //fixme allow partial update
     }
@@ -222,12 +222,12 @@ public class MapView extends    JPanel
     /**
      * Clear all currently highlighted hexes
      */
-    public void clearHighlights() {
+    public synchronized void clearHighlights() {
         highlightSet.clear();
         repaint(); //fixme allow partial update
     }
     
-    public void clearHighlight(String hex) {
+    public synchronized void clearHighlight(String hex) {
         highlightSet.remove(hex);
         repaint(); //fixme allow partial update
     }
@@ -240,7 +240,7 @@ public class MapView extends    JPanel
      * @param direction edge direction
      * @return true for needs drawing
      */
-    boolean edgeNeedsDrawing(int x, int y, int direction) {
+    static boolean edgeNeedsDrawing(int x, int y, int direction) {
         if(direction == 0 || direction == 4 || direction == 5)
             return true;
         else if(direction == 1)
@@ -261,7 +261,7 @@ public class MapView extends    JPanel
      * @param g the Graphics2D object to draw on.
      */
     @Override
-    public void paintComponent(Graphics g) {
+    public synchronized void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
