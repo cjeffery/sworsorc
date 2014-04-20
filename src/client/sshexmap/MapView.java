@@ -5,6 +5,9 @@ import java.util.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.awt.geom.AffineTransform;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Colin Clifford
@@ -48,8 +51,20 @@ public class MapView extends    JPanel
     
     public static MapView getMapView()
     {
-        if(instance == null)
-            instance = new MapView(MainMap.GetInstance());
+        if(instance != null) {
+            return instance;
+        }
+        try {
+            SwingUtilities.invokeAndWait(() -> {
+                instance = new MapView(MainMap.GetInstance());
+            });
+        } catch (InterruptedException ex) {
+            System.out.println("Something went horribly wrong in getMapView");
+            return null;
+        } catch (InvocationTargetException ex) {
+            System.out.println("Something went horribly wrong in getMapView");
+            return null;
+        }
         return instance;
     }
     
