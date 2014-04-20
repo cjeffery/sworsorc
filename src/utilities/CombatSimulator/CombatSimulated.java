@@ -12,20 +12,25 @@
 
 
 package CombatSimulator;
+import Units.*;
+import Units.Race;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import Units.Race;
+import sscharts.*;
 import static sscharts.ArmyCombatResultsTable.*;
-import Units.*;
+import static sscharts.CreatUnits.Create_unit1;
+import static sscharts.CreatUnits.Create_unit2;
+import static sscharts.CreatUnits.Create_unit3;
+import static sscharts.CreatUnits.Create_unit4;
+import sshexmap.MapHex;
 //import static sscharts.Main.*;
 //import static sscharts.Main.Create_unit2;
 
 //import static armycombatresultstable.Main.Create_unit3;
 //import static armycombatresultstable.Main.Create_unit4;
 import ssterrain.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import sshexmap.MapHex;
 /**
  *
  * @author chishaung
@@ -405,10 +410,10 @@ public class CombatSimulated extends javax.swing.JFrame {
         hex1.setTerrainType(tt1);        
         
         // Sorry, I commented out the method definitions to get things compiling!
-        //Create_unit1(Units1_name, Units1_racial, units, attackers);
-        //Create_unit2(Units2_name, Units2_racial, units, attackers);
-        //Create_unit3(Units3_name, Units3_racial, units, defencers);
-        //Create_unit4(Units4_name, Units4_racial, units, defencers);
+        Create_unit1(Units1_name, Units1_racial, units, attackers);
+        Create_unit2(Units2_name, Units2_racial, units, attackers);
+        Create_unit3(Units3_name, Units3_racial, units, defencers);
+        Create_unit4(Units4_name, Units4_racial, units, defencers);
 
 
         results = PrepareAttackResults(attackers, defencers, hex1);
