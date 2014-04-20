@@ -57,6 +57,6 @@ public class MainMenuController {
     }
     //activated by "Quit" button
     @FXML protected void Quit(ActionEvent event) {
-        System.exit(0);        
+        Game.getInstance().stop();
     }
 }

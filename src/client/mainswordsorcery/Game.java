@@ -104,6 +104,14 @@ public class Game extends Application {
         stage.setFullScreenExitHint("");
         stage.show();
     }
+    
+    /**
+     * Cleanup code goes here
+     */
+    @Override
+    public void stop() {
+        System.exit(0);     
+    }
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
