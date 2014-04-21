@@ -8,9 +8,12 @@
 package Units;
 
 /**
- *
+ * This contains the nation of the movable unit. Not to be confused with the 
+ * Race of the Unit.
  * @author Matthew
  */
 public enum Nation {
+    ImperialArmy,
+    IndependentHuman,
     
 }
