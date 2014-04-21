@@ -11,8 +11,11 @@ import java.util.List;
  */
 public class NetworkServer {
 
-    private static List<ClientObject> clientObjects; //"Packaged sockets"
-    protected static List<Lobby> lobbies;
+    // Clients
+    private static List<ClientObject> clientObjects;
+    
+    // Lobbies
+    private static List<Lobby> lobbies;
 
     private static boolean stopped = false;
     
@@ -27,10 +30,12 @@ public class NetworkServer {
         stopped = true;
     }
     
-    public static boolean canCreateNewLobby(String name) {
-        //check if lobby name is unique.
-        //we might have to add other conditions?
-
+    /**
+     * Checks if lobby name is unique
+     * @param name Name of the Lobby
+     * @return True if unique, False if lobby with name already exists
+     */
+    private static boolean canCreateNewLobby(String name) {
         for (Lobby lobby : lobbies) {
             if (lobby.getName().equals(name)) {
                 return false;
@@ -39,11 +44,28 @@ public class NetworkServer {
         return true;
     }
 
-    public static void createNewLobby(String lobbyName) {
+    /**
+     * Creates a new lobby
+     * 
+     * @param lobbyName Name of the lobby to be created
+     * @return 
+     * True if lobby created, False if lobby exists and/or could not be created
+     */
+    public static boolean createNewLobby(String lobbyName) {
+        if( canCreateNewLobby(lobbyName) ) {
             Lobby lobby = new Lobby(lobbyName);
             lobbies.add(lobby); 
+            return true;
+        } else {
+            return false;
+        }
     }
     
+    /**
+     * Adds a client to a lobby
+     * @param lobbyName Name of the lobby
+     * @param client  Name of the client
+     */
     public static void joinLobby(String lobbyName, ClientObject client) {
         for (Lobby l : lobbies) {
             if (l.getName().equals(lobbyName)) {
@@ -85,7 +107,40 @@ public class NetworkServer {
         // TODO: solve why its hitting this so often
         System.err.println("Requested to leave lobby from client not in lobby");
     }
+    
+    /**
+     * Gets current users in the specified Lobby
+     * @param lobbyName Name of the Lobby
+     * @return List of users
+     * @author Christopher Goes
+     */
+    public static List<String> getLobbyUsers( String lobbyName ) {
+        for( Lobby l : lobbies ) {
+            if( l.getName() == null ? lobbyName == null : l.getName().equals(lobbyName) ) {
+                return l.getUserNames();
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Gets names of all lobbies
+     * @return 
+     * @author Christopher Goes
+     */
+    public static List<String> getLobbyNames() {
+        // there's probably a better way to do this
+        List<String> temp = new ArrayList<>();
+        for ( Lobby l : lobbies ) {
+            temp.add(l.getName());
+        }
+        return temp;
+    }
 
+    /**
+     * Returns all currently connected users
+     * @return 
+     */
     public static List<String> getAllUserNames() {
         List<String> handles = new ArrayList<>();
         for (ClientObject obj : NetworkServer.clientObjects) {
@@ -155,7 +210,6 @@ public class NetworkServer {
         Socket tempsock;
         ClientObject tempclient;
         //Spins off new client connections
-        // TODO: we need a way to break out without exception or manual termination
         while (true) {
             try {
                 System.err.println("Waiting for next client...");
