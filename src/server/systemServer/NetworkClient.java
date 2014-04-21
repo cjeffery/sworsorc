@@ -98,6 +98,8 @@ public class NetworkClient {
      * <p>
      * This reads from consoleIn, connect user input to that stream
      * <p>
+     * @param threaded 
+     * Set this true if running from HUD, false if testing through console input
      * @author Christopher Goes
      */
     public static void runClient(boolean threaded) {
@@ -178,6 +180,10 @@ public class NetworkClient {
     }
 
     /* GETTERS/SETTERS */
+    /**
+     * Sets IPv4 address of remote Server
+     * @param sName 
+     */
     public static void setServerName(String sName) {
         if (sName == null || sName.isEmpty()) {
             System.err.println("Invalid server name!");
@@ -186,6 +192,10 @@ public class NetworkClient {
         }
     }
 
+    /**
+     * Sets port of remote Server
+     * @param sPort 
+     */
     public static void setServerPort(int sPort) {
         if (sPort < 1024) {
             System.err.println("Invalid port!");
@@ -194,6 +204,10 @@ public class NetworkClient {
         }
     }
 
+    /**
+     * Sets user Handle/Username
+     * @param uName 
+     */
     public static void setUsername(String uName) {
         if (uName == null || uName.isEmpty()) {
             System.err.println("Invalid server name!");
@@ -202,14 +216,26 @@ public class NetworkClient {
         }
     }
 
+    /**
+     * Gets IPv4 address of remote Server
+     * @return 
+     */
     public static String getServerName() {
         return serverName;
     }
 
+    /**
+     * Gets port of remote Server
+     * @return 
+     */
     public static int getServerPort() {
         return port;
     }
 
+    /**
+     * Gets user Handle/Username
+     * @return 
+     */
     public static String getUsername() {
         return username;
     }
