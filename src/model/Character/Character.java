@@ -22,41 +22,40 @@ import javax.swing.JTextField;
  * @author 张涛
  */
 public final class Character extends MoveableUnit{
-    public String  Name;
+    protected String  Name;
     // a character's magic power level may differ from his average MagicPL
-    public int     MagicPL;
-    public int     MagicPotential;
-    public double  CurrentManna;
+    protected int     MagicPL;
+    protected int     MagicPotential;
+    protected double  CurrentManna;
+    protected Spell_Book spellBook;
+    protected int leadership;
     
     //public int CurrentHex;
     
     public Character(){
-        //GetInfo gi = new GetInfo();
-        //gi.getCharacter();
-        //Name = gi.printName();
-        //MagicPL = gi.printPL();
-        //CurrentManna = gi.printCM();
-        //MagicPotential = 20;
-        
-        //CurrentHex = 1007;
-        //getCharacter();
+        super();
+        this.UnitType = UnitType.Character;
     }
     
     
     public Character(String a, int b, double c, /*int h*/ String h) {
+        super();
+        this.UnitType = UnitType.Character;
         Name        = a;
         MagicPL     = b;
         //MagicPotential  = c;
         CurrentManna = c; //(double)MagicPotential;
         
         location = h;
+        spellBook = new Spell_Book(this);
     }
     
     
     
-    public void CastSpell(Character c){
-        Spell_Book sb = new Spell_Book(c);
-        sb.getSpellBook();
+    public void CastSpell(){
+        //Spell_Book sb = new Spell_Book(c);
+        //sb.getSpellBook();
+        spellBook.getSpellBook();
     }
     
     public void CostManna(double mc){
@@ -132,10 +131,63 @@ public final class Character extends MoveableUnit{
                 
                 char_info.dispose();
                 
-                CastSpell(c);
+                CastSpell();
             }
         });
         
         char_info.setVisible(true);
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+
+    public int getMagicPL() {
+        return MagicPL;
+    }
+
+    public void setMagicPL(int MagicPL) {
+        this.MagicPL = MagicPL;
+    }
+
+    public int getMagicPotential() {
+        return MagicPotential;
+    }
+
+    public void setMagicPotential(int MagicPotential) {
+        this.MagicPotential = MagicPotential;
+    }
+
+    public double getCurrentManna() {
+        return CurrentManna;
+    }
+
+    public void setCurrentManna(double CurrentManna) {
+        this.CurrentManna = CurrentManna;
+    }
+
+    public Spell_Book getSpellBook() {
+        return spellBook;
+    }
+
+    public void setSpellBook(Spell_Book spellBook) {
+        this.spellBook = spellBook;
+    }
+    
+    public void increaseManna(int a){
+        this.CurrentManna += a;
+    }
+    
+    public boolean decreaseManna(int a){
+        if(CurrentManna > a){
+            this.CurrentManna -= a;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

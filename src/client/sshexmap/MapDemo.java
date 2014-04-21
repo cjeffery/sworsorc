@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class MapDemo implements MouseListener, KeyListener {
+public class MapDemo extends JComponent implements MouseListener, KeyListener {
     private MapView mapView;
     private MainMap map;
     private UnitPool pool;
@@ -23,7 +23,7 @@ public class MapDemo implements MouseListener, KeyListener {
         pool = UnitPool.getInstance();
         
         ArmyUnit unit = new LightSword();
-        unit.setRace(Race.Human);
+        unit.setRace(Race.Elves);
         pool.addUnit(0, unit, "0606");
         //ArrayList<String> units = pool.getUnitsInHex("0606");
         //if(units != null)

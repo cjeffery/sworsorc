@@ -53,7 +53,7 @@ public final class Banish_Demon {
     
     //return spell range
     public int getRange(){
-        int range = 0;
+        int range = 4;
         // get spells range
         return range;
     }
@@ -69,24 +69,31 @@ public final class Banish_Demon {
         // this function is used to get the target to cast spell
     }
     
-    public boolean checkLimits(){
-        boolean limit = false;
-        
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
-    }
-    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
+            getTarget();
             if(getDistance() <= getRange()){
                 //peform spell
+                /*
+                    -Decrease manna by 6.
+                    -May be cast as a counterspell.
+                    -int x = 1 + (int)(Math.random() * ((6 - 1) + 1));
+                        if(x+2 <= Demons's magic resistance){
+                            //spell fails
+                        }
+                        else[
+                            //Demon is banished and removed from play.
+                        }
+                */
             }
+            else{
+                //out of range
+            }
+            
+            
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
             // char or unit info, 

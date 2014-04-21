@@ -91,8 +91,8 @@
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <Text fx:id="BlueState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <Text id="RedSun" fx:id="RedState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turn" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Text fx:id="phase" strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Text fx:id="turn" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" percentWidth="65.0" prefWidth="-1.0" />
@@ -112,7 +112,7 @@
                 </GridPane>
                 <GridPane id="grid_Target" minHeight="149.0" minWidth="75.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                   <children>
-                    <TabPane fx:id="Targets" prefHeight="161.0" prefWidth="103.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TabPane fx:id="TargetsPane" prefHeight="161.0" prefWidth="103.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Target" GridPane.columnIndex="0" GridPane.rowIndex="0">
                       <font>
                         <Font name="System Bold" size="14.0" fx:id="x2" />
@@ -130,7 +130,7 @@
                 </GridPane>
                 <GridPane id="grid_Stack" minHeight="150.0" minWidth="75.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                   <children>
-                    <TabPane fx:id="Units" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TabPane fx:id="UnitsPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Text font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Stack" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#DisplayUnits" text="Stack" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                   </children>

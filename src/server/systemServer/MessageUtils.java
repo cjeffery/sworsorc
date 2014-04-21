@@ -161,7 +161,7 @@ public class MessageUtils {
         return message;
     }
 
-    public static void printLobbyInfo(PrintWriter write, List<String> message) {
+    public static String printLobbyInfo(PrintWriter write, List<String> message) {
         String build = "Lobby " + message.get(1) + ", Users: ";
 
         for (int i = 2; i < message.size() - 1; i++) {
@@ -169,6 +169,7 @@ public class MessageUtils {
         }
         build += message.get(message.size() - 1);
         write.println(build);
+        return build;
     }
 
     public static List<String> makeJoinedLobbyMessage(String lobbyName, String handle ) {
@@ -220,9 +221,10 @@ public class MessageUtils {
         return message;
     }
 
-    public static void printGlobalWhoList(PrintWriter write, List<String> message) {
+    public static String printGlobalWhoList(PrintWriter write, List<String> message) {
         if (message.size() == 1) { //first element is message-type tag:
             write.println("No users online.");
+            return "No users online.";
         } else {
             String build = "";
             for (int i = 1; i < message.size() - 1; i++) {
@@ -230,8 +232,9 @@ public class MessageUtils {
             }
             build += message.get(message.size() - 1);
             write.println("Online Users: " + build);
+            return "Online Users: " + build;
         }
-
+        
     }
 
     //Announce that user joined system:
@@ -242,8 +245,9 @@ public class MessageUtils {
         return message;
     }
 
-    public static void printConnectionMessage(PrintWriter write, List<String> array) {
-        write.println("User: " + array.get(1) + " has joined ");
+    public static String printConnectionMessage(PrintWriter write, List<String> array) {
+        write.println("User: " + array.get(1) + " has joined!");
+        return "User: " + array.get(1) + " has joined!";
     }
 
     //Announce that a file is about to be sent:
@@ -318,8 +322,9 @@ public class MessageUtils {
         return message;
     }
 
-    public static void printDisconnect(PrintWriter write, List<String> array) {
+    public static String printDisconnect(PrintWriter write, List<String> array) {
         write.println("User: " + array.get(1) + " has disconnected.");
+        return "User: " + array.get(1) + " has disconnected.";
     }
 
     public static List<String> makeErrorMessage( String errormessage ) {

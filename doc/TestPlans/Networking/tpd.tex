@@ -1,0 +1,767 @@
+\chapter{TEST PLAN (TP) TEMPLATE}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Version 1.1, October 2013
+\par}
+
+\ 
+
+
+\bigskip
+
+{\centering\bfseries\color{black}
+TEST PLAN (TP)}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+FOR
+\par}
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Swords and Sorcery Networking 
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+\begin{figure}
+\centering
+%% \includegraphics[width=3.4354in,height=0.6126in]{uislogan.png}
+\end{figure}
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Version 1
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+April 18, 2014
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Prepared for:
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Software Engineering: CS 383
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Prepared by:
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Chris, Gabe, John, Wayne
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+University of Idaho
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Moscow, ID \ 83844-1010
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+CS383 TPD
+\par}
+
+\pagebreak
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+RECORD OF CHANGES (Change History)
+\par}
+
+\begin{flushleft}
+\tablehead{}
+\begin{supertabular}{|m{0.5462598in}|m{0.6712598in}|m{1.4212599in}|m{0.23375985in}|m{1.7962599in}|m{0.7337598in}|m{0.6295598in}|}
+\hline
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} Change}\par
+
+\centering {\selectlanguage{english}\bfseries\color{black} Number}\par
+
+~
+ &
+~
+
+\centering \selectlanguage{english}\bfseries\color{black} Date completed
+&
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} Location of
+change }\par
+
+\centering \selectlanguage{english}\bfseries\color{black} (e.g., page or
+figure \#) &
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} A}\par
+
+\centering \selectlanguage{english}\bfseries\color{black} M\newline
+D  &
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} Brief
+description }\par
+
+\centering \selectlanguage{english}\bfseries\color{black} of change &
+~
+
+\centering \selectlanguage{english}\bfseries\color{black} Approved by
+(initials) &
+~
+
+\centering {\bfseries\color{black} Date }\par
+
+\centering\arraybslash\bfseries\color{black}
+approved\\
+
+ &
+
+ &
+
+ &
+
+ &
+
+ &
+
+ &
+
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+\end{supertabular}
+\end{flushleft}
+{\selectlanguage{english}\color{black}
+A - ADDED \ M - MODIFIED \ D -- DELETED}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Swords and Sorcery
+\par}
+
+\pagebreak
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+TABLE OF CONTENTS
+\par}
+
+{\selectlanguage{english}\bfseries\color{black}
+Section\ \ Page}
+
+\setcounter{tocdepth}{9}
+\renewcommand\contentsname{}
+\tableofcontents
+
+\bigskip
+
+\bigskip
+\setcounter{page}{1}\pagestyle{Convertiv}
+
+\section[IDENTIFIER]{\selectlanguage{english}\bfseries\color{black}
+TEST PLAN IDENTIFIER}
+
+
+{\selectlanguage{english}\color{black}
+Networking TP 1.
+}
+
+
+\section[REFERENCES]{\selectlanguage{english}\bfseries\color{black}
+REFERENCES}
+
+{\selectlanguage{english}\color{black}
+This test plans make no references (?)
+}
+
+
+
+\section[INTRODUCTION]{\bfseries\color{black} INTRODUCTION}
+
+{\selectlanguage{english}\color{black}
+
+This is an intial test plan for only the networking portion of the
+project. It will outline how we test networking, and how we'll test
+integration of networking into other code.
+
+}
+
+\section[TEST ITEMS]{\bfseries\color{black} TEST ITEMS}
+
+{\selectlanguage{english}\itshape\color{black}
+These are things you intend to test within the scope of this test
+plan. Essentially, something you will test, a list of what is to be
+tested. This can be developed from the software application
+inventories as well as other sources of documentation and information.
+}
+
+{\selectlanguage{english}\color{black}
+
+This is the important section!
+
+}
+
+\section[SOFTWARE RISK ISSUES]{\bfseries\color{black} SOFTWARE RISK ISSUES}
+
+{\selectlanguage{english}\color{black}
+
+\begin{itemize}
+\item   Connection Failures: For whatever reason, we have no access to a server, or can't connect over user's network.
+\item   Networking code is unable to connect with other code elements.
+\item   Networking code can be integrated, but is too complicated for anyone to work with.
+\end{itemize}
+
+}
+
+\section[FEATURES TO BE TESTED]{\bfseries\color{black} FEATURES TO BE TESTED}
+{\selectlanguage{english}\itshape\color{black}
+
+This is a listing of what is to be tested from the USERS viewpoint of
+what the system does. This is not a technical description of the
+software, but a USERS view of the functions.
+
+}
+{\selectlanguage{english}\color{black}
+
+\begin{itemize}
+\item   The user can initiate connection and disconnection from the server.
+\item   The user can...
+\end{itemize}
+  
+
+}
+
+\section[FEATURES NOT TO BE TESTED]{\bfseries\color{black}
+	 FEATURES NOT TO BE TESTED}
+{\selectlanguage{english}\itshape\color{black}
+
+This is a listing of what is NOT to be tested from both the Users
+viewpoint of what the system does and a configuration
+management/version control view. This is not a technical description
+of the software, but a USERS view of the functions.
+
+}
+{\selectlanguage{english}\color{black}
+\begin{itemize}
+\item   Thing one.
+\item   Thing two.
+\end{itemize}
+}
+
+\section[APPROACH]{\bfseries\color{black} APPROACH}
+{\selectlanguage{english}\itshape\color{black}
+
+This is your overall test strategy for this test plan; it should be
+appropriate to the level of the plan (master, acceptance, etc.) and
+should be in agreement with all higher and lower levels of
+plans. Overall rules and processes should be identified. 
+
+\begin{itemize}
+\item Are any special tools to be used? What are they?
+\item What metrics will be collected for this test?
+\item How many configurations/platforms are to be tested?
+\item How will elements in the design deemed "untestable" be processed?
+\end{itemize}
+}
+{\selectlanguage{english}\color{black}
+
+
+
+}
+
+\section[ITEM PASS/FAIL CRITERIA]{\bfseries\color{black}
+	 ITEM PASS/FAIL CRITERIA}
+{\selectlanguage{english}\itshape\color{black}
+What are the Completion criteria for this plan? This is a critical
+aspect of any test plan and should be appropriate to the level of the plan.
+}
+{\selectlanguage{english}\color{black}
+
+  
+
+}
+
+\section[SUSPENSION CRITERIA]{\bfseries\color{black}
+	 SUSPENSION CRITERIA AND RESUMPTION REQUIREMENTS}
+{\selectlanguage{english}\itshape\color{black}
+If the number or type of defects reaches a point where the follow on
+testing has no value, it makes no sense to continue the test; you are
+just wasting resources.
+
+Specify what constitutes stoppage for a test or series of tests and
+what is the acceptable level of defects that will allow the testing to
+proceed past the defects. 
+}
+{\selectlanguage{english}\color{black}
+
+  Failure to connect is a suspension criterion. Without a connection
+  established, we won't be able to test most of the networking
+  functions.
+
+}
+
+\section[TEST DELIVERABLES]{\bfseries\color{black} TEST DELIVERABLES}
+{\selectlanguage{english}\itshape\color{black}
+What is to be delivered as part of this plan?
+
+\begin{itemize}
+\item Test plan document
+\item Test cases
+\item Relevant error logs or problem reports
+\end{itemize}
+One thing that is not a test deliverable is the software itself that
+is listed under test items and is delivered by development.
+}
+{\selectlanguage{english}\color{black}
+
+  
+
+
+}
+
+\section[REMAINING TEST TASKS]{\bfseries\color{black} REMAINING TEST TASKS}
+{\selectlanguage{english}\itshape\color{black}
+If this is a multi-phase process or if the application is to be
+released in increments there may be parts of the application that this
+plan does not address. These areas need to be identified to avoid any
+confusion should defects be reported back on those future
+functions. This will also allow the users and testers to avoid
+incomplete functions and prevent waste of resources chasing non-defects.
+}
+{\selectlanguage{english}\color{black}
+
+  We anticipate unexpected integration requirements to be added to the test plan.
+
+}
+
+\section[ENVIRONMENTAL NEEDS]{\bfseries\color{black} ENVIRONMENTAL NEEDS}
+{\selectlanguage{english}\color{black}
+
+  In the final test, we'll need a remote machine to host the server code.
+
+}
+
+\section[STAFFING AND TRAINING NEEDS]{\bfseries\color{black}
+	 STAFFING AND TRAINING NEEDS}
+{\selectlanguage{english}\color{black}
+
+  There is no need for special staffing.
+
+}
+
+\section[RESPONSIBILITIES]{\bfseries\color{black} RESPONSIBILITIES}
+{\selectlanguage{english}\itshape\color{black}
+Who is in charge?
+
+This issue includes all areas of the plan. Here are some examples:
+
+\begin{itemize}
+\item Selecting features to be tested and not tested.
+\item Ensuring all required elements are in place for testing. 
+\end{itemize}
+}
+{\selectlanguage{english}\color{black}
+
+  In a four-person group, we'll delegate responsibilty as needed?
+
+}
+
+\section[SCHEDULE]{\bfseries\color{black} SCHEDULE}
+{\selectlanguage{english}\itshape\color{black}
+
+Should be based on realistic and validated estimates. If the estimates
+for the development of the application are inaccurate, the entire
+project plan will slip and the testing is part of the overall project plan.
+
+}
+{\selectlanguage{english}\color{black}
+
+  As soon as possible?
+
+}
+
+\section[PLANNING RISKS AND CONTINGENCIES]{\bfseries\color{black}
+	 PLANNING RISKS AND CONTINGENCIES}
+{\selectlanguage{english}\itshape\color{black}
+
+What are the overall risks to the project with an emphasis on the
+testing process? Specify what will be done for various risk events.
+
+}
+{\selectlanguage{english}\color{black}
+
+???
+
+}
+
+\section[APPROVALS]{\bfseries\color{black} APPROVALS}
+{\selectlanguage{english}\itshape\color{black}
+
+Who can approve the process as complete and allow the project to
+proceed to the next level (depending on the level of the plan)? 
+
+}
+{\selectlanguage{english}\color{black}
+
+  
+
+}
+
+\section[GLOSSARY]{\bfseries\color{black} GLOSSARY}
+{\selectlanguage{english}\color{black}
+
+  No special terms are used.
+
+}
+
+
+
+\clearpage\setcounter{page}{1}\pagestyle{Convertviii}
+\section[APPENDIX A. \ [insert name
+here{]}]{\selectlanguage{english}\bfseries\color{black} APPENDIX A.
+\ [insert name here]}
+{\selectlanguage{english}\itshape\color{black}
+Include copies of test examples, etc. supplied or
+derived from the customer. \ Appendices are labeled A, B, {\dots}n.
+\ \ Reference each appendix as appropriate in the text of the document.
+}
+
+{\selectlanguage{english}\color{black}
+\ [ insert appendix A here ]}
+
+\clearpage\setcounter{page}{1}\pagestyle{Convertix}
+\section[APPENDIX B. \ [insert name
+here{]}]{\selectlanguage{english}\bfseries\color{black} APPENDIX B.
+\ [insert name here]}
+
+\bigskip
+
+{\selectlanguage{english}\color{black}
+[ insert appendix B here ]}
+
+
+\bigskip

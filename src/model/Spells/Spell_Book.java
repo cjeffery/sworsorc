@@ -119,13 +119,14 @@ public final class Spell_Book {
         Spell[] myList;
         int nSpells = 0;
         //if( x.AvgMagicPL == 0) {
-        if(character.MagicPL == 0){
+        if(character.getMagicPL() == 0){
             myList = new Spell[1];
             myList[0] = new Spell("void", 0, 0, mainFrame, character);
         } else {
             for(int i = 0; i < 32; i++) {
                 //if( list[i].Level <= x.MagicPL+1 && list[i].ManaCost <= x.MannaLevel) {
-                if(list[i].Level <= character.MagicPL+1 && list[i].ManaCost <= character.CurrentManna){
+                if(list[i].Level <= character.getMagicPL()+1 
+                        && list[i].ManaCost <= character.getCurrentManna()){
                     nSpells++;
                 }
             }
@@ -133,7 +134,8 @@ public final class Spell_Book {
             int j = 0;
             for(int i = 0; i < 32; i++) {
                 //if( list[i].Level <= x.MagicPL+1 && list[i].ManaCost <= x.MannaLevel) {
-                if(list[i].Level <= character.MagicPL+1 && list[i].ManaCost <= character.CurrentManna){
+                if(list[i].Level <= character.getMagicPL()+1 
+                        && list[i].ManaCost <= character.getCurrentManna()){
                     myList[j] = list[i];
                     j++;
                 }
@@ -148,7 +150,7 @@ public final class Spell_Book {
      *  =======================================
      */
     public void prepareGUI(){
-      mainFrame = new JFrame(character.Name);
+      mainFrame = new JFrame(character.getName());
       mainFrame.setSize(frame_width,frame_height);
       //mainFrame.setLayout(new GridLayout(2, 3));
       mainFrame.addWindowListener(new WindowAdapter() {
@@ -163,7 +165,7 @@ public final class Spell_Book {
       MainSpellListPanel.setLayout(new BoxLayout(MainSpellListPanel,BoxLayout.Y_AXIS));
       TitledBorder title;
       
-      if(character.MagicPL == 0 && character.CurrentManna == 0){
+      if(character.getMagicPL() == 0 && character.getCurrentManna() == 0){
           PLZero = new JLabel("This Character can't cast any spells");
           MainSpellListPanel.add(PLZero);
       }else{

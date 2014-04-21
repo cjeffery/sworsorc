@@ -41,7 +41,5 @@ public class MovementCalculatorTest extends TestCase {
         ArrayList<MapHex> validMoves = new ArrayList();
         MovementCalculator.getValidMoves(testUnit, testMap.GetHex(unitLocation),
                 testUnit.getMovement(), validMoves );
-        
-        
     }
 }

@@ -51,42 +51,20 @@ public final class Planar_Return {
         return mana;
     }
     
-    //return spell range
-    public int getRange(){
-        int range = 0;
-        // get spells range
-        return range;
-    }
-    
-    //get distance to selected unit
-    public int getDistance(){
-        int distance = 0;
-        //get distance
-        return distance;        
-    }
-    
-    public void getTarget(){
-        // this function is used to get the target to cast spell
-    }
-    
-    public boolean checkLimits(){
-        boolean limit = false;
-        
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
-    }
-    
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
+        if(checkMana() == true){
             // perform
-            if(getDistance() <= getRange()){
-                //peform spell
-            }
+            /*
+                -Decrease mana by 6
+                -Caster immediately returns to his home hex
+                    -however if he rolls a 1 on the die, he is eliminated and 
+                        removed to another plane and may never see the Valley again.
+                -Spell may be cast at any point in the game (which makes it an 
+                    exception to the sequence of play).        
+            */
+            
             // what I am thinking about performing some data effects
             // is that we can make a tmp data file that stores all the
             // char or unit info, 

@@ -30,11 +30,20 @@ public class MainMenuController {
     }
     //activated by "Start Game" button
     @FXML protected void GotoGame(ActionEvent event) throws IOException {
-        Node node = (Node) event.getSource();
-        Stage stage=(Stage) node.getScene().getWindow();
-        stage.setScene(Game.getInstance().getHudScene());
-        stage.setFullScreen(true);
-        stage.show();
+        //LoadScenario() is only here so that a scenario loads if "Start Game" is clicked
+        //in the future "Start Game" should be greyed out or unclickable before a scenario is loaded
+        //comment:Jay Drage
+        LoadScenario(event);
+        //check if scenario is loaded and if true then display
+        //main hud map
+        if(Game.getInstance().scenarioLoaded){
+            Node node = (Node) event.getSource();
+            Stage stage=(Stage) node.getScene().getWindow();
+
+            stage.setScene(Game.getInstance().getHudScene());
+            stage.setFullScreen(true);
+            stage.show();
+        }
     }
     //activated by "Load Scenario" button
     @FXML protected void LoadScenario(ActionEvent event) {
@@ -48,6 +57,6 @@ public class MainMenuController {
     }
     //activated by "Quit" button
     @FXML protected void Quit(ActionEvent event) {
-        System.exit(0);        
+        Game.getInstance().stop();
     }
 }

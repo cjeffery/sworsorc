@@ -11,7 +11,7 @@ import javax.swing.JComponent;
 
 /**
  *
- * @author 张涛
+ * @author Tao Zhang
  */
 public class Spell_Details extends JComponent{
     
