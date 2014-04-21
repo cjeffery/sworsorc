@@ -125,7 +125,8 @@ public final class Spell_Book {
         } else {
             for(int i = 0; i < 32; i++) {
                 //if( list[i].Level <= x.MagicPL+1 && list[i].ManaCost <= x.MannaLevel) {
-                if(list[i].Level <= character.getMagicPL()+1 && list[i].ManaCost <= character.getCurrentManna()){
+                if(list[i].Level <= character.getMagicPL()+1 
+                        && list[i].ManaCost <= character.getCurrentManna()){
                     nSpells++;
                 }
             }
@@ -133,7 +134,8 @@ public final class Spell_Book {
             int j = 0;
             for(int i = 0; i < 32; i++) {
                 //if( list[i].Level <= x.MagicPL+1 && list[i].ManaCost <= x.MannaLevel) {
-                if(list[i].Level <= character.getMagicPL()+1 && list[i].ManaCost <= character.getCurrentManna()){
+                if(list[i].Level <= character.getMagicPL()+1 
+                        && list[i].ManaCost <= character.getCurrentManna()){
                     myList[j] = list[i];
                     j++;
                 }

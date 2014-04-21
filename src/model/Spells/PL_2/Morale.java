@@ -7,7 +7,6 @@
 package Spells.PL_2;
 
 import Character.Character;
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -20,16 +19,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import sshexmap.HexMap;
 
 /**
  *
- * @author 张涛
+ * @author Tao Zhang
  */
 public final class Morale {
+    int MoraleRange = 7;
+    int MoraleMannaCost = 3;
+    
     JFrame frame;
     
-    
     Character character;
+    
+    String target_n;
+    String target_h;
     
     public Morale(Character c){
         character = c;
@@ -136,9 +141,9 @@ public final class Morale {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                String target_n = target_name_field.getText();
+                target_n = target_name_field.getText();
                 
-                int target_h = Integer.parseInt(target_hex_field.getText());
+                target_h = target_hex_field.getText();
                 
                 target_info.dispose();
                 
@@ -152,11 +157,21 @@ public final class Morale {
     public boolean checkLimits(){
         boolean limit = true;
         
+        limit = checkRange();
         //if( fit all the limits ){
           //  limit = true;
         //}
         
         return limit; 
+    }
+    
+    public boolean checkRange(){
+        boolean go = true;
+        int distance = HexMap.distance(character.location, target_h);
+        if(distance > MoraleRange){
+            go = false;
+        }
+        return go; 
     }
     
     public void performSpellEffects(){
@@ -174,6 +189,8 @@ public final class Morale {
             
         }else{
             // show warning that it desn't fit all the limitations
+            System.out.println("Limits not fit");
+            System.exit(0);
         }
         
         
@@ -189,7 +206,7 @@ public final class Morale {
             character.CostManna(3);
         }else{
             // do nothing
-        }    
+        }
     }
     
 }

@@ -28,6 +28,7 @@ public final class Character extends MoveableUnit{
     protected int     MagicPotential;
     protected double  CurrentManna;
     protected Spell_Book spellBook;
+    protected int leadership;
     
     //public int CurrentHex;
     
