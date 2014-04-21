@@ -23,7 +23,7 @@ import sshexmap.MapHex;
 public class ArmyCombatResultsTable {
     
     
-    public static int [] PrepareAttackResults(ArrayList<ArmyUnit> defencers, ArrayList<ArmyUnit> defenders, 
+    public static /*int []*/ ArrayList PrepareAttackResults(ArrayList<ArmyUnit> defencers, ArrayList<ArmyUnit> defenders, 
             MapHex defHex){
         int atk = 0;
         int def = 0;
@@ -53,7 +53,7 @@ public class ArmyCombatResultsTable {
         System.out.println("Ratio: " + atk + "/" + after_def);
         System.out.println("Ratio: " + ratio);
         
-        Show(atk, def, after_def,ratio);
+        //Show(atk, def, after_def,ratio);
         
         index = 12;
         if(ratio < 6)
@@ -80,8 +80,14 @@ public class ArmyCombatResultsTable {
             index--;
         
         System.out.println("Index: " + index);       
-        
-        return TableLookup(index);
+        ArrayList result = new ArrayList();
+        result.add(TableLookup(index));
+        result.add(atk);
+        result.add(def);
+        result.add(after_def);
+        result.add(ratio);
+        return result;
+        //return TableLookup(index);
         
         /*
         ratio = index
@@ -100,6 +106,17 @@ public class ArmyCombatResultsTable {
         */
     }
 
+    public static ArrayList<Double> return_pre_result(double atk, double def, double after_def,double ratio) {
+        //ArrayList<double> result = new ArrayList<double>(); 
+        ArrayList result = new ArrayList();
+        result.add(atk);
+        result.add(def);
+        result.add(after_def);
+        result.add(ratio);
+        
+        return result;
+    }
+    
     public static void Show(int atk, int def, int after_def,double ratio) {
         javax.swing.JOptionPane.showMessageDialog(null,"Total Attackers Strength: " + atk + 
                          "\nTotal Defenders Strength before terrain bonus: " + def +

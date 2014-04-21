@@ -25,11 +25,7 @@ import static sscharts.CreatUnits.Create_unit2;
 import static sscharts.CreatUnits.Create_unit3;
 import static sscharts.CreatUnits.Create_unit4;
 import sshexmap.MapHex;
-//import static sscharts.Main.*;
-//import static sscharts.Main.Create_unit2;
 
-//import static armycombatresultstable.Main.Create_unit3;
-//import static armycombatresultstable.Main.Create_unit4;
 import ssterrain.*;
 /**
  *
@@ -415,8 +411,42 @@ public class CombatSimulated extends javax.swing.JFrame {
         Create_unit3(Units3_name, Units3_racial, units, defencers);
         Create_unit4(Units4_name, Units4_racial, units, defencers);
 
-
-        results = PrepareAttackResults(attackers, defencers, hex1);
+        
+        
+        
+        
+        //results = PrepareAttackResults(attackers, defencers, hex1);
+        ArrayList result = new ArrayList();
+        result = PrepareAttackResults(attackers, defencers, hex1);
+        int[] index = (int[])result.get(0);
+        System.out.println("I get:" + index[0]);
+        System.out.println("I get:" + index[1]);
+        int atk = (int)result.get(1);
+        int def = (int)result.get(2);
+        int after_def = (int)result.get(3);
+        double ratio = (double)result.get(4);
+        System.out.println("I get atk:" + atk);
+        System.out.println("I get def:" + def);        
+        System.out.println("I get after atk:" + after_def);
+        System.out.println("I get ratio:" + ratio);
+        
+        //System.out.println("I get:" + result.get(2));
+        //System.out.println("I get:" + result.get(3));
+        int option= JOptionPane.showConfirmDialog(this,"Are you sure to combat?\n" + 
+                                                       "Attacker Comabt Value: " + atk +
+                                                       "\nDefender Combat: " + def + 
+                                                       "\nDefender Combat Value after Terrain Bonus: " + after_def + 
+                                                       "\nRatio is: " + ratio + "\n","Combat Decision Title",
+                                                       JOptionPane.YES_NO_CANCEL_OPTION);
+        if(option==JOptionPane.YES_OPTION)
+                {
+                javax.swing.JOptionPane.showMessageDialog(null, "Attackers: " + index[0] + "\nDefenders: " + index[1]);
+                }
+  	    else
+  	    	{
+  	    	 return;	    
+  	    	}
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -489,7 +519,7 @@ public class CombatSimulated extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(/*String args[]*/) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
