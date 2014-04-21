@@ -19,7 +19,7 @@ import Spells.PL_7.*;
 
 /**
  *
- * @author 张涛
+ * @author Tao Zhang
  */
 public class CastSpell{
 
