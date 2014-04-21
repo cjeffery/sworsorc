@@ -32,10 +32,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
+
 import sshexmap.MainMap;
 import sshexmap.MapHex;
-
-
 import sshexmap.MapView;
 
 import systemServer.ClientData;
@@ -88,17 +87,12 @@ public class HUDController {
      * @author Jay Drage        
      */
     public void initialize(){
-        
         //hdip.setContent(MapView.getDipView());
-        
         phase.setText("Movement");
         //Display map in map_view
         hmapContent = MapView.getMapView();
         hmap.setContent(hmapContent);
         map_view.setContent(hmap);
-
-        final UnitPool pool = UnitPool.getInstance();
-        
         //adds mouse support to hmap
         hmap.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
@@ -108,97 +102,35 @@ public class HUDController {
                     MapHex hex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);
                     //allows deselecting of unit with left mouse button
                     if( mouseEvent.isPrimaryButtonDown() && selected_unit != null){
-                        hmapContent.clearHighlights();
-                        selected_unit = null;
-                        selected_stack.clear();
-                        //update target stack panel
-                        try {
-                            DisplayStack(UnitsPane, selected_stack);
-                        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-                            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        DeselectUnit( hexID, hex );
                     }           
                     //select a unit if none previously selected
                     else if( mouseEvent.isPrimaryButtonDown()){
-                        if(hex == null){
-                            return;
-                        }
-                        //check if there is a previously selected unit, return if hex is empty of units
-                        if(hex.getUnits() == null) {
-                            return;
-                        }
-                        //highlight valid hexes
-                        canMoveTo = new ArrayList<>();
-                        selected_stack = hex.getUnits();
-                        selected_unit = selected_stack.get(0);
-                        canMoveTo.clear();
-                        if(phase.getText().equalsIgnoreCase("Movement")){
-                            MovementCalculator.getValidMoves(selected_unit, hex, selected_unit.getMovement(), canMoveTo );
-                            hmapContent.highlight(canMoveTo);
-                        }
-                        //update target stack panel
-                        try {
-                            DisplayStack(UnitsPane, selected_stack);
-                        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-                            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        SelectUnit( hexID, hex );
                     }             
                     //move unit with right mouse button in movement phase
                     else if( mouseEvent.isSecondaryButtonDown() && selected_unit != null && phase.getText().equalsIgnoreCase("Movement")){
-                        if( canMoveTo.contains(hex) ) {
-                            //hack because unitpool isn't finished
-                            //pool.clearPool();
-
-                            hmapContent.clearHighlights();
-                            pool.addMove((ArmyUnit)selected_unit, hex.GetID());
-                            //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
-                            hmapContent.repaint();
-                            selected_unit = null;
-                            selected_stack.clear();
-                            //update target stack panel
-                            try {
-                                DisplayStack(UnitsPane, selected_stack);
-                            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-                                Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                       
+                        MoveUnit( hexID, hex );
                     }
                     //allows deselecting of target unit with right mouse button
                     else if( mouseEvent.isSecondaryButtonDown() && target_unit != null){
-                        target_unit = null;
-                        target_stack.clear();
-                        //update target stack panel
-                        try {
-                            DisplayStack(TargetsPane, target_stack);
-                        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-                            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        DetargetUnit( hexID, hex );
                     }                    
                      //choose target unit in combat or spell phase
                     else if( mouseEvent.isSecondaryButtonDown() //right mouse button
                              && !phase.getText().equalsIgnoreCase("Movement") //check phase
                              && target_unit == null){ //check if target unit already chosen
-                        if(hex == null){
-                            return;
-                        }
-                        //check if there is a previously selected target unit, return if hex is empty of units
-                        if(hex.getUnits() == null) {
-                            return;
-                        }
-                        target_stack = hex.getUnits();
-                        target_unit = null;
-                        target_unit = target_stack.get(0);
-                        //update target stack panel
-                        try {
-                            DisplayStack(TargetsPane, target_stack);
-                        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-                            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        TargetUnit( hexID, hex );
                     }
                 }
 	});
-       //adds mouse support to mini_map
+        /*
+        //adds keyboard support to hmap
+        hmap.onKeyPressedProperty(new EventHandler<KeyEvent>(){
+        
+        });
+        */
+        //adds mouse support to mini_map
         mini_map.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
 		public void handle (MouseEvent mouseEvent) {
@@ -209,7 +141,130 @@ public class HUDController {
         connectedToServer = usernameEntered = ipEntered = false;
         chat_box.setText("Enter your username!");
     }
-   
+    /** 
+     * deselects a unit with left mouse button
+     * sets selected_unit to null
+     * clears selected_stack
+     * 
+     * @param hexID
+     * @param hex
+     * @author Jay Drage
+     */
+    public void DeselectUnit(String hexID, MapHex hex){
+        hmapContent.clearHighlights();
+        selected_unit = null;
+        selected_stack.clear();
+        //update target stack panel
+        try {
+            DisplayStack(UnitsPane, selected_stack);
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
+    /** 
+     * selects a unit
+     * left mouse button sets unit to selected_unit
+     * sets stack to selected_stack
+     * 
+     * @param hexID
+     * @param hex
+     * @author Jay Drage
+     */
+    public void SelectUnit(String hexID, MapHex hex){
+        if(hex == null){
+            return;
+        }
+        //check if there is a previously selected unit, return if hex is empty of units
+        if(hex.getUnits() == null) {
+            return;
+        }
+        //highlight valid hexes
+        canMoveTo = new ArrayList<>();
+        selected_stack = hex.getUnits();
+        selected_unit = selected_stack.get(0);
+        canMoveTo.clear();
+        if(phase.getText().equalsIgnoreCase("Movement")){
+            MovementCalculator.getValidMoves(selected_unit, hex, selected_unit.getMovement(), canMoveTo );
+            hmapContent.highlight(canMoveTo);
+        }
+        //update target stack panel
+        try {
+            DisplayStack(UnitsPane, selected_stack);
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
+    /** 
+     * Moves selected unit with right mouse button
+     * 
+     * @param hexID
+     * @param hex
+     * @author Jay Drage
+     */
+    public void MoveUnit( String hexID, MapHex hex ){
+        if( canMoveTo.contains(hex) ) {
+            final UnitPool pool = UnitPool.getInstance();
+            hmapContent.clearHighlights();
+            pool.addMove((ArmyUnit)selected_unit, hex.GetID());
+            //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
+            hmapContent.repaint();
+            selected_unit = null;
+            selected_stack.clear();
+            //update target stack panel
+            try {
+                DisplayStack(UnitsPane, selected_stack);
+            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+                Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    /**
+     * Detargets a unit
+     * sets target_unit to null
+     * clears target_stack
+     * 
+     * @param hexID
+     * @param hex
+     * @author Jay Drage
+     */
+    public void DetargetUnit( String hexID, MapHex hex ){
+        target_unit = null;
+        target_stack.clear();
+        //update target stack panel
+        try {
+            DisplayStack(TargetsPane, target_stack);
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    /**
+     * Targets a unit with right click
+     * works only when not in movement phase
+     * sets target_unit
+     * sets target_stack
+     * 
+     * @param hexID
+     * @param hex
+     * @author Jay Drage
+     */
+    public void TargetUnit( String hexID, MapHex hex ){
+        if(hex == null){
+            return;
+        }
+        //check if there is a previously selected target unit, return if hex is empty of units
+        if(hex.getUnits() == null) {
+            return;
+        }
+        target_stack = hex.getUnits();
+        target_unit = null;
+        target_unit = target_stack.get(0);
+        //update target stack panel
+        try {
+            DisplayStack(TargetsPane, target_stack);
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     //called when clicking a friendly hex
     @FXML protected void DisplayUnits(ActionEvent event) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         List <MoveableUnit> AU = new ArrayList <>();
@@ -222,7 +277,6 @@ public class HUDController {
         AU.add(target_unit);
         DisplayStack(TargetsPane, AU);
     }
-    
     /** 
      * constructs the tab pane for the selected hex
      * @author Joe Higley      
