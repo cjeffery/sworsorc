@@ -22,6 +22,7 @@ public class MoveableUnit {
     protected double movement;
     protected double workingMovement;
     protected Race race;
+    protected Nation nation;
     public String location;
     protected String ID;
     
