@@ -111,7 +111,7 @@ public class MapView extends    JPanel
         int[] hexc = hexCoords(x,y);
         int hexX = hexc[0], hexY = hexc[1];
       
-        //I can indulge in bad variable names on ocassion
+        //I can indulge in bad variable names on occasion
         int antilow = map.LowFirstRow() ? 0 : 1; 
         double centerX =  width*( hexX*.75 - .25 );
         double centerY = height*( hexY - 0.5 + ((antilow+hexX)%2)*0.5);
