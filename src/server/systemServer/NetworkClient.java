@@ -47,10 +47,25 @@ public class NetworkClient {
     private static ClientThread clientThread;
     
     public static String lastMessage;
+    
+    // Until we have a working HUD reference
+    private static boolean hudWorking = false;
 
     //private Conductor jarvis; // Our conductor object
 
     /* PUBLIC METHODS */
+    
+    /**
+     * Startup of NetworkClient
+     * <p>
+     * Starts local streams, connects to server, and makes the connection live
+     * @return True if started OK, False if connection failed
+     */
+    public static boolean initializeClient() {
+        startLocalStreams();
+        return connect() ? startConnection() : false;     
+    }
+    
     /**
      * Creates a new connection to the server, call this before
      * {@link #startClient startClient()}
@@ -76,10 +91,10 @@ public class NetworkClient {
      * @author Christopher Goes
      * @return boolean True if successful, false if runtime error/exception
      */
-    public static boolean startClient() {
+    public static boolean startConnection() {
 
         startRemoteStreams();
-        startLocalStreams();
+        //startLocalStreams();
         
         //first message is handle:
         MessageUtils.sendMessage(writer, MessageUtils.makeSendHandleMessage(username));
@@ -161,7 +176,8 @@ public class NetworkClient {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                Game.getInstance().hudController.postMessage(lastMessage);
+                //Game.getInstance().hudController.postMessage(lastMessage);
+                // TODO: Broken reference to hudController
             }
         });
     }
@@ -177,6 +193,10 @@ public class NetworkClient {
 
     public static void endTurn(){
         MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
+    }
+    
+    public static boolean testCommand( String command ) {
+        return processInput(command);
     }
 
     /* GETTERS/SETTERS */
@@ -531,8 +551,12 @@ public class NetworkClient {
      * @author Christopher Goes
      */
     private static void startLocalStreams() {
-        consoleIn = new BufferedReader(new InputStreamReader(System.in));
-        consoleOut = new PrintWriter(System.out, true);
+        if( hudWorking ) {
+            // HUD-y stuff here
+        } else {
+            consoleIn = new BufferedReader(new InputStreamReader(System.in));
+            consoleOut = new PrintWriter(System.out, true);
+        }
     }
 
     /**
@@ -624,7 +648,7 @@ public class NetworkClient {
                 consoleOut.print("Attempting to reconnect...");
                 if (connect()) {
                     consoleOut.println("Successfully reconnected!");
-                    startClient();
+                    startConnection();
 
                 } else {
                     consoleOut.println("Reconnect failed");
@@ -678,11 +702,13 @@ public class NetworkClient {
      * @param message Message to write
      */
     private static void sendMessage(String message) {
+ 
         List<String> temp = new ArrayList<>();
         temp.add(message);
         MessageUtils.sendMessage(writer, temp);
+            
     }
-
+      
     /**
      * Prints list of commands and what they do from a text file
      * <p>
@@ -725,19 +751,15 @@ public class NetworkClient {
      */
     private static Socket connectToServer(String sName, int serverPort) throws IOException {
         Socket tempsock = null;
-        System.out.println("Connecting! Please Wait!");
-        Game.getInstance().hudController.postMessage("Connecting! Please Wait!");
+        consoleOut.print("Connecting! Please Wait...");
         try {
             tempsock = new Socket(sName, serverPort);
         } catch (UnknownHostException e) {
             System.err.println("Error : Unknown host!\nException: " + e);
-            Game.getInstance().hudController.postMessage("Error : Unknown host!\nException: " + e);
         } catch (ConnectException e) {
             System.err.println("Error : Connection Refused!\nException: " + e);
-            Game.getInstance().hudController.postMessage("Error : Connection Refused!\nException: " + e);
         }
-        Game.getInstance().hudController.postMessage("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
-        System.out.println("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
+        consoleOut.println("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort() + "!" );
         return tempsock;
     }
 
@@ -759,7 +781,7 @@ public class NetworkClient {
      */
     private static void disconnectFromServer() {
         consoleOut.print("Disconnecting from server...");
-        Game.getInstance().hudController.postMessage("Disconnecting from server...");
+        
         if (isConnected()) {
             MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
             writer.flush();
@@ -768,7 +790,6 @@ public class NetworkClient {
         killRemoteStreams();
         killSocket();
         consoleOut.println("Disconnected!");
-        Game.getInstance().hudController.postMessage("Disconnect!");
     }
 
     /**
@@ -835,14 +856,10 @@ public class NetworkClient {
         NetworkClient.setServerPort(25565);
         NetworkClient.setUsername(uName);
 
-        if (NetworkClient.connect()) {
-            if (NetworkClient.startClient()) {
-                NetworkClient.runClient(false);
-            } else {
-                System.err.println("Client failed to start from main!");
-            }
+        if ( NetworkClient.initializeClient() ) {
+            NetworkClient.runClient(false); // command line test
         } else {
-            System.err.println("Client failed to connect from main!");
+            System.err.println("Client failed to start from main!");
         }
     } // end main
 
