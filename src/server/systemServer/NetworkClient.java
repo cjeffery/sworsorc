@@ -37,7 +37,8 @@ public class NetworkClient {
 
     // Streams & Threads
     private static ListenerThread listenerThread = null;
-    private static PrintWriter writer = null;
+    //private static PrintWriter writer = null;
+    private static ObjectOutputStream writer = null;
 
     // Set default help file
     final private static String helpfile = "commands.txt";
@@ -110,13 +111,13 @@ public class NetworkClient {
         startRemoteStreams();
         
         //first message is handle:
-        MessageUtils.sendMessage(writer, MessageUtils.makeSendHandleMessage(username));
+        sendMessage(writer, MessageUtils.makeSendHandleMessage(username));
 
         //request list of clients:
-        MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
+        sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
 
         //request list of lobbies:
-        MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage());
+        sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage());
 
         return true;
     }
@@ -145,7 +146,7 @@ public class NetworkClient {
                         stopClient();
                         break;
                     }
-                    if (!(processInput(line))) {
+                    if (!(processCommand(line))) {
                         stopClient();
                         consoleOut.println("Later gator!");
                         return;
@@ -174,7 +175,7 @@ public class NetworkClient {
      * @param message The message to display to other users
      */
     public static void sendChatMessage(String message){
-      MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, message));
+      sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, message));
       //TODO: World-wide or lobby-wide?
     }
 
@@ -205,11 +206,11 @@ public class NetworkClient {
      */
 
     public static void endTurn(){
-        MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
+        sendMessage(writer, MessageUtils.makeYieldTurnMessage());
     }
     
     public static boolean testCommand( String command ) {
-        return processInput(command);
+        return processCommand(command);
     }
 
     /* GETTERS/SETTERS */
@@ -290,7 +291,7 @@ public class NetworkClient {
                         stopClient();
                         break;
                     }
-                    if (!(processInput(line))) {
+                    if (!(processCommand(line))) {
                         stopClient();
                         consoleOut.println("Later gator!");
                         return;
@@ -549,7 +550,8 @@ public class NetworkClient {
     private static void setWriter() {
         if (isConnected()) {
             try {
-                writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
+                //writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
+                writer = new ObjectOutputStream(socket.getOutputStream());
             } catch (IOException ex) {
                 System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
                         + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
@@ -600,7 +602,7 @@ public class NetworkClient {
      * @param command
      * @return boolean True if executed normally, False if quit or exception
      */
-    private static boolean processInput(String command) {
+    private static boolean processCommand(String command) {
 
         if (command == null) {
             System.err.println("Null string passed to processInput!");
@@ -616,27 +618,27 @@ public class NetworkClient {
 
             } else if ("/newLobby".equals(parsedString[0])) {
                 String lobbyName = parsedString[1];
-                MessageUtils.sendMessage(writer, MessageUtils.makeNewLobbyRequestMessage(lobbyName));
+                sendMessage(MessageUtils.CREATE_NEW_LOBBY_REQUEST, lobbyName );
 
             } else if ("/joinLobby".equals(parsedString[0])) {
                 String lobbyName = parsedString[1];
-                MessageUtils.sendMessage(writer, MessageUtils.makeJoinLobbyRequestMessage(lobbyName));
+                sendMessage(MessageUtils.JOIN_LOBBY_REQUEST,lobbyName);
             } else if (isConnected()) {
                 // sends chat message to server, which broadcasts to all clients
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, command));
+                sendMessage( MessageUtils.GLOBAL_CHAT, username, command);
             }
         } else if (parsedString.length == 1) {
             if ("/printFile".equals(parsedString[0])) {
-                sendMessage(MessageUtils.PRINT_FILE);
+                sendMessageOld(MessageUtils.PRINT_FILE);
 
             } else if ("/globalWho".equals(parsedString[0])) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeGlobalWhoRequestMessage());
+                sendMessage( MessageUtils.GLOBAL_WHO_LIST);
 
             } else if ("/leaveLobby".equals(parsedString[0])) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeLeaveLobbyMessage());
+                sendMessage( MessageUtils.LEAVE_LOBBY_REQUEST);
 
             } else if ("/showLobbies".equals(parsedString[0])) { // TODO: message if no lobbies available, command to create lobby
-                MessageUtils.sendMessage(writer, MessageUtils.makeRequestLobbyInfoMessage()); // TODO: working lobby info request
+                sendMessage( MessageUtils.LOBBY_INFO); // TODO: working lobby info request
 
             } else if ("/disconnect".equals(parsedString[0])) { // manual client disconnect
                 if (isConnected()) {
@@ -648,7 +650,7 @@ public class NetworkClient {
             } else if ("/yieldTurn".equals(parsedString[0])) { // client turn over
                 endTurn();
             } else if ("/beginGame".equals(parsedString[0])) { // request to start game
-                MessageUtils.sendMessage(writer, MessageUtils.makeBeginGameRequestMessage());
+                sendMessage( MessageUtils.REQUEST_BEGIN_GAME);
 
             } else if ("/help".equals(parsedString[0])) {
                 printCommandList();
@@ -700,9 +702,9 @@ public class NetworkClient {
         String line;
         try {
             BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.forName("UTF-8")));
-            MessageUtils.sendMessage(writer, MessageUtils.makeIncomingFileMessage(fileName));
+            sendMessage(writer, MessageUtils.makeIncomingFileMessage(fileName));
             while ((line = file.readLine()) != null) {
-                MessageUtils.sendMessage(writer, MessageUtils.makeFileLineMessage(fileName, line));
+                sendMessage(writer, MessageUtils.makeFileLineMessage(fileName, line));
             }
         } catch (IOException e) {
             System.err.println("Could not open file! Error thrown: " + e);
@@ -714,14 +716,15 @@ public class NetworkClient {
      * <p>
      * @param message Message to write
      */
-    private static void sendMessage(String message) {
- 
-        List<String> temp = new ArrayList<>();
-        temp.add(message);
-        MessageUtils.sendMessage(writer, temp);
+    private static void sendMessage (String message ) {
             
     }
       
+    
+    private static void sendMessage( String tag, Object... message ) {
+        
+    }
+    
     /**
      * Prints list of commands and what they do from a text file
      * <p>
@@ -806,7 +809,7 @@ public class NetworkClient {
         consoleOut.print("Disconnecting from server...");
         
         if (isConnected()) {
-            MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
+            sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
             writer.flush();
         }
 
