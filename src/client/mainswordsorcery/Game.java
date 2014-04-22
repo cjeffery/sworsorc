@@ -19,11 +19,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Units.UnitPool;
-import Units.*;
 import java.net.URL;
-import javafx.event.ActionEvent;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 
@@ -31,24 +28,18 @@ import javafx.stage.Screen;
  *
  * @author higle_000
  */
+
 public class Game extends Application {
-    /** true if a scenario is loaded */
-    boolean scenarioLoaded;
     /** the singleton unit hash tree UnitPool variable */
     UnitPool unitPool;
+    
     //Stage setup content
     private Parent main;
     private Parent hud;
-    private Parent diplo;
     /** JavaFX scene for the main menu */
     private Scene mainMenu;
     /** JavaFX scene for the HUD window */
     private Scene hudWindow;
-    /** JavaFX scene for the Diplomacy window */
-    private Scene Diplomacy;
-    
-    /** Stored reference to the HUDController instance used by JavaFX*/
-    public HUDController hudController;
     
     @Override
     public void start(Stage stage) throws IOException {
@@ -59,28 +50,9 @@ public class Game extends Application {
         stage.setWidth(screenBounds.getWidth());
         stage.setHeight(screenBounds.getHeight());
         
-
         main = createScene("MainMenu.fxml");
         hud = createScene("hud.fxml");
-        diplo = createScene("Diplomacy.fxml");
-
-        //We can create main normally:
-        main = createScene("MainMenu.fxml");         
         
-        //We need to use an fxmlLoader instance to load the HUD, in order to
-        //get a reference to the correct controller instance.
-        //If we use the static methods, we'll get reference to two
-        //different controller instances:
-        FXMLLoader fxmlLoader = new FXMLLoader(); 
-        URL url = getClass().getResource("hud.fxml");
-        fxmlLoader.setLocation(url);
-        
-        hud = fxmlLoader.load(url.openStream()); //Load the hud, call this only once!
-
-        
-        //Use the same loader to get a reference to the actual controller instance:
-        hudController = (HUDController) fxmlLoader.getController();
-       
         // load the Main Menu font.
         URL fontURL = new URL("file:resources/font/upcjb.ttf");
         Font.loadFont(
@@ -94,23 +66,12 @@ public class Game extends Application {
 //        hud.getStylesheets().add(mainCSS);
         mainMenu = new Scene(main, screenBounds.getWidth(), screenBounds.getHeight());        
         hudWindow = new Scene(hud, screenBounds.getWidth(), screenBounds.getHeight());
-
-        Diplomacy = new Scene(diplo, 500, 500);
         
-
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
         stage.show();
-    }
-    
-    /**
-     * Cleanup code goes here
-     */
-    @Override
-    public void stop() {
-        System.exit(0);     
     }
 
     /**
@@ -127,7 +88,6 @@ public class Game extends Application {
    
     private static Game instance;
     public Game() {
-           scenarioLoaded = false;
            instance = this;
     }
    /**
@@ -163,14 +123,6 @@ public class Game extends Application {
     public Scene getMainScene(){
         return mainMenu;
     }
-    /**
-    * Returns Diplomacy Map scene
-    * 
-    * @author Sean Shepherd
-    */   
-    public Scene getDiploScene(){
-        return Diplomacy;
-    }
    /**
     * SolarDisplay code goes here
     * 
@@ -194,16 +146,8 @@ public class Game extends Application {
         unitPool = UnitPool.getInstance();
         unitPool.clear();
         if(testScenario){
-            ArmyUnit bow = new Bow();
-            ArmyUnit lightsword = new LightSword();
-            ArmyUnit pike = new PikeMan();
-            //add units to unit pool
-            pike.setRace(Race.Human);
-            lightsword.setRace(Race.Elves);
-            unitPool.addUnit(0, pike, "0606");
-            unitPool.addUnit(1, lightsword, "0607");
-            //scenario loading complete
-            scenarioLoaded = true;
+            //TODO load simple test scenario
+            
         }
         else{
             //TODO implement real initScenario from scenario file

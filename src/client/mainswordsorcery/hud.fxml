@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.util.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainswordsorcery.HUDController">
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mainswordsorcery.HUDController">
   <center>
     <GridPane prefHeight="452.0" prefWidth="594.0">
       <children>
@@ -15,7 +17,11 @@
           <children>
             <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0" GridPane.rowSpan="5">
               <children>
-                <ScrollPane fx:id="map_view" />
+                <ScrollPane fx:id="map_view">
+                  <content>
+                    <AnchorPane prefHeight="6000.0" prefWidth="6000.0" />
+                  </content>
+                </ScrollPane>
               </children>
             </StackPane>
             <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
@@ -35,7 +41,7 @@
               </GridPane.margin>
             </TextArea>
             <TextField fx:id="message_box" onAction="#SubmitToChat" prefWidth="411.0" promptText="Your Message Here" text="" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.margin="$x4" GridPane.rowIndex="3" />
-            <AnchorPane prefHeight="26.0" prefWidth="118.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
               <children>
                 <MenuBar fx:id="menuBar" layoutX="0.0" layoutY="1.0" prefWidth="-1.0">
                   <menus>
@@ -49,7 +55,7 @@
                     <Menu disable="false" mnemonicParsing="false" text="Scenario">
                       <items>
                         <MenuItem mnemonicParsing="false" text="Goals" />
-                        <MenuItem fx:id="Diplomacy" mnemonicParsing="false" onAction="#DisplayDiplomacy" text="Alliance" />
+                        <MenuItem mnemonicParsing="false" text="Alliance" />
                         <MenuItem mnemonicParsing="false" text="Diplomacy" />
                       </items>
                     </Menu>
@@ -89,10 +95,10 @@
                     <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Blue Sun:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <Text fx:id="BlueState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Text id="RedSun" fx:id="RedState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                    <Text fx:id="phase" strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <Text fx:id="turn" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Text id="RedSun" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Turn" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" percentWidth="65.0" prefWidth="-1.0" />
@@ -112,7 +118,7 @@
                 </GridPane>
                 <GridPane id="grid_Target" minHeight="149.0" minWidth="75.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                   <children>
-                    <TabPane fx:id="TargetsPane" prefHeight="161.0" prefWidth="103.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TabPane fx:id="Targets" prefHeight="161.0" prefWidth="103.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Target" GridPane.columnIndex="0" GridPane.rowIndex="0">
                       <font>
                         <Font name="System Bold" size="14.0" fx:id="x2" />
@@ -130,7 +136,7 @@
                 </GridPane>
                 <GridPane id="grid_Stack" minHeight="150.0" minWidth="75.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                   <children>
-                    <TabPane fx:id="UnitsPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <TabPane fx:id="Units" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Text font="$x2" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Stack" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <Button alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#DisplayUnits" text="Stack" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                   </children>
@@ -144,12 +150,12 @@
                 </GridPane>
                 <GridPane minHeight="150.0" prefHeight="150.0" prefWidth="75.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
                   <children>
-                    <ImageView id="sun_display" fx:id="SunImage" fitHeight="177.375" fitWidth="177.375" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                    <ImageView id="sun_display" fitHeight="177.375" fitWidth="177.375" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
                       <image>
-                        <Image url="file:resources/images/YellowSun.png" />
+                        <Image url="@sun.png" />
                       </image>
                     </ImageView>
-                    <Button fx:id="phaseButton" mnemonicParsing="false" onAction="#ChangePhase" prefHeight="48.0" prefWidth="158.0" text="End Movement Phase" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Button mnemonicParsing="false" onAction="#ChangeSun" prefHeight="48.0" prefWidth="158.0" text="End Phase" GridPane.columnIndex="0" GridPane.rowIndex="1">
                       <font>
                         <Font name="Palatino Linotype Bold" size="16.0" />
                       </font>

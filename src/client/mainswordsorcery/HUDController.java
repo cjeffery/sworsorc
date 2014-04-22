@@ -10,278 +10,83 @@ package mainswordsorcery;
  *
  * @author Joe Higley
  */
-import MoveCalculator.MovementCalculator;
 import Units.*;
-import static java.lang.Integer.parseInt;
-import static java.lang.String.valueOf;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-import sshexmap.MainMap;
-import sshexmap.MapHex;
-import sshexmap.MapView;
-
-import systemServer.ClientData;
-import systemServer.ClientDataForm;
-import systemServer.NetworkClient;
+import solardisplay.SolarDisplay;
  
 public class HUDController {
-    @FXML private TabPane UnitsPane;
-    @FXML private TabPane TargetsPane;
+    @FXML private TabPane Units;
+    @FXML private TabPane Targets;
+    @FXML private ImageView sun_img;
+    @FXML private Text RedSun;
     @FXML private MenuBar menuBar;
     @FXML private TextField message_box;
     @FXML private TextArea chat_box;
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
-    @FXML private SwingNode hex_map;
     
-    @FXML private ImageView SunImage;
-    @FXML private Button phaseButton;
-    @FXML private Text turn;
-    @FXML private Text phase;
-    @FXML private Text RedState;
-    @FXML private Text BlueState;
-    
-    //currently selected unit and target unit
-    MoveableUnit selected_unit;
-    MoveableUnit target_unit;
-    //currently selected stack of units and target units
-    List <MoveableUnit> selected_stack;
-    List <MoveableUnit> target_stack;
-    //holds valid hexes for selected_unit movement
-    private ArrayList<MapHex> canMoveTo;
-    
+    ArmyUnit bow = new Bow();
+    ArmyUnit lightsword = new LightSword();
+    ArmyUnit pike = new PikeMan();
 
-    MapView hmapContent;//MapView swing object set into hmap
-    SwingNode hmap = new SwingNode();
-    
-    String username, ipAddress;
-    boolean usernameEntered, ipEntered, connectedToServer;
-
-    public HUDController() {
-        selected_stack = new ArrayList <>();
-        target_stack = new ArrayList<>();
-        this.selected_unit = null;
-        this.target_unit = null;
-    }
-    
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
+     * example code in HUDController.java
      * 
      * @author Jay Drage        
      */
     public void initialize(){
-        //hdip.setContent(MapView.getDipView());
-        phase.setText("Movement");
-        //Display map in map_view
-        hmapContent = MapView.getMapView();
-        hmap.setContent(hmapContent);
-        map_view.setContent(hmap);
-        //adds mouse support to hmap
-        hmap.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-		public void handle (MouseEvent mouseEvent) {
-                    //finds out at which hex a mouse event occured
-                    String hexID = hmapContent.hexAt((int)mouseEvent.getX(), (int)mouseEvent.getY());
-                    MapHex hex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);
-                    //allows deselecting of unit with left mouse button
-                    if( mouseEvent.isPrimaryButtonDown() && selected_unit != null){
-                        DeselectUnit( hexID, hex );
-                    }           
-                    //select a unit if none previously selected
-                    else if( mouseEvent.isPrimaryButtonDown()){
-                        SelectUnit( hexID, hex );
-                    }             
-                    //move unit with right mouse button in movement phase
-                    else if( mouseEvent.isSecondaryButtonDown() && selected_unit != null && phase.getText().equalsIgnoreCase("Movement")){
-                        MoveUnit( hexID, hex );
-                    }
-                    //allows deselecting of target unit with right mouse button
-                    else if( mouseEvent.isSecondaryButtonDown() && target_unit != null){
-                        DetargetUnit( hexID, hex );
-                    }                    
-                     //choose target unit in combat or spell phase
-                    else if( mouseEvent.isSecondaryButtonDown() //right mouse button
-                             && !phase.getText().equalsIgnoreCase("Movement") //check phase
-                             && target_unit == null){ //check if target unit already chosen
-                        TargetUnit( hexID, hex );
-                    }
-                }
-	});
-        /*
-        //adds keyboard support to hmap
-        hmap.onKeyPressedProperty(new EventHandler<KeyEvent>(){
         
-        });
-        */
-        //adds mouse support to mini_map
-        mini_map.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
+        //this adds mouse support to map_view, just a placeholder for now
+        map_view.setOnMousePressed(new EventHandler<MouseEvent>() {
 		public void handle (MouseEvent mouseEvent) {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
 		}
 	});
-        //setup network
-        connectedToServer = usernameEntered = ipEntered = false;
-        chat_box.setText("Enter your username!");
+       //this adds mouse support to mini_map
+        mini_map.setOnMousePressed(new EventHandler<MouseEvent>() {
+		public void handle (MouseEvent mouseEvent) {
+			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
+		}
+	});
     }
-    /** 
-     * deselects a unit with left mouse button
-     * sets selected_unit to null
-     * clears selected_stack
-     * 
-     * @param hexID
-     * @param hex
-     * @author Jay Drage
-     */
-    public void DeselectUnit(String hexID, MapHex hex){
-        hmapContent.clearHighlights();
-        selected_unit = null;
-        selected_stack.clear();
-        //update target stack panel
-        try {
-            DisplayStack(UnitsPane, selected_stack);
-        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-    }
-    /** 
-     * selects a unit
-     * left mouse button sets unit to selected_unit
-     * sets stack to selected_stack
-     * 
-     * @param hexID
-     * @param hex
-     * @author Jay Drage
-     */
-    public void SelectUnit(String hexID, MapHex hex){
-        if(hex == null){
-            return;
-        }
-        //check if there is a previously selected unit, return if hex is empty of units
-        if(hex.getUnits() == null) {
-            return;
-        }
-        //highlight valid hexes
-        canMoveTo = new ArrayList<>();
-        selected_stack = hex.getUnits();
-        selected_unit = selected_stack.get(0);
-        canMoveTo.clear();
-        if(phase.getText().equalsIgnoreCase("Movement")){
-            MovementCalculator.getValidMoves(selected_unit, hex, selected_unit.getMovement(), canMoveTo );
-            hmapContent.highlight(canMoveTo);
-        }
-        //update target stack panel
-        try {
-            DisplayStack(UnitsPane, selected_stack);
-        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-    }
-    /** 
-     * Moves selected unit with right mouse button
-     * 
-     * @param hexID
-     * @param hex
-     * @author Jay Drage
-     */
-    public void MoveUnit( String hexID, MapHex hex ){
-        if( canMoveTo.contains(hex) ) {
-            final UnitPool pool = UnitPool.getInstance();
-            hmapContent.clearHighlights();
-            pool.addMove((ArmyUnit)selected_unit, hex.GetID());
-            //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
-            hmapContent.repaint();
-            selected_unit = null;
-            selected_stack.clear();
-            //update target stack panel
-            try {
-                DisplayStack(UnitsPane, selected_stack);
-            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-                Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    /**
-     * Detargets a unit
-     * sets target_unit to null
-     * clears target_stack
-     * 
-     * @param hexID
-     * @param hex
-     * @author Jay Drage
-     */
-    public void DetargetUnit( String hexID, MapHex hex ){
-        target_unit = null;
-        target_stack.clear();
-        //update target stack panel
-        try {
-            DisplayStack(TargetsPane, target_stack);
-        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    /**
-     * Targets a unit with right click
-     * works only when not in movement phase
-     * sets target_unit
-     * sets target_stack
-     * 
-     * @param hexID
-     * @param hex
-     * @author Jay Drage
-     */
-    public void TargetUnit( String hexID, MapHex hex ){
-        if(hex == null){
-            return;
-        }
-        //check if there is a previously selected target unit, return if hex is empty of units
-        if(hex.getUnits() == null) {
-            return;
-        }
-        target_stack = hex.getUnits();
-        target_unit = null;
-        target_unit = target_stack.get(0);
-        //update target stack panel
-        try {
-            DisplayStack(TargetsPane, target_stack);
-        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
     //called when clicking a friendly hex
     @FXML protected void DisplayUnits(ActionEvent event) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        List <MoveableUnit> AU = new ArrayList <>();
-        AU.add(selected_unit);
-        DisplayStack(UnitsPane, AU);
+        List <ArmyUnit> AU = new ArrayList <>();
+        AU.add(bow);
+        AU.add(lightsword);
+        AU.add(pike);
+        DisplayStack(Units, AU);
     }
+    
     //called when clicking an enemy hex
     @FXML protected void DisplayTargets(ActionEvent event) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        List <MoveableUnit> AU = new ArrayList <>();
-        AU.add(target_unit);
-        DisplayStack(TargetsPane, AU);
+        List <ArmyUnit> AU = new ArrayList <>();
+        AU.add(lightsword);
+        AU.add(pike);
+        DisplayStack(Targets, AU);
     }
+    
     /** 
      * constructs the tab pane for the selected hex
      * @author Joe Higley      
      */
-    protected void DisplayStack(TabPane tp, List <MoveableUnit> AU) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    protected void DisplayStack(TabPane tp, List <ArmyUnit> AU) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         ClearTitles(tp); //empty the tab pane
         int x = AU.size();
 //        int x = Game.getInstance().getNum(); //this is just a random number of units, will be replaced later
@@ -301,7 +106,7 @@ public class HUDController {
      * with unit stats.
      * @author Joe Higley      
      */
-    public void FillStats(Tab tp, MoveableUnit AU) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
+    public void FillStats(Tab tp, ArmyUnit AU) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
         //stats are kept in a GridPane inside a ScrollPane in case of more stats than space
         ScrollPane scroll = new ScrollPane();
         GridPane grid = new GridPane();
@@ -345,6 +150,7 @@ public class HUDController {
         scroll.setContent(grid);
         //add ScrollPane to Tab
         tp.setContent(scroll);
+        
     }
     
     /** 
@@ -358,26 +164,11 @@ public class HUDController {
     /** 
      * Displays user text in chat_box
      * 
-     * @author Joe Higley, Gabe Pearhill      
+     * @author Joe Higley      
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
-        if (!usernameEntered) {
-            if (!"".equals(message_box.getText())) {
-                username = message_box.getText();
-                usernameEntered = true;
-                chat_box.setText("Enter the server's IP address.");
-                message_box.clear();
-            }
-        } else if (!ipEntered) {
-            if (!"".equals(message_box.getText())) {
-                ipAddress = message_box.getText();
-                ipEntered = true;
-                message_box.clear();
-                chat_box.clear();
-                connectedToServer = connectToServer();
-            }
-        } else if (!"".equals(message_box.getText())) {
-            NetworkClient.sendChatMessage(message_box.getText());
+        if(!"".equals(message_box.getText())) {
+            chat_box.appendText("<username> " + message_box.getText() + "\n");
             message_box.clear();
         }
     }
@@ -407,99 +198,10 @@ public class HUDController {
      * 
      * @author Joe Higley      
      */   
-    @FXML protected void ChangePhase(ActionEvent event) {
-        
-        /* This if-else is a test that Game's hudController reference actually
-         * refers to the right instance. It's an ackward place,
-         * but putting the code here guarantees that we
-         * are checking against the proper instance. This code should have no
-         * effect besides printing to System.out: 
-         */
-        if (Game.getInstance().hudController == this){
-            System.out.println("Game's hudController reference is correct!");
-        }
-        else {
-            System.out.println("Game's hudController reference is NOT correct!");
-        }
-        
-        switch(phaseButton.getText()){
-            case "End Movement Phase":
-                //clear unit move highlights if present
-                if( hmapContent.highlightSet != null ){
-                    hmapContent.clearHighlights();
-                }
-                phaseButton.setText("End Spell Phase");
-                phase.setText("Spell");
-                break;
-        
-            case "End Spell Phase":
-                phaseButton.setText("End Combat Phase");
-                phase.setText("Combat");
-                break;
-            
-            case "End Combat Phase":
-                phaseButton.setText("End Turn");
-                phase.setText("End");
-                break;
-                
-            case "End Turn":
-                phaseButton.setText("End Movement Phase");
-                phase.setText("Movement");
-                int x = parseInt(turn.getText());
-                x++;
-                turn.setText(Integer.toString(x));
-                
-                SolarDisplay.SunCalc();
-                Image Sun = new Image(SolarDisplay.GetSunImage());
-                SunImage.setImage(Sun);
-        
-                RedState.setText(SolarDisplay.GetRedState());
-                BlueState.setText(SolarDisplay.GetBlueState());
-                break;
-        }
-        
-    }
-    
-
-    @FXML protected void DisplayDiplomacy(ActionEvent event) {
-        Stage stage = (Stage) menuBar.getScene().getWindow();
-        stage.setScene(Game.getInstance().getDiploScene());
-        stage.show();
+    @FXML protected void ChangeSun(ActionEvent event) {
+  //      SolarDisplay.getInstance().function();
+  //      sun_img.setImage(new Image("@red_sun6.png")); //place holder
+  //      RedSun.setText(SolarDisplay.getInstance().getRedSun());
     }
 
-    /**
-     * Connect to server
-     *
-     * @author Gabe Pearhill
-     */
-    public boolean connectToServer() {
-        // 25565 is sworsorc default server port
-        NetworkClient.setServerName(ipAddress);
-        NetworkClient.setServerPort(25565);
-        NetworkClient.setUsername(username);
-
-        if (NetworkClient.connect()) {
-            if (NetworkClient.startClient()) {
-                //NetworkClient.runClient(true);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-    
-    /**
-     * A simple function to post a message to the chat box from outside of the 
-     * class. This function is used by the networking software in order to post
-     * an incoming chat message.
-     * 
-     * @author Gabe Pearhill
-     */
-    public void postMessage(String message){
-        chat_box.appendText(message + "\n");
-    }
-
- 
 }
