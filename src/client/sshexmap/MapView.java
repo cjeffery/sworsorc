@@ -76,7 +76,7 @@ public class MapView extends    JPanel
         }
         try {
             SwingUtilities.invokeAndWait(() -> {
-                instance = new MapView(DiplomacyMap.GetInstance());
+                dip_instance = new MapView(DiplomacyMap.GetInstance());
             });
         } catch (InterruptedException ex) {
             System.out.println("Something went horribly wrong in getMapView");
