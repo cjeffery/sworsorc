@@ -26,7 +26,7 @@ public class UnitDetailsDisplay extends JFrame implements ActionListener{
         frame = new JFrame("Swords and Sorcery");
         //Background image (doesn't display with buttons on top)
         try{
-            frame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("MenuImage.jpg")))));
+            frame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("src\\utilities\\UnitDetailsDisplay\\MenuImage.jpg")))));
         }catch(IOException e){
             System.out.println("Image not found.");
         }
