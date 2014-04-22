@@ -77,6 +77,7 @@ public final class C_Z_I {
             // perform
             ArmyUnit unit1 = new ZombieInfantry(caster, 1);
             unit1.SetLifeSpan(2);
+            unit1.setLocation(caster.getLocation());
             
             if(getDistance() <= getRange()){
                 //peform spell
