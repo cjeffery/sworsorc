@@ -20,6 +20,7 @@ public class MapView extends    JPanel
     double radius, width, height;
     
     static MapView instance;
+    static MapView dip_instance;
     
     /**
      * Creates a new MapView class given a map to show.
@@ -70,8 +71,21 @@ public class MapView extends    JPanel
     
     public static MapView getDipView()
     {
-        MapView dip_map = new MapView(DiplomacyMap.GetInstance());
-        return dip_map;
+        if(dip_instance != null) {
+            return dip_instance;
+        }
+        try {
+            SwingUtilities.invokeAndWait(() -> {
+                instance = new MapView(DiplomacyMap.GetInstance());
+            });
+        } catch (InterruptedException ex) {
+            System.out.println("Something went horribly wrong in getMapView");
+            return null;
+        } catch (InvocationTargetException ex) {
+            System.out.println("Something went horribly wrong in getMapView");
+            return null;
+        }
+        return dip_instance;
     }
     
     /** 
@@ -285,8 +299,10 @@ public class MapView extends    JPanel
 
             //draw all the hexes in the row
             for(int row = hexRect.y; row < hexRect.getMaxY(); row++) {
-                if( map.GetHex(col+1,row+1) == null )
+                if( map.GetHex(col+1,row+1) == null ) {
+                    g2.translate(0, height);
                     continue;
+                }
                 
                 //First pass: hexagons
                 if(pass == 0)
