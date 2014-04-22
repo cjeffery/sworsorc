@@ -11,7 +11,7 @@ import ssterrain.TerrainType;
  */
 public class DiplomacyHex extends Hex {
     private boolean playerHex = false;
-    private boolean neturalHex = false;
+    private boolean neutralHex = false;
 
     public DiplomacyHex(Node hex) {
         NodeList hexList = hex.getChildNodes();
@@ -47,15 +47,15 @@ public class DiplomacyHex extends Hex {
     }
     
     private void SetNeutralHex(){
-        neturalHex = true;
+        neutralHex = true;
     } 
     
     public boolean GetIsPlayerHex(){
         return playerHex; 
     }
         
-    public boolean GetIsNeturalHex(){
-        return neturalHex;
+    public boolean GetIsNeutralHex(){
+        return neutralHex;
     }
         
 }

@@ -12,7 +12,7 @@ package MainSwordSorcery;
  */
 public class DiplomacyHex extends Hex {
     private boolean playerHex = false;
-    private boolean neturalHex = false;
+    private boolean neutralHex = false;
     
     public DiplomacyHex(String id, String northHexID, String northEastHexID, 
                             String southEastHexID, String southHexID, String southWestHexID, 
@@ -22,7 +22,7 @@ public class DiplomacyHex extends Hex {
         if ("1".equals(specialHexCode))
             SetPlayerHex();
         if ("2".equals(specialHexCode))
-            SetNeturalHex();
+            SetNeutralHex();
     }
     
     public DiplomacyHex(String ID, String northHexID, String northEastHexID, 
@@ -36,16 +36,16 @@ public class DiplomacyHex extends Hex {
         playerHex = true;
     }
     
-    private void SetNeturalHex(){
-        neturalHex = true;
+    private void SetNeutralHex(){
+        neutralHex = true;
     } 
     
     public boolean GetIsPlayerHex(){
         return playerHex; 
     }
         
-    public boolean GetIsNeturalHex(){
-        return neturalHex;
+    public boolean GetIsNeutralHex(){
+        return neutralHex;
     }
     
 }

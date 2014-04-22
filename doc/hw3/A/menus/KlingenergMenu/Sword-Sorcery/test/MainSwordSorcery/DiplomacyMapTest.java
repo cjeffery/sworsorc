@@ -25,7 +25,7 @@ public class DiplomacyMapTest {
      */
     @Test
     public void test1() { 
-       boolean result = testMap.GetIsNeturalHex("0606");
+       boolean result = testMap.GetIsNeutralHex("0606");
        assertTrue(result);
     }
     @Test

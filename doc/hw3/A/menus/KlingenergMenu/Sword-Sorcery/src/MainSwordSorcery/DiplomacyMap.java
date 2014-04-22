@@ -156,9 +156,9 @@ public class DiplomacyMap {
         return DiplomacyMap.get(id).GetIsPlayerHex();
     }
     
-    public boolean GetIsNeturalHex(String id){
+    public boolean GetIsNeutralHex(String id){
         
-        return DiplomacyMap.get(id).GetIsNeturalHex();
+        return DiplomacyMap.get(id).GetIsNeutralHex();
     }
 }
 
