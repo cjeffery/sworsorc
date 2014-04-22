@@ -13,7 +13,19 @@ package Units;
  * @author Matthew
  */
 public enum Nation {
-    ImperialArmy,
-    IndependentHuman,
-    
+    ImperialArmy,       
+    Elven,               
+    IndependentHuman,   
+    ORC,                
+    Goblin,     
+    SwampCreature,      
+    Cronk,
+    Conjured,
+    Krasnian,
+    Zirkastian,
+    Mercenary,
+    WhiteORC,
+    CorfluCultist,
+    SpiderFolk,
+    Convivian
 }
