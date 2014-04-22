@@ -1,0 +1,18 @@
+/disconnect
+/reconnect
+
+/showLobbies
+/newLobby TestLobby
+/joinLobby TestLobby
+/leaveLobby
+
+/globalWho
+
+/yieldTurn
+/beginGame
+
+/file commands.txt
+/printFile
+    
+/help
+/quit

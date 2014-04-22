@@ -13,7 +13,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
-import mainswordsorcery.Game;
 
 /**
  * The Infamous Network Client, handles communication to/from Network Server
@@ -46,7 +45,7 @@ public class NetworkClient {
     
     private static ClientThread clientThread;
     
-    public static String lastMessage;
+    private static String lastMessage;
     
     // Until we have a working HUD reference
     private static boolean hudWorking = false;
@@ -91,10 +90,9 @@ public class NetworkClient {
      * @author Christopher Goes
      * @return boolean True if successful, false if runtime error/exception
      */
-    public static boolean startConnection() {
+    private static boolean startConnection() {
 
         startRemoteStreams();
-        //startLocalStreams();
         
         //first message is handle:
         MessageUtils.sendMessage(writer, MessageUtils.makeSendHandleMessage(username));
