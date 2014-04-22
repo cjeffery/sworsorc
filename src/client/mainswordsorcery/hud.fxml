@@ -49,8 +49,8 @@
                     <Menu disable="false" mnemonicParsing="false" text="Scenario">
                       <items>
                         <MenuItem mnemonicParsing="false" text="Goals" />
-                        <MenuItem fx:id="Diplomacy" mnemonicParsing="false" onAction="#DisplayDiplomacy" text="Alliance" />
-                        <MenuItem mnemonicParsing="false" text="Diplomacy" />
+                        <MenuItem fx:id="Diplomacy" mnemonicParsing="false" onAction="#DisplayDiplomacy" text="Diplomacy" />
+                        <MenuItem mnemonicParsing="false" text="Alliance" />
                       </items>
                     </Menu>
                   </menus>
