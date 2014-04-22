@@ -27,5 +27,6 @@ public enum Nation {
     WhiteORC,
     CorfluCultist,
     SpiderFolk,
-    Convivian
+    Convivian,
+    none
 }
