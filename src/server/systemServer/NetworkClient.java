@@ -61,8 +61,23 @@ public class NetworkClient {
      * @return True if started OK, False if connection failed
      */
     public static boolean initializeClient() {
+        configureSettings("netclient_settings.txt"); // default filename
         startLocalStreams();
         return connect() ? startConnection() : false;     
+    }
+    
+    /**
+     * Startup of NetworkClient
+     * Starts local streams, connects to server, and makes the connection live
+     * 
+     * @param filename Name of Network Settings file
+     * @return True if started OK, False if connection failed
+     */
+    public static boolean initializeClient( String filename ) {
+        configureSettings(filename);
+        startLocalStreams();
+        return connect() ? startConnection() : false;     
+
     }
     
     /**
@@ -762,6 +777,16 @@ public class NetworkClient {
     }
 
     /* UTILITY METHODS */
+    
+    /**
+     * Set flags, variables, etc, from a file
+     * @param filename Name of Network Settings file
+     * @return True if successful, False if not
+     */
+    private static boolean configureSettings( String filename ) {
+        return true; // TODO: Stub method
+    }
+    
     /**
      * Checks if client is connected to server
      * <p>
