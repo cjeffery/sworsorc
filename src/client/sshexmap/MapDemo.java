@@ -8,14 +8,14 @@ import javax.swing.*;
 
 public class MapDemo extends JComponent implements MouseListener, KeyListener {
     private MapView mapView;
-    private MainMap map;
+    private DiplomacyMap map;
     private UnitPool pool;
     private MoveableUnit selected_unit;
     private ArrayList<MapHex> canMoveTo;
     public MapDemo() {
         JFrame window = new JFrame("Game Map"); 
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        map = MainMap.GetInstance();
+        map = DiplomacyMap.GetInstance(); //MainMap.GetInstance();
         mapView = new MapView(map);
         JScrollPane scrollPane = new JScrollPane(mapView);
         window.add(scrollPane);
@@ -49,45 +49,7 @@ public class MapDemo extends JComponent implements MouseListener, KeyListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        String hexID = mapView.hexAt(e.getX(), e.getY());
-        MapHex hex = map.GetHex(hexID);
-        if(hex == null)
-            return;
-        System.out.println("===START===");
-        if(selected_unit == null) {
-            System.out.println("no unit selected");
-            if(hex.getUnits() == null) {
-                System.out.println("no units in hex");
-                return;
-            }
-            System.out.println("highlighting moves");
-            canMoveTo = new ArrayList<MapHex>();
-            ArrayList<MoveableUnit> units = hex.getUnits();
-            selected_unit = null;
-            for( MoveableUnit u : units) {
-                if(u != null)
-                    selected_unit = u;
-            }
-            System.out.println("Selected " + selected_unit + ", size of stack: " + hex.getUnits().size() );
-            canMoveTo.clear();
-            MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
-            mapView.highlight(canMoveTo);
-        }
-        else if( canMoveTo.contains(hex) ) {
-            System.out.println("unit selected, can move to destination");
-            //hack because unitpool isn't finished
-            //pool.clearPool();
-            
-            mapView.clearHighlights();
-            pool.addMove((ArmyUnit)selected_unit, hex.GetID());
-            //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
-            mapView.repaint();
-            selected_unit = null;
-        }
-        else {
-            System.out.println("unit sleected, cannot move to destination");
-        }
-        //JOptionPane.showMessageDialog(null, "" + res.size() );      
+     
     }
 
     @Override public void mousePressed(MouseEvent e) {}
