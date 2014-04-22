@@ -462,7 +462,6 @@ public class HUDController {
     
 
     @FXML protected void DisplayDiplomacy(ActionEvent event) {
-        System.out.println("Hello, World!");
         Stage stage = (Stage) menuBar.getScene().getWindow();
         stage.setScene(Game.getInstance().getDiploScene());
         stage.show();
