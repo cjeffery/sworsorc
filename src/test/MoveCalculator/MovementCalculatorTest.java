@@ -31,7 +31,7 @@ public class MovementCalculatorTest extends TestCase {
         String unitLocation = "0101";
         MoveableUnit testUnit = new MoveableUnit();
         
-        //testUnitPool.addUnit(playerID, null, null);
+        testUnitPool.addUnit(1, testUnit, unitLocation);
 
         // Get all unit strings from the hex.
         ArrayList<String> unitStringList = new ArrayList();
