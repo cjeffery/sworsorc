@@ -15,6 +15,7 @@ public class CombatResult extends javax.swing.JFrame {
 
     /**
      * Creates new form CombatResult
+     * Not used yet, for restreating and elimination
      */
     public CombatResult() {
         initComponents();
