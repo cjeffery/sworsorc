@@ -33,11 +33,14 @@
         {
             "name": "Dwarrows",
 	    "player":2,
-            "provinces": ["Citadel of Blood"],
+            "provinces": ["Ithilgil"],
             "setupOrder": 2,
             "moveOrder": 2,
             "units": {
-              "Bow":2
+              "Bow":2,
+              "DinosaurLegion":4,
+              "Zeppelin":2,
+              "RocRider":25
             },
             
             "characters": [
