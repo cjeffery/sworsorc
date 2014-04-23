@@ -19,7 +19,7 @@ import Spells.PL_7.*;
 
 /**
  *
- * @author 张涛
+ * @author Tao Zhang
  */
 public class CastSpell{
 
@@ -43,7 +43,7 @@ public class CastSpell{
                 Force_Wall force_wall = new Force_Wall();
                 break;
             case "Conjure Zombie Infantry":
-                C_Z_I c_z_i = new C_Z_I();
+                C_Z_I c_z_i = new C_Z_I(character);
                 break;
             // ======================
             // PL_2

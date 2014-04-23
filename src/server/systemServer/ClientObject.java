@@ -222,7 +222,8 @@ public class ClientObject {
                         }
                         else {
 
-                            System.out.println("Client " + handle + " requested to start game in lobby " + currentLobby.getName());
+                            System.out.println("Client " + handle + 
+                                    " requested to start game in lobby " + currentLobby.getName());
 
                             currentLobby.beginGame();
                             currentLobby.sendToEntireLobby(MessageUtils.makeGameBegunMessage());
@@ -232,10 +233,11 @@ public class ClientObject {
                         //client asks to create new lobby, and provided name
 
                         String requestedLobbyName = message.get(1);
-                        System.out.println("Received request to create lobby: " + requestedLobbyName);
+                        System.out.println("Received request to create lobby: " 
+                                + requestedLobbyName);
 
-                        if (NetworkServer.canCreateNewLobby(requestedLobbyName)) {
-                            NetworkServer.createNewLobby(message.get(1));
+                        if (NetworkServer.createNewLobby(message.get(1))) {
+                            
                             NetworkServer.joinLobby(message.get(1), ClientObject.this);
                             MessageUtils.sendMessage(writer,
                                     MessageUtils.makeNewLobbyRequestAcceptedMessage());
@@ -246,11 +248,12 @@ public class ClientObject {
 
                     } else if (TAG.equals(MessageUtils.REQUEST_LOBBY_INFO)) {
                         //client asks to create new lobby, and provided name
-                        //System.out.println("Received request to create lobby: "+ message.get(1));
                         //Send current lobbies to client:
-                        for (Lobby lobby : NetworkServer.lobbies) {
+                        // TODO: more specific info, sepearate messages
+                        List<String> lobbyNames = NetworkServer.getLobbyNames();
+                        for (String lobby : lobbyNames) {
                             MessageUtils.sendMessage(writer,
-                                    MessageUtils.makeLobbyInfoMessage(lobby.getName(), lobby.getUserNames()));
+                                    MessageUtils.makeLobbyInfoMessage(lobby, NetworkServer.getLobbyUsers(lobby) ));
                         }
 
                     } else if (TAG.equals(MessageUtils.JOIN_LOBBY_REQUEST)) {
@@ -266,7 +269,8 @@ public class ClientObject {
                     } else if (TAG.equals(MessageUtils.SEND_HANDLE)) {
                         //client has sent us their new handle:
                         handle = message.get(1);
-                        System.out.println("Assigning handle " + handle + " to client " + clientID);
+                        System.out.println("Assigning handle " + handle 
+                                + " to client " + clientID);
 
                         NetworkServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
 
@@ -277,7 +281,8 @@ public class ClientObject {
                     } else if (TAG.equals(MessageUtils.YIELD_TURN)) {
                         //client has sent us their new handle:
                         //handle = message.get(1);
-                        System.out.println("Client " + handle + " (id  " + clientID + " ) yielded turn");
+                        System.out.println("Client " + handle 
+                                + " (id  " + clientID + " ) yielded turn");
 
                         
                         if (currentLobby == null) {

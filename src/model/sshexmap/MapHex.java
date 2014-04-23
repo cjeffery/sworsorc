@@ -421,7 +421,8 @@ public class MapHex extends Hex{
     }
     
     /**
-     * helper function around UnitPool. HEY KINDA LIKE PART OF A FASCADE :D
+     * helper function around UnitPool.
+     * HEY KINDA LIKE PART OF A FAÇADE (Or "Facade" if you hate French) :D :D :D
      * See documentation for getUnitsInHex in UnitPool.java
      * (or write it if it doesn't exist)
      * @return arraylist of Unit IDs in the current hex
@@ -431,7 +432,8 @@ public class MapHex extends Hex{
     }
     
     /**
-     * helper function around UnitPool. HEY KINDA LIKE PART OF A FASCADE :D
+     * helper function around UnitPool.
+     * HEY KINDA LIKE PART OF A FAÇADE (Or "Facade" if you hate French) :D :D :D
      * See documentation for getUnit in UnitPool.java
      * (or write it if it doesn't exist)
      * @return arraylist of Unis in the current hex

@@ -24,10 +24,17 @@ import javax.swing.JTextField;
 public final class Character extends MoveableUnit{
     protected String  Name;
     // a character's magic power level may differ from his average MagicPL
-    protected int     MagicPL;
-    protected int     MagicPotential;
+    protected int MagicPL;
+    protected int MagicPotential;
+    protected int magicProfile;
+    protected int magicResistance;
     protected double  CurrentManna;
     protected Spell_Book spellBook;
+    protected MagicColor magicColor;
+    protected int leadership;
+    protected int diplomacy;
+    
+ 
     
     //public int CurrentHex;
     
@@ -57,6 +64,9 @@ public final class Character extends MoveableUnit{
         spellBook.getSpellBook();
     }
     
+    public boolean cheackManna(int x){
+        return CurrentManna >= x;
+    }
     public void CostManna(double mc){
         CurrentManna -= mc;
     }

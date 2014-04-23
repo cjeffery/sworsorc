@@ -36,6 +36,15 @@ public class MovementCalculator
      * to be filled (by reference) during the recursive calls of this method. 
      * The ArrayList will (after final return) hold all valid hex moves for the 
      * moving unit, starting from the currentHex. (\/)..(;,,,;)..(\/)
+     * 
+     * Also, see MapHex.java comments (approx. line 320) for the hex edge 
+     * integer numbering scheme. For quick reference, the scheme is:
+     * 
+     *                     1     // North is 1
+     *                  2     0  // North-west is 2, North-East is 0
+     *                  3     5  // South-West is 3, South-East is 5
+     *                     4     // South is 4.
+     * 
      * @param movingUnit - the unit to be moved 
      * @param currentHex - the current hex location of the moving unit
      * @param moveAllowance - the unit's movement allowance.

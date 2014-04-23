@@ -155,7 +155,7 @@ class DiplomacyMap #529292 {
 }
 
 class DiplomacyHex #529292 {
--boolean playerHex, neturalHex
+-boolean playerHex, neutralHex
 +public DiplomacyHex(String id, String northHexID, String northEastHexID, 
                             String southEastHexID, String southHexID, String southWestHexID, 
                             String northWestHexID, String specialHexCode)
@@ -163,9 +163,9 @@ class DiplomacyHex #529292 {
                             String southEastHexID, String southHexID, String southWestHexID, 
                             String northWestHexID, String specialHexCode)
 -SetPlayerHex()
--SetNeturalHex()
+-SetNeutralHex()
 +GetIsPlayerHex() : boolean 
-+GetIsNeturalHex() : boolean 
++GetIsNeutralHex() : boolean 
 }
 
 @enduml

@@ -7,18 +7,18 @@
 
 package systemServer;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import junit.framework.TestCase;
 
 /**
  * Unit test for the Network Client
- * <p>
- * Currently very rudimentary, will be making it more through and robust for the next week
+ * 
  * @author Christopher Goes
  */
 public class NetworkClientTest extends TestCase {
-    
-    public NetworkClient instance = null;
 
     public NetworkClientTest(String testName) {
         super(testName);
@@ -27,49 +27,41 @@ public class NetworkClientTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        NetworkServer.main(null);
+        NetworkServer.main(null); // setup a test server
         
     }
     
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        NetworkServer.stopServer();
+        NetworkServer.stopServer(); // shutdown the test server
         
     }
 
-    /**
-     * Test of connect method, of class NetworkClient.
-     */
-    public void testConnect() {
-        System.out.println("connect() test");           
-        assertTrue(instance.connect());
-    }
+    public void testCommands() {
+        String inputline;
+        String tempfile;
 
-    /**
-     * Test of startClient method, of class NetworkClient.
-     */
-    public void testStartClient() {
-        System.out.println("start");
-        instance.startClient();
-    }
+        //tempfile = dir + File.separator + "src" + File.separator + "server" + File.separator + helpfile;
+        tempfile = "C:\\Users\\Tehlizard\\Documents\\NetBeansProjects\\sworsorc\\src\\test\\test_commands.txt";
+        
+        try {
+            BufferedReader input = new BufferedReader(new FileReader(tempfile));
 
-    /**
-     * Test of runClient method, of class NetworkClient.
-     */
-    public void testRunClient() {
-        System.out.println("runClient");
-        //instance.runClient();
-    }
-
-    /**
-     * Test of main method, of class NetworkClient.
-     */
-    public void testMain() {
-        System.out.println("main");
-        String[] args = null;
-        NetworkClient.main(args); // all my code for command line testing is gone now...
-        // All gone....
+            try {
+                while ((inputline = input.readLine()) != null) {
+                    System.out.println(inputline); // Possible errors: newlines, whitespace, etc
+                    assertTrue(NetworkClient.testCommand(inputline)); // Test the command
+                }
+            } catch (IOException ex) {
+                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                ex.printStackTrace();
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + tempfile + "\nException: " + e);
+        }
+        
     }
     
     
@@ -81,8 +73,8 @@ public class NetworkClientTest extends TestCase {
      * maybe even NetworkServer, and catch any outright exceptions/crashes.
      */
     public void testMessageDriver(){
-        NetworkClient.endTurn();
-        NetworkClient.sendChatMessage("Chatter chatter!");
+        //NetworkClient.endTurn();
+        //NetworkClient.sendChatMessage("Chatter chatter!");
         //other messages here!
     }
     

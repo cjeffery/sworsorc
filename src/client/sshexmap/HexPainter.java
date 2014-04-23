@@ -335,7 +335,7 @@ public class HexPainter {
             g2.setColor( Color.BLACK );
             g2.drawString(s, (int)(width / 2), (int)(height / 2));
         }
-        else if(h.GetIsNeturalHex()) {
+        else if(h.GetIsNeutralHex()) {
             g2.setColor( Color.RED );
             g2.fill(hexMask);
             g2.setColor( Color.BLACK );

@@ -13,7 +13,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
-import mainswordsorcery.Game;
 
 /**
  * The Infamous Network Client, handles communication to/from Network Server
@@ -46,11 +45,41 @@ public class NetworkClient {
     
     private static ClientThread clientThread;
     
-    public static String lastMessage;
+    private static String lastMessage;
+    
+    // Until we have a working HUD reference
+    private static boolean hudWorking = false;
 
     //private Conductor jarvis; // Our conductor object
 
     /* PUBLIC METHODS */
+    
+    /**
+     * Startup of NetworkClient
+     * <p>
+     * Starts local streams, connects to server, and makes the connection live
+     * @return True if started OK, False if connection failed
+     */
+    public static boolean initializeClient() {
+        configureSettings("netclient_settings.txt"); // default filename
+        startLocalStreams();
+        return connect() ? startConnection() : false;     
+    }
+    
+    /**
+     * Startup of NetworkClient
+     * Starts local streams, connects to server, and makes the connection live
+     * 
+     * @param filename Name of Network Settings file
+     * @return True if started OK, False if connection failed
+     */
+    public static boolean initializeClient( String filename ) {
+        configureSettings(filename);
+        startLocalStreams();
+        return connect() ? startConnection() : false;     
+
+    }
+    
     /**
      * Creates a new connection to the server, call this before
      * {@link #startClient startClient()}
@@ -76,10 +105,9 @@ public class NetworkClient {
      * @author Christopher Goes
      * @return boolean True if successful, false if runtime error/exception
      */
-    public static boolean startClient() {
+    private static boolean startConnection() {
 
         startRemoteStreams();
-        startLocalStreams();
         
         //first message is handle:
         MessageUtils.sendMessage(writer, MessageUtils.makeSendHandleMessage(username));
@@ -98,6 +126,8 @@ public class NetworkClient {
      * <p>
      * This reads from consoleIn, connect user input to that stream
      * <p>
+     * @param threaded 
+     * Set this true if running from HUD, false if testing through console input
      * @author Christopher Goes
      */
     public static void runClient(boolean threaded) {
@@ -159,7 +189,8 @@ public class NetworkClient {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                Game.getInstance().hudController.postMessage(lastMessage);
+                //Game.getInstance().hudController.postMessage(lastMessage);
+                // TODO: Broken reference to hudController
             }
         });
     }
@@ -176,8 +207,16 @@ public class NetworkClient {
     public static void endTurn(){
         MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
     }
+    
+    public static boolean testCommand( String command ) {
+        return processInput(command);
+    }
 
     /* GETTERS/SETTERS */
+    /**
+     * Sets IPv4 address of remote Server
+     * @param sName 
+     */
     public static void setServerName(String sName) {
         if (sName == null || sName.isEmpty()) {
             System.err.println("Invalid server name!");
@@ -186,6 +225,10 @@ public class NetworkClient {
         }
     }
 
+    /**
+     * Sets port of remote Server
+     * @param sPort 
+     */
     public static void setServerPort(int sPort) {
         if (sPort < 1024) {
             System.err.println("Invalid port!");
@@ -194,6 +237,10 @@ public class NetworkClient {
         }
     }
 
+    /**
+     * Sets user Handle/Username
+     * @param uName 
+     */
     public static void setUsername(String uName) {
         if (uName == null || uName.isEmpty()) {
             System.err.println("Invalid server name!");
@@ -202,14 +249,26 @@ public class NetworkClient {
         }
     }
 
+    /**
+     * Gets IPv4 address of remote Server
+     * @return 
+     */
     public static String getServerName() {
         return serverName;
     }
 
+    /**
+     * Gets port of remote Server
+     * @return 
+     */
     public static int getServerPort() {
         return port;
     }
 
+    /**
+     * Gets user Handle/Username
+     * @return 
+     */
     public static String getUsername() {
         return username;
     }
@@ -505,8 +564,12 @@ public class NetworkClient {
      * @author Christopher Goes
      */
     private static void startLocalStreams() {
-        consoleIn = new BufferedReader(new InputStreamReader(System.in));
-        consoleOut = new PrintWriter(System.out, true);
+        if( hudWorking ) {
+            // HUD-y stuff here
+        } else {
+            consoleIn = new BufferedReader(new InputStreamReader(System.in));
+            consoleOut = new PrintWriter(System.out, true);
+        }
     }
 
     /**
@@ -598,7 +661,7 @@ public class NetworkClient {
                 consoleOut.print("Attempting to reconnect...");
                 if (connect()) {
                     consoleOut.println("Successfully reconnected!");
-                    startClient();
+                    startConnection();
 
                 } else {
                     consoleOut.println("Reconnect failed");
@@ -652,11 +715,13 @@ public class NetworkClient {
      * @param message Message to write
      */
     private static void sendMessage(String message) {
+ 
         List<String> temp = new ArrayList<>();
         temp.add(message);
         MessageUtils.sendMessage(writer, temp);
+            
     }
-
+      
     /**
      * Prints list of commands and what they do from a text file
      * <p>
@@ -699,23 +764,29 @@ public class NetworkClient {
      */
     private static Socket connectToServer(String sName, int serverPort) throws IOException {
         Socket tempsock = null;
-        System.out.println("Connecting! Please Wait!");
-        Game.getInstance().hudController.postMessage("Connecting! Please Wait!");
+        consoleOut.print("Connecting! Please Wait...");
         try {
             tempsock = new Socket(sName, serverPort);
         } catch (UnknownHostException e) {
             System.err.println("Error : Unknown host!\nException: " + e);
-            Game.getInstance().hudController.postMessage("Error : Unknown host!\nException: " + e);
         } catch (ConnectException e) {
             System.err.println("Error : Connection Refused!\nException: " + e);
-            Game.getInstance().hudController.postMessage("Error : Connection Refused!\nException: " + e);
         }
-        Game.getInstance().hudController.postMessage("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
-        System.out.println("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort());
+        consoleOut.println("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort() + "!" );
         return tempsock;
     }
 
     /* UTILITY METHODS */
+    
+    /**
+     * Set flags, variables, etc, from a file
+     * @param filename Name of Network Settings file
+     * @return True if successful, False if not
+     */
+    private static boolean configureSettings( String filename ) {
+        return true; // TODO: Stub method
+    }
+    
     /**
      * Checks if client is connected to server
      * <p>
@@ -733,7 +804,7 @@ public class NetworkClient {
      */
     private static void disconnectFromServer() {
         consoleOut.print("Disconnecting from server...");
-        Game.getInstance().hudController.postMessage("Disconnecting from server...");
+        
         if (isConnected()) {
             MessageUtils.sendMessage(writer, MessageUtils.makeDisconnectRequestMessage());
             writer.flush();
@@ -742,7 +813,6 @@ public class NetworkClient {
         killRemoteStreams();
         killSocket();
         consoleOut.println("Disconnected!");
-        Game.getInstance().hudController.postMessage("Disconnect!");
     }
 
     /**
@@ -809,14 +879,10 @@ public class NetworkClient {
         NetworkClient.setServerPort(25565);
         NetworkClient.setUsername(uName);
 
-        if (NetworkClient.connect()) {
-            if (NetworkClient.startClient()) {
-                NetworkClient.runClient(false);
-            } else {
-                System.err.println("Client failed to start from main!");
-            }
+        if ( NetworkClient.initializeClient() ) {
+            NetworkClient.runClient(false); // command line test
         } else {
-            System.err.println("Client failed to connect from main!");
+            System.err.println("Client failed to start from main!");
         }
     } // end main
 

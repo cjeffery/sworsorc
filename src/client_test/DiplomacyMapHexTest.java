@@ -51,7 +51,7 @@ public class DiplomacyMapHexTest {
         result = hexagon1.GetIsPlayerHex();
         assertFalse(result);
         
-        result = hexagon1.GetIsNeturalHex();
+        result = hexagon1.GetIsNeutralHex();
         assertFalse(result);
                 
         // hexagon2
@@ -80,7 +80,7 @@ public class DiplomacyMapHexTest {
         result = hexagon2.GetIsPlayerHex();
         assertTrue(result);
         
-        result = hexagon2.GetIsNeturalHex();
+        result = hexagon2.GetIsNeutralHex();
         assertFalse(result);
         
         //hexagon3
@@ -109,7 +109,7 @@ public class DiplomacyMapHexTest {
         result = hexagon3.GetIsPlayerHex();
         assertFalse(result);
         
-        result = hexagon3.GetIsNeturalHex();
+        result = hexagon3.GetIsNeutralHex();
         assertTrue(result);        
         
         System.out.println("DiplomacyMapHexTest Fineshed");

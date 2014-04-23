@@ -17,3 +17,5 @@ nbproject/project.xml
 /src/Implement_Spells 下午11.03.46/build/
 /src/Implement_Spells 下午11.03.46/dist/
 /src/Implement_Spells 下午11.03.46/nbproject/private/
+jacoco*
+.jacocoverage*
