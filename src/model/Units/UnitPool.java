@@ -48,7 +48,8 @@ public class UnitPool {
     private SortedMap<String, ArrayList<String>> unitMove = 
             Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());;
     private Object[] options = {"Yes","No",};
-   
+    private boolean safeTeleport;
+    
     private static UnitPool INSTANCE;
     
     private UnitPool() {
@@ -63,6 +64,23 @@ public class UnitPool {
         if (INSTANCE == null)
             INSTANCE = new UnitPool();
         return INSTANCE;
+    }
+    
+    /**
+     * Used with the teleport spells;
+     * 
+     * @return 
+     */
+    public boolean getSafeTeleport(){
+        return this.safeTeleport;
+    }
+    
+    /**
+     * Used in unit move. 
+     * @param teleportIsSafe 
+     */
+    public void setSafeTeleport( boolean teleportIsSafe){
+        this.safeTeleport = teleportIsSafe;
     }
     
     /**
