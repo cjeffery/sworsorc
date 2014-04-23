@@ -111,31 +111,38 @@ public class UnitPainter {
             return new Color(0xff, 0xff, 0xff, a);
         }
         switch(unit.getNation()) {
-            case Conjured:         c = new Color(0xff, 0x43, 0x46, a); //red
-            //case Convivian:
-            //case CorfluCultist:
-            case Cronk:            c = new Color(0xff, 0xa5, 0x00, a); //orange
-                
-            //dark green
-            case Elven:            c = new Color(0x3f, 0x77, 0x50, a);
-                
-            //case Goblin:
-            case ImperialArmy:     c = new Color(0x46, 0x7e, 0xd1, a); //blue
-            //case IndependentHuman:
-            //case Krasnian:
-            //case Mercenary:
-            case ORC:              c = new Color(0xfd, 0xd2, 0x2e, a); //yellow
-            //case SpiderFolk:
-                
-            //light green
-            case SwampCreature:    c = new Color(0xae, 0xb3, 0x5f, a);
-                
-            //case WhiteORC:
-            //case Zirkastian:
+            case Conjured:
+                c = new Color(0xff, 0x43, 0x46, a); //red
+                break;                
+            //case Convivian:                
+            //case CorfluCultist:                
+            case Cronk:
+                c = new Color(0xff, 0xa5, 0x00, a); //orange
+                break;                
+            case Elven:
+                c = new Color(0x3f, 0x77, 0x50, a); //dark green
+                break;                
+            //case Goblin:                
+            case ImperialArmy:
+                c = new Color(0x46, 0x7e, 0xd1, a); //blue
+                break;                
+            //case IndependentHuman:                
+            //case Krasnian:                
+            //case Mercenary:                
+            case ORC:                
+                c = new Color(0xfd, 0xd2, 0x2e, a); //yellow
+                break;                
+            //case SpiderFolk:                
+            case SwampCreature:
+                c = new Color(0xae, 0xb3, 0x5f, a); //light green
+                break;                
+            //case WhiteORC:                
+            //case Zirkastian:                
             default:
                 ; //System.out.println("UnitPainter.java - unhandled nation");
-            case none:             c = new Color(0xff, 0xff, 0xff, a); //white 
-
+            case none:
+                c = new Color(0xff, 0xff, 0xff, a); //white 
+                break;
         }
         return c;
     }
