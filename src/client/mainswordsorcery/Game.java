@@ -26,6 +26,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
+import sscharts.ScenarioConfigurationReader;
 
 /**
  *
@@ -194,14 +195,9 @@ public class Game extends Application {
         unitPool = UnitPool.getInstance();
         unitPool.clear();
         if(testScenario){
-            ArmyUnit bow = new Bow();
-            ArmyUnit lightsword = new LightSword();
-            ArmyUnit pike = new PikeMan();
-            //add units to unit pool
-            pike.setRace(Race.Human);
-            lightsword.setRace(Race.Elves);
-            unitPool.addUnit(0, pike, "0606");
-            unitPool.addUnit(1, lightsword, "0607");
+            ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+            reader.populatePool();
+            
             //scenario loading complete
             scenarioLoaded = true;
         }

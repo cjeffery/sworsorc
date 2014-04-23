@@ -16,6 +16,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
+import sshexmap.Provinces;
+
 
 /**
  * This class reads a scenario configuration file from a configuration JSON 
@@ -104,8 +106,10 @@ public class ScenarioConfigurationReader {
             int player = getControllingPlayer(nation);
             String unitType;
             String objectType;
+            String randHexID;
             int unitQuant;
             ArmyUnit unit;
+            List<String> hisProvinces = getProvinces(nation);
             // iterate through the map of this player's units
             Map<String, Integer> playerUnits = getUnits(nation);
             Iterator it = playerUnits.entrySet().iterator();
@@ -117,7 +121,9 @@ public class ScenarioConfigurationReader {
                 for (int i=0; i<unitQuant; i++) {
                     unit = (ArmyUnit) CreateObject(objectType);
                     unit.setRace(nation);
-                    pool.addUnit(player, unit,"0606"); //TODO add location : not always 0606
+                    // TODO: look for conflicts and stacks of too many
+                    randHexID = Provinces.getRandHex(hisProvinces);
+                    pool.addUnit(player, unit,randHexID);
                 }
                 it.remove();
             }

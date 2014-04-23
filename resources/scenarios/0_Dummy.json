@@ -13,12 +13,14 @@
         {
             "name": "Elves",
 	    "player":1,
-            "provinces": ["Vynar","Nattily Woods"],
+            "provinces": ["Intas"],
             "setupOrder":1,
             "moveOrder":1,
             
             "units": {
-              "HorseArcher":2
+              "HorseArcher":2,
+              "Bow":2,
+              "PikeMan":2
             },
             
             "characters": [
@@ -31,7 +33,7 @@
         {
             "name": "Dwarrows",
 	    "player":2,
-            "provinces": ["The Empire"],
+            "provinces": ["Citadel of Blood"],
             "setupOrder": 2,
             "moveOrder": 2,
             "units": {
