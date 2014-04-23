@@ -43,7 +43,7 @@ public class MovementCalculator
      *                     1     // North is 1
      *                  2     0  // North-west is 2, North-East is 0
      *                  3     5  // South-West is 3, South-East is 1
-     *                     4     // South is 2.
+     *                     4     // South is 4.
      * 
      * @param movingUnit - the unit to be moved 
      * @param currentHex - the current hex location of the moving unit
