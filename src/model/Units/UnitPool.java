@@ -47,7 +47,7 @@ public class UnitPool {
             Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());
     private SortedMap<String, ArrayList<String>> unitMove = 
             Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());;
-    
+    private Object[] options = {"Yes","No",};
    
     private static UnitPool INSTANCE;
     
@@ -212,16 +212,28 @@ public class UnitPool {
              "1044".equals(unit.getLocation()) || 
              "3542".equals(unit.getLocation()) ){
             
-            if (this.teleport(unit))
-                JOptionPane.showMessageDialog(null, "Unit Teleported to hex " 
-                        + unit.getLocation() + ".");
-            else
-                JOptionPane.showMessageDialog(null, "A heard of rampaging "
-                        + "ethereal cows trampled your unit to death.\nYou "
-                        + "should inform the next of kin.");
+            int n = JOptionPane.showConfirmDialog(null,"Would you like to teleport?");
+            
+                if (n == 0);
+                    if (this.teleport(unit))
+
+
+                        //if JOptionPane.showm
+                        JOptionPane.showMessageDialog(null, "Unit Teleported to hex " 
+                                + unit.getLocation() + ".");
+
+                    else
+                        JOptionPane.showMessageDialog(null, "A heard of rampaging "
+                                + "ethereal cows trampled your unit to death.\nYou "
+                                + "should inform the next of kin.");
         }
     }
-    
+    /**
+     * Only used by the teleport method. 
+     * @param unit
+     * @param destinationHexID
+     * @param Teleport 
+     */
     private void addMove(MoveableUnit unit, String destinationHexID, boolean Teleport){
         
         // This horific looking line removes the unit from its current location.
@@ -312,7 +324,7 @@ public class UnitPool {
     }
     
     /**
-     * Given a unit ID, this method would get tat instance of a MoveableUnit class.
+     * Given a unit ID, this method would get the instance of a MoveableUnit class.
      * A unit ID is typically obtained from parsing a unit out of the 
      * getUnitsInHex method.
      * 
