@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+
+//**\UnitRender*,**\NetworkClientT*,**\Hex*Test*,**\Map*Test*,**\Scen*Test*,**\Movement*Test*
 package Units;
 
 
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import javax.swing.JOptionPane;
 
 /**
  * Unit pool tracks all the units that have been created in the game.  
@@ -70,6 +73,42 @@ public class UnitPool {
         this.addUnit(playerID, unit);
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
+    }
+    
+    /**
+     * Removes a MoveableUnit from the UnitPool.
+     * 
+     * Example:
+     * 
+     *  pool.removeUnit(getUnitsInHex("1010").get(0);
+     * 
+     * @param unit : the MoveableUnit to be removed.  
+     */
+    public void removeUnit(MoveableUnit unit){
+        int playerID, positionAtChar, positionHashChar, listSize;
+        String MovableUnitClassName;
+        ArrayList<MoveableUnit> unitList; 
+        boolean unitFound = false;
+        
+        playerID = Integer.parseInt(unit.getID().substring(0, 1));
+        positionAtChar = unit.getID().indexOf("@");
+        positionHashChar = unit.getID().indexOf("#");
+        MovableUnitClassName = unit.getID().substring(++positionHashChar, positionAtChar);
+        
+        unitList = pool.get(playerID).get(MovableUnitClassName);
+        listSize = unitList.size() - 1;
+        
+        for (int i = 0; i <= listSize && !unitFound; i++){
+            if (unitList.get(i).getID() == unit.getID()){
+                this.hexList.get(unit.getLocation()).remove(unit.getID());
+                this.unitMove.remove(unit.getID());
+                unitList.remove(i);
+                
+                unitFound = true;
+            }
+                
+        }
+        
     }
     
     /**
@@ -163,8 +202,34 @@ public class UnitPool {
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
     
-        
+        if ( unit.getLocation() == "2004" || unit.getLocation() == "0912" || unit.getLocation() == "0627" || unit.getLocation() == "3427"  || unit.getLocation()  == "1044"  || unit.getLocation() == "3542"){
+            if (this.teleport(unit))
+                JOptionPane.showMessageDialog(null, "Unit Teleported to hex " + unit.getLocation() + ".");
+            else
+                JOptionPane.showMessageDialog(null, "A heard of rampaging ethereal cows trampled your unit to death.\nYou should inform the next of kin.");
+        }
     }
+    
+    private void addMove(MoveableUnit unit, String destinationHexID, boolean Teleport){
+        
+        // This horific looking line removes the unit from its current location.
+        hexList.get(unit.getLocation()).remove(hexList.get(unit.getLocation()).indexOf(unit.getID()));
+        
+        unit.setLocation(destinationHexID);
+        this.addToHex(hexList, unit);
+        this.addToUnit(unitMove, unit);
+    
+    }
+    
+    /**
+     * Is used to update the location of all the units in a hex.
+     * 
+     * Example:
+     * addMoveStack("0101","2019");
+     * 
+     * @param StartHexID
+     * @param destinationHexID 
+     */
     
     public void addMoveStack(String StartHexID,String destinationHexID){
         MoveableUnit unit;
@@ -290,72 +355,110 @@ public class UnitPool {
         }
     }
 
+    /**
+     * Return the unit to its starting position.
+     * 
+     * 
+     * @param unitID
+     * @return 
+     */
     public String undoMove(String unitID){
         
         if (this.unitMove.get(unitID).size() > 1){
-            
-            unitMove.get(unitID).remove(unitMove.get(unitID).size() - 1);
-            this.getUnit(unitID).setLocation(unitMove.get(unitID).get(unitMove.get(unitID).size()-1));
-            
+            this.getUnit(unitID).setLocation(unitMove.get(unitID).get(0));
+            this.unitMove.get(unitID).clear();
+            this.unitMove.get(unitID).add(getUnit(unitID).getLocation());
         }
         
-        return this.unitMove.get(unitID).get(unitMove.get(unitID).size() - 1);
+        return this.unitMove.get(unitID).get(0);
     }
+    
+    /**
+     * Unsafe teleport. Risk of unit destruction.
+     * 
+     * Example:
+     * successfulTeleport = teleport(SomeUnit);
+     * 
+     * @param unit
+     * @return 
+     */
     public boolean teleport(MoveableUnit unit){
         return this.teleport(unit, false, 7);
     }
     
-    
+    /**
+     * Safe teleport used with the teleport spell.
+     * 
+     * Example:
+     *   successfulTeleport = teleport(someUnit, true, destinationPortal);
+     * (optional) or  teleport(someUnit, true, destinationPortal);
+     * 
+     * @param unit
+     * @param safeTeleport
+     * @param portalNum
+     * @return 
+     */
     public boolean teleport(MoveableUnit unit,boolean safeTeleport, int portalNum){
         String destinationHex;
         
-        if (safeTeleport){
+        if (!safeTeleport){
             Random rNum = new Random();
             portalNum = rNum.nextInt(6);
-            
+            //portalNum = 0;
             
             destinationHex = teleportDestinationLogic(portalNum);
             
             if (destinationHex == unit.getLocation()){
-//                removeUnit(unit);
+                removeUnit(unit);
                 return false;
             }
-            this.addMove(unit, destinationHex);
+            this.addMove(unit, destinationHex, true);
             return true;
         
         }
         else{
+            portalNum--;
             destinationHex = this.teleportDestinationLogic(portalNum);
-            this.addMove(unit, destinationHex);
-            return true;
-        }
-        
-        
+            if (unit.getLocation() == destinationHex )
+                return false;
+            else{
+                this.addMove(unit, destinationHex, true);
+                return true;
+            }
+        }     
     }
 
+    /**
+     * Used to get hexID from portal Number for the teleport methods.
+     * @param destinationPortal
+     * @return 
+     */
+    
     private String teleportDestinationLogic(int destinationPortal) {
         String destinationHex = "";
         switch (destinationPortal){
             case 0 :
-                destinationHex = "0101";
+                destinationHex = "2004";
                 break;
             case 1 :
-                destinationHex = "0102";
+                destinationHex = "0912";
                 break;
             case 2 :
-                destinationHex = "0103";
+                destinationHex = "0627";
                 break;
             case 3 :
-                destinationHex = "0104";
+                destinationHex = "3427";
                 break;
             case 4 :
-                destinationHex = "0105";
+                destinationHex = "1044";
                 break;
             case 5 :
-                destinationHex = "0106";
+                destinationHex = "3542";
                 break;
         }
         return destinationHex;
+    
+    
     }
     
 }
