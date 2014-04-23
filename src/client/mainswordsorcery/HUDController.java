@@ -479,7 +479,7 @@ public class HUDController {
         NetworkClient.setUsername(username);
 
         if (NetworkClient.connect()) {
-            if (NetworkClient.startClient()) {
+            if (NetworkClient.connect()) {
                 //NetworkClient.runClient(true);
                 return true;
             } else {

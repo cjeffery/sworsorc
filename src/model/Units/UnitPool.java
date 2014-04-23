@@ -40,12 +40,14 @@ import javax.swing.JOptionPane;
  */
 
 public class UnitPool {   
-    SortedMap<Integer, TreeMap<String,ArrayList<MoveableUnit>>> pool = Collections.synchronizedSortedMap(new TreeMap<Integer, TreeMap<String,ArrayList<MoveableUnit>>>());
-    //TreeMap<Integer, TreeMap<String,ArrayList<MoveableUnit>>> pool = new TreeMap(); 
-    private SortedMap<String, ArrayList<String>> hexList = Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());
-    //private TreeMap<String, ArrayList<String>> hexList = new TreeMap();
-    private SortedMap<String, ArrayList<String>> unitMove = Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());;
-    //private TreeMap<String, ArrayList<String>> unitMove = new TreeMap();
+    private SortedMap<Integer, TreeMap<String,ArrayList<MoveableUnit>>> 
+            pool = Collections.synchronizedSortedMap(new TreeMap<Integer, 
+                    TreeMap<String,ArrayList<MoveableUnit>>>());
+    private SortedMap<String, ArrayList<String>> hexList = 
+            Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());
+    private SortedMap<String, ArrayList<String>> unitMove = 
+            Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());;
+    
    
     private static UnitPool INSTANCE;
     
@@ -120,7 +122,8 @@ public class UnitPool {
      * @param unit     : an instance of some army unit  
      */
     public void addUnit(int playerId, MoveableUnit unit){
-       unit.setID(Integer.toString(playerId) + "#" + unit.toString() + "@" + Integer.toString(unit.hashCode()));
+       unit.setID(Integer.toString(playerId) + "#" + unit.toString() + 
+               "@" + Integer.toString(unit.hashCode()));
        
        
         
@@ -202,11 +205,20 @@ public class UnitPool {
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
     
-        if ( unit.getLocation() == "2004" || unit.getLocation() == "0912" || unit.getLocation() == "0627" || unit.getLocation() == "3427"  || unit.getLocation()  == "1044"  || unit.getLocation() == "3542"){
+        if ( "2004".equals(unit.getLocation()) || 
+             "0912".equals(unit.getLocation()) || 
+             "0627".equals(unit.getLocation()) || 
+             "3427".equals(unit.getLocation()) || 
+             "1044".equals(unit.getLocation()) || 
+             "3542".equals(unit.getLocation()) ){
+            
             if (this.teleport(unit))
-                JOptionPane.showMessageDialog(null, "Unit Teleported to hex " + unit.getLocation() + ".");
+                JOptionPane.showMessageDialog(null, "Unit Teleported to hex " 
+                        + unit.getLocation() + ".");
             else
-                JOptionPane.showMessageDialog(null, "A heard of rampaging ethereal cows trampled your unit to death.\nYou should inform the next of kin.");
+                JOptionPane.showMessageDialog(null, "A heard of rampaging "
+                        + "ethereal cows trampled your unit to death.\nYou "
+                        + "should inform the next of kin.");
         }
     }
     
