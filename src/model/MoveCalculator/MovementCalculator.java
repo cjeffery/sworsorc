@@ -177,14 +177,24 @@ public class MovementCalculator
         {
             return 0;
         }
-        
-        if( unitsInHex.get(0).getID().equals(movingUnit.getID()) )
-        {
-            return 1;
+        /*
+        The error is here in the .get(0) function. It is trying to get the
+        first entry of an empty list. 
+        */
+        if( unitsInHex.size() > 0) //This if is killing the exception 
+        { 
+            if( unitsInHex.get(0).getID().equals(movingUnit.getID()) )
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
         }
         else
         {
-            return -1;
+            return 0;
         }
     }
     
