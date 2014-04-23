@@ -66,6 +66,25 @@ public class MovementCalculator
             
             if( currentHex.IsVortexHex())
                 return;
+            
+            // check to see if current hex has enemy units in it
+            // if 0 then hex is empty
+            if( getUnits(currentHex, movingUnit) == 0 )
+            {
+                
+            }
+            // if 1 then hex has friendly units
+            // TODO check if there are more then 2 units
+            if( getUnits(currentHex, movingUnit) == 1 )
+            {
+                
+            }
+            // if -1 then hex has enemy units
+            if( getUnits(currentHex, movingUnit) == -1 )
+            {
+                
+            }
+            
             // Add the current hex
             if( !validHexes.contains(currentHex) )
                 validHexes.add(currentHex);
@@ -130,6 +149,33 @@ public class MovementCalculator
         {
             // do not add, do not recurse, moving here is illegal
             return;
+        }
+    }
+    /**
+     * This function checks to see if the sourceHex has enemy units in it. It 
+     * returns a 0 if the sourceHex has no units in it, 1 if it contains units
+     * but they are friendly units, and -1 if the sourceHex has enemy units.
+     * @param sourceHex
+     * @param movingUnit
+     * @return 
+     */
+    public static int getUnits(MapHex sourceHex, MoveableUnit movingUnit)
+    {
+        ArrayList<MoveableUnit> unitsInHex = new ArrayList<MoveableUnit>();
+        unitsInHex = sourceHex.getUnits();
+        
+        if( unitsInHex == null )
+        {
+            return 0;
+        }
+        
+        if( unitsInHex.get(0).getID().equals(movingUnit.getID()) )
+        {
+            return 1;
+        }
+        else
+        {
+            return -1;
         }
     }
     
