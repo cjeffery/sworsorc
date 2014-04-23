@@ -416,11 +416,11 @@ public class UnitPool {
         if (!safeTeleport){
             Random rNum = new Random();
             portalNum = rNum.nextInt(6);
-            //portalNum = 0;
+            //portalNum = 1;
             
             destinationHex = teleportDestinationLogic(portalNum);
             
-            if (destinationHex == unit.getLocation()){
+            if (destinationHex.equals(unit.getLocation())){
                 removeUnit(unit);
                 return false;
             }
