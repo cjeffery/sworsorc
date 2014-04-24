@@ -20,8 +20,9 @@ import sshexmap.Provinces;
 
 
 /**
- * This class reads a scenario configuration file from a configuration JSON 
- * file. The class consists of many getters, an ASCII stdout print function, 
+ * This singleton class contains the data pertaining to a particular scenario, 
+ * which it reads from a scenario configuration JSON. 
+ * The class consists of many getters, an ASCII stdout print function, 
  * and a function to populate a UnitPool from the class's unit hash.
  * <p>
  * Each method gives its own author. In some cases, I left Wayne Fuhrman as 
@@ -34,42 +35,44 @@ import sshexmap.Provinces;
  * @author Tyler Jaszkowiak
  */
 
-public class ScenarioConfigurationReader {
+public class Scenario {
     
-     List<String> nationNames;
-     List<String> neutralNames;
+    private static Scenario instance;
+    
+     static List<String> nationNames;
+     static List<String> neutralNames;
 
     //Information storage for each nation:
      
     //The player nation or neutral name is the key for these hashmaps
-     Map<String, Integer> controllingPlayers;   //nation -> controllingPlayer
-     Map<String, Integer> setupOrders;          //nation -> order
-     Map<String, Integer> moveOrders;           //nation -> order
-     Map<String, List<String>> provinces;       //nation -> list of province names
-     Map<String, List<String>> characters;      //nation -> list of character names
-     Map<String, Map<String, Integer>> units;   //nation -> (unitName -> unitCount)
-     Map<String, String> replacements;          //nation -> description of replacement
-     Map<String, String> reinforcements;        //nation -> description of reinforcements
+     static Map<String, Integer> controllingPlayers;   //nation -> controllingPlayer
+     static Map<String, Integer> setupOrders;          //nation -> order
+     static Map<String, Integer> moveOrders;           //nation -> order
+     static Map<String, List<String>> provinces;       //nation -> list of province names
+     static Map<String, List<String>> characters;      //nation -> list of character names
+     static Map<String, Map<String, Integer>> units;   //nation -> (unitName -> unitCount)
+     static Map<String, String> replacements;          //nation -> description of replacement
+     static Map<String, String> reinforcements;        //nation -> description of reinforcements
 
     //Diplomacy stuff:
-     Map<String, String> leaningTowards;
-     Map<String, Integer> leaningAmount;
-     Map<String, Boolean> acceptsSacrifice;
+     static Map<String, String> leaningTowards;
+     static Map<String, Integer> leaningAmount;
+     static Map<String, Boolean> acceptsSacrifice;
 
     //General game information:
-     String scenarioName;
-     int numberOfPlayers;
-     int gameLength; //Number of game turns
-     int blueSunStart;
+     static String scenarioName;
+     static int numberOfPlayers;
+     static int gameLength; //Number of game turns
+     static int blueSunStart;
      
 
     /**
      * This method prints to standard out an ASCII representation of the data
-     * contained in the {@link ScenarioConfigurationReader} class.
+     * contained in the {@link Scenario} class.
      * 
      * @author Wayne Fuhrman
      */
-    public void print() {
+    public static void print() {
         for (String nation : getNationNames()) {
             System.out.println();
             System.out.println("Nation: " + nation);
@@ -101,7 +104,7 @@ public class ScenarioConfigurationReader {
      * @author Tyler Jaszkowiak
      * @see UnitPool
      */
-    public void populatePool() {
+    public static void populatePool() {
         UnitPool pool = UnitPool.getInstance();
         for (String nation : getNationNames() ) {
             int player = getControllingPlayer(nation);
@@ -131,6 +134,10 @@ public class ScenarioConfigurationReader {
         }
     }
     
+    private Scenario() {
+        
+    }
+    
     /**
      * This constructor for {@link ScenarioConfigurationReader} is intended to 
      * read the configuration given by the specified file and use it to 
@@ -143,7 +150,8 @@ public class ScenarioConfigurationReader {
      * @exception FileNotFoundException if the scenario config file was not found
      * @exception IOException if the scenario config file could not be read from
      */
-    public ScenarioConfigurationReader(String configurationFileName) {
+    public static void Initialize(String configurationFileName) {
+        
         //Attempts to read and store information from the given file.
 
         JSONParser parser = new JSONParser();
@@ -278,12 +286,22 @@ public class ScenarioConfigurationReader {
                 }
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ScenarioConfigurationReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Scenario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ScenarioConfigurationReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Scenario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-             Logger.getLogger(ScenarioConfigurationReader.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(Scenario.class.getName()).log(Level.SEVERE, null, ex);
          }
+    }
+    
+    /**
+     * Get the singleton instance of the Scenario
+     * 
+     * @author Tyler Jaszkowiak
+     * @return the scenario
+     */
+    public static Scenario getInstance() {
+        return instance;
     }
     
     
@@ -293,7 +311,7 @@ public class ScenarioConfigurationReader {
       * @author Wayne Fuhrman
       * @return the scenario's name as a String
       */
-    public String getScenarioName() {
+    public static String getScenarioName() {
         return scenarioName;
     }
 
@@ -303,7 +321,7 @@ public class ScenarioConfigurationReader {
       * @author Wayne Fuhrman
       * @return the number of players in the scenario
       */
-    public int getNumberOfPlayers() {
+    public static int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
@@ -313,7 +331,7 @@ public class ScenarioConfigurationReader {
       * @author Wayne Fuhrman
       * @return the game length of the scenario
       */
-    public int getGameLength() {
+    public static int getGameLength() {
         return gameLength;
     }
     
@@ -323,7 +341,7 @@ public class ScenarioConfigurationReader {
      * @author Tyler Jaszkowiak
      * @return the blue sun's starting position
      */
-    public int getBlueSunStart() {
+    public static int getBlueSunStart() {
         return blueSunStart;
     }
     
@@ -333,7 +351,7 @@ public class ScenarioConfigurationReader {
      * @author Tyler Jaszkowiak
      * @return a list of nations in the scenario
      */
-    public List<String> getNationNames() {
+    public static List<String> getNationNames() {
         return nationNames;
     }
     
@@ -344,7 +362,7 @@ public class ScenarioConfigurationReader {
       * @param name the name of the nation in question
       * @return the number of the player controlling the nation
       */
-    public int getControllingPlayer(String name) {
+    public static int getControllingPlayer(String name) {
         return controllingPlayers.get(name);
     }
 
@@ -354,7 +372,7 @@ public class ScenarioConfigurationReader {
      * @author Wayne Fuhrman
      * @return a list of neutrals in the scenario
      */
-    public List<String> getNeutralNames() {
+    public static List<String> getNeutralNames() {
         return neutralNames;
     }
 
@@ -363,7 +381,7 @@ public class ScenarioConfigurationReader {
      * @param name name of the nation being queried about
      * @return the setup order of the nation in question
      */
-    public Integer getSetupOrder(String name) {
+    public static Integer getSetupOrder(String name) {
         return setupOrders.get(name);
     }
 
@@ -373,7 +391,7 @@ public class ScenarioConfigurationReader {
      * @param name name of the nation being queried about
      * @return the setup order of the nation in question
      */
-    public Integer getMoveOrder(String name) {
+    public static Integer getMoveOrder(String name) {
         return moveOrders.get(name);
     }
 
@@ -383,7 +401,7 @@ public class ScenarioConfigurationReader {
      * @param name name of the nation in question
      * @return a list of the names of these provinces TODO: find a Province object?
      */
-    public List<String> getProvinces(String name) {
+    public static List<String> getProvinces(String name) {
         return provinces.get(name);
     }
 
@@ -395,7 +413,7 @@ public class ScenarioConfigurationReader {
      * @param name the name of the nation in question
      * @return a list of names of the characters in the nation
      */
-    public List<String> getCharacters(String name) {
+    public static List<String> getCharacters(String name) {
         return characters.get(name);
     }
 
@@ -407,27 +425,27 @@ public class ScenarioConfigurationReader {
      * @param name the name of the nation in question
      * @return a list of names of the units in the nation
      */
-    public Map<String, Integer> getUnits(String name) {
+    public static Map<String, Integer> getUnits(String name) {
         return units.get(name);
     }
 
-    public String  getReplacement(String name) {
+    public static String  getReplacement(String name) {
         return replacements.get(name);
     }
     
-    public String getReinforcement(String name) {
+    public static String getReinforcement(String name) {
         return reinforcements.get(name);
     }
 
-    public String getLeaningToward(String name) {
+    public static String getLeaningToward(String name) {
         return leaningTowards.get(name);
     }
 
-    public Integer getLeaningAmount(String name) {
+    public static Integer getLeaningAmount(String name) {
         return leaningAmount.get(name);
     }
 
-    public Boolean acceptsSacrifice(String name) {
+    public static Boolean acceptsSacrifice(String name) {
         return acceptsSacrifice.get(name);
     }
 
@@ -439,8 +457,8 @@ public class ScenarioConfigurationReader {
      * @param args there should be no command line args
      */
     public static void main(String[] args) {
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
-        reader.populatePool();
-        reader.print();
+        Initialize("resources/scenarios/0_Dummy.json");
+        populatePool();
+        print();
     }
 }

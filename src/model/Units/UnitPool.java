@@ -54,7 +54,7 @@ public class UnitPool {
     
     private UnitPool() {
     
-}
+    }
     /**
      * This creates or returns the unit pool singleton.
      * 
