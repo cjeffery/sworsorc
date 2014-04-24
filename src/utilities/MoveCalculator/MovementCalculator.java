@@ -5,7 +5,7 @@
 package MoveCalculator;
 
 import Units.MoveableUnit;
-import java.util.ArrayList;
+import java.util.*;
 import sshexmap.MapHex;
 import ssterrain.HexEdge;
 import ssterrain.HexEdgeType;
@@ -30,6 +30,10 @@ public class MovementCalculator
         throw new AssertionError();
     }
     
+    /* movement points cache for current movement calculation 
+       keeps track of best path to target hex */
+    static HashMap<MapHex, Double> allowance_cache;
+    
     /** 
      * This method returns void, but takes an empty ArrayList of MapHex objects
      * to be filled (by reference) during the recursive calls of this method. 
@@ -53,6 +57,25 @@ public class MovementCalculator
     public static void getValidMoves(MoveableUnit movingUnit, MapHex currentHex,
             double moveAllowance, ArrayList<MapHex> validHexes) 
     {
+        //clear the cache, at the start of a new movement.
+        if(validHexes.isEmpty()) {
+            allowance_cache = new HashMap<MapHex, Double>();
+        }
+        /* check to see if there's already a faster path in the cache
+           if so no point in recursing.
+           if not, add the curret path as the fastest path
+        */
+        Double allowance;
+        allowance = allowance_cache.putIfAbsent(currentHex, moveAllowance);
+        if(allowance != null) {
+            if(allowance >= moveAllowance)
+                return;
+            else
+                allowance_cache.put(currentHex, moveAllowance);
+        }
+        
+        System.out.println("size: " + validHexes.size());
+
         int edgeSignal = 0;
         double moveCost = 0;
         TerrainType destinationTerrainType;
