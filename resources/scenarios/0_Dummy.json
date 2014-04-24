@@ -2,12 +2,8 @@
     "scenarioName": "The Dummy Scenario",
     "gameLength":3,
     "numberOfPlayers":2,
+    "blueSunStart":3,
     
-    "sunTrackSetting" : {
-        "yellow":1,
-        "blue":"F",
-        "red":"L"
-    },
     
     "nations": [
         {
@@ -18,9 +14,10 @@
             "moveOrder":1,
             
             "units": {
-              "HorseArcher":2,
-              "Bow":2,
-              "PikeMan":2
+              "HorseArcher":4,
+              "Bow":4,
+              "PikeMan":4,
+              "LightSword":4
             },
             
             "characters": [
@@ -33,14 +30,13 @@
         {
             "name": "Dwarrows",
 	    "player":2,
-            "provinces": ["Ithilgil"],
+            "provinces": ["Ithilgil","Graumthog"],
             "setupOrder": 2,
             "moveOrder": 2,
             "units": {
               "Bow":2,
-              "DinosaurLegion":4,
-              "Zeppelin":2,
-              "RocRider":25
+              "HeavyAxe":5,
+              "HeavySword":5
             },
             
             "characters": [

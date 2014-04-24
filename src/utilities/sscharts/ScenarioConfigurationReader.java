@@ -60,6 +60,7 @@ public class ScenarioConfigurationReader {
      String scenarioName;
      int numberOfPlayers;
      int gameLength; //Number of game turns
+     int blueSunStart;
      
 
     /**
@@ -172,6 +173,7 @@ public class ScenarioConfigurationReader {
             scenarioName = (String) jsonObject.get("scenarioName");
             numberOfPlayers = ((Long) jsonObject.get("numberOfPlayers")).intValue();
             gameLength = ((Long) jsonObject.get("gameLength")).intValue();
+            blueSunStart = ((Long) jsonObject.get("blueSunStart")).intValue();
 
             //We'll iterate and grab info for each human controlled nation:
             JSONArray JSONNationArray = (JSONArray) jsonObject.get("nations");
@@ -314,6 +316,17 @@ public class ScenarioConfigurationReader {
     public int getGameLength() {
         return gameLength;
     }
+    
+    /**
+     * A getter for the blue sun's starting position used by the solar display
+     * 
+     * @author Tyler Jaszkowiak
+     * @return the blue sun's starting position
+     */
+    public int getBlueSunStart() {
+        return blueSunStart;
+    }
+    
     
     /** return the list of nation names.
      * 

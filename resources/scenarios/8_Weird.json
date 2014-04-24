@@ -2,12 +2,7 @@
     "scenarioName": "Gundarchuksson's Weird",
     "gameLength":7,
     "numberOfPlayers":2,
-    
-    "sunTrackSetting" : {
-        "yellow":1,
-        "blue":"J",
-        "red":"D"
-    },
+    "blueSunStart":10,
     
     "nations": [
         {
