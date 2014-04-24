@@ -26,7 +26,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
-import sscharts.ScenarioConfigurationReader;
+
+import sscharts.Scenario;
 
 /**
  *
@@ -195,14 +196,16 @@ public class Game extends Application {
         unitPool = UnitPool.getInstance();
         unitPool.clear();
         if(testScenario){
-            ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
-            reader.populatePool();
+            // initialize dummy scenario, populate unit pool from it
+            Scenario.Initialize("resources/scenarios/0_Dummy.json");
+            Scenario.populatePool();
             
             //scenario loading complete
             scenarioLoaded = true;
         }
         else{
-            //TODO implement real initScenario from scenario file
+            //TODO implement real initScenario by providing choice of 
+            //     config file (in resources/scenarios)
         }
     }
     /** 
