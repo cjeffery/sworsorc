@@ -248,6 +248,15 @@ public class MapView extends    JPanel
     }
     
     /**
+     * clear every highlight of the specified color
+     * @param c The color to clear
+     */
+    public synchronized void clearHighlightColor( Color c ) {
+        //TODO could be more efficient with a bimap
+        highlightSet.values().removeAll(Collections.singleton(c));
+    }
+    
+    /**
      * determine if the edge has already been drawn
      * if painting is happening down the columns, left to right
      * @param x hex x coordinate
