@@ -27,7 +27,7 @@ public class UnitPainter {
             "ZombieInfantry", "HeavyPluglunk", "IntelligentMold",
             "DinosaurLegion", "HeavySword", "LightSword", "WargRider",
             "LightSpear", "MediumSpear", "HorseArcher", "Zeppelin", "RocRider",
-            "stack_badge", "demoralized_badge"
+            "stack_badge", "demoralized_badge", "generic"
         };
         for(String s : types) {            
             BufferedImage img = null;
@@ -35,6 +35,7 @@ public class UnitPainter {
                 File f = new File( path + s + ".png" );
                 img = ImageIO.read(f);
             } catch(IOException e) {
+                System.out.println("couldn't load: " + s);
                 File f = new File( path + "generic.png" );
                 img = ImageIO.read(f);
             }
@@ -85,10 +86,18 @@ public class UnitPainter {
                 paintArmyUnit(g2, (ArmyUnit)unit, stacked);
                 return;
             case Character:
-                System.out.println("Drawing characters isn't supported yet");
+                System.out.println("Drawing characters isn't supported yet"
+                                   + " - bug colin if it needs implementing");
+                g2.setColor( new Color(0xff, 0xff, 0xff, 127) ); 
+                g2.fill(hexMask);
+                HexPainter.drawImage(g2, "generic", images );
                 return;
             case Monster:
-                System.out.println("Drawing monsters isn't supported yet");
+                System.out.println("Drawing monsters isn't supported yet"
+                                   + " - bug colin if it needs implementing");
+                g2.setColor( new Color(0xff, 0xff, 0xff, 127) ); 
+                g2.fill(hexMask);
+                HexPainter.drawImage(g2, "generic", images );
                 return;
         }
     }
