@@ -2,7 +2,7 @@
     "scenarioName": "The Dummy Scenario",
     "gameLength":3,
     "numberOfPlayers":2,
-    "blueSunStart":3,
+    "blueSunStart":9,
     
     
     "nations": [
