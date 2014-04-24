@@ -73,8 +73,6 @@ public class MovementCalculator
             else
                 allowance_cache.put(currentHex, moveAllowance);
         }
-        
-        System.out.println("size: " + validHexes.size());
 
         int edgeSignal = 0;
         double moveCost = 0;
