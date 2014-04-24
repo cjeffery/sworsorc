@@ -16,7 +16,7 @@ public class MapView extends    JPanel
                      implements Scrollable {
     private HexMap map;
     private HexPainter hp;
-    public TreeSet<String> highlightSet;
+    public HashMap<String, Color> highlightSet;
     double radius, width, height;
     
     static MapView instance;
@@ -27,7 +27,7 @@ public class MapView extends    JPanel
      * @param map The map to show. Either a world map or diplomacy map
      */
     public MapView(HexMap map)  {
-        highlightSet = new TreeSet<String>();
+        highlightSet = new HashMap<String, Color>();
         this.map = map;
         radius = 32;
         width  = radius*2;
@@ -206,8 +206,9 @@ public class MapView extends    JPanel
      * colors at once. This could change in the future.
      * @param hexes A Set of hex IDs 
      */
-    public synchronized void highlightIDs(ArrayList<String> hexes) {
-        highlightSet.addAll(hexes);
+    public synchronized void highlightIDs(ArrayList<String> hexes, Color c) {
+        for(String hex : hexes)
+            highlightSet.put(hex, c);
         repaint(); //fixme allow partial update
     }
     
@@ -218,9 +219,9 @@ public class MapView extends    JPanel
      * colors at once. This could change in the future.
      * @param hexes A Set of hexes
      */
-    public synchronized void highlight(ArrayList<MapHex> hexes) {
+    public synchronized void highlight(ArrayList<MapHex> hexes, Color c) {
         for(MapHex hex : hexes)
-            highlightSet.add(hex.GetID());
+            highlightSet.put(hex.GetID(), c);
         repaint(); //fixme allow partial update
     }
  
@@ -228,8 +229,8 @@ public class MapView extends    JPanel
      * highlight the given hex. Adds to any previous highlights.
      * @param hex A hex ID to highlight
      */
-    public synchronized void highlight(String hex) {
-        highlightSet.add(hex);
+    public synchronized void highlight(String hex, Color c) {
+        highlightSet.put(hex, c);
         repaint(); //fixme allow partial update
     }
     
@@ -244,6 +245,15 @@ public class MapView extends    JPanel
     public synchronized void clearHighlight(String hex) {
         highlightSet.remove(hex);
         repaint(); //fixme allow partial update
+    }
+    
+    /**
+     * clear every highlight of the specified color
+     * @param c The color to clear
+     */
+    public synchronized void clearHighlightColor( Color c ) {
+        //TODO could be more efficient with a bimap
+        highlightSet.values().removeAll(Collections.singleton(c));
     }
     
     /**
@@ -309,10 +319,11 @@ public class MapView extends    JPanel
                     hp.paintHex(g2, map.GetHex(col+1,row+1));
 
                 //highlighting
-                if(pass == 1)
-                if(highlightSet.contains(HexMap.GetIDFromCoords(col+1,
-                                                                row+1))){
-                    hp.highlight(g2);
+                if(pass == 1) {
+                    Color c = highlightSet.get(HexMap.GetIDFromCoords(col+1,
+                                                                      row+1));
+                    if(c != null)
+                        hp.highlight(g2, c);
                 }
                 
                 //edges

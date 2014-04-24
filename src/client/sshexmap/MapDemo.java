@@ -2,6 +2,7 @@ package sshexmap;
 
 import MoveCalculator.MovementCalculator;
 import Units.*;
+import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -71,7 +72,7 @@ public class MapDemo extends JComponent implements MouseListener, KeyListener {
             System.out.println("Selected " + selected_unit + ", size of stack: " + hex.getUnits().size() );
             canMoveTo.clear();
             MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
-            mapView.highlight(canMoveTo);
+            mapView.highlight(canMoveTo, new Color(0,0,255, 70));
         }
         else if( canMoveTo.contains(hex) ) {
             System.out.println("unit selected, can move to destination");

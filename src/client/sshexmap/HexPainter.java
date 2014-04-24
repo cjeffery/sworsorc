@@ -350,8 +350,8 @@ public class HexPainter {
      * Draws a hexagon shaped highlight at the origin
      * @param g2 The graphics object to draw on
      */
-    public void highlight(Graphics2D g2) {
-        g2.setColor( new Color(0,0,255, 70) );
+    public void highlight(Graphics2D g2, Color c) {
+        g2.setColor( c );
         g2.fill(hexMask);
     }
 }
