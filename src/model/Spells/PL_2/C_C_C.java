@@ -6,6 +6,10 @@
 
 package Spells.PL_2;
 
+import Character.Character;
+import static Spells.CastSpell.conjured;
+import Units.*;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -17,8 +21,10 @@ import javax.swing.JLabel;
  */
 public final class C_C_C {
     JFrame frame;
+    Character caster;
     
-    public C_C_C(){
+    public C_C_C(Character c){
+        caster = c;
         prepareGUI();
     }
     
@@ -40,14 +46,7 @@ public final class C_C_C {
     }   
     //check mana available
     public boolean checkMana(){
-        boolean mana = false;
-        
-        //if( enough mana ){
-          //  mana = true;
-        //}
-        //else{ print message that not enough mana};
-        
-        return mana;
+        return caster.cheackManna(1);
     }
     
     //return spell range
@@ -80,7 +79,11 @@ public final class C_C_C {
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
-            // perform
+            ArmyUnit unit1 = new CentauroidCavalry(caster, 1);
+            unit1.SetLifeSpan(99);
+            unit1.setLocation(caster.getLocation());
+            
+            conjured = unit1;
             if(getDistance() <= getRange()){
                 //peform spell
             }

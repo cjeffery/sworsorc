@@ -61,7 +61,7 @@ public class CastSpell{
                 Fear fear = new Fear();
                 break;
             case "Conjure Centauroid Cavalry":
-                C_C_C c_c_c = new C_C_C();
+                C_C_C c_c_c = new C_C_C(character);
                 break;
             // ===============================
             // PL_3
