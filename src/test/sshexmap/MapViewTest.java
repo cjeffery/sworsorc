@@ -6,6 +6,7 @@
 
 package sshexmap;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import junit.framework.TestCase;
 
@@ -75,10 +76,10 @@ public class MapViewTest extends TestCase {
         ArrayList<String> list = new ArrayList<String>();
         list.add("1234");
         list.add("4321");
-        mv.highlightIDs(list);
+        mv.highlightIDs(list, new Color(1, 2, 3, 4));
         assertEquals(mv.highlightSet.size(), 2);
-        assertEquals(mv.highlightSet.contains("1234"), true);        
-        assertEquals(mv.highlightSet.contains("4321"), true);    
+        assertNotNull(mv.highlightSet.get("1234"));        
+        assertNotNull(mv.highlightSet.get("4321"));    
     }
 
     /**
@@ -86,9 +87,9 @@ public class MapViewTest extends TestCase {
      */
     public void testHighlight_String() {
         MapView mv = new MapView(map);
-        mv.highlight("1234");
+        mv.highlight("1234", new Color(1, 2, 3, 4));
         assertEquals(mv.highlightSet.size(), 1);
-        assertEquals(mv.highlightSet.contains("1234"), true);
+        assertNotNull(mv.highlightSet.get("1234"));
     }
 
     /**
@@ -99,8 +100,8 @@ public class MapViewTest extends TestCase {
         ArrayList<String> list = new ArrayList<String>();
         list.add("1234");
         list.add("4321");
-        mv.highlightIDs(list);
-        mv.highlight("2345");
+        mv.highlightIDs(list, new Color(1, 2, 3, 4));
+        mv.highlight("2345", new Color(1, 2, 3, 4));
         mv.clearHighlights();
         assertEquals(mv.highlightSet.size(), 0);
     }
@@ -113,12 +114,12 @@ public class MapViewTest extends TestCase {
         ArrayList<String> list = new ArrayList<String>();
         list.add("1234");
         list.add("4321");
-        mv.highlightIDs(list);
-        mv.highlight("2345");
+        mv.highlightIDs(list, new Color(1, 2, 3, 4));
+        mv.highlight("2345", new Color(1, 2, 3, 4));
         mv.clearHighlight("4321");
         assertEquals(mv.highlightSet.size(), 2);
-        assertEquals(mv.highlightSet.contains("1234"), true);        
-        assertEquals(mv.highlightSet.contains("2345"), true);    
+        assertNotNull(mv.highlightSet.get("1234"));        
+        assertNotNull(mv.highlightSet.get("2345"));    
         
     }
 
