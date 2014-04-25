@@ -1460,7 +1460,7 @@ public class CreatUnits {
             } // End
             */
             case "WyvernAirtroops": {
-                WyvernAirtroops unit1 = new WyvernAirtroops();
+                WyvernAirtroops unit1 = new WyvernAirtroops(null, 0);
                 switch (Units1_racial) {
                     case "Human": {
                         unit1.setRace(Race.Human);
@@ -3096,7 +3096,7 @@ public class CreatUnits {
             } // End
             */
             case "WyvernAirtroops": {
-                WyvernAirtroops unit2 = new WyvernAirtroops();
+                WyvernAirtroops unit2 = new WyvernAirtroops(null, 0);
                 switch (units2_racial) {
                     case "Human": {
                         unit2.setRace(Race.Human);
@@ -4733,7 +4733,7 @@ public class CreatUnits {
             } // End
             */
             case "WyvernAirtroops": {
-                WyvernAirtroops units3 = new WyvernAirtroops();
+                WyvernAirtroops units3 = new WyvernAirtroops(null, 0);
                 switch (units3_racial) {
                     case "Human": {
                         units3.setRace(Race.Human);
@@ -6368,7 +6368,7 @@ public class CreatUnits {
             } // End
             */
             case "WyvernAirtroops": {
-                WyvernAirtroops unit4 = new WyvernAirtroops();
+                WyvernAirtroops unit4 = new WyvernAirtroops(null, 0);
                 switch (units4_racial) {
                     case "Human": {
                         unit4.setRace(Race.Human);
