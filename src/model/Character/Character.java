@@ -199,4 +199,46 @@ public final class Character extends MoveableUnit{
             return false;
         }
     }
+
+    public int getMagicProfile() {
+        return magicProfile;
+    }
+
+    public void setMagicProfile(int magicProfile) {
+        this.magicProfile = magicProfile;
+    }
+
+    public int getMagicResistance() {
+        return magicResistance;
+    }
+
+    public void setMagicResistance(int magicResistance) {
+        this.magicResistance = magicResistance;
+    }
+
+    public MagicColor getMagicColor() {
+        return magicColor;
+    }
+
+    public void setMagicColor(MagicColor magicColor) {
+        this.magicColor = magicColor;
+    }
+
+    public int getLeadership() {
+        return leadership;
+    }
+
+    public void setLeadership(int leadership) {
+        this.leadership = leadership;
+    }
+
+    public int getDiplomacy() {
+        return diplomacy;
+    }
+
+    public void setDiplomacy(int diplomacy) {
+        this.diplomacy = diplomacy;
+    }
+    
+    
 }

@@ -6,6 +6,10 @@
 
 package Spells.PL_3;
 
+import Character.Character;
+import static Spells.CastSpell.conjured;
+import Units.*;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -17,8 +21,10 @@ import javax.swing.JLabel;
  */
 public final class C_W_A {
     JFrame frame;
+    Character caster;
     
-    public C_W_A(){
+    public C_W_A(Character c){
+        caster = c;
         prepareGUI();
     }
     
