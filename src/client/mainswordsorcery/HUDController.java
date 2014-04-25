@@ -51,6 +51,8 @@ public class HUDController {
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
     @FXML private SwingNode hex_map;
+    @FXML private Button undo_button;
+    @FXML private ImageView undo_pic;
     
     @FXML private ImageView SunImage;
     @FXML private Button phaseButton;
@@ -141,6 +143,14 @@ public class HUDController {
         //setup network
         connectedToServer = usernameEntered = ipEntered = false;
         chat_box.setText("Enter your username!");
+/*        
+        undo_button.addEventHandler(MouseEvent.MOUSE_ENTERED, 
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    Image img = new Image("file:resources/images/undo_hovered.png");
+                    undo_pic.setImage(img);
+                }
+        });  */ 
     }
     /** 
      * deselects a unit with left mouse button

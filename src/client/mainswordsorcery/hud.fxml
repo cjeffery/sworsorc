@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainswordsorcery.HUDController">
+<BorderPane id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="mainswordsorcery.HUDController">
   <center>
     <GridPane prefHeight="452.0" prefWidth="594.0">
       <children>
@@ -49,7 +49,7 @@
                     <Menu disable="false" mnemonicParsing="false" text="Scenario">
                       <items>
                         <MenuItem mnemonicParsing="false" text="Goals" />
-                        <MenuItem fx:id="Diplomacy" mnemonicParsing="false" onAction="#DisplayDiplomacy" text="Diplomacy" />
+                        <MenuItem mnemonicParsing="false" onAction="#DisplayDiplomacy" text="Diplomacy" fx:id="Diplomacy" />
                         <MenuItem mnemonicParsing="false" text="Alliance" />
                       </items>
                     </Menu>
@@ -149,12 +149,32 @@
                         <Image url="file:resources/images/YellowSun.png" />
                       </image>
                     </ImageView>
-                    <Button fx:id="phaseButton" mnemonicParsing="false" onAction="#ChangePhase" prefHeight="48.0" prefWidth="158.0" text="End Movement Phase" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                      <font>
-                        <Font name="Palatino Linotype Bold" size="16.0" />
-                      </font>
-                    </Button>
                     <Separator prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
+                    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+                      <children>
+                        <Button fx:id="phaseButton" mnemonicParsing="false" onAction="#ChangePhase" prefHeight="45.0" prefWidth="86.501953125" text="End Movement Phase" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                          <font>
+                            <Font name="Palatino Linotype Bold" size="16.0" />
+                          </font>
+                        </Button>
+                        <Button fx:id="undo_button" disable="false" minWidth="36.076171875" mnemonicParsing="false" onAction="#undoMove" opacity="1.0" prefHeight="45.0" prefWidth="36.076171875" text="Button" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                          <graphic>
+                            <ImageView fx:id="undo_pic" fitHeight="36.076171875" fitWidth="36.076171875" opacity="1.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                <Image url="@../../../resources/images/undo.png" />
+                              </image>
+                            </ImageView>
+                          </graphic>
+                        </Button>
+                      </children>
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="61.0" minWidth="10.0" prefWidth="40.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="10.0" prefWidth="85.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
                   </children>
                   <columnConstraints>
                     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
