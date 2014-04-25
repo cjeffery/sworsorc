@@ -15,7 +15,7 @@ import Character.Character;
  */
 public class Conjured extends ArmyUnit{
     
-    public Conjured(Character c, int lc) {
+    public Conjured(Character c, double lc) {
         super();
         this.conjuror = c;
         this.lifeCost = lc;

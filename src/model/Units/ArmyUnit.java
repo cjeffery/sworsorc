@@ -54,7 +54,7 @@ public class ArmyUnit extends MoveableUnit {
     protected int strength;    
     protected int demoralizedStrength;
     
-    protected int lifeCost;
+    protected double lifeCost;
     protected int lifeSpan;
     
     protected Character conjuror;
@@ -126,7 +126,7 @@ public class ArmyUnit extends MoveableUnit {
         this.lifeCost = lifeCost;
     }
 
-    public int getLifeCost() {
+    public double getLifeCost() {
         return lifeCost;
     }
     

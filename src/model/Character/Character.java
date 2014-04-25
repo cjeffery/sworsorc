@@ -191,7 +191,7 @@ public final class Character extends MoveableUnit{
         this.CurrentManna += a;
     }
     
-    public boolean decreaseManna(int a){
+    public boolean decreaseManna(double a){
         if(CurrentManna > a){
             this.CurrentManna -= a;
             return true;

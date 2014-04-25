@@ -82,7 +82,9 @@ public final class C_W_A {
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
-            // perform
+            caster.CostManna(1.5);
+            ArmyUnit unit1 = new Units.WyvernAirtroops(caster, 1.5);
+            
             if(getDistance() <= getRange()){
                 //peform spell
             }

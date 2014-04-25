@@ -5,14 +5,16 @@
  */
 
 package Units;
+import Character.Character;
 
 /**
  *
  * @author matt
  */
-public class WyvernAirtroops extends FlyingConjured{
+public class WyvernAirtroops extends Conjured{
 
-    public WyvernAirtroops() {
+    public WyvernAirtroops(Character c, double LifeCost) {
+        super(c, LifeCost);
         strength = 3;
         movement = 10;
         demoralizedStrength = 1;
