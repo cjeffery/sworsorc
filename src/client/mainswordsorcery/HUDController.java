@@ -143,14 +143,39 @@ public class HUDController {
         //setup network
         connectedToServer = usernameEntered = ipEntered = false;
         chat_box.setText("Enter your username!");
-/*        
+       
+        //set undo image on hover
         undo_button.addEventHandler(MouseEvent.MOUSE_ENTERED, 
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    Image img = new Image("file:resources/images/undo_hovered.png");
+                    Image img = new Image("file:resources/images/undo_hover.png");
                     undo_pic.setImage(img);
                 }
-        });  */ 
+        });  
+        //return to original undo image on mouse off
+        undo_button.addEventHandler(MouseEvent.MOUSE_EXITED, 
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    Image img = new Image("file:resources/images/undo.png");
+                    undo_pic.setImage(img);
+                }
+        });
+        //set undo image on mouse clicked
+        undo_button.addEventHandler(MouseEvent.MOUSE_PRESSED, 
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    Image img = new Image("file:resources/images/undo_click.png");
+                    undo_pic.setImage(img);
+                }
+        });
+        //set undo image on mouse released
+        undo_button.addEventHandler(MouseEvent.MOUSE_RELEASED, 
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    Image img = new Image("file:resources/images/undo_hover.png");
+                    undo_pic.setImage(img);
+                }
+        });
     }
     /** 
      * deselects a unit with left mouse button
