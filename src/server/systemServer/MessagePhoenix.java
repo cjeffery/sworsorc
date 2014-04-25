@@ -7,20 +7,21 @@
 
 package systemServer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Christopher Goes
  */
 public class MessagePhoenix {
-    
+    // TODO: would this be better as a method interface, then implement in classes?
     //End of message (last element of any array):
     static String DONE = "donesignalthingy";
 
@@ -28,9 +29,11 @@ public class MessagePhoenix {
     //that the client code shouldn't allow given the current game state
     //(like requests to change game turn when it's not their turn, start game but not in lobby, etc) 
 
+    static String GENERIC = "genericMessage";
     //Opening string to tell receiver how to interpret message contents.
     //This will be the first element of every message:
-    static String GLOBAL_CHAT = "chat"; //Normal chat message:
+    static String GLOBAL_CHAT = "globalChat"; //Normal chat message:
+    static String CHAT = "chat"; // preparing for tagged chat messages
     
     /* CONNECTION THINGS */
     static String DISCONNECT_ANNOUNCEMENT = "disconnectAnnounce"; //Announcement message
@@ -79,71 +82,78 @@ public class MessagePhoenix {
     static boolean debug = false; //Print everything!
     static String ERROR_MESSAGE = "errorMessage"; // generic error message, communicate things client does wrong
     
-    private static void send( ObjectOutputStream writer, List<Object> message ) throws IOException {
-        writer.writeObject(message);
+    /* UTILITY METHODS */
+    
+    private static void send( ObjectOutputStream writer, List<Object> message ) {
+        if( writer != null ) {
+            try {
+                writer.writeObject(message);
+                writer.flush();
+            } catch (IOException ex) {
+            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+            ex.printStackTrace();            }
+       } else {
+            System.err.println();
+        }
+    }
+
+    public static List<Object> createMessage( Object... message ) {
+        List<Object> temp = new ArrayList<>();
+        temp.addAll(Arrays.asList(message));
+        return temp;
     }
     
-    private static List<Object> createMessage( String tag, Object... message ) {
+    public static List<Object> createMessage( String tag, Object... message ) {
         List<Object> temp = new ArrayList<>();
         temp.add(tag);
         temp.addAll(Arrays.asList(message));
-        temp.add(DONE);
+        return temp;
+    }
+    
+    public static List<String> createStringList( Object... items ) {
+        List<String> temp = new ArrayList<>();
+        for( Object o : items ) {
+            temp.add(o.toString());
+        }
         return temp;
     }
     
     public static void sendMessage ( ObjectOutputStream writer, String tag, Object... message ) throws IOException {
-        send( writer, createMessage( tag, message ));
+        send( writer,  createMessage( tag, message) );
     }
-    //Send the array, ending with the DONE string:
-    public static void sendMessage(PrintWriter write, List<String> message) {
-        if (debug) {
-            System.out.println("S!ending array: " + message);
-        }
-        for (String s : message) {
-            write.println(s);
-            write.flush();
-
-            if (debug) {
-                System.out.println("!Sent array element:" + s);
-            }
-        }
-        write.println(DONE);
-        write.flush();
-        if (debug) {
-            System.out.println("!Done sending array");
-        }
+    
+    public static void sendMessage (ObjectOutputStream writer, Object... message ) throws IOException {
+        send(writer, createMessage( message )); // pass it along, assume first entry is tag
     }
 
-    //Fill an array, until we read the DONE string
-    public static List<String> receiveMessage(BufferedReader reader) {
-        List<String> array = new ArrayList<>();
-        String next = null;
-        if (debug) {
-            System.out.println("!Receiving array");
-        }
+    // TODO: tag stripping done in MessagePhoenix
+    @SuppressWarnings("unchecked")
+    public static List<Object> recieveMessage( ObjectInputStream reader ) {
         try {
-            next = reader.readLine();
-            if (next == null) {
-                return null;
-            }
-            while (!next.equals(DONE)) {
-                array.add(next);
-                if (debug) {
-                    System.out.println("!Received array element:" + next);
-                }
-                next = reader.readLine();
-                if (next == null) {
-                    return null;
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Error reading array:" + e);
+            return reader != null ? (List<Object>) reader.readObject() : null;
+        } catch (IOException | ClassNotFoundException | NullPointerException ex ) {
+            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
+                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+            ex.printStackTrace();
         }
-
-        if (debug) {
-            System.out.println("!Done receiving array");
+        return null;
+    }
+    
+    public static List<String> objectToString( List<Object> list ) {
+        List<String> temp = new ArrayList<>();
+        for (Object o : list) {
+            temp.add(o != null ? o.toString() : null);
         }
-        return array;
+        return temp;
+    }
+    
+    public static List<Object> stringToObject( List<String> list ) {
+        List<Object> temp = new ArrayList<>();
+        for (String s : list ) {
+            temp.add( s != null ? s : null );
+        }
+        return temp;
     }
     
 }

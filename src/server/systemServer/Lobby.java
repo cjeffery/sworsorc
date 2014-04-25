@@ -29,7 +29,8 @@ public class Lobby {
     public void beginGame() {
         //start with the first player in list:
         current = lobbyClients.get(0);
-        sendToEntireLobby(MessageUtils.makeNextTurnMessage(current.getHandle(), current.getClientID()));
+        sendToEntireLobby( MessagePhoenix.createStringList(MessagePhoenix.NEXT_TURN_INFO, 
+                current.getHandle(), current.getClientID())); // TODO: another patch in the netcode quilt...
     }
 
     /** 
@@ -43,7 +44,7 @@ public class Lobby {
         this.lobbyId = lobbyCounter++;
     }
 
-    public void sendToEntireLobby(List<String> message) {
+    public void sendToEntireLobby(Object... message) {
         for (ClientObject client : lobbyClients) {
             client.send(message);
         }
@@ -90,7 +91,8 @@ public class Lobby {
         }
 
         current = lobbyClients.get(nextIndex);
-        sendToEntireLobby(MessageUtils.makeNextTurnMessage(current.getHandle(), current.getClientID()));
+        sendToEntireLobby(MessagePhoenix.createStringList(MessagePhoenix.NEXT_TURN_INFO, 
+                current.getHandle(), current.getClientID())); // TODO: more stuff to fix
     }
     
 } // end class

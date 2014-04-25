@@ -13,7 +13,7 @@ public class NetworkServer {
 
     // Clients
     private static List<ClientObject> clientObjects;
-    
+    private static int totalClients = 0;
     // Lobbies
     private static List<Lobby> lobbies;
 
@@ -70,14 +70,11 @@ public class NetworkServer {
         for (Lobby l : lobbies) {
             if (l.getName().equals(lobbyName)) {
                 if (l.isInLobby(client.getHandle())) {
-                    client.send(MessageUtils.makeErrorMessage("Cannot join lobby, you're already in it!"));
-                    return;
+                    client.send( MessagePhoenix.ERROR_MESSAGE, "Cannot join lobby, you're already in it!");
                 } else {
                     leaveLobby(client);
                     l.join(client);
-                    sendToAllClients(MessageUtils.makeJoinedLobbyMessage(lobbyName, client.getHandle()));
-                    
-                    return;
+                    sendToAllClients( MessagePhoenix.JOINED_LOBBY, lobbyName, client.getHandle() );
                 }
             }
         }
@@ -96,7 +93,7 @@ public class NetworkServer {
         for (Lobby l : lobbies) {
             if (l.lobbyClients.contains(client)) {
                 l.leave(client);
-                sendToAllClients(MessageUtils.makeLeftLobbyMessage(l.getName(), client.getHandle()));
+                sendToAllClients( MessagePhoenix.LEFT_LOBBY, l.getName(), client.getHandle());
                 if (l.lobbyClients.isEmpty()) {
                     lobbies.remove(l); //For now, just kill lobbies when everyone leaves
                 }
@@ -160,6 +157,18 @@ public class NetworkServer {
     }
 
     /**
+     * Forward the message to all ClientObjects, which will send to their
+     * Clients
+     * <p>
+     * @param message
+     */
+    public static void sendToAllClients( Object... message) {
+        for (ClientObject client : clientObjects) {
+            client.send(message);
+        }
+    }
+    
+    /**
      * clientObject will call this on a planned or unplanned disconnection
      * @param clientId 
      */
@@ -169,15 +178,22 @@ public class NetworkServer {
 
         for (ClientObject clientObject : clientObjects) {
             if (clientObject.getClientID() == clientId) {
-                dearlyDeparted = clientObject;
-                break;
+                //dearlyDeparted = clientObject;
+                leaveLobby(clientObject);
+                clientObjects.remove(clientObject);
+                clientObject.killClient();
+                sendToAllClients( MessagePhoenix.DISCONNECT_ANNOUNCEMENT, clientObject.getHandle());
+                return;
             }
         }
-
-        leaveLobby(dearlyDeparted);
-        sendToAllClients(MessageUtils.makeDisconnectAnnouncementMessage(dearlyDeparted.getHandle()));
-        clientObjects.remove(dearlyDeparted);
-
+        System.err.println("Could not find client to disconnect!");      
+/*       if (dearlyDeparted != null ) {
+            leaveLobby(dearlyDeparted);
+            clientObjects.remove(dearlyDeparted);
+            sendToAllClients( MessagePhoenix.DISCONNECT_ANNOUNCEMENT, dearlyDeparted.getHandle());
+        } else {
+            System.err.println("Tried to disconnect null client!");
+        }*/
     }
 
     /**
@@ -214,9 +230,9 @@ public class NetworkServer {
             try {
                 System.err.println("Waiting for next client...");
                 tempsock = listen.accept(); //Get socket (blocking)
-                tempclient = new ClientObject(tempsock); // generate new client
-                tempclient.startClient(); // Start the connection
-                clientObjects.add(tempclient); // add the active client to list
+                tempclient = new ClientObject(tempsock, totalClients++ ); // generate new client
+                clientObjects.add(tempclient); // add the active client to list              
+                tempclient.start(); // Start the connection
             } catch (IOException e) {
                 System.err.println("Server failed to accept client!\nException: " + e );
                 return;
