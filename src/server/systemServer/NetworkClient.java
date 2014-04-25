@@ -7,13 +7,13 @@ package systemServer;
 
 import Units.MoveableUnit;
 import Units.UnitPool;
-import mainswordsorcery.Game;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
 import java.util.List;
-import javafx.application.Platform;
 import java.util.concurrent.ArrayBlockingQueue;
+import javafx.application.Platform;
+import mainswordsorcery.Game;
 
 /**
  * The Infamous Network Client, handles communication to/from Network Server
@@ -41,8 +41,8 @@ public class NetworkClient {
     private static ClientCommandThread clientThread = null;
 
     // Set default help file
-    final private static String helpfile = "commands.txt";
-    final private static String dir = System.getProperty("user.dir");
+    private static String helpfile = "commands.txt"; // TODO: update from settings file
+    private static String dir = System.getProperty("user.dir");
     
     // Buffers
     private static ArrayBlockingQueue<List<Object>> messageQueue;
@@ -93,6 +93,7 @@ public class NetworkClient {
 
     /**
      * Send a message to client
+     * YOU MUST PUT A TAG AS THE FIRST ITEM!
      * <p>
      * This is just a public wrapper for {@link #write write()}
      * @param message Message to send
@@ -103,6 +104,8 @@ public class NetworkClient {
     
     /**
      * Send a message to client
+     * YOU MUST PUT A TAG AS THE FIRST ITEM!
+     * <p>
      * Generic parameters
      * @param message First parameter is assumed to be tag
      */
@@ -143,7 +146,7 @@ public class NetworkClient {
         send(MessagePhoenix.YIELD_TURN);
     }
 
-    /* THREAD N' STREAM STUFF */
+    // ***THREADS*** //
     private static boolean remoteConnectionIsAlive() {
         return ((listenerThread != null && listenerThread.isAlive())
                 || (clientThread != null && clientThread.isAlive()));
@@ -257,6 +260,24 @@ public class NetworkClient {
         }
         return true;
     }
+
+        /**
+         * Send a file to the server
+         * <p>
+         * @param filename Name of file to be sent
+         */
+        private void sendFile(String filename) {
+            String line;
+            try {
+                BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("UTF-8")));
+                send(MessagePhoenix.FILE, filename); // TODO: rewrite with single message sent
+                while ((line = file.readLine()) != null) {
+                    send(MessagePhoenix.FILE_LINE, filename, line);
+                }
+            } catch (IOException e) {
+                System.err.println("Could not open file! Error thrown: " + e);
+            }
+        }
 
         /**
          * Marks thread for death, causing it to close, return, and die
@@ -613,7 +634,7 @@ public class NetworkClient {
 
     }
 
-    // STREAM STUFF //
+    // ***STREAMS*** //
     
     /**
      * Starts {@link ListenerThread listenerThread} and sets
@@ -711,8 +732,39 @@ public class NetworkClient {
         }
         clientThread = null;
     }
-    /* COMMAND PROCESSING/EXECUTION METHODS */
+    
+    // ***COMMAND PROCESSING/EXECUTION METHODS*** //
+    
+    /**
+     * Post the string "lastMessage" to the GUI chat box. The message has be
+     * sent in this way so that the listener thread can communicate with
+     * this JavaFX thread. Otherwise an exception will be thrown.
+     * 
+     * @author Gabe Pearhill
+     */
+    private static void postMessage( String lastMessage) {
+        Platform.runLater(new Runnable() { // TODO: Get this working
+            @Override
+            public void run() {
+                Game.getInstance().hudController.postMessage(lastMessage);
+            }
+        });
+        //Game.getInstance().hudController.postMessage(lastMessage);
 
+    }
+    
+    /**
+     * Prints message to command line & HUD consoles
+     * Assume newline will be appended
+     * @param lastMessage Message to print
+     * @author Christopher Goes
+     */
+    private static void flushToConsole( String lastMessage ) {
+        consoleOut.println(lastMessage); // TODO: append username/tags!
+        consoleOut.flush();
+        postMessage(lastMessage);
+    }
+    
     /**
      * Writes to socket outgoing connection, hides the protocol details
      * @param message Message to send
@@ -726,9 +778,13 @@ public class NetworkClient {
                     + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
             ex.printStackTrace();           
         }
-    } 
+    }    
     
-    
+    /**
+     * Executes a Network Client command
+     * @param command 
+     * @author Christopher Goes
+     */
     private static void executeCommand( String command ) {
         try {
             commandQueue.put(command);
@@ -737,26 +793,7 @@ public class NetworkClient {
                     + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
             ex.printStackTrace();           
         }
-    }         
-        
-    
-    /**
-     * Send a file to the server
-     * <p>
-     * @param filename Name of file to be sent
-     */
-    private static void sendFile(String filename) {
-        String line;
-        try {
-            BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("UTF-8")));
-            send(MessagePhoenix.FILE, filename);
-            while ((line = file.readLine()) != null) {
-                send( MessagePhoenix.FILE_LINE, filename, line );
-            }
-        } catch (IOException e) {
-            System.err.println("Could not open file! Error thrown: " + e);
-        }
-    }
+    }                
 
     /**
      * Prints list of commands and what they do from a text file
@@ -789,30 +826,9 @@ public class NetworkClient {
 
     }
     
-    /**
-     * Post the string "lastMessage" to the GUI chat box. The message has be
-     * sent in this way so that the listener thread can communicate with
-     * this JavaFX thread. Otherwise an exception will be thrown.
-     * 
-     * @author Gabe Pearhill
-     */
-    private static void postMessage( String lastMessage) {
-        /*Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Game.getInstance().hudController.postMessage(lastMessage);
-            }
-        });*/
-        //Game.getInstance().hudController.postMessage(lastMessage);
 
-    }
     
-    private static void flushToConsole( String lastMessage ) {
-        consoleOut.println(lastMessage); // TODO: append username/tags!
-        consoleOut.flush();
-        postMessage(lastMessage);
-    }
-    // CONNECTION STUFF //
+    // ***CONNECTION***  //
 
     /**
      * Creates a new connection to the server, call this before
@@ -855,28 +871,7 @@ public class NetworkClient {
         flushToConsole("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort() + "!" );
         return tempsock;
     }
-
-    /* UTILITY METHODS */
     
-    /**
-     * Set flags, variables, etc, from a file
-     * @param filename Name of Network Settings file
-     * @return True if successful, False if not
-     */
-    private static boolean configureSettings( String filename ) {
-        return true; // TODO: Stub method
-    }
-    
-    /**
-     * Checks if client is connected to server
-     * <p>
-     * @author Christopher Goes
-     * @return boolean True if connected, False if not
-     */
-    private static boolean isConnected() {
-        return socket != null && !(socket.isClosed()) && socket.isConnected();
-    }
-
     /**
      * Disconnects client from server
      * <p>
@@ -893,7 +888,28 @@ public class NetworkClient {
         killSocket();
         flushToConsole("Disconnected!");
     }
-
+  
+    /**
+     * Checks if client is connected to server
+     * <p>
+     * @author Christopher Goes
+     * @return boolean True if connected, False if not
+     */
+    private static boolean isConnected() {
+        return socket != null && !(socket.isClosed()) && socket.isConnected();
+    }
+    
+    // ***UTILITY METHODS*** //
+    
+    /**
+     * Set flags, variables, etc, from a file
+     * @param filename Name of Network Settings file
+     * @return True if successful, False if not
+     */
+    private static boolean configureSettings( String filename ) {
+        return true; // TODO: Stub method
+    }
+    
     /**
      * Closes and nulls socket
      * <p>
@@ -908,7 +924,6 @@ public class NetworkClient {
                 socket = null;
             }
         } catch (IOException ex) {
-            //System.err.println("Error in killSocket!\nException: " + e);
             System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
                     + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
             ex.printStackTrace();
@@ -924,7 +939,7 @@ public class NetworkClient {
         killLocalStreams();
     }
 
-    /* GETTERS/SETTERS */
+    // ***GETTERS/SETTERS*** //
     
     /**
      * Sets IPv4 address of remote Server
@@ -986,7 +1001,7 @@ public class NetworkClient {
         return username;
     }
     
-    /* MAIN */
+    // ***MAIN*** //
     /**
      * Opens dialog box(s), creates NetworkClient instance, and executes startup
      * methods
@@ -997,6 +1012,7 @@ public class NetworkClient {
      */
     public static void main(String[] args) {
 
+        // TODO: we still need these?
         ClientData clientData = new ClientData();
         ClientDataForm clientDataForm = new ClientDataForm(clientData);
 

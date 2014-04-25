@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package mainswordsorcery;
 
@@ -14,7 +9,6 @@ import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.Color;
 import static java.lang.Integer.parseInt;
-import static java.lang.String.valueOf;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -34,12 +28,9 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-import sshexmap.MainMap;
 import sshexmap.MapHex;
 import sshexmap.MapView;
 
-import systemServer.ClientData;
-import systemServer.ClientDataForm;
 import systemServer.NetworkClient;
  
 public class HUDController {
@@ -378,7 +369,7 @@ public class HUDController {
                 connectedToServer = connectToServer();
             }
         } else if (!"".equals(message_box.getText())) {
-            NetworkClient.sendChatMessage(message_box.getText());
+            NetworkClient.sendGlobalChatMessage(message_box.getText());
             message_box.clear();
         }
     }
@@ -472,23 +463,18 @@ public class HUDController {
      * Connect to server
      *
      * @author Gabe Pearhill
+     * @return 
      */
     public boolean connectToServer() {
         // 25565 is sworsorc default server port
         NetworkClient.setServerName(ipAddress);
-        NetworkClient.setServerPort(25565);
+        //NetworkClient.setServerPort(25565);
+        // No need to set port unless we're hosting multiple servers simultaniously
+        // Default is already set
         NetworkClient.setUsername(username);
 
-        if (NetworkClient.connect()) {
-            if (NetworkClient.connect()) {
-                //NetworkClient.runClient(true);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        // TODO: SETTINGS FILE
+        return NetworkClient.initializeClient();
     }
     
     /**
@@ -497,6 +483,7 @@ public class HUDController {
      * an incoming chat message.
      * 
      * @author Gabe Pearhill
+     * @param message 
      */
     public void postMessage(String message){
         chat_box.appendText(message + "\n");
