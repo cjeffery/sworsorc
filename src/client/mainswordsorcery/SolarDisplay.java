@@ -6,6 +6,8 @@
 
 package mainswordsorcery;
 
+import sscharts.Scenario;
+
 /**
 *
 * @author Johnathan Flake
@@ -22,8 +24,9 @@ public class SolarDisplay {
 
         static String SunImage, BlueState, RedState;
         
-        static int RedSunStart = 1;
-        static int BlueSunStart = 7;
+        static int BlueSunStart = Scenario.getBlueSunStart();
+        // the red sun is half-way around the orbit, which ranges 1-12, not 0-11
+        static int RedSunStart = (BlueSunStart + 5)%12 + 1;
         static int YellowSunStart = 1;
         
         static int SolarDayNum = YellowSunStart;
@@ -39,13 +42,14 @@ public class SolarDisplay {
     
     public SolarDisplay() {
         instance = this;   
-           
     }
     
     public static String GetRedState(){
+        //return RedState+" ("+RedSunVal+")"; // <- useful for debugging
         return RedState;
     }
     public static String GetBlueState(){
+        //return BlueState+" ("+BlueSunVal+")"; // <- useful for debugging
         return BlueState;
     }
     public static String GetSunImage(){

@@ -112,6 +112,10 @@ public class MoveableUnit {
     public Race getRace(){
         return race;
     }
+
+    public Nation getNation(){
+        return nation;
+    }
     
     public double getMovement() {
         return movement;

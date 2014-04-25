@@ -106,24 +106,9 @@ public class ArmyCombatResultsTable {
         */
     }
 
-    public static ArrayList<Double> return_pre_result(double atk, double def, double after_def,double ratio) {
-        //ArrayList<double> result = new ArrayList<double>(); 
-        ArrayList result = new ArrayList();
-        result.add(atk);
-        result.add(def);
-        result.add(after_def);
-        result.add(ratio);
-        
-        return result;
-    }
+
     
-    public static void Show(int atk, int def, int after_def,double ratio) {
-        javax.swing.JOptionPane.showMessageDialog(null,"Total Attackers Strength: " + atk + 
-                         "\nTotal Defenders Strength before terrain bonus: " + def +
-                         "\nTotal Defenders Strength after terrain bonus: " + after_def + 
-                         "\nRatio: " + atk + "/" + after_def +
-                         "\nRatio: " + ratio);
-    }
+
     
     public static int [] TableLookup(int index){
         int [] results = new int[2];

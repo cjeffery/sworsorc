@@ -27,7 +27,7 @@ public class UnitPainter {
             "ZombieInfantry", "HeavyPluglunk", "IntelligentMold",
             "DinosaurLegion", "HeavySword", "LightSword", "WargRider",
             "LightSpear", "MediumSpear", "HorseArcher", "Zeppelin", "RocRider",
-            "stack_badge", "demoralized_badge"
+            "stack_badge", "demoralized_badge", "generic"
         };
         for(String s : types) {            
             BufferedImage img = null;
@@ -35,6 +35,7 @@ public class UnitPainter {
                 File f = new File( path + s + ".png" );
                 img = ImageIO.read(f);
             } catch(IOException e) {
+                System.out.println("couldn't load: " + s);
                 File f = new File( path + "generic.png" );
                 img = ImageIO.read(f);
             }
@@ -85,65 +86,74 @@ public class UnitPainter {
                 paintArmyUnit(g2, (ArmyUnit)unit, stacked);
                 return;
             case Character:
-                System.out.println("Drawing characters isn't supported yet");
+                System.out.println("Drawing characters isn't supported yet"
+                                   + " - bug colin if it needs implementing");
+                g2.setColor( new Color(0xff, 0xff, 0xff, 127) ); 
+                g2.fill(hexMask);
+                HexPainter.drawImage(g2, "generic", images );
                 return;
             case Monster:
-                System.out.println("Drawing monsters isn't supported yet");
+                System.out.println("Drawing monsters isn't supported yet"
+                                   + " - bug colin if it needs implementing");
+                g2.setColor( new Color(0xff, 0xff, 0xff, 127) ); 
+                g2.fill(hexMask);
+                HexPainter.drawImage(g2, "generic", images );
                 return;
         }
     }
 
+    /* only display null nation error output one time */
+    boolean error_displayed = false;
+    /**
+     * gets background color corresponding to unit's nation.
+     * Used to render the unit's background.
+     * @return A color object representing the RGB color of the unit's nation
+     */
     private Color getBGColor(MoveableUnit unit ) {
-        //for now set bg color based on race
-        //this isn't totally correct, but it's
-        //hard to see what needs to be done from here
-        Color bgColor;
-        
-        /* special cases */
-        //conjured units are a variety of races
-        if(unit instanceof Conjured || unit instanceof FlyingConjured) {
-            /* conjured - red */
-            bgColor = new Color(0xff4346);            
-            return bgColor;
+        Color c;
+        int a = 127; //the alpha value
+        if(unit.getNation() == null) {
+            if(error_displayed == false) {
+                System.out.println("UnitPainter.java - unit's nation is null");
+                error_displayed = true;
+            }
+            return new Color(0xff, 0xff, 0xff, a);
         }
-        //roc riders are human color
-        if(unit instanceof RocRider) {
-            /* imperial - blue */ 
-            bgColor = new Color(0x467ed1);                    
-            return bgColor;
-        }        
-
-        switch( unit.getRace() ) {
-            case Human:
-                /* imperial - blue */ 
-                bgColor = new Color(0x467ed1);
-                break;
-            case Elves:
-                /* elves - dark green */
-                bgColor = new Color(0x3f7750);
-                break;
-            case Orc:
-                /* o.r.c - yellow */
-                bgColor = new Color(0xfdd22e);
-                break;
-            case SwampCreature:
-                /* swamp - light green */
-                bgColor = new Color(0xaeb35f);
-                break;
+        switch(unit.getNation()) {
+            case Conjured:
+                c = new Color(0xff, 0x43, 0x46, a); //red
+                break;                
+            //case Convivian:                
+            //case CorfluCultist:                
             case Cronk:
-                /* cronk - orange */
-                bgColor = new Color(0xFFA500);
-                break;
-            case Dragon:
-            case Dwarrows:
-            case KillerPenguin:
-            case Spiders:
+                c = new Color(0xff, 0xa5, 0x00, a); //orange
+                break;                
+            case Elven:
+                c = new Color(0x3f, 0x77, 0x50, a); //dark green
+                break;                
+            //case Goblin:                
+            case ImperialArmy:
+                c = new Color(0x46, 0x7e, 0xd1, a); //blue
+                break;                
+            //case IndependentHuman:                
+            //case Krasnian:                
+            //case Mercenary:                
+            case ORC:                
+                c = new Color(0xfd, 0xd2, 0x2e, a); //yellow
+                break;                
+            //case SpiderFolk:                
+            case SwampCreature:
+                c = new Color(0xae, 0xb3, 0x5f, a); //light green
+                break;                
+            //case WhiteORC:                
+            //case Zirkastian:                
             default:
-                /* hell if I know - white */
-                bgColor = new Color(0xffffff);
-                break;            
+                ; //System.out.println("UnitPainter.java - unhandled nation");
+            case none:
+                c = new Color(0xff, 0xff, 0xff, a); //white 
+                break;
         }
-        return bgColor;
+        return c;
     }
     
     private String getArmyUnitStatusLine(ArmyUnit unit) {

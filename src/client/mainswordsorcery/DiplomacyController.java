@@ -7,6 +7,7 @@
 package mainswordsorcery;
 
 import Units.*;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -16,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,7 +25,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-
 import sshexmap.MapView;/*
 /**
  *
@@ -35,5 +36,12 @@ public class DiplomacyController {
     public void initialize(){
         hdip.setContent(MapView.getDipView());
         dip_view.setContent(hdip);
+    }
+    @FXML protected void Exit(ActionEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+        Stage stage=(Stage) node.getScene().getWindow();
+        stage.setScene(Game.getInstance().getHudScene());
+        stage.setFullScreen(true);
+        stage.show();
     }
 }

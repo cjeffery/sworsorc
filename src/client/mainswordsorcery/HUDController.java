@@ -12,6 +12,7 @@ package mainswordsorcery;
  */
 import MoveCalculator.MovementCalculator;
 import Units.*;
+import java.awt.Color;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.valueOf;
 import java.lang.reflect.InvocationTargetException;
@@ -185,7 +186,7 @@ public class HUDController {
         canMoveTo.clear();
         if(phase.getText().equalsIgnoreCase("Movement")){
             MovementCalculator.getValidMoves(selected_unit, hex, selected_unit.getMovement(), canMoveTo );
-            hmapContent.highlight(canMoveTo);
+            hmapContent.highlight(canMoveTo, new Color(0,0,255, 70));
         }
         //update target stack panel
         try {
@@ -479,7 +480,7 @@ public class HUDController {
         NetworkClient.setUsername(username);
 
         if (NetworkClient.connect()) {
-            if (NetworkClient.startClient()) {
+            if (NetworkClient.connect()) {
                 //NetworkClient.runClient(true);
                 return true;
             } else {

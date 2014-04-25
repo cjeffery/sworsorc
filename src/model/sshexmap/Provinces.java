@@ -15,7 +15,7 @@ import java.util.*;
  * see example code at bottom
  * TODO: add unit tests. Make less horrifying(?)
  */
-class Provinces {
+public class Provinces {
     //key is province ID
     //value is set of hex IDs in given province
     private static TreeMap<String, TreeSet<String>> provinceMap;
@@ -46,7 +46,7 @@ class Provinces {
     /**
      * Get the set of hex IDs in a given province
      * @param province_name
-     * @return The set of provinces in a given hex
+     * @return The set of hexes in a given province
      */
     public static ArrayList<String> getHexList(String province_name) {
         if(provinceMap == null) {
@@ -61,6 +61,36 @@ class Provinces {
             return null;
         res.addAll( provinceMap.get(province_name) );
         return res;
+    }   
+    
+    /**
+     * Get a random hexID string in a given Province set
+     * 
+     * @author Tyler Jaszkowiak
+     * @param province_names a list of provinces to select from
+     * @return A random hex ID string in the province set
+     */
+    public static String getRandHex(List<String> province_names) {
+        if(provinceMap == null) {
+            System.out.println("Did you call provinces before map was loaded?");
+            return null;
+        }
+        // choose a random province from the list
+        Random rand = new Random();
+        int index = rand.nextInt(province_names.size());
+        String province_name = province_names.get(index);
+        
+        //generate arraylist of hexes in the province
+        ArrayList<String> res = new ArrayList<String>();
+        TreeSet<String> hexes = provinceMap.get(province_name);
+        if(hexes == null)
+            return null;
+        res.addAll( provinceMap.get(province_name) );
+        
+        // now get a random hex from that province
+        index = rand.nextInt(res.size());
+        String hexid = res.get(index);
+        return hexid;
     }   
     
     /**

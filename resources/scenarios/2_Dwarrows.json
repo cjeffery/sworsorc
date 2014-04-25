@@ -2,12 +2,8 @@
     "scenarioName": "The War of the Black Dwarrows",
     "gameLength":12,
     "numberOfPlayers":2,
-    
-    "sunTrackSetting" : {
-        "yellow":1,
-        "blue":"F",
-        "red":"L"
-    },
+    "blueSunStart":6,
+
     
     "nations": [
         {

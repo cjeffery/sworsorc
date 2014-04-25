@@ -25,8 +25,8 @@ public class UnitPoolTest extends TestCase {
         super(testName);
     }
 
-    
-  /*  // test adding a unit to a null UnitPool.
+   /*  
+    // test adding a unit to a null UnitPool.
     public void test01() {
         UnitPool pool = UnitPool.getInstance();
         ArmyUnit aUnit;
@@ -85,7 +85,7 @@ public class UnitPoolTest extends TestCase {
         assertTrue(test);
         
     }
-    */
+    
     //Tests update a unit position, test end of movement phase. 
     public void test03() {
         ArrayList<String> list1, list2, list3, list4;
@@ -142,10 +142,10 @@ public class UnitPoolTest extends TestCase {
         assertTrue(1 == list4.size());
         
     }
-    /*
+    
     //Tests undo move.
     public void test04(){
-        ArrayList<String> list1, list2, list3, list4;
+        ArrayList<String> list1, list2;
         MoveableUnit unit;
        
         
@@ -168,17 +168,17 @@ public class UnitPoolTest extends TestCase {
         assertTrue(4 == list2.size());
         list1 = pool.getUnitsInHex("0104");
         pool.undoMove(list1.get(0));
-        list2 = list2 = pool.getUnitHexMoves(list1.get(list1.size() - 1));
+        list2 = pool.getUnitHexMoves(list1.get(list1.size() - 1));
         
-        assertTrue(3 == list2.size());
+        assertTrue(1 == list2.size());
         
     }
   
 
-    /**
+    /*
      * John's example code.  READ ALL // COMENTS IN CODE.
      */
-    
+    /*
     public void test05(){//JohnGoettscheExample
         //This is just some starting data.
         ArrayList<String> list1, list2 = new ArrayList(), list3;
@@ -230,6 +230,20 @@ public class UnitPoolTest extends TestCase {
         pool.endMovementPhase(); //This is importan to stop anyone from trying to undo moves after they have been commited.
                                  //Should be last step at the end of any player turn or server update to a client. 
             
+        
+    }
+    */
+    public void test06(){
+        UnitPool pool = UnitPool.getInstance();
+        MoveableUnit unit; 
+        pool.clear();
+        assertTrue(pool != null);
+        
+        pool.addUnit(1,new LightSword(),"0101");
+        pool.addUnit(1,new LightSword(),"2003");
+        
+        unit = pool.getUnit(pool.getUnitsInHex("2003").get(0));
+        pool.addMove(unit, "2004");
         
     }
     

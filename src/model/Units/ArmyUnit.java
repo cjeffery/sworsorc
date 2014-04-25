@@ -53,7 +53,9 @@ public class ArmyUnit extends MoveableUnit {
     
     protected int strength;    
     protected int demoralizedStrength;
+    
     protected int lifeCost;
+    protected int lifeSpan;
     
     protected Character conjuror;
     
@@ -72,6 +74,23 @@ public class ArmyUnit extends MoveableUnit {
     
     public ArmyUnitType getArmyUnitType(){
         return armyUnitType;
+    }
+    
+    public void SetLifeSpan(int x){
+        if(this.conjured){
+            lifeSpan = x;
+        }
+    }
+    
+    public boolean decLifeSpan(){
+        if(this.conjured){
+            lifeSpan--;
+            if(lifeSpan > 0){
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     public ArmyUnit() {

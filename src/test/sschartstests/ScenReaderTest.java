@@ -10,11 +10,11 @@ package sschartstests;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.TestCase;
-import sscharts.ScenarioConfigurationReader;
+import sscharts.Scenario;
 
 /**
- * A test case for the src/utilities/sscharts/ScenarioConfigurationReader.java
- * class. It runs a few simple JUnit tests to determine if the scenario reader 
+ * A test case for the src/utilities/sscharts/Scenario.java
+ class. It runs a few simple JUnit tests to determine if the scenario reader 
  * behaves as expected.
  * <p>
  * TODO: This only tests the data and the getters under ideal input.
@@ -31,7 +31,7 @@ public class ScenReaderTest extends TestCase {
     // test that the scenario name was read correctly
     public void testScenarioName() {
         boolean test;
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        Scenario reader = new Scenario("resources/scenarios/0_Dummy.json");
         test = reader.getScenarioName().equals("The Dummy Scenario");
         assertTrue(test);
     }
@@ -39,7 +39,7 @@ public class ScenReaderTest extends TestCase {
     // test that the scenario number of players was read correctly
     public void testNumberofPlayers() {
         boolean test;
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        Scenario reader = new Scenario("resources/scenarios/0_Dummy.json");
         test = reader.getNumberOfPlayers() == 2;
         assertTrue(test);
     }
@@ -47,7 +47,7 @@ public class ScenReaderTest extends TestCase {
     // test that the scenario game length was read correctly
     public void testGameLength() {
         boolean test;
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        Scenario reader = new Scenario("resources/scenarios/0_Dummy.json");
         test = reader.getGameLength() == 3;
         assertTrue(test);
     }
@@ -59,7 +59,7 @@ public class ScenReaderTest extends TestCase {
         nations = new ArrayList<>();
         nations.add("Elves");
         nations.add("Dwarrows");
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        Scenario reader = new Scenario("resources/scenarios/0_Dummy.json");
         test = reader.getNationNames().equals(nations);
         assertTrue(test);
     }
@@ -67,7 +67,7 @@ public class ScenReaderTest extends TestCase {
     // test that the controlling player is correct
     public void testGetControllingPlayer() {
         boolean test;
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        Scenario reader = new Scenario("resources/scenarios/0_Dummy.json");
         test = (reader.getControllingPlayer("Elves") == 1) &&
                 (reader.getControllingPlayer("Dwarrows") == 2);
         assertTrue(test);
@@ -79,7 +79,7 @@ public class ScenReaderTest extends TestCase {
     // test that the setup order is correct
     public void testGetSetupOrder() {
         boolean test;
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        Scenario reader = new Scenario("resources/scenarios/0_Dummy.json");
         test = (reader.getSetupOrder("Dwarrows") == 2) && 
                (reader.getSetupOrder("Elves") == 1);
         assertTrue(test);
@@ -88,7 +88,7 @@ public class ScenReaderTest extends TestCase {
     // test that the move order is correct
     public void testGetMoveOrder() {
         boolean test;
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        Scenario reader = new Scenario("resources/scenarios/0_Dummy.json");
         test = reader.getMoveOrder("Dwarrows") == 2 && 
                (reader.getMoveOrder("Elves") == 1);
         assertTrue(test);
@@ -102,7 +102,7 @@ public class ScenReaderTest extends TestCase {
         elvishProvinces = new ArrayList<>();
         elvishProvinces.add("Vynar");
         elvishProvinces.add("Nattily Woods");
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        Scenario reader = new Scenario("resources/scenarios/0_Dummy.json");
         test = reader.getProvinces("Elves").equals(elvishProvinces);
         dwarfProvinces = new ArrayList<>();
         dwarfProvinces.add("The Empire");
@@ -118,7 +118,7 @@ public class ScenReaderTest extends TestCase {
         elvishChars = new ArrayList<>();
         elvishChars.add("Dalmilandril");
         elvishChars.add("Linfalas");
-        ScenarioConfigurationReader reader = new ScenarioConfigurationReader("resources/scenarios/0_Dummy.json");
+        Scenario reader = new Scenario("resources/scenarios/0_Dummy.json");
         test = reader.getCharacters("Elves").equals(elvishChars);
         dwarfChars = new ArrayList<>();
         dwarfChars.add("Paladin Glade");

@@ -5,11 +5,10 @@
 package MoveCalculator;
 
 import Units.MoveableUnit;
-import java.util.ArrayList;
+import java.util.*;
 import sshexmap.MapHex;
 import ssterrain.HexEdge;
 import ssterrain.HexEdgeType;
-import ssterrain.ITTVortex;
 import ssterrain.TerrainType;
 
 /**
@@ -31,11 +30,24 @@ public class MovementCalculator
         throw new AssertionError();
     }
     
+    /* movement points cache for current movement calculation 
+       keeps track of best path to target hex */
+    static HashMap<MapHex, Double> allowance_cache;
+    
     /** 
      * This method returns void, but takes an empty ArrayList of MapHex objects
      * to be filled (by reference) during the recursive calls of this method. 
      * The ArrayList will (after final return) hold all valid hex moves for the 
      * moving unit, starting from the currentHex. (\/)..(;,,,;)..(\/)
+     * 
+     * Also, see MapHex.java comments (approx. line 320) for the hex edge 
+     * integer numbering scheme. For quick reference, the scheme is:
+     * 
+     *                     1     // North is 1
+     *                  2     0  // North-west is 2, North-East is 0
+     *                  3     5  // South-West is 3, South-East is 5
+     *                     4     // South is 4.
+     * 
      * @param movingUnit - the unit to be moved 
      * @param currentHex - the current hex location of the moving unit
      * @param moveAllowance - the unit's movement allowance.
@@ -45,6 +57,23 @@ public class MovementCalculator
     public static void getValidMoves(MoveableUnit movingUnit, MapHex currentHex,
             double moveAllowance, ArrayList<MapHex> validHexes) 
     {
+        //clear the cache, at the start of a new movement.
+        if(validHexes.isEmpty()) {
+            allowance_cache = new HashMap<MapHex, Double>();
+        }
+        /* check to see if there's already a faster path in the cache
+           if so no point in recursing.
+           if not, add the curret path as the fastest path
+        */
+        Double allowance;
+        allowance = allowance_cache.putIfAbsent(currentHex, moveAllowance);
+        if(allowance != null) {
+            if(allowance >= moveAllowance)
+                return;
+            else
+                allowance_cache.put(currentHex, moveAllowance);
+        }
+
         int edgeSignal = 0;
         double moveCost = 0;
         TerrainType destinationTerrainType;
@@ -66,6 +95,25 @@ public class MovementCalculator
             
             if( currentHex.IsVortexHex())
                 return;
+            
+            // check to see if current hex has enemy units in it
+            // if 0 then hex is empty
+            if( getUnits(currentHex, movingUnit) == 0 )
+            {
+                
+            }
+            // if 1 then hex has friendly units
+            // TODO check if there are more then 2 units
+            if( getUnits(currentHex, movingUnit) == 1 )
+            {
+                
+            }
+            // if -1 then hex has enemy units
+            if( getUnits(currentHex, movingUnit) == -1 )
+            {
+                
+            }
+            
             // Add the current hex
             if( !validHexes.contains(currentHex) )
                 validHexes.add(currentHex);
@@ -130,6 +178,43 @@ public class MovementCalculator
         {
             // do not add, do not recurse, moving here is illegal
             return;
+        }
+    }
+    /**
+     * This function checks to see if the sourceHex has enemy units in it. It 
+     * returns a 0 if the sourceHex has no units in it, 1 if it contains units
+     * but they are friendly units, and -1 if the sourceHex has enemy units.
+     * @param sourceHex
+     * @param movingUnit
+     * @return 
+     */
+    public static int getUnits(MapHex sourceHex, MoveableUnit movingUnit)
+    {
+        ArrayList<MoveableUnit> unitsInHex = new ArrayList<MoveableUnit>();
+        unitsInHex = sourceHex.getUnits();
+        
+        if( unitsInHex == null )
+        {
+            return 0;
+        }
+        /*
+        The error is here in the .get(0) function. It is trying to get the
+        first entry of an empty list. 
+        */
+        if( unitsInHex.size() > 0) //This if is killing the exception 
+        { 
+            if( unitsInHex.get(0).getID().equals(movingUnit.getID()) )
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        else
+        {
+            return 0;
         }
     }
     

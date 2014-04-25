@@ -13,12 +13,12 @@
 
 package CombatSimulator;
 import Units.*;
-import Units.Race;
+//import Units.Race;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.JComboBox;
+//import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import sscharts.*;
+//import sscharts.*;
 import static sscharts.ArmyCombatResultsTable.*;
 import static sscharts.CreatUnits.Create_unit1;
 import static sscharts.CreatUnits.Create_unit2;
@@ -65,7 +65,6 @@ public class CombatSimulated extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         Result = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -74,7 +73,6 @@ public class CombatSimulated extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         comboOne = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
         ComboTwo = new javax.swing.JComboBox();
         ComboThree = new javax.swing.JComboBox();
         jLabel11 = new javax.swing.JLabel();
@@ -109,13 +107,6 @@ public class CombatSimulated extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Clear");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Attacker Hex ID");
 
         jLabel2.setText("Defencer Hex ID");
@@ -132,13 +123,6 @@ public class CombatSimulated extends javax.swing.JFrame {
         });
 
         jLabel5.setText("Defender's Terrain Type");
-
-        jButton4.setText("Show Combat Result");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
 
         ComboTwo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Human", "Dragon", "Dwarrows", "Elves", "KillerPenguin", "Orc", "Spiders", "SwampCreature" }));
         ComboTwo.addActionListener(new java.awt.event.ActionListener() {
@@ -214,71 +198,71 @@ public class CombatSimulated extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
-                            .addComponent(jButton4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(comboOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ComboTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel10))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ComboThree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel11))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ComboFour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel12))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ComboFive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel14)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ComboSeven, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel16))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(ComboEight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ComboNine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel1)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel17)
-                                    .addComponent(jLabel18)))
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(ComboSix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel15)))
-                        .addGap(2, 2, 2)))
-                .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel13)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(comboOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel5))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ComboTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel10))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ComboThree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel11))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ComboFour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jLabel12))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ComboFive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(jLabel14)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ComboSeven, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel16))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(ComboEight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ComboNine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel17)
+                                            .addComponent(jLabel18)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ComboSix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel15)))
+                                .addGap(2, 2, 2)))
+                        .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -288,7 +272,6 @@ public class CombatSimulated extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(0, 0, 0)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(ComboTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel10))
@@ -320,16 +303,18 @@ public class CombatSimulated extends javax.swing.JFrame {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(ComboSeven, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel16))))
-                            .addGap(66, 66, 66)))
+                            .addGap(54, 54, 54)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(comboOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -338,13 +323,8 @@ public class CombatSimulated extends javax.swing.JFrame {
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(4, 4, 4)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
 
@@ -416,32 +396,78 @@ public class CombatSimulated extends javax.swing.JFrame {
         
         
         //results = PrepareAttackResults(attackers, defencers, hex1);
+        
+        // ArrayList result involve different datatypes
         ArrayList result = new ArrayList();
         result = PrepareAttackResults(attackers, defencers, hex1);
+        // index contains with # of restreat, # of elitimate, or 0 means no changes
         int[] index = (int[])result.get(0);
-        System.out.println("I get:" + index[0]);
-        System.out.println("I get:" + index[1]);
         int atk = (int)result.get(1);
         int def = (int)result.get(2);
         int after_def = (int)result.get(3);
         double ratio = (double)result.get(4);
+        
+        /* Bunch of testing codes
         System.out.println("I get atk:" + atk);
         System.out.println("I get def:" + def);        
         System.out.println("I get after atk:" + after_def);
-        System.out.println("I get ratio:" + ratio);
+        System.out.println("I get ratio:" + ratio);        
+        System.out.println("I get:" + result.get(2));
+        System.out.println("I get:" + result.get(3));
+        */
         
-        //System.out.println("I get:" + result.get(2));
-        //System.out.println("I get:" + result.get(3));
         int option= JOptionPane.showConfirmDialog(this,"Are you sure to combat?\n" + 
                                                        "Attacker Comabt Value: " + atk +
                                                        "\nDefender Combat: " + def + 
                                                        "\nDefender Combat Value after Terrain Bonus: " + after_def + 
                                                        "\nRatio is: " + ratio + "\n","Combat Decision Title",
                                                        JOptionPane.YES_NO_CANCEL_OPTION);
+        // So here, index[0] for attackers, index[1] for defenders.
+        // 0 => Nothing change
+        // 1,2=> retreat 1 or 2 units
+        // -1,-2=> Eliminate
         if(option==JOptionPane.YES_OPTION)
                 {
-                javax.swing.JOptionPane.showMessageDialog(null, "Attackers: " + index[0] + "\nDefenders: " + index[1]);
+                    if (index[0] == 0) {
+                        if (index[1] == 0) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Attackers: Stay.\nDefenders: Stay." );
+                        }
+                        else if (index[1] >=1) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Attackets: Stay.\nDefenders: Retreat " + index[1] + " Units.");
+                        }                        
+                        else {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Attackers: Stay.\nDefenders: Eliminate " + index[1] + "Units.");
+                        }
+                    }
+                    
+                    if (index[0] >= 1) {
+                        if (index[1] == 0) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Attackers: Retreat " + index[0] + "Units.\nDefenders: Stay." );
+                        }
+                        else if (index[1] >=1) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Attackers: Retreat " + index[0] + "Units. \nDefenders: Retreat " + index[1] + " Units.");
+                        }                        
+                        else {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Attackers: Retreat " + index[0] + "Units. \nDefenders: Eliminate " + index[1] + "Units.");
+                        }
+                    }
+                    
+                    if (index[0] <= -1) {
+                        if (index[1] == 0) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Attackers: Eliminate " + index[0] + "Units.\nDefenders: Stay." );
+                        }
+                        else if (index[1] >=1) {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Attackers: Eliminate " + index[0] + "Units. \nDefenders: Retreat " + index[1] + " Units.");
+                        }                        
+                        else {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Attackers: Eliminate " + index[0] + "Units. \nDefenders: Eliminate " + index[1] + "Units.");
+                        }
+                    }
+                            
+                    
                 }
+                
+
   	    else
   	    	{
   	    	 return;	    
@@ -455,14 +481,6 @@ public class CombatSimulated extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        jTextField2.setText("");
-        jTextField3.setText("");
-
-
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void comboOneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboOneActionPerformed
         // TODO add your handling code here:
         itemText = (String)comboOne.getSelectedItem();
@@ -470,11 +488,6 @@ public class CombatSimulated extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_comboOneActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(null, "Attackers: " + results[0] + "\nDefenders: " + results[1]);
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void ComboTwoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboTwoActionPerformed
         // TODO add your handling code here:
@@ -564,8 +577,6 @@ public class CombatSimulated extends javax.swing.JFrame {
     private javax.swing.JComboBox comboOne;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

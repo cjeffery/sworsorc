@@ -2,12 +2,7 @@
     "scenarioName": "The War of the Great Sword",
     "gameLength":14,
     "numberOfPlayers":2,
-    
-    "sunTrackSetting" : {
-        "yellow":1,
-        "blue":"H",
-        "red":"B"
-    },
+    "blueSunStart":8,
     
     "nations": [
         {
