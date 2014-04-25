@@ -27,6 +27,7 @@ import sshexmap.MapView;
  * @author keith
  */
 public class MovementCalculatorTest extends TestCase {
+    /*
     private MapView mapView;
     private MainMap map;
     private UnitPool pool;
@@ -116,9 +117,10 @@ public class MovementCalculatorTest extends TestCase {
     @Override public void keyTyped(KeyEvent e) {}
     
     @Override public void keyPressed(KeyEvent e) {
-        /*int key = e.getKeyCode();*/
+        //int key = e.getKeyCode();
 
     }
 
     @Override public void keyReleased(KeyEvent e) {}
+    */
 }
