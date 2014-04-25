@@ -1,5 +1,6 @@
 /**
- * The Network Client
+ * NetworkClient.java
+ * The Network Client for Swords and Sorcery
  * <p>
  * Handles client-side communication with the server
  */
@@ -13,15 +14,15 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
+import mainswordsorcery.Game;
 
 /**
  * The Infamous Network Client, handles communication to/from Network Server
+ * Call initializeClient() to startup the client. Any calls before this will fail.
  * <p>
  * NOTE: This is a static singleton. 
- * Don't fool around trying to create instances, you hear now?
  */
 public class NetworkClient {
-// TODO: New messaging protocol, one that doesn't cause carpal tunnel syndrome from sheer amount of characters
 
     // iNet variables
     private static Socket socket = null;
@@ -46,10 +47,10 @@ public class NetworkClient {
     private static ClientThread clientThread;
     
     private static String lastMessage;
-    
-    // Until we have a working HUD reference
-    private static boolean hudWorking = false;
 
+    // Flags
+    private static boolean clientStarted = false; // Professional naming >_>
+    
     //private Conductor jarvis; // Our conductor object
 
     /* PUBLIC METHODS */
@@ -61,9 +62,7 @@ public class NetworkClient {
      * @return True if started OK, False if connection failed
      */
     public static boolean initializeClient() {
-        configureSettings("netclient_settings.txt"); // default filename
-        startLocalStreams();
-        return connect() ? startConnection() : false;     
+        return initializeClient("netclient_settings.txt"); // default filename
     }
     
     /**
@@ -76,7 +75,8 @@ public class NetworkClient {
     public static boolean initializeClient( String filename ) {
         configureSettings(filename);
         startLocalStreams();
-        return connect() ? startConnection() : false;     
+        
+        return connect() ? (clientStarted = startConnection()) : false;     
 
     }
     
@@ -189,8 +189,7 @@ public class NetworkClient {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                //Game.getInstance().hudController.postMessage(lastMessage);
-                // TODO: Broken reference to hudController
+                Game.getInstance().hudController.postMessage(lastMessage);
             }
         });
     }
@@ -271,6 +270,10 @@ public class NetworkClient {
      */
     public static String getUsername() {
         return username;
+    }
+    
+    public static boolean clientInitialized() {
+        return clientStarted;
     }
 
     /* THREAD N' STREAM STUFF */
@@ -564,12 +567,8 @@ public class NetworkClient {
      * @author Christopher Goes
      */
     private static void startLocalStreams() {
-        if( hudWorking ) {
-            // HUD-y stuff here
-        } else {
             consoleIn = new BufferedReader(new InputStreamReader(System.in));
             consoleOut = new PrintWriter(System.out, true);
-        }
     }
 
     /**

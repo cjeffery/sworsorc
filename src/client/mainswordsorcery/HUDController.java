@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package mainswordsorcery;
 
@@ -14,7 +9,6 @@ import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.Color;
 import static java.lang.Integer.parseInt;
-import static java.lang.String.valueOf;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -34,12 +28,9 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-import sshexmap.MainMap;
 import sshexmap.MapHex;
 import sshexmap.MapView;
 
-import systemServer.ClientData;
-import systemServer.ClientDataForm;
 import systemServer.NetworkClient;
  
 public class HUDController {
@@ -394,10 +385,11 @@ public class HUDController {
     /** 
      * Displays user text in chat_box
      * 
+     * @param event
      * @author Joe Higley, Gabe Pearhill      
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
-        if (!usernameEntered) {
+        if (!usernameEntered) { // TODO: this should be handled in NetworkClient
             if (!"".equals(message_box.getText())) {
                 username = message_box.getText();
                 usernameEntered = true;
@@ -506,6 +498,7 @@ public class HUDController {
     /**
      * Connect to server
      *
+     * @return 
      * @author Gabe Pearhill
      */
     public boolean connectToServer() {
@@ -514,16 +507,7 @@ public class HUDController {
         NetworkClient.setServerPort(25565);
         NetworkClient.setUsername(username);
 
-        if (NetworkClient.connect()) {
-            if (NetworkClient.connect()) {
-                //NetworkClient.runClient(true);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        return NetworkClient.initializeClient();
     }
     
     /**
