@@ -7,6 +7,7 @@
 package Spells;
 
 import Character.Character;
+import mainswordsorcery.Game;
 import Units.*;
 
 import Spells.PL_1.*;
@@ -81,7 +82,7 @@ public class CastSpell{
                 Immobilization immobilization = new Immobilization();
                 break;
             case "Conjure Wyvern Airtroops":
-                C_W_A c_w_a = new C_W_A();
+                C_W_A c_w_a = new C_W_A(character);
                 break;
             case "Dispell Magicks":
                 Dispell_Magicks d_m = new Dispell_Magicks();
