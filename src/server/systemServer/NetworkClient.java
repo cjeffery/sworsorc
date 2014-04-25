@@ -49,7 +49,7 @@ public class NetworkClient {
     private static String lastMessage;
 
     // Flags
-    private static boolean clientStarted = false; // Professional naming >_>
+    private static boolean clientInitialized = false; // Professional naming >_>
     
     //private Conductor jarvis; // Our conductor object
 
@@ -60,6 +60,7 @@ public class NetworkClient {
      * <p>
      * Starts local streams, connects to server, and makes the connection live
      * @return True if started OK, False if connection failed
+     * @author Christopher Goes
      */
     public static boolean initializeClient() {
         return initializeClient("netclient_settings.txt"); // default filename
@@ -70,13 +71,15 @@ public class NetworkClient {
      * Starts local streams, connects to server, and makes the connection live
      * 
      * @param filename Name of Network Settings file
-     * @return True if started OK, False if connection failed
+     * @return Fails if unable to connect, or connection startup failed
+     * @author Christopher Goes
      */
     public static boolean initializeClient( String filename ) {
+        if(clientInitialized) { return true; }
         configureSettings(filename);
         startLocalStreams();
         
-        return connect() ? (clientStarted = startConnection()) : false;     
+        return connect() ? (clientInitialized = startConnection()) : false;     
 
     }
     
@@ -87,7 +90,7 @@ public class NetworkClient {
      * @return boolean True if successful, false if not
      * @author Christopher Goes
      */
-    public static boolean connect() { // TODO: connect pass arguments, or no longer public?
+    public static boolean connect() {
         try {
             socket = connectToServer(serverName, port);
             return true;
@@ -207,6 +210,13 @@ public class NetworkClient {
         MessageUtils.sendMessage(writer, MessageUtils.makeYieldTurnMessage());
     }
     
+    /**
+     * Executes a network command
+     * For testing purposes
+     * @param command
+     * @return 
+     * @author Christopher Goes
+     */
     public static boolean testCommand( String command ) {
         return processInput(command);
     }
@@ -270,10 +280,6 @@ public class NetworkClient {
      */
     public static String getUsername() {
         return username;
-    }
-    
-    public static boolean clientInitialized() {
-        return clientStarted;
     }
 
     /* THREAD N' STREAM STUFF */
@@ -859,6 +865,7 @@ public class NetworkClient {
      */
     public static void main(String[] args) {
 
+        // TODO: do we need this outside of testing? Can we eventually removed the two classes?
         ClientData clientData = new ClientData();
         ClientDataForm clientDataForm = new ClientDataForm(clientData);
 
