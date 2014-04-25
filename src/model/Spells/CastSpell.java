@@ -7,6 +7,7 @@
 package Spells;
 
 import Character.Character;
+import Units.*;
 
 import Spells.PL_1.*;
 import Spells.PL_2.*;
@@ -22,7 +23,7 @@ import Spells.PL_7.*;
  * @author Tao Zhang
  */
 public class CastSpell{
-
+    public static ArmyUnit conjured = null;
     public double TotalMannaCost;
     
     Character character;
@@ -146,6 +147,12 @@ public class CastSpell{
                 break;
             default:
                 System.err.println("Error: Unknown spell name: CastSpell: call_spell");
+        }
+        
+        if(conjured != null){
+            //TODO:
+            //insert the conjured unit into the Unit Pool
+            conjured = null;
         }
     }
     

@@ -8,6 +8,7 @@ package Spells.PL_1;
 
 import Character.Character;
 import Units.*;
+import static Spells.CastSpell.conjured;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -75,10 +76,12 @@ public final class C_Z_I {
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
             // perform
+            caster.CostManna(1);
             ArmyUnit unit1 = new ZombieInfantry(caster, 1);
             unit1.SetLifeSpan(2);
             unit1.setLocation(caster.getLocation());
             
+            conjured = unit1;
             if(getDistance() <= getRange()){
                 //peform spell
             }
