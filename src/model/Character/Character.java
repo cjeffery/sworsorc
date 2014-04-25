@@ -64,7 +64,7 @@ public final class Character extends MoveableUnit{
         spellBook.getSpellBook();
     }
     
-    public boolean cheackManna(int x){
+    public boolean checkManna(double x){
         return CurrentManna >= x;
     }
     public void CostManna(double mc){

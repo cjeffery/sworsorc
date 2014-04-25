@@ -47,14 +47,7 @@ public final class C_W_A {
     
     //check mana available
     public boolean checkMana(){
-        boolean mana = false;
-        
-        //if( enough mana ){
-          //  mana = true;
-        //}
-        //else{ print message that not enough mana};
-        
-        return mana;
+        return caster.checkManna(1.5);
     }
     
     //return spell range

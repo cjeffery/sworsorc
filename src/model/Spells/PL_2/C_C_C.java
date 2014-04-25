@@ -46,7 +46,7 @@ public final class C_C_C {
     }   
     //check mana available
     public boolean checkMana(){
-        return caster.cheackManna(1);
+        return caster.checkManna(1);
     }
     
     //return spell range
