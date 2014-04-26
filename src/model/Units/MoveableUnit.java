@@ -65,6 +65,74 @@ public class MoveableUnit {
     public void setRace(Race newRace){
         this.race = newRace;
     }
+    
+    /** 
+     * Matt: Not trying to step on your toes. Talk to me about this if it's 
+     * not right. I just needed to be able to access it from Scenario.
+     * 
+     * @author Tyler Jaszkowiak
+     */
+    public void setNation(Nation newNation) {
+        this.nation = newNation;
+    }
+    
+    public void setNation(String nationStr) {
+        switch (nationStr) {
+            case "ImperialArmy":
+                setNation(Nation.ImperialArmy);
+                break;
+            case "Elven":
+                setNation(Nation.Elven);
+                break;
+            case "IndependentHuman":
+                setNation(Nation.IndependentHuman);
+                break;
+            case "ORC":
+                setNation(Nation.ORC);
+                break;
+            case "Goblin":
+                setNation(Nation.Goblin);
+                break;
+            case "SwampCreature":
+                setNation(Nation.SwampCreature);
+                break;
+            case "Cronk":
+                setNation(Nation.Cronk);
+                break;
+            case "Conjured":
+                setNation(Nation.Conjured);
+                break;
+            case "Krasnian":
+                setNation(Nation.Krasnian);
+                break;
+            case "Zirkastian":
+                setNation(Nation.Zirkastian);
+                break;
+            case "Mercenary":
+                setNation(Nation.Mercenary);
+                break;
+            case "WhiteORC":
+                setNation(Nation.WhiteORC);
+                break;
+            case "CorfluCultist":
+                setNation(Nation.CorfluCultist);
+                break;
+            case "SpiderFolk":
+                setNation(Nation.SpiderFolk);
+                break;
+            case "Convivian":
+                setNation(Nation.Convivian);
+                break;
+            case "none":
+                setNation(Nation.none);
+                break;
+            default:
+                System.err.println("Incorrect Nation sent to setNation(String)");
+                System.err.println("Recieved: " + nationStr);
+                setNation((Nation)null);
+        }
+    }
+    
      /**
       * Set the race of a MoveableUnit from a string. If the string 
       * is not part of the {@link Race} enumerated list, it is set to 
@@ -101,6 +169,9 @@ public class MoveableUnit {
                 break;
             case "SwampCreature":
                 setRace(Race.SwampCreature);
+                break;
+            case "Goblins":
+                setRace(Race.Goblins);
                 break;
             default:
                 System.err.println("Incorrect Race sent to setRace(String)");

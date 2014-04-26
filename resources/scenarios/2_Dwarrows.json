@@ -5,63 +5,83 @@
     "blueSunStart":6,
 
     
-    "nations": [
+    "armies": [
         {
             "name": "Elves",
 	    "player":1,
-            "provinces": ["Vynar"],
             "setupOrder":3,
             "moveOrder":3,
             
-            "units": {
-              "HorseArcher":2,
-              "LightHorse":6,
-              "LightSword":4,
-              "LightBow":4,
-              "MediumSpear":4
-            },
+            "nations": [
+                {
+                    "name":"Elven",
+                    "race":"Elves",
+                    "provinces": ["Vynar"],
+                    "units": {
+                        "HorseArcher":2,
+                        "LightHorse":6,
+                        "LightSword":4,
+                        "LightBow":4,
+                        "MediumSpear":4
+                    },
             
-            "characters": [
-                "Dalmilandril",
-                "Linfalas"
+                    "characters": [
+                        "Dalmilandril",
+                        "Linfalas"
+                    ]
+                }
             ],
+            
 	    "reinforcements":"0",
             "replacements":"1 in 2"
         },
         {
-            "name": "Dwarrows",
+            "name": "Black Dwarrows",
 	    "player":2,
-            "provinces": ["Outer Krasnia","Intas"],
             "setupOrder": 1,
             "moveOrder": 1,
-            "units": {
-              "HeavyAxe":11,
-              "Bow":2,
-              "WargRider":6
-            },
+            "nations": [
+                {
+                    "name":"Krasnian",
+                    "race":"Dwarrows",
+                    "provinces": ["Outer Krasnia","Intas"],
+                    "units": {
+                        "HeavyAxe":11,
+                        "Bow":2,
+                        "WargRider":6
+                    },
             
-            "characters": [
-                "Gerudirr"
+                    "characters": [
+                        "Gerudirr Dragonslayer"
+                    ]
+                }
             ],
+
 	    "reinforcements":"0",
             "replacements":"1 in 3"
         },
         {
             "name": "The Dark Lord",
 	    "player":2,
-            "provinces": ["Intas","Isle of Blood"],
             "setupOrder": 2,
             "moveOrder": 2,
-            "units": {
-              "HeavySword":4,
-	      "LightHorse":4,
-	      "HeavyHorse":2,
-	      "LightSpear":8
-            },
+            "nations": [
+                {
+                    "name":"Goblin",
+                    "race":"Goblins",
+                    "provinces": ["Intas","Citadel of Blood"],
+                    "units": {
+                        "HeavySword":4,
+                        "LightHorse":4,
+                        "HeavyHorse":2,
+                        "LightSpear":8
+                    },
             
-            "characters": [
-                "The Dark Lord",
-		"Ganab the Nasty"
+                    "characters": [
+                        "Loki Hellsson",
+                        "Ganab the Nasty"
+                    ]
+                }
             ],
 	    "reinforcements":"0",
             "replacements":"1 in 2"
