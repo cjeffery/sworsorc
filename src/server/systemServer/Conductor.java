@@ -67,7 +67,7 @@ public class Conductor { // Should this be a static singleton?
      * @param tag The message tag
      */
     public void processMessage( List<String> message, String tag ) {
-        if (message.get(0).equals(MessageUtils.UPDATE_UNIT)){
+       /* if (message.get(0).equals(MessageUtils.UPDATE_UNIT)){
             UnitPool pool = UnitPool.getInstance();
             MoveableUnit unit = pool.getUnit(message.get(1));
             String location = message.get(2);
@@ -80,7 +80,7 @@ public class Conductor { // Should this be a static singleton?
             String location = message.get(4);
             //needs player ID
             //pool.addUnit(port, unit);
-        }
+        }*/
     }
     
     // For each major part of the game, put a different method that calls those object's methods

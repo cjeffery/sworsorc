@@ -84,44 +84,59 @@ public class MessagePhoenix {
     /* UTILITY METHODS */
     
     private static void send( ObjectOutputStream writer, List<Object> message ) {
-        if( writer != null ) {
+        if( writer != null && message != null ) {
             try {
                 writer.writeObject(message);
                 writer.flush();
-            } catch (IOException ex) {
-            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
-            ex.printStackTrace();            }
+            } catch (IOException ex) {            
+                ex.printStackTrace();            
+            }
        } else {
-            System.err.println();
+            System.err.println("Null stream passed to send!!");
         }
     }
 
     public static List<Object> createMessage( Object... message ) {
-        List<Object> temp = new ArrayList<>();
+        List<Object> temp = new ArrayList<>(0);
         temp.addAll(Arrays.asList(message));
         return temp;
     }
     
     public static List<Object> createMessage( String tag, Object... message ) {
-        List<Object> temp = new ArrayList<>();
+        List<Object> temp = new ArrayList<>(0);
         temp.add(tag);
         temp.addAll(Arrays.asList(message));
         return temp;
     }
     
     public static List<String> createStringList( Object... items ) {
-        List<String> temp = new ArrayList<>();
+        List<String> temp = new ArrayList<>(0);
         for( Object o : items ) {
             temp.add(o.toString());
         }
         return temp;
     }
     
+    /**
+     * Must be passed as var-args, prepackaging will mess the process up!
+     * Unless you're actually sending a string of course...make sure its getting parsed then!
+     * @param writer
+     * @param tag
+     * @param message
+     * @throws IOException 
+     */
     public static void sendMessage ( ObjectOutputStream writer, String tag, Object... message ) throws IOException {
         send( writer,  createMessage( tag, message) );
     }
     
+    /**
+     * Overload without specified tag
+     * Make assumption that first object is tag
+     * 
+     * @param writer
+     * @param message
+     * @throws IOException 
+     */
     public static void sendMessage (ObjectOutputStream writer, Object... message ) throws IOException {
         send(writer, createMessage( message )); // pass it along, assume first entry is tag
     }
@@ -129,18 +144,17 @@ public class MessagePhoenix {
     // TODO: tag stripping done in MessagePhoenix
     @SuppressWarnings("unchecked")
     public static List<Object> recieveMessage( ObjectInputStream reader ) {
+        List<Object> temp = new ArrayList<>(0);
         try {
-            return reader != null ? (List<Object>) reader.readObject() : null;
+            temp = (List<Object>) reader.readObject();
         } catch (IOException | ClassNotFoundException | NullPointerException ex ) {
-            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
             ex.printStackTrace();
         }
-        return null;
+        return temp;
     }
     
     public static List<String> objectToString( List<Object> list ) {
-        List<String> temp = new ArrayList<>();
+        List<String> temp = new ArrayList<>(0);
         for (Object o : list) {
             temp.add(o != null ? o.toString() : null);
         }
@@ -148,7 +162,7 @@ public class MessagePhoenix {
     }
     
     public static List<Object> stringToObject( List<String> list ) {
-        List<Object> temp = new ArrayList<>();
+        List<Object> temp = new ArrayList<>(0);
         for (String s : list ) {
             temp.add( s != null ? s : null );
         }

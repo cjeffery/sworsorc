@@ -379,10 +379,7 @@ public class NetworkClient {
             try {
                 MessagePhoenix.sendMessage(writer, tag, message);
             } catch (IOException | NullPointerException ex) {
-                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
-                ex.printStackTrace();
-        
+                ex.printStackTrace();       
             }
         }
         @Override
@@ -749,8 +746,6 @@ public class NetworkClient {
                 Game.getInstance().hudController.postMessage(lastMessage);
             }
         });
-        //Game.getInstance().hudController.postMessage(lastMessage);
-
     }
     
     /**
@@ -762,7 +757,7 @@ public class NetworkClient {
     private static void flushToConsole( String lastMessage ) {
         consoleOut.println(lastMessage); // TODO: append username/tags!
         consoleOut.flush();
-        postMessage(lastMessage);
+        //postMessage(lastMessage);
     }
     
     /**
@@ -838,10 +833,19 @@ public class NetworkClient {
      * @author Christopher Goes
      */
     private static boolean connect() { // TODO: connect pass arguments, or no longer public?
+        flushToConsole("Connecting! Please Wait...");
+
         try {
             socket = connectToServer(serverName, port);
-            return true;
-        } catch (NullPointerException | IOException ex) {
+            if( socket != null ) {
+                flushToConsole("Connected successfully to " + socket.getInetAddress() + " through port " + socket.getPort() + "!" );
+                return true;
+            } else {
+                flushToConsole("Failed to connect!");
+                return false;
+            }
+        
+        } catch (NullPointerException ex) {
             System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
                     + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
             ex.printStackTrace();
@@ -858,18 +862,18 @@ public class NetworkClient {
      * @return Socket
      * @throws IOException
      */
-    private static Socket connectToServer(String sName, int serverPort) throws IOException {
-        Socket tempsock = null;
-        consoleOut.print("Connecting! Please Wait...");
+    private static Socket connectToServer(String sName, int serverPort) {
         try {
-            tempsock = new Socket(sName, serverPort);
+            return( new Socket(sName, serverPort));
         } catch (UnknownHostException e) {
-            System.err.println("Error : Unknown host!\nException: " + e);
+            System.err.println("Error : Unknown host!" );
         } catch (ConnectException e) {
-            System.err.println("Error : Connection Refused!\nException: " + e);
+            System.err.println("Error : Connection Refused!");
+        } catch (IOException e ) {
+            System.err.println("Error: IOException in connectToServer!\nException: " + e);
+            e.printStackTrace();
         }
-        flushToConsole("Connected successfully to " + tempsock.getInetAddress() + " through port " + tempsock.getPort() + "!" );
-        return tempsock;
+        return null;
     }
     
     /**

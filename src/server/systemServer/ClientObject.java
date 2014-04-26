@@ -388,7 +388,7 @@ public class ClientObject {
         
         private void sendMessage(String tag, Object... message) {
             try {
-                MessagePhoenix.sendMessage(writer, tag, message);
+                MessagePhoenix.sendMessage(this.writer, tag, message);
             } catch (IOException ex) {
                 System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
                         + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
