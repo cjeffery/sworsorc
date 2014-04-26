@@ -97,22 +97,28 @@ public class MessagePhoenix {
     }
 
     public static List<Object> createMessage( Object... message ) {
-        List<Object> temp = new ArrayList<>(0);
-        temp.addAll(Arrays.asList(message));
+        List<Object> temp = new ArrayList<>();
+        for (Object object : message){
+            temp.add(object);
+        }
+        //temp.addAll(Arrays.asList(message));
         return temp;
     }
     
     public static List<Object> createMessage( String tag, Object... message ) {
         List<Object> temp = new ArrayList<>(0);
         temp.add(tag);
-        temp.addAll(Arrays.asList(message));
+        for (Object object : message){
+            temp.add(object);
+        }
+        //temp.addAll(Arrays.asList(message));
         return temp;
     }
     
     public static List<String> createStringList( Object... items ) {
         List<String> temp = new ArrayList<>(0);
         for( Object o : items ) {
-            temp.add(o.toString());
+            temp.add((String) o);
         }
         return temp;
     }
@@ -146,7 +152,11 @@ public class MessagePhoenix {
     public static List<Object> recieveMessage( ObjectInputStream reader ) {
         List<Object> temp = new ArrayList<>(0);
         try {
-            temp = (List<Object>) reader.readObject();
+            if (reader != null){
+                Object ob = reader.readObject();
+                System.out.println("Read object of type: " + ob.getClass());
+            }
+            return reader != null ? (ArrayList<Object>) reader.readObject() : null;
         } catch (IOException | ClassNotFoundException | NullPointerException ex ) {
             ex.printStackTrace();
         }
@@ -154,9 +164,10 @@ public class MessagePhoenix {
     }
     
     public static List<String> objectToString( List<Object> list ) {
-        List<String> temp = new ArrayList<>(0);
-        for (Object o : list) {
-            temp.add(o != null ? o.toString() : null);
+        List<String> temp = new ArrayList<>();
+        for (Object ob : list) {
+            System.out.println(ob.getClass()); //The client shows type string, the server shows type ArrayList. Why? I can't figure this out.
+            temp.add(ob != null ? ob.toString() : null); //This doesn't cast to a string, which is why we get those brackets on either side in server
         }
         return temp;
     }

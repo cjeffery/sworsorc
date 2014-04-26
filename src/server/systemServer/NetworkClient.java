@@ -7,9 +7,11 @@ package systemServer;
 
 import Units.MoveableUnit;
 import Units.UnitPool;
+import com.sun.corba.se.pept.transport.ListenerThread;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
@@ -396,7 +398,7 @@ public class NetworkClient {
                     ex.printStackTrace();
                 }
                 if (message != null ) { // assume first object is tag
-                    sendMessage( message.get(0).toString(), message.subList(1, message.size()));
+                    sendMessage( message.get(0).toString(), new ArrayList(message.subList(1, message.size())));
                 } else {
                     System.err.println("Null message!");
                     killThread();
