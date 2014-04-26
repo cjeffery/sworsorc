@@ -74,8 +74,8 @@ public class MovementCalculator
                 allowance_cache.put(currentHex, moveAllowance);
         }
 
-        int edgeSignal = 0;
-        double moveCost = 0;
+        int edgeSignal;
+        double moveCost;
         TerrainType destinationTerrainType;
         ArrayList<MapHex> neighbors = new ArrayList<MapHex>();
         
