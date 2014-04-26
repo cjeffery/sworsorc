@@ -41,7 +41,7 @@ public class DiplomacyController {
         Node node = (Node) event.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
         stage.setScene(Game.getInstance().getHudScene());
-        stage.setFullScreen(true);
+        stage.setFullScreen(Game.getInstance().fullscreen);
         stage.show();
     }
 }

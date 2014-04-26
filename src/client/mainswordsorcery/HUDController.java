@@ -442,7 +442,7 @@ public class HUDController {
     @FXML protected void Quit(ActionEvent event) {
         Stage stage = (Stage) menuBar.getScene().getWindow();
         stage.setScene(Game.getInstance().getMainScene());
-        stage.setFullScreen(true);
+        stage.setFullScreen(Game.getInstance().fullscreen);
         stage.show();
     }
     

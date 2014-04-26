@@ -51,7 +51,38 @@ public class Game extends Application {
     
     /** Stored reference to the HUDController instance used by JavaFX*/
     public HUDController hudController;
+
+    /* window options, for development convenience */
+    static int window_flag = 0; //0 = fullscreen, 1 = left, 2 = right, 3 = wind
+    public boolean fullscreen = true;
+    double screenX;
+    double screenY;
+    double screenW;
+    double screenH;
     
+    /** part of an ugly hack to set screen dimensions if command line option
+     * is entered
+     */ 
+    private void setScreenDimensions() {
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        screenX = screenBounds.getMinX();
+        screenY = screenBounds.getMinY();
+        screenW = screenBounds.getWidth();
+        screenH = screenBounds.getHeight();
+        fullscreen = (window_flag == 0);
+        if(window_flag == 1) {
+            screenW /= 2;          
+        }
+        else if(window_flag == 2) {
+            screenX = (screenX = screenW / 2);
+            screenW /= 2;
+        }
+        stage.setX(screenX);
+        stage.setY(screenY);
+        stage.setWidth(screenW);
+        stage.setHeight(screenH);
+                
+    }
     private Stage stage;
     public Stage getStage() {
         return stage;
@@ -60,14 +91,8 @@ public class Game extends Application {
     @Override
     public void start(Stage st) throws IOException {
         stage = st;
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        //set Stage boundaries to visible bounds of the main screen
-        stage.setX(screenBounds.getMinX());
-        stage.setY(screenBounds.getMinY());
-        stage.setWidth(screenBounds.getWidth());
-        stage.setHeight(screenBounds.getHeight());
+        setScreenDimensions();
         
-
         main = createScene("MainMenu.fxml");
         hud = createScene("hud.fxml");
         diplo = createScene("Diplomacy.fxml");
@@ -100,16 +125,20 @@ public class Game extends Application {
         
         main.getStylesheets().add(mainCSS);
 //        hud.getStylesheets().add(mainCSS);
-        mainMenu = new Scene(main, screenBounds.getWidth(), screenBounds.getHeight());        
-        hudWindow = new Scene(hud, screenBounds.getWidth(), screenBounds.getHeight());
+        mainMenu = new Scene(main, screenW, screenH);        
+        hudWindow = new Scene(hud, screenW, screenH);
 
         Diplomacy = new Scene(diplo, 500, 500);
         
 
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);
-        stage.setFullScreen(true);
-        stage.setFullScreenExitHint("");
+        
+        if(fullscreen) {
+            stage.setFullScreen(true);
+            stage.setFullScreenExitHint("");
+        }
+        
         stage.show();
     }
     
@@ -130,6 +159,20 @@ public class Game extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        for(String s : args) {
+            if(s.equals("left")) {
+                window_flag = 1;
+                break;
+            }
+            if(s.equals("right")) {
+                window_flag = 2;
+                break;
+            }
+            if(s.equals("window")) {
+                 window_flag = 3;
+                 break;
+            }
+        }
         launch(args);
     }
    
