@@ -88,35 +88,58 @@ public class HUDController {
         hmap.setContent(hmapContent);
         map_view.setContent(hmap);
         //adds mouse support to hmap
+        setupEventHandlers();
+        
+        /**
+         * Initialization of the Solar Display
+         * Johnathan Flake
+         * Temporary fix that always loads the dummy scenario, need to find where
+         * HUDController loads the scenario or game or whatever
+         * and put this code after
+         */
+  
+        Scenario.Initialize("resources/scenarios/0_Dummy.json");      
+        SolarDisplay.SunCheck();
+        Image Sun = new Image(SolarDisplay.GetSunImage());
+        SunImage.setImage(Sun);
+        
+        RedState.setText(SolarDisplay.GetRedState());
+        BlueState.setText(SolarDisplay.GetBlueState());
+    }
+    
+    /**
+     * big messy function to set up event handlers
+     */
+    void setupEventHandlers() {
         hmap.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-		public void handle (MouseEvent mouseEvent) {
-                    //finds out at which hex a mouse event occured
-                    String hexID = hmapContent.hexAt((int)mouseEvent.getX(), (int)mouseEvent.getY());
-                    MapHex hex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);
-                    //allows deselecting of unit with left mouse button
-                    if( mouseEvent.isPrimaryButtonDown() && selected_unit != null){
-                        DeselectUnit( hexID, hex );
-                    }           
-                    //select a unit if none previously selected
-                    else if( mouseEvent.isPrimaryButtonDown()){
-                        SelectUnit( hexID, hex );
-                    }             
-                    //move unit with right mouse button in movement phase
-                    else if( mouseEvent.isSecondaryButtonDown() && selected_unit != null && phase.getText().equalsIgnoreCase("Movement")){
-                        MoveUnit( hexID, hex );
-                    }
-                    //allows deselecting of target unit with right mouse button
-                    else if( mouseEvent.isSecondaryButtonDown() && target_unit != null){
-                        DetargetUnit( hexID, hex );
-                    }                    
-                     //choose target unit in combat or spell phase
-                    else if( mouseEvent.isSecondaryButtonDown() //right mouse button
-                             && !phase.getText().equalsIgnoreCase("Movement") //check phase
-                             && target_unit == null){ //check if target unit already chosen
-                        TargetUnit( hexID, hex );
-                    }
+            @Override
+            public void handle (MouseEvent mouseEvent) {
+                //finds out at which hex a mouse event occured
+                String hexID = hmapContent.hexAt((int)mouseEvent.getX(), (int)mouseEvent.getY());
+                MapHex hex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);
+                //allows deselecting of unit with left mouse button
+                if( mouseEvent.isPrimaryButtonDown() && selected_unit != null){
+                    DeselectUnit( hexID, hex );
+                }           
+                //select a unit if none previously selected
+                else if( mouseEvent.isPrimaryButtonDown()){
+                    SelectUnit( hexID, hex );
+                }             
+                //move unit with right mouse button in movement phase
+                else if( mouseEvent.isSecondaryButtonDown() && selected_unit != null && phase.getText().equalsIgnoreCase("Movement")){
+                    MoveUnit( hexID, hex );
                 }
+                //allows deselecting of target unit with right mouse button
+                else if( mouseEvent.isSecondaryButtonDown() && target_unit != null){
+                    DetargetUnit( hexID, hex );
+                }                    
+                 //choose target unit in combat or spell phase
+                else if( mouseEvent.isSecondaryButtonDown() //right mouse button
+                         && !phase.getText().equalsIgnoreCase("Movement") //check phase
+                         && target_unit == null){ //check if target unit already chosen
+                    TargetUnit( hexID, hex );
+                }
+            }
 	});
         /*
         //adds keyboard support to hmap
@@ -131,6 +154,7 @@ public class HUDController {
 			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
 		}
 	});
+        
         //setup network
         connectedToServer = usernameEntered = ipEntered = false;
         chat_box.setText("Enter your username!");
@@ -166,23 +190,7 @@ public class HUDController {
                     Image img = new Image("file:resources/images/undo_hover.png");
                     undo_pic.setImage(img);
                 }
-        });
-        
-                /**
-         * Initialization of the Solar Display
-         * Johnathan Flake
-         * Temporary fix that always loads the dummy scenario, need to find where
-         * HUDController loads the scenario or game or whatever
-         * and put this code after
-         */
-  
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");      
-        SolarDisplay.SunCheck();
-        Image Sun = new Image(SolarDisplay.GetSunImage());
-        SunImage.setImage(Sun);
-        
-        RedState.setText(SolarDisplay.GetRedState());
-        BlueState.setText(SolarDisplay.GetBlueState());
+        });        
     }
     /** 
      * deselects a unit with left mouse button
