@@ -2,45 +2,53 @@
     "scenarioName": "The Dummy Scenario",
     "gameLength":3,
     "numberOfPlayers":2,
-    "blueSunStart":9,
+    "blueSunStart":3,
     
     
-    "nations": [
+    "armies": [
         {
             "name": "Elves",
 	    "player":1,
-            "provinces": ["Intas"],
             "setupOrder":1,
             "moveOrder":1,
-            
-            "units": {
-              "HorseArcher":4,
-              "Bow":4,
-              "PikeMan":4,
-              "LightSword":4
-            },
-            
-            "characters": [
-                "Dalmilandril",
-                "Linfalas"
+            "nations": [
+                {
+                    "name":"Elven",
+                    "race":"Elves",
+                    "provinces":["Intas"],
+                    "units": {
+                        "HorseArcher":4,
+                        "Bow":4,
+                        "LightSword":4
+                    },
+                    "characters": [
+                        "Dalmilandril",
+                        "Linfalas"
+                    ]
+                }
             ],
 	    "reinforcements":"0",
             "replacements":"0"
         },
         {
-            "name": "Dwarrows",
+            "name": "Convivian",
 	    "player":2,
-            "provinces": ["Ithilgil","Graumthog"],
             "setupOrder": 2,
             "moveOrder": 2,
-            "units": {
-              "Bow":2,
-              "HeavyAxe":5,
-              "HeavySword":5
-            },
-            
-            "characters": [
-                "Paladin Glade"
+            "nations": [
+                {
+                    "name":"Convivian",
+                    "race":"Human",
+                    "provinces": ["Ithilgil","Graumthog"],
+                    "units": {
+                        "Bow":2,
+                        "HeavyAxe":5,
+                        "HeavySword":5
+                    },
+                    "characters": [
+                        "Paladin Glade"
+                    ]
+                }
             ],
 	    "reinforcements":"0",
             "replacements":"0"

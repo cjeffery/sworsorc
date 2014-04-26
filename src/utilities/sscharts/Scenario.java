@@ -38,52 +38,58 @@ import sshexmap.Provinces;
 public class Scenario {
     
     private static Scenario instance;
-    
-     static List<String> nationNames;
-     static List<String> neutralNames;
-
-    //Information storage for each nation:
-     
-    //The player nation or neutral name is the key for these hashmaps
-     static Map<String, Integer> controllingPlayers;   //nation -> controllingPlayer
-     static Map<String, Integer> setupOrders;          //nation -> order
-     static Map<String, Integer> moveOrders;           //nation -> order
-     static Map<String, List<String>> provinces;       //nation -> list of province names
-     static Map<String, List<String>> characters;      //nation -> list of character names
-     static Map<String, Map<String, Integer>> units;   //nation -> (unitName -> unitCount)
-     static Map<String, String> replacements;          //nation -> description of replacement
-     static Map<String, String> reinforcements;        //nation -> description of reinforcements
-
-    //Diplomacy stuff:
-     static Map<String, String> leaningTowards;
-     static Map<String, Integer> leaningAmount;
-     static Map<String, Boolean> acceptsSacrifice;
 
     //General game information:
      static String scenarioName;
      static int numberOfPlayers;
      static int gameLength; //Number of game turns
      static int blueSunStart;
+    
+     static List<String> armyNames;
+     static List<String> neutralNames;
+
+    //Information storage for each army:
+    //The player army or neutral name is the key for these hashmaps
+     static Map<String, Integer> controllingPlayers;   //army -> controllingPlayer
+     static Map<String, Integer> setupOrders;          //army -> order
+     static Map<String, Integer> moveOrders;           //army -> order
+     static Map<String, String> replacements;          //army -> description of replacement
+     static Map<String, String> reinforcements;        //army -> description of reinforcements
+     
+     // nation information
+     static Map<String, List<String>> nations;         //army -> names of nations
+     static Map<String, String> races;           //nation -> race
+     static Map<String, List<String>> provinces;       //nation -> list of province names
+     static Map<String, List<String>> characters;      //nation -> list of character names
+     static Map<String, Map<String, Integer>> units;   //nation -> (unitName -> unitCount)
+
+    //Diplomacy stuff:
+     static Map<String, String> leaningTowards;
+     static Map<String, Integer> leaningAmount;
+     static Map<String, Boolean> acceptsSacrifice;
+
      
 
     /**
      * This method prints to standard out an ASCII representation of the data
      * contained in the {@link Scenario} class.
+     * TODO: Fix to reflect nation/army restructuring
      * 
      * @author Wayne Fuhrman
      */
     public static void print() {
-        for (String nation : getNationNames()) {
+        for (String army : getArmyNames()) {
             System.out.println();
-            System.out.println("Nation: " + nation);
-            System.out.println("Controlled by: Player " + getControllingPlayer(nation));
-            System.out.println("Sets up: " + getSetupOrder(nation));
-            System.out.println("Moves: " + getMoveOrder(nation));
-            System.out.println("Controls Provinces: " + getProvinces(nation));
-            System.out.println("Has characters: " + getCharacters(nation));
-            System.out.println("Has units: " + getUnits(nation));
-            System.out.println("Replacements: " + getReplacement(nation));
-            System.out.println("Reinforcements: " + getReinforcement(nation));
+            System.out.println("Army: " + army);
+            System.out.println("Controlled by: Player " + getControllingPlayer(army));
+            System.out.println("Sets up: " + getSetupOrder(army));
+            System.out.println("Moves: " + getMoveOrder(army));
+            System.out.println("Nations: " + getNations(army));
+            /*System.out.println("Controls Provinces: " + getProvinces(army));
+            System.out.println("Has characters: " + getCharacters(army));
+            System.out.println("Has units: " + getUnits(army));*/
+            System.out.println("Replacements: " + getReplacement(army));
+            System.out.println("Reinforcements: " + getReinforcement(army));
         }
         for (String neutral : neutralNames) {
             System.out.println();
@@ -106,30 +112,37 @@ public class Scenario {
      */
     public static void populatePool() {
         UnitPool pool = UnitPool.getInstance();
-        for (String nation : getNationNames() ) {
-            int player = getControllingPlayer(nation);
+        for (String army : getArmyNames() ) {
+            // one player controls all nations in an army - this is fine here
+            int player = getControllingPlayer(army);
             String unitType;
             String objectType;
             String randHexID;
             int unitQuant;
             ArmyUnit unit;
-            List<String> hisProvinces = getProvinces(nation);
-            // iterate through the map of this player's units
-            Map<String, Integer> playerUnits = getUnits(nation);
-            Iterator it = playerUnits.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pairs = (Map.Entry)it.next();
-                unitType = (String) pairs.getKey();
-                objectType = "Units." + unitType;
-                unitQuant = (int) pairs.getValue();
-                for (int i=0; i<unitQuant; i++) {
-                    unit = (ArmyUnit) CreateObject(objectType);
-                    unit.setRace(nation);
-                    // TODO: look for conflicts and stacks of too many
-                    randHexID = Provinces.getRandHex(hisProvinces);
-                    pool.addUnit(player, unit,randHexID);
+            // go through each nation in army and get info about units
+            for (String nation : getNations(army) ) {
+                List<String> nationProvinces = getProvinces(nation);
+                String nationRace = getRace(nation);
+                // iterate through the map of this nation's units
+                Map<String, Integer> playerUnits = getUnits(nation);
+                Iterator it = playerUnits.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pairs = (Map.Entry)it.next();
+                    unitType = (String) pairs.getKey();
+                    objectType = "Units." + unitType;
+                    unitQuant = (int) pairs.getValue();
+                    for (int i=0; i<unitQuant; i++) {
+                        unit = (ArmyUnit) CreateObject(objectType);
+                        unit.setNation(nation);
+                        unit.setRace(nationRace);
+                        // TODO: look for conflicts and stacks of too many
+                        // TODO: avoid water, vortices
+                        randHexID = Provinces.getRandHex(nationProvinces);
+                        pool.addUnit(player, unit,randHexID);
+                    }
+                    it.remove();
                 }
-                it.remove();
             }
         }
     }
@@ -157,9 +170,10 @@ public class Scenario {
         JSONParser parser = new JSONParser();
 
         controllingPlayers = new HashMap<>();
-        nationNames = new ArrayList<>();
+        armyNames = new ArrayList<>();
         setupOrders = new HashMap<>();
         moveOrders = new HashMap<>();
+        nations = new HashMap<>();
         provinces = new HashMap<>();    //Array of province names
         characters = new HashMap<>();   //Array of character names
         units = new HashMap<>();        //The return map is unitName:unitCount
@@ -183,60 +197,78 @@ public class Scenario {
             gameLength = ((Long) jsonObject.get("gameLength")).intValue();
             blueSunStart = ((Long) jsonObject.get("blueSunStart")).intValue();
 
-            //We'll iterate and grab info for each human controlled nation:
-            JSONArray JSONNationArray = (JSONArray) jsonObject.get("nations");
-            for (Object baseNationObject : JSONNationArray) {
-                JSONObject nationObject = (JSONObject) baseNationObject;
+            //We'll iterate and grab info for each human controlled army:
+            // TODO: These are declared each iteration - seems exhausting
+            JSONArray JSONArmyArray = (JSONArray) jsonObject.get("armies");
+            for (Object baseArmyObject : JSONArmyArray) {
+                JSONObject armyObject = (JSONObject) baseArmyObject;
 
-                String nationName = (String) nationObject.get("name");
-                nationNames.add(nationName);
+                String armyName = (String) armyObject.get("name");
+                armyNames.add(armyName);
                 
-                int controllingPlayer = ((Long) nationObject.get("player")).intValue();
-                controllingPlayers.put(nationName, controllingPlayer);
+                int controllingPlayer = ((Long) armyObject.get("player")).intValue();
+                controllingPlayers.put(armyName, controllingPlayer);
 
-                int setupOrder = ((Long) nationObject.get("setupOrder")).intValue();
-                setupOrders.put(nationName, setupOrder);
+                int setupOrder = ((Long) armyObject.get("setupOrder")).intValue();
+                setupOrders.put(armyName, setupOrder);
 
-                int moveOrder = ((Long) nationObject.get("moveOrder")).intValue();
-                moveOrders.put(nationName, moveOrder);
+                int moveOrder = ((Long) armyObject.get("moveOrder")).intValue();
+                moveOrders.put(armyName, moveOrder);
 
-                String replacementDescription = (String) nationObject.get("replacements");
-                replacements.put(nationName, replacementDescription);
+                String replacementDescription = (String) armyObject.get("replacements");
+                replacements.put(armyName, replacementDescription);
                 
-                String reinforcementDescription = (String) nationObject.get("reinforcements");
-                reinforcements.put(nationName, reinforcementDescription);
+                String reinforcementDescription = (String) armyObject.get("reinforcements");
+                reinforcements.put(armyName, reinforcementDescription);
+                
+                // now get the information for each nation in this army
+                JSONArray JSONNationArray = (JSONArray) armyObject.get("nations");
+                
+                // as we traverse through nations, keep a list of names
+                List<String> nationNames = new ArrayList<>();
+                for (Object baseNationObject : JSONNationArray) {
+                    JSONObject nationObject = (JSONObject) baseNationObject;
+                    String nationName = (String) nationObject.get("name");
+                    nationNames.add(nationName);
+                    
+                    String nationRace = (String) nationObject.get("race");
+                    races.put(nationName,nationRace);
+                    
+                    List<String> nationProvinces = new ArrayList<>();
+                    for (Object provinceObject : (JSONArray) nationObject.get("provinces")) {
+                        String province = (String) provinceObject;
+                        nationProvinces.add(province);
+                    }
+                    provinces.put(nationName, nationProvinces);
 
-                List<String> nationProvinces = new ArrayList<>();
-                for (Object provinceObject : (JSONArray) nationObject.get("provinces")) {
-                    String province = (String) provinceObject;
-                    nationProvinces.add(province);
+                    List<String> nationCharacters = new ArrayList<>();
+                    for (Object characterObject : (JSONArray) nationObject.get("characters")) {
+                        String character = (String) characterObject;
+
+                        nationCharacters.add(character);
+                    }
+                    characters.put(nationName, nationCharacters);
+
+                    JSONObject nationUnits = (JSONObject) nationObject.get("units");
+
+                    Map<String, Integer> unitAndCount = new HashMap<>();
+                    int unitCount = 0;
+                    String unitName = "";
+                    for (Object entry : nationUnits.entrySet()) {
+                        Map.Entry en = (Map.Entry) entry;
+                        unitName = (String) en.getKey();
+                        unitCount = ((Long) en.getValue()).intValue();
+                        unitAndCount.put(unitName, unitCount);
+                    }
+                    units.put(nationName, unitAndCount);
                 }
-                provinces.put(nationName, nationProvinces);
-
-                List<String> nationCharacters = new ArrayList<>();
-                for (Object characterObject : (JSONArray) nationObject.get("characters")) {
-                    String character = (String) characterObject;
-
-                    nationCharacters.add(character);
-                }
-                characters.put(nationName, nationCharacters);
-
-                JSONObject nationUnits = (JSONObject) nationObject.get("units");
-
-                Map<String, Integer> unitAndCount = new HashMap<>();
-                int unitCount = 0;
-                String unitName = "";
-                for (Object entry : nationUnits.entrySet()) {
-                    Map.Entry en = (Map.Entry) entry;
-                    unitName = (String) en.getKey();
-                    unitCount = ((Long) en.getValue()).intValue();
-                    unitAndCount.put(unitName, unitCount);
-                }
-                units.put(nationName, unitAndCount);
+                // add the list of this army's nations to the nation hashmap
+                nations.put(armyName, nationNames);
 
             }
 
-            //Iterate and grab information for neutral nations:
+            //Iterate and grab information for neutral armies:
+            // TODO: anything with neutrals. Players have taken a lot of my time
             JSONArray neutralJSONArray = (JSONArray) jsonObject.get("neutrals");
             for (Object neutralBaseObject : neutralJSONArray) {
                 JSONObject neutralObject = (JSONObject) neutralBaseObject;
@@ -260,9 +292,9 @@ public class Scenario {
 
                 //Since we don't want to hard-code unit names, we have to iterate
                 //over the hash map entries to get unit names:
-                JSONObject nationUnitObject = (JSONObject) neutralObject.get("units");
+                JSONObject armyUnitObject = (JSONObject) neutralObject.get("units");
                 Map<String, Integer> nmap = new HashMap<>();
-                for (Object entry : nationUnitObject.entrySet()) {
+                for (Object entry : armyUnitObject.entrySet()) {
                     Map.Entry en = (Map.Entry) entry;
                     String unitName = (String) en.getKey();
                     int unitCount = ((Long) en.getValue()).intValue();
@@ -346,21 +378,21 @@ public class Scenario {
     }
     
     
-    /** return the list of nation names.
+    /** return the list of army names.
      * 
      * @author Tyler Jaszkowiak
-     * @return a list of nations in the scenario
+     * @return a list of armies in the scenario
      */
-    public static List<String> getNationNames() {
-        return nationNames;
+    public static List<String> getArmyNames() {
+        return armyNames;
     }
     
     /**
-      * A getter for the controlling player of a given nation.
+      * A getter for the controlling player of a given army.
       * 
       * @author Tyler Jaszkowiak
-      * @param name the name of the nation in question
-      * @return the number of the player controlling the nation
+      * @param name the name of the army in question
+      * @return the number of the player controlling the army
       */
     public static int getControllingPlayer(String name) {
         return controllingPlayers.get(name);
@@ -376,29 +408,39 @@ public class Scenario {
         return neutralNames;
     }
 
-    /** Gets the setup order of a specific nation in the scenario
+    /** Gets the setup order of a specific army in the scenario
      * 
-     * @param name name of the nation being queried about
-     * @return the setup order of the nation in question
+     * @param name name of the army being queried about
+     * @return the setup order of the army in question
      */
     public static Integer getSetupOrder(String name) {
         return setupOrders.get(name);
     }
 
     /**
-     * Gets the move order of a specific nation in the scenario.
+     * Gets the move order of a specific army in the scenario.
      * 
-     * @param name name of the nation being queried about
-     * @return the setup order of the nation in question
+     * @param name name of the army being queried about
+     * @return the setup order of the army in question
      */
     public static Integer getMoveOrder(String name) {
         return moveOrders.get(name);
     }
+    
+    /** 
+     * Gets the nations in a given army 
+     * 
+     * @param armyName name of the army being queried about
+     * @return a list of nations in the army
+     */
+     public static List<String> getNations(String armyName) {
+         return nations.get(armyName);
+     }
 
     /**
      * Get the provinces a nation is allowed to set up in
      * 
-     * @param name name of the nation in question
+     * @param name name of the army in question
      * @return a list of the names of these provinces TODO: find a Province object?
      */
     public static List<String> getProvinces(String name) {
@@ -415,6 +457,16 @@ public class Scenario {
      */
     public static List<String> getCharacters(String name) {
         return characters.get(name);
+    }
+
+    /**
+     * Return the race of a nation.
+     * 
+     * @param name the name of the nation in question
+     * @return the race of nation
+     */
+    public static String getRace(String name) {
+        return races.get(name);
     }
 
     /**
@@ -458,7 +510,7 @@ public class Scenario {
      */
     public static void main(String[] args) {
         Initialize("resources/scenarios/0_Dummy.json");
-        populatePool();
         print();
+        populatePool();
     }
 }
