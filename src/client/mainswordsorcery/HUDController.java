@@ -9,6 +9,7 @@ import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.Color;
 import static java.lang.Integer.parseInt;
+import static java.lang.Integer.parseInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -27,10 +28,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-
+import sscharts.Scenario;
 import sshexmap.MapHex;
 import sshexmap.MapView;
-
 import systemServer.NetworkClient;
  
 public class HUDController {
@@ -167,6 +167,22 @@ public class HUDController {
                     undo_pic.setImage(img);
                 }
         });
+        
+                /**
+         * Initialization of the Solar Display
+         * Johnathan Flake
+         * Temporary fix that always loads the dummy scenario, need to find where
+         * HUDController loads the scenario or game or whatever
+         * and put this code after
+         */
+  
+        Scenario.Initialize("resources/scenarios/0_Dummy.json");      
+        SolarDisplay.SunCheck();
+        Image Sun = new Image(SolarDisplay.GetSunImage());
+        SunImage.setImage(Sun);
+        
+        RedState.setText(SolarDisplay.GetRedState());
+        BlueState.setText(SolarDisplay.GetBlueState());
     }
     /** 
      * deselects a unit with left mouse button
