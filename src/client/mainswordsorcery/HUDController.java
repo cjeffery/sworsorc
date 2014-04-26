@@ -87,8 +87,13 @@ public class HUDController {
         hmapContent = MapView.getMapView();
         hmap.setContent(hmapContent);
         map_view.setContent(hmap);
+        
         //adds mouse support to hmap
         setupEventHandlers();
+        
+        //setup network
+        connectedToServer = usernameEntered = ipEntered = false;
+        chat_box.setText("Enter your username!");
         
         /**
          * Initialization of the Solar Display
@@ -155,10 +160,6 @@ public class HUDController {
 		}
 	});
         
-        //setup network
-        connectedToServer = usernameEntered = ipEntered = false;
-        chat_box.setText("Enter your username!");
-       
         //set undo image on hover
         undo_button.addEventHandler(MouseEvent.MOUSE_ENTERED, 
             new EventHandler<MouseEvent>() {
