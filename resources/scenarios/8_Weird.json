@@ -12,14 +12,14 @@
             "moveOrder":1,
             "nations": [
                 {
-                    "name":"IndependentHuman",
+                    "name":"ImperialArmy",
                     "race":"Human",
-                    "provinces": ["UrfDurfal"],
+                    "provinces": ["The Empire"],
                     "units": {
-                        "Heavy Horse":5,
-                        "Heavy Sword":4,
+                        "HeavyHorse":5,
+                        "HeavySword":4,
                         "Bow":2,
-                        "Light Spear":4
+                        "LightSpear":4
                     },
             
                     "characters": [
@@ -42,13 +42,23 @@
                     "race":"Goblins",
                     "provinces": ["Endore"],
                     "units": {
-                        "Goblin Light Spear":8,
-                        "Human Heavy Horse":2,
-                        "Human Heavy Sword":2
+                        "LightSpear":8
                     },
             
                     "characters": [
                         "Ganab the Nasty"
+                    ]
+                },
+                {
+                    "name":"Mercenary",
+                    "race":"Human",
+                    "provinces": ["Endore"],
+                    "units": {
+                        "HeavyHorse":2,
+                        "HeavySword":2
+                    },
+                    "characters": [
+                        
                     ]
                 }
             ],
