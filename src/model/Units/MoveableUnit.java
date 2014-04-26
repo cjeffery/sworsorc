@@ -80,36 +80,52 @@ public class MoveableUnit {
         switch (nationStr) {
             case "ImperialArmy":
                 setNation(Nation.ImperialArmy);
+                break;
             case "Elven":
                 setNation(Nation.Elven);
+                break;
             case "IndependentHuman":
                 setNation(Nation.IndependentHuman);
+                break;
             case "ORC":
                 setNation(Nation.ORC);
+                break;
             case "Goblin":
                 setNation(Nation.Goblin);
+                break;
             case "SwampCreature":
                 setNation(Nation.SwampCreature);
+                break;
             case "Cronk":
                 setNation(Nation.Cronk);
+                break;
             case "Conjured":
                 setNation(Nation.Conjured);
+                break;
             case "Krasnian":
                 setNation(Nation.Krasnian);
+                break;
             case "Zirkastian":
                 setNation(Nation.Zirkastian);
+                break;
             case "Mercenary":
                 setNation(Nation.Mercenary);
+                break;
             case "WhiteORC":
                 setNation(Nation.WhiteORC);
+                break;
             case "CorfluCultist":
                 setNation(Nation.CorfluCultist);
+                break;
             case "SpiderFolk":
                 setNation(Nation.SpiderFolk);
+                break;
             case "Convivian":
                 setNation(Nation.Convivian);
+                break;
             case "none":
                 setNation(Nation.none);
+                break;
             default:
                 System.err.println("Incorrect Nation sent to setNation(String)");
                 System.err.println("Recieved: " + nationStr);

@@ -174,6 +174,7 @@ public class Scenario {
         setupOrders = new HashMap<>();
         moveOrders = new HashMap<>();
         nations = new HashMap<>();
+        races = new HashMap<>();
         provinces = new HashMap<>();    //Array of province names
         characters = new HashMap<>();   //Array of character names
         units = new HashMap<>();        //The return map is unitName:unitCount

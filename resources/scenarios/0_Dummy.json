@@ -38,7 +38,7 @@
             "nations": [
                 {
                     "name":"Convivian",
-                    "race":"Human",
+                    "race":"Dwarrows",
                     "provinces": ["Ithilgil","Graumthog"],
                     "units": {
                         "Bow":2,
