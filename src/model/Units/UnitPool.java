@@ -9,6 +9,8 @@
 package Units;
 
 
+import Util.FXOptionPane;
+import Util.FXOptionPane.Response;
 import java.lang.Character; // used on line 213
 import java.util.ArrayList;
 import java.util.Collections;
@@ -228,22 +230,24 @@ public class UnitPool {
              "0627".equals(unit.getLocation()) || 
              "3427".equals(unit.getLocation()) || 
              "1044".equals(unit.getLocation()) || 
-             "3542".equals(unit.getLocation()) ){
+             "3542".equals(unit.getLocation()) )
+        {            
+            Response r;
+            r = FXOptionPane.showConfirmDialog(null,
+                                               "Would you like to teleport?",
+                                               "");
             
-            int n = JOptionPane.showConfirmDialog(null,"Would you like to teleport?");
-            
-                if (n == 0);
-                    if (this.teleport(unit))
-
-
-                        //if JOptionPane.showm
-                        JOptionPane.showMessageDialog(null, "Unit Teleported to hex " 
-                                + unit.getLocation() + ".");
+            //if (n == 0); - what was this?
+            if (this.teleport(unit))
+                //if JOptionPane.showm
+                FXOptionPane.showMessageDialog(null, "Unit Teleported to hex " 
+                                + unit.getLocation() + ".", "");
 
                     else
-                        JOptionPane.showMessageDialog(null, "A heard of rampaging "
-                                + "ethereal cows trampled your unit to death.\nYou "
-                                + "should inform the next of kin.");
+                        FXOptionPane.showMessageDialog(null,
+                                  "A heard of rampaging ethereal cows trampled "
+                                + "your unit to death.\nYou should inform the "
+                                + "next of kin.", "");
         }
     }
     /**

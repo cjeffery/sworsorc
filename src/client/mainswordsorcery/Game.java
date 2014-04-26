@@ -52,8 +52,14 @@ public class Game extends Application {
     /** Stored reference to the HUDController instance used by JavaFX*/
     public HUDController hudController;
     
+    private Stage stage;
+    public Stage getStage() {
+        return stage;
+    }
+    
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage st) throws IOException {
+        stage = st;
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         //set Stage boundaries to visible bounds of the main screen
         stage.setX(screenBounds.getMinX());
