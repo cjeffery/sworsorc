@@ -56,7 +56,7 @@ public class MovementCalculator
     {
         ArrayList<MapHex> illegalMoves = new ArrayList<>();
         ArrayList<MapHex> validHexes = new ArrayList<>();
-        getValidMoves(unit, currHex, unit.getMovement(), validHexes );
+        getValidMoves(unit, currHex, unit.getWorkingMovement(), validHexes );
         
          // find all illegal moves in hashmap - those with negative values.
         allowance_cache.keySet().stream().filter((key) -> 
