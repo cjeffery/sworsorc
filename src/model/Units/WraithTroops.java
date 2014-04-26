@@ -13,7 +13,7 @@ import Character.Character;
  */
 public class WraithTroops extends Conjured{
 
-    public WraithTroops(Character c, int lc) {
+    public WraithTroops(Character c, double lc) {
         super(c, lc);
         strength = 6;
         movement = 3;

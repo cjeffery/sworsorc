@@ -6,6 +6,9 @@
 
 package Spells.PL_5;
 
+import Character.Character;
+import Units.*;
+import static Spells.CastSpell.conjured;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -17,8 +20,10 @@ import javax.swing.JLabel;
  */
 public final class C_W_T {
     JFrame frame;
+    Character caster;
     
-    public C_W_T(){
+    public C_W_T(Character c){
+        caster = c;
         prepareGUI();
     }
     
@@ -41,14 +46,7 @@ public final class C_W_T {
     
     //check mana available
     public boolean checkMana(){
-        boolean mana = false;
-        
-        //if( enough mana ){
-          //  mana = true;
-        //}
-        //else{ print message that not enough mana};
-        
-        return mana;
+        return caster.checkManna(1.5);
     }
     
     //return spell range
@@ -70,7 +68,7 @@ public final class C_W_T {
     }
     
     public boolean checkLimits(){
-        boolean limit = false;
+        boolean limit = true;
         
         //if( fit all the limits ){
           //  limit = true;
@@ -83,7 +81,12 @@ public final class C_W_T {
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
-            // perform
+            caster.CostManna(1.5);
+            ArmyUnit unit1 = new WraithTroops(caster, 1.5);
+            unit1.SetLifeSpan(99);
+            unit1.setLocation(caster.getLocation());
+            
+            conjured = unit1;
             if(getDistance() <= getRange()){
                 //peform spell
             }
