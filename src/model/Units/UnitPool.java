@@ -237,7 +237,9 @@ public class UnitPool {
                                                "Would you like to teleport?",
                                                "");
             
-            //if (n == 0); - what was this?
+            //if (n == 0); - what was this
+            if ( r != Response.YES )
+                return;
             if (this.teleport(unit))
                 //if JOptionPane.showm
                 FXOptionPane.showMessageDialog(null, "Unit Teleported to hex " 
