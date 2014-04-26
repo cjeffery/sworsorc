@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author 张涛
+ * @author Tao and Cameron
  */
 public final class Character extends MoveableUnit{
     protected String  Name;
@@ -28,6 +28,7 @@ public final class Character extends MoveableUnit{
     protected int MagicPotential;
     protected int magicProfile;
     protected int magicResistance;
+    protected int homeHex;
     protected double  CurrentManna;
     protected Spell_Book spellBook;
     protected MagicColor magicColor;
@@ -43,6 +44,455 @@ public final class Character extends MoveableUnit{
         this.UnitType = UnitType.Character;
     }
     
+    public static Character createCharacter(String name){
+        Character newChar = new Character();
+        switch (name){
+            case "Emperor Coron III the Unconquerable" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 0552;
+                newChar.magicProfile = 6;
+                newChar.magicResistance = 4;
+                newChar.leadership = 5;
+                newChar.diplomacy = 3;
+                break;
+            case "The Paladin Glade" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 0452;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 3;
+                newChar.diplomacy = 4;
+                break;  
+            case "Stephen the Paladin" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 950;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 2;
+                newChar.diplomacy = 2;
+                break;   
+            case "Lord Dil" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 0451;
+                newChar.magicProfile = 4;
+                newChar.magicResistance = 4;
+                newChar.leadership = 2;
+                newChar.diplomacy = 3;
+                break;
+            case "Tim the Enchanter" : 
+                newChar.Name = name;
+                newChar.MagicPL = 4;
+                newChar.MagicPotential = 16;
+                newChar.magicColor = MagicColor.red;
+                newChar.homeHex = 0245;
+                newChar.magicProfile = 6;
+                newChar.magicResistance = 4;
+                newChar.leadership = 0;
+                newChar.diplomacy = 1;
+                break; 
+            case "Eodred the Sorceress" : 
+                newChar.Name = name;
+                newChar.MagicPL = 4;
+                newChar.MagicPotential = 12;
+                newChar.magicColor = MagicColor.blue;
+                newChar.homeHex = 0540;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 0;
+                newChar.diplomacy = 3;
+                break;
+            case "Larraka" : 
+                newChar.Name = name;
+                newChar.MagicPL = 5;
+                newChar.MagicPotential = 17;
+                newChar.magicColor = MagicColor.red;
+                newChar.homeHex = 3713;
+                newChar.magicProfile = 5;
+                newChar.magicResistance = 4;
+                newChar.leadership = 1;
+                newChar.diplomacy = 0;
+                break;
+            case "Talerren the Not-So-Brave" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 803;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 4;
+                newChar.diplomacy = 3;
+                break;  
+            case "Weldron" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 2433;
+                newChar.magicProfile = 1;
+                newChar.magicResistance = 3;
+                newChar.leadership = 3;
+                newChar.diplomacy = 2;
+                break;  
+            case "Almuric" : 
+                newChar.Name = name;
+                newChar.MagicPL = 1;
+                newChar.MagicPotential = 6;
+                newChar.magicColor = MagicColor.blue;
+                newChar.homeHex = 2341;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 3;
+                newChar.diplomacy = 1;
+                break; 
+            case "Dierdra" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 3638;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 2;
+                newChar.leadership = 3;
+                newChar.diplomacy = 2;
+                break; 
+            case "Wendolyn the Wary" : 
+                newChar.Name = name;
+                newChar.MagicPL = 3;
+                newChar.MagicPotential = 15;
+                newChar.magicColor = MagicColor.red;
+                newChar.homeHex = 1528;
+                newChar.magicProfile = 2;
+                newChar.magicResistance = 3;
+                newChar.leadership = 0;
+                newChar.diplomacy = -1;
+                break;
+            case "Curvenol" : 
+                newChar.Name = name;
+                newChar.MagicPL = 5;
+                newChar.MagicPotential = 16;
+                newChar.magicColor = MagicColor.yellow;
+                newChar.homeHex = 0352;
+                newChar.magicProfile = 5;
+                newChar.magicResistance = 2;
+                newChar.leadership = 1;
+                newChar.diplomacy = 0;
+                break; 
+            case "Zareth" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 1246;
+                newChar.magicProfile = 5;
+                newChar.magicResistance = 5;
+                newChar.leadership = 1;
+                newChar.diplomacy = 2;
+                break; 
+            case "Loki Hellsson" : 
+                newChar.Name = name;
+                newChar.MagicPL = 6;
+                newChar.MagicPotential = 20;
+                newChar.magicColor = MagicColor.yellow;
+                newChar.homeHex = 0606;
+                newChar.magicProfile = 6;
+                newChar.magicResistance = 5;
+                newChar.leadership = 5;
+                newChar.diplomacy = 4;
+                break; 
+            case "Alric" : 
+                newChar.Name = name;
+                newChar.MagicPL = 3;
+                newChar.MagicPotential = 11;
+                newChar.magicColor = MagicColor.blue;
+                newChar.homeHex = 509;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 0;
+                newChar.diplomacy = 1;
+                break; 
+            case "X the Unknown (Roc Deathsinger)" : 
+                newChar.Name = name;
+                newChar.MagicPL = 6;
+                newChar.MagicPotential = 20;
+                newChar.magicColor = MagicColor.yellow;
+                newChar.homeHex = 904;
+                newChar.magicProfile = 4;
+                newChar.magicResistance = 5;
+                newChar.leadership = 1;
+                newChar.diplomacy = 2;
+                break;
+            case "Gygax Dragonlord" : 
+                newChar.Name = name;
+                newChar.MagicPL = 2;
+                newChar.MagicPotential = 6;
+                newChar.magicColor = MagicColor.red;
+                newChar.homeHex = 0302;
+                newChar.magicProfile = 6;
+                newChar.magicResistance = 5;
+                newChar.leadership = 3;
+                newChar.diplomacy = 3;
+                break;
+            case "Gislan the Rock" : 
+                newChar.Name = name;
+                newChar.MagicPL = 4;
+                newChar.MagicPotential = 8;
+                newChar.magicColor = MagicColor.yellow;
+                newChar.homeHex = 818;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 4;
+                newChar.leadership = 2;
+                newChar.diplomacy = 4;
+                break;  
+            case "Gerudirr Dragonslayer" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 2808;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 3;
+                newChar.diplomacy = 3;
+                break; 
+            case "Zurik Bladebreaker" : 
+                newChar.Name = name;
+                newChar.MagicPL = 4;
+                newChar.MagicPotential = 12;
+                newChar.magicColor = MagicColor.blue;
+                newChar.homeHex = 2517;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 2;
+                newChar.diplomacy = 2;
+                break;  
+            case "Narklath" : 
+                newChar.Name = name;
+                newChar.MagicPL = 2;
+                newChar.MagicPotential = 13;
+                newChar.magicColor = MagicColor.red;
+                newChar.homeHex = 3645;
+                newChar.magicProfile = 1;
+                newChar.magicResistance = 4;
+                newChar.leadership = 2;
+                newChar.diplomacy = 1;
+                break;    
+            case "Gwaigilion Elengal" : 
+                newChar.Name = name;
+                newChar.MagicPL = 3;
+                newChar.MagicPotential = 10;
+                newChar.magicColor = MagicColor.red;
+                newChar.homeHex = 0630;
+                newChar.magicProfile = 4;
+                newChar.magicResistance = 4;
+                newChar.leadership = 3;
+                newChar.diplomacy = 6;
+                break; 
+            case "Maytwist" : 
+                newChar.Name = name;
+                newChar.MagicPL = 3;
+                newChar.MagicPotential = 10;
+                newChar.magicColor = MagicColor.yellow;
+                newChar.homeHex = 3333;
+                newChar.magicProfile = 2;
+                newChar.magicResistance = 3;
+                newChar.leadership = 0;
+                newChar.diplomacy = 3;
+                break;   
+            case "Linfalas" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 3426;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 4;
+                newChar.diplomacy = 4;
+                break; 
+            case "Dalmilandril" : 
+                newChar.Name = name;
+                newChar.MagicPL = 4;
+                newChar.MagicPotential = 12;
+                newChar.magicColor = MagicColor.blue;
+                newChar.homeHex = 319;
+                newChar.magicProfile = 4;
+                newChar.magicResistance = 4;
+                newChar.leadership = 1;
+                newChar.diplomacy = 2;
+                break; 
+            case "Sliggoth" : 
+                newChar.Name = name;
+                newChar.MagicPL = 2;
+                newChar.MagicPotential = 8;
+                newChar.magicColor = MagicColor.blue;
+                newChar.homeHex = 1341;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 2;
+                newChar.diplomacy = -1;
+                break; 
+            case "Gilith" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 0302;
+                newChar.magicProfile = 1;
+                newChar.magicResistance = 4;
+                newChar.leadership = 2;
+                newChar.diplomacy = 3;
+                break;  
+            case "Peg-Leg Gonzo" : 
+                newChar.Name = name;
+                newChar.MagicPL = 2;
+                newChar.MagicPotential = 7;
+                newChar.magicColor = MagicColor.blue;
+                newChar.homeHex = 3150;
+                newChar.magicProfile = 2;
+                newChar.magicResistance = 3;
+                newChar.leadership = 0;
+                newChar.diplomacy = -1;
+                break;  
+            case "Unamit Ahazredit" : 
+                newChar.Name = name;
+                newChar.MagicPL = 4;
+                newChar.MagicPotential = 13;
+                newChar.magicColor = MagicColor.blue;
+                newChar.homeHex = 3150;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 4;
+                newChar.leadership = 3;
+                newChar.diplomacy = 3;
+                break; 
+            case "Raman Cronkevitch" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 2151;
+                newChar.magicProfile = 4;
+                newChar.magicResistance = 4;
+                newChar.leadership = 3;
+                newChar.diplomacy = 1;
+                break;
+            case "Svartz Tarnkap" : 
+                newChar.Name = name;
+                newChar.MagicPL = 2;
+                newChar.MagicPotential = 8;
+                newChar.magicColor = MagicColor.yellow;
+                newChar.homeHex = 2151;
+                newChar.magicProfile = 4;
+                newChar.magicResistance = 3;
+                newChar.leadership = 2;
+                newChar.diplomacy = 3;
+                break;
+            case "Mellanthia" : 
+                newChar.Name = name;
+                newChar.MagicPL = 3;
+                newChar.MagicPotential = 8;
+                newChar.magicColor = MagicColor.red;
+                newChar.homeHex = 3808;
+                newChar.magicProfile = 6;
+                newChar.magicResistance = 4;
+                newChar.leadership = 2;
+                newChar.diplomacy = 3;
+                break;
+            case "Jeremiah Ben Ruben" : 
+                newChar.Name = name;
+                newChar.MagicPL = 2;
+                newChar.MagicPotential = 8;
+                newChar.magicColor = MagicColor.yellow;
+                newChar.homeHex = 2133;
+                newChar.magicProfile = 2;
+                newChar.magicResistance = 4;
+                newChar.leadership = 4;
+                newChar.diplomacy = 6;
+                break; 
+            case "Theregond the Mage" : 
+                newChar.Name = name;
+                newChar.MagicPL = 3;
+                newChar.MagicPotential = 14;
+                newChar.magicColor = MagicColor.red;
+                newChar.homeHex = 2133;
+                newChar.magicProfile = 3;
+                newChar.magicResistance = 3;
+                newChar.leadership = 1;
+                newChar.diplomacy = 2;
+                break; 
+            case "Snorri Gundarchuksson" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 3531;
+                newChar.magicProfile = 4;
+                newChar.magicResistance = 4;
+                newChar.leadership = 3;
+                newChar.diplomacy = 4;
+                break; 
+            case "Ganab the Nasty" : 
+                newChar.Name = name;
+                newChar.MagicPL = 3;
+                newChar.MagicPotential = 12;
+                newChar.magicColor = MagicColor.red;
+                newChar.homeHex = 1909;
+                newChar.magicProfile = 4;
+                newChar.magicResistance = 2;
+                newChar.leadership = 2;
+                newChar.diplomacy = 2;
+                break;
+            case "Chairman Naskhund" : 
+                newChar.Name = name;
+                newChar.MagicPL = 3;
+                newChar.MagicPotential = 8;
+                newChar.magicColor = MagicColor.yellow;
+                newChar.homeHex = 1611;
+                newChar.magicProfile = 5;
+                newChar.magicResistance = 4;
+                newChar.leadership = 4;
+                newChar.diplomacy = 4;
+                break; 
+            case "Krawn the Crazy" : 
+                newChar.Name = name;
+                newChar.MagicPL = 1;
+                newChar.MagicPotential = 6;
+                newChar.magicColor = MagicColor.yellow;
+                newChar.homeHex = 1614;
+                newChar.magicProfile = 4;
+                newChar.magicResistance = 3;
+                newChar.leadership = 3;
+                newChar.diplomacy = 5;
+                break; 
+            case "Zarko" : 
+                newChar.Name = name;
+                newChar.MagicPL = 0;
+                newChar.MagicPotential = 0;
+                newChar.magicColor = MagicColor.none;
+                newChar.homeHex = 1605;
+                newChar.magicProfile = 2;
+                newChar.magicResistance = 2;
+                newChar.leadership = 2;
+                newChar.diplomacy = -1;
+                break;    
+            default: name = "Invalid Character Name";
+                     break;
+        }
+       
+        return newChar;
+    }
     
     public Character(String a, int b, double c, /*int h*/ String h) {
         super();
