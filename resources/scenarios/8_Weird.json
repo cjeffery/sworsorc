@@ -4,7 +4,7 @@
     "numberOfPlayers":2,
     "blueSunStart":10,
     
-    "nations": [
+    "armies": [
         {
 	    "player":1,
             "name": "Snorri",

@@ -83,8 +83,10 @@ public class Provinces {
         //generate arraylist of hexes in the province
         ArrayList<String> res = new ArrayList<String>();
         TreeSet<String> hexes = provinceMap.get(province_name);
-        if(hexes == null)
+        if(hexes == null) {
+            System.out.println("No hexes in province " + province_name);
             return null;
+        }
         res.addAll( provinceMap.get(province_name) );
         
         // now get a random hex from that province

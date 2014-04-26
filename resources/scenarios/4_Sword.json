@@ -4,7 +4,7 @@
     "numberOfPlayers":2,
     "blueSunStart":8,
     
-    "nations": [
+    "armies": [
         {
             "name": "Dark Lord",
 	    "player":1,

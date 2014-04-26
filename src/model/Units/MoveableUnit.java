@@ -170,6 +170,9 @@ public class MoveableUnit {
             case "SwampCreature":
                 setRace(Race.SwampCreature);
                 break;
+            case "Goblins":
+                setRace(Race.Goblins);
+                break;
             default:
                 System.err.println("Incorrect Race sent to setRace(String)");
                 System.err.println("Recieved: " + raceStr);

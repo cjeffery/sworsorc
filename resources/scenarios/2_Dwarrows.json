@@ -5,7 +5,7 @@
     "blueSunStart":6,
 
     
-    "nations": [
+    "armies": [
         {
             "name": "Elves",
 	    "player":1,
@@ -14,8 +14,8 @@
             
             "nations": [
                 {
-                    "name":"Elves",
-                    "race":"Elven",
+                    "name":"Elven",
+                    "race":"Elves",
                     "provinces": ["Vynar"],
                     "units": {
                         "HorseArcher":2,
@@ -69,7 +69,7 @@
                 {
                     "name":"Goblin",
                     "race":"Goblins",
-                    "provinces": ["Intas","Isle of Blood"],
+                    "provinces": ["Intas","Citadel of Blood"],
                     "units": {
                         "HeavySword":4,
                         "LightHorse":4,
