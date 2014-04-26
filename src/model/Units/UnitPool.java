@@ -9,18 +9,18 @@
 package Units;
 
 
-import Util.FXOptionPane;
-import Util.FXOptionPane.Response;
 import java.lang.Character; // used on line 213
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import javax.swing.JOptionPane;
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
+import sshexmap.MapView;
 
 /**
  * Unit pool tracks all the units that have been created in the game.  
@@ -51,12 +51,12 @@ public class UnitPool {
             Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());;
     private Object[] options = {"Yes","No",};
     private boolean safeTeleport;
+    private PopOver item;
+    
     
     private static UnitPool INSTANCE;
     
-    private UnitPool() {
-    
-    }
+    private MapView view = MapView.getMapView();
     /**
      * This creates or returns the unit pool singleton.
      * 
@@ -67,6 +67,7 @@ public class UnitPool {
             INSTANCE = new UnitPool();
         return INSTANCE;
     }
+    
     
     /**
      * Used with the teleport spells;
@@ -206,6 +207,9 @@ public class UnitPool {
         }
     }
     
+   
+
+    
     /**
      * Is used to update the unit location and all of its associated trees.
      * 
@@ -215,6 +219,9 @@ public class UnitPool {
      * @param unit  : A valid instance of a army units class.
      * @param hexId : The hex the unit is moving into.
      */
+    
+    
+    
     
     public void addMove(MoveableUnit unit, String destinationHexID){
         
@@ -230,26 +237,38 @@ public class UnitPool {
              "0627".equals(unit.getLocation()) || 
              "3427".equals(unit.getLocation()) || 
              "1044".equals(unit.getLocation()) || 
-             "3542".equals(unit.getLocation()) )
-        {            
-            Response r;
-            r = FXOptionPane.showConfirmDialog(null,
-                                               "Would you like to teleport?",
-                                               "");
+             "3542".equals(unit.getLocation()) ){
             
-            //if (n == 0); - what was this
-            if ( r != Response.YES )
-                return;
-            if (this.teleport(unit))
-                //if JOptionPane.showm
-                FXOptionPane.showMessageDialog(null, "Unit Teleported to hex " 
-                                + unit.getLocation() + ".", "");
+            Action response = Dialogs.create()
+                .title("Teleport")
+                .masthead("Just Checkin'")
+                .message("Would you like to teleport?")
+                .actions(Dialog.Actions.YES,Dialog.Actions.CANCEL)    
+                .showConfirm()
+                ;
+            
+
+            
+            
+            
+                if ( response == Dialog.Actions.YES )
+                    if (this.teleport(unit))
+                        Dialogs.create()
+                        .title("Teleport")
+                        .masthead("Lucky Dog!")
+                        .message("Unit Teleported to hex " + unit.getLocation() + ".")
+                        .actions(Dialog.Actions.OK)
+                        .showConfirm();
 
                     else
-                        FXOptionPane.showMessageDialog(null,
-                                  "A heard of rampaging ethereal cows trampled "
-                                + "your unit to death.\nYou should inform the "
-                                + "next of kin.", "");
+                        Dialogs.create()
+                        .title("Teleport")
+                        .masthead("In the infamous words of Homer Simpson.  Doh!")
+                        .message("A heard of rampaging "
+                                + "ethereal cows trampled your unit to death.  You "
+                                + "should inform the next of kin.")
+                        .actions(Dialog.Actions.OK)
+                        .showConfirm();
         }
     }
     /**
