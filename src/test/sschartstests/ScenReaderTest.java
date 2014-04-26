@@ -107,14 +107,15 @@ public class ScenReaderTest extends TestCase {
         List<String> elvishProvinces;
         List<String> dwarfProvinces;
         elvishProvinces = new ArrayList<>();
-        elvishProvinces.add("Vynar");
-        elvishProvinces.add("Nattily Woods");
+        elvishProvinces.add("Intas");
         Scenario.Initialize("resources/scenarios/0_Dummy.json");
         Scenario reader = Scenario.getInstance();
         test = reader.getProvinces("Elves").equals(elvishProvinces);
+        assertTrue(test);
         dwarfProvinces = new ArrayList<>();
-        dwarfProvinces.add("The Empire");
-        test = test && reader.getProvinces("Dwarrows").equals(dwarfProvinces);
+        dwarfProvinces.add("Ithilgil");
+        dwarfProvinces.add("Graumthog");
+        test = reader.getProvinces("Dwarrows").equals(dwarfProvinces);
         assertTrue(test);
     }
     
