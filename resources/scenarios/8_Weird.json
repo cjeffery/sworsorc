@@ -8,20 +8,25 @@
         {
 	    "player":1,
             "name": "Snorri",
-            "provinces": ["UrfDurfal"],
             "setupOrder":2,
             "moveOrder":1,
+            "nations": [
+                {
+                    "name":"IndependentHuman",
+                    "race":"Human",
+                    "provinces": ["UrfDurfal"],
+                    "units": {
+                        "Heavy Horse":5,
+                        "Heavy Sword":4,
+                        "Bow":2,
+                        "Light Spear":4
+                    },
             
-            "units": {
-              "Heavy Horse":5,
-              "Heavy Sword":4,
-              "Bow":2,
-              "Light Spear":4
-            },
-            
-            "characters": [
-                "Snorri",
-                "Therefond"
+                    "characters": [
+                        "Snorri Gundarchuksson",
+                        "Theregond the Mage"
+                    ]   
+                }
             ],
 	    "reinforcements":"0",
             "replacements":"1 in 3"
@@ -29,17 +34,23 @@
         {
 	    "player":2,
             "name": "Goblin State",
-            "provinces": ["Endore"],
             "setupOrder": 1,
             "moveOrder": 2,
-            "units": {
-              "Goblin Light Spear":8,
-              "Human Heavy Horse":2,
-              "Human Heavy Sword":2
-            },
+            "nations": [
+                {
+                    "name":"Goblin",
+                    "race":"Goblins",
+                    "provinces": ["Endore"],
+                    "units": {
+                        "Goblin Light Spear":8,
+                        "Human Heavy Horse":2,
+                        "Human Heavy Sword":2
+                    },
             
-            "characters": [
-                "Ganab the Nasty"
+                    "characters": [
+                        "Ganab the Nasty"
+                    ]
+                }
             ],
 	    "reinforcements":"0",
             "replacements":"1 in 3"
