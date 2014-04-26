@@ -194,6 +194,7 @@ public class ClientObject {
                     killThread();
                 }
                 
+                
                 if( TAG == null ) {
                     System.err.println("Tag is null!");
                     killThread();
@@ -202,9 +203,12 @@ public class ClientObject {
                 }
                 
                 rawMessage = rawMessage.subList(1, rawMessage.size());
-                if ( rawMessage.getClass().equals(stringMessage.getClass())) {
+                if ( rawMessage.getClass().equals(stringMessage.subList(0,0).getClass())) {
                     stringMessage = MessagePhoenix.objectToString(rawMessage);
-                    
+                    for (String s : stringMessage){
+                        System.out.println("Received strings: " + s);
+                    }
+          
                 } else {
                     System.err.println("Unknown object recieved!");
                     killThread();
@@ -315,6 +319,7 @@ public class ClientObject {
                 } else {
                     // TODO: will add other protocols
                     System.err.println("Unknown tag! Printing message...");
+                    System.out.println("Tag is : " + TAG);
                     for (String s : stringMessage ) {
                         System.err.println(s + " ");
                     }
@@ -411,7 +416,8 @@ public class ClientObject {
                     killThread();
                 }
                 if (message != null ) { // assume first object is tag
-                    sendMessage( message.get(0).toString(), message.subList(1, message.size()));
+                    
+                    sendMessage( message.get(0).toString(), new ArrayList(message.subList(1, message.size())));
                 } else {
                     System.err.println("Null message!");
                 }
