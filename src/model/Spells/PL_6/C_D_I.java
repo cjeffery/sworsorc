@@ -6,6 +6,9 @@
 
 package Spells.PL_6;
 
+import Character.Character;
+import Units.*;
+import static Spells.CastSpell.conjured;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -17,8 +20,10 @@ import javax.swing.JLabel;
  */
 public final class C_D_I {
     JFrame frame;
+    Character caster;
     
-    public C_D_I(){
+    public C_D_I(Character c){
+        caster = c;
         prepareGUI();
     }
     
@@ -41,14 +46,7 @@ public final class C_D_I {
     
     //check mana available
     public boolean checkMana(){
-        boolean mana = false;
-        
-        //if( enough mana ){
-          //  mana = true;
-        //}
-        //else{ print message that not enough mana};
-        
-        return mana;
+        return caster.checkManna(2);
     }
     
     //return spell range
@@ -70,7 +68,7 @@ public final class C_D_I {
     }
     
     public boolean checkLimits(){
-        boolean limit = false;
+        boolean limit = true;
         
         //if( fit all the limits ){
           //  limit = true;
@@ -84,6 +82,12 @@ public final class C_D_I {
         // like cost mana, or the real effects described in rules
         if(checkLimits() == true && checkMana() == true){
             // perform
+            caster.CostManna(2);
+            ArmyUnit unit1 = new ZombieInfantry(caster, 2);
+            unit1.SetLifeSpan(99);
+            unit1.setLocation(caster.getLocation());
+            
+            conjured = unit1;
             if(getDistance() <= getRange()){
                 //peform spell
             }

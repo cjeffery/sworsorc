@@ -105,7 +105,7 @@ public class CastSpell{
                 Teleporation_Control t_c = new Teleporation_Control();
                 break;
             case "Conjure Koboldic Infantry":
-                C_K_I c_k_i = new C_K_I();
+                C_K_I c_k_i = new C_K_I(character);
                 break;
             // ===============================
             // PL_5
@@ -119,7 +119,7 @@ public class CastSpell{
                 B_C_T b_c_t = new B_C_T();
                 break;
             case "Conjure Wraith Troops":
-                C_W_T c_w_t = new C_W_T();
+                C_W_T c_w_t = new C_W_T(character);
                 break;
             // ===============================
             // PL_6
@@ -139,7 +139,7 @@ public class CastSpell{
                 Berserkergang berserkergang = new Berserkergang();
                 break;
             case "Conjure Demonice Infantry":
-                C_D_I c_d_i = new C_D_I();
+                C_D_I c_d_i = new C_D_I(character);
                 break;
             // ===============================
             // PL_7

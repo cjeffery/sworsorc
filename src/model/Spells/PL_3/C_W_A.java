@@ -69,7 +69,7 @@ public final class C_W_A {
     }
     
     public boolean checkLimits(){
-        boolean limit = false;
+        boolean limit = true;
         
         //if( fit all the limits ){
           //  limit = true;
@@ -84,6 +84,10 @@ public final class C_W_A {
         if(checkLimits() == true && checkMana() == true){
             caster.CostManna(1.5);
             ArmyUnit unit1 = new Units.WyvernAirtroops(caster, 1.5);
+            unit1.SetLifeSpan(99);
+            unit1.setLocation(caster.getLocation());
+            
+            conjured = unit1;
             
             if(getDistance() <= getRange()){
                 //peform spell

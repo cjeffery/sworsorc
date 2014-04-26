@@ -6,6 +6,9 @@
 
 package Spells.PL_4;
 
+import Character.Character;
+import Units.*;
+import static Spells.CastSpell.conjured;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -17,8 +20,10 @@ import javax.swing.JLabel;
  */
 public final class C_K_I {
     JFrame frame;
+    Character caster;
     
-    public C_K_I(){
+    public C_K_I(Character c){
+        caster = c;
         prepareGUI();
     }
     
@@ -41,14 +46,7 @@ public final class C_K_I {
     
     //check mana available
     public boolean checkMana(){
-        boolean mana = false;
-        
-        //if( enough mana ){
-          //  mana = true;
-        //}
-        //else{ print message that not enough mana};
-        
-        return mana;
+        return caster.checkManna(1);
     }
     
     //return spell range
@@ -73,7 +71,12 @@ public final class C_K_I {
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
         if(checkMana() == true){
-            // perform
+            caster.CostManna(1);
+            ArmyUnit unit1 = new KoboldicInfantry(caster, 1);
+            unit1.SetLifeSpan(99);
+            unit1.setLocation(caster.getLocation());
+            
+            conjured = unit1;
             if(getDistance() <= getRange()){
                 //peform spell
             }
