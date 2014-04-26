@@ -10,8 +10,6 @@ import sshexmap.MainMap;
 import Units.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import org.testng.annotations.Test;
 import sshexmap.MapHex;
 
@@ -22,12 +20,19 @@ import sshexmap.MapHex;
 public class MovementCalculatorTest extends TestCase {
     
     @Test
+    /**
+     * This test checks to see if the movement calculator's method 
+     * getValidMoves(...) returns the same valid MapHexes in the ArrayList 
+     * as the wrapper class, movementWrapper(), does in the HashMap.
+     * @author Keith Drew
+     */
     public void testWrapper()
     {
         int playerID = 0;
         String hexID = "0606";
         MainMap map = MainMap.GetInstance();
         UnitPool pool = UnitPool.getInstance();
+        // Initialize EZ Data Structures
         HashMap<MapHex, Double> moves;
         ArrayList<MapHex> validMoves = new ArrayList<>();
         ArrayList<MapHex> illegalMoves = new ArrayList<>();
@@ -45,7 +50,7 @@ public class MovementCalculatorTest extends TestCase {
   
        
         
-        // print to see hexes/costs
+        // print to see hexes/costs - uncomment if needed.
         /*
         moves.keySet().stream().forEach((key) -> {
             String HexId = key.GetID();
