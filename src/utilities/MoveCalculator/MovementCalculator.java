@@ -1,6 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Here you will find the movement calculator class, god of movement. Without
+ * this class you will be unable to move across the great valley and will be 
+ * stuck to the currentHex like a tree. Bow before this class and worship the 
+ * power it holds. The class commands respect. While the class is THE god of 
+ * movement, it is not, in fact, a god class. 
  */
 package MoveCalculator;
 
@@ -13,12 +16,12 @@ import ssterrain.TerrainType;
 
 /**
  * The movement calculator class handles calculating movement for a given unit, 
- * and potentially, eventually, all units in a stack (if stacks are implemented). 
+ * and potentially, eventually, all units in a stack (if stacks are implemented)
+ * The class is a non-instantiable class. 
  * @author Keith/Ian
  */
 public class MovementCalculator 
 {
-
     /**
      * Private constructor throws an assertion error as this class should
      * not be instantiated. This only provides utility, no purpose for instance.
@@ -33,6 +36,41 @@ public class MovementCalculator
     /* movement points cache for current movement calculation 
        keeps track of best path to target hex */
     static HashMap<MapHex, Double> allowance_cache;
+    
+    /**
+     * This method is nice because it requires less information from the user 
+     * of MovementCalculator, and gives more back than getValidMoves(...).
+     * Colin created a nice HashMap for this class that optimizes movement by 
+     * using a HashMap that I edit here and return to the caller. The HashMap 
+     * contains the MapHex objects that are valid moves of 'unit' and the Double
+     * that represents the unit's remaining movement allowance. Make sure to use
+     * the VALUE (double) of the HashMap to reset a unit's workingMovement 
+     * variable when they have selected and moved to a given hex.
+     * @param unit
+     * @param currHex
+     * @return HashMap<MapHex, Double>
+     * @author Keith Drew
+     */
+    public static HashMap<MapHex, Double> movementWrapper(MoveableUnit unit, 
+            MapHex currHex )
+    {
+        ArrayList<MapHex> illegalMoves = new ArrayList<>();
+        ArrayList<MapHex> validHexes = new ArrayList<>();
+        getValidMoves(unit, currHex, unit.getMovement(), validHexes );
+        
+         // find all illegal moves in hashmap - those with negative values.
+        allowance_cache.keySet().stream().filter((key) -> 
+                ( allowance_cache.get(key) < 0 )).forEach((key) -> {
+            illegalMoves.add(key);
+        });
+        
+        // remove all entries in illegalMoves from the moves hashmap
+        illegalMoves.stream().forEach((keyHex) -> {
+            allowance_cache.remove( keyHex, allowance_cache.get(keyHex) );
+        });
+        
+        return allowance_cache;
+    }
     
     /** 
      * This method returns void, but takes an empty ArrayList of MapHex objects
@@ -57,9 +95,11 @@ public class MovementCalculator
     public static void getValidMoves(MoveableUnit movingUnit, MapHex currentHex,
             double moveAllowance, ArrayList<MapHex> validHexes) 
     {
+        if( currentHex.IsVortexHex())
+                return;
         //clear the cache, at the start of a new movement.
         if(validHexes.isEmpty()) {
-            allowance_cache = new HashMap<MapHex, Double>();
+            allowance_cache = new HashMap<>();
         }
         /* check to see if there's already a faster path in the cache
            if so no point in recursing.
@@ -68,16 +108,16 @@ public class MovementCalculator
         Double allowance;
         allowance = allowance_cache.putIfAbsent(currentHex, moveAllowance);
         if(allowance != null) {
-            if(allowance >= moveAllowance)
+            if(allowance >= moveAllowance )
                 return;
             else
                 allowance_cache.put(currentHex, moveAllowance);
         }
-
+        
         int edgeSignal;
         double moveCost;
         TerrainType destinationTerrainType;
-        ArrayList<MapHex> neighbors = new ArrayList<MapHex>();
+        ArrayList<MapHex> neighbors = new ArrayList<>();
         
         // This is the case where the move was legal :D
         if( moveAllowance > 0 )
@@ -85,16 +125,13 @@ public class MovementCalculator
             //For each hex edge, 0-5, get the neighboring hex, if it's valid
             for (int i = 0; i < 6; i++) 
             {
-                //Check if the hex is valid, null returned if hex neighbor no exist
+                //Check if hex is valid, null returned if hex neighbor no exist
                 if( currentHex.getNeighbor(i) != null ) 
                 {
                     // add each valid neighbor to neighbors if not vortex hex
                     neighbors.add(currentHex.getNeighbor(i));
                 }
             }
-            
-            if( currentHex.IsVortexHex())
-                return;
             
             // check to see if current hex has enemy units in it
             // if 0 then hex is empty
@@ -141,9 +178,11 @@ public class MovementCalculator
                         getValidMoves( movingUnit, neighbors.get(i),
                                 moveAllowance - .5, validHexes );
                         break;
-                    case 5 : // Stream hexside - get terrain cost and add one, recurse
-                        destinationTerrainType = neighbors.get(i).getTerrainType();
-                        moveCost = destinationTerrainType.getMovementCost(movingUnit);
+                    case 5 : //Stream hexside - get cost, add one, recurse
+                        destinationTerrainType = neighbors.get(i)
+                                .getTerrainType();
+                        moveCost = destinationTerrainType.
+                                getMovementCost(movingUnit);
                         moveCost = moveCost + 1.;
                         getValidMoves( movingUnit, neighbors.get(i),
                                 moveAllowance - moveCost, validHexes );
@@ -157,8 +196,10 @@ public class MovementCalculator
                     case 8 : // break without recursion for case of enemy unit
                         break;
                     default : // Case where no hex edge applies.
-                        destinationTerrainType = neighbors.get(i).getTerrainType();
-                        moveCost = destinationTerrainType.getMovementCost(movingUnit);
+                        destinationTerrainType = neighbors.get(i)
+                                .getTerrainType();
+                        moveCost = destinationTerrainType
+                                .getMovementCost(movingUnit);
                         if( moveCost == 99. )
                             break;
                         getValidMoves( movingUnit, neighbors.get(i),
@@ -285,11 +326,11 @@ public class MovementCalculator
     }
 
     /**
-     * This method takes a possible destination hex and a unit, who's valid moves
+     * Takes a possible destination hex and a unit, who's valid moves
      * are being calculated, and determines if there are enemy units in that 
      * hex. If there are, the move is illegal and false is returned. Otherwise,
      * true is returned. This method is dependent upon the id numbering scheme
-     * of moveable units including a reference to players and the ability to 
+     * of MoveableUnits including a reference to players and the ability to 
      * access any units residing in the destinationHex from that hex. 
      * @param destinationHex
      * @param movingUnit
