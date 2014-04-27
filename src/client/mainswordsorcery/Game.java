@@ -246,7 +246,7 @@ public class Game extends Application {
         unitPool.clear();
         if(testScenario){
             // initialize dummy scenario, populate unit pool from it
-            Scenario.Initialize("resources/scenarios/8_Weird.json");
+            Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
             Scenario.populatePool();
             
             //scenario loading complete

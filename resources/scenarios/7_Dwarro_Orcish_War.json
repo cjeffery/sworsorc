@@ -1,0 +1,121 @@
+{
+    "scenarioName": "The First Dwarro-Orcish War",
+    "gameLength":12,
+    "numberOfPlayers":2,
+    "blueSunStart":10,
+    
+    "armies": [
+        {
+	    "player":1,
+            "name": "Dwarrows",
+            "setupOrder":2,
+            "moveOrder":2,
+            "nations": [
+                {
+                    "name":"Krasnian",
+                    "race":"Dwarrows",
+                    "provinces": ["Krasnia","Outer Krasnia"],
+                    "units": {
+                        "Bow":2,
+                        "HeavyAxe":8
+                    },
+                    "characters": [
+                        "Gislan the Rock"
+                    ]   
+                },
+                {
+                    "name":"Zirkastian",
+                    "race":"Dwarrows",
+                    "provinces":["Zirkast"],
+                    "units": {
+                        "LightHorse":2,
+                        "Bow":2,
+                        "HeavyAxe":6
+                    },
+                    "characters": [
+                        
+                    ]
+                }
+            ],
+	    "reinforcements":"0",
+            "replacements":"1 in 3"
+        },
+        {
+	    "player":2,
+            "name": "ORC",
+            "setupOrder": 1,
+            "moveOrder": 1,
+            "nations": [
+                {
+                    "name":"ORC",
+                    "race":"Orc",
+                    "provinces": ["Ithilgil","Kanathar"],
+                    "units": {
+                        "WargRider":6,
+                        "Bow":2,
+                        "HeavySword":10,
+                        "LightSpear":14
+                    },
+                    "characters": [
+                        "Chairman Naskhund",
+                        "Zarko"
+                    ]
+                }
+            ],
+	    "reinforcements":"0",
+            "replacements":"1 in 2"
+        }
+    ],
+    
+    "neutrals": [
+        {
+            "name": "Convivian",
+            "provinces": ["Convivia"],
+            "units": {
+              "Bow":2,
+              "HeavyAxe":8
+            },
+            "characters": [
+                "Gerudirr Dragonslayer"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Dwarrows",
+                "amount":3
+            }
+        },
+        {
+            "name": "Elven",
+            "provinces": ["Nattily Woods","Vynar"],
+            "units": {
+              "HorseArcher":2,
+              "LightHorse":6,
+              "LightSword":4
+            },
+            "characters": [
+                "Gwaigilion Elengal"
+            ],
+            "diplomacy": {
+                "leaningTowards":"ORC",
+                "amount":1
+            }
+        },
+        {
+            "name": "SpiderFolk",
+            "provinces": ["Sorcerak"],
+            "units": {
+              "WebWarriors":4,
+              "SpiderLegion":6
+            },
+            "characters": [
+                "Mellanthia"
+            ],
+            "diplomacy": {
+                "humanSacrifice":"true",
+                "leaningTowards": "Orc",
+                "amount":1
+            }
+        }
+    ]
+
+}
+
