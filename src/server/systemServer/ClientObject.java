@@ -299,7 +299,9 @@ public class ClientObject {
                         }
                         //NetworkServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
 
-                    } else {
+                    } else if (TAG.equals(MessageUtils.CHANGE_PHASE)){
+                        NetworkServer.sendToAllClients(message);
+                    } else{
                         //will add other protocols 
                         System.err.println("Unknown tag! Printing message...");
                         for (String s : message) {

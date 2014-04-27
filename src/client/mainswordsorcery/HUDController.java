@@ -483,16 +483,19 @@ public class HUDController {
                 }
                 phaseButton.setText("End Spell Phase");
                 phase.setText("Spell");
+                NetworkClient.sendPhaseChange("Spell");
                 break;
         
             case "End Spell Phase":
                 phaseButton.setText("End Combat Phase");
                 phase.setText("Combat");
+                NetworkClient.sendPhaseChange("Combat");
                 break;
             
             case "End Combat Phase":
                 phaseButton.setText("End Turn");
                 phase.setText("End");
+                NetworkClient.endTurn();
                 break;
                 
             case "End Turn":
@@ -508,6 +511,7 @@ public class HUDController {
         
                 RedState.setText(SolarDisplay.GetRedState());
                 BlueState.setText(SolarDisplay.GetBlueState());
+                NetworkClient.sendPhaseChange("Movement");
                 break;
         }
         

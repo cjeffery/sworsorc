@@ -180,6 +180,14 @@ public class NetworkClient {
       MessageUtils.sendMessage(writer, MessageUtils.makeGlobalChatMessage(username, message));
       //TODO: World-wide or lobby-wide?
     }
+    
+    /**
+     * Sends a message to other users indicating a phase chage!
+     * @param phase 
+     */
+    public static void sendPhaseChange(String phase){
+        MessageUtils.sendMessage(writer, MessageUtils.makePhaseChangeMessage(phase));
+    }
 
     /**
      * Post the string "lastMessage" to the GUI chat box. The message has be
@@ -404,7 +412,11 @@ public class NetworkClient {
                             lastMessage = message.get(1) + ": " + message.get(2);
                             postMessage();
                         }
-                    } else if (message.get(0).equals(MessageUtils.DISCONNECT_ANNOUNCEMENT)) {
+                    } else if (message.get(0).equals(MessageUtils.CHANGE_PHASE)){
+                        System.out.println("Phase Changed!");
+                        lastMessage = "Phase Changed: " + message.get(1);
+                        postMessage();
+                    }else if (message.get(0).equals(MessageUtils.DISCONNECT_ANNOUNCEMENT)) {
                         lastMessage = MessageUtils.printDisconnect(consoleOut, message);
                         postMessage();
                     } else if (message.get(0).equals(MessageUtils.CONNECT_ANNOUNCEMENT)) {
