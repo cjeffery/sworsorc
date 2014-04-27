@@ -39,6 +39,9 @@ public class MovementCalculatorTest extends TestCase {
         // Initialize test unit and add to unitpool
         ArmyUnit unit = new LightSword();
         unit.setRace(Race.Human);
+        // Call method to initialize working movement on unit - must be done or
+        // will not work.
+        unit.ResetWorkingMovement();
         pool.addUnit(playerID, unit, hexID);
                 
         // As of 4/27 I know getValidMoves returns the correct hexes. I'm using 
