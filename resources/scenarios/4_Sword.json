@@ -8,46 +8,162 @@
         {
             "name": "Dark Lord",
 	    "player":1,
-            "provinces": ["Kelgarnth", "Citadel Isle", "Graumthog", "Sorcerak", "Zirkast", "Kananthar", "Ithilgil", "Intas", "Krasnia", "Dwarfhaven"],
             "setupOrder":1,
             "moveOrder":1,
+            "nations": [
+                {
+                    "name":"SpiderFolk",
+                    "race":"Spiders",
+                    "provinces": ["Sorcerak"],
+                    "units": {
+                        "WebWarriors":4,
+                        "SpiderLegion":6
+                    },
+                    "characters": [
+                        "Mellanthia"
+                    ]
+                },
+                {
+                    "name":"ORC",
+                    "race":"Orc",
+                    "provinces":["Ithilgil"],
+                    "units": {
+                        "HeavySpear":18,
+                        "HeavySword":12,
+                        "Bow":2,
+                        "WargRider":8
+                    },
+                    "characters": [
+                        "Krawn the Crazy"
+                    ]
+                },
+                {
+                    "name":"Mercenary",
+                    "race":"Human",
+                    "provinces": ["Kelgarnth", 
+                        "Citadel Isle", 
+                        "Graumthog", 
+                        "Sorcerak", 
+                        "Zirkast", 
+                        "Kananthar", 
+                        "Ithilgil", 
+                        "Intas", 
+                        "Krasnia", 
+                        "Dwarfhaven"],
+                    "units": {
+                        "HeavySword":4,
+                        "HeavyHorse":4
+                    },
+                    "characters": [
+                        
+                    ]
+                },
+                {
+                    "name":"Goblin",
+                    "race":"Goblins",
+                    "provinces": ["Kelgarnth", 
+                        "Citadel Isle", 
+                        "Graumthog", 
+                        "Sorcerak", 
+                        "Zirkast", 
+                        "Kananthar", 
+                        "Ithilgil", 
+                        "Intas", 
+                        "Krasnia", 
+                        "Dwarfhaven"],
+                    "units": {
+                        "LightSpear":8
+                    },
+                    "characters": [
+                        
+                    ]
+                },
+                {
+                    "name":"Krasnian",
+                    "race":"Dwarrows",
+                    "provinces":["Krasnia"],
+                    "units": {
+                        "HeavyAxe":6,
+                        "Bow":2
+                    },
+                    "chracters": [
+                        
+                    ]
+                },
+                {
+                    "name":"Zirkastian",
+                    "race":"Dwarrows",
+                    "provinces":["Zirkast"],
+                    "units": {
+                        "HeavyAxe":6
+                    },
+                    "chracters": [
+                        
+                    ]
+                },
+                {
+                    "name":"Convivian",
+                    "race":"Dwarrows",
+                    "provinces":["Convivia"],
+                    "units": {
+                        "HeavyAxe":4,
+                        "Bow":2
+                    },
+                    "characters": [
+                        
+                    ]
+                },
+                {
+                    "name":"Dragon",
+                    "race":"Dragon",
+                    "provinces":["Kelgarnth"],
+                    "units": {
+                        "Dragon":5
+                    },
+                    "characters": [
+                        
+                    ]
+                }
+            ]
             
-            
-            ***************************************************************************************************
-            * There's no mechanism for specifying the races of the characters when it isn't obvious, as below *
-            * Also, figure out how to limit some units to specific regions in setup ***************************
-            ***************************************************************************************************
-            
-            "units": {
-              "Warriors of the Web":4,
-              "Spider Legions":6,
-              "Heavy Spear":18,
-              ...*********************************************************************************************
-            },
-            
-            "characters": [
-                ***** Is spider queen a character? **********************************************************
-                "Spider Queen", "Krawn the Crazy"
-            ],
-	    "reinforcements":"0",
-            "replacements":"1 in 1"
         },
         {
             "name": "Empire",
 	    "player":2,
-            "provinces": ["The Empire", "Capella", "Ka-Chunk"],
             "setupOrder": 2,
             "moveOrder": 2,
-            "units": {
-              ******************* same regions and races issue *************************
-            },
-            
-            "characters": [
-                "Paladin Glade", "Paladin Curvenol", "Paladin Weldron", "Unamit ahezredit", "Peg-Leg Gonzo"
+            "nations": [
+                {
+                    "name":"ImperialArmy",
+                    "race":"Human",
+                    "provinces":["The Empire","Capella"],
+                    "units": {
+                        "Pike":20,
+                        "HeavyHorse":10,
+                        "LightBow":10,
+                        "HeavySword":10
+                    },
+                    "chracters": [
+                        "The Paladin Glade",
+                        "Curvenol",
+                        "Weldron"
+                    ]
+                },
+                {
+                    "name":"CorfluCultist",
+                    "race":"Human",
+                    "provinces": ["Ka-Chunk"],
+                    "units": {
+                        "LightHorse":2,
+                        "Zeppelin":4,
+                        "HeavySword":8
+                    },
+                    "characters": [
+                        "Unamit Ahazredit",
+                        "Peg-Leg Gonzo"
+                    ]
+                }
             ],
-            **************************************************************************************
-            * reader won't accept the following string for reinforcement's value - fix mechanics *
-            **************************************************************************************
 	    "reinforcements":"4 Pike units - 2 each game turn",
             "replacements":"2 in 1"
         }
@@ -105,11 +221,7 @@
                 "leaningTowards": "Empire",
                 "amount":1
             }
-        },
+        }
     ]
 
 }
-
-**********************************************************************************
-* Find a general mechanic for special rules and victory conditions - seems tough *
-**********************************************************************************
