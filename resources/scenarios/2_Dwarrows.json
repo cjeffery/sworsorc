@@ -28,12 +28,11 @@
                     "characters": [
                         "Dalmilandril",
                         "Linfalas"
-                    ]
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 2"
                 }
-            ],
-            
-	    "reinforcements":"0",
-            "replacements":"1 in 2"
+            ]
         },
         {
             "name": "Black Dwarrows",
@@ -53,12 +52,11 @@
             
                     "characters": [
                         "Gerudirr Dragonslayer"
-                    ]
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 3"
                 }
-            ],
-
-	    "reinforcements":"0",
-            "replacements":"1 in 3"
+            ]
         },
         {
             "name": "The Dark Lord",
@@ -80,11 +78,11 @@
                     "characters": [
                         "Loki Hellsson",
                         "Ganab the Nasty"
-                    ]
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 2"
                 }
-            ],
-	    "reinforcements":"0",
-            "replacements":"1 in 2"
+            ]
         }
     ],
     

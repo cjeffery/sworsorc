@@ -21,7 +21,9 @@
                     },
                     "characters": [
                         "Gislan the Rock"
-                    ]   
+                    ],
+                    "reinforcements":"1 HeavyAxe each 1 for 4",
+                    "replacements":"1 in 3"
                 },
                 {
                     "name":"Zirkastian",
@@ -34,11 +36,11 @@
                     },
                     "characters": [
                         
-                    ]
+                    ],
+                    "reinforcements":"1 Bow, 1 HeavyAxe on 3rd or 4th game-turn",
+                    "repalcements":"1 in 3"
                 }
-            ],
-	    "reinforcements":"0",
-            "replacements":"1 in 3"
+            ]
         },
         {
 	    "player":2,

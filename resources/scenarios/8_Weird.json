@@ -25,11 +25,11 @@
                     "characters": [
                         "Snorri Gundarchuksson",
                         "Theregond the Mage"
-                    ]   
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 3"   
                 }
-            ],
-	    "reinforcements":"0",
-            "replacements":"1 in 3"
+            ]
         },
         {
 	    "player":2,
@@ -47,7 +47,9 @@
             
                     "characters": [
                         "Ganab the Nasty"
-                    ]
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 3"
                 },
                 {
                     "name":"Mercenary",
@@ -59,11 +61,11 @@
                     },
                     "characters": [
                         
-                    ]
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"0"
                 }
-            ],
-	    "reinforcements":"0",
-            "replacements":"1 in 3"
+            ]
         }
     ],
     

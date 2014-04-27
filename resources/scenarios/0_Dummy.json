@@ -47,11 +47,11 @@
                     },
                     "characters": [
                         "Paladin Glade"
-                    ]
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"0"
                 }
-            ],
-	    "reinforcements":"0",
-            "replacements":"0"
+            ]
         }
     ],
     

@@ -54,8 +54,6 @@ public class Scenario {
      static Map<String, Integer> controllingPlayers;   //army -> controllingPlayer
      static Map<String, Integer> setupOrders;          //army -> order
      static Map<String, Integer> moveOrders;           //army -> order
-     static Map<String, String> replacements;          //army -> description of replacement
-     static Map<String, String> reinforcements;        //army -> description of reinforcements
      
      // nation information
      static Map<String, List<String>> nations;         //army -> names of nations
@@ -63,6 +61,8 @@ public class Scenario {
      static Map<String, List<String>> provinces;       //nation -> list of province names
      static Map<String, List<String>> characters;      //nation -> list of character names
      static Map<String, Map<String, Integer>> units;   //nation -> (unitName -> unitCount)
+     static Map<String, String> replacements;          //nation -> description of replacement
+     static Map<String, String> reinforcements;        //nation -> description of reinforcements
 
     //Diplomacy stuff:
      static Map<String, String> leaningTowards;
@@ -86,11 +86,12 @@ public class Scenario {
             System.out.println("Sets up: " + getSetupOrder(army));
             System.out.println("Moves: " + getMoveOrder(army));
             System.out.println("Nations: " + getNations(army));
-            /*System.out.println("Controls Provinces: " + getProvinces(army));
+            /* // these are now at a national, not army, level
+            System.out.println("Controls Provinces: " + getProvinces(army));
             System.out.println("Has characters: " + getCharacters(army));
-            System.out.println("Has units: " + getUnits(army));*/
+            System.out.println("Has units: " + getUnits(army));
             System.out.println("Replacements: " + getReplacement(army));
-            System.out.println("Reinforcements: " + getReinforcement(army));
+            System.out.println("Reinforcements: " + getReinforcement(army));*/
         }
         for (String neutral : neutralNames) {
             System.out.println();
@@ -231,12 +232,6 @@ public class Scenario {
 
                 int moveOrder = ((Long) armyObject.get("moveOrder")).intValue();
                 moveOrders.put(armyName, moveOrder);
-
-                String replacementDescription = (String) armyObject.get("replacements");
-                replacements.put(armyName, replacementDescription);
-                
-                String reinforcementDescription = (String) armyObject.get("reinforcements");
-                reinforcements.put(armyName, reinforcementDescription);
                 
                 // now get the information for each nation in this army
                 JSONArray JSONNationArray = (JSONArray) armyObject.get("nations");
@@ -278,6 +273,14 @@ public class Scenario {
                         unitAndCount.put(unitName, unitCount);
                     }
                     units.put(nationName, unitAndCount);
+                    
+                    
+
+                    String replacementDescription = (String) nationObject.get("replacements");
+                    replacements.put(nationName, replacementDescription);
+                
+                    String reinforcementDescription = (String) nationObject.get("reinforcements");
+                    reinforcements.put(nationName, reinforcementDescription);
                 }
                 // add the list of this army's nations to the nation hashmap
                 nations.put(armyName, nationNames);
@@ -498,12 +501,12 @@ public class Scenario {
         return units.get(name);
     }
 
-    public static String  getReplacement(String name) {
-        return replacements.get(name);
+    public static String  getReplacement(String nationName) {
+        return replacements.get(nationName);
     }
     
-    public static String getReinforcement(String name) {
-        return reinforcements.get(name);
+    public static String getReinforcement(String nationName) {
+        return reinforcements.get(nationName);
     }
 
     public static String getLeaningToward(String name) {
