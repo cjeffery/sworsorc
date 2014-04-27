@@ -71,12 +71,13 @@
     
     "neutrals": [
         {
-            "name": "Aardvark Wallow",
+            "name": "IndependentHuman",
+            "race":"Human",
             "provinces": ["Aardvark Wallow"],
             "units": {
-              "Heavy Pluglunk":10,
-              "Light Bow":4,
-              "Light Horse":2
+              "HeavyPluglunk":10,
+              "LightBow":4,
+              "LightHorse":2
             },
             
             "characters": [
@@ -89,12 +90,13 @@
             }
         },
         {
-            "name": "Swamp Creatures",
+            "name": "SwampCreature",
+            "race":"SwampCreature",
             "provinces": ["The Swamps"],
             "units": {
-              "Heavy Sword":6,
-              "Dinosaur Legions":4,
-              "Intelligent Mold":3
+              "HeavySword":6,
+              "DinosaurLegion":4,
+              "IntelligentMold":3
             },
             
             "characters": [
@@ -105,12 +107,13 @@
             }
         },
         {
-            "name": "Corflu Cultists",
+            "name": "CorfluCultist",
+            "race":"Human",
             "provinces": ["Ka-Chunk"],
             "units": {
-              "Light Horse":2,
-              "Heavy Sword":8,
-              "Airship":4
+              "LightHorse":2,
+              "HeavySword":8,
+              "Zeppelin":4
             },
             
             "characters": [
@@ -123,10 +126,11 @@
             }
         },
         {
-            "name": "Zirkast",
-            "provinces": ["Zirkast, Kanathar"],
+            "name": "Zirkastian",
+            "race":"Dwarrows",
+            "provinces": ["Zirkast", "Kanathar"],
             "units": {
-              "Heavy Axe":4
+              "HeavyAxe":4
             },
             
             "characters": [

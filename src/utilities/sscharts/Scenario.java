@@ -48,6 +48,7 @@ public class Scenario {
     
      static List<String> armyNames;
      static List<String> neutralNames;
+     static Map<String, String> neutralRaces; // neutral -> race
 
     //Information storage for each army:
     //The player army or neutral name is the key for these hashmaps
@@ -114,14 +115,16 @@ public class Scenario {
      */
     public static void populatePool() {
         UnitPool pool = UnitPool.getInstance();
+        String unitType;
+        String objectType;
+        String randHexID;
+        int unitQuant;
+        ArmyUnit unit;
+        int player = 0;
+        
         for (String army : getArmyNames() ) {
             // one player controls all nations in an army - this is fine here
-            int player = getControllingPlayer(army);
-            String unitType;
-            String objectType;
-            String randHexID;
-            int unitQuant;
-            ArmyUnit unit;
+            player = getControllingPlayer(army);
             // go through each nation in army and get info about units
             for (String nation : getNations(army) ) {
                 List<String> nationProvinces = getProvinces(nation);
@@ -139,7 +142,7 @@ public class Scenario {
                         unit.setNation(nation);
                         unit.setRace(nationRace);
                         // TODO: look for conflicts and stacks of too many
-                        // TODO: avoid water, vortices
+                        // TODO: avoid water, vortices, bottomless plungehole
                         randHexID = Provinces.getRandHex(nationProvinces);
                         System.out.println("Adding to unit pool: " + player + ": " + unit.getUnitType() + ", " + randHexID);
                         pool.addUnit(player, unit, randHexID);
@@ -153,12 +156,38 @@ public class Scenario {
                 while (charIt.hasNext()) {
                     String charname = (String) charIt.next();
                     thisChar = Character.createCharacter(charname);
-                    // TODO: look for conflicts and stacks of too many
-                    // TODO: avoid water, vortices
                     System.out.println("Adding to unit pool: " + player + ": " + charname + ", " + thisChar.getHomeHex());
                     pool.addUnit(player, thisChar, thisChar.getHomeHex());
                     charIt.remove();
                 }
+            }
+        }
+        
+        // populate the neutral units
+        for (String neutral : neutralNames) {
+            player++; // TODO: for now neutrals look like addition players to
+                      // the unit pool. see how david wants this implemented
+            List<String> neutralProvinces = getProvinces(neutral);
+            String neutralRace = getNeutralRace(neutral);
+            // iterate through the map of this neutral's units
+            Map<String, Integer> playerUnits = getUnits(neutral);
+            Iterator unitIt = playerUnits.entrySet().iterator();
+            while (unitIt.hasNext()) {
+                Map.Entry pairs = (Map.Entry)unitIt.next();
+                unitType = (String) pairs.getKey();
+                objectType = "Units." + unitType;
+                unitQuant = (int) pairs.getValue();
+                for (int i=0; i<unitQuant; i++) {
+                    unit = (ArmyUnit) CreateObject(objectType);
+                    unit.setNation(neutral);
+                    unit.setRace(neutralRace);
+                    // TODO: look for conflicts and stacks of too many
+                    // TODO: avoid water, vortices, bottomless plungehole
+                    randHexID = Provinces.getRandHex(neutralProvinces);
+                    System.out.println("Adding to unit pool: " + player + ": " + unit.getUnitType() + ", " + randHexID);
+                    pool.addUnit(player, unit, randHexID);
+                }
+                unitIt.remove();
             }
         }
     }
@@ -202,6 +231,7 @@ public class Scenario {
 
         //neutralNames has keys for the maps:
         neutralNames = new ArrayList<>();
+        neutralRaces = new HashMap<>();
 
         try {
             //The entire file:
@@ -287,13 +317,16 @@ public class Scenario {
             }
 
             //Iterate and grab information for neutral armies:
-            // TODO: anything with neutrals. Players have taken a lot of my time
+            // TODO: declare variables outside of loops
             JSONArray neutralJSONArray = (JSONArray) jsonObject.get("neutrals");
             for (Object neutralBaseObject : neutralJSONArray) {
                 JSONObject neutralObject = (JSONObject) neutralBaseObject;
 
                 String neutralName = (String) neutralObject.get("name");
                 neutralNames.add(neutralName);
+                
+                String neutralRace = (String) neutralObject.get("race");
+                neutralRaces.put(neutralName,neutralRace);
 
                 List<String> neutralProvinces = new ArrayList<>();
                 for (Object provinceObject : (JSONArray) neutralObject.get("provinces")) {
@@ -486,6 +519,16 @@ public class Scenario {
      */
     public static String getRace(String name) {
         return races.get(name);
+    }
+
+    /**
+     * Return the race of a neutral.
+     * 
+     * @param name the name of the nation in question
+     * @return the race of nation
+     */
+    public static String getNeutralRace(String neutral) {
+        return neutralRaces.get(neutral);
     }
 
     /**
