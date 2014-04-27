@@ -86,8 +86,8 @@ public class UnitPainter {
                 paintArmyUnit(g2, (ArmyUnit)unit, stacked);
                 return;
             case Character:
-                System.out.println("Drawing characters isn't supported yet"
-                                   + " - bug colin if it needs implementing");
+                //System.out.println("Drawing characters isn't supported yet"
+                //                   + " - bug colin if it needs implementing");
                 g2.setColor( new Color(0xff, 0xff, 0xff, 127) ); 
                 g2.fill(hexMask);
                 HexPainter.drawImage(g2, "generic", images );
