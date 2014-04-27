@@ -17,6 +17,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 import sshexmap.Provinces;
+import Character.Character;
 
 
 /**
@@ -126,9 +127,9 @@ public class Scenario {
                 String nationRace = getRace(nation);
                 // iterate through the map of this nation's units
                 Map<String, Integer> playerUnits = getUnits(nation);
-                Iterator it = playerUnits.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pairs = (Map.Entry)it.next();
+                Iterator unitIt = playerUnits.entrySet().iterator();
+                while (unitIt.hasNext()) {
+                    Map.Entry pairs = (Map.Entry)unitIt.next();
                     unitType = (String) pairs.getKey();
                     objectType = "Units." + unitType;
                     unitQuant = (int) pairs.getValue();
@@ -142,7 +143,21 @@ public class Scenario {
                         System.out.println("Adding to unit pool: " + player + ": " + unit.getUnitType() + ", " + randHexID);
                         pool.addUnit(player, unit, randHexID);
                     }
-                    it.remove();
+                    unitIt.remove();
+                }
+                // iterate through the map of this nation's characters
+                Character thisChar;
+                List<String> playerChars = getCharacters(nation);
+                Iterator charIt = playerChars.iterator();
+                while (charIt.hasNext()) {
+                    String charname = (String) charIt.next();
+                    thisChar = Character.createCharacter(charname);
+                    // TODO: look for conflicts and stacks of too many
+                    // TODO: avoid water, vortices
+                    randHexID = Provinces.getRandHex(nationProvinces);
+                    System.out.println("Adding to unit pool: " + player + ": " + charname + ", " + randHexID);
+                    pool.addUnit(player, thisChar, randHexID);
+                    charIt.remove();
                 }
             }
         }
