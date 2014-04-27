@@ -152,6 +152,7 @@ public class CastSpell{
         
         if(conjured != null){
             //TODO:
+            conjured.ResetWorkingMovement();
             //insert the conjured unit into the Unit Pool
             conjured = null;
         }
