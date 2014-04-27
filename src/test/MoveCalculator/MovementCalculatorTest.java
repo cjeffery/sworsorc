@@ -28,6 +28,7 @@ public class MovementCalculatorTest extends TestCase {
         UnitPool pool = UnitPool.getInstance();
         HashMap<MapHex, Double> moves;
         ArrayList<MapHex> validMoves = new ArrayList<>();
+        ArrayList<MapHex> fromHashMapMoves = new ArrayList<>();
         // Initialize test unit and add to unitpool
         ArmyUnit unit = new LightSword();
         unit.setRace(Race.Human);
@@ -42,13 +43,18 @@ public class MovementCalculatorTest extends TestCase {
         // Get the hashmap with moves:costs for comparison
         moves = MovementCalculator.movementWrapper( unit, map.GetHex( hexID ) );
         // Compare the keys.
-        for( MapHex keyHex : moves.keySet() ) 
-        {
-            assertTrue("Each keyHex must be in validHexes:", 
-                    validMoves.contains(keyHex));
-        }
+        
+        System.out.println("***************HASHMAP****************");
+        System.out.println(moves);
+        System.out.println("***************ARRAYLIST****************");
+        System.out.println(validMoves);
+        
+        moves.keySet().stream().forEach((keyHex) -> {
+            fromHashMapMoves.add(keyHex);
+        });
 
-    
+        assertEquals("Check the size of both lists is equal", validMoves.size(),
+                fromHashMapMoves.size());
     }
     
 }
