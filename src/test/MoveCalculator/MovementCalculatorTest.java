@@ -4,123 +4,51 @@
  */
 package MoveCalculator;
 
-import Units.ArmyUnit;
-import Units.LightSword;
-import Units.MoveableUnit;
-import Units.Race;
 import Units.UnitPool;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
 import junit.framework.TestCase;
-import static org.testng.TestNGAntTask.Mode.junit;
 import sshexmap.MainMap;
-import sshexmap.MapDemo;
+import Units.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.testng.annotations.Test;
 import sshexmap.MapHex;
-import sshexmap.MapView;
 
 /**
  *
  * @author keith
  */
 public class MovementCalculatorTest extends TestCase {
-    /*
-    private MapView mapView;
-    private MainMap map;
-    private UnitPool pool;
-    private MoveableUnit selected_unit;
-    private ArrayList<MapHex> canMoveTo;
-    public MovementCalculatorTest(String testName) {
-        super(testName);
-        JFrame window = new JFrame("Game Map"); 
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        map = MainMap.GetInstance();
-        mapView = new MapView(map);
-        JScrollPane scrollPane = new JScrollPane(mapView);
-        window.add(scrollPane);
-
-        pool = UnitPool.getInstance();
-        
-        ArmyUnit unit = new LightSword();
-        unit.setRace(Race.Elves);
-        pool.addUnit(0, unit, "0606");
-        //ArrayList<String> units = pool.getUnitsInHex("0606");
-        //if(units != null)
-        //    for(String s : units)
-        //        System.out.println(s);
-
-        window.pack();
-        window.setVisible(true);
-    }
     
-    public void testCalculator()
+    @Test
+    public void testWrapper()
     {
-         javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                MapDemo md = new MapDemo();
-                md.mapView.addMouseListener(md);
-                md.mapView.addKeyListener(md);
-            }
-        });
+        int playerID = 0;
+        String hexID = "0606";
+        MainMap map = MainMap.GetInstance();
+        UnitPool pool = UnitPool.getInstance();
+        HashMap<MapHex, Double> moves;
+        ArrayList<MapHex> validMoves = new ArrayList<>();
+        // Initialize test unit and add to unitpool
+        ArmyUnit unit = new LightSword();
+        unit.setRace(Race.Human);
+        pool.addUnit(playerID, unit, hexID);
+        
+        
+        
+        // As of 4/27 I know getValidMoves returns the correct hexes. I'm using 
+        // the method as a baseline for the wrapper test.
+        MovementCalculator.getValidMoves(unit, map.GetHex(hexID), 
+                unit.getMovement(), validMoves);
+        // Get the hashmap with moves:costs for comparison
+        moves = MovementCalculator.movementWrapper( unit, map.GetHex( hexID ) );
+        // Compare the keys.
+        for( MapHex keyHex : moves.keySet() ) 
+        {
+            assertTrue("Each keyHex must be in validHexes:", 
+                    validMoves.contains(keyHex));
+        }
+
+    
     }
     
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        String hexID = mapView.hexAt(e.getX(), e.getY());
-        MapHex hex = map.GetHex(hexID);
-        if(hex == null)
-            return;
-        System.out.println("===START===");
-        if(selected_unit == null) {
-            System.out.println("no unit selected");
-            if(hex.getUnits() == null) {
-                System.out.println("no units in hex");
-                return;
-            }
-            System.out.println("highlighting moves");
-            canMoveTo = new ArrayList<MapHex>();
-            ArrayList<MoveableUnit> units = hex.getUnits();
-            selected_unit = null;
-            for( MoveableUnit u : units) {
-                if(u != null)
-                    selected_unit = u;
-            }
-            System.out.println("Selected " + selected_unit + ", size of stack: " + hex.getUnits().size() );
-            canMoveTo.clear();
-            MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );
-            mapView.highlight(canMoveTo);
-        }
-        else if( canMoveTo.contains(hex) ) {
-            System.out.println("unit selected, can move to destination");
-            //hack because unitpool isn't finished
-            //pool.clearPool();
-            
-            mapView.clearHighlights();
-            pool.addMove((ArmyUnit)selected_unit, hex.GetID());
-            //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
-            mapView.repaint();
-            selected_unit = null;
-        }
-        else {
-            System.out.println("unit sleected, cannot move to destination");
-        }
-        //JOptionPane.showMessageDialog(null, "" + res.size() );      
-    }
-
-    @Override public void mousePressed(MouseEvent e) {}
-    @Override public void mouseReleased(MouseEvent e){}
-    @Override public void mouseEntered(MouseEvent e) {}
-    @Override public void mouseExited(MouseEvent e) {}
-    @Override public void keyTyped(KeyEvent e) {}
-    
-    @Override public void keyPressed(KeyEvent e) {
-        //int key = e.getKeyCode();
-
-    }
-
-    @Override public void keyReleased(KeyEvent e) {}
-    */
 }
