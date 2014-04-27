@@ -1,16 +1,19 @@
-/**
- * The Network Client
- * <p>
- * Handles client-side communication with the server
+/*
+ * All source code is the work of Clinton Jeffery's Spring 2014 Software Engineering 
+ * class at the University of Idaho consisting of the following members:
+ * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
+ * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
+
 package systemServer;
 
 import Units.MoveableUnit;
 import Units.UnitPool;
-import com.sun.corba.se.pept.transport.ListenerThread;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -20,8 +23,8 @@ import mainswordsorcery.Game;
 /**
  * The Infamous Network Client, handles communication to/from Network Server
  * <p>
- * NOTE: This is a static singleton. 
- * Don't fool around trying to create instances, you hear now?
+ * NOTE: This is a static singleton. Don't fool around trying to create instances now, ya' hear?
+ * @author Networking Subteam
  */
 public class NetworkClient {
 
@@ -42,9 +45,13 @@ public class NetworkClient {
     private static ClientWriterThread writerThread = null;
     private static ClientCommandThread clientThread = null;
 
-    // Set default help file
+    // File path defaults
+    // TODO: change these in configureSettings()
     private static String helpfile = "commands.txt"; // TODO: update from settings file
     private static String dir = System.getProperty("user.dir");
+    private static String networkDirectory = System.getProperty("user.dir") + 
+            File.separator + "src" + File.separator + "server" + File.separator;
+
     
     // Buffers
     private static ArrayBlockingQueue<List<Object>> messageQueue;
@@ -92,23 +99,14 @@ public class NetworkClient {
             return false;
         }
     }
-
-    /**
-     * Send a message to client
-     * YOU MUST PUT A TAG AS THE FIRST ITEM!
-     * <p>
-     * This is just a public wrapper for {@link #write write()}
-     * @param message Message to send
-     */
-    public static void send(List<String> message) {
-        write(MessagePhoenix.stringToObject(message));
-    }
     
     /**
      * Send a message to client
      * YOU MUST PUT A TAG AS THE FIRST ITEM!
      * <p>
      * Generic parameters
+     * This is just a public wrapper for {@link #write write()}
+     * 
      * @param message First parameter is assumed to be tag
      */
     public static void send(Object... message) {
@@ -147,8 +145,15 @@ public class NetworkClient {
     public static void endTurn() {
         send(MessagePhoenix.YIELD_TURN);
     }
+    
+    public static int generateUniqueID() {
+        // TODO: update with executeCommand(<ID request command>);
+        // Stub, may not be needed, could use a queue
+        return -1;
+    }
 
     // ***THREADS*** //
+    // TODO: if server dies, make sure client doesn't panic
     private static boolean remoteConnectionIsAlive() {
         return ((listenerThread != null && listenerThread.isAlive())
                 || (clientThread != null && clientThread.isAlive()));
@@ -169,13 +174,14 @@ public class NetworkClient {
          * @param command
          * @return boolean True if executed normally, False if quit or exception
         */
-        private boolean processCommand(String command) {
+        private boolean processCommand( final String command) {
 
         if (command == null) {
             System.err.println("Null string passed to processInput!");
             return false;
         }
 
+        // TODO: ADD REQUEST UNIQUE_ID COMMAND?
         String[] parsedString;
         parsedString = command.split("\\s+"); //Split line by whitespace
 
@@ -268,14 +274,13 @@ public class NetworkClient {
          * <p>
          * @param filename Name of file to be sent
          */
-        private void sendFile(String filename) {
-            String line;
+        private void sendFile( final String filename) {
+            // TODO: this is text file, what about binary files? JSONs?
+            List<String> temp; // What is our file size limit?
             try {
-                BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("UTF-8")));
-                send(MessagePhoenix.FILE, filename); // TODO: rewrite with single message sent
-                while ((line = file.readLine()) != null) {
-                    send(MessagePhoenix.FILE_LINE, filename, line);
-                }
+                //BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("UTF-8")));
+                temp = Files.readAllLines( Paths.get(networkDirectory + filename), Charset.forName("UTF-8"));
+                send(MessagePhoenix.FILE, temp);
             } catch (IOException e) {
                 System.err.println("Could not open file! Error thrown: " + e);
             }
@@ -318,9 +323,7 @@ public class NetworkClient {
 
                     }
                 } catch (IOException ex) {
-                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
-                    ex.printStackTrace();
+                    System.err.println("Error reading commmand stream!");
                     killThread();
                 }
             }
@@ -377,28 +380,29 @@ public class NetworkClient {
             this.killed = true;
         }        
 
-        private void sendMessage(String tag, Object... message) {
+        private void sendMessage(List<Object> message) {
             try {
-                MessagePhoenix.sendMessage(writer, tag, message);
+                MessagePhoenix.sendMessage(writer, message);
             } catch (IOException | NullPointerException ex) {
                 ex.printStackTrace();       
             }
         }
+        
         @Override
         public void run() {
             setWriter();          
-            List<Object> message = null;
+            List<Object> message = new ArrayList<>(0);
             
             while (!killed) {
                 try {
                     message = messageQueue.take();
                 } catch (InterruptedException ex) {
-                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
                     ex.printStackTrace();
+                    killThread();
                 }
-                if (message != null ) { // assume first object is tag
-                    sendMessage( message.get(0).toString(), new ArrayList(message.subList(1, message.size())));
+                if (message != null ) { // Don't want null messages
+                    // assume first object is tag
+                    sendMessage(message);
                 } else {
                     System.err.println("Null message!");
                     killThread();
@@ -412,22 +416,20 @@ public class NetworkClient {
          */
         private void close() {
             try {
-                if (!(isConnected())) {
-                    if (writer != null) {
-                        writer.close();
-                        writer = null;
-                    }
-                } else {
+                if (isConnected()) {
                     disconnectFromServer();
                     if (writer != null) {
                         writer.close();
                         writer = null;
                     }
-
+                    
+                } else {
+                    if (writer != null) {
+                        writer.close();
+                        writer = null;
+                    }
                 }
             } catch (IOException ex) {
-                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
                 ex.printStackTrace();
             }
         }
@@ -458,8 +460,6 @@ public class NetworkClient {
                 try {
                     this.streamIn = new ObjectInputStream(socket.getInputStream());                   
                 } catch (IOException ex) {
-                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
                     ex.printStackTrace();
                 }
             } else {
@@ -477,23 +477,31 @@ public class NetworkClient {
         }
 
         private List<Object> recieveMessage() {
-            return MessagePhoenix.recieveMessage(streamIn);
+            return isConnected() ? MessagePhoenix.recieveMessage(this.streamIn) : null;
         }
         
-        private boolean processMessage( List<Object> incomingMessage ) {
+        private boolean processMessage( final List<Object> incomingMessage ) {
             
-            List<String> message = null; // more generic later on, as in POJOs
-            String TAG = null;
+            List<Object> rawMessage = incomingMessage;
             
-            // Convert to String list
-            // If we have need for objects from servers later, any branches would go here
-            message = MessagePhoenix.objectToString(incomingMessage);
+            List<String> message;
+            String TAG = "default";
 
             // Read and strip the message TAG
-            TAG = message.get(0);
-            message = message.subList(1, message.size());
+            // This should be done in MessagePhoenix, imo
+            if( rawMessage.get(0).getClass().equals(String.class)) {
+                TAG = rawMessage.get(0).toString();
+            } else {
+                System.err.println("Error: Client attemped to process non-String TAG!\nTAG class: "
+                + rawMessage.get(0).getClass());
+                return false;
+            }
+            rawMessage = rawMessage.subList(1, rawMessage.size());
             
-            // Dead Mans switch
+            // Change this later with enumerated switch statement?
+            message = MessagePhoenix.objectToString(rawMessage);
+            
+            // Dead Mans switch (default value)
             String tempMessage = message.toString();            
 
             // assuming message is a string
@@ -517,7 +525,7 @@ public class NetworkClient {
                 if (message.isEmpty()) {
                     flushToConsole("No users online.");
                 } else {
-                    tempMessage = (message.size() + " users online: ");
+                    tempMessage = (message.size() + " users online: ");                   
                     for (String l : message) {
                         tempMessage += (" " + l);
                     }
@@ -564,10 +572,11 @@ public class NetworkClient {
             } else if (TAG.equals(MessagePhoenix.LEFT_LOBBY)) {
                 flushToConsole("Client " + message.get(2) + " has left lobby "
                         + message.get(1));
-            } else { // Game communication
-                // its not a network message, therefore NC doesn't care, and has Jarvis take out the trash
+            } else { 
+                // TODO: HANDLE ID TAG FOR UNIQUE ID
+                // Game communication
                 //jarvis.processMessage( message.subList(1, message.size()), TAG );
-                flushToConsole("Unknown tag: " + TAG);
+                flushToConsole("Unknown tag: " + TAG); // Temporary
             } // end else
             return true;
         }
@@ -576,15 +585,12 @@ public class NetworkClient {
         public void run() {
             createStream();
             // Temporary containers
-            List<Object> incomingMessage = null; // incoming message from server. First string is message tag.
-            List<String> message = null;
-            String TAG = null;
+            // incoming message from server. First string is message tag.
+            List<Object> incomingMessage = null;
             
             // Main loop
             while (!killed) {
-                if (killed) { // Thread killed
-                    break;
-                } else if (isConnected() && streamIn != null) {
+                if (isConnected() && streamIn != null) {
                     incomingMessage = recieveMessage(); // get the message                    
                 } else {
                     continue; // Relax at the MoxieJava until message arrives
@@ -592,10 +598,8 @@ public class NetworkClient {
 
                 if (incomingMessage == null) {
                     System.err.println("Null message from server, or default never changed!");
-                    break;
                 } else if (incomingMessage.isEmpty()) {
                     System.err.println("Empty message from server!");
-                    // TODO: handle empty messages?
                 } else if( processMessage(incomingMessage)) {
                     // TODO: something important
                 } else {
@@ -624,9 +628,7 @@ public class NetworkClient {
                     }
 
                 }
-            } catch (IOException ex) {
-                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+            } catch (IOException ex) {;
                 ex.printStackTrace();
             }
         }
@@ -657,9 +659,9 @@ public class NetworkClient {
         // Send username
         send(MessagePhoenix.SEND_HANDLE, username);
         // Request list of clients:
-        send(MessagePhoenix.GLOBAL_WHO_LIST);
+        send(MessagePhoenix.REQUEST_GLOBAL_WHO);
         // Request list of lobbies:
-        send(MessagePhoenix.LOBBY_INFO);    
+        send(MessagePhoenix.REQUEST_LOBBY_INFO);    
     }
 
     /**
@@ -741,7 +743,7 @@ public class NetworkClient {
      * 
      * @author Gabe Pearhill
      */
-    private static void postMessage( String lastMessage) {
+    private static void postMessage( final String lastMessage) {
         Platform.runLater(new Runnable() { // TODO: Get this working
             @Override
             public void run() {
@@ -756,7 +758,7 @@ public class NetworkClient {
      * @param lastMessage Message to print
      * @author Christopher Goes
      */
-    private static void flushToConsole( String lastMessage ) {
+    private static void flushToConsole( final String lastMessage ) {
         consoleOut.println(lastMessage); // TODO: append username/tags!
         consoleOut.flush();
         //postMessage(lastMessage);
@@ -912,7 +914,7 @@ public class NetworkClient {
      * @param filename Name of Network Settings file
      * @return True if successful, False if not
      */
-    private static boolean configureSettings( String filename ) {
+    private static boolean configureSettings( final String filename ) {
         return true; // TODO: Stub method
     }
     

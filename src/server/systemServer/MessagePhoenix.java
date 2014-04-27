@@ -60,7 +60,7 @@ public class MessagePhoenix {
 
     /* WHO REQUEST THINGYS */
     static String GLOBAL_WHO_LIST = "globalwholist"; //send list of all online users
-    static String REQUEST_GLOBAL_WHO = "globalwhoreqest"; //ask for all online usernames
+    static String REQUEST_GLOBAL_WHO = "globalwhorequest"; //ask for all online usernames
     //static String LOBBY_WHO_REQUEST = "lobbywho"; //ask for user names in same lobby
 
     /* TURN STUFF */
@@ -81,6 +81,8 @@ public class MessagePhoenix {
     static boolean debug = false; //Print everything!
     static String ERROR_MESSAGE = "errorMessage"; // generic error message, communicate things client does wrong
     
+    static String REQUEST_ID = "requestuniqueid; // requests unique ID from server";
+    static String ID = "incomingid";
     /* UTILITY METHODS */
     
     private static void send( ObjectOutputStream writer, List<Object> message ) {
@@ -97,7 +99,10 @@ public class MessagePhoenix {
     }
 
     public static List<Object> createMessage( Object... message ) {
-        List<Object> temp = new ArrayList<>();
+        List<Object> temp = new ArrayList<>(0);
+        //if (message[0].getClass() != String.class )
+            //System.err.println("You tried to create a message with a non-string tag!");
+        System.err.println("Class: " + message[0].getClass());        
         for (Object object : message){
             temp.add(object);
         }
@@ -105,7 +110,8 @@ public class MessagePhoenix {
         return temp;
     }
     
-    public static List<Object> createMessage( String tag, Object... message ) {
+    // This is redundant, first object is tag anyway
+    /*public static List<Object> createMessage( String tag, Object... message ) {
         List<Object> temp = new ArrayList<>(0);
         temp.add(tag);
         for (Object object : message){
@@ -113,16 +119,17 @@ public class MessagePhoenix {
         }
         //temp.addAll(Arrays.asList(message));
         return temp;
-    }
+    }*/
     
-    public static List<String> createStringList( Object... items ) {
+    /*public static List<String> createStringList( Object... items ) {
         List<String> temp = new ArrayList<>(0);
         for( Object o : items ) {
             temp.add((String) o);
         }
         return temp;
-    }
+    }*/
     
+    // TODO: add a tag checking mechanism, so if the caller doesn't include tag a default one will be applied
     /**
      * Must be passed as var-args, prepackaging will mess the process up!
      * Unless you're actually sending a string of course...make sure its getting parsed then!
@@ -131,7 +138,7 @@ public class MessagePhoenix {
      * @param message
      * @throws IOException 
      */
-    public static void sendMessage ( ObjectOutputStream writer, String tag, Object... message ) throws IOException {
+    public static void sendMessage ( ObjectOutputStream writer, String tag, List<Object> message ) throws IOException {
         send( writer,  createMessage( tag, message) );
     }
     
@@ -143,39 +150,48 @@ public class MessagePhoenix {
      * @param message
      * @throws IOException 
      */
-    public static void sendMessage (ObjectOutputStream writer, Object... message ) throws IOException {
+    public static void sendMessage (ObjectOutputStream writer, List<Object> message ) throws IOException {
         send(writer, createMessage( message )); // pass it along, assume first entry is tag
     }
 
     // TODO: tag stripping done in MessagePhoenix
     @SuppressWarnings("unchecked")
-    public static List<Object> recieveMessage( ObjectInputStream reader ) {
-        List<Object> temp = new ArrayList<>(0);
-        try {
-            if (reader != null){
+    public static List<Object> recieveMessage(ObjectInputStream reader) {
+        List<Object> temp = new ArrayList<>(0); // Return empty list instead of null
+        if (reader != null ) {
+            try {
                 Object ob = reader.readObject();
                 System.out.println("Read object of type: " + ob.getClass());
+                temp = (List<Object>) ob; //reader.readObject();
+                // soft cast to list, since underlying type could change
+            } catch (IOException | ClassNotFoundException | NullPointerException ex) {
+                ex.printStackTrace();
+                return temp;
             }
-            return reader != null ? (ArrayList<Object>) reader.readObject() : null;
-        } catch (IOException | ClassNotFoundException | NullPointerException ex ) {
-            ex.printStackTrace();
+            return temp;
+        } else {
+            System.err.println("Null reader passed to recieveMessage!");
+            return temp;
         }
-        return temp;
     }
-    
+
     public static List<String> objectToString( List<Object> list ) {
-        List<String> temp = new ArrayList<>();
+        List<String> temp = new ArrayList<>(0);
+        System.out.print("ObjectToString: ");
         for (Object ob : list) {
             System.out.println(ob.getClass()); //The client shows type string, the server shows type ArrayList. Why? I can't figure this out.
-            temp.add(ob != null ? ob.toString() : null); //This doesn't cast to a string, which is why we get those brackets on either side in server
+            temp.add(ob.toString()); //This doesn't cast to a string, which is why we get those brackets on either side in server
         }
         return temp;
     }
     
     public static List<Object> stringToObject( List<String> list ) {
         List<Object> temp = new ArrayList<>(0);
-        for (String s : list ) {
-            temp.add( s != null ? s : null );
+        if ( list != null && list.isEmpty() ) {
+            for (String s : list ) {
+                temp.add( s ); // no idea why i was checking for null, then adding null if null was found. 
+                // You could say it had a...null effect
+            }
         }
         return temp;
     }

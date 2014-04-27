@@ -27,6 +27,8 @@ public class ClientObject {
 
     // Connection this object is attached to
     final private Socket socket;
+    
+    // The Writer Thread's food source
     final private ArrayBlockingQueue<List<Object>> messageQueue;
 
 
@@ -34,21 +36,20 @@ public class ClientObject {
     final private ServerListenerThread listenerThread;
     final private ServerWriterThread writerThread;
 
-    private List<String> file;
-
     // Lobby client is a part of, null if not in a lobby
     private Lobby currentLobby = null;
 
     // Server console output
     final private PrintWriter consoleOut; 
     
-    private boolean clientKilled = false;
+    // File associated with this object
+    private List<String> file;
     
     /* CONSTRUCTOR */
     
     /**
      * ClientObject constructor
-     * Call {@link #startClient startClient()} to activate the object
+     * Call {@link #start start()} to activate the object
      * @param sock The Socket associated with a single client connection
      * @param clientID The unique ID of the Client
      */
@@ -70,20 +71,13 @@ public class ClientObject {
     }
     
     /* PUBLIC METHODS */
-   
-    /**
-     * Send a message to client
-     * <p>
-     * This is just a public wrapper for {@link #write write()}
-     * @param message Message to send
-     */
-    public void send(List<String> message) {
-        write(MessagePhoenix.stringToObject(message));
-    }
     
     /**
      * Send a message to client
-     * Generic parameters
+     * First Object MUST be the TAG!
+     * No pre-packaging required thanks to varargs
+     * <p>
+     * This is just a public wrapper for {@link #write write()}
      * @param message First parameter is assumed to be tag
      */
     public void send(Object... message) {
@@ -98,7 +92,10 @@ public class ClientObject {
      * @param message Message to send
      */
     private void write(List<Object> message ) { 
-        
+        if( message == null ) {
+            System.err.println("Attempted to write null message to queue!");
+            return;
+        }
         try {
             messageQueue.put(message);
         } catch (InterruptedException ex) {
@@ -121,6 +118,7 @@ public class ClientObject {
     /* LISTENERTHREAD */
     
     /**
+     * Handles incoming messages from the client connection it is associated with
      * Makes the blocking receive until a message arrives
      */
     private class ServerListenerThread extends Thread {
@@ -133,8 +131,8 @@ public class ClientObject {
          * Constructor for ListenerThread, creates stream and object
          * NOTE: Socket must be set before creating a ListenerThread object!
          */
-        private ServerListenerThread() {
-           createStream();
+        private ServerListenerThread() {        
+           // empty constructor
         }
         
         /**
@@ -158,9 +156,13 @@ public class ClientObject {
             }
         }
         
-        // wrapper
-        private List<Object> recieveMessage() {
-            return MessagePhoenix.recieveMessage(this.streamIn);
+        
+        /**
+         * Wrapper for {@link MessagePhoenix#recieveMessage(java.io.ObjectInputStream) }
+         * @return List received, or null if not connected
+         */
+        private List<Object> recieveMessage() { // breaking my own null rule
+            return isConnected() ? MessagePhoenix.recieveMessage(this.streamIn) : null;
         }
         
         private void disconnect() {
@@ -170,39 +172,51 @@ public class ClientObject {
         
         private void killThread() {
             this.killed = true;
+            close();
         }
         
         @Override
         public void run() {
+            createStream(); // start the stream!
             
             // Temporary containers
             String TAG = null;
-            List<Object> rawMessage;
-            List<String> stringMessage = new ArrayList<String>();
+            List<Object> rawMessage = new ArrayList<>(0);
+            List<String> stringMessage = new ArrayList<>(0);
+            // TODO: process message method
             
             while (!killed) {
                 
-                rawMessage = recieveMessage();
-                
-                if (rawMessage == null ) { //connection broken (does NOT throw an exception)
-                    killThread();                   
+                if( isConnected() ) {
+                    rawMessage = recieveMessage();                   
+                } else {
+                    consoleOut.print("Connection Terminated");
+                    killThread();
+                    continue;
                 }
-                if ( rawMessage.get(0).getClass().equals(String.class)) {
-                    TAG = (String) rawMessage.get(0);
+                if (rawMessage == null ) { //connection broken (does NOT throw an exception)
+                        killThread();
+                        continue;
+                }else if ( rawMessage.get(0).getClass().equals(String.class)) {
+                    TAG = rawMessage.get(0).toString();
                 } else {
                     System.err.println("Non-String TAG recieved!");
-                    killThread();
+                    //killThread();
+                    continue;
                 }
                 
                 
                 if( TAG == null ) {
                     System.err.println("Tag is null!");
                     killThread();
+                    continue;
                 } else if ( TAG.equals(MessagePhoenix.DISCONNECT_REQUEST) ) {
-                   killThread();
+                   killThread(); // This disconnects
+                   continue;
                 }
                 
                 rawMessage = rawMessage.subList(1, rawMessage.size());
+                
                 if ( rawMessage.getClass().equals(stringMessage.subList(0,0).getClass())) {
                     stringMessage = MessagePhoenix.objectToString(rawMessage);
                     for (String s : stringMessage){
@@ -211,14 +225,14 @@ public class ClientObject {
           
                 } else {
                     System.err.println("Unknown object recieved!");
-                    killThread();
+                    continue; // non-critical error?
                 }
                 if (TAG.equals(MessagePhoenix.GLOBAL_CHAT)) {
                     consoleOut.println(stringMessage); // Server console print                   
                     NetworkServer.sendToAllClients(stringMessage); // Global broadcast
-                } else if (TAG.equals(MessagePhoenix.FILE)) {
+                } else if (TAG.equals(MessagePhoenix.FILE)) { // TODO: rewrite file handling
                     consoleOut.println("Receiving file " + rawMessage.get(0));
-                    file = new ArrayList<String>();
+                    file = new ArrayList<>(0);
                 } else if (TAG.equals(MessagePhoenix.FILE_LINE)) {
                     if (file != null) {
                         file.add(stringMessage.get(1));
@@ -234,6 +248,8 @@ public class ClientObject {
                     } else {
                         System.err.println("No file loaded!");
                     }
+                } else if( TAG.equals(MessagePhoenix.REQUEST_ID)) {
+                    send(MessagePhoenix.ID, NetworkServer.generateID());
                 } else if (TAG.equals(MessagePhoenix.REQUEST_GLOBAL_WHO)) {
                     //Client asked for list of current connected users
                     List<String> handles = NetworkServer.getAllUserNames();
@@ -352,6 +368,10 @@ public class ClientObject {
 
     // WRITER THREAD //
     
+    /**
+     * Sends messages to the client connection thread is associated with
+     * Created & Destroyed with their associated superclass ClientObject
+     */
     private class ServerWriterThread extends Thread {
 
         private ObjectOutputStream writer = null;
@@ -359,7 +379,7 @@ public class ClientObject {
         private boolean killed = false;
                
         private ServerWriterThread() {
-            setWriter();          
+            // empty constructor
         }
  
         /**
@@ -391,35 +411,33 @@ public class ClientObject {
             this.killed = true;
         }
         
-        private void sendMessage(String tag, Object... message) {
+        private void sendMessage(List<Object> message) {
             try {
-                MessagePhoenix.sendMessage(this.writer, tag, message);
+                MessagePhoenix.sendMessage(this.writer, message);
             } catch (IOException ex) {
-                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
                 ex.printStackTrace();
             }
         }
         
         @Override
         public void run() {
-            List<Object> message = null;
+            setWriter(); // starts stream!
             
+            List<Object> message = new ArrayList<>(0);          
 
             while (!killed) {
                 try {
                     message = messageQueue.take();
                 } catch (InterruptedException ex) {
-                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
                     ex.printStackTrace();
                     killThread();
                 }
-                if (message != null ) { // assume first object is tag
-                    
-                    sendMessage( message.get(0).toString(), new ArrayList(message.subList(1, message.size())));
+                if (message != null ) { 
+                    // assume first object is tag    
+                    sendMessage(message);
                 } else {
                     System.err.println("Null message!");
+                    killThread();
                 }
             }
             close();
@@ -466,10 +484,10 @@ public class ClientObject {
     }
     
     public void killClient() {
-        this.clientKilled = true;
         listenerThread.killThread();
         writerThread.killThread();
     }
+    
     /* GETTERS & SETTERS */
     
     /**
@@ -478,15 +496,29 @@ public class ClientObject {
      * @author Christopher Goes
     */
     public String getHandle() {
-        return handle;
+        return this.handle;
     }
 
     /**
      * Gets the clientID of client object
      * @return clientID Unique ID of client
+     * @author Christopher Goes
      */
     public int getClientID() {
-        return clientID;
+        return this.clientID;
+    }
+    
+    /**
+     * Sets the handle (username) of the ClientObject
+     * @param hand Handle to set
+     * @author Christopher Goes
+     */
+    public void setHandle(String hand) {
+        if (hand != null && !hand.isEmpty()) {
+            this.handle = hand;
+        } else {
+            System.err.println("Tried to set null handle!");      
+        }
     }
     
     /**

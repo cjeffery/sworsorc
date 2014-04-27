@@ -1,13 +1,22 @@
+/*
+ * All source code is the work of Clinton Jeffery's Spring 2014 Software Engineering 
+ * class at the University of Idaho consisting of the following members:
+ * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
+ * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
+ */
+
 package systemServer;
 
-import java.net.*;
 import java.io.*;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The Network Server, a singleton class that is your lord and master
  * Also handles all client-to-client communication as a side-job
+ * <p>
+ * In theory, you should be able to run a client on same machine as the hosting server
  */
 public class NetworkServer {
 
@@ -21,6 +30,8 @@ public class NetworkServer {
     
     private static final int DEFAULT_PORT = 25565;
     private static final String DEFAULT_IP = "76.178.139.129";
+    
+    private static int idFactory = 0;
 
     /**
      * Stops server execution
@@ -52,7 +63,7 @@ public class NetworkServer {
      * True if lobby created, False if lobby exists and/or could not be created
      */
     public static boolean createNewLobby(String lobbyName) {
-        if( canCreateNewLobby(lobbyName) ) {
+        if( lobbyName != null && !lobbyName.isEmpty() && canCreateNewLobby(lobbyName) ) {       
             Lobby lobby = new Lobby(lobbyName);
             lobbies.add(lobby); 
             return true;
@@ -67,6 +78,7 @@ public class NetworkServer {
      * @param client  Name of the client
      */
     public static void joinLobby(String lobbyName, ClientObject client) {
+        // TODO: add null check
         for (Lobby l : lobbies) {
             if (l.getName().equals(lobbyName)) {
                 if (l.isInLobby(client.getHandle())) {
@@ -89,7 +101,7 @@ public class NetworkServer {
      * @param client 
      */
     public static void leaveLobby(ClientObject client) {
-
+        // TODO: add null check
         for (Lobby l : lobbies) {
             if (l.lobbyClients.contains(client)) {
                 l.leave(client);
@@ -112,22 +124,25 @@ public class NetworkServer {
      * @author Christopher Goes
      */
     public static List<String> getLobbyUsers( String lobbyName ) {
-        for( Lobby l : lobbies ) {
-            if( l.getName() == null ? lobbyName == null : l.getName().equals(lobbyName) ) {
-                return l.getUserNames();
+        List<String> temp = new ArrayList<>(0); // Empty list instead of null
+        if( lobbyName != null && !lobbyName.isEmpty() ) {
+            for( Lobby l : lobbies ) {
+                if ( l.getName() != null && l.getName().equals(lobbyName) ) {
+                    return l.getUserNames();
+                }
             }
         }
-        return null;
+        return temp;
     }
     
+    // TODO: concurrent lists with lobby names, user names, etc. Only if performance becomes issue.
     /**
      * Gets names of all lobbies
      * @return 
      * @author Christopher Goes
      */
     public static List<String> getLobbyNames() {
-        // there's probably a better way to do this
-        List<String> temp = new ArrayList<>();
+        List<String> temp = new ArrayList<>(0);
         for ( Lobby l : lobbies ) {
             temp.add(l.getName());
         }
@@ -139,20 +154,26 @@ public class NetworkServer {
      * @return 
      */
     public static List<String> getAllUserNames() {
-        List<String> handles = new ArrayList<>();
+        List<String> handles = new ArrayList<>(0);
         for (ClientObject obj : NetworkServer.clientObjects) {
             handles.add(obj.getHandle());
         }
         return handles;
     }
+    
+    public static int generateID() {
+        idFactory++;
+        return idFactory;
+    }
 
     /**
      * Forward the message to all ClientObjects, which will send to their Clients
+     * @param tag
      * @param message 
      */
-    public static void sendToAllClients(List<String> message) {
+    public static void sendToAllClients(String tag, List<String> message) {
         for (ClientObject client : clientObjects) {
-            client.send(message);
+            client.send(message.toArray(new Object[message.size()]));
         }
     }
 
@@ -174,6 +195,7 @@ public class NetworkServer {
      */
     public static void clientDisconnected(int clientId) {
 
+        // TODO: verify that this is operating properly, and check clientID
         ClientObject dearlyDeparted = null;
 
         for (ClientObject clientObject : clientObjects) {
@@ -181,6 +203,7 @@ public class NetworkServer {
                 //dearlyDeparted = clientObject;
                 leaveLobby(clientObject);
                 clientObjects.remove(clientObject);
+                totalClients--; // Decrement total clients, we weren't doing this before
                 clientObject.killClient();
                 sendToAllClients( MessagePhoenix.DISCONNECT_ANNOUNCEMENT, clientObject.getHandle());
                 return;
@@ -201,8 +224,8 @@ public class NetworkServer {
      * @param args
      */
     public static void main(String args[]) {
-        clientObjects = new ArrayList<>();
-        lobbies = new ArrayList<>();
+        clientObjects = new ArrayList<>(0);
+        lobbies = new ArrayList<>(0);
 
         System.out.println("Server starting. . .");
 
@@ -215,29 +238,28 @@ public class NetworkServer {
         }
 
         // TODO: SSLServerSocket()?
-        ServerSocket listen = null;
+        // TODO: method to restart server on new port
+        ServerSocket listen;
         try {
             listen = new ServerSocket(DEFAULT_PORT);
         } catch (IOException e) {
             System.err.println("Error : While creating ServerSocket\n" + e);
-            System.exit(-1);
+            return; // No need to kill the caller with a exit
         }
         
         Socket tempsock;
         ClientObject tempclient;
         //Spins off new client connections
-        while (true) {
+        while (!stopped) {
             try {
                 System.err.println("Waiting for next client...");
                 tempsock = listen.accept(); //Get socket (blocking)
-                tempclient = new ClientObject(tempsock, totalClients++ ); // generate new client
+                tempclient = new ClientObject(tempsock, totalClients ); // generate new client
+                totalClients++; // Increment total number of connected clients
                 clientObjects.add(tempclient); // add the active client to list              
                 tempclient.start(); // Start the connection
             } catch (IOException e) {
                 System.err.println("Server failed to accept client!\nException: " + e );
-                return;
-            }
-            if( stopped ) {
                 return;
             }
         }

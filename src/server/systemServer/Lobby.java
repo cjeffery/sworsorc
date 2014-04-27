@@ -20,17 +20,17 @@ public class Lobby {
     protected List<ClientObject> lobbyClients;
 
     private static int lobbyCounter = 0; //used to assign unique lobbyId's
-    final private int lobbyId;
+    final private int lobbyId; // TODO: this should probably be used
 
-    private String name;
+    final private String name; // TODO: Ability to change lobby name?
 
     protected ClientObject current; //Whose turn is it? See: advanceTurn()
 
     public void beginGame() {
         //start with the first player in list:
         current = lobbyClients.get(0);
-        sendToEntireLobby( MessagePhoenix.createStringList(MessagePhoenix.NEXT_TURN_INFO, 
-                current.getHandle(), current.getClientID())); // TODO: another patch in the netcode quilt...
+        sendToEntireLobby( MessagePhoenix.NEXT_TURN_INFO, 
+                current.getHandle(), current.getClientID());
     }
 
     /** 
@@ -38,10 +38,11 @@ public class Lobby {
      * @param name Name of the lobby being created
      */
     public Lobby(String name) {
-        lobbyClients = new ArrayList<>();
+        this.lobbyClients = new ArrayList<>(0);
 
         this.name = name;
-        this.lobbyId = lobbyCounter++;
+        this.lobbyId = lobbyCounter;
+        lobbyCounter++;
     }
 
     public void sendToEntireLobby(Object... message) {
@@ -51,7 +52,7 @@ public class Lobby {
     }
 
     public List<String> getUserNames() {
-        List<String> handles = new ArrayList<>();
+        List<String> handles = new ArrayList<>(0);
         for (ClientObject client : lobbyClients) {
             handles.add(client.getHandle());
         }
@@ -78,21 +79,24 @@ public class Lobby {
     }
     
     public void leave(ClientObject client) {
-        lobbyClients.remove(client);
+        if(client != null ) {
+            lobbyClients.remove(client);
+        }
     }
 
+    //TODO: Set order of turn by rearranging the order of the lobbyClient list
     public void advanceGameTurn() {
         
         //Moves the game turn in a "cycle" using the lobbyClients list
-        //TODO: we can set the order of turn by rearranging the order of the lobbyClient list
         int nextIndex = lobbyClients.indexOf(current) + 1;
         if (nextIndex == lobbyClients.size()) {
-            nextIndex = 0; //TODO: This means we have a finished an entire "game pass"! Do something special?
+            nextIndex = 0;
+        //TODO: This means we have a finished an entire "game pass"! Do something special?
         }
 
         current = lobbyClients.get(nextIndex);
-        sendToEntireLobby(MessagePhoenix.createStringList(MessagePhoenix.NEXT_TURN_INFO, 
-                current.getHandle(), current.getClientID())); // TODO: more stuff to fix
+        sendToEntireLobby(MessagePhoenix.NEXT_TURN_INFO, 
+                current.getHandle(), current.getClientID());
     }
     
 } // end class
