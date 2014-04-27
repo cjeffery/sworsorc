@@ -68,4 +68,30 @@ public class MovementCalculatorTest extends TestCase {
                 moves.size());
     }
     
+    @Test
+    /**
+     * This test will check the validity of results from different types of 
+     * units moving via getValidMoves(...). Edit the initialization code at the
+     * top of the test method to check different units.
+     * @author Keith Drew
+     */
+    public void testGetValidMoves()
+    {
+        int playerID = 0; // arbitrary number for player ID
+        String hexID = "0606"; // Starting hex location
+        MainMap map = MainMap.GetInstance(); // Initialize and get the map
+        UnitPool pool = UnitPool.getInstance();// Initialize and get unitpool
+        // Initialize EZ Data Structures
+        ArrayList<MapHex> validMoves = new ArrayList<>();
+        // Initialize test unit and add to unitpool
+        ArmyUnit unit = new LightSword(); // Edit to change unit types
+        unit.setRace(Race.Human); // Edit to change unit race.
+        pool.addUnit(playerID, unit, hexID); // Add the new unit to the unitpool
+        
+        // Initialize hardcoded list of available hexes for comparison.
+        
+        
+        // *****  Begin Test Code *****
+        
+    }
 }
