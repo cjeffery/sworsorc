@@ -155,9 +155,8 @@ public class Scenario {
                     thisChar = Character.createCharacter(charname);
                     // TODO: look for conflicts and stacks of too many
                     // TODO: avoid water, vortices
-                    randHexID = Provinces.getRandHex(nationProvinces);
-                    System.out.println("Adding to unit pool: " + player + ": " + charname + ", " + randHexID);
-                    pool.addUnit(player, thisChar, randHexID);
+                    System.out.println("Adding to unit pool: " + player + ": " + charname + ", " + thisChar.getHomeHex());
+                    pool.addUnit(player, thisChar, thisChar.getHomeHex());
                     charIt.remove();
                 }
             }
