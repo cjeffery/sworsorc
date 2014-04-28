@@ -370,7 +370,7 @@ public class HUDController {
         } else
          */
         if ( !"".equals( message_box.getText() ) ) {
-            NetworkClient.userCommand( message_box.getText() );
+            NetworkClient.userInput( message_box.getText() );
             message_box.clear();
             //chat_box.clear(); do we need this?
         }

@@ -60,6 +60,7 @@ final public class NetworkClient {
     // Flags
     private static boolean addressSet = false;
     private static boolean usernameSet = false;
+    private static boolean clientInitialized = false;
 
     // goto Conductor
     // private Conductor jarvis; // Our conductor object
@@ -90,27 +91,19 @@ final public class NetworkClient {
      * @return True if started OK, False if connection failed
      */
     public static boolean initializeClient( String filename ) {
-        configureSettings( filename );
         messageQueue = new ArrayBlockingQueue<>( 30, true ); // 30 slots, FIFO access
+        commandQueue = new ArrayBlockingQueue<>( 30, true ); // 30 slots, FIFO access
         startLocalStreams();
+        configureSettings( filename );
         startCommandProcessor();
-        if ( !addressSet ) {
-            flushToConsole( "Please enter IP address of server(ex \"127.0.0.1\"): " );
-            addressSet = true;
-        }
-        if ( !usernameSet ) {
-            flushToConsole( "Please enter your username(ex \"HonkHonkBlarg117\"): " );
-            usernameSet = true;
-        }
-
+        // use default values for now
         if ( connect() ) {
             startRemoteConnection();
-            //startCommandProcessor();
-            return true;
+            clientInitialized = true;
         } else {
-            stopClient();
-            return false;
+            clientInitialized = false;
         }
+        return clientInitialized;
     }
 
     /**
@@ -143,7 +136,7 @@ final public class NetworkClient {
      *                <p>
      * @author Christopher Goes
      */
-    public static void userCommand( String command ) {
+    public static void userInput( String command ) {
         executeCommand( command );
     }
 
@@ -152,7 +145,7 @@ final public class NetworkClient {
      * displayed (along with the sender's username) in the chat box of the other
      * connected players.
      * <p>
-     * Use {@link #userCommand userCommand} to send messages normally
+     * Use {@link #userInput userInput} to send messages normally
      *
      * @param message The message to display to other users
      */
@@ -343,7 +336,18 @@ final public class NetworkClient {
          * @author Christopher Goes
          */
         public void killThread() {
-            killed = true;
+            if ( !killed ) {
+                killed = true;
+            }
+        }
+
+        private String getCommand() {
+            try {
+                return commandQueue.take();
+            } catch ( InterruptedException ex ) {
+                ex.printStackTrace();
+                return null;
+            }
         }
 
         /**
@@ -356,20 +360,27 @@ final public class NetworkClient {
         @Override
         public void run() {
             String line = null;
-            //flushToConsole( username + ": " ); Deprecated due to tagging
+
+            /*
+             * if ( !addressSet ) {                flushToConsole( "Please enter IP address of server(ex \"127.0.0.1\"): " );
+                setServerName( getCommand() );
+            }
+            if ( !usernameSet ) {
+                flushToConsole( "Please enter your username(ex \"HonkHonkBlarg117\"): " );
+                setUsername( getCommand() );
+            }
+             */
 
             while ( !killed ) {
-                try {
-                    line = commandQueue.take();
-                } catch ( InterruptedException ex ) {
-                    ex.printStackTrace();
-                }
 
+                line = getCommand();
                 if ( line == null ) {
                     System.err.
                             println( "Null user input! Either default never got changed, or something bad happened!" );
                     stopClient();
                     killThread();
+                } else if ( line.isEmpty() ) {
+                    System.err.println( "Empty line" );
                 } else if ( !(processCommand( line )) ) {
                     flushToConsole( "Later gator!" );
                     stopClient(); // Shutdown everything
@@ -530,8 +541,14 @@ final public class NetworkClient {
          * @author Christopher Goes
          */
         private boolean processMessage( final NetworkPacket incomingMessage ) {
+            NetworkPacket rawMessage = new NetworkPacket();
+            if ( incomingMessage != null ) {
+                rawMessage = incomingMessage;
+            } else {
+                System.err.println( "Null message processed!" );
+                return false;
+            }
 
-            NetworkPacket rawMessage = incomingMessage;
             // TODO: put default sender in write method
             List<Object> message;
             Tag tag; // local default
@@ -542,6 +559,7 @@ final public class NetworkClient {
             flag = rawMessage.getFlag();
             message = rawMessage.getData();
             sender = rawMessage.getSender();
+
 
             switch ( flag ) {
                 // Tagged Chat Message ex: GLOBAL, LOBBY, PRIVATE, etc
@@ -1087,6 +1105,7 @@ final public class NetworkClient {
             System.err.println( "Invalid server name!" );
         } else {
             serverName = sName;
+            addressSet = true;
         }
     }
 
@@ -1113,6 +1132,7 @@ final public class NetworkClient {
             System.err.println( "Invalid server name!" );
         } else {
             username = uName;
+            usernameSet = true;
         }
     }
 
