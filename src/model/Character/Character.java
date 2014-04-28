@@ -190,6 +190,8 @@ public final class Character extends MoveableUnit{
     
     public void increaseManna(int a){
         this.CurrentManna += a;
+        if(CurrentManna > this.MagicPotential)
+            CurrentManna = MagicPotential;
     }
     
     public boolean decreaseManna(double a){
