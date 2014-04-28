@@ -393,7 +393,8 @@ public class HUDController {
         if( canMoveTo.contains(hex) ) {
             final UnitPool pool = UnitPool.getInstance();
             hmapContent.clearHighlights();
-            pool.addMove((ArmyUnit)selected_unit, hex.GetID());
+            //pool.addMove((ArmyUnit)selected_unit, hex.GetID());
+            pool.addMove(selected_unit, hex.GetID());
             //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
             hmapContent.repaint();
             selected_unit = null;
@@ -487,7 +488,7 @@ public class HUDController {
     /** 
      * fills the contents of a tab pane
      * with unit stats.
-     * @author Joe Higley      
+     * @author Joe Higley    
      */
     public void FillStats(Tab tp, MoveableUnit AU) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
         //stats are kept in a GridPane inside a ScrollPane in case of more stats than space
@@ -510,23 +511,47 @@ public class HUDController {
         column2.setPercentWidth(35);
         grid.getColumnConstraints().add(column2);
         
-        //labels and function names
-        List <String> stats = new ArrayList<>(Arrays.asList("Race: ", "Demoralized: ", "Strength: ", "Movement: "));
-        List <String> funcs = new ArrayList<>(Arrays.asList("getRace", "isDemoralized", "getStrength", "getMovement"));
-        //adds stats to GridPane (will be replaced with call to unit stats)
-        for(int i=0; i < stats.size(); i++){
-            Label l = new Label(stats.get(i));
-            l.setFont(Font.font(null, FontWeight.BOLD, 12));
-            //"get" method to be called
-            Method method = AU.getClass().getMethod(funcs.get(i));
-            Object b = method.invoke(AU); //get desired data
-            TextField tf = new TextField(String.valueOf(b));
-            tf.setAlignment(Pos.CENTER_RIGHT);
+        if(AU.getUnitType() == UnitType.Character){
+            //labels and function names
+            List <String> stats = new ArrayList<>(Arrays.asList("Name: ", "MagicPL: ", "MagicPotential: ", "Movement: "));
+            List <String> funcs = new ArrayList<>(Arrays.asList("getName", "getMagicPL", "getMagicPotential", "getMovement"));
+            //adds stats to GridPane (will be replaced with call to unit stats)
+            for(int i=0; i < stats.size(); i++){
+                Label l = new Label(stats.get(i));
+                l.setFont(Font.font(null, FontWeight.BOLD, 12));
+                //"get" method to be called
+                Method method = AU.getClass().getMethod(funcs.get(i));
+                Object b = method.invoke(AU); //get desired data
+                TextField tf = new TextField(String.valueOf(b));
+                tf.setAlignment(Pos.CENTER_RIGHT);
             
-            //add stats to new row of GridPane
-            grid.add(l, 0, i);
-            grid.add(tf, 1, i);
+                //add stats to new row of GridPane
+                grid.add(l, 0, i);
+                grid.add(tf, 1, i);
+            }
         }
+        else{
+            //labels and function names
+            List <String> stats = new ArrayList<>(Arrays.asList("Race: ", "Demoralized: ", "Strength: ", "Movement: "));
+            List <String> funcs = new ArrayList<>(Arrays.asList("getRace", "isDemoralized", "getStrength", "getMovement"));
+            //adds stats to GridPane (will be replaced with call to unit stats)
+            for(int i=0; i < stats.size(); i++){
+                Label l = new Label(stats.get(i));
+                l.setFont(Font.font(null, FontWeight.BOLD, 12));
+                //"get" method to be called
+                Method method = AU.getClass().getMethod(funcs.get(i));
+                Object b = method.invoke(AU); //get desired data
+                TextField tf = new TextField(String.valueOf(b));
+                tf.setAlignment(Pos.CENTER_RIGHT);
+            
+                //add stats to new row of GridPane
+                grid.add(l, 0, i);
+                grid.add(tf, 1, i);
+            }
+        }
+        
+        
+        
         
         //add GridPane to ScrollPane
         scroll.setFitToWidth(true);

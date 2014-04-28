@@ -1,6 +1,7 @@
 package sscharts;
 
 import static ObjectCreator.ObjectCreator.CreateObject;
+import static Character.CharacterMaker.createCharacter;
 import Units.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -155,7 +156,7 @@ public class Scenario {
                 Iterator charIt = playerChars.iterator();
                 while (charIt.hasNext()) {
                     String charname = (String) charIt.next();
-                    thisChar = Character.createCharacter(charname);
+                    thisChar = createCharacter(charname);
                     System.out.println("Adding to unit pool: " + player + ": " + charname + ", " + thisChar.getHomeHex());
                     pool.addUnit(player, thisChar, thisChar.getHomeHex());
                     charIt.remove();
