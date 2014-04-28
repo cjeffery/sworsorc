@@ -194,28 +194,19 @@ public class ClientObject {
             return MessagePhoenix.recieveMessage( ClientObject.this.streamIn );
         }
 
-        /*
-         * TODO: deprecated
-         * private void disconnect() { consoleOut.println( "Client " + clientID + " (" + handle +
-         * "): disconnected" );
-         *
-         * NetworkServer.clientDisconnected( clientID );
-         *
-         * }
-         */
         private void killThread() {
             this.killed = true;
             close();
         }
 
         /**
-         * Processes incoming message to NetworkClient
+         * Processes incoming messages from the client
          * <p>
          * Uses nested switch statements to parse message flags and tags
          *
          * @param incomingMessage
          *
-         * @return False if disconnected or a error occured
+         * @return False if disconnected or a error occurred
          *
          * @author Christopher Goes
          */
@@ -479,21 +470,21 @@ public class ClientObject {
             close();
         }
 
+        private void disconnect() {
+            // TODO: KILL CONNECTION
+            NetworkServer.clientDisconnected( ClientObject.this );
+        }
         public void close() {
             if ( isConnected() ) {
-                //disconnect();
-            }
-            try {
-                if ( !(socket.isClosed()) ) {
-                    socket.close();
-                }
-                if ( streamIn != null ) {
-                    streamIn.close();
-                    streamIn = null;
-                }
+                try {
+                    if ( streamIn != null ) {
+                        streamIn.close();
+                        streamIn = null;
+                    }
 
-            } catch ( IOException e ) {
-                errorOut.println( e );
+                } catch ( IOException e ) {
+                    errorOut.println( e );
+                }
             }
         }
 
@@ -604,7 +595,6 @@ public class ClientObject {
                 getInetAddress() );
     }
 
-    // TODO: deprecated(?)
     public void killClient() {
         listenerThread.killThread();
         writerThread.killThread();

@@ -46,7 +46,6 @@ final public class NetworkClient {
     private static ObjectOutputStream writer;
     private static ObjectInputStream streamIn;
 
-
     // File path defaults
     // TODO: change these in configureSettings()
     private static String helpfile = "commands.txt"; // TODO: update from settings file
@@ -156,7 +155,7 @@ final public class NetworkClient {
      * the next user, or the next game turn may start, or the game may end.
      */
     public static void endTurn() {
-        send( Flag.GAME, Tag.YIELD_TURN );
+        send( Flag.GAME, Tag.YIELD_TURN_REQUEST );
     }
 
     /**
@@ -189,7 +188,7 @@ final public class NetworkClient {
          * <p>
          * @author Christopher Goes
          * @param command
-         * <p>
+         *                <p>
          * @return boolean True if executed normally, False if quit or exception
          */
         private boolean processCommand( final String command ) {
@@ -295,7 +294,7 @@ final public class NetworkClient {
             try {
                 //BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("UTF-8")));
                 temp = Files.readAllLines( Paths.get( networkDirectory + filename ), Charset.
-                                           forName( "UTF-8" ) );
+                        forName( "UTF-8" ) );
                 send( Flag.FILE, Tag.SEND_FILE_REQUEST, temp );
             } catch ( IOException e ) {
                 System.err.println( "Could not open file! Error thrown: " + e );
@@ -397,7 +396,7 @@ final public class NetworkClient {
         }
 
         private void sendMessage( NetworkPacket message ) {
-                MessagePhoenix.sendMessage( writer, message );
+            MessagePhoenix.sendMessage( writer, message );
         }
 
         @Override
@@ -501,7 +500,7 @@ final public class NetworkClient {
          * Uses nested switch statements to parse message flags and tags
          * <p>
          * @param incomingMessage
-         * <p>
+         *                        <p>
          * @return True unless critical/fatal error
          * <p>
          * @author Christopher Goes
@@ -573,7 +572,7 @@ final public class NetworkClient {
                                 flushToConsole( "It is now " + message.get( 1 ) + "'s turn!" );
                             }
                             break;
-                        case YIELD_TURN:
+                        case YIELD_TURN_RESPONSE:
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
@@ -627,6 +626,7 @@ final public class NetworkClient {
                             // TODO: more actions?
                             if ( (Boolean) message.get( 0 ) ) { // approved!
                                 flushToConsole( "Lobby " + message.get( 1 ) + " created!" );
+                                currentLobby = (String) message.get( 1 );
                             } else {
                                 // denied, server provides reason
                                 flushToConsole( "Could not create lobby: " + message.get( 1 )
@@ -637,8 +637,14 @@ final public class NetworkClient {
                             // TODO: handle Unique ID messages!
                             break;
                         case JOIN_LOBBY_RESPONSE:
+                            currentLobby = (String) message.get( 0 );
+                            break;
                         case LEAVE_LOBBY_RESPONSE:
+                            currentLobby = "Not in a Lobby";
+                            break;
                         case CREATE_LOBBY_RESPONSE:
+                            currentLobby = (String) message.get( 1 );
+                            break;
                         case BEGIN_GAME_RESPONSE: // Client will see game started, so just print message
                             flushToConsole( (String) message.get( 0 ) );
                             break;
@@ -876,7 +882,6 @@ final public class NetworkClient {
         writeToQueue( new NetworkPacket( flag, tag, message ) );
     }
 
-
     /**
      * Writes to socket outgoing connection, hides the protocol details
      * <p>
@@ -890,12 +895,11 @@ final public class NetworkClient {
         }
     }
 
-
     /**
      * Executes a Network Client command
      * <p>
      * @param command
-     * <p>
+     *                <p>
      * @author Christopher Goes
      */
     private static void executeCommand( String command ) {

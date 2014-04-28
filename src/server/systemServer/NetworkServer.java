@@ -18,6 +18,7 @@ import java.util.List;
  * In theory, you should be able to run a client on same machine as the hosting server
  */
 final public class NetworkServer {
+
     // TODO: could this possibly a subclass of NetworkClient?
     // Clients
     private static List<ClientObject> clientObjects;
@@ -25,7 +26,6 @@ final public class NetworkServer {
     // Lobbies
     private static List<Lobby> lobbies;
     private static Integer totalLobbies = 0; //used to assign unique lobbyId's
-
 
     private static boolean stopped = false;
 
@@ -205,6 +205,7 @@ final public class NetworkServer {
 
     public static boolean pollClients() {
         // TODO: STUB
+        return false;
     }
 
     /**
@@ -245,35 +246,20 @@ final public class NetworkServer {
     /**
      * ClientObject will call this on a planned or unplanned disconnection
      * <p>
-     * @param clientId
+     * @param client
      */
-    public static void clientDisconnected( ClientObject clientId ) {
+    public static void clientDisconnected( ClientObject client ) {
 
-        // TODO: verify that this is operating properly, and check clientID
-        ClientObject dearlyDeparted = null;
+        // TODO: verify that this is operating properly
+        // TODO: null check
 
-        for ( ClientObject clientObject : clientObjects ) {
-            clientObjects.remove( clientObject );
-            //if ( clientObject.getClientID() == clientId ) {
-                //dearlyDeparted = clientObject;
-
-                leaveLobby( clientObject );
-                clientObjects.remove( clientObject );
-                totalClients--; // Decrement total clients, we weren't doing this before
-                clientObject.killClient();
-                sendToAllClients( "Client " + clientObject.getHandle() );
-                return;
-        }
-        System.err.println( "Could not find client to disconnect!" );
-        /*
-         * if (dearlyDeparted != null ) {
-         * leaveLobby(dearlyDeparted);
-         * clientObjects.remove(dearlyDeparted);
-         * sendToAllClients( MessagePhoenix.DISCONNECT_ANNOUNCEMENT, dearlyDeparted.getHandle());
-         * } else {
-         * System.err.println("Tried to disconnect null client!");
-         * }
-         */
+        leaveLobby( client );
+        clientObjects.remove( client );
+        totalClients--; // Decrement total clients, we weren't doing this before
+        // Client should kill itself (like a true warrior) client.killClient();
+        System.out.
+                println( "Client " + client.getHandle() + " (" + client.getClientID() + ") has disconnected" );
+        sendToAllClients( "User " + client.getHandle() + " has disconnected!" );
     }
 
     /**

@@ -8,7 +8,6 @@
 package systemServer;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,7 +64,8 @@ public class NetworkPacket implements Serializable {
      * @return the data
      */
     public List<Object> getData() {
-        return Collections.unmodifiableList( data );
+        //return Collections.unmodifiableList( data );
+        return data;
     }
 
     /**
