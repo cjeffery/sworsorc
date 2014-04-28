@@ -34,6 +34,10 @@ import sscharts.Scenario;
  * @author higle_000
  */
 public class Game extends Application {
+    //current client player id
+    //set to 0 for testing convenience
+    //changed by network
+    int PlayerID = 0;
     /** true if a scenario is loaded */
     boolean scenarioLoaded;
     /** the singleton unit hash tree UnitPool variable */

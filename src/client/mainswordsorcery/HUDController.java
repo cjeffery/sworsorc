@@ -25,6 +25,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
@@ -110,12 +112,15 @@ public class HUDController {
         
         RedState.setText(SolarDisplay.GetRedState());
         BlueState.setText(SolarDisplay.GetBlueState());
+        
     }
     
     /**
      * big messy function to set up event handlers
      */
     void setupEventHandlers() {
+        
+       
         hmap.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
@@ -144,15 +149,145 @@ public class HUDController {
                          && target_unit == null){ //check if target unit already chosen
                     TargetUnit( hexID, hex );
                 }
+                mouseEvent.consume();
             }
 	});
-        /*
-        //adds keyboard support to hmap
-        hmap.onKeyPressedProperty(new EventHandler<KeyEvent>(){
-        
+        /**adds keyboard support to map_view
+         * @author Jay Drage
+         */
+        map_view.addEventHandler(KeyEvent.KEY_PRESSED, 
+            new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    //attack
+                    if(keyEvent.getText().equalsIgnoreCase("a") 
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                        StartCombat();
+                    }
+                    //spells
+                    else if(keyEvent.getText().equalsIgnoreCase("s")
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                        StartSpell();
+                    }
+                };
         });
-        */
-        //adds mouse support to mini_map
+        /**adds keyboard support to UnitsPane
+         * @author Jay Drage
+         */
+        UnitsPane.addEventHandler(KeyEvent.KEY_PRESSED, 
+            new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    //attack
+                    if(keyEvent.getText().equalsIgnoreCase("a") 
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                        StartCombat();
+                    }
+                    //spells
+                    else if(keyEvent.getText().equalsIgnoreCase("s")
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                        StartSpell();
+                    }
+                };
+        });
+        /**adds keyboard support to TargetsPane
+         * @author Jay Drage
+         */
+        TargetsPane.addEventHandler(KeyEvent.KEY_PRESSED, 
+            new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    //attack
+                    if(keyEvent.getText().equalsIgnoreCase("a") 
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                        StartCombat();
+                    }
+                    //spells
+                    else if(keyEvent.getText().equalsIgnoreCase("s")
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                        StartSpell();
+                    }
+                };
+        });
+        /**adds keyboard support to undo_button
+         * @author Jay Drage
+         */
+        undo_button.addEventHandler(KeyEvent.KEY_PRESSED, 
+            new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    //attack
+                    if(keyEvent.getText().equalsIgnoreCase("a") 
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                        StartCombat();
+                    }
+                    //spells
+                    else if(keyEvent.getText().equalsIgnoreCase("s")
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                        StartSpell();
+                    }
+                };
+        });
+        /**adds keyboard support to chat_box
+         * @author Jay Drage
+         */
+        chat_box.addEventHandler(KeyEvent.KEY_PRESSED, 
+            new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    //attack
+                    if(keyEvent.getText().equalsIgnoreCase("a") 
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                        StartCombat();
+                    }
+                    //spells
+                    else if(keyEvent.getText().equalsIgnoreCase("s")
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                        StartSpell();
+                    }
+                };
+        });
+        /**adds keyboard support to phaseButton
+         * @author Jay Drage
+         */
+        phaseButton.addEventHandler(KeyEvent.KEY_PRESSED, 
+            new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    //attack
+                    if(keyEvent.getText().equalsIgnoreCase("a") 
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                        StartCombat();
+                    }
+                    //spells
+                    else if(keyEvent.getText().equalsIgnoreCase("s")
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                        StartSpell();
+                    }
+                };
+        });
+        /**adds keyboard support to mini_map
+         * @author Jay Drage
+         */
+        mini_map.addEventHandler(KeyEvent.KEY_PRESSED, 
+            new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent keyEvent) {
+                    //attack
+                    if(keyEvent.getText().equalsIgnoreCase("a") 
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                        StartCombat();
+                    }
+                    //spells
+                    else if(keyEvent.getText().equalsIgnoreCase("s")
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                        StartSpell();
+                    }
+                };
+        });
+        /** adds mouse support to mini_map
+         * @author Jay Drage
+         */
         mini_map.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
 		public void handle (MouseEvent mouseEvent) {
@@ -193,6 +328,7 @@ public class HUDController {
                 }
         });        
     }
+    
     /** 
      * deselects a unit with left mouse button
      * sets selected_unit to null
@@ -546,5 +682,24 @@ public class HUDController {
         chat_box.appendText(message + "\n");
     }
 
- 
+    /**
+     * used to start combat
+     * called from keyEvent handlers
+     *
+     * @author Jay Drage
+     */
+    public void StartCombat(){
+        System.out.println("StartCombat()");
+        //Place combat code here
+    }
+    /**
+     * used to start spells
+     * called from keyEvent handlers
+     *
+     * @author Jay Drage
+     */
+    public void StartSpell(){
+        System.out.println("StartSpell()");
+        //Place spell code here
+    }
 }
