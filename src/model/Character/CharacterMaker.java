@@ -500,7 +500,7 @@ public class CharacterMaker{
             default: name = "Invalid Character Name";
                      break;
         }
-       
+        newChar.CurrentManna = newChar.MagicPotential;
         return newChar;
     }
 }
