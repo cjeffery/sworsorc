@@ -28,23 +28,6 @@ final public class MessagePhoenix {
     // TODO: make sure server is prepending messagetype/username
     // PUBLIC INTERFACE //
     /**
-     * Send a packed message over stream Make assumption that first object is
-     * tag
-     * <p>
-     * @param flag
-     * @param tag
-     * @param message
-     * <p>
-     * @return
-     */
-    /*
-     * public static NetworkPacket createMessage( final Flag flag, final Tag tag,                                               final List<Object> message ) {
-
-        return (new NetworkPacket( flag, tag, message ));
-    }
-     */
-
-    /**
      * Sending a packed message
      *
      * @param writer
@@ -66,7 +49,7 @@ final public class MessagePhoenix {
 
     public static NetworkPacket recieveMessage( final ObjectInputStream reader ) {
 
-        NetworkPacket temp = null;
+        NetworkPacket temp = new NetworkPacket();
 
         if ( reader != null ) {
             try {
@@ -82,17 +65,16 @@ final public class MessagePhoenix {
         }
     }
 
-// PUBLIC UTILITIES //
+    // PUBLIC UTILITIES //
+
     /**
      *
      * @param message
-     * <p>
+     *                <p>
      * @return
      */
     public static List<Object> packMessageContents( Object... message ) {
         List<Object> temp = new ArrayList<>( 0 );
-        System.err.println( "createMessage message[0] Class: " + message[0].
-                getClass() );
         temp.addAll( Arrays.asList( message ) );
         return temp;
     }
@@ -100,7 +82,7 @@ final public class MessagePhoenix {
     /**
      *
      * @param items
-     * <p>
+     *              <p>
      * @return
      */
     public static List<String> createStringList( Object... items ) {
@@ -114,7 +96,7 @@ final public class MessagePhoenix {
     /**
      *
      * @param list
-     * <p>
+     *             <p>
      * @return
      */
     public static List<String> objectToString( List<Object> list ) {
@@ -128,7 +110,7 @@ final public class MessagePhoenix {
     /**
      *
      * @param list
-     * <p>
+     *             <p>
      * @return
      */
     public static List<Object> stringToObject( List<String> list ) {

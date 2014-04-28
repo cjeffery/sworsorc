@@ -36,6 +36,7 @@ final public class NetworkClient {
 
     // Client info
     private static String username = "default_user";
+    private static String currentLobby = "Not in a lobby";
 
     // Streams & Threads
     private static ClientListenerThread listenerThread;
@@ -188,7 +189,7 @@ final public class NetworkClient {
          * <p>
          * @author Christopher Goes
          * @param command
-         *                <p>
+         * <p>
          * @return boolean True if executed normally, False if quit or exception
          */
         private boolean processCommand( final String command ) {
@@ -208,28 +209,28 @@ final public class NetworkClient {
 
                 } else if ( "/newLobby".equals( parsedString[0] ) ) {
                     String lobbyName = parsedString[1];
-                    send( Flag.MessagePhoenix.CREATE_NEW_LOBBY_REQUEST, lobbyName );
+                    send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobbyName );
 
                 } else if ( "/joinLobby".equals( parsedString[0] ) ) {
                     String lobbyName = parsedString[1];
-                    send( MessagePhoenix.JOIN_LOBBY_REQUEST, lobbyName );
+                    send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, lobbyName );
                 } else if ( isConnected() ) {
                     // sends chat message to server, which broadcasts to all clients
-                    send( MessagePhoenix.GLOBAL_CHAT, username, command );
+                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
                 }
             } else if ( parsedString.length == 1 ) {
                 if ( "/globalWho".equals( parsedString[0] ) ) {
-                    send( MessagePhoenix.GLOBAL_WHO_LIST );
+                    send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
 
                 } else if ( "/leaveLobby".equals( parsedString[0] ) ) {
-                    send( MessagePhoenix.LEAVE_LOBBY_REQUEST );
+                    send( Flag.REQUEST, Tag.LEAVE_LOBBY_REQUEST );
 
                 } else if ( "/showLobbies".equals( parsedString[0] ) ) { // TODO: message if no lobbies available, command to create lobby
-                    send( MessagePhoenix.LOBBY_INFO ); // TODO: working lobby info request
+                    send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST ); // TODO: working lobby info request
 
                 } else if ( "/disconnect".equals( parsedString[0] ) ) { // manual client disconnect
                     if ( isConnected() ) {
-                        disconnectFromServer();
+                        send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
                     } else {
                         flushToConsole( "Can't disconnect when you're not connected!" );
                     }
@@ -237,7 +238,7 @@ final public class NetworkClient {
                 } else if ( "/yieldTurn".equals( parsedString[0] ) ) { // client turn over
                     endTurn();
                 } else if ( "/beginGame".equals( parsedString[0] ) ) { // request to start game
-                    send( MessagePhoenix.REQUEST_BEGIN_GAME );
+                    send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST );
 
                 } else if ( "/help".equals( parsedString[0] ) ) {
                     printCommandList();
@@ -254,6 +255,7 @@ final public class NetworkClient {
                     if ( connect() ) {
                         flushToConsole( "Successfully reconnected!" );
                         startRemoteConnection();
+                        // TODO: create reconnect() method
 
                     } else {
                         flushToConsole( "Reconnect failed" );
@@ -294,7 +296,7 @@ final public class NetworkClient {
                 //BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("UTF-8")));
                 temp = Files.readAllLines( Paths.get( networkDirectory + filename ), Charset.
                                            forName( "UTF-8" ) );
-                send( MessagePhoenix.FILE, temp );
+                send( Flag.FILE, Tag.SEND_FILE_REQUEST, temp );
             } catch ( IOException e ) {
                 System.err.println( "Could not open file! Error thrown: " + e );
             }
@@ -302,6 +304,7 @@ final public class NetworkClient {
 
         /**
          * Marks thread for death, causing it to close, return, and die
+         * (*cough cough "or die" *cough cough*)
          * <p>
          * @author Christopher Goes
          */
@@ -507,14 +510,15 @@ final public class NetworkClient {
 
             NetworkPacket rawMessage = incomingMessage;
 
-            //List<String> message;
             List<Object> message;
             Tag tag; // local default
             Flag flag;
+            String sender;
 
             tag = rawMessage.getTAG();
             flag = rawMessage.getFlag();
             message = rawMessage.getData();
+            sender = rawMessage.getSender();
 
             // Change this later with enumerated switch statement?
             //message = MessagePhoenix.objectToString( rawMessage.getData() );
@@ -524,7 +528,7 @@ final public class NetworkClient {
             // assuming message is a string
             // branch past here if its not
             switch ( flag ) {
-                // Tagged Chat Message ex: GLOBAL, LOBBY, DIRECT, etc
+                // Tagged Chat Message ex: GLOBAL, LOBBY, PRIVATE, etc
                 case CHAT:
 
                     switch ( tag ) {
@@ -532,9 +536,16 @@ final public class NetworkClient {
                         //if (message.get(0).equals(username)) {  // suppress message
 
                         //flushToConsole(message.get(0) + ": " + message.get(1));
-                        case DIRECT:
+                        case PRIVATE:
+                            flushToConsole( "(Private)" + sender + ": " + message.get( 0 ) );
+                            break;
                         case LOBBY:
+                            flushToConsole( "(" + currentLobby + ")" + sender + ": " + message.
+                                    get( 0 ) );
+                            break;
                         case GLOBAL:
+                            flushToConsole( "(GLOBAL)" + sender + ": " + message.get( 0 ) );
+                            break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
@@ -544,6 +555,7 @@ final public class NetworkClient {
 
                     switch ( tag ) {
                         case SEND_HANDLE:
+                        case MESSAGE_FROM_SERVER:
 
                         default:
                             flushToConsole( "Unknown tag: " + tag );
@@ -759,11 +771,11 @@ final public class NetworkClient {
         // TODO: hello message?
 
         // Send username
-        send( MessagePhoenix.SEND_HANDLE, username );
+        send( Flag.CLIENT, Tag.SEND_HANDLE, username );
         // Request list of clients:
-        send( MessagePhoenix.REQUEST_GLOBAL_WHO );
+        send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
         // Request list of lobbies:
-        send( MessagePhoenix.REQUEST_LOBBY_INFO );
+        send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST );
     }
 
     /**
@@ -867,12 +879,13 @@ final public class NetworkClient {
     }
 
     private static void write( Flag flag, Tag tag ) {
-        writeToQueue( new NetworkPacket( flag, tag ) );
+        write( flag, tag, null );
     }
 
     private static void write( Flag flag, Tag tag, List<Object> message ) {
-        writeToQueue( MessagePhoenix.createMessage( flag, tag, message ) );
+        writeToQueue( new NetworkPacket( flag, tag, message ) );
     }
+
 
     /**
      * Writes to socket outgoing connection, hides the protocol details
@@ -1001,7 +1014,7 @@ final public class NetworkClient {
         consoleOut.print( "Disconnecting from server..." );
 
         if ( isConnected() ) {
-            send( CONNECTION, DISCONNECT );
+            send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
         }
 
         killRemoteConnection();

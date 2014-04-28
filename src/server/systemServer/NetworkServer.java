@@ -18,18 +18,20 @@ import java.util.List;
  * In theory, you should be able to run a client on same machine as the hosting server
  */
 final public class NetworkServer {
-
+    // TODO: could this possibly a subclass of NetworkClient?
     // Clients
     private static List<ClientObject> clientObjects;
     private static int totalClients = 0;
     // Lobbies
     private static List<Lobby> lobbies;
+    private static Integer totalLobbies = 0; //used to assign unique lobbyId's
+
 
     private static boolean stopped = false;
 
     private static final int DEFAULT_PORT = 25565;
     //private static final String DEFAULT_IP = "76.178.139.129";
-
+    // TODO: clean up server privacy, methods, vars, etc
     private static int idFactory = 0;
 
     /**
@@ -44,34 +46,35 @@ final public class NetworkServer {
     /**
      * Checks if lobby name is unique
      * <p>
-     * @param name Name of the Lobby
+     * @param lobbyname Name of the Lobby
      * <p>
      * @return True if unique, False if lobby with name already exists
      */
-    private static boolean canCreateNewLobby( String name ) {
+    private static boolean lobbyExists( String lobbyname ) {
         for ( Lobby lobby : lobbies ) {
-            if ( lobby.getName().equals( name ) ) {
-                return false;
+            if ( lobby.getName().equals( lobbyname ) ) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**
      * Creates a new lobby
      * <p>
-     * @param lobbyName Name of the lobby to be created
+     * @param lobbyname Name of the lobby to be created
      * <p>
-     * @return
-     *         True if lobby created, False if lobby exists and/or could not be created
+     * @return True if lobby created, False if lobby exists and/or could not be created
      */
-    public static boolean createNewLobby( String lobbyName ) {
-        if ( lobbyName != null && !lobbyName.isEmpty() && canCreateNewLobby( lobbyName ) ) {
-            Lobby lobby = new Lobby( lobbyName );
-            lobbies.add( lobby );
-            return true;
-        } else {
+    public static boolean createNewLobby( String lobbyname ) {
+        // TODO: this should be in Lobby. should it send message responses?
+        if ( (lobbyname == null || lobbyname.isEmpty()) || lobbyExists( lobbyname ) ) {
             return false;
+        } else {
+            Lobby lobby = new Lobby( lobbyname, totalLobbies );
+            lobbies.add( lobby );
+            totalLobbies++;
+            return true;
         }
     }
 
@@ -87,11 +90,13 @@ final public class NetworkServer {
             if ( l.getName().equals( lobbyName ) ) {
                 if ( l.isInLobby( client.getHandle() ) ) {
                     client.
-                            send( MessagePhoenix.ERROR_MESSAGE, "Cannot join lobby, you're already in it!" );
+                            send( Flag.RESPONSE, Tag.JOIN_LOBBY_RESPONSE, "Cannot join lobby, you're already in it!" );
                 } else {
                     leaveLobby( client );
                     l.join( client );
-                    sendToAllClients( MessagePhoenix.JOINED_LOBBY, lobbyName, client.getHandle() );
+                    client.
+                            send( Flag.RESPONSE, Tag.JOIN_LOBBY_RESPONSE, "Successfully joined lobby!" );
+                    l.sendToEntireLobby( "Client " + client.getHandle() + " has joined the lobby!" );
                 }
             }
         }
@@ -110,8 +115,8 @@ final public class NetworkServer {
         // TODO: add null check
         for ( Lobby l : lobbies ) {
             if ( l.lobbyClients.contains( client ) ) {
-                l.leave( client );
-                sendToAllClients( MessagePhoenix.LEFT_LOBBY, l.getName(), client.getHandle() );
+                l.leaveLobby( client );
+                l.sendToEntireLobby( "Client " + client.getHandle() + " has left the lobby!" );
                 if ( l.lobbyClients.isEmpty() ) {
                     lobbies.remove( l ); //For now, just kill lobbies when everyone leaves
                 }
@@ -179,49 +184,81 @@ final public class NetworkServer {
     }
 
     /**
+     * Send private message to a individual client
+     * <p>
+     * @param handle
+     * @param flag
+     * @param tag
+     * @param message
+     *
+     * @return
+     */
+    public static boolean sendToClient( String handle, Flag flag, Tag tag, Object... message ) {
+        for ( ClientObject client : NetworkServer.clientObjects ) {
+            if ( client.getHandle().equals( handle ) ) {
+                client.send( flag, tag, message );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Global Chat message
+     * <p>
+     * @param message
+     */
+    public static void sendToAllClients( String message ) {
+        sendToAllClients( Flag.CHAT, Tag.GLOBAL, message );
+    }
+
+    /**
      * Forward the message to all ClientObjects, which will send to their Clients
      * <p>
+     * @param flag
      * @param tag
      * @param message
      */
-    public static void sendToAllClients( String tag, List<String> message ) {
+    public static void sendToAllClients( Flag flag, Tag tag, String message ) {
         for ( ClientObject client : clientObjects ) {
-            client.send( message.toArray( new Object[message.size()] ) );
+            client.send( flag, tag, message );
         }
     }
 
     /**
-     * Forward the message to all ClientObjects, which will send to their
-     * Clients
+     * Forward the message to all ClientObjects, which will send to their Clients
      * <p>
+     * @param flag
+     * @param tag
      * @param message
      */
-    public static void sendToAllClients( Object... message ) {
+    public static void sendToAllClients( Flag flag, Tag tag, Object... message ) {
         for ( ClientObject client : clientObjects ) {
-            client.send( message );
+            client.send( flag, tag, message );
         }
     }
 
     /**
-     * clientObject will call this on a planned or unplanned disconnection
+     * ClientObject will call this on a planned or unplanned disconnection
      * <p>
      * @param clientId
      */
-    public static void clientDisconnected( int clientId ) {
+    public static void clientDisconnected( ClientObject clientId ) {
 
         // TODO: verify that this is operating properly, and check clientID
         ClientObject dearlyDeparted = null;
 
         for ( ClientObject clientObject : clientObjects ) {
-            if ( clientObject.getClientID() == clientId ) {
+            clientObjects.remove( clientObject );
+            //if ( clientObject.getClientID() == clientId ) {
                 //dearlyDeparted = clientObject;
+
                 leaveLobby( clientObject );
                 clientObjects.remove( clientObject );
                 totalClients--; // Decrement total clients, we weren't doing this before
                 clientObject.killClient();
-                sendToAllClients( MessagePhoenix.DISCONNECT_ANNOUNCEMENT, clientObject.getHandle() );
+                sendToAllClients( "Client " + clientObject.getHandle() );
                 return;
-            }
         }
         System.err.println( "Could not find client to disconnect!" );
         /*

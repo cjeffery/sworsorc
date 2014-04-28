@@ -18,23 +18,22 @@ import java.util.List;
 public class NetworkPacket implements Serializable {
     private static final long serialVersionUID = 1L;
     private final Flag flag;
-
     private final Tag tag;
     private final List<Object> data;
-    private final String message;
+    private final String sender;
 
     /**
      *
      * @param FLAG
      * @param TAG
      * @param DATA
-     * @param MESSAGE
+     * @param sender
      */
-    public NetworkPacket( Flag FLAG, Tag TAG, List<Object> DATA, String MESSAGE ) {
+    public NetworkPacket( Flag FLAG, Tag TAG, List<Object> DATA, String sender ) {
         this.flag = FLAG;
         this.tag = TAG;
         this.data = DATA;
-        this.message = MESSAGE;
+        this.sender = sender;
     }
 
     public NetworkPacket( Flag FLAG, Tag TAG, List<Object> DATA ) {
@@ -45,14 +44,21 @@ public class NetworkPacket implements Serializable {
      *
      * @param FLAG
      * @param TAG
-     * @param MESSAGE
+     * @param sender
      */
-    public NetworkPacket( Flag FLAG, Tag TAG, String MESSAGE ) {
-        this( FLAG, TAG, null, MESSAGE );
+    public NetworkPacket( Flag FLAG, Tag TAG, String sender ) {
+        this( FLAG, TAG, null, sender );
     }
 
     public NetworkPacket( Flag FLAG, Tag TAG ) {
         this( FLAG, TAG, null, null );
+    }
+
+    /*
+     * Default constructor, empty > null
+     */
+    public NetworkPacket() {
+        this( null, null, null, null );
     }
 
     /**
@@ -81,8 +87,8 @@ public class NetworkPacket implements Serializable {
      *
      * @return
      */
-    public String getMessage() {
-        return message;
+    public String getSender() {
+        return sender;
     }
 
     /**
@@ -90,7 +96,7 @@ public class NetworkPacket implements Serializable {
      * @return
      */
     public boolean isEmpty() {
-        return data.isEmpty() && tag == null && flag == null && message.isEmpty();
+        return data.isEmpty() && tag == null && flag == null && sender.isEmpty();
     }
 
 }
