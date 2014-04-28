@@ -9,5 +9,5 @@
 <children><Button fx:id="Return_to_Game" layoutX="14.0" layoutY="2.0" mnemonicParsing="false" onAction="#Exit" text="Close Diplomacy Map" />
 </children></AnchorPane>
 </top>
-<left><ScrollPane fx:id="dip_view" layoutX="-133.5" layoutY="-21.0" prefHeight="300.0" prefWidth="269.0" BorderPane.alignment="CENTER" />
-</left></BorderPane>
+<center><ScrollPane fx:id="dip_view" layoutX="-133.5" layoutY="-21.0" prefHeight="300.0" prefWidth="269.0" BorderPane.alignment="CENTER" />
+</center></BorderPane>
