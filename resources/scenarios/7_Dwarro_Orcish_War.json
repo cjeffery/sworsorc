@@ -105,7 +105,7 @@
         },
         {
             "name": "SpiderFolk",
-            "race":"SpiderFolk",
+            "race":"Spiders",
             "provinces": ["Sorcerak"],
             "units": {
               "WebWarriors":4,
