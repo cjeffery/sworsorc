@@ -229,13 +229,22 @@ public class MovementCalculator
         unitsInHex = sourceHex.getUnitIDs();
         
         // check if list is empty
-        if( unitsInHex.isEmpty() )
+        if( unitsInHex == null || unitsInHex.isEmpty() )
         {
             return false;
         }
         
-        int idInNewHex = Integer.parseInt(unitsInHex.get(0));
-        int idOfCurrent = Integer.parseInt(movingUnit.getID());
+        if( unitsInHex.get(0) == null ) {
+            System.out.println("Got this stuff: ");
+            for( String s : unitsInHex) {
+                System.out.println(s);
+            }
+            System.out.println("done");
+        }
+        
+        //oh my gosh this is so terrible
+        int idInNewHex = Integer.parseInt(unitsInHex.get(0).split("#")[0]);
+        int idOfCurrent = Integer.parseInt(movingUnit.getID().split("#")[0]);
         
         if( idInNewHex != idOfCurrent )
         {
