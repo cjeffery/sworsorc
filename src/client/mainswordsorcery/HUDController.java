@@ -9,7 +9,6 @@ import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.Color;
 import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
