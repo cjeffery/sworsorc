@@ -513,8 +513,8 @@ public class HUDController {
         
         if(AU.getUnitType() == UnitType.Character){
             //labels and function names
-            List <String> stats = new ArrayList<>(Arrays.asList("Name: ", "MagicPL: ", "MagicPotential: ", "Movement: "));
-            List <String> funcs = new ArrayList<>(Arrays.asList("getName", "getMagicPL", "getMagicPotential", "getMovement"));
+            List <String> stats = new ArrayList<>(Arrays.asList("Name: ", "Race", "MagicPL: ", "MagicPotential: ", "Movement: "));
+            List <String> funcs = new ArrayList<>(Arrays.asList("getName", "getRace", "getMagicPL", "getMagicPotential", "getMovement"));
             //adds stats to GridPane (will be replaced with call to unit stats)
             for(int i=0; i < stats.size(); i++){
                 Label l = new Label(stats.get(i));
