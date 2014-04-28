@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="BorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainswordsorcery.DiplomacyController">
+<BorderPane fx:id="BorderPane" maxHeight="500" maxWidth="500" minHeight="200" minWidth="200" prefHeight="333.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainswordsorcery.DiplomacyController">
 <top><AnchorPane prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER">
 <children><Button fx:id="Return_to_Game" layoutX="14.0" layoutY="2.0" mnemonicParsing="false" onAction="#Exit" text="Close Diplomacy Map" />
 </children></AnchorPane>

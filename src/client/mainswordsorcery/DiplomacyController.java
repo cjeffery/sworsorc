@@ -5,31 +5,21 @@
  * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
 package mainswordsorcery;
-
-import Units.*;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
-import java.util.Arrays;
-import javafx.embed.swing.SwingNode;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.geometry.*;
-import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
-import javafx.stage.Stage;
-import sshexmap.MapView;/*
 /**
  *
  * @author Sean
  */
+import Units.*;
+import java.io.IOException;
+import javafx.embed.swing.SwingNode;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+
+import javafx.stage.Stage;
+import sshexmap.MapView;
+
 public class DiplomacyController {
     @FXML private ScrollPane dip_view;
     SwingNode hdip = new SwingNode();
