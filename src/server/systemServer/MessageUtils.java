@@ -63,6 +63,7 @@ public class MessageUtils {
     static String ADD_UNIT = "addunit";
     static String UPDATE_UNIT = "updateunit"; // client sends a unit update
     static String UPDATE_HEX = "updatehex"; // client sends a hex update
+    static String CHANGE_PHASE = "changePhase"; // cleint sends a phase to change too
 
     /* KILL THE BUGS! */
     static boolean debug = false; //Print everything!
@@ -158,6 +159,13 @@ public class MessageUtils {
         for (String handle : handles) {
             message.add(handle);
         }
+        return message;
+    }
+    
+    public static List<String> makePhaseChangeMessage(String phaseName){
+        List<String> message = new ArrayList<>();
+        message.add(CHANGE_PHASE);
+        message.add(phaseName);
         return message;
     }
 
