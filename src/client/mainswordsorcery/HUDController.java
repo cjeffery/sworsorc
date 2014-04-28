@@ -25,7 +25,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyEvent;
-import javafx.beans.value.ChangeListener;
+import javafx.beans.value.*;
+import javafx.beans.Observable;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
@@ -61,6 +62,7 @@ public class HUDController {
     List <MoveableUnit> target_stack;
     //holds valid hexes for selected_unit movement
     private ArrayList<MapHex> canMoveTo;
+    private MapHex currentHex;
     
 
     MapView hmapContent;//MapView swing object set into hmap
@@ -114,35 +116,33 @@ public class HUDController {
      * big messy function to set up event handlers
      */
     void setupEventHandlers() {
-        
-       
         hmap.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent mouseEvent) {
                 //finds out at which hex a mouse event occured
                 String hexID = hmapContent.hexAt((int)mouseEvent.getX(), (int)mouseEvent.getY());
-                MapHex hex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);
+                currentHex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);
                 //allows deselecting of unit with left mouse button
                 if( mouseEvent.isPrimaryButtonDown() && selected_unit != null){
-                    DeselectUnit( hexID, hex );
+                    DeselectUnit( hexID, currentHex );
                 }           
                 //select a unit if none previously selected
                 else if( mouseEvent.isPrimaryButtonDown()){
-                    SelectUnit( hexID, hex );
+                    SelectUnit( hexID, currentHex );
                 }             
                 //move unit with right mouse button in movement phase
                 else if( mouseEvent.isSecondaryButtonDown() && selected_unit != null && phase.getText().equalsIgnoreCase("Movement")){
-                    MoveUnit( hexID, hex );
+                    MoveUnit( hexID, currentHex );
                 }
                 //allows deselecting of target unit with right mouse button
                 else if( mouseEvent.isSecondaryButtonDown() && target_unit != null){
-                    DetargetUnit( hexID, hex );
+                    DetargetUnit( hexID, currentHex );
                 }                    
                  //choose target unit in combat or spell phase
                 else if( mouseEvent.isSecondaryButtonDown() //right mouse button
                          && !phase.getText().equalsIgnoreCase("Movement") //check phase
                          && target_unit == null){ //check if target unit already chosen
-                    TargetUnit( hexID, hex );
+                    TargetUnit( hexID, currentHex );
                 }
                 mouseEvent.consume();
             }
@@ -154,18 +154,7 @@ public class HUDController {
             new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent keyEvent) {
-                    //attack
-                    if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
-                       && phase.getText().equalsIgnoreCase("Combat")){
-                        StartCombat();
-                    }
-                    //spells
-                    else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
-                            && phase.getText().equalsIgnoreCase("Spell")){
-                        StartSpell();
-                    }
+                    KeyEventWrapper(keyEvent);
                 };
         });
         /**adds keyboard support to UnitsPane
@@ -175,18 +164,7 @@ public class HUDController {
             new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent keyEvent) {
-                    //attack
-                    if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
-                       && phase.getText().equalsIgnoreCase("Combat")){
-                        StartCombat();
-                    }
-                    //spells
-                    else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
-                            && phase.getText().equalsIgnoreCase("Spell")){
-                        StartSpell();
-                    }
+                    KeyEventWrapper(keyEvent);
                 };
         });
         /**adds keyboard support to TargetsPane
@@ -196,18 +174,7 @@ public class HUDController {
             new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent keyEvent) {
-                    //attack
-                    if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
-                       && phase.getText().equalsIgnoreCase("Combat")){
-                        StartCombat();
-                    }
-                    //spells
-                    else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
-                            && phase.getText().equalsIgnoreCase("Spell")){
-                        StartSpell();
-                    }
+                    KeyEventWrapper(keyEvent);
                 };
         });
         /**adds keyboard support to undo_button
@@ -217,18 +184,7 @@ public class HUDController {
             new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent keyEvent) {
-                    //attack
-                    if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
-                       && phase.getText().equalsIgnoreCase("Combat")){
-                        StartCombat();
-                    }
-                    //spells
-                    else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
-                            && phase.getText().equalsIgnoreCase("Spell")){
-                        StartSpell();
-                    }
+                    KeyEventWrapper(keyEvent);
                 };
         });
         /**adds keyboard support to chat_box
@@ -238,18 +194,7 @@ public class HUDController {
             new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent keyEvent) {
-                    //attack
-                    if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
-                       && phase.getText().equalsIgnoreCase("Combat")){
-                        StartCombat();
-                    }
-                    //spells
-                    else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
-                            && phase.getText().equalsIgnoreCase("Spell")){
-                        StartSpell();
-                    }
+                    KeyEventWrapper(keyEvent);
                 };
         });
         /**adds keyboard support to phaseButton
@@ -259,18 +204,7 @@ public class HUDController {
             new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent keyEvent) {
-                    //attack
-                    if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
-                       && phase.getText().equalsIgnoreCase("Combat")){
-                        StartCombat();
-                    }
-                    //spells
-                    else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
-                            && phase.getText().equalsIgnoreCase("Spell")){
-                        StartSpell();
-                    }
+                    KeyEventWrapper(keyEvent);
                 };
         });
         /**adds keyboard support to mini_map
@@ -280,18 +214,7 @@ public class HUDController {
             new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent keyEvent) {
-                    //attack
-                    if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
-                       && phase.getText().equalsIgnoreCase("Combat")){
-                        StartCombat();
-                    }
-                    //spells
-                    else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
-                            && phase.getText().equalsIgnoreCase("Spell")){
-                        StartSpell();
-                    }
+                    KeyEventWrapper(keyEvent);
                 };
         });
         /** adds mouse support to mini_map
@@ -335,9 +258,62 @@ public class HUDController {
                     Image img = new Image("file:resources/images/undo_hover.png");
                     undo_pic.setImage(img);
                 }
-        });        
+        });
+        /**
+         * Allows changing of selected_unit from selected_stack
+         * with the UnitsPane
+         * @author Jay Drage
+         */
+        UnitsPane.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<Tab>(){
+                @Override
+                public void changed(ObservableValue<? extends Tab> ov, Tab oldTab, Tab newTab) {
+                    selected_unit = selected_stack.get(UnitsPane.getTabs().indexOf(newTab));
+                    //highlight valid hexes if in movement phase
+                    canMoveTo = new ArrayList<>();
+                    canMoveTo.clear();
+                    if(phase.getText().equalsIgnoreCase("Movement")){
+                        hmapContent.clearHighlights();
+                        MovementCalculator.getValidMoves(selected_unit, currentHex, selected_unit.getMovement(), canMoveTo );
+                        hmapContent.highlight(canMoveTo, new Color(0,0,255, 70));
+                    }
+                }
+            }
+        );
+        /**
+         * Allows changing of target_unit from target_stack
+         * with the TargetsPane
+         * @author Jay Drage
+         */
+        TargetsPane.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<Tab>(){
+                @Override
+                public void changed(ObservableValue<? extends Tab> ov, Tab oldTab, Tab newTab) {
+                    target_unit = target_stack.get(TargetsPane.getTabs().indexOf(newTab));
+                }
+            }
+        );
     }
-    
+    /**
+     * Function that is called for keyEvents
+     * simply reduces clutter in code
+     * @param keyEvent 
+     * @author Jay Drage
+     */
+    public void KeyEventWrapper(KeyEvent keyEvent){
+        //attack
+        if(keyEvent.getText().equalsIgnoreCase("a") 
+           && !target_stack.isEmpty() && !selected_stack.isEmpty()
+           && phase.getText().equalsIgnoreCase("Combat")){
+            StartCombat();
+        }
+        //spells
+        else if(keyEvent.getText().equalsIgnoreCase("s")
+                && !target_stack.isEmpty() && !selected_stack.isEmpty() 
+                && phase.getText().equalsIgnoreCase("Spell")){
+            StartSpell();
+        }
+    }
     /** 
      * deselects a unit with left mouse button
      * sets selected_unit to null
@@ -375,15 +351,7 @@ public class HUDController {
         if(hex.getUnits() == null) {
             return;
         }
-        //highlight valid hexes
-        canMoveTo = new ArrayList<>();
         selected_stack = hex.getUnits();
-        selected_unit = selected_stack.get(0);
-        canMoveTo.clear();
-        if(phase.getText().equalsIgnoreCase("Movement")){
-            MovementCalculator.getValidMoves(selected_unit, hex, selected_unit.getMovement(), canMoveTo );
-            hmapContent.highlight(canMoveTo, new Color(0,0,255, 70));
-        }
         //update target stack panel
         try {
             DisplayStack(UnitsPane, selected_stack);
