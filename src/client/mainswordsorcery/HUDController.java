@@ -9,7 +9,6 @@ import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.Color;
 import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -104,7 +103,7 @@ public class HUDController {
          * HUDController loads the scenario or game or whatever
          * and put this code after
          */
-  
+        
         Scenario.Initialize("resources/scenarios/0_Dummy.json");      
         SolarDisplay.SunCheck();
         Image Sun = new Image(SolarDisplay.GetSunImage());
