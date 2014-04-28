@@ -234,14 +234,6 @@ public class MovementCalculator
             return false;
         }
         
-        if( unitsInHex.get(0) == null ) {
-            System.out.println("Got this stuff: ");
-            for( String s : unitsInHex) {
-                System.out.println(s);
-            }
-            System.out.println("done");
-        }
-        
         //oh my gosh this is so terrible
         int idInNewHex = Integer.parseInt(unitsInHex.get(0).split("#")[0]);
         int idOfCurrent = Integer.parseInt(movingUnit.getID().split("#")[0]);
