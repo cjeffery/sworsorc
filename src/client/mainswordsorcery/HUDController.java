@@ -96,23 +96,19 @@ public class HUDController {
         //setup network
         connectedToServer = usernameEntered = ipEntered = false;
         chat_box.setText("Enter your username!");
-        
-        /**
-         * Initialization of the Solar Display
-         * Johnathan Flake
-         * Temporary fix that always loads the dummy scenario, need to find where
-         * HUDController loads the scenario or game or whatever
-         * and put this code after
-         */
-  
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");      
+    }
+    
+    /**
+     * Initialization of the Solar Display
+     * Johnathan Flake
+     */
+    void initializeSunStuff() {
         SolarDisplay.SunCheck();
         Image Sun = new Image(SolarDisplay.GetSunImage());
         SunImage.setImage(Sun);
-        
+
         RedState.setText(SolarDisplay.GetRedState());
         BlueState.setText(SolarDisplay.GetBlueState());
-        
     }
     
     /**
