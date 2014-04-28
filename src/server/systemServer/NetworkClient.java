@@ -4,17 +4,13 @@
  * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
  * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
-
 package systemServer;
 
-import Units.MoveableUnit;
-import Units.UnitPool;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
@@ -24,14 +20,15 @@ import mainswordsorcery.Game;
  * The Infamous Network Client, handles communication to/from Network Server
  * <p>
  * NOTE: This is a static singleton. Don't fool around trying to create instances now, ya' hear?
+ * <p>
  * @author Networking Subteam
  */
-public class NetworkClient {
+final public class NetworkClient {
 
     // iNet variables
     private static Socket socket = null;
-    private static int port = 25565;
-    private static String serverName = "127.0.0.1";
+    private static int port = 25565; // standard SworSorc port
+    private static String serverName = "127.0.0.1"; // default to loopback
 
     // Read/write streams
     private static BufferedReader consoleIn = null;
@@ -41,56 +38,59 @@ public class NetworkClient {
     private static String username = "default_user";
 
     // Streams & Threads
-    private static ClientListenerThread listenerThread = null;
-    private static ClientWriterThread writerThread = null;
-    private static ClientCommandThread clientThread = null;
+    private static ClientListenerThread listenerThread;
+    private static ClientWriterThread writerThread;
+    private static ClientCommandThread clientThread;
+
+    private static ObjectOutputStream writer;
+    private static ObjectInputStream streamIn;
+
 
     // File path defaults
     // TODO: change these in configureSettings()
     private static String helpfile = "commands.txt"; // TODO: update from settings file
-    private static String dir = System.getProperty("user.dir");
-    private static String networkDirectory = System.getProperty("user.dir") + 
-            File.separator + "src" + File.separator + "server" + File.separator;
+    private static String dir = System.getProperty( "user.dir" );
+    private static String networkDirectory = System.getProperty( "user.dir" )
+            + File.separator + "src" + File.separator + "server" + File.separator;
 
-    
     // Buffers
-    private static ArrayBlockingQueue<List<Object>> messageQueue;
+    private static ArrayBlockingQueue<NetworkPacket> messageQueue;
     private static ArrayBlockingQueue<String> commandQueue;
-    
+
     // Flags
+    // goto Conductor
+    // private Conductor jarvis; // Our conductor object
 
-    // Conductor
-    //private Conductor jarvis; // Our conductor object
-
-    /* PUBLIC METHODS */
-    
+    /*
+     * PUBLIC METHODS
+     */
     /**
      * Default Startup of NetworkClient
      * Starts local streams, connects to server, and makes the connection live
      * <p>
      * NOTE: will use default settings file of "netclient_settings.txt"
-     * 
+     * <p>
      * @return True if started OK, False if connection failed
      */
     public static boolean initializeClient() { // default
-        return initializeClient("netclient_settings.txt");      
+        return initializeClient( "netclient_settings.txt" );
     }
-    
+
     /**
      * Startup of NetworkClient
      * Starts local streams, connects to server, and makes the connection live
-     * 
-     * @param filename 
-     *  Name of Network Settings file, no path necessary
-     *  Method will search for and find the file, as long in sworsorc directory
-     * 
+     * <p>
+     * @param filename
+     *                 Name of Network Settings file, no path necessary
+     *                 Method will search for and find the file, as long in sworsorc directory
+     * <p>
      * @return True if started OK, False if connection failed
      */
     public static boolean initializeClient( String filename ) {
-        configureSettings(filename);
-        messageQueue = new ArrayBlockingQueue<>(30, true ); // 30 slots, FIFO access
+        configureSettings( filename );
+        messageQueue = new ArrayBlockingQueue<>( 30, true ); // 30 slots, FIFO access
         startLocalStreams();
-        if (connect()) {
+        if ( connect() ) {
             startRemoteConnection();
             startCommandProcessor();
             return true;
@@ -99,29 +99,41 @@ public class NetworkClient {
             return false;
         }
     }
-    
+
     /**
      * Send a message to client
-     * YOU MUST PUT A TAG AS THE FIRST ITEM!
      * <p>
      * Generic parameters
      * This is just a public wrapper for {@link #write write()}
-     * 
+     * <p>
+     * @param flag
+     * @param tag
      * @param message First parameter is assumed to be tag
      */
-    public static void send(Object... message) {
-        write(MessagePhoenix.createMessage(message));
+    public static void send( Flag flag, Tag tag, Object... message ) {
+        write( flag, tag, MessagePhoenix.packMessageContents( message ) );
     }
-    
+
+    /**
+     *
+     * @param flag
+     * @param tag
+     */
+    public static void poke( Flag flag, Tag tag ) {
+        write( flag, tag );
+    }
+
     /**
      * Test a user command
-     * @param command 
+     * <p>
+     * @param command
+     *                <p>
      * @author Christopher Goes
      */
     public static void testCommand( String command ) {
-        executeCommand(command);
-    }    
-    
+        executeCommand( command );
+    }
+
     /**
      * Sends a "chat" message to the other users. The received message will be
      * displayed (along with the sender's username) in the chat box of the other
@@ -129,8 +141,8 @@ public class NetworkClient {
      * <p>
      * @param message The message to display to other users
      */
-    public static void sendGlobalChatMessage(String message) {
-        send(MessagePhoenix.GLOBAL_CHAT, message);
+    public static void sendGlobalChatMessage( String message ) {
+        send( Flag.CHAT, Tag.GLOBAL, message );
     }
 
     /**
@@ -143,9 +155,13 @@ public class NetworkClient {
      * the next user, or the next game turn may start, or the game may end.
      */
     public static void endTurn() {
-        send(MessagePhoenix.YIELD_TURN);
+        send( Flag.GAME, Tag.YIELD_TURN );
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public static int generateUniqueID() {
         // TODO: update with executeCommand(<ID request command>);
         // Stub, may not be needed, could use a queue
@@ -158,12 +174,12 @@ public class NetworkClient {
         return ((listenerThread != null && listenerThread.isAlive())
                 || (clientThread != null && clientThread.isAlive()));
     }
-    
+
     private static class ClientCommandThread extends Thread {
 
         private boolean killed = false;
-        
-        private ClientCommandThread() {                    
+
+        private ClientCommandThread() {
             // empty constructor
         }
 
@@ -172,117 +188,115 @@ public class NetworkClient {
          * <p>
          * @author Christopher Goes
          * @param command
+         *                <p>
          * @return boolean True if executed normally, False if quit or exception
-        */
-        private boolean processCommand( final String command) {
+         */
+        private boolean processCommand( final String command ) {
 
-        if (command == null) {
-            System.err.println("Null string passed to processInput!");
-            return false;
-        }
-
-        // TODO: ADD REQUEST UNIQUE_ID COMMAND?
-        String[] parsedString;
-        parsedString = command.split("\\s+"); //Split line by whitespace
-
-        if (parsedString.length == 2) {
-            if ("/file".equals(parsedString[0])) {
-                sendFile(parsedString[1]);
-
-            } else if ("/newLobby".equals(parsedString[0])) {
-                String lobbyName = parsedString[1];
-                send(MessagePhoenix.CREATE_NEW_LOBBY_REQUEST, lobbyName );
-
-            } else if ("/joinLobby".equals(parsedString[0])) {
-                String lobbyName = parsedString[1];
-                send(MessagePhoenix.JOIN_LOBBY_REQUEST,lobbyName);
-            } else if (isConnected()) {
-                // sends chat message to server, which broadcasts to all clients
-                send( MessagePhoenix.GLOBAL_CHAT, username, command);
-            }
-        } else if (parsedString.length == 1) {
-            if ("/printFile".equals(parsedString[0])) {
-                send(MessagePhoenix.PRINT_FILE);
-
-            } else if ("/globalWho".equals(parsedString[0])) {
-                send( MessagePhoenix.GLOBAL_WHO_LIST);
-
-            } else if ("/leaveLobby".equals(parsedString[0])) {
-                send( MessagePhoenix.LEAVE_LOBBY_REQUEST);
-
-            } else if ("/showLobbies".equals(parsedString[0])) { // TODO: message if no lobbies available, command to create lobby
-                send( MessagePhoenix.LOBBY_INFO); // TODO: working lobby info request
-
-            } else if ("/disconnect".equals(parsedString[0])) { // manual client disconnect
-                if (isConnected()) {
-                    disconnectFromServer();
-                } else {
-                    flushToConsole("Can't disconnect when you're not connected!");
-                }
-
-            } else if ("/yieldTurn".equals(parsedString[0])) { // client turn over
-                endTurn();
-            } else if ("/beginGame".equals(parsedString[0])) { // request to start game
-                send( MessagePhoenix.REQUEST_BEGIN_GAME);
-
-            } else if ("/help".equals(parsedString[0])) {
-                printCommandList();
-
-            } else if ("/reconnect".equals(parsedString[0])) {
-                if (isConnected()) { // Anti-clone League of Uganda certified
-                    flushToConsole("Already connected!");
-                    return true;
-                } else if( remoteConnectionIsAlive()) {
-                    flushToConsole("Remote connection still alive!");
-                    return true;
-                }
-                flushToConsole("Attempting to reconnect...");
-                if (connect()) {
-                    flushToConsole("Successfully reconnected!");
-                    startRemoteConnection();
-
-                } else {
-                    flushToConsole("Reconnect failed");
-                }
-
-            } else if ("/quit".equals(parsedString[0])) {
-                flushToConsole("Exiting client...");
-                if (isConnected()) {
-                    flushToConsole("Still connected to server, disconnecting");
-                    disconnectFromServer();
-                }
+            if ( command == null ) {
+                System.err.println( "Null string passed to processInput!" );
                 return false;
-            }  
-            else if (parsedString[0].length() != 0 && "/".equals(parsedString[0].charAt(0))){
-                flushToConsole("Invalid command, try again, or type /help for a list of commands.");
             }
-            else {
-                sendGlobalChatMessage(command);
-            }
-        } else {
-            if (isConnected()) {
-                    sendGlobalChatMessage(command);
+
+            // TODO: ADD REQUEST UNIQUE_ID COMMAND?
+            String[] parsedString;
+            parsedString = command.split( "\\s+" ); //Split line by whitespace
+
+            if ( parsedString.length == 2 ) {
+                if ( "/file".equals( parsedString[0] ) ) {
+                    sendFile( parsedString[1] );
+
+                } else if ( "/newLobby".equals( parsedString[0] ) ) {
+                    String lobbyName = parsedString[1];
+                    send( Flag.MessagePhoenix.CREATE_NEW_LOBBY_REQUEST, lobbyName );
+
+                } else if ( "/joinLobby".equals( parsedString[0] ) ) {
+                    String lobbyName = parsedString[1];
+                    send( MessagePhoenix.JOIN_LOBBY_REQUEST, lobbyName );
+                } else if ( isConnected() ) {
+                    // sends chat message to server, which broadcasts to all clients
+                    send( MessagePhoenix.GLOBAL_CHAT, username, command );
+                }
+            } else if ( parsedString.length == 1 ) {
+                if ( "/globalWho".equals( parsedString[0] ) ) {
+                    send( MessagePhoenix.GLOBAL_WHO_LIST );
+
+                } else if ( "/leaveLobby".equals( parsedString[0] ) ) {
+                    send( MessagePhoenix.LEAVE_LOBBY_REQUEST );
+
+                } else if ( "/showLobbies".equals( parsedString[0] ) ) { // TODO: message if no lobbies available, command to create lobby
+                    send( MessagePhoenix.LOBBY_INFO ); // TODO: working lobby info request
+
+                } else if ( "/disconnect".equals( parsedString[0] ) ) { // manual client disconnect
+                    if ( isConnected() ) {
+                        disconnectFromServer();
+                    } else {
+                        flushToConsole( "Can't disconnect when you're not connected!" );
+                    }
+
+                } else if ( "/yieldTurn".equals( parsedString[0] ) ) { // client turn over
+                    endTurn();
+                } else if ( "/beginGame".equals( parsedString[0] ) ) { // request to start game
+                    send( MessagePhoenix.REQUEST_BEGIN_GAME );
+
+                } else if ( "/help".equals( parsedString[0] ) ) {
+                    printCommandList();
+
+                } else if ( "/reconnect".equals( parsedString[0] ) ) {
+                    if ( isConnected() ) { // Anti-clone League of Uganda certified
+                        flushToConsole( "Already connected!" );
+                        return true;
+                    } else if ( remoteConnectionIsAlive() ) {
+                        flushToConsole( "Remote connection still alive!" );
+                        return true;
+                    }
+                    flushToConsole( "Attempting to reconnect..." );
+                    if ( connect() ) {
+                        flushToConsole( "Successfully reconnected!" );
+                        startRemoteConnection();
+
+                    } else {
+                        flushToConsole( "Reconnect failed" );
+                    }
+
+                } else if ( "/quit".equals( parsedString[0] ) ) {
+                    flushToConsole( "Exiting client..." );
+                    if ( isConnected() ) {
+                        flushToConsole( "Still connected to server, disconnecting" );
+                        disconnectFromServer();
+                    }
+                    return false;
+                } else if ( parsedString[0].length() != 0 && "/".
+                        equals( parsedString[0].charAt( 0 ) ) ) {
+                    flushToConsole( "Invalid command, try again, or type /help for a list of commands." );
+                } else {
+                    sendGlobalChatMessage( command );
+                }
             } else {
-                return false;
+                if ( isConnected() ) {
+                    sendGlobalChatMessage( command );
+                } else {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
 
         /**
          * Send a file to the server
          * <p>
          * @param filename Name of file to be sent
          */
-        private void sendFile( final String filename) {
+        private void sendFile( final String filename ) {
             // TODO: this is text file, what about binary files? JSONs?
             List<String> temp; // What is our file size limit?
             try {
                 //BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("UTF-8")));
-                temp = Files.readAllLines( Paths.get(networkDirectory + filename), Charset.forName("UTF-8"));
-                send(MessagePhoenix.FILE, temp);
-            } catch (IOException e) {
-                System.err.println("Could not open file! Error thrown: " + e);
+                temp = Files.readAllLines( Paths.get( networkDirectory + filename ), Charset.
+                                           forName( "UTF-8" ) );
+                send( MessagePhoenix.FILE, temp );
+            } catch ( IOException e ) {
+                System.err.println( "Could not open file! Error thrown: " + e );
             }
         }
 
@@ -299,56 +313,55 @@ public class NetworkClient {
          * Main execution thread for the Network Client
          * <p>
          * Reads from consoleIn(command line) and GUI chat window
-         * 
+         * <p>
          * @author Christopher Goes
          */
         @Override
         public void run() {
             String line;
-            flushToConsole(username + ": "); // TODO: append username/tags! (see flushToConsole)
+            flushToConsole( username + ": " ); // TODO: append username/tags! (see flushToConsole)
 
-            while (!killed) {
+            while ( !killed ) {
                 try {
                     line = consoleIn.readLine();
-                    if (line == null) {
-                        System.err.println("line == null! Eeek!");
+                    if ( line == null ) {
+                        System.err.println( "line == null! Eeek!" );
                         stopClient();
                         killThread();
-                    } else if (!(processCommand(line))) {
-                        flushToConsole("Later gator!");
+                    } else if ( !(processCommand( line )) ) {
+                        flushToConsole( "Later gator!" );
                         stopClient(); // Shutdown everything
                         killThread(); // Kill command processing
                     } else {
-                        flushToConsole(username + ": "); // TODO: append username/tags! (see flushToConsole)
+                        flushToConsole( username + ": " ); // TODO: append username/tags! (see flushToConsole)
 
                     }
-                } catch (IOException ex) {
-                    System.err.println("Error reading commmand stream!");
+                } catch ( IOException ex ) {
+                    System.err.println( "Error reading commmand stream!" );
                     killThread();
                 }
             }
 
             close();
         }
-        
+
         /**
          * Always run this before returning from {@link #run run}!
          */
         private void close() {
             // empty for now
         }
+
     }
-    
+
     private static class ClientWriterThread extends Thread { // TODO: how kill
 
-        private ObjectOutputStream writer;
-        
         private boolean killed = false;
-                
+
         private ClientWriterThread() {
             // empty constructor
         }
- 
+
         /**
          * Initializes writer with a new stream.
          * <p>
@@ -357,20 +370,20 @@ public class NetworkClient {
          * @author Christopher Goes
          */
         private void setWriter() {
-            if (isConnected()) {
+            if ( isConnected() ) {
                 try {
-                    writer = new ObjectOutputStream(socket.getOutputStream());
+                    writer = new ObjectOutputStream( socket.getOutputStream() );
                     writer.flush();
-                } catch (IOException ex) {
-                    System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+                } catch ( IOException ex ) {
+                    System.err.println( "Error in " + ex.getClass().getEnclosingMethod().getName()
+                            + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause() );
                     ex.printStackTrace();
                 }
             } else {
-                System.err.println("Error in setWriter: not connected!");
+                System.err.println( "Error in setWriter: not connected!" );
             }
         }
-        
+
         /**
          * Marks thread for death, causing it to close, return, and die
          * <p>
@@ -378,70 +391,65 @@ public class NetworkClient {
          */
         public void killThread() {
             this.killed = true;
-        }        
-
-        private void sendMessage(List<Object> message) {
-            try {
-                MessagePhoenix.sendMessage(writer, message);
-            } catch (IOException | NullPointerException ex) {
-                ex.printStackTrace();       
-            }
         }
-        
+
+        private void sendMessage( NetworkPacket message ) {
+                MessagePhoenix.sendMessage( writer, message );
+        }
+
         @Override
         public void run() {
-            setWriter();          
-            List<Object> message = new ArrayList<>(0);
-            
-            while (!killed) {
+            setWriter();
+            //List<Object> message = new ArrayList<>( 0 );
+            NetworkPacket message = null;
+
+            while ( !killed ) {
                 try {
                     message = messageQueue.take();
-                } catch (InterruptedException ex) {
+                } catch ( InterruptedException ex ) {
                     ex.printStackTrace();
                     killThread();
                 }
-                if (message != null ) { // Don't want null messages
-                    // assume first object is tag
-                    sendMessage(message);
+                if ( message != null ) { // Don't want null messages
+                    sendMessage( message );
                 } else {
-                    System.err.println("Null message!");
+                    System.err.println( "Null message!" );
                     killThread();
                 }
             }
             close();
         }
-        
+
         /**
          * Always run this before returning from {@link #run run}!
          */
         private void close() {
             try {
-                if (isConnected()) {
+                if ( isConnected() ) {
                     disconnectFromServer();
-                    if (writer != null) {
+                    if ( writer != null ) {
                         writer.close();
                         writer = null;
                     }
-                    
+
                 } else {
-                    if (writer != null) {
+                    if ( writer != null ) {
                         writer.close();
                         writer = null;
                     }
                 }
-            } catch (IOException ex) {
+            } catch ( IOException ex ) {
                 ex.printStackTrace();
             }
         }
+
     }
-    
+
     /**
      * Listens for and handles incoming communications for Network Client
-     */   
+     */
     private static class ClientListenerThread extends Thread {
 
-        private ObjectInputStream streamIn;
-        
         private boolean killed = false;
 
         private ClientListenerThread() {
@@ -456,14 +464,14 @@ public class NetworkClient {
          * @author Christopher Goes
          */
         private void createStream() {
-            if (isConnected()) {
+            if ( isConnected() ) {
                 try {
-                    this.streamIn = new ObjectInputStream(socket.getInputStream());                   
-                } catch (IOException ex) {
+                    streamIn = new ObjectInputStream( socket.getInputStream() );
+                } catch ( IOException ex ) {
                     ex.printStackTrace();
                 }
             } else {
-                System.err.println("Error creating listen stream: socket isn't connected!");
+                System.err.println( "Error creating listen stream: socket isn't connected!" );
             }
         }
 
@@ -476,135 +484,231 @@ public class NetworkClient {
             killed = true;
         }
 
-        private List<Object> recieveMessage() {
-            return isConnected() ? MessagePhoenix.recieveMessage(this.streamIn) : null;
+        /**
+         *
+         * @return
+         */
+        private NetworkPacket recieveMessage() {
+            return isConnected() ? MessagePhoenix.recieveMessage( streamIn ) : null;
         }
-        
-        private boolean processMessage( final List<Object> incomingMessage ) {
-            
-            List<Object> rawMessage = incomingMessage;
-            
-            List<String> message;
-            String TAG = "default";
 
-            // Read and strip the message TAG
-            // This should be done in MessagePhoenix, imo
-            if( rawMessage.get(0).getClass().equals(String.class)) {
-                TAG = rawMessage.get(0).toString();
-            } else {
-                System.err.println("Error: Client attemped to process non-String TAG!\nTAG class: "
-                + rawMessage.get(0).getClass());
-                return false;
-            }
-            rawMessage = rawMessage.subList(1, rawMessage.size());
-            
+        /**
+         * Processes incoming message to NetworkClient
+         * <p>
+         * Uses nested switch statements to parse message flags and tags
+         * <p>
+         * @param incomingMessage
+         * <p>
+         * @return True unless critical/fatal error
+         * <p>
+         * @author Christopher Goes
+         */
+        private boolean processMessage( final NetworkPacket incomingMessage ) {
+
+            NetworkPacket rawMessage = incomingMessage;
+
+            //List<String> message;
+            List<Object> message;
+            Tag tag; // local default
+            Flag flag;
+
+            tag = rawMessage.getTAG();
+            flag = rawMessage.getFlag();
+            message = rawMessage.getData();
+
             // Change this later with enumerated switch statement?
-            message = MessagePhoenix.objectToString(rawMessage);
-            
-            // Dead Mans switch (default value)
-            String tempMessage = message.toString();            
+            //message = MessagePhoenix.objectToString( rawMessage.getData() );
 
+            // Dead Mans switch (default value)
+            //String tempMessage = message.toString();
             // assuming message is a string
             // branch past here if its not
-            if (TAG.equals(MessagePhoenix.GLOBAL_CHAT)) {
-                if (message.get(0).equals(username)) {
-                    // suppress message
-                    flushToConsole(message.get(0) + ": " + message.get(1));
-                } else {
-                    // TODO: ADD CHAT "PRIVACY" TAG. EX: (Global), (<lobby>), etc
-                    // TODO: ADD CONNECTION STATUS TAG. EX: (CONNECTED), (DISCONNECTED), other states
-                    
-                    flushToConsole(message.get(0) + ": " + message.get(1));
-                }
-            } else if (TAG.equals(MessagePhoenix.DISCONNECT_ANNOUNCEMENT)) {
-                flushToConsole(("User: " + message.get(0) + " has disconnected."));
-            } else if (TAG.equals(MessagePhoenix.CONNECT_ANNOUNCEMENT)) {
-                // TODO: Joined what? the server? Really want to know outside of lobby connections?
-                flushToConsole(("User: " + message.get(0) + " has joined!"));
-            } else if (TAG.equals(MessagePhoenix.GLOBAL_WHO_LIST)) {
-                if (message.isEmpty()) {
-                    flushToConsole("No users online.");
-                } else {
-                    tempMessage = (message.size() + " users online: ");                   
-                    for (String l : message) {
-                        tempMessage += (" " + l);
+            switch ( flag ) {
+                // Tagged Chat Message ex: GLOBAL, LOBBY, DIRECT, etc
+                case CHAT:
+
+                    switch ( tag ) {
+
+                        //if (message.get(0).equals(username)) {  // suppress message
+
+                        //flushToConsole(message.get(0) + ": " + message.get(1));
+                        case DIRECT:
+                        case LOBBY:
+                        case GLOBAL:
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
                     }
-                    flushToConsole(tempMessage);
-                }
-            } else if (TAG.equals(MessagePhoenix.LOBBY_INFO)) {
-                tempMessage = ("Lobby " + message.get(0) + ", Users: ");
-                for (String l : message ) {
-                    tempMessage += (" " + l);
-                }
-                flushToConsole(tempMessage);
-            } else if (TAG.equals(MessagePhoenix.APROVE_NEW_LOBBY_REQUEST)) {
-                flushToConsole("Lobby created!");
-            } else if (TAG.equals(MessagePhoenix.GAME_BEGUN)) {
-                flushToConsole("Game has begun!");
-            } else if (TAG.equals(MessagePhoenix.DENY_NEW_LOBBY_REQUEST)) {
-                flushToConsole("Could not create lobby: (Duplicated name?)");
-            } else if (TAG.equals(MessagePhoenix.NAG)) {
-                System.err.println("NAG: " + message.get(1));
-                flushToConsole("NAG: " + message.get(1));
-            } else if (TAG.equals(MessagePhoenix.NEXT_TURN_INFO)) {
-                if (username.equals(message.get(0))) {
-                    flushToConsole(("It is now my turn!"));
-                } else {
-                    flushToConsole("It is now " + message.get(1) + "'s turn!");
-                }
-                //Added by John Goettsche (I hope this is where it goes
-                // Sort of, if/elses handle Netclient-specific messages
-                // While the Conductor is supposed to handle game communications
-            } else if (TAG.equals(MessagePhoenix.UPDATE_UNIT)) { // TODO: these will need updating/moveing
-                UnitPool pool = UnitPool.getInstance();
-                MoveableUnit unit = pool.getUnit(message.get(0));
-                String location = message.get(1);
-                pool.addMove(unit, location);
-            } else if (TAG.equals(MessagePhoenix.ADD_UNIT)) {
-                UnitPool pool = UnitPool.getInstance();
-                MoveableUnit unit = pool.getUnit(message.get(0));
-                unit.setRace(message.get(1));
-                unit.setUnitType(message.get(2));
-                String location = message.get(3);
-            } else if (TAG.equals(MessagePhoenix.JOINED_LOBBY)) {
-                flushToConsole("Client " + message.get(2) + " has joined lobby "
-                        + message.get(1));
-            } else if (TAG.equals(MessagePhoenix.LEFT_LOBBY)) {
-                flushToConsole("Client " + message.get(2) + " has left lobby "
-                        + message.get(1));
-            } else { 
-                // TODO: HANDLE ID TAG FOR UNIQUE ID
-                // Game communication
-                //jarvis.processMessage( message.subList(1, message.size()), TAG );
-                flushToConsole("Unknown tag: " + TAG); // Temporary
-            } // end else
+                    break;
+                // Network Command (Different from CONNECTION, may not be needed)
+                case CLIENT:
+
+                    switch ( tag ) {
+                        case SEND_HANDLE:
+
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Error message
+                case ERROR:
+
+                    switch ( tag ) {
+                        case INVALID_GAME_ACTION:
+                        case GENERIC_ERROR:
+
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Game state update/message/command (Anything related to game)
+                case GAME:
+                    //jarvis.processMessage( message.subList(1, message.size()), TAG );
+                    // TODO: conductor will go in here somewhere
+                    switch ( tag ) {
+                        case BEGIN_GAME_RESPONSE:
+                            flushToConsole( "Game has begun!" );
+                            break;
+                        case NEXT_TURN_INFO:
+                            if ( username.equals( message.get( 0 ) ) ) {
+                                flushToConsole( ("It is now my turn!") );
+                            } else {
+                                flushToConsole( "It is now " + message.get( 1 ) + "'s turn!" );
+                            }
+                            break;
+                        case YIELD_TURN:
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Request for inforation ex: REQUEST_LOBBY_INFO
+                case REQUEST: // client shouldn't recieve these!!!
+
+                    switch ( tag ) {
+
+                        case GLOBAL_WHO_REQUEST:
+                        case LOBBY_INFO_REQUEST:
+                        case NEW_LOBBY_REQUEST:
+                        case JOIN_LOBBY_REQUEST:
+                        case LEAVE_LOBBY_REQUEST:
+                        case UID_REQUEST:
+                        case BEGIN_GAME_REQUEST:
+                        case SEND_FILE_REQUEST:
+                        case GET_FILE_REQUEST:
+                        case CREATE_LOBBY_REQUEST:
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Response to information request ex: LOBBY_INFO
+                case RESPONSE:
+
+                    switch ( tag ) {
+
+                        case GLOBAL_WHO_RESPONSE:
+                            /*
+                             * if (message.isEmpty()) {
+                             * flushToConsole("No users online.");
+                             * } else {
+                             * tempMessage = (message.size() + " users online: ");
+                             * for (String l : message) {
+                             * tempMessage += (" " + l);
+                             * }
+                             * flushToConsole(tempMessage);
+                             */
+                            break;
+                        case LOBBY_INFO_RESPONSE:
+                            /*
+                             * tempMessage = ("Lobby " + message.get(0) + ", Users: ");
+                             * for (String l : message ) {
+                             * tempMessage += (" " + l);
+                             * }
+                             * flushToConsole(tempMessage);
+                             */
+                            break;
+                        case NEW_LOBBY_RESPONSE:
+                            // TODO: more actions?
+                            if ( (Boolean) message.get( 0 ) ) { // approved!
+                                flushToConsole( "Lobby " + message.get( 1 ) + " created!" );
+                            } else {
+                                // denied, server provides reason
+                                flushToConsole( "Could not create lobby: " + message.get( 1 )
+                                        + "!\n" + message.get( 2 ) );
+                            }
+                            break;
+                        case UID_RESPONSE:
+                            // TODO: handle Unique ID messages!
+                            break;
+                        case JOIN_LOBBY_RESPONSE:
+                        case LEAVE_LOBBY_RESPONSE:
+                        case CREATE_LOBBY_RESPONSE:
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Connection messages/commands ex: DISCONNECT_REQUEST
+                case CONNECTION:
+
+                    switch ( tag ) {
+                        case DISCONNECT_REQUEST:
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Anything related to file transfer, either for network or game state(for now)
+                case FILE:
+
+                    switch ( tag ) {
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Anything that doesn't fall into above categories ex: GENERIC
+                case OTHER:
+
+                    switch ( tag ) {
+
+                        case NAG:
+                            System.err.println( "NAG: " + message.get( 1 ) );
+                            flushToConsole( "NAG: " + message.get( 1 ) );
+                            break;
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
+                    }
+                    break;
+
+                default:
+                    flushToConsole( "Unknown flag: " + flag );
+                    break;
+            } // end outer switch
+
             return true;
         }
-        
+
         @Override
         public void run() {
+
+            // Start the input stream. VERY IMPORTANT!
             createStream();
-            // Temporary containers
+
             // incoming message from server. First string is message tag.
-            List<Object> incomingMessage = null;
-            
+            NetworkPacket incomingMessage = null;
+
             // Main loop
-            while (!killed) {
-                if (isConnected() && streamIn != null) {
+            while ( !killed ) {
+                if ( isConnected() && streamIn != null ) {
                     incomingMessage = recieveMessage(); // get the message                    
                 } else {
                     continue; // Relax at the MoxieJava until message arrives
                 }
 
-                if (incomingMessage == null) {
-                    System.err.println("Null message from server, or default never changed!");
-                } else if (incomingMessage.isEmpty()) {
-                    System.err.println("Empty message from server!");
-                } else if( processMessage(incomingMessage)) {
+                if ( incomingMessage == null ) {
+                    System.err.println( "Null message from server, or default never changed!" );
+                } else if ( incomingMessage.isEmpty() ) {
+                    System.err.println( "Empty message from server!" );
+                } else if ( processMessage( incomingMessage ) ) {
                     // TODO: something important
                 } else {
-                    System.err.println("processMessage failed!");
-                    // TODO: critical error?
+                    System.err.println( "processMessage failed!" );
                 } // end else      
             } // end while
             close();
@@ -615,20 +719,20 @@ public class NetworkClient {
          */
         private void close() {
             try {
-                if (!(isConnected())) {
-                    if (streamIn != null) {
+                if ( !(isConnected()) ) {
+                    if ( streamIn != null ) {
                         streamIn.close();
                         streamIn = null;
                     }
                 } else {
                     disconnectFromServer();
-                    if (streamIn != null) {
+                    if ( streamIn != null ) {
                         streamIn.close();
                         streamIn = null;
                     }
 
                 }
-            } catch (IOException ex) {;
+            } catch ( IOException ex ) {
                 ex.printStackTrace();
             }
         }
@@ -636,11 +740,9 @@ public class NetworkClient {
     }
 
     // ***STREAMS*** //
-    
     /**
      * Starts {@link ListenerThread listenerThread} and sets
      * {@link #setWriter() writer stream}
-     * <p>
      * <p>
      * @author Christopher Goes
      */
@@ -650,18 +752,18 @@ public class NetworkClient {
         writerThread.start();
 
         // Start incoming stream processor
-        listenerThread = new ClientListenerThread();      
+        listenerThread = new ClientListenerThread();
         listenerThread.start();
-        
+
         // startup messages
         // TODO: hello message?
 
         // Send username
-        send(MessagePhoenix.SEND_HANDLE, username);
+        send( MessagePhoenix.SEND_HANDLE, username );
         // Request list of clients:
-        send(MessagePhoenix.REQUEST_GLOBAL_WHO);
+        send( MessagePhoenix.REQUEST_GLOBAL_WHO );
         // Request list of lobbies:
-        send(MessagePhoenix.REQUEST_LOBBY_INFO);    
+        send( MessagePhoenix.REQUEST_LOBBY_INFO );
     }
 
     /**
@@ -676,7 +778,7 @@ public class NetworkClient {
         if ( listenerThread != null && listenerThread.isAlive() ) {
             listenerThread.killThread();
         }
-        if ( writerThread != null && writerThread.isAlive()) {
+        if ( writerThread != null && writerThread.isAlive() ) {
             writerThread.killThread();
         }
         listenerThread = null;
@@ -689,110 +791,119 @@ public class NetworkClient {
      * @author Christopher Goes
      */
     private static void startLocalStreams() {
-        
+
         // Start I/O streams
-        consoleIn = new BufferedReader(new InputStreamReader(System.in));
-        consoleOut = new PrintWriter(System.out, true);
-       
+        consoleIn = new BufferedReader( new InputStreamReader( System.in ) );
+        consoleOut = new PrintWriter( System.out, true );
+
 
     }
 
     /**
      * Kills local Input/Output streams
-     * 
+     * <p>
      * @author Christopher Goes
      */
     private static void killLocalStreams() {
         try {
-        if (consoleIn != null ) {
-            consoleIn.close();
-            consoleIn = null;
-        }
-        if( consoleOut != null ) {
-            consoleOut.close();
-            consoleOut = null;
-        }
-        
-        } catch (IOException ex) {
-            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+            if ( consoleIn != null ) {
+                consoleIn.close();
+                consoleIn = null;
+            }
+            if ( consoleOut != null ) {
+                consoleOut.close();
+                consoleOut = null;
+            }
+
+        } catch ( IOException ex ) {
             ex.printStackTrace();
         }
 
     }
-    
+
     private static void startCommandProcessor() {
         // Start command processor
-        clientThread = new ClientCommandThread();       
+        clientThread = new ClientCommandThread();
         clientThread.start();
     }
-    
+
     private static void killCommandProcessor() {
-        if( clientThread != null && clientThread.isAlive() ) {
+        if ( clientThread != null && clientThread.isAlive() ) {
             clientThread.killThread();
         }
         clientThread = null;
     }
-    
+
     // ***COMMAND PROCESSING/EXECUTION METHODS*** //
-    
     /**
      * Post the string "lastMessage" to the GUI chat box. The message has be
      * sent in this way so that the listener thread can communicate with
      * this JavaFX thread. Otherwise an exception will be thrown.
-     * 
+     * <p>
      * @author Gabe Pearhill
      */
-    private static void postMessage( final String lastMessage) {
-        Platform.runLater(new Runnable() { // TODO: Get this working
+    private static void postMessage( final String lastMessage ) {
+        Platform.runLater( new Runnable() { // TODO: Get this working
             @Override
             public void run() {
-                Game.getInstance().hudController.postMessage(lastMessage);
+                Game.getInstance().hudController.postMessage( lastMessage );
             }
-        });
+
+        } );
     }
-    
+
     /**
      * Prints message to command line & HUD consoles
      * Assume newline will be appended
+     * <p>
      * @param lastMessage Message to print
+     * <p>
      * @author Christopher Goes
      */
     private static void flushToConsole( final String lastMessage ) {
-        consoleOut.println(lastMessage); // TODO: append username/tags!
+        consoleOut.println( lastMessage ); // TODO: append username/tags!
         consoleOut.flush();
         //postMessage(lastMessage);
     }
-    
+
+    private static void write( Flag flag, Tag tag ) {
+        writeToQueue( new NetworkPacket( flag, tag ) );
+    }
+
+    private static void write( Flag flag, Tag tag, List<Object> message ) {
+        writeToQueue( MessagePhoenix.createMessage( flag, tag, message ) );
+    }
+
     /**
      * Writes to socket outgoing connection, hides the protocol details
+     * <p>
      * @param message Message to send
      */
-    private static void write(List<Object> message ) { 
-        
+    private static void writeToQueue( final NetworkPacket message ) {
         try {
-            messageQueue.put(message);
-        } catch (InterruptedException ex) {
-            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
-            ex.printStackTrace();           
+            messageQueue.put( message );
+        } catch ( InterruptedException ex ) {
+            ex.printStackTrace();
         }
-    }    
-    
+    }
+
+
     /**
      * Executes a Network Client command
-     * @param command 
+     * <p>
+     * @param command
+     * <p>
      * @author Christopher Goes
      */
     private static void executeCommand( String command ) {
         try {
-            commandQueue.put(command);
-        } catch (InterruptedException ex) {
-            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
-            ex.printStackTrace();           
+            commandQueue.put( command );
+        } catch ( InterruptedException ex ) {
+            System.err.println( "Error in " + ex.getClass().getEnclosingMethod().getName()
+                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause() );
+            ex.printStackTrace();
         }
-    }                
+    }
 
     /**
      * Prints list of commands and what they do from a text file
@@ -808,95 +919,96 @@ public class NetworkClient {
         tempfile = dir + File.separator + "src" + File.separator + "server" + File.separator + helpfile;
 
         try {
-            BufferedReader input = new BufferedReader(new FileReader(tempfile));
+            BufferedReader input = new BufferedReader( new FileReader( tempfile ) );
 
             try {
-                while ((inputline = input.readLine()) != null) {
-                    flushToConsole(inputline);
+                while ( (inputline = input.readLine()) != null ) {
+                    flushToConsole( inputline );
                 }
-            } catch (IOException ex) {
-                System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+            } catch ( IOException ex ) {
+                System.err.println( "Error in " + ex.getClass().getEnclosingMethod().getName()
+                        + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause() );
                 ex.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found: " + tempfile + "\nException: " + e);
+        } catch ( FileNotFoundException e ) {
+            System.err.println( "File not found: " + tempfile + "\nException: " + e );
         }
 
     }
-    
 
-    
     // ***CONNECTION***  //
-
     /**
      * Creates a new connection to the server, call this before
      * {@link #startClient startClient()}
      * <p>
      * @return boolean True if successful, false if not
+     * <p>
      * @author Christopher Goes
      */
     private static boolean connect() { // TODO: connect pass arguments, or no longer public?
-        flushToConsole("Connecting! Please Wait...");
+        flushToConsole( "Connecting! Please Wait..." );
 
         try {
-            socket = connectToServer(serverName, port);
-            if( socket != null ) {
-                flushToConsole("Connected successfully to " + socket.getInetAddress() + " through port " + socket.getPort() + "!" );
+            socket = connectToServer( serverName, port );
+            if ( socket != null ) {
+                flushToConsole( "Connected successfully to " + socket.getInetAddress() + " through port " + socket.
+                        getPort() + "!" );
                 return true;
             } else {
-                flushToConsole("Failed to connect!");
+                flushToConsole( "Failed to connect!" );
                 return false;
             }
-        
-        } catch (NullPointerException ex) {
-            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+
+        } catch ( NullPointerException ex ) {
+            System.err.println( "Error in " + ex.getClass().getEnclosingMethod().getName()
+                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause() );
             ex.printStackTrace();
             return false;
         }
-    } 
-    
+    }
+
     /**
      * Attempts connection to the server, and returns socket if successful
      * <p>
      * @author Christopher Goes
      * @param sName
      * @param serverPort
+     *                   <p>
      * @return Socket
+     * <p>
      * @throws IOException
      */
-    private static Socket connectToServer(String sName, int serverPort) {
+    private static Socket connectToServer( String sName, int serverPort ) {
         try {
-            return( new Socket(sName, serverPort));
-        } catch (UnknownHostException e) {
-            System.err.println("Error : Unknown host!" );
-        } catch (ConnectException e) {
-            System.err.println("Error : Connection Refused!");
-        } catch (IOException e ) {
-            System.err.println("Error: IOException in connectToServer!\nException: " + e);
+            return (new Socket( sName, serverPort ));
+        } catch ( UnknownHostException e ) {
+            System.err.println( "Error : Unknown host!" );
+        } catch ( ConnectException e ) {
+            System.err.println( "Error : Connection Refused!" );
+        } catch ( IOException e ) {
+            System.err.println( "Error: IOException in connectToServer!\nException: " + e );
             e.printStackTrace();
         }
         return null;
     }
-    
+
     /**
      * Disconnects client from server
      * <p>
      * @author Christopher Goes
      */
     private static void disconnectFromServer() {
-        consoleOut.print("Disconnecting from server...");
-        
-        if (isConnected()) {
-            send( MessagePhoenix.DISCONNECT_REQUEST);
+        consoleOut.print( "Disconnecting from server..." );
+
+        if ( isConnected() ) {
+            send( CONNECTION, DISCONNECT );
         }
 
         killRemoteConnection();
         killSocket();
-        flushToConsole("Disconnected!");
+        flushToConsole( "Disconnected!" );
     }
-  
+
     /**
      * Checks if client is connected to server
      * <p>
@@ -906,18 +1018,19 @@ public class NetworkClient {
     private static boolean isConnected() {
         return socket != null && !(socket.isClosed()) && socket.isConnected();
     }
-    
+
     // ***UTILITY METHODS*** //
-    
     /**
      * Set flags, variables, etc, from a file
+     * <p>
      * @param filename Name of Network Settings file
+     * <p>
      * @return True if successful, False if not
      */
     private static boolean configureSettings( final String filename ) {
         return true; // TODO: Stub method
     }
-    
+
     /**
      * Closes and nulls socket
      * <p>
@@ -925,15 +1038,15 @@ public class NetworkClient {
      */
     private static void killSocket() {
         try {
-            if (socket != null && !(socket.isClosed())) {
+            if ( socket != null && !(socket.isClosed()) ) {
                 socket.close();
                 socket = null;
-            } else if (socket != null) {
+            } else if ( socket != null ) {
                 socket = null;
             }
-        } catch (IOException ex) {
-            System.err.println("Error in " + ex.getClass().getEnclosingMethod().getName()
-                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause());
+        } catch ( IOException ex ) {
+            System.err.println( "Error in " + ex.getClass().getEnclosingMethod().getName()
+                    + "!\nException: " + ex.getMessage() + "\nCause: " + ex.getCause() );
             ex.printStackTrace();
         }
     }
@@ -948,14 +1061,14 @@ public class NetworkClient {
     }
 
     // ***GETTERS/SETTERS*** //
-    
     /**
      * Sets IPv4 address of remote Server
-     * @param sName 
+     * <p>
+     * @param sName
      */
-    public static void setServerName(String sName) {
-        if (sName == null || sName.isEmpty()) {
-            System.err.println("Invalid server name!");
+    public static void setServerName( String sName ) {
+        if ( sName == null || sName.isEmpty() ) {
+            System.err.println( "Invalid server name!" );
         } else {
             serverName = sName;
         }
@@ -963,11 +1076,12 @@ public class NetworkClient {
 
     /**
      * Sets port of remote Server
-     * @param sPort 
+     * <p>
+     * @param sPort
      */
-    public static void setServerPort(int sPort) {
-        if (sPort < 1024) {
-            System.err.println("Invalid port!");
+    public static void setServerPort( int sPort ) {
+        if ( sPort < 1024 ) {
+            System.err.println( "Invalid port!" );
         } else {
             port = sPort;
         }
@@ -975,11 +1089,12 @@ public class NetworkClient {
 
     /**
      * Sets user Handle/Username
-     * @param uName 
+     * <p>
+     * @param uName
      */
-    public static void setUsername(String uName) {
-        if (uName == null || uName.isEmpty()) {
-            System.err.println("Invalid server name!");
+    public static void setUsername( String uName ) {
+        if ( uName == null || uName.isEmpty() ) {
+            System.err.println( "Invalid server name!" );
         } else {
             username = uName;
         }
@@ -987,7 +1102,8 @@ public class NetworkClient {
 
     /**
      * Gets IPv4 address of remote Server
-     * @return 
+     * <p>
+     * @return
      */
     public static String getServerName() {
         return serverName;
@@ -995,7 +1111,8 @@ public class NetworkClient {
 
     /**
      * Gets port of remote Server
-     * @return 
+     * <p>
+     * @return
      */
     public static int getServerPort() {
         return port;
@@ -1003,47 +1120,47 @@ public class NetworkClient {
 
     /**
      * Gets user Handle/Username
-     * @return 
+     * <p>
+     * @return
      */
     public static String getUsername() {
         return username;
     }
-    
+
     // ***MAIN*** //
     /**
-     * Opens dialog box(s), creates NetworkClient instance, and executes startup
-     * methods
-     * <p>
-     * NOTE: Kill when client closes
+     * For testing purposes
      * <p>
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main( String[] args ) {
 
-        // TODO: we still need these?
-        ClientData clientData = new ClientData();
-        ClientDataForm clientDataForm = new ClientDataForm(clientData);
-
-        System.out.println("Launching Login Dialog");
-
-        clientDataForm.setVisible(true);
-
-        System.out.println("Login Dialog Finished");
-
-        System.out.flush();
-
-        String sName = clientData.getIPAddress();
-        String uName = clientData.getUsername();
-
-        // 25565 is sworsorc default server port
-        NetworkClient.setServerName(sName);
-        NetworkClient.setServerPort(25565);
-        NetworkClient.setUsername(uName);
+        /*
+         * // TODO: we still need these?
+         * ClientData clientData = new ClientData();
+         * ClientDataForm clientDataForm = new ClientDataForm(clientData);
+         *
+         * System.out.println("Launching Login Dialog");
+         *
+         * clientDataForm.setVisible(true);
+         *
+         * System.out.println("Login Dialog Finished");
+         *
+         * System.out.flush();
+         *
+         * String sName = clientData.getIPAddress();
+         * String uName = clientData.getUsername();
+         *
+         * // 25565 is sworsorc default server port
+         * NetworkClient.setServerName(sName);
+         * NetworkClient.setServerPort(25565);
+         * NetworkClient.setUsername(uName);
+         */
 
         if ( NetworkClient.initializeClient() ) {
-            
+
         } else {
-            System.err.println("Client failed to start from main!");
+            System.err.println( "Client failed to start from main!" );
         }
     } // end main
 
