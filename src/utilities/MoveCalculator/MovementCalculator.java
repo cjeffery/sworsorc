@@ -121,33 +121,28 @@ public class MovementCalculator
         // This is the case where the move was legal :D
         if( moveAllowance > 0 )
         {  
+            for( int i = 0; i < 6; i++)
+            {
+                // if true then neighbor hex has enemy unit
+                if ( getUnits(currentHex.getNeighbor(i), movingUnit) )
+                {
+                    if( !validHexes.contains(currentHex) )
+                    {   
+                        validHexes.add(currentHex);
+                    }
+                    return;
+                }
+            }
             //For each hex edge, 0-5, get the neighboring hex, if it's valid
             for (int i = 0; i < 6; i++) 
             {
                 //Check if hex is valid, null returned if hex neighbor no exist
                 if( currentHex.getNeighbor(i) != null ) 
                 {
+
                     // add each valid neighbor to neighbors if not vortex hex
                     neighbors.add(currentHex.getNeighbor(i));
                 }
-            }
-            
-            // check to see if current hex has enemy units in it
-            // if 0 then hex is empty
-            if( getUnits(currentHex, movingUnit) == 0 )
-            {
-                
-            }
-            // if 1 then hex has friendly units
-            // TODO check if there are more then 2 units
-            if( getUnits(currentHex, movingUnit) == 1 )
-            {
-                
-            }
-            // if -1 then hex has enemy units
-            if( getUnits(currentHex, movingUnit) == -1 )
-            {
-                
             }
             
             // Add the current hex
@@ -228,33 +223,27 @@ public class MovementCalculator
      * @param movingUnit
      * @return 
      */
-    public static int getUnits(MapHex sourceHex, MoveableUnit movingUnit)
+    public static boolean getUnits(MapHex sourceHex, MoveableUnit movingUnit)
     {
-        ArrayList<MoveableUnit> unitsInHex = new ArrayList<MoveableUnit>();
-        unitsInHex = sourceHex.getUnits();
+        ArrayList<String> unitsInHex = new ArrayList<String>();
+        unitsInHex = sourceHex.getUnitIDs();
         
-        if( unitsInHex == null )
+        // check if list is empty
+        if( unitsInHex.isEmpty() )
         {
-            return 0;
+            return false;
         }
-        /*
-        The error is here in the .get(0) function. It is trying to get the
-        first entry of an empty list. 
-        */
-        if( unitsInHex.size() > 0) //This if is killing the exception 
-        { 
-            if( unitsInHex.get(0).getID().equals(movingUnit.getID()) )
-            {
-                return 1;
-            }
-            else
-            {
-                return -1;
-            }
+        
+        int idInNewHex = Integer.parseInt(unitsInHex.get(0));
+        int idOfCurrent = Integer.parseInt(movingUnit.getID());
+        
+        if( idInNewHex != idOfCurrent )
+        {
+                return true;
         }
         else
         {
-            return 0;
+            return false;
         }
     }
     
