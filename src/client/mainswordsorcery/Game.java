@@ -132,7 +132,7 @@ public class Game extends Application {
         mainMenu = new Scene(main, screenW, screenH);        
         hudWindow = new Scene(hud, screenW, screenH);
 
-        Diplomacy = new Scene(diplo, 500, 500);
+        Diplomacy = new Scene(diplo, 300, 300);
         
 
         stage.setTitle("Scenario");
