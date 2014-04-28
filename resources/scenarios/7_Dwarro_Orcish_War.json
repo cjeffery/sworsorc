@@ -72,6 +72,7 @@
     "neutrals": [
         {
             "name": "Convivian",
+            "race":"Dwarrows",
             "provinces": ["Convivia"],
             "units": {
               "Bow":2,
@@ -87,6 +88,7 @@
         },
         {
             "name": "Elven",
+            "race":"Elves",
             "provinces": ["Nattily Woods","Vynar"],
             "units": {
               "HorseArcher":2,
@@ -103,6 +105,7 @@
         },
         {
             "name": "SpiderFolk",
+            "race":"SpiderFolk",
             "provinces": ["Sorcerak"],
             "units": {
               "WebWarriors":4,
