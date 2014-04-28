@@ -9,24 +9,30 @@ package mainswordsorcery;
  *
  * @author Sean
  */
-import Units.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-
 import javafx.stage.Stage;
+import sscharts.Scenario;
 import sshexmap.MapView;
 
 public class DiplomacyController {
+    
     @FXML private ScrollPane dip_view;
     SwingNode hdip = new SwingNode();
+    int numberOfPlayers;
+    
     public void initialize(){
         hdip.setContent(MapView.getDipView());
         dip_view.setContent(hdip);
+        numberOfPlayers = Scenario.getNumberOfPlayers();
     }
+    
     @FXML protected void Exit(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
