@@ -94,10 +94,21 @@ public class MovementCalculator
     public static void getValidMoves(MoveableUnit movingUnit, MapHex currentHex,
             double moveAllowance, ArrayList<MapHex> validHexes) 
     {
+        // Make sure this isn't a vortex hex
         if( currentHex.IsVortexHex())
-                return;
+            return;
+        
+        //Make sure this isn't occupied by an enemy unit
+        if( getUnits( currentHex, movingUnit ) )
+            return;
+        
+        if( isZoneOfControl( currentHex, movingUnit ) )
+        {
+            // What to do here...
+        }
         //clear the cache, at the start of a new movement.
-        if(validHexes.isEmpty()) {
+        if( validHexes.isEmpty() ) 
+        {
             allowance_cache = new HashMap<>();
         }
         /* check to see if there's already a faster path in the cache
@@ -134,7 +145,7 @@ public class MovementCalculator
                 }
             }
             //For each hex edge, 0-5, get the neighboring hex, if it's valid
-            for (int i = 0; i < 6; i++) 
+            for( int i = 0; i < 6; i++ ) 
             {
                 //Check if hex is valid, null returned if hex neighbor no exist
                 if( currentHex.getNeighbor(i) != null ) 
@@ -315,22 +326,24 @@ public class MovementCalculator
     }
 
     /**
-     * Takes a possible destination hex and a unit, who's valid moves
-     * are being calculated, and determines if there are enemy units in that 
-     * hex. If there are, the move is illegal and false is returned. Otherwise,
-     * true is returned. This method is dependent upon the id numbering scheme
-     * of MoveableUnits including a reference to players and the ability to 
-     * access any units residing in the destinationHex from that hex. 
-     * @param destinationHex
+     * Takes the current hex location and moving unit, and determines if
+     * the unit is currently in a zone of control.
+     * @param currentHex
      * @param movingUnit
-     * @return enemyOccupied
+     * @return isZone
      * @author Keith and Ian
      */
-    public static boolean isEnemyOccupiedHex(MapHex destinationHex,
-            MoveableUnit movingUnit) {
-        // TODO
-        boolean enemyOccupied = false;
-
-        return enemyOccupied;
+    public static boolean isZoneOfControl(MapHex currentHex,
+            MoveableUnit movingUnit) 
+    {
+        boolean isZone = false;
+        
+        for( int i = 0; i < 6; i++)
+        {
+            // if true then neighbor hex has enemy unit
+            if ( getUnits(currentHex.getNeighbor(i), movingUnit) )
+                isZone = true;
+        }
+        return isZone;
     }
 }
