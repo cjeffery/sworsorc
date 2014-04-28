@@ -156,12 +156,14 @@ public class HUDController {
                 public void handle(KeyEvent keyEvent) {
                     //attack
                     if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
+                       && phase.getText().equalsIgnoreCase("Combat")){
                         StartCombat();
                     }
                     //spells
                     else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
+                            && phase.getText().equalsIgnoreCase("Spell")){
                         StartSpell();
                     }
                 };
@@ -175,12 +177,14 @@ public class HUDController {
                 public void handle(KeyEvent keyEvent) {
                     //attack
                     if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
+                       && phase.getText().equalsIgnoreCase("Combat")){
                         StartCombat();
                     }
                     //spells
                     else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
+                            && phase.getText().equalsIgnoreCase("Spell")){
                         StartSpell();
                     }
                 };
@@ -194,12 +198,14 @@ public class HUDController {
                 public void handle(KeyEvent keyEvent) {
                     //attack
                     if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
+                       && phase.getText().equalsIgnoreCase("Combat")){
                         StartCombat();
                     }
                     //spells
                     else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
+                            && phase.getText().equalsIgnoreCase("Spell")){
                         StartSpell();
                     }
                 };
@@ -213,12 +219,14 @@ public class HUDController {
                 public void handle(KeyEvent keyEvent) {
                     //attack
                     if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
+                       && phase.getText().equalsIgnoreCase("Combat")){
                         StartCombat();
                     }
                     //spells
                     else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
+                            && phase.getText().equalsIgnoreCase("Spell")){
                         StartSpell();
                     }
                 };
@@ -232,12 +240,14 @@ public class HUDController {
                 public void handle(KeyEvent keyEvent) {
                     //attack
                     if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
+                       && phase.getText().equalsIgnoreCase("Combat")){
                         StartCombat();
                     }
                     //spells
                     else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
+                            && phase.getText().equalsIgnoreCase("Spell")){
                         StartSpell();
                     }
                 };
@@ -251,12 +261,14 @@ public class HUDController {
                 public void handle(KeyEvent keyEvent) {
                     //attack
                     if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
+                       && phase.getText().equalsIgnoreCase("Combat")){
                         StartCombat();
                     }
                     //spells
                     else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
+                            && phase.getText().equalsIgnoreCase("Spell")){
                         StartSpell();
                     }
                 };
@@ -270,12 +282,14 @@ public class HUDController {
                 public void handle(KeyEvent keyEvent) {
                     //attack
                     if(keyEvent.getText().equalsIgnoreCase("a") 
-                       && !target_stack.isEmpty() && !selected_stack.isEmpty()){
+                       && !target_stack.isEmpty() && !selected_stack.isEmpty()
+                       && phase.getText().equalsIgnoreCase("Combat")){
                         StartCombat();
                     }
                     //spells
                     else if(keyEvent.getText().equalsIgnoreCase("s")
-                            && !target_stack.isEmpty() && !selected_stack.isEmpty() ){
+                            && !target_stack.isEmpty() && !selected_stack.isEmpty() 
+                            && phase.getText().equalsIgnoreCase("Spell")){
                         StartSpell();
                     }
                 };
