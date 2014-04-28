@@ -45,11 +45,11 @@
                     "name":"Mercenary",
                     "race":"Human",
                     "provinces": ["Kelgarnth", 
-                        "Citadel Isle", 
+                        "Citadel of Blood", 
                         "Graumthog", 
                         "Sorcerak", 
                         "Zirkast", 
-                        "Kananthar", 
+                        "Kanathar", 
                         "Ithilgil", 
                         "Intas", 
                         "Krasnia", 
@@ -68,11 +68,11 @@
                     "name":"Goblin",
                     "race":"Goblins",
                     "provinces": ["Kelgarnth", 
-                        "Citadel Isle", 
+                        "Citadel of Blood", 
                         "Graumthog", 
                         "Sorcerak", 
                         "Zirkast", 
-                        "Kananthar", 
+                        "Kanathar", 
                         "Ithilgil", 
                         "Intas", 
                         "Krasnia", 
@@ -94,7 +94,7 @@
                         "HeavyAxe":6,
                         "Bow":2
                     },
-                    "chracters": [
+                    "characters": [
                         
                     ],
                     "reinforcements":"0",
@@ -107,7 +107,7 @@
                     "units": {
                         "HeavyAxe":6
                     },
-                    "chracters": [
+                    "characters": [
                         
                     ],
                     "reinforcements":"0",
@@ -154,12 +154,12 @@
                     "race":"Human",
                     "provinces":["The Empire","Capella"],
                     "units": {
-                        "Pike":20,
+                        "PikeMan":20,
                         "HeavyHorse":10,
                         "LightBow":10,
                         "HeavySword":10
                     },
-                    "chracters": [
+                    "characters": [
                         "The Paladin Glade",
                         "Curvenol",
                         "Weldron"
@@ -189,15 +189,15 @@
     
     "neutrals": [
         {
-            "name": "Elves",
-            "provinces": ["Natilly Woods", "Vynar"],
+            "name": "Elven",
+            "race": "Elves",
+            "provinces": ["Nattily Woods", "Vynar"],
             "units": {
-              "Horse Archer":2,
-              "Light Horse":10,
-              "Light Bow":4,
-              "Light Sword":6
+              "HorseArcher":2,
+              "LightHorse":10,
+              "LightBow":4,
+              "LightSword":6
             },
-            
             "characters": [
                 "Gwaigillion Elengal", "Linfalas"
             ],
@@ -207,12 +207,13 @@
             }
         },
         {
-            "name": "Swamp-Creatures",
+            "name": "SwampCreature",
+            "race":"SwampCreature",
             "provinces": ["The Swamps"],
             "units": {
-              "Heavy Sword":6,
-              "Dinosaur Legions":4,
-              "Intelligent Mold":3
+              "HeavySword":6,
+              "DinosaurLegion":4,
+              "IntelligentMold":3
             },
             
             "characters": [
@@ -224,16 +225,17 @@
             }
         },
         {
-            "name": "Cronks",
+            "name": "Cronk",
+            "race": "Cronk",
             "provinces": ["Aardvark Wallow"],
             "units": {
-              "Heavy Pluglunk":10,
-              "Light Bow":4,
-              "Light Horse":2
+              "HeavyPluglunk":10,
+              "LightBow":4,
+              "LightHorse":2
             },
             
             "characters": [
-                "Ramon Cronkevitch", "Svartz Tarnkap"
+                "Raman Cronkevitch", "Svartz Tarnkap"
             ],
             "diplomacy": {
                 "leaningTowards": "Empire",

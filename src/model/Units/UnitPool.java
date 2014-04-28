@@ -436,6 +436,7 @@ public class UnitPool {
             this.unitMove.get(unitID).clear();
             this.unitMove.get(unitID).add(getUnit(unitID).getLocation());
         }
+          this.getUnit(unitID).ResetWorkingMovement();
         
         return this.unitMove.get(unitID).get(0);
     }
