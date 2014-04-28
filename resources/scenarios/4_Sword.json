@@ -30,7 +30,7 @@
                     "race":"Orc",
                     "provinces":["Ithilgil"],
                     "units": {
-                        "MediumSpear":18,
+                        "HeavySpear":18,
                         "HeavySword":12,
                         "Bow":2,
                         "WargRider":8
