@@ -237,8 +237,11 @@ public class MovementCalculator
     public static boolean getUnits(MapHex sourceHex, MoveableUnit movingUnit)
     {
         ArrayList<String> unitsInHex = new ArrayList<String>();
-        unitsInHex = sourceHex.getUnitIDs();
-        
+        if(sourceHex != null){
+            unitsInHex = sourceHex.getUnitIDs();
+        } else {
+            return false;
+        }
         // check if list is empty
         if( unitsInHex == null || unitsInHex.isEmpty() )
         {

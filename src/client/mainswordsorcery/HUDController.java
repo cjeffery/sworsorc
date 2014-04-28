@@ -268,14 +268,18 @@ public class HUDController {
             new ChangeListener<Tab>(){
                 @Override
                 public void changed(ObservableValue<? extends Tab> ov, Tab oldTab, Tab newTab) {
-                    selected_unit = selected_stack.get(UnitsPane.getTabs().indexOf(newTab));
+                    if(selected_stack.isEmpty() == false){
+                        selected_unit = selected_stack.get(UnitsPane.getTabs().indexOf(newTab));
+                    }
                     //highlight valid hexes if in movement phase
                     canMoveTo = new ArrayList<>();
                     canMoveTo.clear();
                     if(phase.getText().equalsIgnoreCase("Movement")){
                         hmapContent.clearHighlights();
-                        MovementCalculator.getValidMoves(selected_unit, currentHex, selected_unit.getMovement(), canMoveTo );
-                        hmapContent.highlight(canMoveTo, new Color(0,0,255, 70));
+                        if(selected_unit != null){
+                            MovementCalculator.getValidMoves(selected_unit, currentHex, selected_unit.getMovement(), canMoveTo );
+                            hmapContent.highlight(canMoveTo, new Color(0,0,255, 70));
+                        }
                     }
                 }
             }
