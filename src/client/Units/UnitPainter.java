@@ -121,34 +121,51 @@ public class UnitPainter {
         }
         switch(unit.getNation()) {
             case Conjured:
-                c = new Color(0xff, 0x43, 0x46, a); //red
+                c = new Color(0xfb, 0x35, 0x3f, a); //red
                 break;                
-            //case Convivian:                
-            //case CorfluCultist:                
+            case Convivian:
+                c = new Color(0xcd, 0x42, 0x41, a); //blood red! >:O
+                break;
+            case CorfluCultist:
+                c = new Color(0xa6, 0x7c, 0x89, a); //purple
+                break;
             case Cronk:
-                c = new Color(0xff, 0xa5, 0x00, a); //orange
+                c = new Color(0xf9, 0x28, 0x27, a); //orange
                 break;                
             case Elven:
-                c = new Color(0x3f, 0x77, 0x50, a); //dark green
+                c = new Color(0x34, 0x60, 0x45, a); //dark green
                 break;                
-            //case Goblin:                
+            case Goblin:
+                c = new Color(0xee, 0x7d, 0x2f, a); //pumpkin
+                break;
             case ImperialArmy:
-                c = new Color(0x46, 0x7e, 0xd1, a); //blue
+                c = new Color(0x31, 0x65, 0xb4, a); //blue
                 break;                
-            //case IndependentHuman:                
-            //case Krasnian:                
-            //case Mercenary:                
+            case IndependentHuman:
+                c = new Color(0x6a, 0x95, 0xc9, a); //blue     
+                break;
+            case Krasnian:
+                c = new Color(0xf6, 0x3d, 0x42, a); //hot red  
+                break;
+            case Mercenary:     
+                c = new Color(0xc4, 0xc3, 0xbc, a); //grey
+                break;
             case ORC:                
-                c = new Color(0xfd, 0xd2, 0x2e, a); //yellow
+                c = new Color(0xfd, 0xdb, 0x41, a); //yellow
                 break;                
-            //case SpiderFolk:                
+            case SpiderFolk:
+                c = new Color(0xff, 0xff, 0xff, a); //white (TODO MAKE BLACK)
+                break;
             case SwampCreature:
-                c = new Color(0xae, 0xb3, 0x5f, a); //light green
+                c = new Color(0xa4, 0xb1, 0x52, a); //light green
                 break;                
-            //case WhiteORC:                
-            //case Zirkastian:                
+            case WhiteORC:    
+                c = new Color(0xf2, 0xf3, 0xe8, a); //white
+                break;
+            case Zirkastian:           
+                c = new Color(0xc4, 0xc2, 0xbb, a); //grey
             default:
-                ; //System.out.println("UnitPainter.java - unhandled nation");
+                System.out.println("UnitPainter.java - unhandled nation");
             case none:
                 c = new Color(0xff, 0xff, 0xff, a); //white 
                 break;
