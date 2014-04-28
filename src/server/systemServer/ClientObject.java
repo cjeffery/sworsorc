@@ -19,7 +19,7 @@ public class ClientObject {
     // TODO: or should this be a subclass of NetworkClient/server? jeez chris get it together
     // User data
     final private int clientID; // Unique ID of client connection
-    private String handle; // Username, may want to change later, so not final
+    private String handle; // Username, can change
 
     // Connection this object is attached to
     final private Socket socket;
@@ -196,7 +196,6 @@ public class ClientObject {
 
         private void killThread() {
             this.killed = true;
-            close();
         }
 
         /**
@@ -254,7 +253,8 @@ public class ClientObject {
 
                     switch ( tag ) {
                         case SEND_HANDLE:
-                            consoleOut.println( "Assigning handle " + handle + " to client " + clientID );
+                            consoleOut.
+                                    println( "Assigning handle " + handle + " to client " + clientID );
                             handle = sender;
                             NetworkServer.
                                     sendToAllClients( handle + "has just connected to the server!" );
@@ -281,6 +281,11 @@ public class ClientObject {
                     // TODO: conductor will go in here somewhere
                     switch ( tag ) {
 
+                        case PHASE_CHANGE:
+                            NetworkServer.
+                                    sendToAllClients( flag, tag, sender + " changed phase to " + message.
+                                            get( 0 ) );
+                            break;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
                     }
@@ -452,19 +457,18 @@ public class ClientObject {
 
                 if ( isConnected() ) {
                     rawMessage = recieveMessage();
+                    if ( rawMessage == null ) {
+                        killThread();
+                    } else if ( processMessage( rawMessage ) ) {
+                        // suprise party fiddlesticks lives here
+                    } else {
+                        // TODO: disconnect
+                        disconnect();
+                    }
                 } else {
                     consoleOut.
                             print( "Client " + ClientObject.this.getClientID() + " lost connection!" );
                     killThread();
-                    continue;
-                }
-
-                if ( rawMessage == null ) { //connection broken (does NOT throw an exception)
-                    killThread();
-                } else if ( processMessage( rawMessage ) ) {
-                    // suprise party fiddlesticks lives here
-                } else {
-                    // do someting like dis the connect
                 }
             }
             close();
@@ -472,18 +476,23 @@ public class ClientObject {
 
         private void disconnect() {
             // TODO: KILL CONNECTION
+            close();
             NetworkServer.clientDisconnected( ClientObject.this );
         }
+
         public void close() {
             if ( isConnected() ) {
                 try {
                     if ( streamIn != null ) {
                         streamIn.close();
-                        streamIn = null;
                     }
 
                 } catch ( IOException e ) {
                     errorOut.println( e );
+                } finally {
+                    streamIn = null;
+                    writerThread.killThread();
+
                 }
             }
         }
@@ -546,15 +555,20 @@ public class ClientObject {
                     ex.printStackTrace();
                     killThread();
                 }
-                if ( message != null ) {
+                if ( message != null && writer != null ) {
                     // assume first object is tag
                     sendMessage( message );
-                } else {
+                } else if ( message == null ) {
                     errorOut.println( "Null message!" );
                     killThread();
+                } else {
+                    errorOut.println( "Writer is null!" );
+                    if ( !killed ) {
+                        killThread();
+                    }
                 }
             }
-            close(); // TODO: make sure closing  in proper order!
+            close(); // TODO: make sure closing streams in proper order!
         }
 
         /**
@@ -562,18 +576,9 @@ public class ClientObject {
          */
         private void close() {
             try {
-                if ( !(isConnected()) ) {
-                    if ( writer != null ) {
-                        writer.close();
-                        writer = null;
-                    }
-                } else {
-                    // TODO: disconnect
-                    if ( writer != null ) {
-                        writer.close();
-                        writer = null;
-                    }
-
+                if ( writer != null ) {
+                    writer.close();
+                    writer = null;
                 }
             } catch ( IOException ex ) {
                 ex.printStackTrace();
@@ -595,10 +600,11 @@ public class ClientObject {
                 getInetAddress() );
     }
 
-    public void killClient() {
-        listenerThread.killThread();
-        writerThread.killThread();
-    }
+    /*
+     * public void killClient() { listenerThread.killThread();
+     * writerThread.killThread();
+     * }
+     */
 
     /*
      * GETTERS & SETTERS

@@ -123,8 +123,6 @@ final public class NetworkServer {
                 return;
             }
         }
-        //If we're here, we didn't find the name!
-        // TODO: solve why its hitting this so often
         System.err.println( "Requested to leave lobby from client not in lobby" );
     }
 

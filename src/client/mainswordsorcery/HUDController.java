@@ -8,11 +8,9 @@ package mainswordsorcery;
 import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.Color;
-import static java.lang.Integer.parseInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
@@ -27,12 +25,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
-
 import sshexmap.MapHex;
 import sshexmap.MapView;
-
 import systemServer.NetworkClient;
- 
+
+import static java.lang.Integer.parseInt;
+
 public class HUDController {
     @FXML private TabPane UnitsPane;
     @FXML private TabPane TargetsPane;
@@ -351,10 +349,11 @@ public class HUDController {
      * Displays user text in chat_box
      * 
      * @author Joe Higley, Gabe Pearhill      
+     * @param event
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
-        if (!usernameEntered) {
-            if (!"".equals(message_box.getText())) {
+        /*
+         * if (!usernameEntered) {            if (!"".equals(message_box.getText())) {
                 username = message_box.getText();
                 usernameEntered = true;
                 chat_box.setText("Enter the server's IP address.");
@@ -368,9 +367,12 @@ public class HUDController {
                 chat_box.clear();
                 connectedToServer = connectToServer();
             }
-        } else if (!"".equals(message_box.getText())) {
-            NetworkClient.sendGlobalChatMessage(message_box.getText());
+        } else
+         */
+        if ( !"".equals( message_box.getText() ) ) {
+            NetworkClient.userCommand( message_box.getText() );
             message_box.clear();
+            //chat_box.clear(); do we need this?
         }
     }
     
@@ -467,11 +469,11 @@ public class HUDController {
      */
     public boolean connectToServer() {
         // 25565 is sworsorc default server port
-        NetworkClient.setServerName(ipAddress);
+        //NetworkClient.setServerName(ipAddress);
         //NetworkClient.setServerPort(25565);
         // No need to set port unless we're hosting multiple servers simultaniously
         // Default is already set
-        NetworkClient.setUsername(username);
+        //NetworkClient.setUsername(username);
 
         // TODO: SETTINGS FILE
         return NetworkClient.initializeClient();
