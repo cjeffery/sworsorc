@@ -28,7 +28,7 @@ public class NetworkPacket implements Serializable {
      * @param DATA
      * @param sender
      */
-    public NetworkPacket( Flag FLAG, Tag TAG, List<Object> DATA, String sender ) {
+    public NetworkPacket( Flag FLAG, Tag TAG, String sender, List<Object> DATA ) {
         this.flag = FLAG;
         this.tag = TAG;
         this.data = DATA;
@@ -36,7 +36,7 @@ public class NetworkPacket implements Serializable {
     }
 
     public NetworkPacket( Flag FLAG, Tag TAG, List<Object> DATA ) {
-        this( FLAG, TAG, DATA, null );
+        this( FLAG, TAG, null, DATA );
     }
 
     /**
@@ -46,7 +46,7 @@ public class NetworkPacket implements Serializable {
      * @param sender
      */
     public NetworkPacket( Flag FLAG, Tag TAG, String sender ) {
-        this( FLAG, TAG, null, sender );
+        this( FLAG, TAG, sender, null );
     }
 
     public NetworkPacket( Flag FLAG, Tag TAG ) {

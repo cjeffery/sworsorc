@@ -61,6 +61,9 @@ final public class NetworkClient {
     private static boolean addressSet = false;
     private static boolean usernameSet = false;
     private static boolean clientInitialized = false;
+    final private static boolean debug = MessagePhoenix.debugStatus();
+
+    private static boolean phasing = false;
 
     // goto Conductor
     // private Conductor jarvis; // Our conductor object
@@ -79,7 +82,6 @@ final public class NetworkClient {
     public static boolean initializeClient() { // default
         return initializeClient( "netclient_settings.txt" );
     }
-
     /**
      * Startup of NetworkClient
      * Starts local streams, connects to server, and makes the connection live
@@ -107,26 +109,40 @@ final public class NetworkClient {
     }
 
     /**
-     * Send a message to client
+     * Tagged message with client username as sender
+     *
+     * @param flag
+     * @param tag
+     */
+    public static void send( Flag flag, Tag tag ) {
+        write( flag, tag, username );
+    }
+    /**
+     * Tagged message with a sender
      * <p>
      * Generic parameters
      * This is just a public wrapper for {@link #write write()}
      * <p>
      * @param flag
      * @param tag
-     * @param message First parameter is assumed to be tag
+     * @param sender
      */
-    public static void send( Flag flag, Tag tag, Object... message ) {
-        write( flag, tag, MessagePhoenix.packMessageContents( message ) );
+    public static void send( Flag flag, Tag tag, String sender ) {
+        write( flag, tag, sender );
     }
-
     /**
-     *
+     * Send a message
+     * <p>
+     * Generic parameters
+     * This is just a public wrapper for {@link #write write()}
+     * <p>
      * @param flag
      * @param tag
+     * @param sender
+     * @param message First parameter is assumed to be tag
      */
-    public static void poke( Flag flag, Tag tag ) {
-        write( flag, tag );
+    public static void send( Flag flag, Tag tag, String sender, Object... message ) {
+        write( flag, tag, sender, MessagePhoenix.packMessageContents( message ) );
     }
 
     /**
@@ -150,7 +166,7 @@ final public class NetworkClient {
      * @param message The message to display to other users
      */
     public static void sendGlobalChatMessage( String message ) {
-        send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, message );
+        NetworkClient.send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, message );
     }
 
     /**
@@ -163,7 +179,11 @@ final public class NetworkClient {
      * the next user, or the next game turn may start, or the game may end.
      */
     public static void endTurn() {
-        send( Flag.GAME, Tag.YIELD_TURN_REQUEST );
+        NetworkClient.send( Flag.GAME, Tag.YIELD_TURN_REQUEST );
+    }
+
+    public static boolean isPhasing() {
+        return phasing;
     }
 
     /**
@@ -174,7 +194,7 @@ final public class NetworkClient {
      * @author Gabe Pearhill
      */
     public static void sendPhaseChange( String phase ) {
-        send( Flag.GAME, Tag.PHASE_CHANGE, phase );
+        NetworkClient.send( Flag.GAME, Tag.PHASE_CHANGE, phase );
     }
 
     /**
@@ -234,28 +254,28 @@ final public class NetworkClient {
 
                 } else if ( "/newLobby".equals( parsedString[0] ) ) {
                     String lobbyName = parsedString[1];
-                    send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobbyName );
+                    NetworkClient.send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobbyName );
 
                 } else if ( "/joinLobby".equals( parsedString[0] ) ) {
                     String lobbyName = parsedString[1];
-                    send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, lobbyName );
+                    NetworkClient.send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, lobbyName );
                 } else if ( isConnected() ) {
                     // sends chat message to server, which broadcasts to all clients
-                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
+                    NetworkClient.send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
                 }
             } else if ( parsedString.length == 1 ) {
                 if ( "/globalWho".equals( parsedString[0] ) ) {
-                    send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
+                    NetworkClient.send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
 
                 } else if ( "/leaveLobby".equals( parsedString[0] ) ) {
-                    send( Flag.REQUEST, Tag.LEAVE_LOBBY_REQUEST );
+                    NetworkClient.send( Flag.REQUEST, Tag.LEAVE_LOBBY_REQUEST );
 
                 } else if ( "/showLobbies".equals( parsedString[0] ) ) { // TODO: message if no lobbies available, command to create lobby
-                    send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST ); // TODO: working lobby info request
+                    NetworkClient.send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST ); // TODO: working lobby info request
 
                 } else if ( "/disconnect".equals( parsedString[0] ) ) { // manual client disconnect
                     if ( remoteConnectionIsAlive() ) {
-                        send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
+                        NetworkClient.send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
                     } else if ( isConnected() ) {
                         flushToConsole( "Error! connection isn't alive but socket is!" );
                         return false;
@@ -266,7 +286,7 @@ final public class NetworkClient {
                 } else if ( "/yieldTurn".equals( parsedString[0] ) ) { // client turn over
                     endTurn();
                 } else if ( "/beginGame".equals( parsedString[0] ) ) { // request to start game
-                    send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST );
+                    NetworkClient.send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST );
 
                 } else if ( "/help".equals( parsedString[0] ) ) {
                     printCommandList();
@@ -299,11 +319,11 @@ final public class NetworkClient {
                         equals( parsedString[0].charAt( 0 ) ) ) {
                     flushToConsole( "Invalid command, try again, or type /help for a list of commands." );
                 } else {
-                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
+                    NetworkClient.send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
                 }
             } else {
                 if ( isConnected() ) {
-                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
+                    NetworkClient.send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
                 } else {
                     return false;
                 }
@@ -323,7 +343,7 @@ final public class NetworkClient {
                 //BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("UTF-8")));
                 temp = Files.readAllLines( Paths.get( networkDirectory + filename ), Charset.
                         forName( "UTF-8" ) );
-                send( Flag.FILE, Tag.SEND_FILE_REQUEST, temp );
+                send( Flag.FILE, Tag.SEND_FILE_REQUEST, username, temp );
             } catch ( IOException e ) {
                 System.err.println( "Could not open file! Error thrown: " + e );
             }
@@ -560,6 +580,16 @@ final public class NetworkClient {
             message = rawMessage.getData();
             sender = rawMessage.getSender();
 
+            if ( debug ) {
+                System.err.println( "Process Message" );
+                System.err.println( "Tag: " + tag );
+                System.err.println( "Flag: " + flag );
+                System.err.print( "Sender: " + sender );
+                System.err.print( "Data: " );
+                for ( Object s : message ) {
+                    System.err.println( "Object " + s.getClass() + ": " + s + " " );
+                }
+            }
 
             switch ( flag ) {
                 // Tagged Chat Message ex: GLOBAL, LOBBY, PRIVATE, etc
@@ -615,6 +645,12 @@ final public class NetworkClient {
                             }
                             break;
                         case YIELD_TURN_RESPONSE:
+                            if ( (boolean) message.get( 0 ) ) {
+                                phasing = false;
+                            } else {
+                                flushToConsole( "Could not yield turn!" );
+                            }
+                            break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
@@ -813,13 +849,12 @@ final public class NetworkClient {
         }
         // TODO: hello message?
         // Send username
-        send( Flag.CLIENT, Tag.SEND_HANDLE, username );
+        send( Flag.CLIENT, Tag.SEND_HANDLE );
         // Request list of clients:
         send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
         // Request list of lobbies:
         send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST );
     }
-
     /**
      * Kills ListenerThread and WriterThread
      * <p>
@@ -849,7 +884,6 @@ final public class NetworkClient {
         consoleIn = new BufferedReader( new InputStreamReader( System.in ) );
         consoleOut = new PrintWriter( System.out, true );
     }
-
     /**
      * Closes local Input/Output streams
      * <p>
@@ -879,7 +913,6 @@ final public class NetworkClient {
         clientThread = new ClientCommandThread();
         clientThread.start();
     }
-
     private static void killCommandProcessor() {
         if ( clientThread != null && clientThread.isAlive() ) {
             clientThread.killThread();
@@ -904,7 +937,6 @@ final public class NetworkClient {
 
         } );
     }
-
     /**
      * Prints message to command line & HUD consoles
      * Assume newline will be appended
@@ -920,11 +952,16 @@ final public class NetworkClient {
     }
 
     private static void write( Flag flag, Tag tag ) {
-        write( flag, tag, null );
+        write( flag, tag, username, null );
     }
-
+    private static void write( Flag flag, Tag tag, String sender ) {
+        write( flag, tag, sender, null );
+    }
     private static void write( Flag flag, Tag tag, List<Object> message ) {
-        writeToQueue( new NetworkPacket( flag, tag, message ) );
+        write( flag, tag, username, message );
+    }
+    private static void write( Flag flag, Tag tag, String sender, List<Object> message ) {
+        writeToQueue( new NetworkPacket( flag, tag, sender, message ) );
     }
 
     /**
@@ -1030,7 +1067,6 @@ final public class NetworkClient {
         }
         return null;
     }
-
     /**
      * Disconnects client from server
      * <p>
@@ -1046,7 +1082,6 @@ final public class NetworkClient {
         killRemoteConnection();
         flushToConsole( "Disconnected!" );
     }
-
     /**
      * Checks if client is connected to server
      * <p>

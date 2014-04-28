@@ -124,7 +124,7 @@ public class ClientObject {
      */
     private void write( final Flag flag, final Tag tag, final String sender,
                         final List<Object> message ) {
-        writeToQueue( new NetworkPacket( flag, tag, message, (sender == null || sender.isEmpty()) ? "Server" : sender ) );
+        writeToQueue( new NetworkPacket( flag, tag, ((sender == null || sender.isEmpty()) ? "Server" : sender), message ) );
     }
 
     /**
@@ -235,7 +235,6 @@ public class ClientObject {
 
                     switch ( tag ) {
                         case PRIVATE:
-
                             NetworkServer.sendToClient( sender, flag, tag, message );
                             break;
                         case LOBBY:
@@ -253,11 +252,12 @@ public class ClientObject {
 
                     switch ( tag ) {
                         case SEND_HANDLE:
+                            handle = sender;
                             consoleOut.
                                     println( "Assigning handle " + handle + " to client " + clientID );
-                            handle = sender;
                             NetworkServer.
                                     sendToAllClients( handle + "has just connected to the server!" );
+
                             break;
                         case MESSAGE_TO_SERVER:
                         default:
@@ -285,6 +285,10 @@ public class ClientObject {
                             NetworkServer.
                                     sendToAllClients( flag, tag, sender + " changed phase to " + message.
                                             get( 0 ) );
+                            break;
+                        case YIELD_TURN_REQUEST:
+                            send( Flag.RESPONSE, Tag.YIELD_TURN_RESPONSE );
+
                             break;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
