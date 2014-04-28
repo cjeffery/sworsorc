@@ -8,6 +8,7 @@
 package MoveCalculator;
 
 import Units.MoveableUnit;
+import Units.UnitType;
 import java.util.*;
 import sshexmap.MapHex;
 import ssterrain.HexEdge;
@@ -104,7 +105,9 @@ public class MovementCalculator
         
         if( isZoneOfControl( currentHex, movingUnit ) )
         {
-            // What to do here...
+            if( movingUnit.getUnitType() != UnitType.Character 
+                && movingUnit.getWorkingMovement() != movingUnit.getMovement() )
+                movingUnit.setWorkingMovement(0);
         }
         //clear the cache, at the start of a new movement.
         if( validHexes.isEmpty() ) 
@@ -132,6 +135,7 @@ public class MovementCalculator
         // This is the case where the move was legal :D
         if( moveAllowance > 0 )
         {  
+            /*
             for( int i = 0; i < 6; i++)
             {
                 // if true then neighbor hex has enemy unit
@@ -143,7 +147,7 @@ public class MovementCalculator
                     }
                     return;
                 }
-            }
+            }*/
             //For each hex edge, 0-5, get the neighboring hex, if it's valid
             for( int i = 0; i < 6; i++ ) 
             {
