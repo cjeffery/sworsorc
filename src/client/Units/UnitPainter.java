@@ -164,6 +164,7 @@ public class UnitPainter {
                 break;
             case Zirkastian:           
                 c = new Color(0xc4, 0xc2, 0xbb, a); //grey
+                break;
             default:
                 System.out.println("UnitPainter.java - unhandled nation");
             case none:
