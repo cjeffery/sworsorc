@@ -86,8 +86,9 @@ public final class Morale {
         selection.add(ok_button);
         selection.add(again_button);
         
-        ImageIcon morale_image = new ImageIcon("resources/image/Spells/Morale.jpg");
+        ImageIcon morale_image = new ImageIcon("resources/images/Spells/Morale.jpg");
         JPanel image_panel = new JPanel();
+        //image_panel.setLayout(new BorderLayout());
         JLabel image_lable = new JLabel("",morale_image, JLabel.CENTER);
         
         image_panel.add(image_lable);

@@ -6,10 +6,14 @@
 
 package Spells.PL_2;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -24,7 +28,7 @@ public final class Fear {
     
     public void prepareGUI(){
         frame = new JFrame("Fear");
-        frame.setSize(100,100);
+        frame.setSize(400,400);
         frame.addWindowListener( new WindowAdapter() {
             @Override
             public void windowClosing( WindowEvent e )
@@ -33,9 +37,14 @@ public final class Fear {
             }
         });
         
-        JLabel notice = new JLabel("This is Fear");
         
-        frame.add(notice);
+        ImageIcon morale_image = new ImageIcon("resources/images/Spells/fear.gif");
+        JPanel image_panel = new JPanel();
+        //image_panel.setLayout(new BorderLayout());
+        JLabel image_lable = new JLabel("",morale_image, JLabel.CENTER);
+        
+        image_panel.add(image_lable);
+        frame.add(image_panel, BorderLayout.CENTER);
         frame.setVisible(true);
     }   
      
