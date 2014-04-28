@@ -7,7 +7,7 @@
 package Spells.PL_3;
 
 import Character.Character;
-import static Spells.CastSpell.conjured;
+import static Spells.Spell.conjured;
 import Units.*;
 
 import java.awt.event.WindowAdapter;
