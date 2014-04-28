@@ -509,7 +509,7 @@ final public class NetworkClient {
         private boolean processMessage( final NetworkPacket incomingMessage ) {
 
             NetworkPacket rawMessage = incomingMessage;
-
+            // TODO: put default sender in write method
             List<Object> message;
             Tag tag; // local default
             Flag flag;
@@ -520,22 +520,11 @@ final public class NetworkClient {
             message = rawMessage.getData();
             sender = rawMessage.getSender();
 
-            // Change this later with enumerated switch statement?
-            //message = MessagePhoenix.objectToString( rawMessage.getData() );
-
-            // Dead Mans switch (default value)
-            //String tempMessage = message.toString();
-            // assuming message is a string
-            // branch past here if its not
             switch ( flag ) {
                 // Tagged Chat Message ex: GLOBAL, LOBBY, PRIVATE, etc
                 case CHAT:
 
                     switch ( tag ) {
-
-                        //if (message.get(0).equals(username)) {  // suppress message
-
-                        //flushToConsole(message.get(0) + ": " + message.get(1));
                         case PRIVATE:
                             flushToConsole( "(Private)" + sender + ": " + message.get( 0 ) );
                             break;
@@ -577,9 +566,6 @@ final public class NetworkClient {
                     //jarvis.processMessage( message.subList(1, message.size()), TAG );
                     // TODO: conductor will go in here somewhere
                     switch ( tag ) {
-                        case BEGIN_GAME_RESPONSE:
-                            flushToConsole( "Game has begun!" );
-                            break;
                         case NEXT_TURN_INFO:
                             if ( username.equals( message.get( 0 ) ) ) {
                                 flushToConsole( ("It is now my turn!") );
@@ -594,7 +580,7 @@ final public class NetworkClient {
                     break;
                 // Request for inforation ex: REQUEST_LOBBY_INFO
                 case REQUEST: // client shouldn't recieve these!!!
-
+                    flag = Flag.RESPONSE; // programmers are lazy
                     switch ( tag ) {
 
                         case GLOBAL_WHO_REQUEST:
@@ -613,7 +599,7 @@ final public class NetworkClient {
                     break;
                 // Response to information request ex: LOBBY_INFO
                 case RESPONSE:
-
+                    flag = Flag.REQUEST; // lifeEasiness++
                     switch ( tag ) {
 
                         case GLOBAL_WHO_RESPONSE:
@@ -653,6 +639,10 @@ final public class NetworkClient {
                         case JOIN_LOBBY_RESPONSE:
                         case LEAVE_LOBBY_RESPONSE:
                         case CREATE_LOBBY_RESPONSE:
+                        case BEGIN_GAME_RESPONSE: // Client will see game started, so just print message
+                            flushToConsole( (String) message.get( 0 ) );
+                            break;
+
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }

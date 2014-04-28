@@ -22,10 +22,22 @@ import java.util.List;
  */
 final public class MessagePhoenix {
 
+    final private static boolean debug = false; // Change this to enable/disable debugging
+
+    /**
+     *
+     * @return
+     */
+    public static boolean debugStatus() {
+        return debug;
+    }
+
     // TODO: tag stripping done in MessagePhoenix
     // TODO: buffer size
     // TODO: would this be better as a method interface, then implement in classes?
     // TODO: make sure server is prepending messagetype/username
+    // TODO: could all the string concatenations be causeing performance issues?
+    // TODO: need checks for game state on certain actions, such as lobbies
     // PUBLIC INTERFACE //
     /**
      * Sending a packed message

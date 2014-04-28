@@ -11,7 +11,7 @@ package systemServer;
  * @author Christopher Goes <GhostOfGoes@gmail.com>
  */
 public enum Tag {
-
+    // Tried to do order from client to server
     PRIVATE, LOBBY, GLOBAL, SEND_CHAT_MESSAGE, // server determines locatlity of reference
     GLOBAL_WHO_REQUEST, GLOBAL_WHO_RESPONSE,
     LOBBY_INFO_REQUEST, LOBBY_INFO_RESPONSE,
@@ -27,10 +27,13 @@ public enum Tag {
     GENERIC,
     INVALID_GAME_ACTION, GENERIC_ERROR,
     SEND_HANDLE,
-    YIELD_TURN,
+    YIELD_TURN_REQUEST, YIELD_TURN_RESPONSE,
     SEND_FILE_REQUEST,
     GET_FILE_REQUEST,
     CREATE_LOBBY_REQUEST, CREATE_LOBBY_RESPONSE,
+    VOTE_RESPONSE, VOTE_REQUEST, BEGIN_GAME,
+    UPDATE_HANDLE_REQUEST, UPDATE_HANDLE_RESPONSE, // TODO: implement this
+
 
 
 }

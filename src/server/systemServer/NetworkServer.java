@@ -82,28 +82,27 @@ final public class NetworkServer {
      * Adds a client to a lobby
      * <p>
      * @param lobbyName Name of the lobby
-     * @param client    Name of the client
+     * @param client    Client to add to lobby
+     *
+     * @return False if client is already in lobby or an Error occurred
      */
-    public static void joinLobby( String lobbyName, ClientObject client ) {
+    protected static boolean joinLobby( String lobbyName, ClientObject client ) {
         // TODO: add null check
+        // TODO: game status check
         for ( Lobby l : lobbies ) {
             if ( l.getName().equals( lobbyName ) ) {
                 if ( l.isInLobby( client.getHandle() ) ) {
-                    client.
-                            send( Flag.RESPONSE, Tag.JOIN_LOBBY_RESPONSE, "Cannot join lobby, you're already in it!" );
+                    return false;
                 } else {
-                    leaveLobby( client );
+                    leaveLobby( client ); // bit dangerous...
                     l.join( client );
-                    client.
-                            send( Flag.RESPONSE, Tag.JOIN_LOBBY_RESPONSE, "Successfully joined lobby!" );
-                    l.sendToEntireLobby( "Client " + client.getHandle() + " has joined the lobby!" );
+                    return true;
                 }
             }
         }
-        //If we're here, we didn't find the name!
-        //TODO: make a canJoinLobby() function or request/deny messages
-        //(e.g. what if the game is in session?)
+
         System.err.println( "Error: Couldn't find lobby: " + lobbyName + " to join." );
+        return false;
     }
 
     /**
@@ -119,6 +118,7 @@ final public class NetworkServer {
                 l.sendToEntireLobby( "Client " + client.getHandle() + " has left the lobby!" );
                 if ( l.lobbyClients.isEmpty() ) {
                     lobbies.remove( l ); //For now, just kill lobbies when everyone leaves
+                    return;
                 }
                 return;
             }
@@ -201,6 +201,10 @@ final public class NetworkServer {
             }
         }
         return false;
+    }
+
+    public static boolean pollClients() {
+        // TODO: STUB
     }
 
     /**

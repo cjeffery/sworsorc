@@ -54,6 +54,22 @@ public class Lobby {
         //anyMatch( (client) -> (client.getHandle().equals( user )) );
     }
 
+    protected void sendToEntireLobby( String message ) {
+        sendToEntireLobby( Flag.CHAT, Tag.LOBBY, null, message );
+    }
+    /**
+     *
+     * @param flag
+     * @param tag
+     * @param sender
+     * @param message
+     */
+    protected void sendToEntireLobby( Flag flag, Tag tag, String sender, Object... message ) {
+        for ( ClientObject client : lobbyClients ) {
+            client.send( flag, tag, sender, message );
+        }
+    }
+
     /**
      *
      * @param flag
@@ -62,19 +78,10 @@ public class Lobby {
      */
     protected void sendToEntireLobby( Flag flag, Tag tag, Object... message ) {
         for ( ClientObject client : lobbyClients ) {
-            client.send( flag, tag, message );
+            client.send( flag, tag, null, message );
         }
     }
 
-    /**
-     *
-     * @param message
-     */
-    protected void sendToEntireLobby( Object... message ) {
-        for ( ClientObject client : lobbyClients ) {
-            client.send( message );
-        }
-    }
 
     /**
      *
@@ -95,7 +102,6 @@ public class Lobby {
     public void join( ClientObject client ) {
         lobbyClients.add( client );
         client.setCurrentLobby( this );
-        //TODO: make join messages lobbycast instead of broadcast
     }
 
     /**
