@@ -43,6 +43,7 @@ public final class Character extends MoveableUnit{
         super();
         this.UnitType = UnitType.Character;
         this.movement = 9.;
+        this.ResetWorkingMovement();
     }
     
     public Character(String a, int b, double c, /*int h*/ String h) {
