@@ -12,7 +12,6 @@ import static java.lang.Integer.parseInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
@@ -34,7 +33,15 @@ import sscharts.Scenario;
 import sshexmap.MapHex;
 import sshexmap.MapView;
 import systemServer.NetworkClient;
- 
+
+import static java.lang.Integer.parseInt;
+import org.controlsfx.control.Notifications;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialogs;
+import static sscharts.ArmyCombatResultsTable.PrepareAttackResults;
+import ssterrain.TTSwamp;
+import ssterrain.TerrainType;
+
 public class HUDController {
     @FXML private TabPane UnitsPane;
     @FXML private TabPane TargetsPane;
@@ -554,6 +561,7 @@ public class HUDController {
      * 
      * @param event
      * @author Joe Higley, Gabe Pearhill      
+     * @param event
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
         if (!usernameEntered) { // TODO: this should be handled in NetworkClient
@@ -571,9 +579,10 @@ public class HUDController {
                 chat_box.clear();
                 connectedToServer = connectToServer();
             }
-        } else if (!"".equals(message_box.getText())) {
-            NetworkClient.sendChatMessage(message_box.getText());
+        } else if ( !"".equals( message_box.getText() ) ) {
+            NetworkClient.userInput( message_box.getText() );
             message_box.clear();
+            //chat_box.clear(); do we need this here?
         }
     }
     
@@ -671,11 +680,10 @@ public class HUDController {
      *
      * @return 
      * @author Gabe Pearhill
+     * @return 
      */
     public boolean connectToServer() {
-        // 25565 is sworsorc default server port
         NetworkClient.setServerName(ipAddress);
-        NetworkClient.setServerPort(25565);
         NetworkClient.setUsername(username);
 
         return NetworkClient.initializeClient();
@@ -687,6 +695,7 @@ public class HUDController {
      * an incoming chat message.
      * 
      * @author Gabe Pearhill
+     * @param message 
      */
     public void postMessage(String message){
         chat_box.appendText(message + "\n");
@@ -699,8 +708,56 @@ public class HUDController {
      * @author Jay Drage
      */
     public void StartCombat(){
+        
         System.out.println("StartCombat()");
-        //Place combat code here
+
+        System.out.println(target_unit.getRace());
+        System.out.println(target_unit.getNation());
+        
+        MoveableUnit selected_combat_unit = new MoveableUnit();
+        MoveableUnit target_combat_unit = new MoveableUnit();
+        selected_combat_unit = selected_unit;
+        target_combat_unit = target_unit;
+        selected_combat_unit.setUnitType(UnitType.ArmyUnit);
+        target_combat_unit.setUnitType(UnitType.ArmyUnit);
+        
+        ArrayList<ArmyUnit> attackers = new ArrayList<>();
+        ArrayList<ArmyUnit> defenders = new ArrayList<>();
+ 
+        attackers.add((ArmyUnit) selected_combat_unit);
+        attackers.add((ArmyUnit) selected_combat_unit);
+        defenders.add((ArmyUnit) target_combat_unit);
+        defenders.add((ArmyUnit) target_combat_unit);
+        MapHex hex1 = new MapHex();
+        TerrainType tt1 = null;
+        tt1 = new TTSwamp();
+        hex1.setTerrainType(tt1);  
+        target_combat_unit.getLocation();
+        ArrayList result = new ArrayList();
+        result = PrepareAttackResults(attackers, defenders, hex1);
+        int[] index = (int[])result.get(0);
+        int atk = (int)result.get(1);
+        int def = (int)result.get(2);
+        int after_def = (int)result.get(3);
+        double ratio = (double)result.get(4);
+
+        Notifications.create()
+              .title("Details of Combat")
+              .text("attacker: " + atk + "\ndefender: " + def + "\nAfter Def: " + after_def)
+              .showWarning();
+ 
+        
+        Action result_of_combat = Dialogs.create()
+          .title("Combat Comfirmation")
+          .message( "Are you sure to enforce the combat?")
+          .showConfirm();
+
+        
+        Notifications.create()
+        .title("Result of Combat")
+        .text("Attackets: Stay.\nDefenders: Retreat " + index[1] + " Units.")
+        .showWarning();
+
     }
     /**
      * used to start spells
