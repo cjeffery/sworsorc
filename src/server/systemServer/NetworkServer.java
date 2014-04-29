@@ -187,14 +187,16 @@ final public class NetworkServer {
      * @param handle
      * @param flag
      * @param tag
+     * @param sender
      * @param message
      *
      * @return
      */
-    public static boolean sendToClient( String handle, Flag flag, Tag tag, Object... message ) {
+    public static boolean sendToClient( String handle, Flag flag, Tag tag, String sender,
+                                        Object... message ) {
         for ( ClientObject client : NetworkServer.clientObjects ) {
             if ( client.getHandle().equals( handle ) ) {
-                client.send( flag, tag, message );
+                client.send( flag, tag, sender, message );
                 return true;
             }
         }
@@ -220,11 +222,12 @@ final public class NetworkServer {
      * <p>
      * @param flag
      * @param tag
+     * @param sender
      * @param message
      */
-    public static void sendToAllClients( Flag flag, Tag tag, String message ) {
+    public static void sendToAllClients( Flag flag, Tag tag, String sender, String message ) {
         for ( ClientObject client : clientObjects ) {
-            client.send( flag, tag, message );
+            client.send( flag, tag, sender, message );
         }
     }
 
@@ -233,11 +236,12 @@ final public class NetworkServer {
      * <p>
      * @param flag
      * @param tag
+     * @param sender
      * @param message
      */
-    public static void sendToAllClients( Flag flag, Tag tag, Object... message ) {
+    public static void sendToAllClients( Flag flag, Tag tag, String sender, Object... message ) {
         for ( ClientObject client : clientObjects ) {
-            client.send( flag, tag, message );
+            client.send( flag, tag, sender, message );
         }
     }
 

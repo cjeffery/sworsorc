@@ -948,7 +948,7 @@ final public class NetworkClient {
     private static void flushToConsole( final String lastMessage ) {
         consoleOut.println( lastMessage ); // TODO: append username/tags!
         consoleOut.flush();
-        //postMessage(lastMessage);
+        postMessage(lastMessage);
     }
 
     private static void write( Flag flag, Tag tag ) {

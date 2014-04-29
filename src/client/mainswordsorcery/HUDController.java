@@ -352,8 +352,9 @@ public class HUDController {
      * @param event
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
-        /*
-         * if (!usernameEntered) {            if (!"".equals(message_box.getText())) {
+        
+        if ( !usernameEntered ) {
+            if ( !"".equals( message_box.getText() ) ) {
                 username = message_box.getText();
                 usernameEntered = true;
                 chat_box.setText("Enter the server's IP address.");
@@ -367,12 +368,10 @@ public class HUDController {
                 chat_box.clear();
                 connectedToServer = connectToServer();
             }
-        } else
-         */
-        if ( !"".equals( message_box.getText() ) ) {
+        } else if ( !"".equals( message_box.getText() ) ) {
             NetworkClient.userInput( message_box.getText() );
             message_box.clear();
-            //chat_box.clear(); do we need this?
+            //chat_box.clear(); do we need this here?
         }
     }
     
@@ -468,12 +467,8 @@ public class HUDController {
      * @return 
      */
     public boolean connectToServer() {
-        // 25565 is sworsorc default server port
-        //NetworkClient.setServerName(ipAddress);
-        //NetworkClient.setServerPort(25565);
-        // No need to set port unless we're hosting multiple servers simultaniously
-        // Default is already set
-        //NetworkClient.setUsername(username);
+        NetworkClient.setServerName(ipAddress);
+        NetworkClient.setUsername(username);
 
         // TODO: SETTINGS FILE
         return NetworkClient.initializeClient();

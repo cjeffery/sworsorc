@@ -90,8 +90,12 @@ public class ClientObject {
      * @param flag
      * @param tag
      */
-    private void send( final Flag flag, final Tag tag, List<Object> message ) {
-        write( flag, tag, null, message );
+    private void send( final Flag flag, final Tag tag, String sender, List<Object> message ) {
+        write( flag, tag, sender, message );
+    }
+
+    public void send( final Flag flag, final Tag tag, final String sender ) {
+        write( flag, tag, sender, null );
     }
 
     /**
@@ -108,11 +112,6 @@ public class ClientObject {
      */
     public void send( Flag flag, Tag tag, String sender, Object... message ) {
         write( flag, tag, sender, MessagePhoenix.packMessageContents( message ) );
-    }
-
-    public void send( Flag flag, Tag tag, Object... message ) {
-        write( flag, tag, null, MessagePhoenix.packMessageContents( message ) );
-
     }
 
     /**
@@ -235,13 +234,13 @@ public class ClientObject {
 
                     switch ( tag ) {
                         case PRIVATE:
-                            NetworkServer.sendToClient( sender, flag, tag, message );
+                            NetworkServer.sendToClient( sender, flag, tag, null, message );
                             break;
                         case LOBBY:
-                            currentLobby.sendToEntireLobby( flag, tag, message );
+                            currentLobby.sendToEntireLobby( flag, tag, sender, message );
                             break;
                         case GLOBAL:
-                            NetworkServer.sendToAllClients( flag, tag, message );
+                            NetworkServer.sendToAllClients( flag, tag, sender, message );
                             break;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
@@ -300,7 +299,8 @@ public class ClientObject {
                     switch ( tag ) {
 
                         case GLOBAL_WHO_REQUEST:
-                            send( flag, Tag.GLOBAL_WHO_RESPONSE, NetworkServer.getAllUserNames() );
+                            send( flag, Tag.GLOBAL_WHO_RESPONSE, null, NetworkServer.
+                                    getAllUserNames() );
                             break;
                         case LOBBY_INFO_REQUEST:
                             // TODO: possible List<String> to List<Object> conversion issue
@@ -314,9 +314,10 @@ public class ClientObject {
                                             getLobbyUsers( lobby ).toString().
                                             split( " " ) ) );
                                 } // could use a functional as well...hmm...
-                                send( flag, Tag.LOBBY_INFO_RESPONSE, lobbyinfo );
+                                send( flag, Tag.LOBBY_INFO_RESPONSE, null, lobbyinfo );
                             } else {
-                                send( flag, Tag.LOBBY_INFO_RESPONSE, currentLobby.getUserNames() );
+                                send( flag, Tag.LOBBY_INFO_RESPONSE, null, currentLobby.
+                                        getUserNames() );
                             }
                             break;
                         case NEW_LOBBY_REQUEST:
@@ -326,10 +327,10 @@ public class ClientObject {
                             if ( NetworkServer.createNewLobby( (String) message.get( 0 ) ) ) {
                                 NetworkServer.
                                         joinLobby( (String) message.get( 0 ), ClientObject.this );
-                                send( flag, Tag.NEW_LOBBY_RESPONSE, true, "Lobby " + message.
+                                send( flag, Tag.NEW_LOBBY_RESPONSE, null, true, "Lobby " + message.
                                         get( 0 ) + " has been created!" );
                             } else {
-                                send( flag, Tag.NEW_LOBBY_RESPONSE, false, "Could not create lobby, it probably already exists!" );
+                                send( flag, Tag.NEW_LOBBY_RESPONSE, null, false, "Could not create lobby, it probably already exists!" );
                             }
                             break;
                         case JOIN_LOBBY_REQUEST:
@@ -357,7 +358,7 @@ public class ClientObject {
                             currentLobby = null;
                             break;
                         case UID_REQUEST:
-                            send( flag, Tag.UID_RESPONSE, NetworkServer.generateID() );
+                            send( flag, Tag.UID_RESPONSE, null, NetworkServer.generateID() );
                             break;
                         case BEGIN_GAME_REQUEST:
                             if ( currentLobby == null ) {
@@ -480,7 +481,7 @@ public class ClientObject {
 
         private void disconnect() {
             // TODO: KILL CONNECTION
-            close();
+            killThread();
             NetworkServer.clientDisconnected( ClientObject.this );
         }
 
@@ -603,12 +604,6 @@ public class ClientObject {
         consoleOut.println( "Opened connection from client " + clientID + " at address " + socket.
                 getInetAddress() );
     }
-
-    /*
-     * public void killClient() { listenerThread.killThread();
-     * writerThread.killThread();
-     * }
-     */
 
     /*
      * GETTERS & SETTERS
