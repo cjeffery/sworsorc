@@ -18,6 +18,7 @@ public class ZombieInfantry extends Conjured{
         strength = 2;
         movement = 3;
         demoralizedStrength = 1;
+        this.ResetWorkingMovement();
     }
     
     

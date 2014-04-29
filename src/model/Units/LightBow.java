@@ -19,6 +19,7 @@ public class LightBow extends RangedLandUnit{
         strength = 3;
         movement = 5;
         demoralizedStrength = 1;
+        this.ResetWorkingMovement();
     }
        
 }

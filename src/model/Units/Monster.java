@@ -19,7 +19,7 @@ public class Monster extends MoveableUnit
 
     public Monster()
     {
-
+        this.ResetWorkingMovement();
     }
 
     public int GetMagicPL()

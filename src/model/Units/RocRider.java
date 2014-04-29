@@ -17,6 +17,7 @@ public class RocRider extends FlyingUnit{
         strength = 5;
         movement = 9;
         demoralizedStrength = 2;
+        this.ResetWorkingMovement();
     }
     
     

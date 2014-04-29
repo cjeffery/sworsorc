@@ -17,6 +17,7 @@ public class HeavyPluglunk extends LandUnit{
         strength = 4;
         movement = 4;
         demoralizedStrength = 2;
+        this.ResetWorkingMovement();
     }
         
 }

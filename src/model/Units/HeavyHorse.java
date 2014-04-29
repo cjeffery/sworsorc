@@ -16,6 +16,7 @@ public class HeavyHorse extends Cavalry{
         strength = 4;
         movement = 7;
         demoralizedStrength = 1;
+        this.ResetWorkingMovement();
     }
     
 }

@@ -17,6 +17,7 @@ public class LightHorse extends Cavalry{
         strength = 2;
         movement = 9;
         demoralizedStrength = 1;
+        this.ResetWorkingMovement();
     }
     
     @Override

@@ -16,6 +16,7 @@ public class SpiderLegion extends LandUnit{
         strength = 3;
         movement = 4;
         demoralizedStrength = 1;
+        this.ResetWorkingMovement();
     }
     
 }

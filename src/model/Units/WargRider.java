@@ -17,5 +17,6 @@ public class WargRider extends LandUnit{
         strength = 3;
         movement = 9;
         demoralizedStrength = 1;
+        this.ResetWorkingMovement();
     }   
 }

@@ -15,6 +15,7 @@ public class Cavalry extends ArmyUnit{
     Cavalry(){
         super();
         armyUnitType = ArmyUnitType.cavalry;
+        this.ResetWorkingMovement();
     }
     
 }

@@ -18,6 +18,7 @@ public class DemonicInfantry extends Conjured{
         strength = 8;
         movement = 3;
         demoralizedStrength = 4;
+        this.ResetWorkingMovement();
     }
         
 }

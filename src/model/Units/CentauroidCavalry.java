@@ -17,6 +17,7 @@ public class CentauroidCavalry extends Conjured{
         strength = 3;
         movement = 9;
         demoralizedStrength = 1;
+        this.ResetWorkingMovement();
     }
     
     

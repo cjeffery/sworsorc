@@ -18,6 +18,7 @@ public class WyvernAirtroops extends Conjured{
         strength = 3;
         movement = 10;
         demoralizedStrength = 1;
+        this.ResetWorkingMovement();
     }
     
     
