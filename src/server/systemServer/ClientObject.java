@@ -57,7 +57,7 @@ public class ClientObject {
      * @param sock     The Socket associated with a single client connection
      * @param clientID The unique ID of the Client
      */
-    public ClientObject( Socket sock, int clientID ) {
+    protected ClientObject( Socket sock, int clientID ) {
 
         // Data member initializers
         this.clientID = clientID; // Unique client ID
@@ -75,42 +75,38 @@ public class ClientObject {
     }
 
     /**
-     * Writes to socket outgoing connection, hides the protocol details
+     * Poke from server
      *
      * @param flag
      * @param tag
      */
-    private void send( final Flag flag, final Tag tag ) {
+    private void send( Flag flag,  Tag tag ) {
         write( flag, tag, null, null );
     }
 
     /**
-     * Writes to socket outgoing connection, hides the protocol details
+     * Poke from another client
      *
      * @param flag
      * @param tag
+     * @param sender
      */
-    private void send( final Flag flag, final Tag tag, String sender, List<Object> message ) {
-        write( flag, tag, sender, message );
-    }
-
-    public void send( final Flag flag, final Tag tag, final String sender ) {
+    protected void send( final Flag flag, final Tag tag, final String sender ) {
         write( flag, tag, sender, null );
     }
 
     /**
-     * Send a message to client
-     * First Object MUST be the TAG!
-     * No pre-packaging required thanks to varargs
+     * Send a message to client, no pre-packaging required
+     * Must ensure any collections are either split up, or handled on the receiving end!
      * <p>
-     * This is just a public wrapper for {@link #write write()}
+     * This is just a protected wrapper for {@link #write write()}
      * <p>
      * @param flag
      * @param tag
      * @param sender
      * @param message First parameter is assumed to be tag
      */
-    public void send( Flag flag, Tag tag, String sender, Object... message ) {
+    protected void send( Flag flag, Tag tag, String sender, Object... message ) {
         write( flag, tag, sender, MessagePhoenix.packMessageContents( message ) );
     }
 
@@ -223,11 +219,13 @@ public class ClientObject {
                 errorOut.println( "Flag: " + flag );
                 errorOut.print( "Sender: " + sender );
                 errorOut.print( "Data: " );
-                for ( Object s : message ) {
-                    errorOut.println( "Object " + s.getClass() + ": " + s + " " );
+                if ( message != null ) {
+                    for ( Object s : message ) {
+                        errorOut.println( "Object " + s.getClass() + ": " + s + " " );
+                    }
                 }
             }
-
+            if ( message != null ) {
             switch ( flag ) {
                 // Tagged Chat Message ex: GLOBAL, LOBBY, PRIVATE, etc
                 case CHAT:
@@ -255,7 +253,7 @@ public class ClientObject {
                             consoleOut.
                                     println( "Assigning handle " + handle + " to client " + clientID );
                             NetworkServer.
-                                    sendToAllClients( handle + "has just connected to the server!" );
+                                    sendToAllClients( "Server", handle + "has just connected to the server!" );
 
                             break;
                         case MESSAGE_TO_SERVER:
@@ -358,7 +356,7 @@ public class ClientObject {
                             currentLobby = null;
                             break;
                         case UID_REQUEST:
-                            send( flag, Tag.UID_RESPONSE, null, NetworkServer.generateID() );
+                            send( flag, Tag.UID_RESPONSE, null, NetworkServer.generateUniqueID() );
                             break;
                         case BEGIN_GAME_REQUEST:
                             if ( currentLobby == null ) {
@@ -412,7 +410,8 @@ public class ClientObject {
 
                     switch ( tag ) {
                         case DISCONNECT_REQUEST:
-                            // TODO: disconnect stuff
+                            // Notify client that server recieved request, and is closing its side of the connection
+                            send( Flag.RESPONSE, Tag.DISCONNECT_RESPONSE, null, true ); // true always for now
                             return false;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
@@ -450,7 +449,11 @@ public class ClientObject {
                     break;
             } // end outer switch
 
-            return true;
+                return true;
+            } else {
+                errorOut.println( "Null message!" );
+                return false;
+            }
         }
 
         @Override
@@ -467,7 +470,6 @@ public class ClientObject {
                     } else if ( processMessage( rawMessage ) ) {
                         // suprise party fiddlesticks lives here
                     } else {
-                        // TODO: disconnect
                         disconnect();
                     }
                 } else {
@@ -480,12 +482,11 @@ public class ClientObject {
         }
 
         private void disconnect() {
-            // TODO: KILL CONNECTION
             killThread();
             NetworkServer.clientDisconnected( ClientObject.this );
         }
 
-        public void close() {
+        protected void close() {
             if ( isConnected() ) {
                 try {
                     if ( streamIn != null ) {
@@ -597,7 +598,7 @@ public class ClientObject {
      * <p>
      * @author Christopher Goes
      */
-    public void start() {
+    protected void start() {
 
         listenerThread.start();
         writerThread.start();
@@ -615,7 +616,7 @@ public class ClientObject {
      * <p>
      * @author Christopher Goes
      */
-    public String getHandle() {
+    protected String getHandle() {
         return this.handle;
     }
 
@@ -626,7 +627,7 @@ public class ClientObject {
      * <p>
      * @author Christopher Goes
      */
-    public int getClientID() {
+    protected int getClientID() {
         return this.clientID;
     }
 
@@ -637,7 +638,7 @@ public class ClientObject {
      * <p>
      * @author Christopher Goes
      */
-    public void setHandle( String hand ) {
+    protected void setHandle( String hand ) {
         if ( hand != null && !hand.isEmpty() ) {
             this.handle = hand;
         } else {
@@ -650,7 +651,7 @@ public class ClientObject {
      * <p>
      * @param lobby
      */
-    public void setCurrentLobby( Lobby lobby ) {
+    protected void setCurrentLobby( Lobby lobby ) {
         this.currentLobby = lobby;
     }
 

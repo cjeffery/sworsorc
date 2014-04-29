@@ -8,6 +8,7 @@
 package systemServer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,12 +32,12 @@ public class NetworkPacket implements Serializable {
     public NetworkPacket( Flag FLAG, Tag TAG, String sender, List<Object> DATA ) {
         this.flag = FLAG;
         this.tag = TAG;
-        this.data = DATA;
-        this.sender = sender;
-    }
-
-    public NetworkPacket( Flag FLAG, Tag TAG, List<Object> DATA ) {
-        this( FLAG, TAG, null, DATA );
+        if ( DATA != null ) {
+            this.data = DATA;
+        } else {
+            this.data = new ArrayList<>( 0 );
+        }
+        this.sender = sender; // there should not be a null sender
     }
 
     /**
@@ -47,10 +48,6 @@ public class NetworkPacket implements Serializable {
      */
     public NetworkPacket( Flag FLAG, Tag TAG, String sender ) {
         this( FLAG, TAG, sender, null );
-    }
-
-    public NetworkPacket( Flag FLAG, Tag TAG ) {
-        this( FLAG, TAG, null, null );
     }
 
     /*

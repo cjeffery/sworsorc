@@ -58,8 +58,8 @@ final public class NetworkClient {
     private static ArrayBlockingQueue<String> commandQueue;
 
     // Flags
-    private static boolean addressSet = false;
-    private static boolean usernameSet = false;
+    //private static boolean addressSet = false;
+    //private static boolean usernameSet = false;
     private static boolean clientInitialized = false;
     final private static boolean debug = MessagePhoenix.debugStatus();
 
@@ -82,6 +82,7 @@ final public class NetworkClient {
     public static boolean initializeClient() { // default
         return initializeClient( "netclient_settings.txt" );
     }
+
     /**
      * Startup of NetworkClient
      * Starts local streams, connects to server, and makes the connection live
@@ -117,6 +118,7 @@ final public class NetworkClient {
     public static void send( Flag flag, Tag tag ) {
         write( flag, tag, username );
     }
+
     /**
      * Tagged message with a sender
      * <p>
@@ -130,6 +132,7 @@ final public class NetworkClient {
     public static void send( Flag flag, Tag tag, String sender ) {
         write( flag, tag, sender );
     }
+
     /**
      * Send a message
      * <p>
@@ -312,7 +315,7 @@ final public class NetworkClient {
                     flushToConsole( "Exiting client..." );
                     if ( isConnected() ) {
                         flushToConsole( "Still connected to server, disconnecting" );
-                        disconnectFromServer();
+                        attemptDisconnect();
                     }
                     return false;
                 } else if ( parsedString[0].length() != 0 && "/".
@@ -382,13 +385,14 @@ final public class NetworkClient {
             String line = null;
 
             /*
-             * if ( !addressSet ) {                flushToConsole( "Please enter IP address of server(ex \"127.0.0.1\"): " );
-                setServerName( getCommand() );
-            }
-            if ( !usernameSet ) {
-                flushToConsole( "Please enter your username(ex \"HonkHonkBlarg117\"): " );
-                setUsername( getCommand() );
-            }
+             * if ( !addressSet ) { flushToConsole( "Please enter IP address of server(ex
+             * \"127.0.0.1\"): " );
+             * setServerName( getCommand() );
+             * }
+             * if ( !usernameSet ) {
+             * flushToConsole( "Please enter your username(ex \"HonkHonkBlarg117\"): " );
+             * setUsername( getCommand() );
+             * }
              */
 
             while ( !killed ) {
@@ -398,14 +402,13 @@ final public class NetworkClient {
                     System.err.
                             println( "Null user input! Either default never got changed, or something bad happened!" );
                     stopClient();
-                    killThread();
                 } else if ( line.isEmpty() ) {
                     System.err.println( "Empty line" );
                 } else if ( !(processCommand( line )) ) {
                     flushToConsole( "Later gator!" );
                     stopClient(); // Shutdown everything
-                    killThread(); // Kill command processing
                 }
+                // suprise party fiddlesticks
                 // Continue execution
             }
 
@@ -421,7 +424,7 @@ final public class NetworkClient {
 
     }
 
-    private static class ClientWriterThread extends Thread { // TODO: how kill
+    private static class ClientWriterThread extends Thread {
 
         private boolean killed = false;
 
@@ -436,16 +439,19 @@ final public class NetworkClient {
          * <p>
          * @author Christopher Goes
          */
-        private void setWriter() {
+        private boolean setWriter() {
             if ( isConnected() ) {
                 try {
                     writer = new ObjectOutputStream( socket.getOutputStream() );
                     writer.flush();
+                    return true;
                 } catch ( IOException ex ) {
                     ex.printStackTrace();
+                    return false;
                 }
             } else {
                 System.err.println( "Error in setWriter: not connected!" );
+                return false;
             }
         }
 
@@ -464,7 +470,10 @@ final public class NetworkClient {
 
         @Override
         public void run() {
-            setWriter();
+            if ( !setWriter() ) {
+                flushToConsole( "Unable to start writerThread!" );
+                killThread();
+            }
             NetworkPacket message = null;
 
             while ( !killed ) {
@@ -520,15 +529,18 @@ final public class NetworkClient {
          * <p>
          * @author Christopher Goes
          */
-        private void createStream() {
+        private boolean createStream() {
             if ( isConnected() ) {
                 try {
                     streamIn = new ObjectInputStream( socket.getInputStream() );
+                    return true;
                 } catch ( IOException ex ) {
                     ex.printStackTrace();
+                    return false;
                 }
             } else {
                 System.err.println( "Error creating listen stream: socket isn't connected!" );
+                return false;
             }
         }
 
@@ -577,17 +589,22 @@ final public class NetworkClient {
 
             tag = rawMessage.getTAG();
             flag = rawMessage.getFlag();
-            message = rawMessage.getData();
             sender = rawMessage.getSender();
+
+            message = rawMessage.getData(); // possibly null
 
             if ( debug ) {
                 System.err.println( "Process Message" );
                 System.err.println( "Tag: " + tag );
                 System.err.println( "Flag: " + flag );
-                System.err.print( "Sender: " + sender );
-                System.err.print( "Data: " );
-                for ( Object s : message ) {
+                System.err.println( "Sender: " + sender );
+                System.err.println( "Data: " );
+                if ( message != null ) {
+                    for ( Object s : message ) {
                     System.err.println( "Object " + s.getClass() + ": " + s + " " );
+                    }
+                } else {
+                    System.err.println( "null data!" );
                 }
             }
 
@@ -659,17 +676,6 @@ final public class NetworkClient {
                 case REQUEST: // client shouldn't recieve these!!!
                     flag = Flag.RESPONSE; // programmers are lazy
                     switch ( tag ) {
-
-                        case GLOBAL_WHO_REQUEST:
-                        case LOBBY_INFO_REQUEST:
-                        case NEW_LOBBY_REQUEST:
-                        case JOIN_LOBBY_REQUEST:
-                        case LEAVE_LOBBY_REQUEST:
-                        case UID_REQUEST:
-                        case BEGIN_GAME_REQUEST:
-                        case SEND_FILE_REQUEST:
-                        case GET_FILE_REQUEST:
-                        case CREATE_LOBBY_REQUEST:
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
@@ -735,7 +741,10 @@ final public class NetworkClient {
                 case CONNECTION:
 
                     switch ( tag ) {
-                        case DISCONNECT_REQUEST:
+                        case DISCONNECT_RESPONSE:
+                            disconnect();
+                            killThread();
+                            return true;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
@@ -774,7 +783,10 @@ final public class NetworkClient {
         public void run() {
 
             // Start the input stream. VERY IMPORTANT!
-            createStream();
+            if ( !createStream() ) {
+                flushToConsole( "Unable to start listener thread" );
+                killThread();
+            }
 
             // incoming message from server. First string is message tag.
             NetworkPacket incomingMessage = null;
@@ -783,12 +795,16 @@ final public class NetworkClient {
             while ( !killed ) {
                 if ( isConnected() && streamIn != null ) {
                     incomingMessage = recieveMessage(); // get the message                    
+                } else if ( streamIn == null ) {
+                    System.err.println( "streamIn is null!" );
+                    killThread();
                 } else {
                     continue; // Relax at the MoxieJava until message arrives
                 }
 
                 if ( incomingMessage == null ) {
                     System.err.println( "Null message from server, or default never changed!" );
+                    killThread();
                 } else if ( incomingMessage.isEmpty() ) {
                     System.err.println( "Empty message from server!" );
                 } else if ( processMessage( incomingMessage ) ) {
@@ -805,18 +821,9 @@ final public class NetworkClient {
          */
         private void close() {
             try {
-                if ( !(isConnected()) ) {
-                    if ( streamIn != null ) {
-                        streamIn.close();
-                        streamIn = null;
-                    }
-                } else {
-                    disconnectFromServer();
-                    if ( streamIn != null ) {
-                        streamIn.close();
-                        streamIn = null;
-                    }
-
+                if ( streamIn != null ) {
+                    streamIn.close();
+                    streamIn = null;
                 }
             } catch ( IOException ex ) {
                 ex.printStackTrace();
@@ -855,6 +862,7 @@ final public class NetworkClient {
         // Request list of lobbies:
         send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST );
     }
+
     /**
      * Kills ListenerThread and WriterThread
      * <p>
@@ -872,7 +880,7 @@ final public class NetworkClient {
         }
         listenerThread = null;
         writerThread = null;
-        closeSocket();
+        closeSocket(); // shouldn't need this
     }
 
     /**
@@ -884,6 +892,7 @@ final public class NetworkClient {
         consoleIn = new BufferedReader( new InputStreamReader( System.in ) );
         consoleOut = new PrintWriter( System.out, true );
     }
+
     /**
      * Closes local Input/Output streams
      * <p>
@@ -913,6 +922,7 @@ final public class NetworkClient {
         clientThread = new ClientCommandThread();
         clientThread.start();
     }
+
     private static void killCommandProcessor() {
         if ( clientThread != null && clientThread.isAlive() ) {
             clientThread.killThread();
@@ -937,6 +947,7 @@ final public class NetworkClient {
 
         } );
     }
+
     /**
      * Prints message to command line & HUD consoles
      * Assume newline will be appended
@@ -948,18 +959,21 @@ final public class NetworkClient {
     private static void flushToConsole( final String lastMessage ) {
         consoleOut.println( lastMessage ); // TODO: append username/tags!
         consoleOut.flush();
-        postMessage(lastMessage);
+        postMessage( lastMessage );
     }
 
     private static void write( Flag flag, Tag tag ) {
         write( flag, tag, username, null );
     }
+
     private static void write( Flag flag, Tag tag, String sender ) {
         write( flag, tag, sender, null );
     }
+
     private static void write( Flag flag, Tag tag, List<Object> message ) {
         write( flag, tag, username, message );
     }
+
     private static void write( Flag flag, Tag tag, String sender, List<Object> message ) {
         writeToQueue( new NetworkPacket( flag, tag, sender, message ) );
     }
@@ -1067,21 +1081,24 @@ final public class NetworkClient {
         }
         return null;
     }
+
+    private static void attemptDisconnect() {
+        flushToConsole( "Attempting to disconnect from server..." );
+        if ( remoteConnectionIsAlive() ) {
+            send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
+        }
+    }
+
     /**
      * Disconnects client from server
      * <p>
      * @author Christopher Goes
      */
-    private static void disconnectFromServer() {
-        flushToConsole( "Disconnecting from server..." );
-
-        if ( isConnected() ) {
-            send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
-        }
-
+    private static void disconnect() {
         killRemoteConnection();
         flushToConsole( "Disconnected!" );
     }
+
     /**
      * Checks if client is connected to server
      * <p>
@@ -1126,6 +1143,7 @@ final public class NetworkClient {
      */
     private static void stopClient() {
         killRemoteConnection();
+        killCommandProcessor();
         killLocalStreams();
     }
 
@@ -1140,7 +1158,6 @@ final public class NetworkClient {
             System.err.println( "Invalid server name!" );
         } else {
             serverName = sName;
-            addressSet = true;
         }
     }
 
@@ -1167,7 +1184,6 @@ final public class NetworkClient {
             System.err.println( "Invalid server name!" );
         } else {
             username = uName;
-            usernameSet = true;
         }
     }
 

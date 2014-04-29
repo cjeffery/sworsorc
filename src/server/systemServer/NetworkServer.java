@@ -4,6 +4,7 @@
  * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
  * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
+
 package systemServer;
 
 import java.io.*;
@@ -12,52 +13,116 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Network Server, a singleton class that is your lord and master
- * Also handles all client-to-client communication as a side-job
+ * The Network Server
+ * Singleton that manages client connections, lobbies, and communication between clients
  * <p>
  * In theory, you should be able to run a client on same machine as the hosting server
+ * This is not recommended
+ * <p>
+ * @author Networking Subteam
  */
-final public class NetworkServer {
+final public class NetworkServer { // TODO: could this possibly a subclass of NetworkClient?
 
-    // TODO: could this possibly a subclass of NetworkClient?
     // Clients
     private static List<ClientObject> clientObjects;
     private static int totalClients = 0;
+
     // Lobbies
     private static List<Lobby> lobbies;
-    private static Integer totalLobbies = 0; //used to assign unique lobbyId's
+    private static int totalLobbies = 0; //used to assign unique lobbyId's
 
+    // Server
+    private static final int DEFAULT_PORT = 25565;
+    private static int uniqueID = 0;
+
+    // Flags
     private static boolean stopped = false;
 
-    private static final int DEFAULT_PORT = 25565;
-    //private static final String DEFAULT_IP = "76.178.139.129";
-    // TODO: clean up server privacy, methods, vars, etc
-    private static int idFactory = 0;
-
+    // MESSAGES//
     /**
-     * Stops server execution
+     * Global Chat message
      * <p>
-     * @author Christopher Goes
+     * @param sender
+     * @param message
      */
-    public static void stopServer() {
-        stopped = true;
+    protected static void sendToAllClients( String sender, String message ) {
+        sendToAllClients( Flag.CHAT, Tag.GLOBAL, sender, message );
     }
 
     /**
-     * Checks if lobby name is unique
+     * Forward the message to all ClientObjects, which will send to their Clients
      * <p>
-     * @param lobbyname Name of the Lobby
-     * <p>
-     * @return True if unique, False if lobby with name already exists
+     * @param flag
+     * @param tag
+     * @param sender
+     * @param message
      */
-    private static boolean lobbyExists( String lobbyname ) {
-        for ( Lobby lobby : lobbies ) {
-            if ( lobby.getName().equals( lobbyname ) ) {
+    protected static void sendToAllClients( Flag flag, Tag tag, String sender, Object... message ) {
+        for ( ClientObject client : clientObjects ) {
+            client.send( flag, tag, sender, message );
+        }
+    }
+
+    /**
+     * Send private message to a individual client
+     * <p>
+     * @param handle
+     * @param flag
+     * @param tag
+     * @param sender
+     * @param message
+     *
+     * @return
+     */
+    protected static boolean sendToClient( String handle, Flag flag, Tag tag, String sender,
+                                           Object... message ) {
+        for ( ClientObject client : NetworkServer.clientObjects ) {
+            if ( client.getHandle().equals( handle ) ) {
+                client.send( flag, tag, sender, message );
                 return true;
             }
         }
         return false;
     }
+
+    // CLIENT STUFF //
+    /**
+     * ClientObject will call this on a planned or unplanned disconnection
+     * <p>
+     * @param client
+     */
+    protected static void clientDisconnected( ClientObject client ) {
+
+        // TODO: verify that this is operating properly
+        // TODO: null check
+
+        leaveLobby( client );
+        clientObjects.remove( client );
+        totalClients--; // Decrement total clients, we weren't doing this before
+        // Client should kill itself (like a true warrior) client.killClient();
+        System.out.
+                println( "Client " + client.getHandle() + " (" + client.getClientID() + ") has disconnected" );
+        sendToAllClients( "Server", ("User" + client.getHandle() + " has disconnected!") );
+    }
+
+    /**
+     * Returns all currently connected users
+     * <p>
+     * @return
+     */
+    protected static List<String> getAllUserNames() {
+        List<String> handles = new ArrayList<>( 0 );
+        for ( ClientObject obj : NetworkServer.clientObjects ) {
+            handles.add( obj.getHandle() );
+        }
+        return handles;
+    }
+
+    protected static int numClientsConnected() {
+        return totalClients;
+    }
+
+    // LOBBY STUFF //
 
     /**
      * Creates a new lobby
@@ -66,7 +131,7 @@ final public class NetworkServer {
      * <p>
      * @return True if lobby created, False if lobby exists and/or could not be created
      */
-    public static boolean createNewLobby( String lobbyname ) {
+    protected static boolean createNewLobby( String lobbyname ) {
         // TODO: this should be in Lobby. should it send message responses?
         if ( (lobbyname == null || lobbyname.isEmpty()) || lobbyExists( lobbyname ) ) {
             return false;
@@ -110,7 +175,7 @@ final public class NetworkServer {
      * <p>
      * @param client
      */
-    public static void leaveLobby( ClientObject client ) {
+    protected static void leaveLobby( ClientObject client ) {
         // TODO: add null check
         for ( Lobby l : lobbies ) {
             if ( l.lobbyClients.contains( client ) ) {
@@ -135,7 +200,7 @@ final public class NetworkServer {
      * <p>
      * @author Christopher Goes
      */
-    public static List<String> getLobbyUsers( String lobbyName ) {
+    protected static List<String> getLobbyUsers( String lobbyName ) {
         List<String> temp = new ArrayList<>( 0 ); // Empty list instead of null
         if ( lobbyName != null && !lobbyName.isEmpty() ) {
             for ( Lobby l : lobbies ) {
@@ -147,7 +212,6 @@ final public class NetworkServer {
         return temp;
     }
 
-    // TODO: concurrent lists with lobby names, user names, etc. Only if performance becomes issue.
     /**
      * Gets names of all lobbies
      * <p>
@@ -155,7 +219,7 @@ final public class NetworkServer {
      *         <p>
      * @author Christopher Goes
      */
-    public static List<String> getLobbyNames() {
+    protected static List<String> getLobbyNames() {
         List<String> temp = new ArrayList<>( 0 );
         for ( Lobby l : lobbies ) {
             temp.add( l.getName() );
@@ -164,105 +228,58 @@ final public class NetworkServer {
     }
 
     /**
-     * Returns all currently connected users
+     * Checks if lobby name is unique
      * <p>
-     * @return
-     */
-    public static List<String> getAllUserNames() {
-        List<String> handles = new ArrayList<>( 0 );
-        for ( ClientObject obj : NetworkServer.clientObjects ) {
-            handles.add( obj.getHandle() );
-        }
-        return handles;
-    }
-
-    public static int generateID() {
-        idFactory++;
-        return idFactory;
-    }
-
-    /**
-     * Send private message to a individual client
+     * @param lobbyname Name of the Lobby
      * <p>
-     * @param handle
-     * @param flag
-     * @param tag
-     * @param sender
-     * @param message
-     *
-     * @return
+     * @return True if unique, False if lobby with name already exists
      */
-    public static boolean sendToClient( String handle, Flag flag, Tag tag, String sender,
-                                        Object... message ) {
-        for ( ClientObject client : NetworkServer.clientObjects ) {
-            if ( client.getHandle().equals( handle ) ) {
-                client.send( flag, tag, sender, message );
+    protected static boolean lobbyExists( String lobbyname ) {
+        for ( Lobby lobby : lobbies ) {
+            if ( lobby.getName().equals( lobbyname ) ) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean pollClients() {
+    protected static int getTotalLobbies() {
+        return totalLobbies;
+    }
+
+    // UTILITIES & STUBS //
+    /**
+     * Generates a unique ID across all clients
+     *
+     * @return
+     */
+    protected static int generateUniqueID() {
+        uniqueID++;
+        return uniqueID;
+    }
+
+    /**
+     * Poll clients for a Yes/No response, process and return result of poll
+     *
+     * @param question Poll question
+     *
+     * @return Majority response
+     */
+    protected static boolean pollClients( String question ) {
         // TODO: STUB
         return false;
     }
 
     /**
-     * Global Chat message
+     * Stops server execution
      * <p>
-     * @param message
+     * @author Christopher Goes
      */
-    public static void sendToAllClients( String message ) {
-        sendToAllClients( Flag.CHAT, Tag.GLOBAL, message );
+    public static void stopServer() {
+        stopped = true;
     }
 
-    /**
-     * Forward the message to all ClientObjects, which will send to their Clients
-     * <p>
-     * @param flag
-     * @param tag
-     * @param sender
-     * @param message
-     */
-    public static void sendToAllClients( Flag flag, Tag tag, String sender, String message ) {
-        for ( ClientObject client : clientObjects ) {
-            client.send( flag, tag, sender, message );
-        }
-    }
 
-    /**
-     * Forward the message to all ClientObjects, which will send to their Clients
-     * <p>
-     * @param flag
-     * @param tag
-     * @param sender
-     * @param message
-     */
-    public static void sendToAllClients( Flag flag, Tag tag, String sender, Object... message ) {
-        for ( ClientObject client : clientObjects ) {
-            client.send( flag, tag, sender, message );
-        }
-    }
-
-    /**
-     * ClientObject will call this on a planned or unplanned disconnection
-     * <p>
-     * @param client
-     */
-    public static void clientDisconnected( ClientObject client ) {
-
-        // TODO: verify that this is operating properly
-        // TODO: null check
-
-        leaveLobby( client );
-        clientObjects.remove( client );
-        totalClients--; // Decrement total clients, we weren't doing this before
-        // Client should kill itself (like a true warrior) client.killClient();
-        System.out.
-                println( "Client " + client.getHandle() + " (" + client.getClientID() + ") has disconnected" );
-        sendToAllClients( "User " + client.getHandle() + " has disconnected!" );
-    }
 
     /**
      * Network Server main, primary execution happens here
@@ -300,7 +317,7 @@ final public class NetworkServer {
             try {
                 System.err.println( "Waiting for next client..." );
                 tempsock = listen.accept(); //Get socket (blocking)
-                tempclient = new ClientObject( tempsock, totalClients ); // generate new client
+                tempclient = new ClientObject( tempsock, generateUniqueID() ); // generate new client with guaranteed unique ID
                 totalClients++; // Increment total number of connected clients
                 clientObjects.add( tempclient ); // add the active client to list
                 tempclient.start(); // Start the connection
