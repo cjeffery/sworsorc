@@ -1,0 +1,27 @@
+@startuml
+hide circle 
+hide members
+title Collaboration Diagram\nMove Use Case
+footer Author: David Klingenberg 
+
+class “ : <u>HUDController</u>” as HC
+class “ : <u>MapView</u>” as MV
+class “ : <u>UnitPool</u>” as UP
+class “: <u>MovementCalculator</u>” as MC
+class “: <u>MapHex</u>” as MHex
+
+
+
+MV - HC : 1* SelectUnit\n(hexID, hex) >
+MHex -- HC : 1.1 MapHex.getUnits() <
+MC -- HC :1.2 <font color=blue>getValidMoves(unitID,\n<font color=blue>hex,moveAllowance,\n<font color=blue>validMoves) <
+HC - MV : 1.3 highlight\n(validMoves, color) >
+HC -- HC : 1.4 DisplayStack\n(unitPane, SelectedStack) >
+HC - HC : 2 MoveUnit\n(hexID, hex) >
+HC - MV : 2.1 <font color=red>clearHighlights() >
+HC -- UP : 2.2 addMove(selectedUnit, hex.GetID() >
+HC - HC : 2.3 MoveUnit\n(hexID, hex) >
+
+
+
+@enduml
