@@ -105,9 +105,7 @@ public class MovementCalculator
         
         if( isZoneOfControl( currentHex, movingUnit ) )
         {
-            if( movingUnit.getUnitType() != UnitType.Character 
-                && movingUnit.getWorkingMovement() != movingUnit.getMovement() )
-                movingUnit.setWorkingMovement(0);
+           movingUnit.setWorkingMovement( 0 );
         }
         //clear the cache, at the start of a new movement.
         if( validHexes.isEmpty() ) 
@@ -135,26 +133,27 @@ public class MovementCalculator
         // This is the case where the move was legal :D
         if( moveAllowance > 0 )
         {  
-            /*
-            for( int i = 0; i < 6; i++)
+            if( moveAllowance != movingUnit.getWorkingMovement() )
             {
-                // if true then neighbor hex has enemy unit
-                if ( getUnits(currentHex.getNeighbor(i), movingUnit) )
+                for( int i = 0; i < 6; i++)
                 {
-                    if( !validHexes.contains(currentHex) )
-                    {   
-                        validHexes.add(currentHex);
+                    // if true then neighbor hex has enemy unit
+                    if( getUnits(currentHex.getNeighbor(i), movingUnit) )
+                    {
+                        if( !validHexes.contains(currentHex) )
+                        {   
+                            validHexes.add(currentHex);
+                        }
+                        return;
                     }
-                    return;
                 }
-            }*/
+            }
             //For each hex edge, 0-5, get the neighboring hex, if it's valid
             for( int i = 0; i < 6; i++ ) 
             {
                 //Check if hex is valid, null returned if hex neighbor no exist
                 if( currentHex.getNeighbor(i) != null ) 
                 {
-
                     // add each valid neighbor to neighbors if not vortex hex
                     neighbors.add(currentHex.getNeighbor(i));
                 }
@@ -351,6 +350,9 @@ public class MovementCalculator
             if ( getUnits(currentHex.getNeighbor(i), movingUnit) )
                 isZone = true;
         }
+
+        if( movingUnit.getUnitType() == UnitType.Character )
+            isZone = false;
         return isZone;
     }
 }
