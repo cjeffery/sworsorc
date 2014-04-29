@@ -7,8 +7,6 @@
 
 package systemServer;
 
-import Units.MoveableUnit;
-import Units.UnitPool;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +40,7 @@ import java.util.Map;
  * always nice "one-to-one" relationship between messages send by NetworkClient
  * and functions received here.
  * 
- * @author Christopher Goes...and friends...
+ * @author Jarvis the Unknown
  */
 public class Conductor { // Should this be a static singleton?
     
@@ -54,7 +52,7 @@ public class Conductor { // Should this be a static singleton?
      * @author Christopher Goes
      */
     public Conductor() {
-    
+        // empty constructor
     }
     
     /**
@@ -67,20 +65,7 @@ public class Conductor { // Should this be a static singleton?
      * @param tag The message tag
      */
     public void processMessage( List<String> message, String tag ) {
-        if (message.get(0).equals(MessageUtils.UPDATE_UNIT)){
-            UnitPool pool = UnitPool.getInstance();
-            MoveableUnit unit = pool.getUnit(message.get(1));
-            String location = message.get(2);
-            pool.addMove(unit, location);
-        } else if (message.get(0).equals(MessageUtils.ADD_UNIT)){
-            UnitPool pool = UnitPool.getInstance();
-            MoveableUnit unit = pool.getUnit(message.get(1));
-            unit.setRace(message.get(2));
-            unit.setUnitType(message.get(3));            
-            String location = message.get(4);
-            //needs player ID
-            //pool.addUnit(port, unit);
-        }
+        // TODO: stub
     }
     
     // For each major part of the game, put a different method that calls those object's methods
@@ -107,6 +92,7 @@ public class Conductor { // Should this be a static singleton?
      * The server is letting you know that some other player (who
      * is not YOU), has started their turn. 
      * 
+     * @param otherUsername
      * @see #beginUserPlayerTurn() 
      */
     public void otherPlayerBeganTurn(String otherUsername){
@@ -135,6 +121,7 @@ public class Conductor { // Should this be a static singleton?
      * 
      * All players get this message at the same time. TODO on actual setup handling...
      * 
+     * @param playerNation
      * @param playerRoles A map from usernames to nations
      * @param userNation For convenience, this is the user's nation.
      */

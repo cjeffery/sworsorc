@@ -12,7 +12,6 @@ import static java.lang.Integer.parseInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
@@ -34,7 +33,9 @@ import sscharts.Scenario;
 import sshexmap.MapHex;
 import sshexmap.MapView;
 import systemServer.NetworkClient;
- 
+
+import static java.lang.Integer.parseInt;
+
 public class HUDController {
     @FXML private TabPane UnitsPane;
     @FXML private TabPane TargetsPane;
@@ -554,6 +555,7 @@ public class HUDController {
      * 
      * @param event
      * @author Joe Higley, Gabe Pearhill      
+     * @param event
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
         if (!usernameEntered) { // TODO: this should be handled in NetworkClient
@@ -571,9 +573,10 @@ public class HUDController {
                 chat_box.clear();
                 connectedToServer = connectToServer();
             }
-        } else if (!"".equals(message_box.getText())) {
-            NetworkClient.sendChatMessage(message_box.getText());
+        } else if ( !"".equals( message_box.getText() ) ) {
+            NetworkClient.userInput( message_box.getText() );
             message_box.clear();
+            //chat_box.clear(); do we need this here?
         }
     }
     
@@ -671,11 +674,10 @@ public class HUDController {
      *
      * @return 
      * @author Gabe Pearhill
+     * @return 
      */
     public boolean connectToServer() {
-        // 25565 is sworsorc default server port
         NetworkClient.setServerName(ipAddress);
-        NetworkClient.setServerPort(25565);
         NetworkClient.setUsername(username);
 
         return NetworkClient.initializeClient();
@@ -687,6 +689,7 @@ public class HUDController {
      * an incoming chat message.
      * 
      * @author Gabe Pearhill
+     * @param message 
      */
     public void postMessage(String message){
         chat_box.appendText(message + "\n");

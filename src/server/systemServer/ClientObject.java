@@ -4,338 +4,655 @@
  * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
  * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
-
 package systemServer;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Manages the connection for a client connected to server
  */
 public class ClientObject {
 
-    private static int totalClients = 0;
-    final private int clientID;
+    // TODO: or should this be a subclass of NetworkClient/server? jeez chris get it together
+    // User data
+    final private int clientID; // Unique ID of client connection
+    private String handle; // Username, can change
 
-    private String handle; //username
-
+    // Connection this object is attached to
     final private Socket socket;
 
-    final private ListenerThread listenerThread;
+    // The Writer Thread's food source
+    final private ArrayBlockingQueue<NetworkPacket> messageQueue;
 
-    private PrintWriter writer = null;
+    // Remote Send/Recieve threads
+    final private ServerListenerThread listenerThread;
+    final private ServerWriterThread writerThread;
+
+    private ObjectOutputStream writer = null;
+    private ObjectInputStream streamIn = null;
+
+    // Lobby client is a part of, null if not in a lobby
+    private Lobby currentLobby = null;
+
+    // Server console output
+    final private PrintWriter consoleOut;
+    final private PrintWriter errorOut;
+
+    // File associated with this object
     private List<String> file;
 
-    private Lobby currentLobby = null; //Clients need to be able to talk just to their lobbies
+    // Debugging
+    final private boolean debug;
 
-    //We need a PrintWriter to standardize the printMessage functions:
-    private PrintWriter consoleOut = null;
-    
-    /* CONSTRUCTOR */
-    
+    /*
+     * CONSTRUCTOR
+     */
     /**
      * ClientObject constructor
-     * Call {@link #startClient startClient()} to activate the object
-     * @param sock The Socket associated with a single client connection
-     */
-    public ClientObject(Socket sock) {
-        //Given instance it's own ID:
-        clientID = totalClients;
-        totalClients++;
-        handle = "UnknownHandle"; //client will tell us by message
-
-        this.socket = sock;
-
-        consoleOut  = new PrintWriter(System.out, true);
-        listenerThread = new ListenerThread();
-    }
-    
-    /* PUBLIC METHODS */
-    
-    /**
-     * Starts the ClientObject, opening the connection
-     * 
-     * @author Christopher Goes
-     */
-    public void startClient() {
-        setWriter();
-        listenerThread.start();
-        System.out.println("Opened connection from client " + clientID + " at address " + socket.getInetAddress());
-    }
-    
-    /**
-     * Send a message to client
+     * Call {@link #start start()} to activate the object
      * <p>
-     * This is just a public wrapper for {@link #write write()}
-     * @param message Message to send
+     * @param sock     The Socket associated with a single client connection
+     * @param clientID The unique ID of the Client
      */
-    public void send(List<String> message) {
-        write(message);
-    }
-    
-    /* GETTERS & SETTERS */
-    
-    /**
-     * Gets the handle of client object
-     * @return handle Username of client
-     * @author Christopher Goes
-    */
-    public String getHandle() {
-        return handle;
+    protected ClientObject( Socket sock, int clientID ) {
+
+        // Data member initializers
+        this.clientID = clientID; // Unique client ID
+        this.handle = "UnknownHandle"; // Default handle
+        this.socket = sock; // Set socket to client connection
+
+        // Initialize threads/streams
+        this.consoleOut = new PrintWriter( System.out, true );
+        this.listenerThread = new ServerListenerThread();
+        this.writerThread = new ServerWriterThread();
+        this.messageQueue = new ArrayBlockingQueue<>( 30, true ); // 30 slots, FIFO access
+
+        this.debug = MessagePhoenix.debugStatus();
+        this.errorOut = new PrintWriter( System.err, true );
     }
 
     /**
-     * Gets the clientID of client object
-     * @return clientID Unique ID of client
+     * Poke from server
+     *
+     * @param flag
+     * @param tag
      */
-    public int getClientID() {
-        return clientID;
-    }
-    
-    /**
-     * Sets current lobby of client object
-     * @param lobby
-     */
-    public void setCurrentLobby(Lobby lobby) {
-        this.currentLobby = lobby;
+    private void send( Flag flag,  Tag tag ) {
+        write( flag, tag, null, null );
     }
 
     /**
-     * Creates a new writer stream off of the socket
-     * NOTE: Socket must be set before calling this method!
-     * @author Christopher Goes
+     * Poke from another client
+     *
+     * @param flag
+     * @param tag
+     * @param sender
      */
-    public void setWriter() {
-        if( socket == null ) {
-            System.err.println("Error in setWriter: null socket!");
-            return;
-        }
-        try {
-            writer = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
-        } catch (IOException e) {
-            System.err.println("Error : Creating output writer for client:" 
-                    + clientID + "\nException: " + e );
-        }
+    protected void send( final Flag flag, final Tag tag, final String sender ) {
+        write( flag, tag, sender, null );
     }
-    
-    /* UTILITY METHODS */
-    
+
+    /**
+     * Send a message to client, no pre-packaging required
+     * Must ensure any collections are either split up, or handled on the receiving end!
+     * <p>
+     * This is just a protected wrapper for {@link #write write()}
+     * <p>
+     * @param flag
+     * @param tag
+     * @param sender
+     * @param message First parameter is assumed to be tag
+     */
+    protected void send( Flag flag, Tag tag, String sender, Object... message ) {
+        write( flag, tag, sender, MessagePhoenix.packMessageContents( message ) );
+    }
+
     /**
      * Writes to socket outgoing connection, hides the protocol details
-     * @param message Message to send
+     *
+     * @param flag
+     * @param tag
+     * @param message
      */
-    private void write(List<String> message) {    
-        MessageUtils.sendMessage(writer, message);
-    }    
-    
-    /* LISTENERTHREAD */
-    
+    private void write( final Flag flag, final Tag tag, final String sender,
+                        final List<Object> message ) {
+        writeToQueue( new NetworkPacket( flag, tag, ((sender == null || sender.isEmpty()) ? "Server" : sender), message ) );
+    }
+
     /**
+     *
+     * @param packet
+     */
+    private void writeToQueue( final NetworkPacket packet ) {
+        if ( packet == null ) {
+            errorOut.println( "Attempted to write null packet to queue!" );
+        } else {
+            try {
+                messageQueue.put( packet );
+            } catch ( InterruptedException ex ) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Checks if client is connected to server
+     * <p>
+     * @author Christopher Goes
+     * @return boolean True if connected, False if not
+     */
+    private boolean isConnected() {
+        return this.socket != null && !(this.socket.isClosed()) && this.socket.isConnected();
+    }
+
+    /**
+     * Handles incoming messages from the client connection it is associated with
      * Makes the blocking receive until a message arrives
      */
-    private class ListenerThread extends Thread {
+    private class ServerListenerThread extends Thread {
 
-        BufferedReader streamIn; //socket incoming
+        private boolean killed = false;
+
+        protected ServerListenerThread() {
+            // empty constructor
+        }
 
         /**
-         * Constructor for ListenerThread, creates stream and object
-         * NOTE: Socket must be set before creating a ListenerThread object!
+         * Creates input stream, and connects to socket
+         * <p>
+         * NOTE: Must be called when creating thread!
+         * <p>
+         * @author Christopher Goes
          */
-        private ListenerThread() {
-            if( socket == null ) {
-                System.err.println("Error in ListenerThread constructor: null socket!");
-                return;
+        private void createStream() {
+            if ( isConnected() ) {
+                try {
+                    ClientObject.this.streamIn = new ObjectInputStream( ClientObject.this.socket.
+                            getInputStream() );
+                } catch ( IOException ex ) {
+                    ex.printStackTrace();
+                }
+            } else {
+                errorOut.println( "Error creating listen stream: socket isn't connected!" );
             }
-            try {
-                streamIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            } catch (IOException e) {
-                System.err.println("Error : Creating streamIn for client: " + clientID);
+        }
+
+        /**
+         * Wrapper for {@link MessagePhoenix#recieveMessage(java.io.ObjectInputStream) }
+         * <p>
+         * @return List received, or null if not connected
+         */
+        private NetworkPacket recieveMessage() { // breaking my own null rule
+            return MessagePhoenix.recieveMessage( ClientObject.this.streamIn );
+        }
+
+        private void killThread() {
+            this.killed = true;
+        }
+
+        /**
+         * Processes incoming messages from the client
+         * <p>
+         * Uses nested switch statements to parse message flags and tags
+         *
+         * @param incomingMessage
+         *
+         * @return False if disconnected or a error occurred
+         *
+         * @author Christopher Goes
+         */
+        private boolean processMessage( final NetworkPacket incomingMessage ) {
+
+            NetworkPacket rawMessage = incomingMessage;
+
+            Tag tag = rawMessage.getTAG();
+            Flag flag = rawMessage.getFlag();
+            String sender = rawMessage.getSender();
+            List<Object> message = rawMessage.getData();
+
+            if ( debug ) {
+                errorOut.println( "Process Message" );
+                errorOut.println( "Tag: " + tag );
+                errorOut.println( "Flag: " + flag );
+                errorOut.print( "Sender: " + sender );
+                errorOut.print( "Data: " );
+                if ( message != null ) {
+                    for ( Object s : message ) {
+                        errorOut.println( "Object " + s.getClass() + ": " + s + " " );
+                    }
+                }
+            }
+            if ( message != null ) {
+            switch ( flag ) {
+                // Tagged Chat Message ex: GLOBAL, LOBBY, PRIVATE, etc
+                case CHAT:
+
+                    switch ( tag ) {
+                        case PRIVATE:
+                            NetworkServer.sendToClient( sender, flag, tag, null, message );
+                            break;
+                        case LOBBY:
+                            currentLobby.sendToEntireLobby( flag, tag, sender, message );
+                            break;
+                        case GLOBAL:
+                            NetworkServer.sendToAllClients( flag, tag, sender, message );
+                            break;
+                        default:
+                            consoleOut.println( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Client stuff?
+                case CLIENT:
+
+                    switch ( tag ) {
+                        case SEND_HANDLE:
+                            handle = sender;
+                            consoleOut.
+                                    println( "Assigning handle " + handle + " to client " + clientID );
+                            NetworkServer.
+                                    sendToAllClients( "Server", handle + "has just connected to the server!" );
+
+                            break;
+                        case MESSAGE_TO_SERVER:
+                        default:
+                            consoleOut.println( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Error message
+                case ERROR:
+
+                    switch ( tag ) {
+                        case INVALID_GAME_ACTION:
+                        case GENERIC_ERROR:
+
+                        default:
+                            consoleOut.println( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Game state update/message/command (Anything related to game)
+                case GAME:
+                    //jarvis.processMessage( message.subList(1, message.size()), TAG );
+                    // TODO: conductor will go in here somewhere
+                    switch ( tag ) {
+
+                        case PHASE_CHANGE:
+                            NetworkServer.
+                                    sendToAllClients( flag, tag, sender + " changed phase to " + message.
+                                            get( 0 ) );
+                            break;
+                        case YIELD_TURN_REQUEST:
+                            send( Flag.RESPONSE, Tag.YIELD_TURN_RESPONSE );
+
+                            break;
+                        default:
+                            consoleOut.println( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Request for inforation ex: REQUEST_LOBBY_INFO
+                case REQUEST: // client shouldn't recieve these!!!
+                    flag = Flag.RESPONSE; // make life easier
+                    switch ( tag ) {
+
+                        case GLOBAL_WHO_REQUEST:
+                            send( flag, Tag.GLOBAL_WHO_RESPONSE, null, NetworkServer.
+                                    getAllUserNames() );
+                            break;
+                        case LOBBY_INFO_REQUEST:
+                            // TODO: possible List<String> to List<Object> conversion issue
+                            if ( currentLobby == null ) {
+                                List<String> lobbyinfo = new ArrayList<>( 0 );
+                                lobbyinfo.add( "Lobbies: " );
+                                // this can be written in a much more verbose manner
+                                // just wanna see if this works. gotta "cowboy code" every once in a while for kicks...
+                                for ( String lobby : NetworkServer.getLobbyNames() ) {
+                                    lobbyinfo.add( lobby + Arrays.toString( NetworkServer.
+                                            getLobbyUsers( lobby ).toString().
+                                            split( " " ) ) );
+                                } // could use a functional as well...hmm...
+                                send( flag, Tag.LOBBY_INFO_RESPONSE, null, lobbyinfo );
+                            } else {
+                                send( flag, Tag.LOBBY_INFO_RESPONSE, null, currentLobby.
+                                        getUserNames() );
+                            }
+                            break;
+                        case NEW_LOBBY_REQUEST:
+                            consoleOut.println( "Received request to create lobby: " + message.
+                                    get( 0 ) );
+
+                            if ( NetworkServer.createNewLobby( (String) message.get( 0 ) ) ) {
+                                NetworkServer.
+                                        joinLobby( (String) message.get( 0 ), ClientObject.this );
+                                send( flag, Tag.NEW_LOBBY_RESPONSE, null, true, "Lobby " + message.
+                                        get( 0 ) + " has been created!" );
+                            } else {
+                                send( flag, Tag.NEW_LOBBY_RESPONSE, null, false, "Could not create lobby, it probably already exists!" );
+                            }
+                            break;
+                        case JOIN_LOBBY_REQUEST:
+                            String lobby = (String) message.get( 0 );
+                            consoleOut.
+                                    println( "Received request to join lobby: " + lobby + " from client " + handle );
+                            if ( currentLobby != null && currentLobby.getName().
+                                    equals( lobby ) ) {
+                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Cannot join lobby, you're already in it!" );
+
+                            } else if ( NetworkServer.joinLobby( handle, ClientObject.this ) ) {
+                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Successfully joined lobby " + currentLobby + "!" );
+                                currentLobby.
+                                        sendToEntireLobby( flag, Tag.JOIN_LOBBY_RESPONSE, "Client " + handle + " has joined the lobby!" );
+                            } else {
+                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Failed to join lobby " + lobby + "! It probably doesn't exist!" );
+                            }
+                            break;
+                        case LEAVE_LOBBY_REQUEST: // TODO: improve on this
+                            consoleOut.
+                                    println( "Client " + handle + " has requested to leave lobby" );
+                            NetworkServer.leaveLobby( ClientObject.this );
+                            send( flag, Tag.LEAVE_LOBBY_RESPONSE, "You have successfully left lobby " + message.
+                                    get( 0 ) );
+                            currentLobby = null;
+                            break;
+                        case UID_REQUEST:
+                            send( flag, Tag.UID_RESPONSE, null, NetworkServer.generateUniqueID() );
+                            break;
+                        case BEGIN_GAME_REQUEST:
+                            if ( currentLobby == null ) {
+                                send( flag, Tag.BEGIN_GAME_RESPONSE,
+                                        "You requested to start the game, but you aren't even in a lobby!" );
+                            } else {
+                                currentLobby.
+                                        sendToEntireLobby( flag, Tag.BEGIN_GAME_RESPONSE,
+                                                ("Client " + sender + " has requested to start a game in lobby " + currentLobby.
+                                                 getName()) );
+                                // TODO: VOTING
+                                currentLobby.beginGame();
+                                currentLobby.sendToEntireLobby( flag, Tag.BEGIN_GAME );
+                            }
+                            break;
+                        case SEND_FILE_REQUEST:
+                        case GET_FILE_REQUEST:
+                        case CREATE_LOBBY_REQUEST:
+                        case YIELD_TURN_REQUEST:
+                            // TODO: implement this!
+                            consoleOut.
+                                    println( "Client " + handle + " (id  " + clientID + " ) yielded turn" );
+
+                            if ( currentLobby == null ) {
+                                //client requested to change turns, but it's not their turn!
+                                //send( MessagePhoenix.NAG, "You requested to yield your turn, but you're not even in lobby!" );
+                            } else if ( currentLobby.current.getClientID() != clientID ) {
+                                //client requested to change turns, but it's not their turn!
+                                //send( MessagePhoenix.NAG, "Requested to yield turn, but it's not your turn!" );
+                            } else {
+                                currentLobby.advanceGameTurn(); //tell lobby handler to advance game turn
+                            }
+                            break;
+                        default:
+                            consoleOut.println( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Response to information request ex: LOBBY_INFO
+                case RESPONSE: // Not used much on the server side (sorry if it seems backwards, remember, there is no spoon)
+                    flag = Flag.REQUEST; // MAKING my life eAsiEr
+                    switch ( tag ) {
+
+                        case VOTE_RESPONSE:
+                        // TODO: voting!
+                        default:
+                            consoleOut.println( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Connection messages/commands ex: DISCONNECT_REQUEST
+                case CONNECTION:
+
+                    switch ( tag ) {
+                        case DISCONNECT_REQUEST:
+                            // Notify client that server recieved request, and is closing its side of the connection
+                            send( Flag.RESPONSE, Tag.DISCONNECT_RESPONSE, null, true ); // true always for now
+                            return false;
+                        default:
+                            consoleOut.println( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Anything related to file transfer, either for network or game state(for now)
+                case FILE:
+
+                    switch ( tag ) {
+                        case GET_FILE_REQUEST:
+                            // send file
+                            break;
+                        case SEND_FILE_REQUEST:
+                            // prepare to recieve file
+                            break;
+                        default:
+                            consoleOut.println( "Unknown tag: " + tag );
+                    }
+                    break;
+                // Anything that doesn't fall into above categories ex: GENERIC
+                case OTHER:
+
+                    switch ( tag ) {
+
+                        case NAG: // What purpose does this serve now?
+                            errorOut.println( "NAG: " + message.get( 0 ) );
+                            break;
+                        default:
+                            consoleOut.println( "Unknown tag: " + tag );
+                    }
+                    break;
+
+                default:
+                    consoleOut.println( "Unknown flag: " + flag );
+                    break;
+            } // end outer switch
+
+                return true;
+            } else {
+                errorOut.println( "Null message!" );
+                return false;
             }
         }
 
         @Override
         public void run() {
-            List<String> message;
-            while (true) {
+            createStream(); // start the stream!
+            NetworkPacket rawMessage = new NetworkPacket();
+
+            while ( !killed ) {
+
+                if ( isConnected() ) {
+                    rawMessage = recieveMessage();
+                    if ( rawMessage == null ) {
+                        killThread();
+                    } else if ( processMessage( rawMessage ) ) {
+                        // suprise party fiddlesticks lives here
+                    } else {
+                        disconnect();
+                    }
+                } else {
+                    consoleOut.
+                            print( "Client " + ClientObject.this.getClientID() + " lost connection!" );
+                    killThread();
+                }
+            }
+            close();
+        }
+
+        private void disconnect() {
+            killThread();
+            NetworkServer.clientDisconnected( ClientObject.this );
+        }
+
+        protected void close() {
+            if ( isConnected() ) {
                 try {
-                    //Blocking read: (messageUtil will return null if socket closed)
-                    message = MessageUtils.receiveMessage(streamIn);
-
-                    // Socket closed OR Client requested disconnect
-                    if (message == null || message.get(0).equals(MessageUtils.DISCONNECT_REQUEST)) {
-                        //connection broken (does NOT throw an exception)
-                        System.out.println("Client " + clientID + " (" + handle + "): disconnected");
-
-                        NetworkServer.clientDisconnected(clientID);
-
-                        close();
-                        return;
-
+                    if ( streamIn != null ) {
+                        streamIn.close();
                     }
 
-                    //what type of message did we get?
-                    //For now, the first element of the parsed array (from messageUtils),
-                    //will tell us:
-                    String TAG = message.get(0);
-                    if (TAG.equals(MessageUtils.GLOBAL_CHAT)) {
-                        //Prints to _server_ console:
-                        MessageUtils.printChat(consoleOut, message);
-
-                        //Send to all connected clients:
-                        NetworkServer.sendToAllClients(message);
-                    } else if (TAG.equals(MessageUtils.FILE)) {
-                        System.out.println("Receiving file " + message.get(1));
-                        file = new ArrayList<String>();
-                    } else if (TAG.equals(MessageUtils.FILE_LINE)) {
-                        if (file != null) {
-                            file.add(message.get(2));
-                            System.out.println(message.get(2));
-                        } else {
-                            System.err.println("No file created to receive!");
-                        }
-                    } else if (TAG.equals(MessageUtils.PRINT_FILE)) {
-                        if (file != null) {
-                            for (String file1 : file) {
-                                System.out.println(file1);
-                            }
-                        } else {
-                            System.err.println("No file loaded!");
-                        }
-                    } else if (TAG.equals(MessageUtils.REQUEST_GLOBAL_WHO)) {
-                        //Client asked for list of current connected users
-                        List<String> handles = NetworkServer.getAllUserNames();
-                        write(MessageUtils.makeGlobalWhoListMessage(handles));
-                    } else if (TAG.equals(MessageUtils.REQUEST_BEGIN_GAME)) {
-                        //Client asked agree to start the game
-                        //TODO: Voting here? Right now, we start when any single client requests
-
-                        if (currentLobby == null){
-                            MessageUtils.sendMessage(writer, 
-                              MessageUtils.makeNagMessage("You requested to start the game, but you aren't even in a lobby!"));
-                        }
-                        else {
-
-                            System.out.println("Client " + handle + 
-                                    " requested to start game in lobby " + currentLobby.getName());
-
-                            currentLobby.beginGame();
-                            currentLobby.sendToEntireLobby(MessageUtils.makeGameBegunMessage());
-                        }
-
-                    } else if (TAG.equals(MessageUtils.CREATE_NEW_LOBBY_REQUEST)) {
-                        //client asks to create new lobby, and provided name
-
-                        String requestedLobbyName = message.get(1);
-                        System.out.println("Received request to create lobby: " 
-                                + requestedLobbyName);
-
-                        if (NetworkServer.createNewLobby(message.get(1))) {
-                            
-                            NetworkServer.joinLobby(message.get(1), ClientObject.this);
-                            MessageUtils.sendMessage(writer,
-                                    MessageUtils.makeNewLobbyRequestAcceptedMessage());
-                        } else {
-                            MessageUtils.sendMessage(writer,
-                                    MessageUtils.makeNewLobbyRequestDeniedMessage());
-                        }
-
-                    } else if (TAG.equals(MessageUtils.REQUEST_LOBBY_INFO)) {
-                        //client asks to create new lobby, and provided name
-                        //Send current lobbies to client:
-                        // TODO: more specific info, sepearate messages
-                        List<String> lobbyNames = NetworkServer.getLobbyNames();
-                        for (String lobby : lobbyNames) {
-                            MessageUtils.sendMessage(writer,
-                                    MessageUtils.makeLobbyInfoMessage(lobby, NetworkServer.getLobbyUsers(lobby) ));
-                        }
-
-                    } else if (TAG.equals(MessageUtils.JOIN_LOBBY_REQUEST)) {
-                        //client requested to join lobby.
-                        System.out.println("Received request to join lobby: " + message.get(1));
-                        NetworkServer.joinLobby(message.get(1), ClientObject.this);
-                        //TODO: implement/send an accept/reject message
-                    } else if (TAG.equals(MessageUtils.LEAVE_LOBBY_REQUEST)) {
-                        System.out.println(handle + " has requested to leave lobby");
-                        NetworkServer.leaveLobby(ClientObject.this);
-                        currentLobby = null;
-
-                    } else if (TAG.equals(MessageUtils.SEND_HANDLE)) {
-                        //client has sent us their new handle:
-                        handle = message.get(1);
-                        System.out.println("Assigning handle " + handle 
-                                + " to client " + clientID);
-
-                        NetworkServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
-
-                    } else if (TAG.equals(MessageUtils.ADD_UNIT)) {
-                        NetworkServer.sendToAllClients(message);
-                    } else if (TAG.equals(MessageUtils.UPDATE_UNIT)) {
-                         NetworkServer.sendToAllClients(message);
-                    } else if (TAG.equals(MessageUtils.YIELD_TURN)) {
-                        //client has sent us their new handle:
-                        //handle = message.get(1);
-                        System.out.println("Client " + handle 
-                                + " (id  " + clientID + " ) yielded turn");
-
-                        
-                        if (currentLobby == null) {
-                            //client requested to change turns, but it's not their turn!
-                            MessageUtils.sendMessage(writer,
-                                    MessageUtils.makeNagMessage("You requested to yield your turn, but you're not even in lobby!"));
-                        } 
-                        else if (currentLobby.current.getClientID() != clientID) {
-                            //client requested to change turns, but it's not their turn!
-                            MessageUtils.sendMessage(writer,
-                                    MessageUtils.makeNagMessage("Requested to yield turn, but it's not your turn!"));
-                        } else {
-                            currentLobby.advanceGameTurn(); //tell lobby handler to advance game turn
-                        }
-                        //NetworkServer.sendToAllClients(MessageUtils.makeConnectionMessage(handle));
-
-                    } else if (TAG.equals(MessageUtils.CHANGE_PHASE)){
-                        NetworkServer.sendToAllClients(message);
-                    } else{
-                        //will add other protocols 
-                        System.err.println("Unknown tag! Printing message...");
-                        for (String s : message) {
-                            System.err.println(s + " ");
-                        }
-                        System.err.println("End of unknown message");
-                    }
-
-                } catch (Exception e) {
-                    System.out.println("Client " + clientID + " error: " + e);
-                    close();
-                    return;
-
-                }
-            }
-
-        }
-
-        public void close() {
-            try {
-                if (!(socket.isClosed())) {
-                    socket.close();
-                }
-                if (streamIn != null) {
-                    streamIn.close();
+                } catch ( IOException e ) {
+                    errorOut.println( e );
+                } finally {
                     streamIn = null;
+                    writerThread.killThread();
+
                 }
-                
-            } catch (IOException e) {
-                System.err.println(e);
             }
         }
 
-    } // end class
+    } // end ServerListenerThread
 
+    /**
+     * Sends messages to the client connection thread is associated with
+     * Created & Destroyed with their associated superclass ClientObject
+     */
+    private class ServerWriterThread extends Thread {
+
+        private boolean killed = false;
+
+        protected ServerWriterThread() {
+            // empty constructor
+        }
+
+        /**
+         * Initializes writer with a new stream.
+         * <p>
+         * NOTE: Socket must be set before calling this!
+         * <p>
+         * @author Christopher Goes
+         */
+        private void setWriter() {
+            if ( isConnected() ) {
+                try {
+                    ClientObject.this.writer = new ObjectOutputStream( ClientObject.this.socket.
+                            getOutputStream() );
+                    ClientObject.this.writer.flush();
+                } catch ( IOException ex ) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
+        /**
+         * Marks thread for death, causing it to close, return, and die
+         * <p>
+         * @author Christopher Goes
+         */
+        private void killThread() {
+            this.killed = true;
+        }
+
+        private void sendMessage( final NetworkPacket message ) {
+            MessagePhoenix.sendMessage( ClientObject.this.writer, message );
+        }
+
+        @Override
+        public void run() {
+            setWriter(); // starts stream!
+            NetworkPacket message = null;
+
+            while ( !killed ) {
+                try {
+                    message = messageQueue.take();
+                } catch ( InterruptedException ex ) {
+                    ex.printStackTrace();
+                    killThread();
+                }
+                if ( message != null && writer != null ) {
+                    // assume first object is tag
+                    sendMessage( message );
+                } else if ( message == null ) {
+                    errorOut.println( "Null message!" );
+                    killThread();
+                } else {
+                    errorOut.println( "Writer is null!" );
+                    if ( !killed ) {
+                        killThread();
+                    }
+                }
+            }
+            close(); // TODO: make sure closing streams in proper order!
+        }
+
+        /**
+         * Always run this before returning from {@link #run run}!
+         */
+        private void close() {
+            try {
+                if ( writer != null ) {
+                    writer.close();
+                    writer = null;
+                }
+            } catch ( IOException ex ) {
+                ex.printStackTrace();
+            }
+        }
+
+    } // end ServerWriterThread
+
+    /**
+     * Starts the ClientObject, opening the connection
+     * <p>
+     * @author Christopher Goes
+     */
+    protected void start() {
+
+        listenerThread.start();
+        writerThread.start();
+        consoleOut.println( "Opened connection from client " + clientID + " at address " + socket.
+                getInetAddress() );
+    }
+
+    /*
+     * GETTERS & SETTERS
+     */
+    /**
+     * Gets the handle of client object
+     * <p>
+     * @return handle Username of client
+     * <p>
+     * @author Christopher Goes
+     */
+    protected String getHandle() {
+        return this.handle;
+    }
+
+    /**
+     * Gets the clientID of client object
+     * <p>
+     * @return clientID Unique ID of client
+     * <p>
+     * @author Christopher Goes
+     */
+    protected int getClientID() {
+        return this.clientID;
+    }
+
+    /**
+     * Sets the handle (username) of the ClientObject
+     * <p>
+     * @param hand Handle to set
+     * <p>
+     * @author Christopher Goes
+     */
+    protected void setHandle( String hand ) {
+        if ( hand != null && !hand.isEmpty() ) {
+            this.handle = hand;
+        } else {
+            errorOut.println( "Tried to set null or empty handle!" );
+        }
+    }
+
+    /**
+     * Sets current lobby of client object
+     * <p>
+     * @param lobby
+     */
+    protected void setCurrentLobby( Lobby lobby ) {
+        this.currentLobby = lobby;
+    }
 
 } // end class
