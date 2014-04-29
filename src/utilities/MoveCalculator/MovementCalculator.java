@@ -36,7 +36,7 @@ public class MovementCalculator
     
     /* movement points cache for current movement calculation 
        keeps track of best path to target hex */
-    static HashMap<MapHex, Double> allowance_cache;
+    static HashMap<MapHex, Double> allowanceCache;
     
     /**
      * This method is nice because it requires less information from the user 
@@ -57,19 +57,20 @@ public class MovementCalculator
     {
         ArrayList<MapHex> illegalMoves = new ArrayList<>();
         ArrayList<MapHex> validHexes = new ArrayList<>();
-        getValidMoves(unit, currHex, unit.getMovement(), validHexes );
+        getValidMoves(unit, currHex, unit.getWorkingMovement(), validHexes );
         
          // find all illegal moves in hashmap - those with negative values.
-        allowance_cache.keySet().stream().filter((key) -> 
-                ( allowance_cache.get(key) < 0 )).forEach((key) -> { illegalMoves.add(key);
+        allowanceCache.keySet().stream().filter((key) -> 
+                ( allowanceCache.get(key) < 0 ))
+                .forEach((key) -> { illegalMoves.add(key);
         });
         
         // remove all entries in illegalMoves from the moves hashmap
         illegalMoves.stream().forEach((keyHex) -> {
-            allowance_cache.remove( keyHex, allowance_cache.get(keyHex) );
+            allowanceCache.remove( keyHex, allowanceCache.get(keyHex) );
         });
         
-        return allowance_cache;
+        return allowanceCache;
     }
     
     /** 
@@ -95,75 +96,50 @@ public class MovementCalculator
     public static void getValidMoves(MoveableUnit movingUnit, MapHex currentHex,
             double moveAllowance, ArrayList<MapHex> validHexes) 
     {
-        // Make sure this isn't a vortex hex
-        if( currentHex.IsVortexHex())
+        // If the current hex is not a valid move, return
+        if( !isCurrentHexValid( currentHex, movingUnit ) )
             return;
         
-        //Make sure this isn't occupied by an enemy unit
-        if( getUnits( currentHex, movingUnit ) )
-            return;
-        
+        // Check if current hex is in an enemy zone of control
         if( isZoneOfControl( currentHex, movingUnit ) )
         {
-           movingUnit.setWorkingMovement( 0 );
+            // If this is not the first of the unit, set movementallowance to 0.
+            // this allows enemies to move out of a zone of control at the 
+            // beginning of move.
+            if( !validHexes.isEmpty() )
+                moveAllowance = 0;
         }
+                 
         //clear the cache, at the start of a new movement.
         if( validHexes.isEmpty() ) 
         {
-            allowance_cache = new HashMap<>();
+            allowanceCache = new HashMap<>();
         }
-        /* check to see if there's already a faster path in the cache
-           if so no point in recursing.
-           if not, add the curret path as the fastest path
-        */
+        // Check for a faster path
         Double allowance;
-        allowance = allowance_cache.putIfAbsent(currentHex, moveAllowance);
+        allowance = allowanceCache.putIfAbsent(currentHex, moveAllowance);
         if(allowance != null) {
             if(allowance >= moveAllowance )
                 return;
             else
-                allowance_cache.put(currentHex, moveAllowance);
+                allowanceCache.put(currentHex, moveAllowance);
         }
         
         int edgeSignal;
         double moveCost;
         TerrainType destinationTerrainType;
-        ArrayList<MapHex> neighbors = new ArrayList<>();
+        ArrayList<MapHex> neighbors;
         
         // This is the case where the move was legal :D
         if( moveAllowance > 0 )
-        {  
-            if( moveAllowance != movingUnit.getWorkingMovement() )
-            {
-                for( int i = 0; i < 6; i++)
-                {
-                    // if true then neighbor hex has enemy unit
-                    if( getUnits(currentHex.getNeighbor(i), movingUnit) )
-                    {
-                        if( !validHexes.contains(currentHex) )
-                        {   
-                            validHexes.add(currentHex);
-                        }
-                        return;
-                    }
-                }
-            }
-            //For each hex edge, 0-5, get the neighboring hex, if it's valid
-            for( int i = 0; i < 6; i++ ) 
-            {
-                //Check if hex is valid, null returned if hex neighbor no exist
-                if( currentHex.getNeighbor(i) != null ) 
-                {
-                    // add each valid neighbor to neighbors if not vortex hex
-                    neighbors.add(currentHex.getNeighbor(i));
-                }
-            }
+        {   
+            // Get the current hexes neighbors
+            neighbors = getNeighbors( currentHex );
             
-            // Add the current hex
+            // Add the current hex to validhexes if it hasn't been added yet
             if( !validHexes.contains(currentHex) )
                 validHexes.add(currentHex);
 
-            
             // Let the recursion begin...
             for( int i = 0; i < neighbors.size(); i++ )
             {
@@ -172,15 +148,15 @@ public class MovementCalculator
                 switch (edgeSignal) {
                     case 1 : // Subtract one for moving over bridge edge
                         getValidMoves( movingUnit, neighbors.get(i),
-                                moveAllowance - 1, validHexes );
+                                moveAllowance - 1., validHexes );
                         break;
                     case 2 : // Subtract 3 for moving over ford edge.
                         getValidMoves( movingUnit, neighbors.get(i), 
-                                moveAllowance - 3, validHexes );
+                                moveAllowance - 3., validHexes );
                         break;
                     case 3 : // Subtract 1 for moving through gate, like bridge
                         getValidMoves( movingUnit, neighbors.get(i), 
-                                moveAllowance - 1, validHexes );
+                                moveAllowance - 1., validHexes );
                         break;
                     case 4 : // Subtract .5 for moving along a road
                         getValidMoves( movingUnit, neighbors.get(i),
@@ -197,7 +173,7 @@ public class MovementCalculator
                         break;
                     case 6 : // Subtrace only one from move cost for trail
                         getValidMoves( movingUnit, neighbors.get(i),
-                                moveAllowance - 1, validHexes );
+                                moveAllowance - 1., validHexes );
                         break;
                     case 7 : // break without recursion for case of wall
                         break;
@@ -221,21 +197,17 @@ public class MovementCalculator
             // do not recurse here - end of the line
             if( !currentHex.IsVortexHex() )
                 validHexes.add(currentHex);
-            return;
             
         } else if( moveAllowance < 0 ) // ILLEGAL!!!! DO NOT ADD!!!
         {
-            // do not add, do not recurse, moving here is illegal
-            return;
         }
     }
     /**
      * This function checks to see if the sourceHex has enemy units in it. It 
-     * returns a 0 if the sourceHex has no units in it, 1 if it contains units
-     * but they are friendly units, and -1 if the sourceHex has enemy units.
+     * returns true if there are enemy units in the hex, false otherwise.
      * @param sourceHex
      * @param movingUnit
-     * @return 
+     * @return boolean
      */
     public static boolean getUnits(MapHex sourceHex, MoveableUnit movingUnit)
     {
@@ -255,16 +227,8 @@ public class MovementCalculator
         int idInNewHex = Integer.parseInt(unitsInHex.get(0).split("#")[0]);
         int idOfCurrent = Integer.parseInt(movingUnit.getID().split("#")[0]);
         
-        if( idInNewHex != idOfCurrent )
-        {
-                return true;
-        }
-        else
-        {
-            return false;
-        }
+        return idInNewHex != idOfCurrent;
     }
-    
     
     /**
      * This method returns -1 if the move between source and dest. is invalid,
@@ -272,14 +236,14 @@ public class MovementCalculator
      * 1 if there IS a road/trail linking the hexes. This is a helper for the 
      * getValidMoves() method.
      * @param sourceHex
-     * @param destinationHex
+     * @param sourceEdgeDirection
      * @return edgeCost 
      * @author Keith and Ian
      */
     public static int getEdgeSignal(MapHex sourceHex, int sourceEdgeDirection ) 
     {
         // allocate and initialize return variable and HexEdge being examined
-        int edgeSignal = 0;
+        int edgeSignal;
         HexEdge edge = sourceHex.getEdge(sourceEdgeDirection);
         
         
@@ -344,15 +308,62 @@ public class MovementCalculator
     {
         boolean isZone = false;
         
+        // loop over neighbors and check if each neighbor has an enemy unit
         for( int i = 0; i < 6; i++)
         {
             // if true then neighbor hex has enemy unit
             if ( getUnits(currentHex.getNeighbor(i), movingUnit) )
                 isZone = true;
         }
-
+        // Characters are unaffected by zones of control
         if( movingUnit.getUnitType() == UnitType.Character )
             isZone = false;
         return isZone;
+    }
+    
+    /**
+     * This method determines if the hex being passed in (the "current" hex)
+     * is a legal move from the context of being the hex that the recursion
+     * is currently at. Returns false is the hex is an illegal move for the 
+     * unit and true otherwise.
+     * @param currHex
+     * @param unit
+     * @return boolean
+     * @author Keith Drew
+     */
+    public static boolean isCurrentHexValid( MapHex currHex, MoveableUnit unit )
+    {
+        boolean valid = true;
+        
+        // Check if the current hex is a vortex hex.
+        if( currHex.IsVortexHex() )
+            valid = false;
+        
+        // Check if current hex has enemy units in it.
+        if( getUnits( currHex, unit ) )
+            valid = false;
+        
+        // Add more conditions for false here
+        return valid;
+    }
+    
+    /** 
+     * This method returns an ArrayList containing the non-null neighbors of
+     * currHex
+     * @param currHex
+     * @return ArrayList<MapHex> neighbors
+     * @author Keith Drew
+     */
+    public static ArrayList<MapHex> getNeighbors( MapHex currHex )
+    {
+        ArrayList<MapHex> neighbors = new ArrayList<>();
+        //For each hex edge, 0-5, get the neighboring hex, if it's valid
+        for( int i = 0; i < 6; i++ )
+        {
+            // Make sure the neighbor exists
+            if( currHex.getNeighbor( i ) != null )
+                neighbors.add( currHex.getNeighbor(i));
+        }
+        return neighbors;
     }
 }

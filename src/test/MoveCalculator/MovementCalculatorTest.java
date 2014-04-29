@@ -10,6 +10,10 @@ import sshexmap.MainMap;
 import Units.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.testng.annotations.Test;
 import sshexmap.MapHex;
 
@@ -32,10 +36,12 @@ public class MovementCalculatorTest extends TestCase {
         String hexID = "0606";
         MainMap map = MainMap.GetInstance();
         UnitPool pool = UnitPool.getInstance();
-        // Initialize EZ Data Structures
+        
+        // Initialize needed data structures
         HashMap<MapHex, Double> moves;
         ArrayList<MapHex> validMoves = new ArrayList<>();
         ArrayList<MapHex> illegalMoves = new ArrayList<>();
+
         // Initialize test unit and add to unitpool
         ArmyUnit unit = new LightSword();
         unit.setRace(Race.Human);
@@ -50,9 +56,7 @@ public class MovementCalculatorTest extends TestCase {
                 unit.getMovement(), validMoves);
         // Get the hashmap with moves:costs for comparison
         moves = MovementCalculator.movementWrapper( unit, map.GetHex( hexID ) );
-  
-       
-        
+         
         // print to see hexes/costs - uncomment if needed.
         /*
         moves.keySet().stream().forEach((key) -> {
@@ -62,6 +66,7 @@ public class MovementCalculatorTest extends TestCase {
         });*/
         // Check that sizes are equal - same number of valid moves from both
         //  sources.
+
         System.out.println("Size 1 and 2: " + validMoves.size() + " " + moves.size());
 
         assertEquals("Check the size of both lists is equal", validMoves.size(),

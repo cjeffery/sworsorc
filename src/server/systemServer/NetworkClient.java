@@ -205,11 +205,11 @@ final public class NetworkClient {
      * @param phase
      *
      * @author Gabe Pearhill
-     */
+     */ 
     public static void sendPhaseChange( String phase ) {
         NetworkClient.send( Flag.GAME, Tag.PHASE_CHANGE, phase );
     }
-
+    
     /**
      *
      * @return
