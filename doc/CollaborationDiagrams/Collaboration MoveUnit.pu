@@ -20,7 +20,7 @@ HC -- HC : 1.4 DisplayStack\n(unitPane, SelectedStack) >
 HC - HC : 2 MoveUnit\n(hexID, hex) >
 HC - MV : 2.1 <font color=red>clearHighlights() >
 HC -- UP : 2.2 addMove(selectedUnit, hex.GetID() >
-HC - HC : 2.3 MoveUnit\n(hexID, hex) >
+HC - HC : 2.3 DisplayStack\n(unitPane, SelectedStack) >
 
 
 
