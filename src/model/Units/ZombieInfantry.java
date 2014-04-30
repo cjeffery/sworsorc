@@ -5,7 +5,7 @@
  */
 
 package Units;
-import Character.Character;
+import Character.Characters;
 
 /**
  *
@@ -13,7 +13,7 @@ import Character.Character;
  */
 public class ZombieInfantry extends Conjured{
 
-    public ZombieInfantry(Character c, int LifeCost) {
+    public ZombieInfantry(Characters c, int LifeCost) {
         super(c, LifeCost);
         strength = 2;
         movement = 3;

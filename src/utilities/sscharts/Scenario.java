@@ -18,7 +18,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 import sshexmap.Provinces;
-import Character.Character;
+import Character.Characters;
 
 
 /**
@@ -151,7 +151,7 @@ public class Scenario {
                     unitIt.remove();
                 }
                 // iterate through the map of this nation's characters
-                Character thisChar;
+                Characters thisChar;
                 List<String> playerChars = getCharacters(nation);
                 Iterator charIt = playerChars.iterator();
                 while (charIt.hasNext()) {

@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  *
  * @author Tao and Cameron
  */
-public final class Character extends MoveableUnit{
+public final class Characters extends MoveableUnit{
     protected String  Name;
     // a character's magic power level may differ from his average MagicPL
     protected int MagicPL;
@@ -39,14 +39,14 @@ public final class Character extends MoveableUnit{
     
     //public int CurrentHex;
     
-    public Character(){
+    public Characters(){
         super();
         this.UnitType = UnitType.Character;
         this.movement = 9.;
         this.ResetWorkingMovement();
     }
     
-    public Character(String a, int b, double c, /*int h*/ String h) {
+    public Characters(String a, int b, double c, /*int h*/ String h) {
         super();
         this.UnitType = UnitType.Character;
         Name        = a;
@@ -78,7 +78,7 @@ public final class Character extends MoveableUnit{
      *  ===========================
      * @param c
      */
-    public void getCharacter(final Character c){
+    public void getCharacter(final Characters c){
         final JFrame char_info = new JFrame("Character Info");
         char_info.setSize(300,300);
         

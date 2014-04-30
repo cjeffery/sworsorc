@@ -5,7 +5,7 @@
  */
 
 package Units;
-import Character.Character;
+import Character.Characters;
 
 /**
  *
@@ -13,7 +13,7 @@ import Character.Character;
  */
 public class KoboldicInfantry extends Conjured{
 
-    public KoboldicInfantry(Character c, int lc) {
+    public KoboldicInfantry(Characters c, int lc) {
         super(c, lc);
         strength = 4;
         movement = 4;

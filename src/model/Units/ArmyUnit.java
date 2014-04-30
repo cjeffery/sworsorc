@@ -6,7 +6,7 @@
 
 package Units;
 
-import Character.Character;
+import Character.Characters;
 
 
 /**
@@ -57,7 +57,7 @@ public class ArmyUnit extends MoveableUnit {
     protected double lifeCost;
     protected int lifeSpan;
     
-    protected Character conjuror;
+    protected Characters conjuror;
     
     protected boolean conjured;
     protected boolean demoralized;

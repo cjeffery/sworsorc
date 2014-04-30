@@ -5,14 +5,14 @@
  */
 
 package Units;
-import Character.Character;
+import Character.Characters;
 /**
  *
  * @author matt
  */
 public class CentauroidCavalry extends Conjured{
 
-    public CentauroidCavalry(Character c, int lc) {
+    public CentauroidCavalry(Characters c, int lc) {
         super(c, lc);
         strength = 3;
         movement = 9;

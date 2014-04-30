@@ -6,7 +6,7 @@
 
 package Units;
 
-import Character.Character;
+import Character.Characters;
 
 /**
  *
@@ -15,7 +15,7 @@ import Character.Character;
  */
 public class Conjured extends ArmyUnit{
     
-    public Conjured(Character c, double lc) {
+    public Conjured(Characters c, double lc) {
         super();
         this.conjuror = c;
         this.lifeCost = lc;

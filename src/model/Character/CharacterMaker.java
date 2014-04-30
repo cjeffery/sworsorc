@@ -14,8 +14,8 @@ import Units.Race;
  * @author Cam
  */
 public class CharacterMaker{
-     public static Character createCharacter(String name){
-        Character newChar = new Character();
+     public static Characters createCharacter(String name){
+        Characters newChar = new Characters();
         switch (name){
             case "Emperor Coron III the Unconquerable" : 
                 newChar.Name = name;

@@ -8,6 +8,7 @@ package mainswordsorcery;
 import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.Color;
+import Character.*;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.parseInt;
 import static java.lang.Integer.parseInt;
@@ -732,6 +733,11 @@ public class HUDController {
      * @author Jay Drage
      */
     public void StartSpell(){
+        if(selected_unit != null){
+            if(selected_unit.getUnitType() == UnitType.Character){
+               // (Characters)selected_unit.;
+            }
+        }
         System.out.println("StartSpell()");
         //Place spell code here
     }

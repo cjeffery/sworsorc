@@ -6,7 +6,7 @@
 
 package Spells;
 
-import Character.Character;
+import Character.Characters;
 import Spells.PL_1.C_Z_I;
 import Spells.PL_1.Force_Wall;
 import Spells.PL_1.TP_Protection;
@@ -56,7 +56,7 @@ import javax.swing.JPanel;
  * @author Tyler & Tao Zhang
  */
 public class Spell {
-    Character character;
+    Characters character;
     
     String  Name;
     int     Level;
@@ -69,7 +69,7 @@ public class Spell {
     
     public JFrame BookFrame;
     
-    public Spell(String n, int lv, double mc, JFrame mainf, Character c) {
+    public Spell(String n, int lv, double mc, JFrame mainf, Characters c) {
         Name  = n;
         Level = lv;
         ManaCost  = mc;   

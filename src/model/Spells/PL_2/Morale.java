@@ -6,7 +6,7 @@
 
 package Spells.PL_2;
 
-import Character.Character;
+import Character.Characters;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -31,12 +31,12 @@ public final class Morale {
     
     JFrame frame;
     
-    Character character;
+    Characters character;
     
     String target_n;
     String target_h;
     
-    public Morale(Character c){
+    public Morale(Characters c){
         character = c;
         
         getTarget();

@@ -6,7 +6,7 @@
 
 package Spells;
 
-import Character.Character;
+import Character.Characters;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
@@ -30,7 +30,7 @@ public final class Spell_Book {
      *      Character info
      *  ==========================
      */
-    Character character;
+    Characters character;
     public int PL;
     public int MagicPotential;
     public double CurrentManna;
@@ -67,7 +67,7 @@ public final class Spell_Book {
  
     
     
-    public Spell_Book(Character c) {
+    public Spell_Book(Characters c) {
         character = c;
         prepareGUI();
         
@@ -114,7 +114,7 @@ public final class Spell_Book {
         
     }
     
-    public Spell[] MySpells(Character character){
+    public Spell[] MySpells(Characters character){
     //public Spell[] MySpells(Character x) {
         Spell[] myList;
         int nSpells = 0;
