@@ -44,6 +44,7 @@ public final class Characters extends MoveableUnit{
         this.UnitType = UnitType.Character;
         this.movement = 9.;
         this.ResetWorkingMovement();
+        spellBook = new Spell_Book(this);
     }
     
     public Characters(String a, int b, double c, /*int h*/ String h) {
@@ -85,7 +86,7 @@ public final class Characters extends MoveableUnit{
         char_info.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) { 
-                System.exit(0);
+                //System.exit(0);
             }
 
         });

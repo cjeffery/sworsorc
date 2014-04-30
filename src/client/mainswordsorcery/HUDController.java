@@ -548,7 +548,7 @@ public class HUDController {
             Button b = new Button("Cast Spell");
             b.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
-                    //Code to call here
+                    StartSpell();
                 }
             });
         

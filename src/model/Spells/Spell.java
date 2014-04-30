@@ -39,7 +39,7 @@ import Spells.PL_6.C_D_I;
 import Spells.PL_6.Firestorm;
 import Spells.PL_6.Summon_Force;
 import Spells.PL_7.Wizard_Wheel;
-import Units.ArmyUnit;
+import Units.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -265,6 +265,9 @@ public class Spell {
         if(conjured != null){
             //TODO:
             conjured.ResetWorkingMovement();
+            UnitPool unitpool = UnitPool.getInstance();
+            unitpool.addUnit(1, conjured);
+
             //insert the conjured unit into the Unit Pool
             conjured = null;
         }

@@ -24,7 +24,7 @@ public final class C_Z_I {
     
     public C_Z_I(Characters c){
         caster = c;
-        prepareGUI();
+        //prepareGUI();
     }
     
     public void prepareGUI(){
@@ -34,7 +34,7 @@ public final class C_Z_I {
             @Override
             public void windowClosing( WindowEvent e )
             {  
-                System.exit(0); 
+                //System.exit(0); 
 
             }
         });
