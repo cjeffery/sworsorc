@@ -214,7 +214,8 @@ public class Spell {
                 Ersatz_Winter e_w = new Ersatz_Winter();
                 break;
             case "Teleporation Control":
-                Teleporation_Control t_c = new Teleporation_Control(character);
+
+                Teleporation_Control t_c = new Teleporation_Control();
                 break;
             case "Conjure Koboldic Infantry":
                 C_K_I c_k_i = new C_K_I(character);
