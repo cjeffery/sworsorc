@@ -6,10 +6,13 @@
 
 package Spells.PL_2;
 
+import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -24,7 +27,7 @@ public final class River_Crossing {
     
     public void prepareGUI(){
         frame = new JFrame("River_Crossing");
-        frame.setSize(100,100);
+        frame.setSize(400,300);
         frame.addWindowListener( new WindowAdapter() {
             @Override
             public void windowClosing( WindowEvent e )
@@ -33,9 +36,13 @@ public final class River_Crossing {
             }
         });
         
-        JLabel notice = new JLabel("This is River_Crossing");
+        ImageIcon morale_image = new ImageIcon("resources/images/Spells/rivercrossing.jpg");
+        JPanel image_panel = new JPanel();
+        //image_panel.setLayout(new BorderLayout());
+        JLabel image_lable = new JLabel("",morale_image, JLabel.CENTER);
         
-        frame.add(notice);
+        image_panel.add(image_lable);
+        frame.add(image_panel, BorderLayout.CENTER);
         frame.setVisible(true);
     }   
     
