@@ -86,7 +86,7 @@ public class UnitPool {
      * @param unitID
      * @param portal 
      */
-    public void setTeleportDestination(String unitID, int portal){
+    public void setTeleportDestination(ArrayList<String> unitID, int portal){
         portalNum = portal -1; 
     }
     
@@ -105,7 +105,7 @@ public class UnitPool {
      * @param unitID
      * @param teleportIsSafe 
      */
-    public void setSafeTeleport(String unitID, boolean teleportIsSafe){
+    public void setSafeTeleport(ArrayList<String> unitID, boolean teleportIsSafe){
         this.safeTeleport = teleportIsSafe;
     }
     
