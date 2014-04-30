@@ -42,21 +42,22 @@ import sshexmap.MapView;
  */
 
 public class UnitPool {   
-    private SortedMap<Integer, TreeMap<String,ArrayList<MoveableUnit>>> 
+    private final SortedMap<Integer, TreeMap<String,ArrayList<MoveableUnit>>> 
             pool = Collections.synchronizedSortedMap(new TreeMap<Integer, 
                     TreeMap<String,ArrayList<MoveableUnit>>>());
-    private SortedMap<String, ArrayList<String>> hexList = 
+    private final SortedMap<String, ArrayList<String>> hexList = 
             Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());
-    private SortedMap<String, ArrayList<String>> unitMove = 
+    private final SortedMap<String, ArrayList<String>> unitMove = 
             Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());;
-    private Object[] options = {"Yes","No",};
+    private final Object[] options = {"Yes","No",};
     private boolean safeTeleport;
     private PopOver item;
-    
+    private int portalNum = 0;
     
     private static UnitPool INSTANCE;
     
-    private MapView view = MapView.getMapView();
+    private final MapView view = MapView.getMapView();
+    
     /**
      * This creates or returns the unit pool singleton.
      * 
@@ -74,24 +75,61 @@ public class UnitPool {
      * 
      * @return 
      */
+    public int getTeleportDestination(){
+        return portalNum;
+        
+    }
+    
+    /**
+     * Used with the teleport spells;
+     * 
+     * @param unitID
+     * @param portal 
+     */
+    public void setTeleportDestination(ArrayList<String> unitID, int portal){
+        portalNum = portal -1; 
+    }
+    
+    /**
+     * Used with the teleport spells;
+     * 
+     * @return 
+     */
     public boolean getSafeTeleport(){
         return this.safeTeleport;
     }
     
     /**
      * Used in unit move. 
+     * 
+     * @param unitID
      * @param teleportIsSafe 
      */
-    public void setSafeTeleport( boolean teleportIsSafe){
+    public void setSafeTeleport(ArrayList<String> unitID, boolean teleportIsSafe){
         this.safeTeleport = teleportIsSafe;
     }
     
+    public boolean overStackWaring(String location){
+        if (hexList.get(location).size() > 2){
+            Dialogs.create()
+            .title("Stack Warring")
+            .masthead("One too many!")
+            .message("You will hafe to eleminate " + (hexList.get(location).size() - 2) + " unit at the end of your move phase if you dont move them.")
+            .actions(Dialog.Actions.OK)
+            .showConfirm();
+            return true;
+        }
+        return false;
+    } 
     /**
-     * Used to add a new unit to the pool with an initial location.
+     * Used to add a new unit to the pool with an initial location.*
      * 
+     * @param playerID
+     * @param unit
      * @param location : the hex the unit occupies. 
      */        
     public void addUnit(int playerID, MoveableUnit unit, String location){
+        unit.ResetWorkingMovement();
         unit.setLocation(location);
         this.addUnit(playerID, unit);
         this.addToHex(hexList, unit);
@@ -122,7 +160,7 @@ public class UnitPool {
         listSize = unitList.size() - 1;
         
         for (int i = 0; i <= listSize && !unitFound; i++){
-            if (unitList.get(i).getID() == unit.getID()){
+            if (unitList.get(i).getID().equals(unit.getID())){
                 this.hexList.get(unit.getLocation()).remove(unit.getID());
                 this.unitMove.remove(unit.getID());
                 unitList.remove(i);
@@ -139,7 +177,7 @@ public class UnitPool {
      * Example:
      * pool.addUnit (1, new LightSword, "0101");
      * 
-     * @param playerID : the player number or unique ID
+     * @param playerId
      * @param unit     : an instance of some army unit  
      */
     public void addUnit(int playerId, MoveableUnit unit){
@@ -217,7 +255,7 @@ public class UnitPool {
      * addMove(getUnitsInHex("0101").get(0),"0102");
      * 
      * @param unit  : A valid instance of a army units class.
-     * @param hexId : The hex the unit is moving into.
+     * @param destinationHexID
      */
     
     
@@ -387,7 +425,7 @@ public class UnitPool {
         
         do {
                     unit = pool.get(playerId).get(unitClass).get(i);
-                    test = unit.getID() == unitId;
+                    test = unit.getID().equals(unitId);
                     i++;
                  } while (i < pool.get(playerId).get(unitClass).size() && !test );
         if (test)
@@ -487,7 +525,7 @@ public class UnitPool {
         else{
             portalNum--;
             destinationHex = this.teleportDestinationLogic(portalNum);
-            if (unit.getLocation() == destinationHex )
+            if (unit.getLocation().equals(destinationHex) )
                 return false;
             else{
                 this.addMove(unit, destinationHex, true);
