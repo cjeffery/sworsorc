@@ -710,7 +710,7 @@ public class HUDController {
      */
     public void StartCombat(){        
         System.out.println("StartCombat()");
-        LaunchBotton(selected_unit, target_unit);
+        LaunchBotton(selected_stack, target_stack);
     }
     /**
      * used to start spells
