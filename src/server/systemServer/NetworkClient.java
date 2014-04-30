@@ -68,7 +68,7 @@ final public class NetworkClient {
 
     // goto Conductor
     // private Conductor jarvis; // Our conductor object
-
+    // TODO: SOCKET ERRORS ON CLIENT CLOSURE
     /*
      * PUBLIC METHODS
      */
@@ -301,6 +301,7 @@ final public class NetworkClient {
                 } else if ( "/reconnect".equals( parsedString[0] ) ) {
                     if ( remoteConnectionIsAlive() ) {
                         flushToConsole( "You're already connected!" );
+                        return true;
                     } else if ( isConnected() ) {
                         flushToConsole( "Error! connection isn't alive but socket is!" );
                         return false;
@@ -488,8 +489,11 @@ final public class NetworkClient {
                     ex.printStackTrace();
                     killThread();
                 }
-                if ( message != null ) { // Don't want null messages
+                if ( message != null || !isConnected() ) { // Don't want null messages
                     sendMessage( message );
+                } else if ( !isConnected() ) {
+                    flushToConsole( "Lost connection to server!" );
+                    killThread();
                 } else {
                     System.err.println( "Null message given to client writer thread!" );
                     killThread();
@@ -563,7 +567,7 @@ final public class NetworkClient {
          * @return
          */
         private NetworkPacket recieveMessage() {
-            return isConnected() ? MessagePhoenix.recieveMessage( streamIn ) : null;
+            return streamIn != null && isConnected() ? MessagePhoenix.recieveMessage( streamIn ) : null;
         }
 
         /**
@@ -583,7 +587,7 @@ final public class NetworkClient {
             if ( incomingMessage != null ) {
                 rawMessage = incomingMessage;
             } else {
-                System.err.println( "Null message processed!" );
+                flushToConsole( "Null message processed by processMessage in the listener thread!" );
                 return false;
             }
 
@@ -598,10 +602,13 @@ final public class NetworkClient {
 
             message = rawMessage.getData(); // possibly null(shouldn't be anymore)
             if ( message == null ) {
-                System.err.println( "Null data!" );
+                System.out.println( "Null data!" );
                 return false;
-            }
-            if ( message.get( 0 ).getClass().equals( String.class ) ) {
+            } else if ( message.isEmpty() ) {
+                if ( debug ) {
+                    System.out.println( "Diagnostic: empty message " );
+                }
+            } else if ( message.get( 0 ).getClass().equals( String.class ) ) {
                 stringmessage = (String) message.get( 0 );
             }
 
@@ -628,7 +635,7 @@ final public class NetworkClient {
                                     get( 0 ) );
                             break;
                         case GLOBAL:
-                            flushToConsole( "(GLOBAL)" + sender + ": " + stringmessage );
+                            flushToConsole( "(GLOBAL) " + sender + " : " + stringmessage );
                             break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
@@ -735,9 +742,13 @@ final public class NetworkClient {
 
                     switch ( tag ) {
                         case DISCONNECT_RESPONSE:
-                            disconnect();
-                            killThread();
-                            return true;
+                            if ( (boolean) message.get( 0 ) ) {
+                                disconnect();
+                                return false;
+                            } else {
+                                flushToConsole( "Server refused request to disconnect! How ruuude!\nYou are still connected, try again in a little bit, server might be overloaded." );
+                                return true;
+                            }
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
@@ -777,31 +788,34 @@ final public class NetworkClient {
 
             // Start the input stream. VERY IMPORTANT!
             if ( !createStream() ) {
-                flushToConsole( "Unable to start listener thread" );
+                flushToConsole( "Unable to start listener thread: stream creation failure!" );
                 killThread();
             }
 
             // incoming message from server. First string is message tag.
-            NetworkPacket incomingMessage = null;
+            NetworkPacket incomingMessage = new NetworkPacket(); // damn nulls are everywhere!
 
             // Main loop
             while ( !killed ) {
-                if ( isConnected() && streamIn != null ) {
+                if ( streamIn != null && isConnected() ) {
                     incomingMessage = recieveMessage(); // get the message                    
-                } else if ( streamIn == null ) {
-                    System.err.println( "streamIn is null!" );
+                } else if ( !isConnected() ) {
+                    flushToConsole( "Lost connection to server!" );
                     killThread();
                 } else {
-                    continue; // Relax at the MoxieJava until message arrives
+                    //continue; // Relax at the MoxieJava until message arrives
+                    System.err.println( "streamIn is null!" );
+                    killThread();
                 }
 
                 if ( incomingMessage == null ) {
-                    System.err.println( "Null message from server, or default never changed!" );
+                    System.err.println( "Incoming message is null: its all his fault!)" );
                     killThread();
                 } else if ( incomingMessage.isEmpty() ) {
                     System.err.println( "Empty message from server!" );
+                    killThread();
                 } else if ( processMessage( incomingMessage ) ) {
-                    // TODO: something important
+                    // TODO: something important ( like a suprise party! )
                 } else {
                     System.err.println( "processMessage failed!" );
                 } // end else      

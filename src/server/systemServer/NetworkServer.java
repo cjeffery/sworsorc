@@ -37,6 +37,7 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
 
     // Flags
     private static boolean stopped = false; // Stops server if set to true
+    private static boolean debug = false;
 
     // MESSAGES//
     /**
@@ -46,7 +47,8 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
      * @param message
      */
     protected static void sendToAllClients( String sender, String message ) {
-        sendToAllClients( Flag.CHAT, Tag.GLOBAL, sender, message );
+        sendToAllClients( Flag.CHAT, Tag.GLOBAL, sender, MessagePhoenix.
+                packMessageContents( message ) );
     }
 
     /**
@@ -57,7 +59,7 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
      * @param sender
      * @param message
      */
-    protected static void sendToAllClients( Flag flag, Tag tag, String sender, Object... message ) {
+    protected static void sendToAllClients( Flag flag, Tag tag, String sender, List<Object> message ) {
         for ( ClientObject client : clientObjects ) {
             client.send( flag, tag, sender, message );
         }
@@ -78,7 +80,7 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
                                            Object... message ) {
         for ( ClientObject client : NetworkServer.clientObjects ) {
             if ( client.getHandle().equals( handle ) ) {
-                client.send( flag, tag, sender, message );
+                client.send( flag, tag, sender, ((Object[]) message) );
                 return true;
             }
         }
@@ -93,13 +95,17 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
      */
     protected static void clientDisconnected( ClientObject client ) {
 
-        // TODO: verify that this is operating properly
-        // TODO: null check
-
-        leaveLobby( client );
-        clientObjects.remove( client );
-        totalClients--; // Decrement total clients, we weren't doing this before
-        // Client should kill itself (like a true warrior) client.killClient();
+        if ( client == null ) {
+            System.err.println( "null client passed to clientDisconnected!" );
+            return;
+        }
+        leaveLobby( client ); // Leave any lobby client may be in
+        clientObjects.remove( client ); // Remove from list of clients
+        totalClients--; // Decrement total clients
+        if ( debug ) {
+            System.err.println( "totalClients after decrement: " + totalClients );
+        }
+        // Client should kill itself
         System.out.
                 println( "Client " + client.getHandle() + " (" + client.getClientID() + ") has disconnected" );
         sendToAllClients( "Server", ("User" + client.getHandle() + " has disconnected!") );
@@ -157,7 +163,13 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
      * @return False if client is already in lobby or an Error occurred
      */
     protected static boolean joinLobby( String lobbyName, ClientObject client ) {
-        // TODO: add null check
+        if ( lobbyName == null || client == null ) {
+            System.err.println( "Null arg passed to joinLobby!" );
+            return false;
+        } else if ( lobbyName.isEmpty() ) {
+            System.err.println( "Empty string passed to joinLobby!" );
+            return false;
+        }
         // TODO: game status check
         for ( Lobby l : lobbies ) {
             if ( l.getName().equals( lobbyName ) ) {
@@ -180,8 +192,11 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
      * <p>
      * @param client
      */
-    protected static void leaveLobby( ClientObject client ) {
-        // TODO: add null check
+    protected static void leaveLobby( ClientObject client ) { // TODO: boolean return?
+        if ( client == null ) {
+            return;
+        }
+        // Search all lobbies for client
         for ( Lobby l : lobbies ) {
             if ( l.lobbyClients.contains( client ) ) {
                 l.leaveLobby( client );
@@ -193,7 +208,6 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
                 return;
             }
         }
-        System.err.println( "Requested to leave lobby from client not in lobby" );
     }
 
     /**
@@ -297,11 +311,12 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
      * @param args
      */
     public static void main( String args[] ) {
+
+        debug = MessagePhoenix.debugStatus();
         clientObjects = new ArrayList<>( 0 );
         lobbies = new ArrayList<>( 0 );
 
         System.out.println( "Server starting. . ." );
-
         System.out.println( "Binding port " + DEFAULT_PORT + " . . ." );
 
         try {

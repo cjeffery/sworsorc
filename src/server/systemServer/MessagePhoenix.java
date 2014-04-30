@@ -23,7 +23,7 @@ import java.util.List;
 final public class MessagePhoenix {
 
     // Leave disabled unless you are testing Network internals
-    final private static boolean debug = false; // Change this to enable/disable debugging
+    final private static boolean debug = true; // Change this to enable/disable debugging
 
     /**
      * Test if debugging is enabled

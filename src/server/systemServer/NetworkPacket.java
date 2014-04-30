@@ -115,7 +115,7 @@ public class NetworkPacket implements Serializable {
      * @return
      */
     public boolean isEmpty() {
-        return data.isEmpty() && tag == null && flag == null && sender.isEmpty();
+        return data.isEmpty() && tag == Tag.NULL_TAG && flag == Flag.NULL_FLAG && sender.isEmpty();
     }
 
 }
