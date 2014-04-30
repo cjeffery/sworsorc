@@ -16,27 +16,27 @@ import java.util.List;
  * The Network Server
  * Singleton that manages client connections, lobbies, and communication between clients
  * <p>
- * In theory, you should be able to run a client on same machine as the hosting server
- * This is not recommended
+ * In theory, you should be able to run a client on same machine as the hosting server.
+ * This is not recommended.
  * <p>
  * @author Networking Subteam
  */
 final public class NetworkServer { // TODO: could this possibly a subclass of NetworkClient?
 
     // Clients
-    private static List<ClientObject> clientObjects;
-    private static int totalClients = 0;
+    private static List<ClientObject> clientObjects; // Connected clients
+    private static int totalClients = 0; // Current Number of connected clients
 
     // Lobbies
-    private static List<Lobby> lobbies;
-    private static int totalLobbies = 0; //used to assign unique lobbyId's
+    private static List<Lobby> lobbies; // Game lobbies
+    private static int totalLobbies = 0; // Current Number of Game lobbies
 
     // Server
-    private static final int DEFAULT_PORT = 25565;
-    private static int uniqueID = 0;
+    final private static int DEFAULT_PORT = 25565; // Default SworSorc server port
+    private static int uniqueID = 0; // Guaranteed(I would hope) Unique ID
 
     // Flags
-    private static boolean stopped = false;
+    private static boolean stopped = false; // Stops server if set to true
 
     // MESSAGES//
     /**
@@ -118,7 +118,12 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
         return handles;
     }
 
-    protected static int numClientsConnected() {
+    /**
+     * Current number of clients connected to this server
+     *
+     * @return
+     */
+    protected static int getTotalClients() {
         return totalClients;
     }
 
@@ -243,6 +248,11 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
         return false;
     }
 
+    /**
+     * Current number of active game lobbies on this server
+     *
+     * @return
+     */
     protected static int getTotalLobbies() {
         return totalLobbies;
     }

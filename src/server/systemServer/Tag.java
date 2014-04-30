@@ -7,6 +7,7 @@
 package systemServer;
 
 /**
+ * Specific message type being sent
  *
  * @author Christopher Goes <GhostOfGoes@gmail.com>
  */
@@ -20,7 +21,7 @@ public enum Tag {
     LEAVE_LOBBY_REQUEST, LEAVE_LOBBY_RESPONSE,
     UID_REQUEST, UID_RESPONSE,
     MESSAGE_TO_SERVER, MESSAGE_FROM_SERVER,
-    NAG, // Still needed?
+    NAG, // TODO: Still needed?
     BEGIN_GAME_REQUEST, BEGIN_GAME_RESPONSE,
     NEXT_TURN_INFO, // TODO: deprecated(?)
     DISCONNECT_REQUEST, DISCONNECT_RESPONSE,
@@ -33,7 +34,8 @@ public enum Tag {
     PHASE_CHANGE, // Gabe's phase changing
     CREATE_LOBBY_REQUEST, CREATE_LOBBY_RESPONSE,
     VOTE_RESPONSE, VOTE_REQUEST, BEGIN_GAME,
-    UPDATE_HANDLE_REQUEST, UPDATE_HANDLE_RESPONSE, // TODO: implement this
+    UPDATE_HANDLE_REQUEST, UPDATE_HANDLE_RESPONSE,
+    NULL_TAG,
 
 
 

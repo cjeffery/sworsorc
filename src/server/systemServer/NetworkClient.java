@@ -79,6 +79,7 @@ final public class NetworkClient {
      * NOTE: will use default settings file of "netclient_settings.txt"
      * <p>
      * @return True if started OK, False if connection failed
+     *
      * @author Christopher Goes
      */
     public static boolean initializeClient() { // default
@@ -173,13 +174,17 @@ final public class NetworkClient {
     public static void sendGlobalChatMessage( String message ) {
         NetworkClient.send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, message );
     }
-    
+
     /**
-     * Sends a message to other users indicating a phase chage!
-     * @param phase 
+     * Sends a message to other users indicating a phase change!
+     * <p>
+     * @param phase
+     *
+     * @author Game Pearhill
      */
-    public static void sendPhaseChange(String phase){
-        MessageUtils.sendMessage(writer, MessageUtils.makePhaseChangeMessage(phase));
+    public static void sendPhaseChange( String phase ) {
+        send( Flag.GAME, Tag.PHASE_CHANGE, username, phase );
+        //MessageUtils.sendMessage(writer, MessageUtils.makePhaseChangeMessage(phase));
     }
 
     /**
@@ -199,17 +204,6 @@ final public class NetworkClient {
         return phasing;
     }
 
-    /**
-     * Sends a message to other users indicating a phase change!
-     * <p>
-     * @param phase
-     *
-     * @author Gabe Pearhill
-     */ 
-    public static void sendPhaseChange( String phase ) {
-        NetworkClient.send( Flag.GAME, Tag.PHASE_CHANGE, phase );
-    }
-    
     /**
      *
      * @return
@@ -395,6 +389,7 @@ final public class NetworkClient {
             String line = null;
 
             /*
+             * TODO
              * if ( !addressSet ) { flushToConsole( "Please enter IP address of server(ex
              * \"127.0.0.1\"): " );
              * setServerName( getCommand() );
@@ -584,6 +579,7 @@ final public class NetworkClient {
          */
         private boolean processMessage( final NetworkPacket incomingMessage ) {
             NetworkPacket rawMessage = new NetworkPacket();
+            String stringmessage = "";
             if ( incomingMessage != null ) {
                 rawMessage = incomingMessage;
             } else {
@@ -591,9 +587,8 @@ final public class NetworkClient {
                 return false;
             }
 
-            // TODO: put default sender in write method
             List<Object> message;
-            Tag tag; // local default
+            Tag tag;
             Flag flag;
             String sender;
 
@@ -601,21 +596,23 @@ final public class NetworkClient {
             flag = rawMessage.getFlag();
             sender = rawMessage.getSender();
 
-            message = rawMessage.getData(); // possibly null
+            message = rawMessage.getData(); // possibly null(shouldn't be anymore)
+            if ( message == null ) {
+                System.err.println( "Null data!" );
+                return false;
+            }
+            if ( message.get( 0 ).getClass().equals( String.class ) ) {
+                stringmessage = (String) message.get( 0 );
+            }
 
+            // Debugging
             if ( debug ) {
                 System.err.println( "Process Message" );
                 System.err.println( "Tag: " + tag );
                 System.err.println( "Flag: " + flag );
                 System.err.println( "Sender: " + sender );
-                System.err.println( "Data: " );
-                if ( message != null ) {
-                    for ( Object s : message ) {
-                    System.err.println( "Object " + s.getClass() + ": " + s + " " );
-                    }
-                } else {
-                    System.err.println( "null data!" );
-                }
+                System.err.println( "Data: " + message.toString() );
+                System.err.println( "stringmessage: " + stringmessage );
             }
 
             switch ( flag ) {
@@ -624,20 +621,20 @@ final public class NetworkClient {
 
                     switch ( tag ) {
                         case PRIVATE:
-                            flushToConsole( "(Private)" + sender + ": " + message.get( 0 ) );
+                            flushToConsole( "(Private)" + sender + ": " + stringmessage );
                             break;
                         case LOBBY:
                             flushToConsole( "(" + currentLobby + ")" + sender + ": " + message.
                                     get( 0 ) );
                             break;
                         case GLOBAL:
-                            flushToConsole( "(GLOBAL)" + sender + ": " + message.get( 0 ) );
+                            flushToConsole( "(GLOBAL)" + sender + ": " + stringmessage );
                             break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
                     break;
-                // Network Command (Different from CONNECTION, may not be needed)
+                // Server-Client Network command communication
                 case CLIENT:
 
                     switch ( tag ) {
@@ -665,13 +662,14 @@ final public class NetworkClient {
                     // TODO: conductor will go in here somewhere
                     switch ( tag ) {
                         case NEXT_TURN_INFO:
-                            if ( username.equals( message.get( 0 ) ) ) {
+                            if ( username.equals( stringmessage ) ) {
                                 flushToConsole( ("It is now my turn!") );
                             } else {
-                                flushToConsole( "It is now " + message.get( 1 ) + "'s turn!" );
+                                flushToConsole( "It is now " + (String) message.get( 1 ) + "'s turn!" );
                             }
                             break;
                         case YIELD_TURN_RESPONSE:
+                            // TODO: finish phasing implementation
                             if ( (boolean) message.get( 0 ) ) {
                                 phasing = false;
                             } else {
@@ -683,7 +681,7 @@ final public class NetworkClient {
                     }
                     break;
                 // Request for inforation ex: REQUEST_LOBBY_INFO
-                case REQUEST: // client shouldn't recieve these!!!
+                case REQUEST: // Client doesn't usually get requests currently
                     flag = Flag.RESPONSE; // programmers are lazy
                     switch ( tag ) {
                         default:
@@ -691,30 +689,15 @@ final public class NetworkClient {
                     }
                     break;
                 // Response to information request ex: LOBBY_INFO
-                case RESPONSE:
+                case RESPONSE: // Incoming from server
                     flag = Flag.REQUEST; // lifeEasiness++
                     switch ( tag ) {
 
                         case GLOBAL_WHO_RESPONSE:
-                            /*
-                             * if (message.isEmpty()) {
-                             * flushToConsole("No users online.");
-                             * } else {
-                             * tempMessage = (message.size() + " users online: ");
-                             * for (String l : message) {
-                             * tempMessage += (" " + l);
-                             * }
-                             * flushToConsole(tempMessage);
-                             */
+                            flushToConsole( stringmessage );
                             break;
                         case LOBBY_INFO_RESPONSE:
-                            /*
-                             * tempMessage = ("Lobby " + message.get(0) + ", Users: ");
-                             * for (String l : message ) {
-                             * tempMessage += (" " + l);
-                             * }
-                             * flushToConsole(tempMessage);
-                             */
+                            flushToConsole( stringmessage );
                             break;
                         case NEW_LOBBY_RESPONSE:
                             // TODO: more actions?
@@ -724,14 +707,14 @@ final public class NetworkClient {
                             } else {
                                 // denied, server provides reason
                                 flushToConsole( "Could not create lobby: " + message.get( 1 )
-                                        + "!\n" + message.get( 2 ) );
+                                        + "!\n" + (String) message.get( 2 ) );
                             }
                             break;
                         case UID_RESPONSE:
                             // TODO: handle Unique ID messages!
                             break;
                         case JOIN_LOBBY_RESPONSE:
-                            currentLobby = (String) message.get( 0 );
+                            currentLobby = stringmessage;
                             break;
                         case LEAVE_LOBBY_RESPONSE:
                             currentLobby = "Not in a Lobby";
@@ -740,7 +723,7 @@ final public class NetworkClient {
                             currentLobby = (String) message.get( 1 );
                             break;
                         case BEGIN_GAME_RESPONSE: // Client will see game started, so just print message
-                            flushToConsole( (String) message.get( 0 ) );
+                            flushToConsole( stringmessage );
                             break;
 
                         default:
@@ -773,8 +756,8 @@ final public class NetworkClient {
                     switch ( tag ) {
 
                         case NAG:
-                            System.err.println( "NAG: " + message.get( 1 ) );
-                            flushToConsole( "NAG: " + message.get( 1 ) );
+                            System.err.println( "NAG: " + (String) message.get( 1 ) );
+                            flushToConsole( "NAG: " + (String) message.get( 1 ) );
                             break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
@@ -972,16 +955,8 @@ final public class NetworkClient {
         postMessage( lastMessage );
     }
 
-    private static void write( Flag flag, Tag tag ) {
-        write( flag, tag, username, null );
-    }
-
     private static void write( Flag flag, Tag tag, String sender ) {
         write( flag, tag, sender, null );
-    }
-
-    private static void write( Flag flag, Tag tag, List<Object> message ) {
-        write( flag, tag, username, message );
     }
 
     private static void write( Flag flag, Tag tag, String sender, List<Object> message ) {

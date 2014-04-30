@@ -8,7 +8,7 @@
 package systemServer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,7 +16,11 @@ import java.util.List;
  * @author Christopher Goes
  */
 public class NetworkPacket implements Serializable {
+
+    // Packet ID (Used by JVM)
     private static final long serialVersionUID = 1L;
+
+    // Packet data
     private final Flag flag;
     private final Tag tag;
     private final List<Object> data;
@@ -27,17 +31,36 @@ public class NetworkPacket implements Serializable {
      * @param FLAG
      * @param TAG
      * @param DATA
-     * @param sender
+     * @param SENDER
      */
-    public NetworkPacket( Flag FLAG, Tag TAG, String sender, List<Object> DATA ) {
-        this.flag = FLAG;
-        this.tag = TAG;
+    public NetworkPacket( Flag FLAG, Tag TAG, String SENDER, List<Object> DATA ) {
+
+        // Null checks
+        // Apparantly using ternary statements here is an error, according to netbeans
+        // Not sure why that is, seems to be a design practice thing than an actual error
+        if ( FLAG != null ) {
+            this.flag = FLAG;
+        } else {
+            this.flag = Flag.NULL_FLAG;
+        }
+
+        if ( TAG != null ) {
+            this.tag = TAG;
+        } else {
+            this.tag = Tag.NULL_TAG;
+        }
+
         if ( DATA != null ) {
             this.data = DATA;
         } else {
-            this.data = new ArrayList<>( 0 );
+            this.data = Collections.emptyList();
         }
-        this.sender = sender; // there should not be a null sender
+
+        if ( SENDER != null ) {
+            this.sender = SENDER;
+        } else {
+            this.sender = "";
+        }
     }
 
     /**
@@ -61,8 +84,7 @@ public class NetworkPacket implements Serializable {
      * @return the data
      */
     public List<Object> getData() {
-        //return Collections.unmodifiableList( data );
-        return data;
+        return Collections.unmodifiableList( data );
     }
 
     /**

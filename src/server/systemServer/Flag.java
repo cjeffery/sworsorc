@@ -8,10 +8,12 @@
 package systemServer;
 
 /**
+ * General category of message being sent
  *
  * @author Christopher Goes
  */
 public enum Flag {
-    CHAT, CLIENT, ERROR, GAME, REQUEST, RESPONSE, CONNECTION, FILE, OTHER
+    CHAT, CLIENT, ERROR, GAME, REQUEST, RESPONSE, CONNECTION, FILE, OTHER,
+    NULL_FLAG,
 
 }

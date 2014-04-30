@@ -9,8 +9,8 @@ package systemServer;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,9 +22,11 @@ import java.util.List;
  */
 final public class MessagePhoenix {
 
-    final private static boolean debug = true; // Change this to enable/disable debugging
+    // Leave disabled unless you are testing Network internals
+    final private static boolean debug = false; // Change this to enable/disable debugging
 
     /**
+     * Test if debugging is enabled
      *
      * @return
      */
@@ -34,21 +36,21 @@ final public class MessagePhoenix {
 
     // TODO: tag stripping done in MessagePhoenix
     // TODO: buffer size
-    // TODO: would this be better as a method interface, then implement in classes?
-    // TODO: make sure server is prepending messagetype/username
-    // TODO: could all the string concatenations be causeing performance issues?
     // TODO: need checks for game state on certain actions, such as lobbies
     // PUBLIC INTERFACE //
     /**
-     * Sending a packed message
+     * Sending a packed message to the specified output stream
+     * <p>
+     * Writes a single object, then flushes the stream
      *
      * @param writer
      * @param message
+     *
+     * @author Christopher Goes
      */
     public static void sendMessage( final ObjectOutputStream writer, final NetworkPacket message ) {
         if ( writer != null && message != null ) {
             try {
-                //writer.writeObject( message );
                 writer.writeUnshared( message );
                 writer.flush();
             } catch ( IOException ex ) {
@@ -59,6 +61,16 @@ final public class MessagePhoenix {
         }
     }
 
+    /**
+     * Receive a message from the specified stream
+     *
+     * @param reader
+     *
+     * @return
+     *         A {@link NetworkPacket message} is returned
+     *
+     * @author Christopher Goes
+     */
     public static NetworkPacket recieveMessage( final ObjectInputStream reader ) {
 
         NetworkPacket temp = new NetworkPacket();
@@ -77,60 +89,15 @@ final public class MessagePhoenix {
         }
     }
 
-    // PUBLIC UTILITIES //
-
     /**
+     * Pack a variable array of individual messages into a List suitable for sending
      *
      * @param message
-     *                <p>
      * @return
+     *
+     * @author Christopher Goes
      */
     public static List<Object> packMessageContents( Object... message ) {
-        List<Object> temp = new ArrayList<>( 0 );
-        temp.addAll( Arrays.asList( message ) );
-        return temp;
+        return message != null ? Arrays.asList( message ) : Collections.emptyList();
     }
-
-    /**
-     *
-     * @param items
-     *              <p>
-     * @return
-     */
-    public static List<String> createStringList( Object... items ) {
-        List<String> temp = new ArrayList<>( 0 );
-        for ( Object o : items ) {
-            temp.add( (String) o );
-        }
-        return temp;
-    }
-
-    /**
-     *
-     * @param list
-     *             <p>
-     * @return
-     */
-    public static List<String> objectToString( List<Object> list ) {
-        List<String> temp = new ArrayList<>( 0 );
-        for ( Object ob : list ) {
-            temp.add( (String) ob );
-        }
-        return temp;
-    }
-
-    /**
-     *
-     * @param list
-     *             <p>
-     * @return
-     */
-    public static List<Object> stringToObject( List<String> list ) {
-        List<Object> temp = new ArrayList<>( 0 );
-        if ( list != null && list.isEmpty() ) {
-            temp.addAll( list );
-        }
-        return temp;
-    }
-
 }
