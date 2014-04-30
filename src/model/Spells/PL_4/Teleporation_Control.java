@@ -6,16 +6,23 @@
 
 package Spells.PL_4;
 
+import Units.UnitPool;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 
 /**
  *
  * @author Tao Zhang & Cameron Simon
  */
 public final class Teleporation_Control {
+    int TP_MANNACOST = 4;
+    
+    UnitPool unitpool;
+    
     JFrame frame;
     
     public Teleporation_Control(){
@@ -24,7 +31,7 @@ public final class Teleporation_Control {
     
     public void prepareGUI(){
         frame = new JFrame("Teleporation_Control");
-        frame.setSize(100,100);
+        frame.setSize(400,400);
         frame.addWindowListener( new WindowAdapter() {
             @Override
             public void windowClosing( WindowEvent e )
