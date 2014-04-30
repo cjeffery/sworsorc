@@ -733,12 +733,13 @@ public class HUDController {
      * @author Jay Drage
      */
     public void StartSpell(){
+        System.out.println("StartSpell()");
         if(selected_unit != null){
             if(selected_unit.getUnitType() == UnitType.Character){
-               // (Characters)selected_unit.;
+               Characters tempCaster = (Characters) selected_unit;
+               tempCaster.CastSpell();
+               tempCaster = null;
             }
         }
-        System.out.println("StartSpell()");
-        //Place spell code here
     }
 }
