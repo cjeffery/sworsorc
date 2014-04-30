@@ -341,7 +341,7 @@ public class HUDController {
         selected_stack.clear();
         //update target stack panel
         try {
-            DisplayStack(UnitsPane, selected_stack);
+            DisplayStack(UnitsPane, selected_stack, true);
         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
             Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
         }        
@@ -366,7 +366,7 @@ public class HUDController {
         selected_stack = hex.getUnits();
         //update target stack panel
         try {
-            DisplayStack(UnitsPane, selected_stack);
+            DisplayStack(UnitsPane, selected_stack, true);
         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
             Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
         }        
@@ -390,7 +390,7 @@ public class HUDController {
             selected_stack.clear();
             //update target stack panel
             try {
-                DisplayStack(UnitsPane, selected_stack);
+                DisplayStack(UnitsPane, selected_stack, true);
             } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
                 Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -410,7 +410,7 @@ public class HUDController {
         target_stack.clear();
         //update target stack panel
         try {
-            DisplayStack(TargetsPane, target_stack);
+            DisplayStack(TargetsPane, target_stack, false);
         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
             Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -438,7 +438,7 @@ public class HUDController {
         target_unit = target_stack.get(0);
         //update target stack panel
         try {
-            DisplayStack(TargetsPane, target_stack);
+            DisplayStack(TargetsPane, target_stack, false);
         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
             Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -447,19 +447,19 @@ public class HUDController {
     @FXML protected void DisplayUnits(ActionEvent event) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         List <MoveableUnit> AU = new ArrayList <>();
         AU.add(selected_unit);
-        DisplayStack(UnitsPane, AU);
+        DisplayStack(UnitsPane, AU, true);
     }
     //called when clicking an enemy hex
     @FXML protected void DisplayTargets(ActionEvent event) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         List <MoveableUnit> AU = new ArrayList <>();
         AU.add(target_unit);
-        DisplayStack(TargetsPane, AU);
+        DisplayStack(TargetsPane, AU, false);
     }
     /** 
      * constructs the tab pane for the selected hex
      * @author Joe Higley      
      */
-    protected void DisplayStack(TabPane tp, List <MoveableUnit> AU) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    protected void DisplayStack(TabPane tp, List <MoveableUnit> AU, Boolean isMyUnit) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         ClearTitles(tp); //empty the tab pane
         int x = AU.size();
 //        int x = Game.getInstance().getNum(); //this is just a random number of units, will be replaced later
@@ -468,7 +468,7 @@ public class HUDController {
         for(int i=0; i < x; i++) {
             tabs[i] = new Tab();
             tabs[i].setText(AU.get(i).toString());
-            FillStats(tabs[i], AU.get(i)); //add contents of the tab
+            FillStats(tabs[i], AU.get(i), isMyUnit); //add contents of the tab
         }
         //add tabs to tab pane
         tp.getTabs().addAll(tabs);
@@ -479,7 +479,9 @@ public class HUDController {
      * with unit stats.
      * @author Joe Higley    
      */
-    public void FillStats(Tab tp, MoveableUnit AU) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
+    public void FillStats(Tab tp, MoveableUnit AU, Boolean isMyUnit) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
+        //total number of details
+        int details = 0;
         //stats are kept in a GridPane inside a ScrollPane in case of more stats than space
         ScrollPane scroll = new ScrollPane();
         GridPane grid = new GridPane();
@@ -517,6 +519,7 @@ public class HUDController {
                 //add stats to new row of GridPane
                 grid.add(l, 0, i);
                 grid.add(tf, 1, i);
+                details = i;
             }
         }
         else{
@@ -536,10 +539,20 @@ public class HUDController {
                 //add stats to new row of GridPane
                 grid.add(l, 0, i);
                 grid.add(tf, 1, i);
+                details = i;
             }
         }
         
+        if(isMyUnit){
+            Button b = new Button("Cast Spell");
+            b.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    //Code to call here
+                }
+            });
         
+            grid.add(b, 0, details +1, 2, 1);
+        }
         
         
         //add GridPane to ScrollPane
