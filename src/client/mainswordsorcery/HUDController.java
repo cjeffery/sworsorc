@@ -552,7 +552,7 @@ public class HUDController {
                 }
             });
         
-            grid.add(b, 0, details +1, 2, 1);
+            grid.add(b, 0, details+1, 2, 1);
         }
         
         
