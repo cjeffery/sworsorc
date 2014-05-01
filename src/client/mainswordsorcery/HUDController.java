@@ -71,6 +71,7 @@ public class HUDController {
     List <MoveableUnit> target_stack;
     //holds valid hexes for selected_unit movement
     private ArrayList<MapHex> canMoveTo;
+    private HashMap<MapHex, Double> moves;
     private MapHex currentHex;
     
 
@@ -281,12 +282,16 @@ public class HUDController {
                         selected_unit = selected_stack.get(UnitsPane.getTabs().indexOf(newTab));
                     }
                     //highlight valid hexes if in movement phase
-                    canMoveTo = new ArrayList<>();
-                    canMoveTo.clear();
+                    //canMoveTo = new ArrayList<>();
+                    //canMoveTo.clear();
+                    moves = new HashMap<>();
+                    moves.clear();
                     if(phase.getText().equalsIgnoreCase("Movement")){
                         hmapContent.clearHighlights();
                         if(selected_unit != null){
-                            MovementCalculator.getValidMoves(selected_unit, currentHex, selected_unit.getMovement(), canMoveTo );
+                            moves = MovementCalculator.movementWrapper(selected_unit, currentHex);
+                            canMoveTo = new ArrayList<MapHex>(moves.keySet());
+                            //MovementCalculator.getValidMoves(selected_unit, currentHex, selected_unit.getMovement(), canMoveTo );
                             hmapContent.highlight(canMoveTo, new Color(0,0,255, 70));
                         }
                     }
@@ -380,10 +385,11 @@ public class HUDController {
      * @author Jay Drage
      */
     public void MoveUnit( String hexID, MapHex hex ){
-        if( canMoveTo.contains(hex) ) {
+        if( moves.containsKey(hex) ) {
             final UnitPool pool = UnitPool.getInstance();
             hmapContent.clearHighlights();
             //pool.addMove((ArmyUnit)selected_unit, hex.GetID());
+            selected_unit.setWorkingMovement( moves.get(hex) );
             pool.addMove(selected_unit, hex.GetID());
             //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
             hmapContent.repaint();
