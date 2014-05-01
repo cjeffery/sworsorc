@@ -158,6 +158,7 @@ public class Spell {
                 break;
             case "Conjure Zombie Infantry":
                 C_Z_I c_z_i = new C_Z_I(character);
+                c_z_i.performSpellEffects();
                 break;
             // ======================
             // PL_2
@@ -175,6 +176,7 @@ public class Spell {
                 break;
             case "Conjure Centauroid Cavalry":
                 C_C_C c_c_c = new C_C_C(character);
+                c_c_c.performSpellEffects();
                 break;
             // ===============================
             // PL_3
@@ -195,6 +197,7 @@ public class Spell {
                 break;
             case "Conjure Wyvern Airtroops":
                 C_W_A c_w_a = new C_W_A(character);
+                c_w_a.performSpellEffects();
                 break;
             case "Dispell Magicks":
                 Dispell_Magicks d_m = new Dispell_Magicks();
@@ -219,6 +222,7 @@ public class Spell {
                 break;
             case "Conjure Koboldic Infantry":
                 C_K_I c_k_i = new C_K_I(character);
+                c_k_i.performSpellEffects();
                 break;
             // ===============================
             // PL_5
@@ -233,6 +237,7 @@ public class Spell {
                 break;
             case "Conjure Wraith Troops":
                 C_W_T c_w_t = new C_W_T(character);
+                c_w_t.performSpellEffects();
                 break;
             // ===============================
             // PL_6
@@ -253,6 +258,7 @@ public class Spell {
                 break;
             case "Conjure Demonice Infantry":
                 C_D_I c_d_i = new C_D_I(character);
+                c_d_i.performSpellEffects();
                 break;
             // ===============================
             // PL_7
@@ -265,6 +271,7 @@ public class Spell {
         
         if(conjured != null){
             //TODO:
+            System.out.println("placing unit into pool");
             conjured.ResetWorkingMovement();
             UnitPool unitpool = UnitPool.getInstance();
             unitpool.addUnit(1, conjured);

@@ -25,7 +25,7 @@ public final class C_C_C {
     
     public C_C_C(Characters c){
         caster = c;
-        prepareGUI();
+        //prepareGUI();
     }
     
     public void prepareGUI(){
