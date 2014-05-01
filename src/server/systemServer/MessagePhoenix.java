@@ -37,7 +37,6 @@ final public class MessagePhoenix {
     // TODO: tag stripping done in MessagePhoenix
     // TODO: buffer size
     // TODO: need checks for game state on certain actions, such as lobbies
-    // PUBLIC INTERFACE //
     /**
      * Sending a packed message to the specified output stream
      * <p>
@@ -72,7 +71,6 @@ final public class MessagePhoenix {
      * @author Christopher Goes
      */
     public static NetworkPacket recieveMessage( final ObjectInputStream reader ) {
-
         NetworkPacket temp = new NetworkPacket();
 
         if ( reader != null ) {

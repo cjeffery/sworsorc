@@ -15,14 +15,13 @@ import java.util.concurrent.ArrayBlockingQueue;
  * Manages the connection for a client connected to server
  */
 public class ClientObject {
-    // TODO: or should this be a subclass of NetworkClient/server?
 
     // User data
     final private int clientID; // Unique ID of client connection
     private String handle; // Username, can change
-
-    // Connection this object is attached to
-    final private Socket socket;
+    final private Socket socket;     // Connection this object is attached to
+    private Lobby currentLobby = null;     // Lobby client is a part of, null if not in a lobby
+    private List<String> file;     // File associated with this object
 
     // The Writer Thread's food source
     final private ArrayBlockingQueue<NetworkPacket> messageQueue;
@@ -34,15 +33,9 @@ public class ClientObject {
     private ObjectOutputStream writer = null;
     private ObjectInputStream streamIn = null;
 
-    // Lobby client is a part of, null if not in a lobby
-    private Lobby currentLobby = null;
-
     // Server console output
     final private PrintWriter consoleOut;
     final private PrintWriter errorOut;
-
-    // File associated with this object
-    private List<String> file;
 
     // Debugging
     final private boolean debug;
@@ -72,6 +65,7 @@ public class ClientObject {
 
         this.debug = MessagePhoenix.debugStatus();
         this.errorOut = new PrintWriter( System.err, true );
+        this.file = Collections.emptyList();
     }
 
     /**
@@ -114,7 +108,6 @@ public class ClientObject {
      */
     protected void send( Flag flag, Tag tag, String sender, Object... message ) {
         send( flag, tag, sender, MessagePhoenix.packMessageContents( message ) );
-        // writeToQueue( new NetworkPacket( flag, tag, ((sender == null || sender.isEmpty()) ? "Server" : sender), MessagePhoenix.packMessageContents( message ) ) );
     }
 
     /**
@@ -180,7 +173,7 @@ public class ClientObject {
          * <p>
          * @return List received, or null if not connected
          */
-        private NetworkPacket recieveMessage() { // breaking my own null rule
+        private NetworkPacket recieveMessage() {
             return MessagePhoenix.recieveMessage( ClientObject.this.streamIn );
         }
 
@@ -208,6 +201,7 @@ public class ClientObject {
             Flag flag = rawMessage.getFlag();
             String sender = rawMessage.getSender();
             List<Object> message = rawMessage.getData();
+
             if ( message == null ) {
                 errorOut.println( "Null data!" );
                 return false;
@@ -219,6 +213,7 @@ public class ClientObject {
             } else if ( message.get( 0 ).getClass().equals( String.class ) ) {
                 stringmessage = (String) message.get( 0 );
             }
+
             if ( debug ) {
                 errorOut.println( "Process Message" );
                 errorOut.println( "Tag: " + tag );
@@ -234,7 +229,10 @@ public class ClientObject {
 
                     switch ( tag ) {
                         case PRIVATE:
-                            NetworkServer.sendToClient( sender, flag, tag, null, message );
+                            NetworkServer.
+                                    sendToClient( stringmessage, flag, tag, sender, MessagePhoenix.
+                                            packMessageContents( message.
+                                                    get( 1 ) ) ); // assume message is a single string object
                             break;
                         case LOBBY:
                             currentLobby.sendToEntireLobby( flag, tag, sender, message );
@@ -253,7 +251,7 @@ public class ClientObject {
                             consoleOut.println( "Unknown tag: " + tag );
                     }
                     break;
-                // Client stuff?
+                // Client stuff
                 case CLIENT:
 
                     switch ( tag ) {
@@ -287,7 +285,7 @@ public class ClientObject {
 
                         case PHASE_CHANGE:
                             NetworkServer.
-                                    sendToAllClients( flag, tag, "", message );
+                                    sendToAllClients( flag, tag, "Server", message );
                             break;
                         case YIELD_TURN_REQUEST:
                             send( Flag.RESPONSE, Tag.YIELD_TURN_RESPONSE );
@@ -406,8 +404,8 @@ public class ClientObject {
                     }
                     break;
                 // Response to information request ex: LOBBY_INFO
-                case RESPONSE: // Not used much on the server side (sorry if it seems backwards, remember, "there is no spoon")
-                    flag = Flag.REQUEST; // MAKING my life eAsiEr
+                case RESPONSE:
+                    flag = Flag.REQUEST;
                     switch ( tag ) {
 
                         case VOTE_RESPONSE:
@@ -602,16 +600,6 @@ public class ClientObject {
          * Always run this before returning from {@link #run run}!
          */
         private void close() {
-            /*
-             * try {
-             * Could possibly: writer != null && isConnected() ...
-             * if ( writer != null ) {
-             * writer.close(); writer = null;
-             * }
-             * } catch ( IOException ex ) {
-             * ex.printStackTrace();
-             * }
-             */
             writer = null;
         }
 

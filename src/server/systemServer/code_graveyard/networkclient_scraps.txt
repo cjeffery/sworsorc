@@ -28,3 +28,54 @@
         consoleOut = new PrintWriter(System.out, true);
 
     } // end constructor
+
+
+
+STUFF FROM NETWORKCLIENT MAIN:
+
+        /*
+         * // TODO: we still need these?
+         * ClientData clientData = new ClientData();
+         * ClientDataForm clientDataForm = new ClientDataForm(clientData);
+         *
+         * System.out.println("Launching Login Dialog");
+         *
+         * clientDataForm.setVisible(true);
+         *
+         * System.out.println("Login Dialog Finished");
+         *
+         * System.out.flush();
+         *
+         * String sName = clientData.getIPAddress();
+         * String uName = clientData.getUsername();
+         *
+         * // 25565 is sworsorc default server port
+         * NetworkClient.setServerName(sName);
+         * NetworkClient.setServerPort(25565);
+         * NetworkClient.setUsername(uName);
+         */
+
+
+            /*
+             * TODO
+             * if ( !addressSet ) { flushToConsole( "Please enter IP address of server(ex
+             * \"127.0.0.1\"): " );
+             * setServerName( getCommand() );
+             * }
+             * if ( !usernameSet ) {
+             * flushToConsole( "Please enter your username(ex \"HonkHonkBlarg117\"): " );
+             * setUsername( getCommand() );
+             * }
+             */
+
+
+            /*
+             * try {
+             * Could possibly: writer != null && isConnected() ...
+             * if ( writer != null ) {
+             * writer.close(); writer = null;
+             * }
+             * } catch ( IOException ex ) {
+             * ex.printStackTrace();
+             * }
+             */

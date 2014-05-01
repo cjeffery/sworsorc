@@ -18,9 +18,12 @@ import mainswordsorcery.Game;
 
 /**
  * The Infamous Network Client, handles communication to/from Network Server
- * Call initializeClient() to startup the client. Any calls before this will fail.
+ * Call initializeClient() to startup the client and establish connection with server
  * <p>
- * NOTE: This is a static singleton. Don't fool around trying to create instances now, ya' hear?
+ * You may safely access the setters/getters without initialization
+ * However, any other method calls will have unpredictable, and likely unstable, results if called
+ * before the client has been initialized.
+ * Check this with {@link #clientIsInitialized clientIsInitialized}
  * <p>
  * @author Networking Subteam
  */
@@ -59,8 +62,6 @@ final public class NetworkClient {
     private static ArrayBlockingQueue<String> commandQueue;
 
     // Flags
-    //private static boolean addressSet = false;
-    //private static boolean usernameSet = false;
     private static boolean clientInitialized = false;
     final private static boolean debug = MessagePhoenix.debugStatus();
 
@@ -68,17 +69,13 @@ final public class NetworkClient {
 
     // goto Conductor
     // private Conductor jarvis; // Our conductor object
-    // TODO: SOCKET ERRORS ON CLIENT CLOSURE
-    /*
-     * PUBLIC METHODS
-     */
     /**
      * Default Startup of NetworkClient
      * Starts local streams, connects to server, and makes the connection live
      * <p>
      * NOTE: will use default settings file of "netclient_settings.txt"
      * <p>
-     * @return True if started OK, False if connection failed
+     * @return True if started OK, False if connection or startup failed
      *
      * @author Christopher Goes
      */
@@ -95,6 +92,8 @@ final public class NetworkClient {
      *                 Method will search for and find the file, as long in sworsorc directory
      * <p>
      * @return True if started OK, False if connection failed
+     *
+     * @author Christopher Goes
      */
     public static boolean initializeClient( String filename ) {
         messageQueue = new ArrayBlockingQueue<>( 30, true ); // 30 slots, FIFO access
@@ -102,7 +101,6 @@ final public class NetworkClient {
         startLocalStreams();
         configureSettings( filename );
         startCommandProcessor();
-        // use default values for now
         if ( connect() ) {
             startRemoteConnection();
             clientInitialized = true;
@@ -114,65 +112,45 @@ final public class NetworkClient {
 
     /**
      * Tagged message with client username as sender
-     *
+     * Basically a "poke" to execute a command, send a request, etc
+     * <p>
      * @param flag
      * @param tag
      */
-    public static void send( Flag flag, Tag tag ) {
-        write( flag, tag, username );
+    public static void poke( Flag flag, Tag tag ) {
+        send( flag, tag );
     }
 
     /**
-     * Tagged message with a sender
+     * Send a message to the currently connected server
+     * This includes chat & game messages!
      * <p>
      * Generic parameters
-     * This is just a public wrapper for {@link #write write()}
      * <p>
      * @param flag
      * @param tag
-     * @param sender
+     * @param message
      */
-    public static void send( Flag flag, Tag tag, String sender ) {
-        write( flag, tag, sender );
+    public static void send( Flag flag, Tag tag, Object... message ) {
+        // Assume any outgoing messages from the client, are from the client
+        writeToQueue( new NetworkPacket( flag, tag, username, MessagePhoenix.
+                packMessageContents( message ) ) );
     }
 
     /**
-     * Send a message
-     * <p>
-     * Generic parameters
-     * This is just a public wrapper for {@link #write write()}
-     * <p>
-     * @param flag
-     * @param tag
-     * @param sender
-     * @param message First parameter is assumed to be tag
-     */
-    public static void send( Flag flag, Tag tag, String sender, Object... message ) {
-        write( flag, tag, sender, MessagePhoenix.packMessageContents( message ) );
-    }
-
-    /**
-     * User input processing
+     * Processes raw user input
+     * This also allows for programattic execution of user console commands
      * <p>
      * @param command
-     *                <p>
+     *
      * @author Christopher Goes
      */
     public static void userInput( String command ) {
-        executeCommand( command );
-    }
-
-    /**
-     * Sends a "chat" message to the other users. The received message will be
-     * displayed (along with the sender's username) in the chat box of the other
-     * connected players.
-     * <p>
-     * Use {@link #userInput userInput} to send messages normally
-     *
-     * @param message The message to display to other users
-     */
-    public static void sendGlobalChatMessage( String message ) {
-        NetworkClient.send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, message );
+        try {
+            commandQueue.put( command );
+        } catch ( InterruptedException ex ) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -183,8 +161,7 @@ final public class NetworkClient {
      * @author Game Pearhill
      */
     public static void sendPhaseChange( String phase ) {
-        send( Flag.GAME, Tag.PHASE_CHANGE, username, phase );
-        //MessageUtils.sendMessage(writer, MessageUtils.makePhaseChangeMessage(phase));
+        send( Flag.GAME, Tag.PHASE_CHANGE, phase );
     }
 
     /**
@@ -197,7 +174,7 @@ final public class NetworkClient {
      * the next user, or the next game turn may start, or the game may end.
      */
     public static void endTurn() {
-        NetworkClient.send( Flag.GAME, Tag.YIELD_TURN_REQUEST );
+        send( Flag.GAME, Tag.YIELD_TURN_REQUEST );
     }
 
     public static boolean isPhasing() {
@@ -255,34 +232,36 @@ final public class NetworkClient {
             String[] parsedString;
             parsedString = command.split( "\\s+" ); //Split line by whitespace
 
+            if ( parsedString.length > 2 ) {
+                if ( "/msg".equals( parsedString[0] ) ) {
+                    send( Flag.CHAT, Tag.PRIVATE, parsedString[1] );
+                }
+            }
             if ( parsedString.length == 2 ) {
                 if ( "/file".equals( parsedString[0] ) ) {
                     sendFile( parsedString[1] );
 
                 } else if ( "/newLobby".equals( parsedString[0] ) ) {
-                    String lobbyName = parsedString[1];
-                    send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobbyName );
+                    send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, parsedString[1] );
 
                 } else if ( "/joinLobby".equals( parsedString[0] ) ) {
-                    String lobbyName = parsedString[1];
-                    NetworkClient.send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, lobbyName );
+                    send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, parsedString[1] );
                 } else if ( isConnected() ) {
-                    // sends chat message to server, which broadcasts to all clients
-                    NetworkClient.send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
+                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command );
                 }
             } else if ( parsedString.length == 1 ) {
                 if ( "/globalWho".equals( parsedString[0] ) ) {
-                    NetworkClient.send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
+                    send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
 
                 } else if ( "/leaveLobby".equals( parsedString[0] ) ) {
-                    NetworkClient.send( Flag.REQUEST, Tag.LEAVE_LOBBY_REQUEST );
+                    send( Flag.REQUEST, Tag.LEAVE_LOBBY_REQUEST );
 
-                } else if ( "/showLobbies".equals( parsedString[0] ) ) { // TODO: message if no lobbies available, command to create lobby
-                    NetworkClient.send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST ); // TODO: working lobby info request
+                } else if ( "/showLobbies".equals( parsedString[0] ) ) {
+                    send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST );
 
-                } else if ( "/disconnect".equals( parsedString[0] ) ) { // manual client disconnect
+                } else if ( "/disconnect".equals( parsedString[0] ) ) { // Manual client disconnect
                     if ( remoteConnectionIsAlive() ) {
-                        NetworkClient.send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
+                        send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
                     } else if ( isConnected() ) {
                         flushToConsole( "Error! connection isn't alive but socket is!" );
                         return false;
@@ -293,7 +272,7 @@ final public class NetworkClient {
                 } else if ( "/yieldTurn".equals( parsedString[0] ) ) { // client turn over
                     endTurn();
                 } else if ( "/beginGame".equals( parsedString[0] ) ) { // request to start game
-                    NetworkClient.send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST );
+                    send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST );
 
                 } else if ( "/help".equals( parsedString[0] ) ) {
                     printCommandList();
@@ -320,18 +299,20 @@ final public class NetworkClient {
                     flushToConsole( "Exiting client..." );
                     if ( isConnected() ) {
                         flushToConsole( "Still connected to server, disconnecting" );
-                        attemptDisconnect();
+                        if ( remoteConnectionIsAlive() ) {
+                            send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
+                        }
                     }
                     return false;
                 } else if ( parsedString[0].length() != 0 && "/".
                         equals( parsedString[0].charAt( 0 ) ) ) {
                     flushToConsole( "Invalid command, try again, or type /help for a list of commands." );
                 } else {
-                    NetworkClient.send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
+                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command ); // default to chat
                 }
             } else {
                 if ( isConnected() ) {
-                    NetworkClient.send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, username, command );
+                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command );
                 } else {
                     return false;
                 }
@@ -348,10 +329,9 @@ final public class NetworkClient {
             // TODO: this is text file, what about binary files? JSONs?
             List<String> temp; // What is our file size limit?
             try {
-                //BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Charset.forName("UTF-8")));
                 temp = Files.readAllLines( Paths.get( networkDirectory + filename ), Charset.
                         forName( "UTF-8" ) );
-                send( Flag.FILE, Tag.SEND_FILE_REQUEST, username, temp );
+                send( Flag.FILE, Tag.SEND_FILE_REQUEST, temp );
             } catch ( IOException e ) {
                 System.err.println( "Could not open file! Error thrown: " + e );
             }
@@ -364,9 +344,7 @@ final public class NetworkClient {
          * @author Christopher Goes
          */
         public void killThread() {
-            if ( !killed ) {
-                killed = true;
-            }
+            this.killed = true;
         }
 
         private String getCommand() {
@@ -387,22 +365,9 @@ final public class NetworkClient {
          */
         @Override
         public void run() {
-            String line = null;
-
-            /*
-             * TODO
-             * if ( !addressSet ) { flushToConsole( "Please enter IP address of server(ex
-             * \"127.0.0.1\"): " );
-             * setServerName( getCommand() );
-             * }
-             * if ( !usernameSet ) {
-             * flushToConsole( "Please enter your username(ex \"HonkHonkBlarg117\"): " );
-             * setUsername( getCommand() );
-             * }
-             */
+            String line = "";
 
             while ( !killed ) {
-
                 line = getCommand();
                 if ( line == null ) {
                     System.err.
@@ -414,10 +379,8 @@ final public class NetworkClient {
                     flushToConsole( "Later gator!" );
                     stopClient(); // Shutdown everything
                 }
-                // suprise party fiddlesticks
                 // Continue execution
             }
-
             close();
         }
 
@@ -964,17 +927,9 @@ final public class NetworkClient {
      * @author Christopher Goes
      */
     private static void flushToConsole( final String lastMessage ) {
-        consoleOut.println( lastMessage ); // TODO: append username/tags!
+        consoleOut.println( lastMessage );
         consoleOut.flush();
         postMessage( lastMessage );
-    }
-
-    private static void write( Flag flag, Tag tag, String sender ) {
-        write( flag, tag, sender, null );
-    }
-
-    private static void write( Flag flag, Tag tag, String sender, List<Object> message ) {
-        writeToQueue( new NetworkPacket( flag, tag, sender != null ? sender : username, message ) );
     }
 
     /**
@@ -985,21 +940,6 @@ final public class NetworkClient {
     private static void writeToQueue( final NetworkPacket message ) {
         try {
             messageQueue.put( message );
-        } catch ( InterruptedException ex ) {
-            ex.printStackTrace();
-        }
-    }
-
-    /**
-     * Executes a Network Client command
-     * <p>
-     * @param command
-     *                <p>
-     * @author Christopher Goes
-     */
-    private static void executeCommand( String command ) {
-        try {
-            commandQueue.put( command );
         } catch ( InterruptedException ex ) {
             ex.printStackTrace();
         }
@@ -1017,18 +957,12 @@ final public class NetworkClient {
 
         // TODO: change src and server to variables when project is nearing completion
         tempfile = dir + File.separator + "src" + File.separator + "server" + File.separator + helpfile;
-
         try {
             BufferedReader input = new BufferedReader( new FileReader( tempfile ) );
-
-            try {
                 while ( (inputline = input.readLine()) != null ) {
                     flushToConsole( inputline );
                 }
-            } catch ( IOException ex ) {
-                ex.printStackTrace();
-            }
-        } catch ( FileNotFoundException e ) {
+        } catch ( IOException e ) {
             System.err.println( "File not found: " + tempfile + "\nException: " + e );
         }
 
@@ -1079,13 +1013,6 @@ final public class NetworkClient {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private static void attemptDisconnect() {
-        flushToConsole( "Attempting to disconnect from server..." );
-        if ( remoteConnectionIsAlive() ) {
-            send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
-        }
     }
 
     /**
@@ -1213,6 +1140,15 @@ final public class NetworkClient {
         return username;
     }
 
+    /**
+     * Checks if the client has been initialized yet
+     *
+     * @return
+     */
+    public static boolean clientIsInitialized() {
+        return clientInitialized;
+    }
+
     // ***MAIN*** //
     /**
      * For testing purposes
@@ -1220,34 +1156,11 @@ final public class NetworkClient {
      * @param args
      */
     public static void main( String[] args ) {
-
-        /*
-         * // TODO: we still need these?
-         * ClientData clientData = new ClientData();
-         * ClientDataForm clientDataForm = new ClientDataForm(clientData);
-         *
-         * System.out.println("Launching Login Dialog");
-         *
-         * clientDataForm.setVisible(true);
-         *
-         * System.out.println("Login Dialog Finished");
-         *
-         * System.out.flush();
-         *
-         * String sName = clientData.getIPAddress();
-         * String uName = clientData.getUsername();
-         *
-         * // 25565 is sworsorc default server port
-         * NetworkClient.setServerName(sName);
-         * NetworkClient.setServerPort(25565);
-         * NetworkClient.setUsername(uName);
-         */
-
-        if ( NetworkClient.initializeClient() ) {
+        if ( initializeClient() ) {
 
         } else {
             System.err.println( "Client failed to start from main!" );
         }
-    } // end main
+    }
 
 } // end class

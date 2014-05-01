@@ -42,11 +42,11 @@ import java.util.Map;
  * 
  * @author Jarvis the Unknown
  */
-public class Conductor { // Should this be a static singleton?
+public class Conductor { // Should this be a static singleton? I think it should be (chris)
     
     // Put singletons and other objects here, so conductor can access their methods
     //Can we do "register" methods? We have access to singletons everywhere already
-    
+    // TODO: research feasability of remote method execution
     /**
      * Constructor
      * @author Christopher Goes
@@ -59,12 +59,13 @@ public class Conductor { // Should this be a static singleton?
      * Processes all messages passed from NetworkClient
      * <p>
      * This will read the tag passed from NetworkClient, and call the relevant method
-     * NOTE: This tag is really message.get(0), this just simplifies things a bit, and makes a bit more extensible
      * @author Christopher Goes
-     * @param message The message contents, minus the tag
+     * @param flag
      * @param tag The message tag
+     * @param sender
+     * @param data
      */
-    public void processMessage( List<String> message, String tag ) {
+    public void processMessage( Flag flag, Tag tag, String sender, List<Object> data ) {
         // TODO: stub
     }
     

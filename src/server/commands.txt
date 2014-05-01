@@ -15,5 +15,7 @@ Commands:
 
     /file <filename> - Sends file to server
     /printFile - Not sure what this does...
+
+    /msg <username> - Send a private message to <username>
     
     /help - This list of commands

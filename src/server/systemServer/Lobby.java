@@ -11,8 +11,6 @@ import java.util.List;
 
 /**
  * The Infamous Lobby Class
- * If you are not in the network team, do not touch this!
- * Public != PettingZoo
  */
 public class Lobby {
 
@@ -49,9 +47,6 @@ public class Lobby {
             }
         }
         return false;
-        // TODO: test out Netbeans fancy-pants functional way of doing these list searches
-        //return lobbyClients.stream().
-        //anyMatch( (client) -> (client.getHandle().equals( user )) );
     }
 
     protected void sendToEntireLobby( String message ) {
@@ -145,7 +140,6 @@ public class Lobby {
      */
     public void advanceGameTurn() {
         //TODO: Set order of turn by rearranging the order of the lobbyClient list
-
         int nextIndex = lobbyClients.indexOf( current ) + 1;
         if ( nextIndex == lobbyClients.size() ) {
             nextIndex = 0;
