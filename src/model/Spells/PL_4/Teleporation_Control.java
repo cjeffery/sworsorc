@@ -6,6 +6,7 @@
 
 package Spells.PL_4;
 
+import Character.Characters;
 import Units.UnitPool;
 
 import java.awt.event.WindowAdapter;
@@ -21,11 +22,14 @@ import javax.swing.JLabel;
 public final class Teleporation_Control {
     int TP_MANNACOST = 4;
     
-    UnitPool unitpool;
+    Characters caster;
+    
+    UnitPool unitpool = new UnitPool();
     
     JFrame frame;
     
-    public Teleporation_Control(){
+    public Teleporation_Control(Characters character){
+        caster = character;
         prepareGUI();
     }
     
@@ -84,6 +88,13 @@ public final class Teleporation_Control {
             getTarget();
             if(getDistance() <= getRange()){
                 //peform spell
+                
+                unitpool.setSafeTeleport(unitpool.getUnitsInHex(caster.getLocation()), true);
+                // need functions to select the portal
+                int portal = 1;
+                
+                unitpool.setTeleportDestination(unitpool.getUnitsInHex(caster.getLocation()),
+                            portal);
                 /*
                     -Decrease mana 4 points
                     -Affects all characters and/or units in the caster's hex.
