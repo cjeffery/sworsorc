@@ -1,0 +1,634 @@
+\chapter{TEST PLAN (TP)}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Version 1.1, April 2014
+\par}
+
+\ 
+
+\bigskip
+
+{\centering\bfseries\color{black}
+TEST PLAN (TP)}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+FOR
+\par}
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Swords and Sorcery
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+\begin{figure}
+\centering
+\includegraphics[width=3.4354in,height=0.6126in]{uislogan.png}
+\end{figure}
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Version 1
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+April 30, 2014
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Prepared for:
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Clinton Jeffery
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Prepared by:
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Matthew Brown (Rules Team)
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+University of Idaho
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Moscow, ID \ 83844-1010
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+CS383 TPD
+\par}
+
+\pagebreak
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+RECORD OF CHANGES (Change History)
+\par}
+
+\begin{flushleft}
+\tablehead{}
+\begin{supertabular}{|m{0.5462598in}|m{0.6712598in}|m{1.4212599in}|m{0.23375985in}|m{1.7962599in}|m{0.7337598in}|m{0.6295598in}|}
+\hline
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} Change}\par
+
+\centering {\selectlanguage{english}\bfseries\color{black} Number}\par
+
+~
+ &
+~
+
+\centering \selectlanguage{english}\bfseries\color{black} Date completed
+&
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} Location of
+change }\par
+
+\centering \selectlanguage{english}\bfseries\color{black} (e.g., page or
+figure \#) &
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} A}\par
+
+\centering \selectlanguage{english}\bfseries\color{black} M\newline
+D  &
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} Brief
+description }\par
+
+\centering \selectlanguage{english}\bfseries\color{black} of change &
+~
+
+\centering \selectlanguage{english}\bfseries\color{black} Approved by
+(initials) &
+~
+
+\centering {\bfseries\color{black} Date }\par
+
+\centering\arraybslash\bfseries\color{black}
+approved\\
+
+ &
+
+ &
+
+ &
+
+ &
+
+ &
+
+ &
+
+\\\hline
+1
+ &
+4/30/2014
+ &
+Document
+ &
+A
+ &
+Original Document Created
+ &
+MB
+ &
+4/30/2014
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+\end{supertabular}
+\end{flushleft}
+{\selectlanguage{english}\color{black}
+A - ADDED \ M - MODIFIED \ D -- DELETED}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Swords and Sorcery
+\par}
+
+\pagebreak
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+TABLE OF CONTENTS
+\par}
+
+{\selectlanguage{english}\bfseries\color{black}
+Section\ \ Page}
+
+\setcounter{tocdepth}{9}
+\renewcommand\contentsname{}
+\tableofcontents
+
+\setcounter{page}{1}\pagestyle{Convertiv}
+
+\section[IDENTIFIER]{\selectlanguage{english}\bfseries\color{black} TEST PLAN IDENTIFIER}
+
+{\selectlanguage{english}\color{black}
+This test plan has no unique identifier other than Spring 2014 CS 383 sworsorc. This particular test plan is in conjunction to the rules and game play group test plans. There are many test plans for this group do to the size and span of the group's contents. This test plan, for example, will be known as the Units test plan.}
+
+
+\section[INTRODUCTION]{\bfseries\color{black} INTRODUCTION}
+
+{\selectlanguage{english}\itshape\color{black}
+
+This test plan covers the creation and implementation of the Moveableunit class and its sub class Armyunits. 
+}
+
+\section[TEST ITEMS]{\bfseries\color{black} TEST ITEMS}
+
+{\selectlanguage{english}\itshape\color{black}
+
+The army units will be tested for the proper member variable values as well as proper results from the member function of the Moveableunit and Armyunit classes. Variables will tested at creation and members variable will be tested for proper results when applicable. Some example tests will be that the location member variable is properly set during movement. Also another type of test that will be preformed is that conjured units are properly created and and placed in the proper place on the game board. 
+}
+
+{\selectlanguage{english}\color{black}
+[Insert text here.]}
+
+\section[SOFTWARE RISK ISSUES]{\bfseries\color{black} SOFTWARE RISK ISSUES}
+{\selectlanguage{english}\itshape\color{black}
+
+{\selectlanguage{english}\color{black}
+\begin{itemize}
+\item Improper casting of units
+\item Unit ID's interpreted incorrectly
+\end{itemize}
+}
+
+\section[FEATURES TO BE TESTED]{\bfseries\color{black} FEATURES TO BE TESTED}
+
+{\selectlanguage{english}\color{black}
+\begin{itemize}
+\item conjured unit appear when casted
+\item units are properly represented on HUD
+\item movement location is correct on map
+\item moral status is properly updated after combat
+\end{itemize}
+}
+
+\section[FEATURES NOT TO BE TESTED]{\bfseries\color{black} FEATURES NOT TO BE TESTED}
+
+{\selectlanguage{english}\color{black}
+What is not tested is the count of the units on the map that correspond to the scenario loaded. Also the type of unit is not test, this is assumed correct. 
+}
+
+\section[APPROACH]{\bfseries\color{black} APPROACH}
+{\selectlanguage{english}\itshape\color{black}
+
+{\selectlanguage{english}\color{black}
+We will use JUnit tests as well as manual tests to determine the effectiveness and accuracy of the methods and variables tested. 
+}
+
+\section[ITEM PASS/FAIL CRITERIA]{\bfseries\color{black}
+	 ITEM PASS/FAIL CRITERIA}
+
+{\selectlanguage{english}\color{black}
+Items will receive a PASS once the variables/methods have been test multiple times and under different circumstances and the results of the test were within expected parameters. A FAIL will be received if the test results are not within expected parameters. 
+}
+
+\section[SUSPENSION CRITERIA]{\bfseries\color{black}
+	 SUSPENSION CRITERIA AND RESUMPTION REQUIREMENTS}
+{\selectlanguage{english}\itshape\color{black}
+
+{\selectlanguage{english}\color{black}
+Tests will be suspended if a bigger piece of code that directly or indirectly effects the code is compromised. Tests will also be suspended once a FAIL has be received for that test. The tests will be resumed once the effected code fixed. 
+}
+
+\section[TEST DELIVERABLES]{\bfseries\color{black} TEST DELIVERABLES}
+
+{\selectlanguage{english}\color{black}
+\begin{itemize}
+\item Test plan document
+\item Test cases
+\item Relevant error logs or problem reports
+\end{itemize}
+}
+
+\section[REMAINING TEST TASKS]{\bfseries\color{black} REMAINING TEST TASKS}
+
+{\selectlanguage{english}\color{black}
+This is a multi-group project in which many test plans are created for the respective group. Also since the full project as not been completed there will be more tests developed in the future. 
+}
+
+\section[ENVIRONMENTAL NEEDS]{\bfseries\color{black} ENVIRONMENTAL NEEDS}
+
+{\selectlanguage{english}\color{black}
+There are no special requirements for this test plan. 
+}
+
+\section[STAFFING AND TRAINING NEEDS]{\bfseries\color{black} STAFFING AND TRAINING NEEDS}
+{\selectlanguage{english}\itshape\color{black}
+
+{\selectlanguage{english}\color{black}
+Training in JUnit test is required to understand sections of the code. 
+}
+
+\section[RESPONSIBILITIES]{\bfseries\color{black} RESPONSIBILITIES}
+{\selectlanguage{english}\itshape\color{black}
+
+{\selectlanguage{english}\color{black}
+This is a co-operative, no one person is in charge. Tests are divided by group type developers. 
+}
+
+\section[SCHEDULE]{\bfseries\color{black} SCHEDULE}
+{\selectlanguage{english}\itshape\color{black}
+
+
+{\selectlanguage{english}\color{black}
+Realistically most tests will not be completed due to the rapid approach of the end of the semester.  
+}
+
+\section[PLANNING RISKS AND CONTINGENCIES]{\bfseries\color{black} PLANNING RISKS AND CONTINGENCIES}
+
+{\selectlanguage{english}\color{black}
+Too many tests will cause a halt in development and since the project wont be completed by the end of the semester might as well get as much working functionality as possible. 
+}
+
+\section[APPROVALS]{\bfseries\color{black} APPROVALS}
+{\selectlanguage{english}\color{black}
+Dr. J is the evil genius behind the project and is the only one capable of approving this process. 
+}
+
+
+
+\clearpage\setcounter{page}{1}\pagestyle{Convertviii}
+\section[APPENDIX A. \ [insert name
+here{]}]{\selectlanguage{english}\bfseries\color{black} APPENDIX A.
+\ [insert name here]}
+{\selectlanguage{english}\itshape\color{black}
+Include copies of test examples, etc. supplied or
+derived from the customer. \ Appendices are labeled A, B, {\dots}n.
+\ \ Reference each appendix as appropriate in the text of the document.
+}
+
+{\selectlanguage{english}\color{black}
+\ [ insert appendix A here ]}
+
+\clearpage\setcounter{page}{1}\pagestyle{Convertix}
+\section[APPENDIX B. \ [insert name
+here{]}]{\selectlanguage{english}\bfseries\color{black} APPENDIX B.
+\ [insert name here]}
+
+\bigskip
+
+{\selectlanguage{english}\color{black}
+[ insert appendix B here ]}
+
+
+\bigskip
