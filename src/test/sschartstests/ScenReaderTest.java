@@ -14,7 +14,8 @@ import sscharts.Scenario;
 
 /**
  * A test case for the src/utilities/sscharts/Scenario.java
- class. It runs a few simple JUnit tests to determine if the scenario reader 
+ class. It runs a few simple JUnit tests after loading Scenario 2: Dwarrows in
+ * order to determine if the scenario class 
  * behaves as expected.
  * <p>
  * TODO: This only tests the data and the getters under ideal input.
@@ -31,76 +32,144 @@ public class ScenReaderTest extends TestCase {
     // test that the scenario name was read correctly
     public void testScenarioName() {
         boolean test;
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");
-        Scenario reader = Scenario.getInstance();
-        test = reader.getScenarioName().equals("The Dummy Scenario");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getScenarioName().equals("The First Dwarro-Orcish War");
         assertTrue(test);
     }
     
     // test that the scenario number of players was read correctly
     public void testNumberofPlayers() {
         boolean test;
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");
-        Scenario reader = Scenario.getInstance();
-        test = reader.getNumberOfPlayers() == 2;
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getNumberOfPlayers() == 2;
         assertTrue(test);
     }
     
     // test that the scenario game length was read correctly
     public void testGameLength() {
         boolean test;
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");
-        Scenario reader = Scenario.getInstance();
-        test = reader.getGameLength() == 3;
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getGameLength() == 12;
+        assertTrue(test);
+    }
+    
+    // test the Blue sun starting position
+    public void testSolarConfig() {
+        boolean test;
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getBlueSunStart() == 10;
         assertTrue(test);
     }
     
     // test that the nation names were read correctly
-    public void testNationNames() {
+    public void testArmyNames() {
         boolean test;
         List<String> nations;
         nations = new ArrayList<>();
-        nations.add("Elves");
         nations.add("Dwarrows");
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");
-        Scenario reader = Scenario.getInstance();
-        test = reader.getNationNames().equals(nations);
+        nations.add("ORC");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getArmyNames().equals(nations);
         assertTrue(test);
     }
     
     // test that the controlling player is correct
     public void testGetControllingPlayer() {
         boolean test;
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");
-        Scenario reader = Scenario.getInstance();
-        test = (reader.getControllingPlayer("Elves") == 1) &&
-                (reader.getControllingPlayer("Dwarrows") == 2);
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = (Scenario.getControllingPlayer("Dwarrows") == 1) &&
+               (Scenario.getControllingPlayer("ORC") == 2);
         assertTrue(test);
     }
-    
-    // TODO: since neutrals are not yet in Dummy or handled by the pool populator, 
-    // they will be tested later.
     
     // test that the setup order is correct
     public void testGetSetupOrder() {
         boolean test;
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
         Scenario reader = Scenario.getInstance();
         test = (reader.getSetupOrder("Dwarrows") == 2) && 
-               (reader.getSetupOrder("Elves") == 1);
+               (reader.getSetupOrder("ORC") == 1);
         assertTrue(test);
     }
     
     // test that the move order is correct
     public void testGetMoveOrder() {
         boolean test;
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
         Scenario reader = Scenario.getInstance();
         test = reader.getMoveOrder("Dwarrows") == 2 && 
-               (reader.getMoveOrder("Elves") == 1);
+               (reader.getMoveOrder("ORC") == 1);
         assertTrue(test);
     }
     
+    // test the list of nations in the Dwarrows of Scenario 2
+    public void testNationNames() {
+        boolean test;
+        List<String> nations = new ArrayList<>();
+        nations.add("Krasnian");
+        nations.add("Zirkastian");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getNations("Dwarrows").equals(nations);
+        assertTrue(test);
+    }
+    
+    // test the list of neutrals 
+    public void testNeutralNames() {
+        boolean test;
+        List<String> neutrals = new ArrayList<>();
+        neutrals.add("Convivian");
+        neutrals.add("Elven");
+        neutrals.add("SpiderFolk");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getNeutralNames().equals(neutrals);
+        assertTrue(test);
+    }
+    
+    // test the list of a nation's provinces via the Krasnian Dwarrows
+    public void testProvinces() {
+        boolean test;
+        List<String> provs = new ArrayList<>();
+        provs.add("Krasnia");
+        provs.add("Outer Krasnia");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getProvinces("Krasnian").equals(provs);
+        assertTrue(test);
+    }
+    
+    // test the list of a nation's characters via ORC
+    public void testCharacters() {
+        boolean test;
+        List<String> chars = new ArrayList<>();
+        chars.add("Chairman Naskhund");
+        chars.add("Zarko");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getCharacters("ORC").equals(chars);
+        assertTrue(test);
+    }
+    
+    // test the getRace of a nation via ORC
+    public void testNationRace() {
+        boolean test;
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getRace("ORC").equals("Orc");
+        assertTrue(test);
+    }
+    
+    // test the getRace of a neutral via ORC
+    public void testNeutralRace() {
+        boolean test;
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getNeutralRace("Convivian").equals("Dwarrows");
+        assertTrue(test);
+    }
+    
+    // TODO: Test the unit list
+    // TODO: Test those last getters in Scenario.java, whose corresponding
+    //       data isn't even used by the game.
+    //       Other getters for new data in the structure may help for coverage
+    
+    
+    /*
     // test that the nation provinces were read correctly
     public void testProvinces() {
         boolean test;
@@ -108,7 +177,7 @@ public class ScenReaderTest extends TestCase {
         List<String> dwarfProvinces;
         elvishProvinces = new ArrayList<>();
         elvishProvinces.add("Intas");
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
         Scenario reader = Scenario.getInstance();
         test = reader.getProvinces("Elves").equals(elvishProvinces);
         assertTrue(test);
@@ -127,7 +196,7 @@ public class ScenReaderTest extends TestCase {
         elvishChars = new ArrayList<>();
         elvishChars.add("Dalmilandril");
         elvishChars.add("Linfalas");
-        Scenario.Initialize("resources/scenarios/0_Dummy.json");
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
         Scenario reader = Scenario.getInstance();
         test = reader.getCharacters("Elves").equals(elvishChars);
         dwarfChars = new ArrayList<>();
@@ -135,5 +204,5 @@ public class ScenReaderTest extends TestCase {
         test = test && reader.getCharacters("Dwarrows").equals(dwarfChars);
         assertTrue(test);
     }
-    
+    */
 }
