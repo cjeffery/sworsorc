@@ -261,7 +261,7 @@ final public class NetworkClient {
 
                 } else if ( "/newLobby".equals( parsedString[0] ) ) {
                     String lobbyName = parsedString[1];
-                    NetworkClient.send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobbyName );
+                    send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobbyName );
 
                 } else if ( "/joinLobby".equals( parsedString[0] ) ) {
                     String lobbyName = parsedString[1];
@@ -974,7 +974,7 @@ final public class NetworkClient {
     }
 
     private static void write( Flag flag, Tag tag, String sender, List<Object> message ) {
-        writeToQueue( new NetworkPacket( flag, tag, sender, message ) );
+        writeToQueue( new NetworkPacket( flag, tag, sender != null ? sender : username, message ) );
     }
 
     /**

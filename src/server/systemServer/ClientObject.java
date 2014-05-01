@@ -83,14 +83,29 @@ public class ClientObject {
      * @param tag
      */
     protected void send( Flag flag, Tag tag ) {
-        write( flag, tag, null, null );
+        send( flag, tag, null, (Object[]) null );
     }
 
     /**
      * Send a message to client, no pre-packaging required
      * Must ensure any collections are either split up, or handled on the receiving end!
      * <p>
-     * This is just a protected wrapper for {@link #write write()}
+     * Writes to socket outgoing connection, hides the protocol details
+     * <p>
+     * @param flag
+     * @param tag
+     * @param sender
+     * @param message First parameter is assumed to be tag
+     */
+    protected void send( Flag flag, Tag tag, String sender, List<Object> message ) {
+        writeToQueue( new NetworkPacket( flag, tag, ((sender == null || sender.isEmpty()) ? "Server" : sender), message ) );
+    }
+
+    /**
+     * Send a message to client, no pre-packaging required
+     * Must ensure any collections are either split up, or handled on the receiving end!
+     * <p>
+     * Writes to socket outgoing connection, hides the protocol details
      * <p>
      * @param flag
      * @param tag
@@ -98,19 +113,8 @@ public class ClientObject {
      * @param message First parameter is assumed to be tag
      */
     protected void send( Flag flag, Tag tag, String sender, Object... message ) {
-        write( flag, tag, sender, MessagePhoenix.packMessageContents( message ) );
-    }
-
-    /**
-     * Writes to socket outgoing connection, hides the protocol details
-     *
-     * @param flag
-     * @param tag
-     * @param message
-     */
-    private void write( final Flag flag, final Tag tag, final String sender,
-                        final List<Object> message ) {
-        writeToQueue( new NetworkPacket( flag, tag, ((sender == null || sender.isEmpty()) ? "Server" : sender), message ) );
+        send( flag, tag, sender, MessagePhoenix.packMessageContents( message ) );
+        // writeToQueue( new NetworkPacket( flag, tag, ((sender == null || sender.isEmpty()) ? "Server" : sender), MessagePhoenix.packMessageContents( message ) ) );
     }
 
     /**

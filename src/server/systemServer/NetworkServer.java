@@ -77,10 +77,10 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
      * @return
      */
     protected static boolean sendToClient( String handle, Flag flag, Tag tag, String sender,
-                                           Object... message ) {
+                                           List<Object> message ) {
         for ( ClientObject client : NetworkServer.clientObjects ) {
             if ( client.getHandle().equals( handle ) ) {
-                client.send( flag, tag, sender, ((Object[]) message) );
+                client.send( flag, tag, sender, message );
                 return true;
             }
         }
