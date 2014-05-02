@@ -10,7 +10,6 @@ package Units;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -26,13 +25,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import mainswordsorcery.Game;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
@@ -70,30 +71,32 @@ public class Stack {
     }
 
     public void removeOverStack(ArrayList<MoveableUnit> units) {
-        final Popup popup = new Popup();
-        
-        //UnitColor c;
-        
-        
-        //Stage stage = new Stage();
-        
-        //stage.setScene(Game.getInstance().getHudScene());
-        
+        final Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.initStyle(StageStyle.UNDECORATED);
+        popup.setHeight(300);
+        popup.setWidth(800);
         BorderPane border = new BorderPane();
         border.setTop(this.addHBox());
         border.setCenter(addFlow(units));
         border.setBottom(this.addVbox(popup));
         this.traverse(border);
-       
         
-        popup.setAutoFix(false);
-        popup.setHideOnEscape(true);
-        popup.getContent().addAll(border);
-        popup.setX(350);
-        popup.setY(350);
+        StackPane root = new StackPane();
+        root.getChildren().add(border);
+        
+        Scene popScene = new Scene(root,300,250);
+        
+        //popup.setAutoFix(false);
+        //popup.setHideOnEscape(true);
+        //popup.getContent().addAll(border);
+        //popup.setX(350);
+        //popup.setY(350);
         popup.centerOnScreen();
+        popup.setScene(popScene);
+        popup.initOwner(Game.getInstance().getStage());
         
-        popup.show(Game.getInstance().getStage()); //Game.getInstance().getHudScene());
+        popup.show();//Game.getInstance().getStage()); //Game.getInstance().getHudScene());
         //Scene scene = new Scene(border, 300, 300);
 
         //stage.
@@ -234,17 +237,17 @@ public class Stack {
         return hbox;
     }
 
-     private VBox addVbox(Popup box){
+     private VBox addVbox(Stage box){
         
      VBox hBox = new VBox();
      Button btn = new Button();
-     
+     btn.setDefaultButton(true);
      btn.setText("Remove Units");
      btn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
             public void handle(ActionEvent event) {
-                box.hide();
+                box.close();
             }
         });
      hBox.setPadding(new Insets(15, 12, 15, 12));
