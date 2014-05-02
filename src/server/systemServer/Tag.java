@@ -36,6 +36,11 @@ public enum Tag {
     VOTE_RESPONSE, VOTE_REQUEST, BEGIN_GAME,
     UPDATE_HANDLE_REQUEST, UPDATE_HANDLE_RESPONSE,
     NULL_TAG,
+    
+    //Colin was here. This was a bit of a mess.
+    INIT_GAME_PLEASE, //send to client that's in charge of loading scenario
+    PLACE_UNIT //send to have all clients place a unit
+    
 
 
 

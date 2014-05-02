@@ -21,6 +21,8 @@ public class Lobby {
 
     // Client who's turn it currently is
     protected ClientObject current;
+    
+    protected boolean gameStarted;
 
     /**
      * Lobby Constructor
@@ -32,6 +34,7 @@ public class Lobby {
         this.lobbyClients = new ArrayList<>( 0 );
         this.name = name;
         this.lobbyID = lobbyID;
+        this.gameStarted = false;
     }
 
     /**
@@ -129,10 +132,16 @@ public class Lobby {
      *
      */
     public void beginGame() {
-        //start with the first player in list:
-        current = lobbyClients.get( 0 );
-        sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO,
-                           current.getHandle(), current.getClientID() );
+        if(!gameStarted) {
+            //start with the first player in list:
+            current = lobbyClients.get( 0 );
+            sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO,
+                               current.getHandle(), current.getClientID() );
+            gameStarted = true;
+        }
+        else {
+            System.out.println("Game already started");
+        }
     }
 
     /**
@@ -149,5 +158,4 @@ public class Lobby {
         current = lobbyClients.get( nextIndex );
         sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO, current.getHandle(), current.getClientID() );
     }
-
 } // end class

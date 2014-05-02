@@ -394,6 +394,9 @@ public class ClientObject {
                                 // TODO: VOTING
                                 currentLobby.beginGame();
                                 currentLobby.sendToEntireLobby( flag, Tag.BEGIN_GAME );
+                                
+                                //selected client in charge of game setup
+                                send( Flag.GAME, Tag.INIT_GAME_PLEASE);
                             }
                             break;
                         case SEND_FILE_REQUEST:

@@ -14,6 +14,7 @@ import Units.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
+import java.util.logging.*;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -24,7 +25,7 @@ import javafx.stage.*;
 import javafx.scene.*;
 import org.controlsfx.dialog.Dialogs;
 import sscharts.Scenario;
-import systemServer.NetworkClient;
+import systemServer.*;
 
 /**
  *
@@ -233,13 +234,22 @@ public class Game extends Application {
         int x = rand.nextInt(9);
         return x;
     }
+    
     /** 
      * used to initialize scenario. called from MainMenuController::LoadScenario()
      * 
      * @author Jay Drage
      * @param scenarioFile the path/filename of the scenario to be loaded.
      */
-    public void initScenario(String scenarioFile){
+    public void initScenario(String scenarioFile) {
+        if(!NetworkClient.clientIsInitialized()) {
+            initNetwork();
+        }        
+        NetworkClient.startGame();
+        scenarioLoaded = true;//fixme this shouldn't be here
+    }
+
+    public void initScenarioCallback() {
         //set to true to load sample scenario
         //set to false to run actual initScenario
         boolean testScenario = true;
@@ -265,21 +275,32 @@ public class Game extends Application {
      */
     public void initNetwork(){
         String ip = Dialogs.create()
-                    .title("Enter servers IP address")
-                    .masthead("Enter servers IP address").showTextInput();
-        if(ip.equals(""))
+                    .title("Enter servers IP address (blank for default)")
+                    .masthead("Enter servers IP address (blank for default)")
+                    .showTextInput();
+        if(ip == null || ip.equals(""))
             ip = "127.0.0.1";
         
-        String username = Dialogs.create().title("Choose a username")
-                                 .masthead("Choose a username").showTextInput();
+        String username =
+                Dialogs.create()
+                       .title("Choose a username (blank for default)")
+                       .masthead("Choose a username (blank for default)")
+                       .showTextInput();
+        if(username == null || username.equals(""))
+            username = "FRANCIBALD";
 
-        //todo handle this
-        if( !NetworkClient.initializeClient(username, ip) ) {
+        if( !NetworkClient.initializeClient(username, ip)
+           && ip.equals("127.0.0.1"))
+        {
             System.out.println("Failed to init network");
-            return;
+            System.out.println("So better try starting a server");
+            NetworkServer.startServer();
+            if( !NetworkClient.initializeClient(username, ip) ) {      
+                System.out.println("Well shucks it still failed :\\");
+                return;
+            }      
         }
         
         NetworkClient.createAndJoinLobby("Default");
-        
     }
 }
