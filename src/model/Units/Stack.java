@@ -69,7 +69,7 @@ public class Stack {
         return false;
     }
 
-    public void removeOverStack(MoveableUnit unit) {
+    public void removeOverStack(ArrayList<MoveableUnit> units) {
         final Popup popup = new Popup();
         
         //UnitColor c;
@@ -81,7 +81,7 @@ public class Stack {
         
         BorderPane border = new BorderPane();
         border.setTop(this.addHBox());
-        border.setCenter(addFlow(unit));
+        border.setCenter(addFlow(units));
         border.setBottom(this.addVbox(popup));
         this.traverse(border);
        
@@ -104,7 +104,7 @@ public class Stack {
         //stage.show();
     }
 
-    private FlowPane addFlow(MoveableUnit unit){
+    private FlowPane addFlow(ArrayList<MoveableUnit> units){
         
         FlowPane flow = new FlowPane();
         
@@ -123,8 +123,9 @@ public class Stack {
         }*/
         
         
-       
-        flow.getChildren().add(addButton(unit));
+        for (MoveableUnit s : units)
+            flow.getChildren().add(addButton(s));
+        
         //flow.getChildren().add(addButton(unit));
        
         //flow.getChildren().add(addButton(unit));

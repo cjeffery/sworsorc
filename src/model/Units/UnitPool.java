@@ -115,20 +115,7 @@ public class UnitPool {
             this.safeTeleport.add(temp);
     }
     
-    public boolean overStackWaring(String location){
-        
-        
-        if (hexList.get(location).size() > 2){
-            Dialogs.create()
-            .title("Stack Warring")
-            .masthead("One too many!")
-            .message("You will hafe to eleminate " + (hexList.get(location).size() - 2) + " unit at the end of your move phase if you dont move them.")
-            .actions(Dialog.Actions.OK)
-            .showConfirm();
-            return true;
-        }
-        return false;
-    } 
+    
     /**
      * Used to add a new unit to the pool with an initial location.*
      * 
@@ -271,7 +258,7 @@ public class UnitPool {
     
     public void addMove(MoveableUnit unit, String destinationHexID){
         
-        stack.removeOverStack(unit);
+       
         // This horific looking line removes the unit from its current location.
         hexList.get(unit.getLocation()).remove(hexList.get(unit.getLocation()).indexOf(unit.getID()));
         
@@ -279,6 +266,16 @@ public class UnitPool {
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
         Stack.overStackWaring(this.getUnitsInHex(unit.getLocation()));
+        
+        ArrayList<MoveableUnit> temp = new ArrayList<MoveableUnit>();
+        ArrayList<String> hold = new ArrayList<String>();
+        hold = this.getUnitsInHex(destinationHexID);
+        hold = this.getUnitsInHex(destinationHexID);
+        
+        for(String s : hold)
+            temp.add(this.getUnit(s));
+        
+        stack.removeOverStack(temp);
         
         if ( "2004".equals(unit.getLocation()) || 
              "0912".equals(unit.getLocation()) || 
