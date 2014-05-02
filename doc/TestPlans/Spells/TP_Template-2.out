@@ -14,16 +14,27 @@
 \BOOKMARK [2][-]{subsection.1.8.5}{Hardware}{section.1.8}% 14
 \BOOKMARK [2][-]{subsection.1.8.6}{Automated Testing}{section.1.8}% 15
 \BOOKMARK [3][-]{subsubsection.1.8.6.1}{Unit Testing}{subsection.1.8.6}% 16
-\BOOKMARK [1][-]{section.1.9}{ITEM PASS/FAIL CRITERIA}{chapter.1}% 17
-\BOOKMARK [1][-]{section.1.10}{SUSPENSION CRITERIA}{chapter.1}% 18
-\BOOKMARK [1][-]{section.1.11}{TEST DELIVERABLES}{chapter.1}% 19
-\BOOKMARK [1][-]{section.1.12}{REMAINING TEST TASKS}{chapter.1}% 20
-\BOOKMARK [1][-]{section.1.13}{ENVIRONMENTAL NEEDS}{chapter.1}% 21
-\BOOKMARK [1][-]{section.1.14}{STAFFING AND TRAINING NEEDS}{chapter.1}% 22
-\BOOKMARK [1][-]{section.1.15}{RESPONSIBILITIES}{chapter.1}% 23
-\BOOKMARK [1][-]{section.1.16}{SCHEDULE}{chapter.1}% 24
-\BOOKMARK [1][-]{section.1.17}{PLANNING RISKS AND CONTINGENCIES}{chapter.1}% 25
-\BOOKMARK [1][-]{section.1.18}{APPROVALS}{chapter.1}% 26
-\BOOKMARK [1][-]{section.1.19}{GLOSSARY}{chapter.1}% 27
-\BOOKMARK [1][-]{section.1.20}{APPENDIX A. \040[insert name here]}{chapter.1}% 28
-\BOOKMARK [1][-]{section.1.21}{APPENDIX B. \040[insert name here]}{chapter.1}% 29
+\BOOKMARK [2][-]{subsection.1.8.7}{Manual Testing}{section.1.8}% 17
+\BOOKMARK [1][-]{section.1.9}{ITEM PASS/FAIL CRITERIA}{chapter.1}% 18
+\BOOKMARK [2][-]{subsection.1.9.1}{Reporting a failure}{section.1.9}% 19
+\BOOKMARK [3][-]{subsubsection.1.9.1.1}{What Constitutes failure?}{subsection.1.9.1}% 20
+\BOOKMARK [3][-]{subsubsection.1.9.1.2}{What Does Not Constitute a failure?}{subsection.1.9.1}% 21
+\BOOKMARK [3][-]{subsubsection.1.9.1.3}{What to do when a failure is discovered?}{subsection.1.9.1}% 22
+\BOOKMARK [3][-]{subsubsection.1.9.1.4}{What if a specification document is incorrect \(e.g. outdated, misstated\)?}{subsection.1.9.1}% 23
+\BOOKMARK [3][-]{subsubsection.1.9.1.5}{What sections to include in an SCR?}{subsection.1.9.1}% 24
+\BOOKMARK [2][-]{subsection.1.9.2}{Unit Testing Pass/Fail Criteria}{section.1.9}% 25
+\BOOKMARK [2][-]{subsection.1.9.3}{Intergration Testing Pass/Fail Criteria}{section.1.9}% 26
+\BOOKMARK [3][-]{subsubsection.1.9.3.1}{Character}{subsection.1.9.3}% 27
+\BOOKMARK [3][-]{subsubsection.1.9.3.2}{Spells}{subsection.1.9.3}% 28
+\BOOKMARK [1][-]{section.1.10}{SUSPENSION CRITERIA}{chapter.1}% 29
+\BOOKMARK [1][-]{section.1.11}{TEST DELIVERABLES}{chapter.1}% 30
+\BOOKMARK [1][-]{section.1.12}{REMAINING TEST TASKS}{chapter.1}% 31
+\BOOKMARK [1][-]{section.1.13}{ENVIRONMENTAL NEEDS}{chapter.1}% 32
+\BOOKMARK [1][-]{section.1.14}{STAFFING AND TRAINING NEEDS}{chapter.1}% 33
+\BOOKMARK [1][-]{section.1.15}{RESPONSIBILITIES}{chapter.1}% 34
+\BOOKMARK [1][-]{section.1.16}{SCHEDULE}{chapter.1}% 35
+\BOOKMARK [1][-]{section.1.17}{PLANNING RISKS AND CONTINGENCIES}{chapter.1}% 36
+\BOOKMARK [1][-]{section.1.18}{APPROVALS}{chapter.1}% 37
+\BOOKMARK [1][-]{section.1.19}{GLOSSARY}{chapter.1}% 38
+\BOOKMARK [1][-]{section.1.20}{APPENDIX A. \040[insert name here]}{chapter.1}% 39
+\BOOKMARK [1][-]{section.1.21}{APPENDIX B. \040[insert name here]}{chapter.1}% 40

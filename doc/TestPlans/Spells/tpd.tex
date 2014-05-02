@@ -634,21 +634,57 @@ The software will be developed with Java 1.8.
 \subsection{Automated Testing}
 The automated test process will be Unit testing ...
 \subsubsection{Unit Testing}
-Unit testing will be used to validate individual classes objects. Some objects will not be required to be validated by unit testing, such as the user interface and the supporting classes and any classes or code that is exempted according to section 5.
-Each team should develop TCSs as needed for their code. Each TCS should include tests for all classes as required and for each test, validate as many inputs as needed to test that the class operates as required by the rules covered in the SSRS, and also according to an requirements and design documents applicable to that class.
+Not yet.
+%Unit testing will be used to validate individual classes objects. Some objects will not be required to be validated by unit testing, such as the user interface and the supporting classes and any classes or code that is exempted according to section 5.\\
+%Each team should develop TCSs as needed for their code. Each TCS should include tests for all classes as required and for each test, validate as many inputs as needed to test that the class operates as required by the rules covered in the SSRS, and also according to an requirements and design documents applicable to that class.
 
-\
-
+\subsection{Manual Testing}
+Manual testing will be required for the portions of the program that can not undergo  automated testing. This section applies to the testing of the user interface to simulate user orientated testing to verify conformance to the documented use cases.
 }
 
 \section[ITEM PASS/FAIL CRITERIA]{\bfseries\color{black}
 	 ITEM PASS/FAIL CRITERIA}
-{\selectlanguage{english}\itshape\color{black}
-What are the Completion criteria for this plan? This is a critical
-aspect of any test plan and should be appropriate to the level of the plan.
-}
+%{\selectlanguage{english}\itshape\color{black}
+%What are the Completion criteria for this plan? This is a critical
+%aspect of any test plan and should be appropriate to the level of the plan.
+%}
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+\subsection{Reporting a failure}
+If a failure happens during the execution of any test, a failure report should be submitted to provide information of the failure. Failure should be reported in the issue page of the repository.
+\newline
+The name of the issue should be the name of the name of the code file and the name of the test if applicable.
+
+\subsubsection{What Constitutes failure?}
+And deviation from a specification, e.g. SRS, UML diagrams.
+
+\subsubsection{What Does Not Constitute a failure?}
+Any unit or action that does not have any requirements documentation, cannot cause a failure.
+
+\subsubsection{What to do when a failure is discovered?}
+Produce a SCR to document each failure that needs to be corrected.
+
+\subsubsection{What if a specification document is incorrect (e.g. outdated, misstated)?}
+This also constitutes a failure and an SCR should be created.
+
+\subsubsection{What sections to include in an SCR?}
+Failure Identified 
+\newline
+Expected Outcome 
+\newline
+Actual Behavior 
+\newline
+Steps to reproduce
+\newline
+Each section should be brief and to the point, but yet convey enough information for the coder.
+
+\subsection{Unit Testing Pass/Fail Criteria}
+
+\subsection{Intergration Testing Pass/Fail Criteria}
+\input{character_integration}
+\input{spell_integration}
+
+
+}
 
 \section[SUSPENSION CRITERIA]{\bfseries\color{black}
 	 SUSPENSION CRITERIA AND RESUMPTION REQUIREMENTS}
