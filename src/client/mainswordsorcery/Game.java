@@ -269,14 +269,16 @@ public class Game extends Application {
                     .masthead("Enter servers IP address").showTextInput();
         if(ip.equals(""))
             ip = "127.0.0.1";
+        NetworkClient.setServerName(ip);
         
-        String username = Dialogs.create().title("Choose a username")
-                                 .masthead("Choose a username").showTextInput();
+        NetworkClient.setUsername(
+            Dialogs.create().title("Choose a username")
+                            .masthead("Choose a username").showTextInput()
+        );
 
         //todo handle this
-        if( !NetworkClient.initializeClient(username, ip) ) {
+        if( !NetworkClient.initializeClient() ) {
             System.out.println("Failed to init network");
-            return;
         }
     }
 }
