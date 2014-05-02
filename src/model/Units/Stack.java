@@ -157,7 +157,9 @@ public class Stack {
             iv.setImage(image);
             iv.setY(1);
             
-            if (((ArmyUnit)unit).isDemoralized()){
+            if(   (unit instanceof ArmyUnit)
+               && ((ArmyUnit)unit).isDemoralized())
+            {
                 File fileBadge = new File(path + "demoralized_badge.png");
 
                 localUrl = fileBadge.toURI().toURL().toString();
