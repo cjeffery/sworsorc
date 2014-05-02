@@ -27,7 +27,7 @@ public class MoveableUnit {
     protected String ID;
     
     public MoveableUnit(){
-        
+        race = Race.NOT_SET;
     }
     
     public void ResetWorkingMovement(){
