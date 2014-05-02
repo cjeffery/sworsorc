@@ -18,8 +18,7 @@ import org.controlsfx.dialog.Dialogs;
 import static sscharts.ArmyCombatResultsTable.PrepareAttackResults;
 import sshexmap.MapHex;
 import sshexmap.MapView;
-import ssterrain.TTSwamp;
-import ssterrain.TerrainType;
+
 
 /**
  *
