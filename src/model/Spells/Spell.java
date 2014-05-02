@@ -218,7 +218,7 @@ public class Spell {
                 break;
             case "Teleporation Control":
 
-                Teleporation_Control t_c = new Teleporation_Control();
+                //Teleporation_Control t_c = new Teleporation_Control();
                 break;
             case "Conjure Koboldic Infantry":
                 C_K_I c_k_i = new C_K_I(character);

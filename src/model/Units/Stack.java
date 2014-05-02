@@ -28,6 +28,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -82,12 +84,13 @@ public class Stack {
         border.setCenter(addFlow(unit));
         border.setBottom(this.addVbox(popup));
         this.traverse(border);
-
+       
+        
         popup.setAutoFix(false);
         popup.setHideOnEscape(true);
         popup.getContent().addAll(border);
         popup.setX(350);
-        popup.setY(250);
+        popup.setY(350);
         popup.centerOnScreen();
         
         popup.show(Game.getInstance().getStage()); //Game.getInstance().getHudScene());
@@ -213,15 +216,16 @@ public class Stack {
         hbox.setStyle("-fx-background-color: #336699;");
         
         Text txt = new Text(50,50,"Stack overflow.  You must eleminate unit(s).");
-        
-        hbox.getChildren().addAll(txt);
+        Text txt2 = new Text("Test Code! Dose Nothing.");
+        txt2.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+        hbox.getChildren().addAll(txt,txt2);
 
         return hbox;
     }
 
      private VBox addVbox(Popup box){
         
-     VBox vbox = new VBox();
+     VBox hBox = new VBox();
      Button btn = new Button();
      
      btn.setText("Remove Units");
@@ -232,11 +236,12 @@ public class Stack {
                 box.hide();
             }
         });
+     hBox.setPadding(new Insets(15, 12, 15, 12));
+     hBox.setStyle("-fx-background-color: #234679;"); 
+    
+     hBox.getChildren().addAll(btn);
      
-     vbox.setStyle("-fx-background-color: #234679;"); 
-     vbox.getChildren().addAll(btn);
-     
-     return vbox;
+     return hBox;
     }
     
     private void traverse (Parent node){
