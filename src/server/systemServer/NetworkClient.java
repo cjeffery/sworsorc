@@ -566,7 +566,19 @@ final public class NetworkClient {
          * @return
          */
         private NetworkPacket recieveMessage() {
-            return streamIn != null && isConnected() ? MessagePhoenix.recieveMessage( streamIn ) : null;
+            if(streamIn == null || !isConnected()) {
+                return null;
+            }
+            try {
+                return MessagePhoenix.recieveMessage( streamIn );
+                
+            }
+            catch ( IOException | ClassNotFoundException | 
+                    NullPointerException ex)
+            {
+                ex.printStackTrace();
+                return null;
+            }
         }
 
         /**

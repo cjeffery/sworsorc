@@ -8,6 +8,7 @@ package systemServer;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -173,8 +174,20 @@ public class ClientObject {
          * <p>
          * @return List received, or null if not connected
          */
-        private NetworkPacket recieveMessage() {
-            return MessagePhoenix.recieveMessage( ClientObject.this.streamIn );
+        private NetworkPacket recieveMessage()
+        {
+            NetworkPacket res;
+            try {
+                res = MessagePhoenix.recieveMessage(ClientObject.this.streamIn);
+                return res;
+            }
+            catch ( IOException | ClassNotFoundException | 
+                    NullPointerException ex)
+            {
+                ex.printStackTrace();
+                killThread();
+                return null;
+            }
         }
 
         private void killThread() {

@@ -70,16 +70,13 @@ final public class MessagePhoenix {
      *
      * @author Christopher Goes
      */
-    public static NetworkPacket recieveMessage( final ObjectInputStream reader ) {
+    public static NetworkPacket recieveMessage( final ObjectInputStream reader )
+    throws IOException, ClassNotFoundException, NullPointerException
+    {
         NetworkPacket temp = new NetworkPacket();
 
         if ( reader != null ) {
-            try {
-                temp = (NetworkPacket) reader.readUnshared();
-            } catch ( IOException | ClassNotFoundException |
-                      NullPointerException ex ) {
-                ex.printStackTrace();
-            }
+            temp = (NetworkPacket) reader.readUnshared();
             return temp;
         } else {
             System.err.println( "Null reader passed to recieveMessage!" );
