@@ -635,7 +635,8 @@ final public class NetworkClient {
                     System.out.println( "Diagnostic: empty message " );
                 }
             }*/
-            else if ( message.get( 0 ).getClass().equals( String.class ) ) {
+            else if (   !message.isEmpty()
+                     && message.get( 0 ).getClass().equals( String.class ) ) {
                 stringmessage = (String) message.get( 0 );
             }
 
