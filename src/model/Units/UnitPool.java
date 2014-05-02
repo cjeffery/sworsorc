@@ -270,6 +270,7 @@ public class UnitPool {
     
     
     public void addMove(MoveableUnit unit, String destinationHexID){
+        
         stack.removeOverStack(unit);
         // This horific looking line removes the unit from its current location.
         hexList.get(unit.getLocation()).remove(hexList.get(unit.getLocation()).indexOf(unit.getID()));
@@ -277,7 +278,8 @@ public class UnitPool {
         unit.setLocation(destinationHexID);
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
-    
+        Stack.overStackWaring(this.getUnitsInHex(unit.getLocation()));
+        
         if ( "2004".equals(unit.getLocation()) || 
              "0912".equals(unit.getLocation()) || 
              "0627".equals(unit.getLocation()) || 
