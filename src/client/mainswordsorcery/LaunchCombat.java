@@ -24,6 +24,7 @@ import sshexmap.MapView;
  *
  * @author Shaung
  * 
+ * 
  */
 public class LaunchCombat {
     
@@ -57,7 +58,7 @@ public class LaunchCombat {
         // Set up Defender's TerrainType
         MapHex Defender_Terrain = new MapHex();
         MapView temp = MapView.getMapView();
-        Defender_Terrain = (MapHex)temp.GetHexMap().GetHex(selected_combat_unit.getLocation());
+        Defender_Terrain = (MapHex)temp.GetHexMap().GetHex(target_combat_unit.getLocation());
         
         // Add Friendly Unit into Attackers List
         ArrayList<MapHex> FriendlyCombatList = new ArrayList<>();
@@ -185,6 +186,9 @@ public class LaunchCombat {
             // Do nothing
         }
         
+        attackers.clear();
+        defenders.clear();
+        FriendlyCombatList.clear();
     }
     /**
      * 
