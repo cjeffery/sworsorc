@@ -154,6 +154,7 @@ public class Stack {
             File file = new File(path + unit.getClass().getSimpleName() + ".png");
             String localUrl = file.toURI().toURL().toString();
             Image image = new Image(localUrl, false);
+            
             iv.setImage(image);
             iv.setY(1);
             
@@ -191,7 +192,14 @@ public class Stack {
         btn.setScaleY(.5);
         btn.setShape(polygon);
 
-        btn.setStyle("-fx-background-color: " + unit.getNation().color() + " ;");
+        Nation nation = unit.getNation();
+        if(nation != null) {
+            btn.setStyle(  "-fx-background-color: "
+                         + unit.getNation().color() + " ;");
+        }
+        else {
+            btn.setStyle(  "-fx-background-color: #FFFFFF;");
+        }
         btn.setGraphic(blend);
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
