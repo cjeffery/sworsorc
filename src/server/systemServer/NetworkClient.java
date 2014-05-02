@@ -96,10 +96,31 @@ final public class NetworkClient {
      * @author Christopher Goes
      */
     public static boolean initializeClient( String filename ) {
-        messageQueue = new ArrayBlockingQueue<>( 30, true ); // 30 slots, FIFO access
-        commandQueue = new ArrayBlockingQueue<>( 30, true ); // 30 slots, FIFO access
-        startLocalStreams();
         configureSettings( filename );
+        return startClient();
+    }
+    
+    /**
+     * Initialize client without going through file
+     * @param username The username
+     * @param ip_addr The IP address to connect to
+     * @return whether it exploded or not (true is good)
+     */
+    public static boolean initializeClient(String username, String ip_addr) {
+        serverName = ip_addr;
+        NetworkClient.username = username;
+        return startClient();
+    }
+    
+    /**
+     * Start network client after settings have been set from file or whatever
+     * @author Christopher Goes
+     */
+    public static boolean startClient() {
+        // 30 slots, FIFO access
+        messageQueue = new ArrayBlockingQueue<>( 30, true ); 
+        commandQueue = new ArrayBlockingQueue<>( 30, true );
+        startLocalStreams();
         startCommandProcessor();
         if ( connect() ) {
             startRemoteConnection();
@@ -107,7 +128,7 @@ final public class NetworkClient {
         } else {
             clientInitialized = false;
         }
-        return clientInitialized;
+        return clientInitialized;        
     }
 
     /**
