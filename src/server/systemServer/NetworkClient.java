@@ -9,10 +9,10 @@ package systemServer;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.logging.*;
 import javafx.application.Platform;
 import mainswordsorcery.Game;
 
@@ -212,6 +212,16 @@ final public class NetworkClient {
         createLobby(lobby);
         joinLobby(lobby);
     }
+    
+    /**
+     * request to start game
+     * @return 
+     */
+    //oh my gosh this is so terrible
+    public static void startGame() {
+        send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST);
+    }
+    
     
     public static boolean isPhasing() {
         return phasing;
@@ -683,7 +693,7 @@ final public class NetworkClient {
                             if ( username.equals( stringmessage ) ) {
                                 flushToConsole( ("It is now my turn!") );
                             } else {
-                                flushToConsole( "It is now " + (String) message.get( 1 ) + "'s turn!" );
+                                flushToConsole( "It is now " + (Integer) message.get( 0 ) + "'s turn!" );
                             }
                             break;
                         case YIELD_TURN_RESPONSE:
@@ -693,6 +703,9 @@ final public class NetworkClient {
                             } else {
                                 flushToConsole( "Could not yield turn!" );
                             }
+                            break;
+                        case INIT_GAME_PLEASE: //setup scenario
+                            Game.getInstance().initScenarioCallback();
                             break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
@@ -743,7 +756,6 @@ final public class NetworkClient {
                         case BEGIN_GAME_RESPONSE: // Client will see game started, so just print message
                             flushToConsole( stringmessage );
                             break;
-
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }

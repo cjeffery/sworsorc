@@ -353,5 +353,20 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
         }
 
     }
+    
+    /**
+     * start the server, fun
+     */
+    public static void startServer() {
+        new Thread() {
+            public void run() {
+                systemServer.NetworkServer.main(new String[0]);
+            }
+        }.start();  
+        //sleep to discourage immediate connection attempts from failing
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {}
+    }
 
 } // end NetworkServer
