@@ -12,6 +12,7 @@ package Units;
 import java.lang.Character; // used on line 213
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.SortedMap;
@@ -48,16 +49,16 @@ public class UnitPool {
     private final SortedMap<String, ArrayList<String>> hexList = 
             Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());
     private final SortedMap<String, ArrayList<String>> unitMove = 
-            Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());;
+            Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<String>>());
     private final Object[] options = {"Yes","No",};
-    private boolean safeTeleport;
-    private PopOver item;
-    private int portalNum = 0;
-    
+    private final SortedMap<String, Integer> portalNum = 
+            Collections.synchronizedSortedMap(new TreeMap<String, Integer>());
+    private final List<String> safeTeleport = 
+            Collections.synchronizedList(new ArrayList<String>());
+    private int portNum = 0; 
     private static UnitPool INSTANCE;
     
-    private final MapView view = MapView.getMapView();
-    
+    private Stack stack = new Stack();
     /**
      * This creates or returns the unit pool singleton.
      * 
@@ -75,8 +76,8 @@ public class UnitPool {
      * 
      * @return 
      */
-    public int getTeleportDestination(){
-        return portalNum;
+    public int getTeleportDestination(String unitID){
+        return this.portalNum.get(unitID);
         
     }
     
@@ -87,7 +88,8 @@ public class UnitPool {
      * @param portal 
      */
     public void setTeleportDestination(ArrayList<String> unitID, int portal){
-        portalNum = portal -1; 
+        for(String temp : unitID)
+            this.portalNum.put(temp, portal); 
     }
     
     /**
@@ -95,8 +97,11 @@ public class UnitPool {
      * 
      * @return 
      */
-    public boolean getSafeTeleport(){
-        return this.safeTeleport;
+    public boolean getSafeTeleport(String unitID){
+        if (this.safeTeleport.contains(unitID))
+            return true;
+        else
+            return false;
     }
     
     /**
@@ -106,10 +111,13 @@ public class UnitPool {
      * @param teleportIsSafe 
      */
     public void setSafeTeleport(ArrayList<String> unitID, boolean teleportIsSafe){
-        this.safeTeleport = teleportIsSafe;
+        for (String temp : unitID)
+            this.safeTeleport.add(temp);
     }
     
     public boolean overStackWaring(String location){
+        
+        
         if (hexList.get(location).size() > 2){
             Dialogs.create()
             .title("Stack Warring")
@@ -262,7 +270,7 @@ public class UnitPool {
     
     
     public void addMove(MoveableUnit unit, String destinationHexID){
-        
+        stack.removeOverStack(unit);
         // This horific looking line removes the unit from its current location.
         hexList.get(unit.getLocation()).remove(hexList.get(unit.getLocation()).indexOf(unit.getID()));
         
@@ -400,7 +408,8 @@ public class UnitPool {
      * @param unitClassName
      * @return 
      */
-    public ArrayList<MoveableUnit> getPlayerSpecificUnits(int playerId, String unitClassName){
+    public ArrayList<MoveableUnit> getPlayerSpecificUnits(int playerId, 
+            String unitClassName){
         return pool.get(playerId).get(unitClassName);
     }
     
@@ -442,6 +451,8 @@ public class UnitPool {
         this.pool.clear();
         this.hexList.clear();
         this.unitMove.clear();
+        this.portalNum.clear();
+        this.safeTeleport.clear();
     }
     
     /**
@@ -452,10 +463,8 @@ public class UnitPool {
         
         for (Map.Entry<String, ArrayList<String>> entry : this.unitMove.entrySet()){
             if (entry.getValue().size() > 1){
-                 
-                int temp = entry.getValue().size();
-                for (int i = 0; i <= (temp - 2); i++)
                    entry.getValue().remove(0);
+                   endMovementPhase();
             }   
         }
     }
@@ -488,9 +497,9 @@ public class UnitPool {
      * @param unit
      * @return 
      */
-    public boolean teleport(MoveableUnit unit){
-        return this.teleport(unit, false, 7);
-    }
+    //public boolean teleport(MoveableUnit unit){
+    //    return this.teleport(unit, false, 7);
+    //}
     
     /**
      * Safe teleport used with the teleport spell.
@@ -504,15 +513,16 @@ public class UnitPool {
      * @param portalNum
      * @return 
      */
-    public boolean teleport(MoveableUnit unit,boolean safeTeleport, int portalNum){
+    public boolean teleport(MoveableUnit unit){
         String destinationHex;
+        Random rNum = new Random();
         
-        if (!safeTeleport){
-            Random rNum = new Random();
-            portalNum = rNum.nextInt(6);
+        if (!this.safeTeleport.contains(unit.getID())){
+            
+            //portNum = rNum.nextInt(6);
             //portalNum = 1;
             
-            destinationHex = teleportDestinationLogic(portalNum);
+            destinationHex = teleportDestinationLogic(rNum.nextInt(6));
             
             if (destinationHex.equals(unit.getLocation())){
                 removeUnit(unit);
@@ -523,15 +533,22 @@ public class UnitPool {
         
         }
         else{
-            portalNum--;
-            destinationHex = this.teleportDestinationLogic(portalNum);
-            if (unit.getLocation().equals(destinationHex) )
-                return false;
+            if (this.portalNum.containsKey(unit.getID())){
+                destinationHex = this.teleportDestinationLogic(portalNum.get(unit.getID()));
+                    if (unit.getLocation().equals(destinationHex) )
+                        return false;
+            
+                    else{
+                        this.addMove(unit, destinationHex, true);
+                        return true;
+                    }
+                }
             else{
-                this.addMove(unit, destinationHex, true);
+                destinationHex = teleportDestinationLogic(rNum.nextInt(6));
+                this.addMove(unit, destinationHex,true);
                 return true;
             }
-        }     
+        }        
     }
 
     /**

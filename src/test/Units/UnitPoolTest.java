@@ -85,7 +85,7 @@ public class UnitPoolTest extends TestCase {
         assertTrue(test);
         
     }
-    
+    */
     //Tests update a unit position, test end of movement phase. 
     public void test03() {
         ArrayList<String> list1, list2, list3, list4;
@@ -107,11 +107,13 @@ public class UnitPoolTest extends TestCase {
         
         pool.addMove(unit, "0102");
         pool.addMove(unit, "0103");
+        pool.addMove(unit, "0104");
+        pool.addMove(unit, "0105");
         
-        list1 = pool.getUnitsInHex("0103");
+        list1 = pool.getUnitsInHex("0105");
         list2 = pool.getUnitHexMoves(list1.get(list1.size() - 1));
         assertTrue(1 == list1.size());
-        assertTrue(3 == list2.size());
+        assertTrue(5 == list2.size());
         
         pool.addUnit(2,new Bow(),"0101");
         list1 = pool.getUnitsInHex("0101");
@@ -125,24 +127,25 @@ public class UnitPoolTest extends TestCase {
         
         list1 = pool.getUnitsInHex("0103");
         list2 = pool.getUnitHexMoves(list1.get(0));
-        list3 = pool.getUnitHexMoves(list1.get(1));
+        //list3 = pool.getUnitHexMoves(list1.get(1));
         
         //unit = pool.getUnit(list1.get(0));// If null, it would've thrown a null pointer exception.
-        assertTrue(2 == list1.size());
-        assertTrue(3 == list2.size());
-        assertTrue(2 == list3.size());
+        assertTrue(1 == list1.size());
+        assertTrue(2 == list2.size());
+        //assertTrue(2 == list3.size());
         
         list1 = pool.getUnitsInHex("0101");
+        list3 = pool.getUnitsInHex("0105");
         list4 = pool.getUnitHexMoves(list1.get(0));
-        
+        list2 = pool.getUnitHexMoves(list3.get(0));
         pool.endMovementPhase();
         
         assertTrue(1 == list2.size());
-        assertTrue(1 == list3.size());
+        //assertTrue(1 == list3.size());
         assertTrue(1 == list4.size());
         
     }
-    
+    /*
     //Tests undo move.
     public void test04(){
         ArrayList<String> list1, list2;
@@ -233,18 +236,11 @@ public class UnitPoolTest extends TestCase {
         
     }
     */
+    
+    // Test stack overflow
     public void test06(){
         UnitPool pool = UnitPool.getInstance();
-        MoveableUnit unit; 
-        pool.clear();
-        assertTrue(pool != null);
-        
-        pool.addUnit(1,new LightSword(),"0101");
-        pool.addUnit(1,new LightSword(),"2003");
-        
-        unit = pool.getUnit(pool.getUnitsInHex("2003").get(0));
-        pool.addMove(unit, "2004");
-        
+       
     }
     
 }
