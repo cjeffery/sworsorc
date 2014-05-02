@@ -69,8 +69,8 @@ public final class Spell_Book {
     
     public Spell_Book(Characters c) {
         character = c;
-        mainFrame = new JFrame(character.getName());
-        //prepareGUI();
+       
+        prepareGUI();
         
         list = new Spell[32];
         list[0]  = new Spell("Teleportation Protection", 1, 2, mainFrame,c);
@@ -151,14 +151,14 @@ public final class Spell_Book {
      *  =======================================
      */
     public void prepareGUI(){
-      
+      mainFrame = new JFrame(character.getName());
       mainFrame.setSize(frame_width,frame_height);
       //mainFrame.setLayout(new GridLayout(2, 3));
       mainFrame.addWindowListener(new WindowAdapter() {
          @Override
          public void windowClosing(WindowEvent windowEvent){
             //System.exit(0);
-         }        
+         }      
       });   
       
       
@@ -208,11 +208,16 @@ public final class Spell_Book {
       scrollpanel = new JScrollPane();
       scrollpanel.setViewportView(MainSpellListPanel);
       mainFrame.add(scrollpanel);
-      mainFrame.setVisible(true); 
+      mainFrame.setVisible(false); 
+    }
+    
+    public void hideWindow(){
+        mainFrame.setVisible(false);
     }
     
     public void getSpellBook(){
         prepareGUI();
+        mainFrame.setVisible(true);
         // get the spell book for this character
         //Spell_Book sb = new Spell_Book(character);
         Spell[] myspells;
