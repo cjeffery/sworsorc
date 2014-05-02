@@ -279,6 +279,7 @@ public class Spell {
             //insert the conjured unit into the Unit Pool
             conjured = null;
         }
+        character.hideSpellWindow();
     }
     
 }
