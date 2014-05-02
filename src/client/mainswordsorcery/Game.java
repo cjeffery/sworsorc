@@ -10,24 +10,21 @@ package mainswordsorcery;
  *
  * @author Joe Higley
  */
+import Units.*;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Random;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import Units.UnitPool;
-import Units.*;
-import java.net.URL;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.stage.Screen;
-
+import javafx.stage.*;
+import javafx.scene.*;
+import org.controlsfx.dialog.Dialogs;
 import sscharts.Scenario;
+import systemServer.NetworkClient;
 
 /**
  *
@@ -267,6 +264,21 @@ public class Game extends Application {
      * @author Jay Drage        
      */
     public void initNetwork(){
-        //TODO connect to network
+        String ip = Dialogs.create()
+                    .title("Enter servers IP address")
+                    .masthead("Enter servers IP address").showTextInput();
+        if(ip.equals(""))
+            ip = "127.0.0.1";
+        NetworkClient.setServerName(ip);
+        
+        NetworkClient.setUsername(
+            Dialogs.create().title("Choose a username")
+                            .masthead("Choose a username").showTextInput()
+        );
+
+        //todo handle this
+        if( !NetworkClient.initializeClient() ) {
+            System.out.println("Failed to init network");
+        }
     }
 }
