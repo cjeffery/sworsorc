@@ -366,4 +366,181 @@ public class MovementCalculator
         }
         return neighbors;
     }
+    
+    /**
+     * 
+     * @param unit
+     * @param currentHex
+     * @param retreatLimit
+     * @param retreatMoves
+     * @author Keith and Shaung
+     */
+    public static void validRetreatMoves(MoveableUnit unit,
+            MapHex currentHex, Double retreatLimit, ArrayList<MapHex> retreatMoves)
+    {
+        // If the current hex is not a valid move, return
+        //if( !isCurrentHexValid( currentHex, unit ) )
+          //  return;
+        
+        // Check if current hex is in an enemy zone of control
+        //if( isZoneOfControl( currentHex, unit ) )
+        //{
+            // If this is not the first of the unit, set movementallowance to 0.
+            // this allows enemies to move out of a zone of control at the 
+            // beginning of move.
+          //  if( !retreatMoves.isEmpty() )
+                retreatLimit = 0.;
+        //}
+            /*
+        //clear the cache, at the start of a new movement.
+        if( retreatMoves.isEmpty() ) 
+        {
+            allowanceCache = new HashMap<>();
+        }
+        // Check for a faster path
+        Double allowance;
+        allowance = allowanceCache.putIfAbsent(currentHex, moveAllowance);
+        if(allowance != null) {
+            if(allowance >= moveAllowance )
+                return;
+            else
+                allowanceCache.put(currentHex, moveAllowance);
+        }
+      */
+        int edgeSignal;
+        double moveCost;
+        TerrainType destinationTerrainType;
+        ArrayList<MapHex> neighbors;
+        
+        // This is the case where the move was legal :D
+        if( retreatLimit > 0 )
+        {   
+            // Get the current hexes neighbors
+            neighbors = getNeighbors( currentHex );
+            
+            // Add the current hex to validhexes if it hasn't been added yet
+          //  if( !retreatMoves.contains(currentHex) )
+            //    retreatMoves.add(currentHex);
+
+            // Let the recursion begin...
+            for( int i = 0; i < neighbors.size(); i++ )
+            {
+                edgeSignal = getEdgeSignal( currentHex, i ); 
+                
+                switch (edgeSignal) {
+                    case 1 : // Subtract one for retreating over bridge edge
+                        validRetreatMoves( unit, neighbors.get(i),
+                                retreatLimit - 1., retreatMoves );
+                        break;
+                    case 2 : // Subtract 1 for retreating over ford edge.
+                        validRetreatMoves( unit, neighbors.get(i), 
+                                retreatLimit - 1., retreatMoves );
+                        break;
+                    case 3 : // Subtract 1 for retreating through gate, like bridge
+                        validRetreatMoves( unit, neighbors.get(i), 
+                                retreatLimit - 1., retreatMoves );
+                        break;
+                    case 4 : // Subtract .5 for retreating along a road
+                        validRetreatMoves( unit, neighbors.get(i),
+                                retreatLimit - 1., retreatMoves );
+                        break;
+                    case 5 : //Stream hexside -1 for retreating
+                        validRetreatMoves( unit, neighbors.get(i),
+                                retreatLimit - 1., retreatMoves );
+                        break;
+                    case 6 : // Subtrace only one from move cost for trail
+                        validRetreatMoves( unit, neighbors.get(i),
+                                retreatLimit - 1., retreatMoves );
+                        break;
+                    case 7 : // break without recursion for case of wall
+                        break;
+                    case 8 : // break without recursion for case of enemy unit
+                        break;
+                    default : // Case where no hex edge applies.
+                        destinationTerrainType = neighbors.get(i)
+                                .getTerrainType();
+                        moveCost = destinationTerrainType
+                                .getMovementCost(unit);
+                        if( moveCost == 99. )
+                            break;
+                        validRetreatMoves( unit, neighbors.get(i),
+                                retreatLimit - 1., retreatMoves );
+                        break;
+                }
+            }
+        
+        } else if( retreatLimit == 0 ) // move is exactly legal, add & return
+        {
+            // Only valid case for retreating, add current hex to list here
+            if( !retreatMoves.contains( currentHex ))
+                retreatMoves.add( currentHex );
+            
+        } else if( retreatLimit < 0 ) // ILLEGAL!!!! DO NOT ADD!!!
+        {
+            // broke me
+        }
+    }
+    
+    public static int getRetreatCase(MoveableUnit retreatingUnit, 
+            MapHex neighbor )
+    {
+        int retreatCase = 0;
+        
+        if( !isZoneOfControl(neighbor, retreatingUnit) 
+            && !getUnits( neighbor, retreatingUnit ) )
+            retreatCase = 1;
+       
+        
+        if( isFriendlyControlledHex( neighbor, retreatingUnit ) 
+            && !isZoneOfControl( neighbor, retreatingUnit ))
+            retreatCase = 2;
+ 
+        
+
+        if( isFriendlyControlledHex( neighbor, retreatingUnit )
+            && !getUnits( neighbor, retreatingUnit ) )
+            retreatCase = 3;
+        
+        
+      
+        if( neighbor.getUnits() == null 
+            && !getUnits( neighbor, retreatingUnit) )
+            retreatCase = 4;
+        
+        
+        if( retreatCase == 0 )
+            retreatCase = 5;
+        
+        return retreatCase;
+    }
+    
+    /**
+     * Returns true if there are friendly units in the given hex. Otherwise
+     * false.
+     * @param sourceHex
+     * @param movingUnit
+     * @return boolean
+     * @author Ian, Keith, Shaung
+     */
+    public static boolean isFriendlyControlledHex(MapHex sourceHex, 
+            MoveableUnit movingUnit)
+    {
+        ArrayList<String> unitsInHex = new ArrayList<String>();
+        if(sourceHex != null){
+            unitsInHex = sourceHex.getUnitIDs();
+        } else {
+            return false;
+        }
+        // check if list is empty
+        if( unitsInHex == null || unitsInHex.isEmpty() )
+        {
+            return false;
+        }
+        
+        //oh my gosh this is so terrible
+        int idInNewHex = Integer.parseInt(unitsInHex.get(0).split("#")[0]);
+        int idOfCurrent = Integer.parseInt(movingUnit.getID().split("#")[0]);
+        
+        return idOfCurrent == idInNewHex;
+    }
 }
