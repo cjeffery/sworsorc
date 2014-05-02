@@ -274,7 +274,7 @@ public class Spell {
             System.out.println("placing unit into pool");
             conjured.ResetWorkingMovement();
             UnitPool unitpool = UnitPool.getInstance();
-            unitpool.addUnit(1, conjured);
+            unitpool.addUnit(1, conjured, character.getLocation());
 
             //insert the conjured unit into the Unit Pool
             conjured = null;
