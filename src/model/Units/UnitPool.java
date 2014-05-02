@@ -129,6 +129,7 @@ public class UnitPool {
         this.addUnit(playerID, unit);
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
+        MapView.getMapView().repaint();
     }
     
     /**
