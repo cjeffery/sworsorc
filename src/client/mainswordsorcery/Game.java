@@ -278,5 +278,8 @@ public class Game extends Application {
             System.out.println("Failed to init network");
             return;
         }
+        
+        NetworkClient.createAndJoinLobby("Default");
+        
     }
 }

@@ -205,12 +205,10 @@ public class ClientObject {
             if ( message == null ) {
                 errorOut.println( "Null data!" );
                 return false;
-            } else if ( message.isEmpty() ) {
-                if ( debug ) {
-                    errorOut.println( "Diagnostic: empty message " );
-                }
-                return true;
-            } else if ( message.get( 0 ).getClass().equals( String.class ) ) {
+            } 
+            else if (!message.isEmpty() &&
+                     message.get( 0 ).getClass().equals( String.class ) )
+            {
                 stringmessage = (String) message.get( 0 );
             }
 
@@ -352,7 +350,7 @@ public class ClientObject {
                                     equals( lobby ) ) {
                                 send( flag, Tag.JOIN_LOBBY_RESPONSE, "Cannot join lobby, you're already in it!" );
 
-                            } else if ( NetworkServer.joinLobby( handle, ClientObject.this ) ) {
+                            } else if ( NetworkServer.joinLobby( (String) message.get( 0 ), ClientObject.this ) ) {
                                 send( flag, Tag.JOIN_LOBBY_RESPONSE, "Successfully joined lobby " + currentLobby + "!" );
                                 currentLobby.
                                         sendToEntireLobby( flag, Tag.JOIN_LOBBY_RESPONSE, "Client " + handle + " has joined the lobby!" );
@@ -386,8 +384,15 @@ public class ClientObject {
                             }
                             break;
                         case SEND_FILE_REQUEST:
+                            System.out.println("SEND_FILE_REQUEST unhandled");
+                            break;
                         case GET_FILE_REQUEST:
+                            System.out.println("GET_FILE_REQUEST unhandled");
+                            break;
+                        //How is this different from NEW_LOBBY_REQUEST
                         case CREATE_LOBBY_REQUEST:
+                            System.out.println("CREATE_FILE_REQUEST unhandled");
+                            break;
                         case YIELD_TURN_REQUEST:
                             consoleOut.
                                     println( "Client " + handle + " (id  " + clientID + " ) yielded turn" );

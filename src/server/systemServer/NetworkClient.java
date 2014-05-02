@@ -116,7 +116,7 @@ final public class NetworkClient {
      * Start network client after settings have been set from file or whatever
      * @author Christopher Goes
      */
-    public static boolean startClient() {
+    private static boolean startClient() {
         // 30 slots, FIFO access
         messageQueue = new ArrayBlockingQueue<>( 30, true ); 
         commandQueue = new ArrayBlockingQueue<>( 30, true );
@@ -197,7 +197,22 @@ final public class NetworkClient {
     public static void endTurn() {
         send( Flag.GAME, Tag.YIELD_TURN_REQUEST );
     }
-
+    
+    /**
+     * Try to create a lobby
+     */
+    public static void createLobby(String lobby) {
+        send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobby);
+    }
+    public static void joinLobby(String lobby) {
+        send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, lobby);
+    }
+    //at this point I must resort to terrible hacks - Colin
+    public static void createAndJoinLobby(String lobby) {
+        createLobby(lobby);
+        joinLobby(lobby);
+    }
+    
     public static boolean isPhasing() {
         return phasing;
     }
@@ -698,7 +713,7 @@ final public class NetworkClient {
                             } else {
                                 // denied, server provides reason
                                 flushToConsole( "Could not create lobby: " + message.get( 1 )
-                                        + "!\n" + (String) message.get( 2 ) );
+                                        + "!\n" );
                             }
                             break;
                         case UID_RESPONSE:
