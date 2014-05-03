@@ -365,14 +365,34 @@ public class MovementCalculator
         return neighbors;
     }
     
-    
+    /**
+     * This method returns an ArrayList<MapHex> that contains all map hexes that
+     * are valid for the retreating unit to retreat into. This method is also 
+     * a wrapper function. It calls getAllRetreatHexesInRange() to populate the 
+     * retreatAllowanceCache with all moves valid for retreat within range of 
+     * retreatLimit. Then it calls a filtering method filterRetreatMoves(), 
+     * which removes all but the furthest hexes, as per the rules of retreating.
+     * Finally, this method performs a filter based on the states of the hexes
+     * still remaining in retreatAllowanceCache and returns an arrayList with
+     * only the valid hexes.
+     * @param currentHex
+     * @param retreater
+     * @param retreatLimit
+     * @return ArrayList<MapHex>
+     * @author Keith and Shaung
+     */
     public static ArrayList<MapHex> getRetreatMoves( MapHex currentHex, 
             MoveableUnit retreater, double retreatLimit )
     {        
+        // Populate retreatAllowanceCache with all moves retreater can reach
         getAllRetreatHexesInRange( currentHex, retreater, retreatLimit );
         
+        // Filter retreatAllowanceCache to contain only the ideal distance
+        //  hexes.
         filterRetreatMoves( retreater, retreatLimit );
         
+        // Again, iterate over entries in the hash map to filter out all but
+        // the best cases of retreatable hexes, based on rules for S&S
         Iterator<Map.Entry<MapHex,Double>> it = 
                 retreatAllowanceCache.entrySet().iterator();
         
@@ -386,9 +406,11 @@ public class MovementCalculator
                 it.remove();
         }
         
+        // Get all hexes into the retreatMoves array list
         ArrayList<MapHex> retreatMoves = 
                 new ArrayList<>( retreatAllowanceCache.keySet() );
         
+        // return the array list.
         return retreatMoves;
     }    
     
@@ -449,16 +471,19 @@ public class MovementCalculator
         if( !isCurrentHexValid( currentHex, retreater ) )
             return;
         
+        // If retreatLimit is less than zero, out of bounds, return.
         if( retreatLimit < 0 )
             return;
         
-        if( retreatAllowanceCache.isEmpty() )
+        // If the retreatAllowanceCache is not null, initialize it.
+        if( retreatAllowanceCache == null )
             retreatAllowanceCache = new HashMap<>();
         
         // Check for a faster path
         Double rAllowance;
         rAllowance = retreatAllowanceCache.putIfAbsent(currentHex, 
                 retreatLimit);
+        
         if( rAllowance != null ) 
         {
             if(rAllowance >= retreatLimit )
@@ -483,13 +508,13 @@ public class MovementCalculator
                 
                 switch (edgeSignal) {
                     case 5 : // Stream, add 1 to cost
-                        getAllRetreatHexesInRange( currentHex, retreater, 
+                        getAllRetreatHexesInRange( neighbors.get(i), retreater, 
                                 retreatLimit - 2 );
                         break;
                     case 7 : // Wall - cannot pass
                         break;
                     default : 
-                        getAllRetreatHexesInRange( currentHex, retreater,
+                        getAllRetreatHexesInRange( neighbors.get(i), retreater,
                                 retreatLimit - 1 );
                         break;
                 }
