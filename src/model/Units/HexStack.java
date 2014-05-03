@@ -7,18 +7,25 @@
 
 package Units;
 
-import java.awt.Color;
+import Character.Characters;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.util.SortedMap;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
@@ -43,7 +50,7 @@ import org.controlsfx.dialog.Dialogs;
  *
  * @author David Klingenberg
  */
-public class Stack {
+public class HexStack {
     String path = "resources/images/units/";
     
     public static boolean overStackWaring(ArrayList<String> unitList){
@@ -51,13 +58,19 @@ public class Stack {
     }
     
     public static boolean overStackWaring(ArrayList<String> unitList, Boolean Graf){
-        if (unitList.size() > 2){
+        int count = unitList.size();
+        
+        for (String e : unitList)
+            if ( UnitPool.getInstance().getUnit(e) instanceof Characters)
+                count--;
+        
+        if (count > 2){
             if (Graf){
                 Dialogs.create()
                 .title("Stack Warring")
                 .masthead("One too many!")
                 .message("You will hafe to eleminate " + 
-                        (unitList.size() - 2) +
+                        (count - 2) +
                         " unit at the end of your move phase if you dont move them.")
                 .actions(Dialog.Actions.OK)
                 .showConfirm();
@@ -71,71 +84,86 @@ public class Stack {
         return false;
     }
 
-    public void removeOverStack(ArrayList<MoveableUnit> units) {
+    
+    /*public void removeOverStack(SortedMap<String, ArrayList<MoveableUnit>> stackList){
+        for(Entry e : stackList.entrySet()){
+            removeOverStackPopup((ArrayList<MoveableUnit>)e.getValue());
+        }
+    }
+    */
+    
+    public void removeOverStack(SortedMap<String, ArrayList<MoveableUnit>> 
+            stackList) {
+        
         final Stage popup = new Stage();
+        final ScrollBar sc = new ScrollBar();
+        int count = 0;
+                
+        Group cent = new Group();
+        
+        ScrollPane sp = new ScrollPane();
+        
+        
+        FlowPane fp = new FlowPane();
+        VBox vb = new VBox();
+        sp.setContent(vb);
+        fp.setLayoutX(5);
+        fp.setPadding(new Insets(5,0,5,0));
+        fp.setVgap(4);
+        fp.setHgap(4);
+                       
+        for(Entry e : stackList.entrySet()){
+            Object[] temp = addFlow((ArrayList<MoveableUnit>)e.getValue(),count);
+            count = count + (int)temp[0];
+            vb.getChildren().add((FlowPane)temp[1]);
+        
+        }
+            
+        vb.getChildren().add(fp);
+      
+        cent.getChildren().addAll(sc,vb);
+        
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.initStyle(StageStyle.UNDECORATED);
-        popup.setHeight(300);
-        popup.setWidth(800);
+      
         BorderPane border = new BorderPane();
+                
         border.setTop(this.addHBox());
-        border.setCenter(addFlow(units));
-        border.setBottom(this.addVbox(popup));
+        border.setCenter(sp);
+        border.setBottom(this.addVbox(popup, count));
         this.traverse(border);
         
         StackPane root = new StackPane();
         root.getChildren().add(border);
         
-        Scene popScene = new Scene(root,300,250);
-        
-        //popup.setAutoFix(false);
-        //popup.setHideOnEscape(true);
-        //popup.getContent().addAll(border);
-        //popup.setX(350);
-        //popup.setY(350);
+        Scene popScene = new Scene(root,450,250);
+               
         popup.centerOnScreen();
         popup.setScene(popScene);
         popup.initOwner(Game.getInstance().getStage());
-        
-        popup.show();//Game.getInstance().getStage()); //Game.getInstance().getHudScene());
-        //Scene scene = new Scene(border, 300, 300);
-
-        //stage.
-
-
-        //stage.setTitle("Tisk! Tisk!");
-        //stage.setScene(scene);
-        //stage.show();
+        //popup.setFullScreen(true);
+        popup.show();
     }
 
-    private FlowPane addFlow(ArrayList<MoveableUnit> units){
-        
+    private Object[]  addFlow(ArrayList<MoveableUnit> units , int count){
+        Object[] ob = new Object[2];
         FlowPane flow = new FlowPane();
         
         flow.setPadding(new Insets(1, 0, 1, 0));
         flow.setVgap(2);
         flow.setHgap(2);
-        flow.setPrefWrapLength(170); // preferred width allows for two columns
-        flow.setStyle("-fx-background-color: #DAE6F3;");
-        
-        /*ImageView pages[] = new ImageView[8];
-        for (int i=0; i<8; i++) {
-            pages[i] = new ImageView(
-                new Image(LayoutSample.class.getResourceAsStream(
-                "graphics/chart_"+(i+1)+".png")));
-            flow.getChildren().add(pages[i]);
-        }*/
-        
-        
-        for (MoveableUnit s : units)
+        //flow.setPrefWrapLength(250); // preferred width allows for two columns
+        flow.setStyle("-fx-background-color: #DAE6F3;"
+                + "-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 )");
+        count = count - 2; 
+        for (MoveableUnit s : units){
+            
             flow.getChildren().add(addButton(s));
-        
-        //flow.getChildren().add(addButton(unit));
-       
-        //flow.getChildren().add(addButton(unit));
-        //flow.getChildren().add(addButton(unit));
-        
-        return flow;
+            count ++;
+        }
+        ob[0] = count;
+        ob[1]= flow;
+        return ob;
     }
     
     private ToggleButton addButton(MoveableUnit unit){
@@ -198,12 +226,13 @@ public class Stack {
         btn.setShape(polygon);
 
         Nation nation = unit.getNation();
-        Color nationColor = UnitPainter.getBGColor( unit );
-        String color_hex = String.format("#%02x%02x%02x",nationColor.getRed(),
-                                                         nationColor.getGreen(),
-                                                         nationColor.getBlue());
-        btn.setStyle(  "-fx-background-color: " + color_hex + " ;");
-        blend.setBlendMode(BlendMode.DARKEN);
+        if(nation != null) {
+            btn.setStyle(  "-fx-background-color: "
+                         + unit.getNation().color() + " ;");
+        }
+        else {
+            btn.setStyle(  "-fx-background-color: #FFFFFF;");
+        }
         btn.setGraphic(blend);
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -211,10 +240,10 @@ public class Stack {
             public void handle(ActionEvent event) {
               
                if (btn.isSelected()){
-                   btn.setStyle("-fx-background-color: #2F4F4F;" );
+                   btn.setStyle("-fx-background-color: #2F4F4F ;" );
                }
                else{
-                   btn.setStyle("-fx-background-color: " + color_hex + " ;");
+                   btn.setStyle("-fx-background-color: " + unit.getNation().color() + " ;");
                    blend.setBlendMode(BlendMode.DARKEN);
                }
             }
@@ -223,9 +252,9 @@ public class Stack {
         return btn;
     }
     
-    private HBox addHBox() {
-        HBox hbox = new HBox();
-        hbox.setPadding(new Insets(15, 12, 15, 12));
+    private VBox addHBox() {
+        VBox hbox = new VBox();
+        hbox.setPadding(new Insets(5, 12, 5, 12));
         hbox.setSpacing(10);
         hbox.setStyle("-fx-background-color: #336699;");
         
@@ -237,12 +266,12 @@ public class Stack {
         return hbox;
     }
 
-     private VBox addVbox(Stage box){
+     private VBox addVbox(Stage box, int count){
         
      VBox hBox = new VBox();
      Button btn = new Button();
      btn.setDefaultButton(true);
-     btn.setText("Remove Units");
+     btn.setText("Remove" + count + "Units");
      btn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
@@ -250,7 +279,7 @@ public class Stack {
                 box.close();
             }
         });
-     hBox.setPadding(new Insets(15, 12, 15, 12));
+     hBox.setPadding(new Insets(15, 12, 15, 100));
      hBox.setStyle("-fx-background-color: #234679;"); 
     
      hBox.getChildren().addAll(btn);

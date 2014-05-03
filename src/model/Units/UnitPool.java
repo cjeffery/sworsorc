@@ -9,7 +9,8 @@
 package Units;
 
 
-import Units.Stack; // used on line 213
+import Character.Characters;
+import Units.HexStack; // used on line 213
 import java.util.*;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
@@ -51,10 +52,13 @@ public class UnitPool {
             Collections.synchronizedSortedMap(new TreeMap<String, Integer>());
     private final List<String> safeTeleport = 
             Collections.synchronizedList(new ArrayList<String>());
+    private final SortedMap<String, ArrayList<MoveableUnit>> overStackMap = 
+            Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<MoveableUnit>>());
+    
     private int portNum = 0; 
     private static UnitPool INSTANCE;
     
-    private Stack stack = new Stack();
+    private HexStack stack = new HexStack();
     /**
      * This creates or returns the unit pool singleton.
      * 
@@ -269,18 +273,8 @@ public class UnitPool {
         unit.setLocation(destinationHexID);
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
-        Stack.overStackWaring(this.getUnitsInHex(unit.getLocation()));
-        
-        ArrayList<MoveableUnit> temp = new ArrayList<MoveableUnit>();
-        ArrayList<String> hold = new ArrayList<String>();
-        hold = this.getUnitsInHex(destinationHexID);
-        hold = this.getUnitsInHex(destinationHexID);
-        
-        for(String s : hold)
-            temp.add(this.getUnit(s));
-        
-        stack.removeOverStack(temp);
-        
+        HexStack.overStackWaring(this.getUnitsInHex(unit.getLocation()));
+                        
         if ( "2004".equals(unit.getLocation()) || 
              "0912".equals(unit.getLocation()) || 
              "0627".equals(unit.getLocation()) || 
@@ -456,6 +450,7 @@ public class UnitPool {
         this.unitMove.clear();
         this.portalNum.clear();
         this.safeTeleport.clear();
+        this.overStackMap.clear();
     }
     
     /**
@@ -465,13 +460,34 @@ public class UnitPool {
     public void endMovementPhase(){
         
         for (Map.Entry<String, ArrayList<String>> entry : this.unitMove.entrySet()){
+            if (!overStackMap.containsKey(this.getUnit(entry.getKey()).getLocation())){
+                for(Map.Entry<String, ArrayList<String>> entry2 : this.hexList.entrySet()){
+                    if (entry2.getValue().size() > 2){
+                        ArrayList<MoveableUnit> units = new ArrayList<MoveableUnit>();
+
+                        for(String temp : entry2.getValue()){
+                            if(!(getUnit(temp) instanceof Characters))
+                                units.add(this.getUnit(temp));
+
+                        }
+                        if (units.size() > 2)
+                            this.overStackMap.put(units.get(0).getLocation(), units);
+                    }    
+                }
+            }
             if (entry.getValue().size() > 1){
-                   entry.getValue().remove(0);
-                   endMovementPhase();
-            }   
+               entry.getValue().remove(0);
+               endMovementPhase();
+            }
+            this.getUnit(entry.getKey()).ResetWorkingMovement();
         }
     }
-
+    
+    
+    public SortedMap<String, ArrayList<MoveableUnit>> getOverStack(){
+        return this.overStackMap;
+    }
+    
     /**
      * Return the unit to its starting position.
      * 

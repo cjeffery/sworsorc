@@ -44,6 +44,7 @@ import ssterrain.TTSwamp;
 import ssterrain.TerrainType;
 import systemServer.NetworkClient;
 
+
 public class HUDController {
     @FXML private TabPane UnitsPane;
     @FXML private TabPane TargetsPane;
@@ -634,6 +635,10 @@ public class HUDController {
         
         switch(phaseButton.getText()){
             case "End Movement Phase":
+                UnitPool.getInstance().endMovementPhase();
+                HexStack stack = new HexStack();
+                if(UnitPool.getInstance().getOverStack() != null && UnitPool.getInstance().getOverStack().size() > 0)
+                    stack.removeOverStack(UnitPool.getInstance().getOverStack());
                 //clear unit move highlights if present
                 if( hmapContent.highlightSet != null ){
                     hmapContent.clearHighlights();
