@@ -12,7 +12,6 @@ import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.logging.*;
 import javafx.application.Platform;
 import mainswordsorcery.Game;
 
@@ -60,6 +59,8 @@ final public class NetworkClient {
     // Buffers
     private static ArrayBlockingQueue<NetworkPacket> messageQueue;
     private static ArrayBlockingQueue<String> commandQueue;
+    private volatile static int uid;
+
 
     // Flags
     private static boolean clientInitialized = false;
@@ -200,6 +201,7 @@ final public class NetworkClient {
     
     /**
      * Try to create a lobby
+     * @param lobby
      */
     public static void createLobby(String lobby) {
         send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobby);
@@ -230,7 +232,6 @@ final public class NetworkClient {
      *
      * @return
      */
-    volatile static int uid;
     public static int generateUniqueID() {
         uid = -1;
         send( Flag.REQUEST, Tag.UID_REQUEST );

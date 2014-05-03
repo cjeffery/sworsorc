@@ -35,6 +35,8 @@ public enum Tag {
     CREATE_LOBBY_REQUEST, CREATE_LOBBY_RESPONSE,
     VOTE_RESPONSE, VOTE_REQUEST, BEGIN_GAME,
     UPDATE_HANDLE_REQUEST, UPDATE_HANDLE_RESPONSE,
+    ADD_UNIT, // add unit to unitpool
+    REMOVE_UNIT, // remove unit from unitpool
     NULL_TAG,
     
     //Colin was here. This was a bit of a mess.

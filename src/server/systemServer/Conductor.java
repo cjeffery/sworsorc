@@ -7,6 +7,7 @@
 
 package systemServer;
 
+import Units.UnitPool;
 import java.util.List;
 import java.util.Map;
 
@@ -42,19 +43,12 @@ import java.util.Map;
  * 
  * @author Jarvis the Unknown
  */
-public class Conductor { // Should this be a static singleton? I think it should be (chris)
-    
+final public class Conductor { // Should this be a static singleton? I think it should be (chris)
+    private final static UnitPool pool = UnitPool.getInstance();
+
     // Put singletons and other objects here, so conductor can access their methods
-    //Can we do "register" methods? We have access to singletons everywhere already
-    // TODO: research feasability of remote method execution
-    /**
-     * Constructor
-     * @author Christopher Goes
-     */
-    public Conductor() {
-        // empty constructor
-    }
-    
+    // Can we do "register" methods? We have access to singletons everywhere already
+
     /**
      * Processes all messages passed from NetworkClient
      * <p>
@@ -67,6 +61,23 @@ public class Conductor { // Should this be a static singleton? I think it should
      */
     public void processMessage( Flag flag, Tag tag, String sender, List<Object> data ) {
         // TODO: stub
+
+        switch ( flag ) {
+            case GAME:
+                switch ( tag ) {
+                    case ADD_UNIT:
+                        //pool.addUnit( null(playerID??), (Unit)data.get(0);
+                        break;
+                    case REMOVE_UNIT:
+                        // pool.removeUnit( (Unit) data.get(0);
+                        break;
+                    default:
+
+                }
+                break;
+            default:
+            // error handling
+        }
     }
     
     // For each major part of the game, put a different method that calls those object's methods
