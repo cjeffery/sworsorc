@@ -7,7 +7,6 @@
 
 package Units;
 
-import java.awt.Color;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -96,7 +95,7 @@ public class HexStack {
         Group cent = new Group();
         
         ScrollPane sp = new ScrollPane();
-        sp.setStyle("-fx-background-coloe: #447434;");
+        
         
         FlowPane fp = new FlowPane();
         VBox vb = new VBox();
@@ -105,25 +104,19 @@ public class HexStack {
         fp.setPadding(new Insets(5,0,5,0));
         fp.setVgap(4);
         fp.setHgap(4);
-        //fp.setPrefWrapLength(250);
-        //fp.setStyle("-fx-background-coloe: #447434;");
-        
-        
-        
+                       
         for(Entry e : stackList.entrySet())
             vb.getChildren().add(addFlow((ArrayList<MoveableUnit>)e.getValue()));
         
         vb.getChildren().add(fp);
-        //vb.setStyle("-fx-background-coloe: #447434;");
+      
         cent.getChildren().addAll(sc,vb);
         
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.initStyle(StageStyle.UNDECORATED);
-        //popup.setHeight(300);
-        //popup.setWidth(250);
+      
         BorderPane border = new BorderPane();
-        
-        
+                
         border.setTop(this.addHBox());
         border.setCenter(sp);
         border.setBottom(this.addVbox(popup));
@@ -133,8 +126,7 @@ public class HexStack {
         root.getChildren().add(border);
         
         Scene popScene = new Scene(root,450,250);
-        
-       
+               
         popup.centerOnScreen();
         popup.setScene(popScene);
         popup.initOwner(Game.getInstance().getStage());
@@ -233,12 +225,13 @@ public class HexStack {
         btn.setShape(polygon);
 
         Nation nation = unit.getNation();
-        Color nationColor = UnitPainter.getBGColor( unit );
-        String color_hex = String.format("#%02x%02x%02x",nationColor.getRed(),
-                                                         nationColor.getGreen(),
-                                                         nationColor.getBlue());
-        btn.setStyle(  "-fx-background-color: " + color_hex + " ;");
-        blend.setBlendMode(BlendMode.DARKEN);
+        if(nation != null) {
+            btn.setStyle(  "-fx-background-color: "
+                         + unit.getNation().color() + " ;");
+        }
+        else {
+            btn.setStyle(  "-fx-background-color: #FFFFFF;");
+        }
         btn.setGraphic(blend);
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -246,10 +239,10 @@ public class HexStack {
             public void handle(ActionEvent event) {
               
                if (btn.isSelected()){
-                   btn.setStyle("-fx-background-color: #2F4F4F;" );
+                   btn.setStyle("-fx-background-color: #2F4F4F ;" );
                }
                else{
-                   btn.setStyle("-fx-background-color: " + color_hex + " ;");
+                   btn.setStyle("-fx-background-color: " + unit.getNation().color() + " ;");
                    blend.setBlendMode(BlendMode.DARKEN);
                }
             }
