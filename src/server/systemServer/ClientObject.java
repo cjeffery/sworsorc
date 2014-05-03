@@ -8,7 +8,6 @@ package systemServer;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -183,7 +182,7 @@ public class ClientObject {
             }
             catch ( IOException | ClassNotFoundException | 
                     NullPointerException ex)
-            {
+            { // the lack of this was the cause of a lot of issues...watch in future
                 ex.printStackTrace();
                 killThread();
                 return null;
@@ -238,12 +237,11 @@ public class ClientObject {
                 // Tagged Chat Message ex: GLOBAL, LOBBY, PRIVATE, etc
                 case CHAT:
 
-                    switch ( tag ) {
+                    switch ( tag ) { // assume message is a single string object
                         case PRIVATE:
                             NetworkServer.
                                     sendToClient( stringmessage, flag, tag, sender, MessagePhoenix.
-                                            packMessageContents( message.
-                                                    get( 1 ) ) ); // assume message is a single string object
+                                            packMessageContents( message.get( 1 ) ) ); 
                             break;
                         case LOBBY:
                             currentLobby.sendToEntireLobby( flag, tag, sender, message );

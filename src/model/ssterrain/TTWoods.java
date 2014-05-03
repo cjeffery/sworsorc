@@ -20,8 +20,10 @@ public class TTWoods extends TerrainType{
     
     @Override
     public double getMovementCost(MoveableUnit unit) {
-        if(unit.getRace().equals(Race.Elves))return 1;
-        else return 2;
+        if(unit.getRace() == null || !unit.getRace().equals(Race.Elves))
+            return 2;
+        else
+            return 1;
     }
 
     @Override

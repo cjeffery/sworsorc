@@ -65,13 +65,18 @@ public final class Characters extends MoveableUnit{
         //Spell_Book sb = new Spell_Book(c);
         //sb.getSpellBook();
         spellBook.getSpellBook();
+        
+    }
+    
+    public void hideSpellWindow(){
+        spellBook.hideWindow();
     }
     
     public boolean checkManna(double x){
         return CurrentManna >= x;
     }
     public void CostManna(double mc){
-        CurrentManna -= mc;
+        CurrentManna = CurrentManna - mc;
     }
     
     /** ===========================

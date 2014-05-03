@@ -36,7 +36,6 @@ package Units;
             this.uColor = uColor;    
         }
         public String color(){
-            
             return uColor;
         }
     }

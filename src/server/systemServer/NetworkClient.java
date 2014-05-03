@@ -12,7 +12,6 @@ import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.logging.*;
 import javafx.application.Platform;
 import mainswordsorcery.Game;
 
@@ -60,6 +59,8 @@ final public class NetworkClient {
     // Buffers
     private static ArrayBlockingQueue<NetworkPacket> messageQueue;
     private static ArrayBlockingQueue<String> commandQueue;
+    private volatile static int uid;
+
 
     // Flags
     private static boolean clientInitialized = false;
@@ -200,6 +201,7 @@ final public class NetworkClient {
     
     /**
      * Try to create a lobby
+     * @param lobby
      */
     public static void createLobby(String lobby) {
         send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobby);
@@ -217,7 +219,6 @@ final public class NetworkClient {
      * request to start game
      * @return 
      */
-    //oh my gosh this is so terrible
     public static void startGame() {
         send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST);
     }
@@ -232,9 +233,13 @@ final public class NetworkClient {
      * @return
      */
     public static int generateUniqueID() {
-        // TODO: update with executeCommand(<ID request command>);
-        // Stub, may not be needed, could use a queue
-        return -1;
+        uid = -1;
+        send( Flag.REQUEST, Tag.UID_REQUEST );
+        //return -1;
+        while(uid == -1) {
+            try { Thread.sleep(1); } catch(InterruptedException e) {}
+        }
+        return uid;
     }
 
     // ***THREADS*** //
@@ -625,11 +630,14 @@ final public class NetworkClient {
             if ( message == null ) {
                 System.out.println( "Null data!" );
                 return false;
-            } else if ( message.isEmpty() ) {
+            } 
+            /*else if ( message.isEmpty() ) {
                 if ( debug ) {
                     System.out.println( "Diagnostic: empty message " );
                 }
-            } else if ( message.get( 0 ).getClass().equals( String.class ) ) {
+            }*/
+            else if (   !message.isEmpty()
+                     && message.get( 0 ).getClass().equals( String.class ) ) {
                 stringmessage = (String) message.get( 0 );
             }
 
@@ -705,7 +713,10 @@ final public class NetworkClient {
                             }
                             break;
                         case INIT_GAME_PLEASE: //setup scenario
-                            Game.getInstance().initScenarioCallback();
+                            Platform.runLater( new Runnable() {
+                                public void run() {
+                                Game.getInstance().initScenarioCallback();
+                            }});                            
                             break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
@@ -742,7 +753,7 @@ final public class NetworkClient {
                             }
                             break;
                         case UID_RESPONSE:
-                            // TODO: handle Unique ID messages!
+                            uid = (Integer)message.get(0);
                             break;
                         case JOIN_LOBBY_RESPONSE:
                             currentLobby = stringmessage;
@@ -821,7 +832,7 @@ final public class NetworkClient {
             // Main loop
             while ( !killed ) {
                 if ( streamIn != null && isConnected() ) {
-                    incomingMessage = recieveMessage(); // get the message                    
+                    incomingMessage = recieveMessage(); // get the message         
                 } else if ( !isConnected() ) {
                     flushToConsole( "Lost connection to server!" );
                     killThread();
@@ -830,7 +841,6 @@ final public class NetworkClient {
                     System.err.println( "streamIn is null!" );
                     killThread();
                 }
-
                 if ( incomingMessage == null ) {
                     System.err.println( "Incoming message is null: its all his fault!)" );
                     killThread();

@@ -84,34 +84,41 @@ public class UnitPainter {
         switch( unit.getUnitType() ) {
             case ArmyUnit:
                 paintArmyUnit(g2, (ArmyUnit)unit, stacked);
-                return;
+                break;
             case Character:
                 //System.out.println("Drawing characters isn't supported yet"
                 //                   + " - bug colin if it needs implementing");
                 g2.setColor( new Color(0xff, 0xff, 0xff, 127) ); 
                 g2.fill(hexMask);
                 HexPainter.drawImage(g2, "generic", images );
-                return;
+                break;
             case Monster:
                 System.out.println("Drawing monsters isn't supported yet"
                                    + " - bug colin if it needs implementing");
                 g2.setColor( new Color(0xff, 0xff, 0xff, 127) ); 
                 g2.fill(hexMask);
                 HexPainter.drawImage(g2, "generic", images );
-                return;
+                break;
         }
+        if(stacked)
+            HexPainter.drawImage(g2, "stack_badge", images );
     }
 
     /* only display null nation error output one time */
-    boolean error_displayed = false;
+    static boolean error_displayed = false;
     /**
      * gets background color corresponding to unit's nation.
      * Used to render the unit's background.
      * @return A color object representing the RGB color of the unit's nation
      */
-    private Color getBGColor(MoveableUnit unit ) {
+    public static Color getBGColor(MoveableUnit unit ) {
         Color c;
         int a = 127; //the alpha value
+        
+        if(unit instanceof Conjured) {
+            return new Color(0xff, 0x00, 0x00, a); //red            
+        }
+        
         if(unit.getNation() == null) {
             if(error_displayed == false) {
                 System.out.println("UnitPainter.java - unit's nation is null");
@@ -200,9 +207,6 @@ public class UnitPainter {
         g2.fill(hexMask);
         
         HexPainter.drawImage(g2, unit.toString(), images);
-        
-        if(stacked)
-            HexPainter.drawImage(g2, "stack_badge", images );
         if(unit.isDemoralized())
             HexPainter.drawImage(g2, "demoralized_badge", images );            
         

@@ -7,6 +7,7 @@
 
 package Units;
 
+import java.awt.Color;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -232,13 +233,12 @@ public class HexStack {
         btn.setShape(polygon);
 
         Nation nation = unit.getNation();
-        if(nation != null) {
-            btn.setStyle(  "-fx-background-color: "
-                         + unit.getNation().color() + " ;");
-        }
-        else {
-            btn.setStyle(  "-fx-background-color: #FFFFFF;");
-        }
+        Color nationColor = UnitPainter.getBGColor( unit );
+        String color_hex = String.format("#%02x%02x%02x",nationColor.getRed(),
+                                                         nationColor.getGreen(),
+                                                         nationColor.getBlue());
+        btn.setStyle(  "-fx-background-color: " + color_hex + " ;");
+        blend.setBlendMode(BlendMode.DARKEN);
         btn.setGraphic(blend);
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -246,10 +246,10 @@ public class HexStack {
             public void handle(ActionEvent event) {
               
                if (btn.isSelected()){
-                   btn.setStyle("-fx-background-color: #2F4F4F ;" );
+                   btn.setStyle("-fx-background-color: #2F4F4F;" );
                }
                else{
-                   btn.setStyle("-fx-background-color: " + unit.getNation().color() + " ;");
+                   btn.setStyle("-fx-background-color: " + color_hex + " ;");
                    blend.setBlendMode(BlendMode.DARKEN);
                }
             }

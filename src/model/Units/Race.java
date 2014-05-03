@@ -21,5 +21,6 @@ public enum Race {
     Orc,
     Spiders,
     SwampCreature,
-    Goblins
+    Goblins,
+    NOT_SET
 }

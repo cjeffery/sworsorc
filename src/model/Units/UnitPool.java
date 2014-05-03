@@ -9,19 +9,15 @@
 package Units;
 
 
-import java.lang.Character; // used on line 213
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import org.controlsfx.control.PopOver;
+import Units.Stack; // used on line 213
+import java.util.*;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import sshexmap.MapView;
+import systemServer.Flag;
+import systemServer.NetworkClient;
+import systemServer.Tag;
 
 /**
  * Unit pool tracks all the units that have been created in the game.  
@@ -132,6 +128,7 @@ public class UnitPool {
         this.addUnit(playerID, unit);
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
+        MapView.getMapView().repaint();
     }
     
     /**
@@ -167,6 +164,9 @@ public class UnitPool {
             }
                 
         }
+
+        // Removes unit from the pools of all connected players
+        NetworkClient.send( Flag.GAME, Tag.REMOVE_UNIT, unit );
         
     }
     
@@ -201,7 +201,11 @@ public class UnitPool {
            unitList.add(unit);
            unitMap.put(unit.toString(), unitList);
            pool.put(playerId, unitMap);
-       }     
+        }
+
+        // Send unit being added to the rest of the players
+        // Does we need to send playerID as well? Seems to be included in the units information
+        NetworkClient.send( Flag.GAME, Tag.ADD_UNIT, unit );
     }
     
     /**

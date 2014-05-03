@@ -77,6 +77,7 @@ public final class C_Z_I {
         if(checkLimits() == true && checkMana() == true){
             // perform
             caster.CostManna(1);
+            System.out.println("Conjure Zombie Infantry is active");
             ArmyUnit unit1 = new ZombieInfantry(caster, 1);
             unit1.SetLifeSpan(2);
             unit1.setLocation(caster.getLocation());
