@@ -29,9 +29,9 @@ import sshexmap.MapView;
 public class LaunchCombat {
     
 
-    public static void LaunchBotton(List selected_stack, List target_stack) {
+    public static ArrayList LaunchBotton(List selected_stack, List target_stack) {
 
-  
+        boolean choice = true;
         MoveableUnit selected_combat_unit = new MoveableUnit();
         MoveableUnit target_combat_unit = new MoveableUnit();
         MoveableUnit selected_combat_unit1 = new MoveableUnit();
@@ -131,64 +131,45 @@ public class LaunchCombat {
           .showConfirm();
 
         if (result_of_combat == Dialog.Actions.YES) {
-        
-        
-        
-        
-        if (index[0] == 0 && index[1] == 0) {
-            Notifications.create()
-            .title("Result of Combat: Draw")
-            .text("Love and Peace")
-            .showWarning();
-        }
-        
-        else {
-            if (index[0] == 0) {
-            Notifications.create()
-            .title("Result of Combat: Attacker")
-            .text("Victory!")
-            .showWarning();
-            }
+            
+            // Attacker should eliminate # of units
             if (index[0] < 0) {
-            Notifications.create()
-            .title("Result of Combat: Attacker")
-            .text("Attacker eliminates " + index[0] + " unit.")
-            .showWarning();
+                Notifications.create()
+                .title("Requires to Eliminate Units")
+                .text("Need to select a unit and eliminate it.")           
+                .showWarning();
+                
+                // Show Diagram for picking up unit
+                
+                // Call elimination function
             }
-            if (index[0] > 0) {
-            Notifications.create()
-            .title("Result of Combat: Attacker")
-            .text("Attacker retreat " + index[0] + " unit.")
-            .showWarning();
+            
+            // Attacker should decide to retreat or eliminate # of units
+            else {
+                Notifications.create()
+                .title("Requires to Retreat OR Eliminate Units")
+                .text("Need to select a unit and Retreat OR Eliminate it.")           
+                .showWarning();
+                
+                // Showing the GUI fo Selection
+                
+                // Call Retreat funtion
+                // MoveableUnit, MapHex, Int 
+                // Retreat(target_stack.get(0), Defender_Terrain, index[1]);
             }
-            if (index[1] == 0) {
-            Notifications.create()
-            .title("Result of Combat: Defender")
-            .text("Victory!")
-            .showWarning();
-            }
-            if (index[1] < 0) {
-            Notifications.create()
-            .title("Result of Combat: Defender")
-            .text("Defender eliminates " + index[1] + " unit.")
-            .showWarning();
-            }
-            if (index[1] > 0) {
-            Notifications.create()
-            .title("Result of Combat: Defender")
-            .text("Defender retreat " + index[1] + " unit.")
-            .showWarning();
-            }
+            
+            result.add("true");
         }
         
-        }
         else {
-            // Do nothing
+            
+            result.add("false");
         }
         
         attackers.clear();
         defenders.clear();
         FriendlyCombatList.clear();
+        return result;
     }
     /**
      * 

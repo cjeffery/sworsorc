@@ -720,7 +720,18 @@ public class HUDController {
      */
     public void StartCombat(){        
         System.out.println("StartCombat()");
-        LaunchBotton(selected_stack, target_stack);
+        ArrayList result = new ArrayList();
+        result = LaunchBotton(selected_stack, target_stack);
+        
+        
+        System.out.println("Result is: " + result.get(5));
+        if (result.get(5) == "true") {
+            //System.out.println("Got true");
+            
+        } 
+        else {
+            //System.out.println("Got false");
+        }
     }
     /**
      * used to start spells
