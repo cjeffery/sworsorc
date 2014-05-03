@@ -10,14 +10,21 @@ package Units;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.util.SortedMap;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
@@ -42,7 +49,7 @@ import org.controlsfx.dialog.Dialogs;
  *
  * @author David Klingenberg
  */
-public class Stack {
+public class HexStack {
     String path = "resources/images/units/";
     
     public static boolean overStackWaring(ArrayList<String> unitList){
@@ -70,41 +77,68 @@ public class Stack {
         return false;
     }
 
-    public void removeOverStack(ArrayList<MoveableUnit> units) {
+    
+    /*public void removeOverStack(SortedMap<String, ArrayList<MoveableUnit>> stackList){
+        for(Entry e : stackList.entrySet()){
+            removeOverStackPopup((ArrayList<MoveableUnit>)e.getValue());
+        }
+    }
+    */
+    
+    public void removeOverStack(SortedMap<String, ArrayList<MoveableUnit>> 
+            stackList) {
+        
         final Stage popup = new Stage();
+        final ScrollBar sc = new ScrollBar();
+        
+                
+        Group cent = new Group();
+        
+        ScrollPane sp = new ScrollPane();
+        sp.setStyle("-fx-background-coloe: #447434;");
+        
+        FlowPane fp = new FlowPane();
+        VBox vb = new VBox();
+        sp.setContent(vb);
+        fp.setLayoutX(5);
+        fp.setPadding(new Insets(5,0,5,0));
+        fp.setVgap(4);
+        fp.setHgap(4);
+        //fp.setPrefWrapLength(250);
+        //fp.setStyle("-fx-background-coloe: #447434;");
+        
+        
+        
+        for(Entry e : stackList.entrySet())
+            vb.getChildren().add(addFlow((ArrayList<MoveableUnit>)e.getValue()));
+        
+        vb.getChildren().add(fp);
+        //vb.setStyle("-fx-background-coloe: #447434;");
+        cent.getChildren().addAll(sc,vb);
+        
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.initStyle(StageStyle.UNDECORATED);
-        popup.setHeight(300);
-        popup.setWidth(800);
+        //popup.setHeight(300);
+        //popup.setWidth(250);
         BorderPane border = new BorderPane();
+        
+        
         border.setTop(this.addHBox());
-        border.setCenter(addFlow(units));
+        border.setCenter(sp);
         border.setBottom(this.addVbox(popup));
         this.traverse(border);
         
         StackPane root = new StackPane();
         root.getChildren().add(border);
         
-        Scene popScene = new Scene(root,300,250);
+        Scene popScene = new Scene(root,450,250);
         
-        //popup.setAutoFix(false);
-        //popup.setHideOnEscape(true);
-        //popup.getContent().addAll(border);
-        //popup.setX(350);
-        //popup.setY(350);
+       
         popup.centerOnScreen();
         popup.setScene(popScene);
         popup.initOwner(Game.getInstance().getStage());
-        
-        popup.show();//Game.getInstance().getStage()); //Game.getInstance().getHudScene());
-        //Scene scene = new Scene(border, 300, 300);
-
-        //stage.
-
-
-        //stage.setTitle("Tisk! Tisk!");
-        //stage.setScene(scene);
-        //stage.show();
+        //popup.setFullScreen(true);
+        popup.show();
     }
 
     private FlowPane addFlow(ArrayList<MoveableUnit> units){
@@ -114,8 +148,9 @@ public class Stack {
         flow.setPadding(new Insets(1, 0, 1, 0));
         flow.setVgap(2);
         flow.setHgap(2);
-        flow.setPrefWrapLength(170); // preferred width allows for two columns
-        flow.setStyle("-fx-background-color: #DAE6F3;");
+        //flow.setPrefWrapLength(250); // preferred width allows for two columns
+        flow.setStyle("-fx-background-color: #DAE6F3;"
+                + "-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 )");
         
         /*ImageView pages[] = new ImageView[8];
         for (int i=0; i<8; i++) {
@@ -223,9 +258,9 @@ public class Stack {
         return btn;
     }
     
-    private HBox addHBox() {
-        HBox hbox = new HBox();
-        hbox.setPadding(new Insets(15, 12, 15, 12));
+    private VBox addHBox() {
+        VBox hbox = new VBox();
+        hbox.setPadding(new Insets(5, 12, 5, 12));
         hbox.setSpacing(10);
         hbox.setStyle("-fx-background-color: #336699;");
         
@@ -250,7 +285,7 @@ public class Stack {
                 box.close();
             }
         });
-     hBox.setPadding(new Insets(15, 12, 15, 12));
+     hBox.setPadding(new Insets(15, 12, 15, 100));
      hBox.setStyle("-fx-background-color: #234679;"); 
     
      hBox.getChildren().addAll(btn);

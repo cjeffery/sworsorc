@@ -16,11 +16,11 @@ import org.junit.Test;
  *
  * @author David
  */
-public class StackTest {
+public class HexStackTest {
     UnitPool pool = UnitPool.getInstance();
     
     
-    public StackTest() {
+    public HexStackTest() {
 
     }
 
@@ -34,13 +34,13 @@ public class StackTest {
         pool.addUnit(1, new Bow(), "0101");
         pool.addUnit(1, new Bow(), "0101");
         
-        test = Stack.overStackWaring(pool.getUnitsInHex("0101"),false);
+        test = HexStack.overStackWaring(pool.getUnitsInHex("0101"),false);
         
         assertFalse(test);
         
         pool.addUnit(1, new Bow(), "0101");
         
-        test = Stack.overStackWaring(pool.getUnitsInHex("0101"),false);
+        test = HexStack.overStackWaring(pool.getUnitsInHex("0101"),false);
         assertTrue(test);
     }
     
