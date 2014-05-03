@@ -47,6 +47,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
+import javafx.stage.Stage;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -56,7 +57,8 @@ import javax.swing.JPanel;
  * @author Tyler & Tao Zhang
  */
 public class Spell implements Serializable {
-
+    private Stage popup = new Stage();
+            
     private static final long serialVersionUID = 1L;
     Characters character;
     
@@ -82,7 +84,7 @@ public class Spell implements Serializable {
         spellbutton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                BookFrame.dispose();
+                //BookFrame.dispose();
                 showSpellDetails();
                 showButtonDemo();
             }
@@ -101,7 +103,8 @@ public class Spell implements Serializable {
             }
         });
         
-        spellFrame.getContentPane().add( new Spell_Details(Name));
+        spellFrame.getContentPane().add(new Spell_Details(Name));
+        //popup = JFXpopup.getJFXPopup(spellbutton)
         spellFrame.setVisible( true );
     }
     

@@ -12,8 +12,15 @@ import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
+import javafx.embed.swing.SwingNode;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import mainswordsorcery.Game;
 
 /**
  *
@@ -22,6 +29,8 @@ import javax.swing.border.TitledBorder;
 public final class Spell_Book implements Serializable {
     private static final long serialVersionUID = 1L;
     Spell[] list;
+    
+    Stage popup = new Stage();
     
     /** ==========================
      *      Character info
@@ -147,16 +156,16 @@ public final class Spell_Book implements Serializable {
      *      GUI functions
      *  =======================================
      */
-    public void prepareGUI(){
-      mainFrame = new JFrame(character.getName());
-      mainFrame.setSize(frame_width,frame_height);
+    private void prepareGUI(){
+      //mainFrame = new JFrame(character.getName());
+      //mainFrame.setSize(frame_width,frame_height);
       //mainFrame.setLayout(new GridLayout(2, 3));
-      mainFrame.addWindowListener(new WindowAdapter() {
-         @Override
-         public void windowClosing(WindowEvent windowEvent){
+      //mainFrame.addWindowListener(new WindowAdapter() {
+         //@Override
+        // public void windowClosing(WindowEvent windowEvent){
             //System.exit(0);
-         }      
-      });   
+         //}      
+      //});   
       
       
       MainSpellListPanel = new JPanel();
@@ -204,17 +213,34 @@ public final class Spell_Book implements Serializable {
       }
       scrollpanel = new JScrollPane();
       scrollpanel.setViewportView(MainSpellListPanel);
-      mainFrame.add(scrollpanel);
-      mainFrame.setVisible(false); 
+      //mainFrame.add(scrollpanel);
+      //mainFrame.setVisible(false); 
     }
     
     public void hideWindow(){
-        mainFrame.setVisible(false);
+        //mainFrame.setVisible(false);
+       // popup.close();
     }
     
+    
+    
+    
     public void getSpellBook(){
+        
+        getSpellBookOld();
+        popup = JFXpopup.getJFXPopup(MainSpellListPanel);
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    private void getSpellBookOld(){
         prepareGUI();
-        mainFrame.setVisible(true);
+        //mainFrame.setVisible(true);
         // get the spell book for this character
         //Spell_Book sb = new Spell_Book(character);
         Spell[] myspells;
@@ -312,7 +338,7 @@ public final class Spell_Book implements Serializable {
         }
         
         // refresh the visible main frame
-        mainFrame.setVisible(true); 
+        //mainFrame.setVisible(true); 
     }
     
 }

@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.SortedMap;
+import java.util.TreeMap;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -52,7 +53,9 @@ import org.controlsfx.dialog.Dialogs;
  */
 public class HexStack {
     String path = "resources/images/units/";
-    
+    SortedMap<String, Integer> uCount = new TreeMap<String, Integer>();
+    ArrayList<MoveableUnit> removeList = new ArrayList<MoveableUnit>();
+    Scene popScene;
     public static boolean overStackWaring(ArrayList<String> unitList){
         return overStackWaring(unitList, true);
     }
@@ -98,7 +101,7 @@ public class HexStack {
         final Stage popup = new Stage();
         final ScrollBar sc = new ScrollBar();
         int count = 0;
-                
+              
         Group cent = new Group();
         
         ScrollPane sp = new ScrollPane();
@@ -121,7 +124,7 @@ public class HexStack {
             
         vb.getChildren().add(fp);
       
-        cent.getChildren().addAll(sc,vb);
+        cent.getChildren().addAll(vb);
         
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.initStyle(StageStyle.UNDECORATED);
@@ -136,7 +139,7 @@ public class HexStack {
         StackPane root = new StackPane();
         root.getChildren().add(border);
         
-        Scene popScene = new Scene(root,450,250);
+        popScene = new Scene(root,450,250);
                
         popup.centerOnScreen();
         popup.setScene(popScene);
@@ -148,7 +151,6 @@ public class HexStack {
     private Object[]  addFlow(ArrayList<MoveableUnit> units , int count){
         Object[] ob = new Object[2];
         FlowPane flow = new FlowPane();
-        
         flow.setPadding(new Insets(1, 0, 1, 0));
         flow.setVgap(2);
         flow.setHgap(2);
@@ -158,17 +160,21 @@ public class HexStack {
         count = count - 2; 
         for (MoveableUnit s : units){
             
-            flow.getChildren().add(addButton(s));
+            flow.getChildren().add(addButton(s,units.size()));
             count ++;
         }
         ob[0] = count;
         ob[1]= flow;
+        flow.setId(units.get(0).getLocation());
+        uCount.put(flow.getId(), 0);
+        
         return ob;
     }
     
-    private ToggleButton addButton(MoveableUnit unit){
+    private ToggleButton addButton(MoveableUnit unit, int count){
         ToggleButton btn = new ToggleButton();
-  
+        
+        
         Polygon polygon = new Polygon();
         
         polygon.getPoints().addAll(new Double[]{
@@ -213,12 +219,7 @@ public class HexStack {
         // error
         }
 
-        
-        
-        
-        blend.setBlendMode(BlendMode.COLOR_BURN);
-        //blend.setScaleX(.5);
-        //blend.setScaleY(.5);
+        blend.setBlendMode(BlendMode.COLOR_BURN);        
         
         btn.setId(unit.getID());
         btn.setScaleX(.5);
@@ -235,17 +236,29 @@ public class HexStack {
         }
         btn.setGraphic(blend);
         btn.setOnAction(new EventHandler<ActionEvent>() {
-            
+
             @Override
-            public void handle(ActionEvent event) {
-              
-               if (btn.isSelected()){
+           public void handle(ActionEvent event) {
+               Button tBtn = (Button) popScene.lookup("#Remove");
+               if (btn.isSelected() && (count - uCount.get(unit.getLocation())) > 2){
                    btn.setStyle("-fx-background-color: #2F4F4F ;" );
+                   uCount.put(unit.getLocation(), uCount.get(unit.getLocation()) + 1);
+                   removeList.add(unit);
+                   tBtn.setText("new");
                }
                else{
                    btn.setStyle("-fx-background-color: " + unit.getNation().color() + " ;");
                    blend.setBlendMode(BlendMode.DARKEN);
+                   if(!btn.isSelected())
+                       uCount.put(unit.getLocation(), uCount.get(unit.getLocation()) - 1);
+                       removeList.remove(unit);
+                       
+                       tBtn.setText("new");
+                   btn.setSelected(false);
+                   btn.disarm();        
                }
+               
+               
             }
         });
         
@@ -266,25 +279,28 @@ public class HexStack {
         return hbox;
     }
 
-     private VBox addVbox(Stage box, int count){
-        
-     VBox hBox = new VBox();
-     Button btn = new Button();
-     btn.setDefaultButton(true);
-     btn.setText("Remove" + count + "Units");
-     btn.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-                box.close();
-            }
-        });
-     hBox.setPadding(new Insets(15, 12, 15, 100));
-     hBox.setStyle("-fx-background-color: #234679;"); 
-    
-     hBox.getChildren().addAll(btn);
-     
-     return hBox;
+    private VBox addVbox(Stage box, int count){
+        int tCount = count;
+        for(Entry e : this.uCount.entrySet())
+            tCount= tCount - (Integer) e.getValue();
+        VBox hBox = new VBox();
+        Button btn = new Button();
+        btn.setId("Remove");
+        btn.setDefaultButton(true);
+        btn.setText("Remove" + tCount + "Units");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    box.close();
+                }
+            });
+        hBox.setPadding(new Insets(15, 12, 15, 100));
+        hBox.setStyle("-fx-background-color: #234679;"); 
+
+        hBox.getChildren().addAll(btn);
+
+        return hBox;
     }
     
     private void traverse (Parent node){
