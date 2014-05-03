@@ -34,9 +34,12 @@ public class MovementCalculator
         throw new AssertionError();
     }
     
+    
     /* movement points cache for current movement calculation 
        keeps track of best path to target hex */
     static HashMap<MapHex, Double> allowanceCache;
+    // Retreat allowance cache, works for a similar cause as allowanceCache.
+    static HashMap<MapHex, Double> retreatAllowanceCache;
     
     /**
      * This method is nice because it requires less information from the user 
@@ -284,11 +287,6 @@ public class MovementCalculator
         }
         else 
         {
-            //System.out.println( "Else" );
-            // Here should be a check to see if there are enemy units in the 
-            // neighbor hex - for now, just return 0 to indicate terrain should
-            // be used for movement cost.
-            //edgeSignal = 8;
             edgeSignal = 9;
         }
         
@@ -367,60 +365,116 @@ public class MovementCalculator
         return neighbors;
     }
     
+    
+    public static ArrayList<MapHex> getRetreatMoves( MapHex currentHex, 
+            MoveableUnit retreater, double retreatLimit )
+    {        
+        getAllRetreatHexesInRange( currentHex, retreater, retreatLimit );
+        
+        filterRetreatMoves( retreater, retreatLimit );
+        
+        Iterator<Map.Entry<MapHex,Double>> it = 
+                retreatAllowanceCache.entrySet().iterator();
+        
+        double minRetreatCode = Collections.min(retreatAllowanceCache.values());
+        
+        while ( it.hasNext() ) 
+        {
+            Map.Entry<MapHex,Double> entry = it.next();
+            // If an entry value is greater than minVal, remove it.
+            if( entry.getValue() > minRetreatCode )
+                it.remove();
+        }
+        
+        ArrayList<MapHex> retreatMoves = 
+                new ArrayList<>( retreatAllowanceCache.keySet() );
+        
+        return retreatMoves;
+    }    
+    
+    
     /**
-     * 
-     * @param unit
-     * @param currentHex
+     * This method filters the retreatAllowanceCache so that it only contains
+     * MapHex keys that are at the maximum retreat distance possible for the 
+     * retreating unit. The values associated with each remaining key becomes
+     * the number that indicates hierarchy preference of valid retreat moves,
+     * as per the rules of retreating.
+     * @param retreater
      * @param retreatLimit
-     * @param retreatMoves
      * @author Keith and Shaung
      */
-    public static void validRetreatMoves(MoveableUnit unit,
-            MapHex currentHex, Double retreatLimit, ArrayList<MapHex> retreatMoves)
+    public static void filterRetreatMoves( MoveableUnit retreater, 
+            double retreatLimit )
+    {
+        // Get smallest value in hashmap - indicates max retreat distance
+        double minVal = Collections.min( retreatAllowanceCache.values() );
+        double retreatCase;
+        
+        // Create iterator for HashMap
+        Iterator<Map.Entry<MapHex,Double>> it = 
+                retreatAllowanceCache.entrySet().iterator();
+        // Read all entries in hashmap and compare values agains minVal. 
+        while ( it.hasNext() ) 
+        {
+            Map.Entry<MapHex,Double> entry = it.next();
+            // If an entry value is greater than minVal, remove it.
+            if( entry.getValue() > minVal )
+                it.remove();
+            else if( entry.getValue() == minVal ) 
+            { // Otherwise, replace it's value with the retreatCase value.
+                // Get reatreat case.
+                retreatCase = getRetreatCase( retreater, entry.getKey() );
+                
+                // Set entries value to the retreatCase value;
+                entry.setValue(retreatCase);
+            }
+        }
+    }
+    
+    /** This method places all MapHexes within the retreat limit and their 
+     *  associated remaining retreatLimit cost value into the 
+     *  retreatAllowanceCache. ie, if a unit is forced to retreat 5 hexes, this 
+     *  method will place all MapHexes, within 5 MapHexes, that are legal moves 
+     *  for the given unit, into retreatAllowanceCache. However, this method 
+     *  DOES NOT RETURN LEGAL RETREATS. The HashMap returned must be filtered.
+     * @param currentHex
+     * @param retreater
+     * @param retreatLimit
+     * @author Keith Drew
+     */ // Currently in need of testing
+    public static void getAllRetreatHexesInRange( MapHex currentHex, 
+            MoveableUnit retreater, double retreatLimit )
     {
         // If the current hex is not a valid move, return
-        //if( !isCurrentHexValid( currentHex, unit ) )
-          //  return;
+        if( !isCurrentHexValid( currentHex, retreater ) )
+            return;
         
-        // Check if current hex is in an enemy zone of control
-        //if( isZoneOfControl( currentHex, unit ) )
-        //{
-            // If this is not the first of the unit, set movementallowance to 0.
-            // this allows enemies to move out of a zone of control at the 
-            // beginning of move.
-          //  if( !retreatMoves.isEmpty() )
-                retreatLimit = 0.;
-        //}
-            /*
-        //clear the cache, at the start of a new movement.
-        if( retreatMoves.isEmpty() ) 
-        {
-            allowanceCache = new HashMap<>();
-        }
+        if( retreatLimit < 0 )
+            return;
+        
+        if( retreatAllowanceCache.isEmpty() )
+            retreatAllowanceCache = new HashMap<>();
+        
         // Check for a faster path
-        Double allowance;
-        allowance = allowanceCache.putIfAbsent(currentHex, moveAllowance);
-        if(allowance != null) {
-            if(allowance >= moveAllowance )
+        Double rAllowance;
+        rAllowance = retreatAllowanceCache.putIfAbsent(currentHex, 
+                retreatLimit);
+        if( rAllowance != null ) 
+        {
+            if(rAllowance >= retreatLimit )
                 return;
             else
-                allowanceCache.put(currentHex, moveAllowance);
+                retreatAllowanceCache.put(currentHex, retreatLimit );
         }
-      */
-        int edgeSignal;
-        double moveCost;
-        TerrainType destinationTerrainType;
-        ArrayList<MapHex> neighbors;
         
         // This is the case where the move was legal :D
         if( retreatLimit > 0 )
         {   
+            int edgeSignal;
+            ArrayList<MapHex> neighbors;
+        
             // Get the current hexes neighbors
             neighbors = getNeighbors( currentHex );
-            
-            // Add the current hex to validhexes if it hasn't been added yet
-          //  if( !retreatMoves.contains(currentHex) )
-            //    retreatMoves.add(currentHex);
 
             // Let the recursion begin...
             for( int i = 0; i < neighbors.size(); i++ )
@@ -428,88 +482,68 @@ public class MovementCalculator
                 edgeSignal = getEdgeSignal( currentHex, i ); 
                 
                 switch (edgeSignal) {
-                    case 1 : // Subtract one for retreating over bridge edge
-                        validRetreatMoves( unit, neighbors.get(i),
-                                retreatLimit - 1., retreatMoves );
+                    case 5 : // Stream, add 1 to cost
+                        getAllRetreatHexesInRange( currentHex, retreater, 
+                                retreatLimit - 2 );
                         break;
-                    case 2 : // Subtract 1 for retreating over ford edge.
-                        validRetreatMoves( unit, neighbors.get(i), 
-                                retreatLimit - 1., retreatMoves );
+                    case 7 : // Wall - cannot pass
                         break;
-                    case 3 : // Subtract 1 for retreating through gate, like bridge
-                        validRetreatMoves( unit, neighbors.get(i), 
-                                retreatLimit - 1., retreatMoves );
-                        break;
-                    case 4 : // Subtract .5 for retreating along a road
-                        validRetreatMoves( unit, neighbors.get(i),
-                                retreatLimit - 1., retreatMoves );
-                        break;
-                    case 5 : //Stream hexside -1 for retreating
-                        validRetreatMoves( unit, neighbors.get(i),
-                                retreatLimit - 1., retreatMoves );
-                        break;
-                    case 6 : // Subtrace only one from move cost for trail
-                        validRetreatMoves( unit, neighbors.get(i),
-                                retreatLimit - 1., retreatMoves );
-                        break;
-                    case 7 : // break without recursion for case of wall
-                        break;
-                    case 8 : // break without recursion for case of enemy unit
-                        break;
-                    default : // Case where no hex edge applies.
-                        destinationTerrainType = neighbors.get(i)
-                                .getTerrainType();
-                        moveCost = destinationTerrainType
-                                .getMovementCost(unit);
-                        if( moveCost == 99. )
-                            break;
-                        validRetreatMoves( unit, neighbors.get(i),
-                                retreatLimit - 1., retreatMoves );
+                    default : 
+                        getAllRetreatHexesInRange( currentHex, retreater,
+                                retreatLimit - 1 );
                         break;
                 }
             }
         
-        } else if( retreatLimit == 0 ) // move is exactly legal, add & return
-        {
-            // Only valid case for retreating, add current hex to list here
-            if( !retreatMoves.contains( currentHex ))
-                retreatMoves.add( currentHex );
-            
-        } else if( retreatLimit < 0 ) // ILLEGAL!!!! DO NOT ADD!!!
-        {
-            // broke me
-        }
+        } 
     }
     
+    /**
+     * This method returns the integer code for the retreat case of a retreating 
+     * unit (retreatingUnit) moving in a hex (neighbor). This allows us to 
+     * determine which level of the retreat hierarchy this move will be, as
+     * certain retreat conditions are only allowed if others are unavailable.
+     * 1 = Neighbor is vacant, uncontrolled hex
+     * 2 = Neighbor is friendly-occupied, uncontrolled hex
+     * 3 = Neighbor is friendly-occupied, enemy controlled hex
+     * 4 = Neighbor is vacant, enemy controlled hex
+     * 5 = neighbor holds enemy units
+     * @param retreatingUnit
+     * @param neighbor
+     * @return retreatCaseCode
+     * @author Keith and Shaung
+     */
     public static int getRetreatCase(MoveableUnit retreatingUnit, 
             MapHex neighbor )
     {
-        int retreatCase = 0;
+        // Initialize to zero to indicate if no retreat cases are available.
+        int retreatCase = 5;
         
+        if( getUnits( neighbor, retreatingUnit ) )
+            return retreatCase;
+            
+        // First case checks to make sure the hex is not controlled AND empty
         if( !isZoneOfControl(neighbor, retreatingUnit) 
-            && !getUnits( neighbor, retreatingUnit ) )
+            && neighbor.getUnits() == null )
             retreatCase = 1;
        
-        
+        // Second case checks to see if the hex contains friendly units  
+        // and is not in the zone of control of an enemy.
         if( isFriendlyControlledHex( neighbor, retreatingUnit ) 
             && !isZoneOfControl( neighbor, retreatingUnit ))
             retreatCase = 2;
- 
         
-
+        // Third case checks to see if the hex is in a friendly zone of control
+        // that has no enemies in it, but could be in an enemy zone of control
         if( isFriendlyControlledHex( neighbor, retreatingUnit )
-            && !getUnits( neighbor, retreatingUnit ) )
+            && isZoneOfControl( neighbor, retreatingUnit ) )
             retreatCase = 3;
-        
-        
-      
+               
+        // Fourth case checks to see if the hex is empty and has no enemies in 
+        // it, but is in an enemy zone of control.
         if( neighbor.getUnits() == null 
-            && !getUnits( neighbor, retreatingUnit) )
+            && isZoneOfControl( neighbor, retreatingUnit) )
             retreatCase = 4;
-        
-        
-        if( retreatCase == 0 )
-            retreatCase = 5;
         
         return retreatCase;
     }
@@ -525,7 +559,7 @@ public class MovementCalculator
     public static boolean isFriendlyControlledHex(MapHex sourceHex, 
             MoveableUnit movingUnit)
     {
-        ArrayList<String> unitsInHex = new ArrayList<String>();
+        ArrayList<String> unitsInHex;
         if(sourceHex != null){
             unitsInHex = sourceHex.getUnitIDs();
         } else {
