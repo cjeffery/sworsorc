@@ -9,7 +9,7 @@
 package Units;
 
 
-import Units.Stack; // used on line 213
+import Units.HexStack; // used on line 213
 import java.util.*;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
