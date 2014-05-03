@@ -11,19 +11,16 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import java.io.Serializable;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 /**
  *
  * @author Tyler & Tao Zhang
  */
-public final class Spell_Book {
+public final class Spell_Book implements Serializable {
+    private static final long serialVersionUID = 1L;
     Spell[] list;
     
     /** ==========================

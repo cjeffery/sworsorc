@@ -26,7 +26,6 @@ import Spells.PL_4.Building;
 import Spells.PL_4.C_K_I;
 import Spells.PL_4.Distintegration;
 import Spells.PL_4.Ersatz_Winter;
-import Spells.PL_4.Teleporation_Control;
 import Spells.PL_4.Vortex_Creation;
 import Spells.PL_5.B_C_T;
 import Spells.PL_5.C_W_T;
@@ -47,6 +46,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Serializable;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -55,7 +55,9 @@ import javax.swing.JPanel;
  *
  * @author Tyler & Tao Zhang
  */
-public class Spell {
+public class Spell implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     Characters character;
     
     String  Name;

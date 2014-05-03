@@ -6,10 +6,12 @@
 
 package Units;
 
+import java.io.Serializable;
+
 /**
- * Moveable Units:
+ * Movable Units:
  * This class contains information about the movement allocation, race, location,
- * and the most basic type of a moveable unit(army unit, character, or monster).
+ * and the most basic type of a movable unit(army unit, character, or monster).
  * <p>
  * 
  * The functions in this class work by taking the movement data out of any of the
@@ -17,7 +19,8 @@ package Units;
  *
  * @author matt
  */
-public class MoveableUnit {
+public class MoveableUnit implements Serializable {
+    private static final long serialVersionUID = 1L;
     protected UnitType UnitType;
     protected double movement;
     protected double workingMovement;
