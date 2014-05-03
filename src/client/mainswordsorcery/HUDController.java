@@ -637,7 +637,8 @@ public class HUDController {
             case "End Movement Phase":
                 UnitPool.getInstance().endMovementPhase();
                 HexStack stack = new HexStack();
-                stack.removeOverStack(UnitPool.getInstance().getOverStack());
+                if(UnitPool.getInstance().getOverStack() != null && UnitPool.getInstance().getOverStack().size() > 0)
+                    stack.removeOverStack(UnitPool.getInstance().getOverStack());
                 //clear unit move highlights if present
                 if( hmapContent.highlightSet != null ){
                     hmapContent.clearHighlights();

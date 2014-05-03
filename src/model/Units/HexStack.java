@@ -7,6 +7,7 @@
 
 package Units;
 
+import Character.Characters;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -57,13 +58,19 @@ public class HexStack {
     }
     
     public static boolean overStackWaring(ArrayList<String> unitList, Boolean Graf){
-        if (unitList.size() > 2){
+        int count = unitList.size();
+        
+        for (String e : unitList)
+            if ( UnitPool.getInstance().getUnit(e) instanceof Characters)
+                count--;
+        
+        if (count > 2){
             if (Graf){
                 Dialogs.create()
                 .title("Stack Warring")
                 .masthead("One too many!")
                 .message("You will hafe to eleminate " + 
-                        (unitList.size() - 2) +
+                        (count - 2) +
                         " unit at the end of your move phase if you dont move them.")
                 .actions(Dialog.Actions.OK)
                 .showConfirm();
@@ -90,7 +97,7 @@ public class HexStack {
         
         final Stage popup = new Stage();
         final ScrollBar sc = new ScrollBar();
-        
+        int count = 0;
                 
         Group cent = new Group();
         
@@ -105,9 +112,13 @@ public class HexStack {
         fp.setVgap(4);
         fp.setHgap(4);
                        
-        for(Entry e : stackList.entrySet())
-            vb.getChildren().add(addFlow((ArrayList<MoveableUnit>)e.getValue()));
+        for(Entry e : stackList.entrySet()){
+            Object[] temp = addFlow((ArrayList<MoveableUnit>)e.getValue(),count);
+            count = count + (int)temp[0];
+            vb.getChildren().add((FlowPane)temp[1]);
         
+        }
+            
         vb.getChildren().add(fp);
       
         cent.getChildren().addAll(sc,vb);
@@ -119,7 +130,7 @@ public class HexStack {
                 
         border.setTop(this.addHBox());
         border.setCenter(sp);
-        border.setBottom(this.addVbox(popup));
+        border.setBottom(this.addVbox(popup, count));
         this.traverse(border);
         
         StackPane root = new StackPane();
@@ -134,8 +145,8 @@ public class HexStack {
         popup.show();
     }
 
-    private FlowPane addFlow(ArrayList<MoveableUnit> units){
-        
+    private Object[]  addFlow(ArrayList<MoveableUnit> units , int count){
+        Object[] ob = new Object[2];
         FlowPane flow = new FlowPane();
         
         flow.setPadding(new Insets(1, 0, 1, 0));
@@ -144,25 +155,15 @@ public class HexStack {
         //flow.setPrefWrapLength(250); // preferred width allows for two columns
         flow.setStyle("-fx-background-color: #DAE6F3;"
                 + "-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 )");
-        
-        /*ImageView pages[] = new ImageView[8];
-        for (int i=0; i<8; i++) {
-            pages[i] = new ImageView(
-                new Image(LayoutSample.class.getResourceAsStream(
-                "graphics/chart_"+(i+1)+".png")));
-            flow.getChildren().add(pages[i]);
-        }*/
-        
-        
-        for (MoveableUnit s : units)
+        count = count - 2; 
+        for (MoveableUnit s : units){
+            
             flow.getChildren().add(addButton(s));
-        
-        //flow.getChildren().add(addButton(unit));
-       
-        //flow.getChildren().add(addButton(unit));
-        //flow.getChildren().add(addButton(unit));
-        
-        return flow;
+            count ++;
+        }
+        ob[0] = count;
+        ob[1]= flow;
+        return ob;
     }
     
     private ToggleButton addButton(MoveableUnit unit){
@@ -265,12 +266,12 @@ public class HexStack {
         return hbox;
     }
 
-     private VBox addVbox(Stage box){
+     private VBox addVbox(Stage box, int count){
         
      VBox hBox = new VBox();
      Button btn = new Button();
      btn.setDefaultButton(true);
-     btn.setText("Remove Units");
+     btn.setText("Remove" + count + "Units");
      btn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override

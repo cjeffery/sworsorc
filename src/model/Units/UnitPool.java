@@ -9,6 +9,7 @@
 package Units;
 
 
+import Character.Characters;
 import Units.HexStack; // used on line 213
 import java.util.*;
 import org.controlsfx.control.action.Action;
@@ -273,15 +274,7 @@ public class UnitPool {
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
         HexStack.overStackWaring(this.getUnitsInHex(unit.getLocation()));
-        
-        ArrayList<MoveableUnit> temp = new ArrayList<MoveableUnit>();
-        ArrayList<String> hold = new ArrayList<String>();
-        hold = this.getUnitsInHex(destinationHexID);                
-        for(String s : hold)
-            temp.add(this.getUnit(s));
-        
-        //stack.removeOverStack(temp);
-        
+                        
         if ( "2004".equals(unit.getLocation()) || 
              "0912".equals(unit.getLocation()) || 
              "0627".equals(unit.getLocation()) || 
@@ -457,6 +450,7 @@ public class UnitPool {
         this.unitMove.clear();
         this.portalNum.clear();
         this.safeTeleport.clear();
+        this.overStackMap.clear();
     }
     
     /**
@@ -472,10 +466,12 @@ public class UnitPool {
                         ArrayList<MoveableUnit> units = new ArrayList<MoveableUnit>();
 
                         for(String temp : entry2.getValue()){
-                            units.add(this.getUnit(temp));
+                            if(!(getUnit(temp) instanceof Characters))
+                                units.add(this.getUnit(temp));
 
                         }
-                        this.overStackMap.put(units.get(0).getLocation(), units);
+                        if (units.size() > 2)
+                            this.overStackMap.put(units.get(0).getLocation(), units);
                     }    
                 }
             }
