@@ -7,6 +7,7 @@
 
 package mainswordsorcery;
 
+import MoveCalculator.MovementCalculator;
 import Units.ArmyUnit;
 import Units.MoveableUnit;
 import java.util.ArrayList;
@@ -155,7 +156,17 @@ public class LaunchCombat {
                 
                 // Call Retreat funtion
                 // MoveableUnit, MapHex, Int 
-                // Retreat(target_stack.get(0), Defender_Terrain, index[1]);
+                MoveableUnit unit = (MoveableUnit)target_stack.get(0);
+                //Double retreatLimit = new Double(index[1]);
+                System.out.println( "Unit Location: " + unit.getLocation());
+                ArrayList<MapHex> retreatMoves = new ArrayList<>
+                        ( MovementCalculator.getRetreatMoves(Defender_Terrain, 
+                                unit, 2 ) );
+                
+                retreatMoves.stream().forEach((retreatMove) -> {
+                    System.out.println( "Moves: " + retreatMove.GetID());
+                });
+                                
             }
             
             result.add("true");
