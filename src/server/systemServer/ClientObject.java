@@ -27,8 +27,8 @@ public class ClientObject {
     final private ArrayBlockingQueue<NetworkPacket> messageQueue;
 
     // Remote Send/Recieve threads
-    final private ServerListenerThread listenerThread;
-    final private ServerWriterThread writerThread;
+    final private ServerReceivingThread listenerThread;
+    final private ServerSendingThread writerThread;
 
     private ObjectOutputStream writer = null;
     private ObjectInputStream streamIn = null;
@@ -40,9 +40,6 @@ public class ClientObject {
     // Debugging
     final private boolean debug;
 
-    /*
-     * CONSTRUCTOR
-     */
     /**
      * ClientObject constructor
      * Call {@link #start start()} to activate the object
@@ -59,8 +56,8 @@ public class ClientObject {
 
         // Initialize threads/streams
         this.consoleOut = new PrintWriter( System.out, true );
-        this.listenerThread = new ServerListenerThread();
-        this.writerThread = new ServerWriterThread();
+        this.listenerThread = new ServerReceivingThread();
+        this.writerThread = new ServerSendingThread();
         this.messageQueue = new ArrayBlockingQueue<>( 30, true ); // 30 slots, FIFO access
 
         this.debug = MessagePhoenix.debugStatus();
@@ -140,13 +137,9 @@ public class ClientObject {
      * Handles incoming messages from the client connection it is associated with
      * Makes the blocking receive until a message arrives
      */
-    private class ServerListenerThread extends Thread {
+    private class ServerReceivingThread extends Thread {
 
         private boolean killed = false;
-
-        protected ServerListenerThread() {
-            // empty constructor
-        }
 
         /**
          * Creates input stream, and connects to socket
@@ -173,16 +166,13 @@ public class ClientObject {
          * <p>
          * @return List received, or null if not connected
          */
-        private NetworkPacket recieveMessage()
-        {
+        private NetworkPacket recieveMessage() {
             NetworkPacket res;
             try {
-                res = MessagePhoenix.recieveMessage(ClientObject.this.streamIn);
+                res = MessagePhoenix.recieveMessage( ClientObject.this.streamIn );
                 return res;
-            }
-            catch ( IOException | ClassNotFoundException | 
-                    NullPointerException ex)
-            { // the lack of this was the cause of a lot of issues...watch in future
+            } catch ( IOException | ClassNotFoundException |
+                      NullPointerException ex ) { // the lack of this was the cause of a lot of issues...watch in future
                 ex.printStackTrace();
                 killThread();
                 return null;
@@ -217,10 +207,8 @@ public class ClientObject {
             if ( message == null ) {
                 errorOut.println( "Null data!" );
                 return false;
-            } 
-            else if (!message.isEmpty() &&
-                     message.get( 0 ).getClass().equals( String.class ) )
-            {
+            } else if ( !message.isEmpty()
+                    && message.get( 0 ).getClass().equals( String.class ) ) {
                 stringmessage = (String) message.get( 0 );
             }
 
@@ -241,17 +229,18 @@ public class ClientObject {
                         case PRIVATE:
                             NetworkServer.
                                     sendToClient( stringmessage, flag, tag, sender, MessagePhoenix.
-                                            packMessageContents( message.get( 1 ) ) ); 
+                                            packMessageContents( message.get( 1 ) ) );
                             break;
                         case LOBBY:
-                            currentLobby.sendToEntireLobby( flag, tag, sender, message );
+                            currentLobby.sendToEntireLobby( flag, tag, sender, stringmessage );
                             break;
                         case GLOBAL:
                             NetworkServer.sendToAllClients( flag, tag, sender, message );
                             break;
                         case SEND_CHAT_MESSAGE:
                             if ( currentLobby != null ) {
-                                currentLobby.sendToEntireLobby( flag, Tag.LOBBY, sender, message );
+                                currentLobby.
+                                        sendToEntireLobby( flag, Tag.LOBBY, sender, stringmessage );
                             } else {
                                 NetworkServer.sendToAllClients( flag, Tag.GLOBAL, sender, message );
                             }
@@ -361,10 +350,11 @@ public class ClientObject {
                                     equals( lobby ) ) {
                                 send( flag, Tag.JOIN_LOBBY_RESPONSE, "Cannot join lobby, you're already in it!" );
 
-                            } else if ( NetworkServer.joinLobby( (String) message.get( 0 ), ClientObject.this ) ) {
+                            } else if ( NetworkServer.
+                                    joinLobby( (String) message.get( 0 ), ClientObject.this ) ) {
                                 send( flag, Tag.JOIN_LOBBY_RESPONSE, "Successfully joined lobby " + currentLobby + "!" );
                                 currentLobby.
-                                        sendToEntireLobby( flag, Tag.JOIN_LOBBY_RESPONSE, "Client " + handle + " has joined the lobby!" );
+                                        lobbyNotification( "Client " + handle + " has joined the lobby!" );
                             } else {
                                 send( flag, Tag.JOIN_LOBBY_RESPONSE, "Failed to join lobby " + lobby + "! It probably doesn't exist!" );
                             }
@@ -386,26 +376,24 @@ public class ClientObject {
                                         "You requested to start the game, but you aren't even in a lobby!" );
                             } else {
                                 currentLobby.
-                                        sendToEntireLobby( flag, Tag.BEGIN_GAME_RESPONSE,
-                                                ("Client " + sender + " has requested to start a game in lobby " + currentLobby.
-                                                 getName()) );
+                                        lobbyNotification("Client " + sender + " has requested to start a game in lobby " + currentLobby.getName() );
                                 // TODO: VOTING
                                 currentLobby.beginGame();
-                                currentLobby.sendToEntireLobby( flag, Tag.BEGIN_GAME );
-                                
+                                currentLobby.pokeEntireLobby( flag, Tag.BEGIN_GAME );
+
                                 //selected client in charge of game setup
-                                send( Flag.GAME, Tag.INIT_GAME_PLEASE);
+                                send( Flag.GAME, Tag.INIT_GAME_PLEASE );
                             }
                             break;
                         case SEND_FILE_REQUEST:
-                            System.out.println("SEND_FILE_REQUEST unhandled");
+                            System.out.println( "SEND_FILE_REQUEST unhandled" );
                             break;
                         case GET_FILE_REQUEST:
-                            System.out.println("GET_FILE_REQUEST unhandled");
+                            System.out.println( "GET_FILE_REQUEST unhandled" );
                             break;
                         //How is this different from NEW_LOBBY_REQUEST
                         case CREATE_LOBBY_REQUEST:
-                            System.out.println("CREATE_FILE_REQUEST unhandled");
+                            System.out.println( "CREATE_FILE_REQUEST unhandled" );
                             break;
                         case YIELD_TURN_REQUEST:
                             consoleOut.
@@ -461,19 +449,14 @@ public class ClientObject {
                     break;
                 // Anything that doesn't fall into above categories ex: GENERIC
                 case OTHER:
-
                     switch ( tag ) {
-
-                        case NAG: // TODO: What purpose does this serve now?
-                            errorOut.println( "NAG: " + message.get( 0 ) );
-                            break;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
                     }
                     break;
 
                 default:
-                    consoleOut.println( "Unknown flag: " + flag );
+                    consoleOut.println( "Unknown flag: " + flag + "\nTag: " + tag );
                     break;
             } // end outer switch
 
@@ -494,7 +477,8 @@ public class ClientObject {
                     } else if ( processMessage( rawMessage ) ) {
                         // Suprise Party Fiddlesticks lives here
                     } else {
-                        disconnect();
+                        killThread();
+                        NetworkServer.clientDisconnected( ClientObject.this );
                     }
                 } else if ( !isConnected() ) {
                     errorOut.
@@ -507,12 +491,7 @@ public class ClientObject {
             close();
         }
 
-        private void disconnect() {
-            killThread();
-            NetworkServer.clientDisconnected( ClientObject.this );
-        }
-
-        protected void close() {
+        private void close() {
             if ( isConnected() ) {
                 try {
                     if ( streamIn != null ) {
@@ -533,20 +512,16 @@ public class ClientObject {
             }
         }
 
-    } // end ServerListenerThread
+    } // end ServerReceivingThread
 
     /**
      * Sends messages to the connected client
      * <p>
      * Dies when listenerThread died
      */
-    private class ServerWriterThread extends Thread {
+    private class ServerSendingThread extends Thread {
 
         private boolean killed = false;
-
-        protected ServerWriterThread() {
-            // empty constructor
-        }
 
         /**
          * Initializes writer with a new stream.
@@ -576,7 +551,7 @@ public class ClientObject {
             this.killed = true;
         }
 
-        private void sendMessage( final NetworkPacket message ) {
+        private void sendMessage( NetworkPacket message ) {
             MessagePhoenix.sendMessage( ClientObject.this.writer, message );
         }
 
@@ -622,7 +597,7 @@ public class ClientObject {
             writer = null;
         }
 
-    } // end ServerWriterThread
+    } // end ServerSendingThread
 
     /**
      * Starts the ClientObject, opening the connection

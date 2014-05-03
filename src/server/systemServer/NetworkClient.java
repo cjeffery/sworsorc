@@ -42,8 +42,8 @@ final public class NetworkClient {
     private static String currentLobby = "Not in a lobby";
 
     // Streams & Threads
-    private static ClientListenerThread listenerThread;
-    private static ClientWriterThread writerThread;
+    private static ClientReceivingThread listenerThread;
+    private static ClientSendingThread writerThread;
     private static ClientCommandThread clientThread;
 
     private static ObjectOutputStream writer;
@@ -68,8 +68,6 @@ final public class NetworkClient {
 
     private static boolean phasing = false;
 
-    // goto Conductor
-    // private Conductor jarvis; // Our conductor object
     /**
      * Default Startup of NetworkClient
      * Starts local streams, connects to server, and makes the connection live
@@ -206,10 +204,11 @@ final public class NetworkClient {
     public static void createLobby(String lobby) {
         send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobby);
     }
+
     public static void joinLobby(String lobby) {
         send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, lobby);
     }
-    //at this point I must resort to terrible hacks - Colin
+
     public static void createAndJoinLobby(String lobby) {
         createLobby(lobby);
         joinLobby(lobby);
@@ -222,7 +221,6 @@ final public class NetworkClient {
     public static void startGame() {
         send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST);
     }
-    
     
     public static boolean isPhasing() {
         return phasing;
@@ -259,10 +257,6 @@ final public class NetworkClient {
     private static class ClientCommandThread extends Thread {
 
         private boolean killed = false;
-
-        private ClientCommandThread() {
-            // empty constructor
-        }
 
         /**
          * Parses user input, executes commands, and sends messages to server
@@ -372,23 +366,6 @@ final public class NetworkClient {
         }
 
         /**
-         * Send a file to the server
-         * <p>
-         * @param filename Name of file to be sent
-         */
-        private void sendFile( final String filename ) {
-            // TODO: this is text file, what about binary files? JSONs?
-            List<String> temp; // What is our file size limit?
-            try {
-                temp = Files.readAllLines( Paths.get( networkDirectory + filename ), Charset.
-                        forName( "UTF-8" ) );
-                send( Flag.FILE, Tag.SEND_FILE_REQUEST, temp );
-            } catch ( IOException e ) {
-                System.err.println( "Could not open file! Error thrown: " + e );
-            }
-        }
-
-        /**
          * Marks thread for death, causing it to close, return, and die
          * (*cough cough "or die" *cough cough*)
          * <p>
@@ -444,13 +421,9 @@ final public class NetworkClient {
 
     }
 
-    private static class ClientWriterThread extends Thread {
+    private static class ClientSendingThread extends Thread {
 
         private boolean killed = false;
-
-        private ClientWriterThread() {
-            // empty constructor
-        }
 
         /**
          * Initializes writer with a new stream.
@@ -537,13 +510,9 @@ final public class NetworkClient {
     /**
      * Listens for and handles incoming communications for Network Client
      */
-    private static class ClientListenerThread extends Thread {
+    private static class ClientReceivingThread extends Thread {
 
         private boolean killed = false;
-
-        private ClientListenerThread() {
-            // empty constructor
-        }
 
         /**
          * Creates input stream, and connects to socket
@@ -626,18 +595,11 @@ final public class NetworkClient {
             flag = rawMessage.getFlag();
             sender = rawMessage.getSender();
 
-            message = rawMessage.getData(); // possibly null(shouldn't be anymore)
+            message = rawMessage.getData();
             if ( message == null ) {
                 System.out.println( "Null data!" );
                 return false;
-            } 
-            /*else if ( message.isEmpty() ) {
-                if ( debug ) {
-                    System.out.println( "Diagnostic: empty message " );
-                }
-            }*/
-            else if (   !message.isEmpty()
-                     && message.get( 0 ).getClass().equals( String.class ) ) {
+            } else if ( !message.isEmpty() && message.get( 0 ).getClass().equals( String.class ) ) {
                 stringmessage = (String) message.get( 0 );
             }
 
@@ -657,14 +619,13 @@ final public class NetworkClient {
 
                     switch ( tag ) {
                         case PRIVATE:
-                            flushToConsole( "(Private)" + sender + ": " + stringmessage );
+                            flushToConsole( "(Private) " + sender + ": " + stringmessage );
                             break;
                         case LOBBY:
-                            flushToConsole( "(" + currentLobby + ")" + sender + ": " + message.
-                                    get( 0 ) );
+                            flushToConsole( "(" + currentLobby + ") " + sender + ": " + stringmessage );
                             break;
                         case GLOBAL:
-                            flushToConsole( "(GLOBAL) " + sender + " : " + stringmessage );
+                            flushToConsole( "(GLOBAL) " + sender + ": " + stringmessage );
                             break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
@@ -694,8 +655,8 @@ final public class NetworkClient {
                     break;
                 // Game state update/message/command (Anything related to game)
                 case GAME:
-                    //jarvis.processMessage( message.subList(1, message.size()), TAG );
-                    // TODO: conductor will go in here somewhere
+                    // Move processing of GAME flag to conductor
+                    Conductor.processMessage( tag, sender, message );
                     switch ( tag ) {
                         case NEXT_TURN_INFO:
                             if ( username.equals( stringmessage ) ) {
@@ -780,7 +741,7 @@ final public class NetworkClient {
                                 disconnect();
                                 return false;
                             } else {
-                                flushToConsole( "Server refused request to disconnect! How ruuude!\nYou are still connected, try again in a little bit, server might be overloaded." );
+                                flushToConsole( "Server refused request to disconnect!\nYou are still connected, try again in a little bit, server might be overloaded." );
                                 return true;
                             }
                         default:
@@ -797,20 +758,14 @@ final public class NetworkClient {
                     break;
                 // Anything that doesn't fall into above categories ex: GENERIC
                 case OTHER:
-
                     switch ( tag ) {
-
-                        case NAG:
-                            System.err.println( "NAG: " + (String) message.get( 1 ) );
-                            flushToConsole( "NAG: " + (String) message.get( 1 ) );
-                            break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
                     break;
 
                 default:
-                    flushToConsole( "Unknown flag: " + flag );
+                    consoleOut.println( "Unknown flag: " + flag + "\nTag: " + tag );
                     break;
             } // end outer switch
 
@@ -880,11 +835,11 @@ final public class NetworkClient {
      */
     private static void startRemoteConnection() {
         // Start outgoing stream processor
-        writerThread = new ClientWriterThread();
+        writerThread = new ClientSendingThread();
         writerThread.start();
 
         // Start incoming stream processor
-        listenerThread = new ClientListenerThread();
+        listenerThread = new ClientReceivingThread();
         listenerThread.start();
 
         // startup messages
@@ -1143,6 +1098,22 @@ final public class NetworkClient {
         killLocalStreams();
     }
 
+    /**
+     * Send a file to the server
+     * <p>
+     * @param filename Name of file to be sent
+     */
+    private static void sendFile( final String filename ) {
+        // TODO: this is text file, what about binary files? JSONs?
+        List<String> temp; // What is our file size limit?
+        try {
+            temp = Files.readAllLines( Paths.get( networkDirectory + filename ), Charset.
+                    forName( "UTF-8" ) );
+            send( Flag.FILE, Tag.SEND_FILE_REQUEST, temp );
+        } catch ( IOException e ) {
+            System.err.println( "Could not open file! Error thrown: " + e );
+        }
+    }
     // ***GETTERS/SETTERS*** //
     /**
      * Sets IPv4 address of remote Server

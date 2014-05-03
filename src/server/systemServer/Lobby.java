@@ -52,9 +52,14 @@ public class Lobby {
         return false;
     }
 
-    protected void sendToEntireLobby( String message ) {
-        sendToEntireLobby( Flag.CHAT, Tag.LOBBY, null, message );
+    protected void lobbyNotification( String notification ) {
+        sendToEntireLobby( Flag.NOTIFICATION, Tag.LOBBY, null, notification );
     }
+
+    protected void pokeEntireLobby( Flag flag, Tag tag ) {
+        sendToEntireLobby( flag, tag, null, (Object[]) null );
+    }
+
     /**
      *
      * @param flag
@@ -64,22 +69,10 @@ public class Lobby {
      */
     protected void sendToEntireLobby( Flag flag, Tag tag, String sender, Object... message ) {
         for ( ClientObject client : lobbyClients ) {
-            client.send( flag, tag, sender, message );
+            client.send( flag, tag, sender != null ? sender : "", MessagePhoenix.
+                    packMessageContents( message ) );
         }
     }
-
-    /**
-     *
-     * @param flag
-     * @param tag
-     * @param message
-     */
-    protected void sendToEntireLobby( Flag flag, Tag tag, Object... message ) {
-        for ( ClientObject client : lobbyClients ) {
-            client.send( flag, tag, null, message );
-        }
-    }
-
 
     /**
      *
@@ -135,8 +128,8 @@ public class Lobby {
         if(!gameStarted) {
             //start with the first player in list:
             current = lobbyClients.get( 0 );
-            sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO,
-                               current.getHandle(), current.getClientID() );
+            sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO, current.getHandle(), current.
+                    getClientID() ); // What does this do?
             gameStarted = true;
         }
         else {

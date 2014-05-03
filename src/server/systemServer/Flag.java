@@ -14,6 +14,6 @@ package systemServer;
  */
 public enum Flag {
     CHAT, CLIENT, ERROR, GAME, REQUEST, RESPONSE, CONNECTION, FILE, OTHER,
-    NULL_FLAG,
+    NULL_FLAG, NOTIFICATION,
 
 }

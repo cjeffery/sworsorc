@@ -200,7 +200,7 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
         for ( Lobby l : lobbies ) {
             if ( l.lobbyClients.contains( client ) ) {
                 l.leaveLobby( client );
-                l.sendToEntireLobby( "Client " + client.getHandle() + " has left the lobby!" );
+                l.lobbyNotification( "Client " + client.getHandle() + " has left the lobby!" );
                 if ( l.lobbyClients.isEmpty() ) {
                     lobbies.remove( l ); //For now, just kill lobbies when everyone leaves
                     return;
