@@ -483,6 +483,9 @@ public class UnitPool {
         }
     }
     
+    public void clearOverStack(){
+        overStackMap.clear();
+    }
     
     public SortedMap<String, ArrayList<MoveableUnit>> getOverStack(){
         return this.overStackMap;
