@@ -258,6 +258,7 @@ public class HexStack {
                         tBtn.setStyle("-fx-font: 22 arial; -fx-base: #b6e7c9;");
                     }
                     else{
+                        tBtn.setDisable(false);
                         tBtn.setText("Kiss them good bye.");
                         tBtn.setStyle("-fx-font: 22 arial; -fx-base: #ff0000;");
                     }
@@ -283,6 +284,7 @@ public class HexStack {
                         tBtn.setStyle("-fx-font: 22 arial; -fx-base: #b6e7c9;");
                     }
                     else{
+                        tBtn.setDefaultButton(false);
                         tBtn.setText("Kiss them good bye.");
                         tBtn.setStyle("-fx-font: 22 arial; -fx-base: #ff0000;");
                     }
@@ -311,7 +313,8 @@ public class HexStack {
         //Text txt2 = new Text("Test Code! Dose Nothing.");
         txt.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         hbox.getChildren().addAll(txt);
-
+        
+        
         return hbox;
     }
 
@@ -347,7 +350,8 @@ public class HexStack {
         hBox.setStyle("-fx-background-color: #234679;"); 
 
         hBox.getChildren().addAll(btn);
-
+        btn.setDisable(true);
+        
         return hBox;
     }
     
