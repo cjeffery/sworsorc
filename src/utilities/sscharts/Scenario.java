@@ -24,14 +24,8 @@ import Character.Characters;
 /**
  * This singleton class contains the data pertaining to a particular scenario, 
  * which it reads from a scenario configuration JSON. 
- * The class consists of many getters, an ASCII stdout print function, 
+ * The class consists of many getters 
  * and a function to populate a UnitPool from the class's unit hash.
- * <p>
- * Each method gives its own author. In some cases, I left Wayne Fuhrman as 
- * the main author even though I made changes to a few lines. The ground work 
- * was still laid by him.
- * <p>
- * TODO: Input error handling and null pointer checking, etc.
  * 
  * @author Wayne Fuhrman
  * @author Tyler Jaszkowiak
@@ -70,42 +64,6 @@ public class Scenario {
      static Map<String, String> leaningTowards;
      static Map<String, Integer> leaningAmount;
      static Map<String, Boolean> acceptsSacrifice;
-
-     
-
-    /**
-     * This method prints to standard out an ASCII representation of the data
-     * contained in the {@link Scenario} class.
-     * TODO: Fix to reflect nation/army restructuring
-     * 
-     * @author Wayne Fuhrman
-     */
-    public static void print() {
-        for (String army : getArmyNames()) {
-            System.out.println();
-            System.out.println("Army: " + army);
-            System.out.println("Controlled by: Player " + getControllingPlayer(army));
-            System.out.println("Sets up: " + getSetupOrder(army));
-            System.out.println("Moves: " + getMoveOrder(army));
-            System.out.println("Nations: " + getNations(army));
-            /* // these are now at a national, not army, level
-            System.out.println("Controls Provinces: " + getProvinces(army));
-            System.out.println("Has characters: " + getCharacters(army));
-            System.out.println("Has units: " + getUnits(army));
-            System.out.println("Replacements: " + getReplacement(army));
-            System.out.println("Reinforcements: " + getReinforcement(army));*/
-        }
-        for (String neutral : neutralNames) {
-            System.out.println();
-            System.out.println("Neutral: " + neutral);
-            System.out.println("Controls Provinces: " + getProvinces(neutral));
-            System.out.println("Has characters: " + getCharacters(neutral));
-            System.out.println("Has units: " + getUnits(neutral));
-            System.out.println("Leaning towards: " + getLeaningToward(neutral));
-            System.out.println("Leaning amount: " + getLeaningAmount(neutral));
-            System.out.println("Human sacrifice: " + acceptsSacrifice(neutral));
-        }
-    }
     
     /**
      * This method, which is incomplete, is intended to populate the singleton
@@ -166,7 +124,7 @@ public class Scenario {
         
         // populate the neutral units
         for (String neutral : neutralNames) {
-            player++; // TODO: for now neutrals look like addition players to
+            player++; // TODO: for now neutrals look like additional players to
                       // the unit pool. see how david wants this implemented
             List<String> neutralProvinces = getProvinces(neutral);
             String neutralRace = getNeutralRace(neutral);
@@ -193,12 +151,8 @@ public class Scenario {
         }
     }
     
-    private Scenario() {
-        
-    }
-    
     /**
-     * This constructor for {@link ScenarioConfigurationReader} is intended to 
+     * This initializer for {@link Scenario} is intended to 
      * read the configuration given by the specified file and use it to 
      * populate all fields of the class to reflect that data.
      * 
@@ -304,16 +258,15 @@ public class Scenario {
                     }
                     units.put(nationName, unitAndCount);
                     
-                    
-
-                    String replacementDescription = (String) nationObject.get("replacements");
-                    replacements.put(nationName, replacementDescription);
-                
-                    String reinforcementDescription = (String) nationObject.get("reinforcements");
-                    reinforcements.put(nationName, reinforcementDescription);
                 }
                 // add the list of this army's nations to the nation hashmap
                 nations.put(armyName, nationNames);
+                // get the army's reinforcements and replacements
+                String replacementDescription = (String) armyObject.get("replacements");
+                replacements.put(armyName, replacementDescription);
+
+                String reinforcementDescription = (String) armyObject.get("reinforcements");
+                reinforcements.put(armyName, reinforcementDescription);
 
             }
 
@@ -363,12 +316,17 @@ public class Scenario {
                     int hexesTowards = ((Long) diplomacy.get("amount")).intValue();
                     leaningAmount.put(neutralName, hexesTowards);
                 }
-
-                if (neutralObject.containsKey("humanSacrifice")) {
-                    if (((String) neutralObject.get("humanSacrifice")).equals("true")) {
+                // read whether the neutral accepts human sacrifices
+                if (diplomacy.containsKey("humanSacrifice")) {
+                    if (((String) diplomacy.get("humanSacrifice")).equals("true")) {
                         acceptsSacrifice.put(neutralName, true);
+                    } else {
+                        acceptsSacrifice.put(neutralName, false);
                     }
+                } else {
+                    acceptsSacrifice.put(neutralName, false);
                 }
+                
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Scenario.class.getName()).log(Level.SEVERE, null, ex);
@@ -536,6 +494,7 @@ public class Scenario {
      * Return a list of names of the units in a nation.
      * <p>
      * TODO: change this to return ArmyUnits instead of strings?
+     *       also, this logic seems very wrong.
      * 
      * @param name the name of the nation in question
      * @return a list of names of the units in the nation
@@ -544,12 +503,12 @@ public class Scenario {
         return units.get(name);
     }
 
-    public static String  getReplacement(String nationName) {
-        return replacements.get(nationName);
+    public static String  getReplacement(String armyName) {
+        return replacements.get(armyName);
     }
     
-    public static String getReinforcement(String nationName) {
-        return reinforcements.get(nationName);
+    public static String getReinforcement(String armyName) {
+        return reinforcements.get(armyName);
     }
 
     public static String getLeaningToward(String name) {
@@ -562,18 +521,5 @@ public class Scenario {
 
     public static Boolean acceptsSacrifice(String name) {
         return acceptsSacrifice.get(name);
-    }
-
-    /**
-     * A simple main class for testing the reader on a specified file. It 
-     * simply reads and calls the stdout print function.
-     * 
-     * @author Tyler Jaszkowiak
-     * @param args there should be no command line args
-     */
-    public static void main(String[] args) {
-        Initialize("resources/scenarios/0_Dummy.json");
-        print();
-        populatePool();
     }
 }

@@ -9,8 +9,11 @@ package sschartstests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import junit.framework.TestCase;
 import sscharts.Scenario;
+import Units.UnitPool;
 
 /**
  * A test case for the src/utilities/sscharts/Scenario.java
@@ -28,6 +31,19 @@ public class ScenReaderTest extends TestCase {
     public ScenReaderTest(String testName) {
         super(testName);
     }
+    
+    /*
+    // test the unitpool populator method 
+    // since there is no map to populate, this can't really be tested befeore the 
+    // map is loaded. So it's useless as a standalone test.
+    public void testPopulator() {
+        boolean test;
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        Scenario.populatePool();
+        UnitPool pool = UnitPool.getInstance();
+        test = pool.getAllPlayerUnits(1).size() == 20;
+        assertTrue(test);
+    } */
     
     // test that the scenario name was read correctly
     public void testScenarioName() {
@@ -147,6 +163,28 @@ public class ScenReaderTest extends TestCase {
         assertTrue(test);
     }
     
+    // test getting the units of a given player nation
+    public void testNationUnits() {
+        boolean test;
+        Map<String, Integer> unitList = new HashMap<>();
+        unitList.put("Bow", 2);
+        unitList.put("HeavyAxe", 8);
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getUnits("Krasnian").equals(unitList);
+        assertTrue(test);
+    }
+    
+    // test getting the units of a given neutral nation, just in case it behaves different
+    public void testNeutralUnits() {
+        boolean test;
+        Map<String, Integer> unitList = new HashMap<>();
+        unitList.put("Bow", 2);
+        unitList.put("HeavyAxe", 8);
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getUnits("Convivian").equals(unitList);
+        assertTrue(test);
+    }
+    
     // test the getRace of a nation via ORC
     public void testNationRace() {
         boolean test;
@@ -162,47 +200,45 @@ public class ScenReaderTest extends TestCase {
         test = Scenario.getNeutralRace("Convivian").equals("Dwarrows");
         assertTrue(test);
     }
-    
-    // TODO: Test the unit list
-    // TODO: Test those last getters in Scenario.java, whose corresponding
-    //       data isn't even used by the game.
-    //       Other getters for new data in the structure may help for coverage
-    
-    
-    /*
-    // test that the nation provinces were read correctly
-    public void testProvinces() {
+
+    // test the getReinforcement of a nation via ORC
+    public void testReinforcements() {
         boolean test;
-        List<String> elvishProvinces;
-        List<String> dwarfProvinces;
-        elvishProvinces = new ArrayList<>();
-        elvishProvinces.add("Intas");
         Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
-        Scenario reader = Scenario.getInstance();
-        test = reader.getProvinces("Elves").equals(elvishProvinces);
-        assertTrue(test);
-        dwarfProvinces = new ArrayList<>();
-        dwarfProvinces.add("Ithilgil");
-        dwarfProvinces.add("Graumthog");
-        test = reader.getProvinces("Dwarrows").equals(dwarfProvinces);
+        test = Scenario.getReinforcement("ORC").equals("0");
         assertTrue(test);
     }
-    
-    // test that the nation provinces were read correctly
-    public void testCharacters() {
+
+    // test the getReplacement of a nation via ORC
+    public void testReplacements() {
         boolean test;
-        List<String> elvishChars;
-        List<String> dwarfChars;
-        elvishChars = new ArrayList<>();
-        elvishChars.add("Dalmilandril");
-        elvishChars.add("Linfalas");
         Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
-        Scenario reader = Scenario.getInstance();
-        test = reader.getCharacters("Elves").equals(elvishChars);
-        dwarfChars = new ArrayList<>();
-        dwarfChars.add("Paladin Glade");
-        test = test && reader.getCharacters("Dwarrows").equals(dwarfChars);
+        test = Scenario.getReplacement("ORC").equals("1 in 2");
         assertTrue(test);
     }
-    */
+
+    // test a netural's leaning toward value
+    public void testLeaningToward() {
+        boolean test;
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getLeaningToward("SpiderFolk").equals("Orc");
+        assertTrue(test);
+    }
+
+    // test a netural's leaning amount value
+    public void testLeaningAmount() {
+        boolean test;
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        test = Scenario.getLeaningAmount("SpiderFolk").equals(1);
+        assertTrue(test);
+    }
+
+    // test a netural's human sacrifice value
+    public void testAcceptsSacrifice() {
+        boolean test;
+        Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+        System.out.print("Do SpiderFolk accept human sacrifice? " + Scenario.acceptsSacrifice("SpiderFolk"));
+        test = Scenario.acceptsSacrifice("SpiderFolk");
+        assertTrue(test);
+    }
 }
