@@ -11,7 +11,7 @@ import Units.Race;
 
 /**
  *
- * @author Cam
+ * @author Cameron 
  */
 public class CharacterMaker{
      public static Characters createCharacter(String name){
