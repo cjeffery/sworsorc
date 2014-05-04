@@ -16,7 +16,6 @@ package sscharts;
 
 import java.util.Random;
 import java.util.ArrayList;
-import ssterrain.*;
 import Units.*;
 import sshexmap.MapHex;
         

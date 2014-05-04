@@ -1,15 +1,13 @@
 package Units;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 import java.io.*;
-import java.net.URL;
 import java.util.*;
 import javax.imageio.*;
 import sshexmap.HexPainter;
-import ssterrain.*;
+
 
 /** A class that does nothing but draw units! */
 public class UnitPainter {
@@ -67,7 +65,7 @@ public class UnitPainter {
     public void paintUnits(Graphics2D g2, ArrayList<MoveableUnit> units) {
         //HexPainter.drawImage(g2, "fighter.png", images);
         //only draw one unit for now
-        if(units == null || units.size() == 0)
+        if(units == null || units.isEmpty())
             return;
         MoveableUnit unit = units.get(0);
         boolean stacked = units.size() > 1;
@@ -109,6 +107,8 @@ public class UnitPainter {
     /**
      * gets background color corresponding to unit's nation.
      * Used to render the unit's background.
+     * 
+     * @param unit the unit to be rendered
      * @return A color object representing the RGB color of the unit's nation
      */
     public static Color getBGColor(MoveableUnit unit ) {

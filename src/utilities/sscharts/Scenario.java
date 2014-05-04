@@ -328,13 +328,9 @@ public class Scenario {
                 }
                 
             }
-        } catch (FileNotFoundException ex) {
+        } catch (IOException | ParseException ex) {
             Logger.getLogger(Scenario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Scenario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-             Logger.getLogger(Scenario.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        }
     }
     
     /**
@@ -483,7 +479,7 @@ public class Scenario {
     /**
      * Return the race of a neutral.
      * 
-     * @param name the name of the nation in question
+     * @param neutral the name of the nation in question
      * @return the race of nation
      */
     public static String getNeutralRace(String neutral) {
@@ -511,15 +507,15 @@ public class Scenario {
         return reinforcements.get(armyName);
     }
 
-    public static String getLeaningToward(String name) {
-        return leaningTowards.get(name);
+    public static String getLeaningToward(String neutralName) {
+        return leaningTowards.get(neutralName);
     }
 
-    public static Integer getLeaningAmount(String name) {
-        return leaningAmount.get(name);
+    public static Integer getLeaningAmount(String neutralName) {
+        return leaningAmount.get(neutralName);
     }
 
-    public static Boolean acceptsSacrifice(String name) {
-        return acceptsSacrifice.get(name);
+    public static Boolean acceptsSacrifice(String neutralName) {
+        return acceptsSacrifice.get(neutralName);
     }
 }
