@@ -278,6 +278,8 @@ public class Spell implements Serializable {
             //TODO:
             System.out.println("placing unit into pool");
             conjured.ResetWorkingMovement();
+            conjured.setRace(Race.Conjured);
+            conjured.setNation(character.getNation());
             UnitPool unitpool = UnitPool.getInstance();
             unitpool.addUnit(1, conjured, character.getLocation());
 

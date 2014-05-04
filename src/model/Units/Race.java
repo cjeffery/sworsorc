@@ -13,6 +13,7 @@ package Units;
  */
 public enum Race {
     Cronk,
+    Conjured,
     Dragon,
     Dwarrows,
     Elves,
