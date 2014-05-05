@@ -6,6 +6,7 @@
  */
 package systemServer;
 
+import Units.MoveableUnit;
 import Units.UnitPool;
 import java.util.List;
 import java.util.Map;
@@ -62,14 +63,21 @@ final public class Conductor { // Should this be a static singleton? I think it 
 
         switch ( tag ) {
             case ADD_UNIT:
-                //pool.addUnit( null(playerID??), (Unit)data.get(0);
+                pool.addUnit( 0, (MoveableUnit) data.get( 0 ) ); // TODO: (playerID??)
                 break;
             case REMOVE_UNIT:
-                // pool.removeUnit( (Unit) data.get(0);
+                pool.removeUnit( (MoveableUnit) data.get( 0 ) );
+                break;
+            case MOVE_UNIT:
+                pool.
+                        addMoveNetwork( (MoveableUnit) data.get( 0 ) );
+                break;
+            case MOVE_UNIT_TELEPORT:
+                pool.addMove( (MoveableUnit) data.get( 0 ), (String) data.get( 1 ), (boolean) data.
+                        get( 2 ) );
                 break;
             default:
-            // error handling
-
+                System.err.println( "(Conductor) Unknown tag: " + tag );
         }
     }
 

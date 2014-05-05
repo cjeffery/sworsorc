@@ -279,7 +279,7 @@ public class UnitPool {
             
 
             if ( response == Dialog.Actions.YES ) {
-                NetworkClient.send( Flag.GAME, Tag.MOVE_UNIT_TELEPORT, unit );
+                NetworkClient.send( Flag.GAME, Tag.MOVE_UNIT_TELEPORT, unit, destinationHexID );
                 if ( this.teleport( unit ) ) {
                         Dialogs.create()
                                 .title( "Teleport" )
@@ -305,17 +305,33 @@ public class UnitPool {
     }
 
     /**
+     * Called from the network Conductor class.
+     * Basically just addMove, without the fancy-pants teleport stuff
+     *
+     * @param unit
+     *
+     * @author Christopher Goes
+     */
+    public void addMoveNetwork( MoveableUnit unit ) {
+            removeFromCurrentHex( unit );
+            this.addToHex( hexList, unit );
+            this.addToUnit( unitMove, unit );
+            HexStack.overStackWaring( this.getUnitsInHex( unit.getLocation() ) );
+
+    }
+
+    /**
      * Only used by the teleport method. 
      * @param unit
      * @param destinationHexID
      * @param Teleport 
      */
-    private void addMove(MoveableUnit unit, String destinationHexID, boolean Teleport){
-        
+    public void addMove( MoveableUnit unit, String destinationHexID, boolean Teleport ) {
+        // had to make public for now sorry
         removeFromCurrentHex( unit );
         unit.setLocation(destinationHexID);
         this.addToHex(hexList, unit);
-        this.addToUnit(unitMove, unit);    
+        this.addToUnit( unitMove, unit );
     }
 
     private void removeFromCurrentHex( MoveableUnit unit ) {
@@ -522,7 +538,8 @@ public class UnitPool {
             destinationHex = teleportDestinationLogic(rNum.nextInt(6));
             
             if (destinationHex.equals(unit.getLocation())){
-                removeUnit(unit);
+                removeUnit( unit );
+                NetworkClient.send( Flag.GAME, Tag.REMOVE_UNIT, unit ); // TODO: functions encapsulating this behavior
                 return false;
             }
             this.addMove(unit, destinationHex, true);
@@ -531,13 +548,12 @@ public class UnitPool {
         else{
             if (this.portalNum.containsKey(unit.getID())){
                 destinationHex = this.teleportDestinationLogic(portalNum.get(unit.getID()));
-                    if (unit.getLocation().equals(destinationHex) )
-                        return false;
-            
-                    else{
-                        this.addMove(unit, destinationHex, true);
-                        return true;
-                    }
+                if ( unit.getLocation().equals( destinationHex ) ) {
+                    return false;
+                } else {
+                    this.addMove(unit, destinationHex, true);
+                    return true;
+                }
                 }
             else{
                 destinationHex = teleportDestinationLogic(rNum.nextInt(6));
