@@ -463,10 +463,10 @@ public class MovementCalculator
      * @param retreater
      * @param retreatLimit
      * @author Keith Drew
-     */ // Currently in need of testing
+     */ 
     public static void getAllRetreatHexesInRange( MapHex currentHex, 
             MoveableUnit retreater, double retreatLimit )
-    {
+    {       
         // If the current hex is not a valid move, return
         if( !isCurrentHexValid( currentHex, retreater ) )
             return;
