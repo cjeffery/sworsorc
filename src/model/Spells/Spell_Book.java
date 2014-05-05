@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * All source code is the work of Clinton Jeffery's Spring 2014 Software Engineering
+ * class at the University of Idaho consisting of the following members:
+ * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
+ * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
 
 package Spells;
@@ -9,18 +10,9 @@ package Spells;
 import Character.Characters;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.Serializable;
-import javafx.embed.swing.SwingNode;
-import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import mainswordsorcery.Game;
 
 /**
  *
@@ -29,8 +21,10 @@ import mainswordsorcery.Game;
 public final class Spell_Book implements Serializable {
     private static final long serialVersionUID = 1L;
     Spell[] list;
-    
-    Stage popup = new Stage();
+
+    // Find a different way to do this please
+    // Serialze information for the dialog, and then display the dialog in the calling class
+    //Stage popup = new Stage();
     
     /** ==========================
      *      Character info
@@ -62,6 +56,7 @@ public final class Spell_Book implements Serializable {
     private JPanel PLSevenPanel;
     private JPanel MainSpellListPanel;
     private JLabel statusLabel;
+
     // counter to count how many spells each power level this character can cast
     public int PL1_count;
     public int PL2_count;
@@ -221,21 +216,10 @@ public final class Spell_Book implements Serializable {
         //mainFrame.setVisible(false);
        // popup.close();
     }
-    
-    
-    
-    
-    public void getSpellBook(){
-        
+
+    public void getSpellBook() {
         getSpellBookOld();
-        popup = JFXpopup.getJFXPopup(MainSpellListPanel);
-        
-        
-        
-        
-        
-        
-        
+        //popup = JFXpopup.getJFXPopup(MainSpellListPanel);
     }
     
     private void getSpellBookOld(){

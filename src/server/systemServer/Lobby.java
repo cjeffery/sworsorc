@@ -4,9 +4,11 @@
  * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
  * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
+
 package systemServer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,12 +17,12 @@ import java.util.List;
 public class Lobby {
 
     // TODO: private?
-    protected List<ClientObject> lobbyClients;
+    protected List<String> lobbyClients;
     final private Integer lobbyID; // TODO: this should probably be used
     final private String name; // TODO: Ability to change lobby name?
 
     // Client who's turn it currently is
-    protected ClientObject current;
+    protected String current;
     
     protected boolean gameStarted;
 
@@ -38,18 +40,14 @@ public class Lobby {
     }
 
     /**
+     * Tests if a client is in the lobby
      *
      * @param handle
      *
      * @return
      */
     protected boolean isInLobby( String handle ) {
-        for ( ClientObject client : lobbyClients ) {
-            if ( client.getHandle().equals( handle ) ) {
-                return true;
-            }
-        }
-        return false;
+        return lobbyClients.contains( handle );
     }
 
     protected void lobbyNotification( String notification ) {
@@ -68,10 +66,8 @@ public class Lobby {
      * @param message
      */
     protected void sendToEntireLobby( Flag flag, Tag tag, String sender, Object... message ) {
-        for ( ClientObject client : lobbyClients ) {
-            client.send( flag, tag, sender != null ? sender : "", MessagePhoenix.
-                    packMessageContents( message ) );
-        }
+        NetworkServer.sendToEntireLobby( this, flag, tag, sender, MessagePhoenix.
+                packMessageContents( message ) );
     }
 
     /**
@@ -79,20 +75,15 @@ public class Lobby {
      * @return
      */
     protected List<String> getUserNames() {
-        List<String> handles = new ArrayList<>( 0 );
-        for ( ClientObject client : lobbyClients ) {
-            handles.add( client.getHandle() );
-        }
-        return handles;
+        return Collections.unmodifiableList( lobbyClients );
     }
 
     /**
      *
      * @param client
      */
-    public void join( ClientObject client ) {
+    public void join( String client ) {
         lobbyClients.add( client );
-        client.setCurrentLobby( this );
     }
 
     /**
@@ -115,21 +106,19 @@ public class Lobby {
      *
      * @param client
      */
-    protected void leaveLobby( ClientObject client ) {
-        if ( client != null && isInLobby( client.getHandle() ) ) {
+    protected void leaveLobby( String client ) {
+        if ( client != null && isInLobby( client ) ) {
             lobbyClients.remove( client );
         }
     }
 
     /**
-     *
+     * Begins the game in this lobby
      */
     public void beginGame() {
-        if(!gameStarted) {
-            //start with the first player in list:
+        if ( !gameStarted ) {
             current = lobbyClients.get( 0 );
-            sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO, current.getHandle(), current.
-                    getClientID() ); // What does this do?
+            sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO, current );
             gameStarted = true;
         }
         else {
@@ -149,6 +138,6 @@ public class Lobby {
         }
 
         current = lobbyClients.get( nextIndex );
-        sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO, current.getHandle(), current.getClientID() );
+        sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO, current);
     }
 } // end class

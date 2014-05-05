@@ -4,6 +4,7 @@
  * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
  * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
+
 package systemServer;
 
 import java.io.*;
@@ -39,7 +40,7 @@ final public class NetworkClient {
 
     // Client info
     private static String username = "default_user";
-    private static String currentLobby = "Not in a lobby";
+    private static String currentLobby = "";
 
     // Streams & Threads
     private static ClientReceivingThread listenerThread;
@@ -104,6 +105,8 @@ final public class NetworkClient {
      * @param username The username
      * @param ip_addr The IP address to connect to
      * @return whether it exploded or not (true is good)
+     *
+     * @author Colin the Stupendous
      */
     public static boolean initializeClient(String username, String ip_addr) {
         serverName = ip_addr;
@@ -136,6 +139,8 @@ final public class NetworkClient {
      * <p>
      * @param flag
      * @param tag
+     *
+     * @author Christopher Goes
      */
     public static void poke( Flag flag, Tag tag ) {
         send( flag, tag );
@@ -150,6 +155,8 @@ final public class NetworkClient {
      * @param flag
      * @param tag
      * @param message
+     *
+     * @author Christopher Goes
      */
     public static void send( Flag flag, Tag tag, Object... message ) {
         // Assume any outgoing messages from the client, are from the client
@@ -208,15 +215,9 @@ final public class NetworkClient {
     public static void joinLobby(String lobby) {
         send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, lobby);
     }
-
-    public static void createAndJoinLobby(String lobby) {
-        createLobby(lobby);
-        joinLobby(lobby);
-    }
     
     /**
      * request to start game
-     * @return 
      */
     public static void startGame() {
         send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST);
@@ -227,8 +228,11 @@ final public class NetworkClient {
     }
 
     /**
+     * Generates a "globally" unique ID from the server
      *
      * @return
+     *
+     * @author Christopher Goes
      */
     public static int generateUniqueID() {
         uid = -1;
@@ -254,6 +258,11 @@ final public class NetworkClient {
                 || (clientThread != null && clientThread.isAlive()));
     }
 
+    /**
+     * Processes user input and handles execution of user commands
+     *
+     * @author Christohper Goes
+     */
     private static class ClientCommandThread extends Thread {
 
         private boolean killed = false;
@@ -261,10 +270,10 @@ final public class NetworkClient {
         /**
          * Parses user input, executes commands, and sends messages to server
          * <p>
-         * @author Christopher Goes
          * @param command
          *                <p>
          * @return boolean True if executed normally, False if quit or exception
+         * @author Christopher Goes
          */
         private boolean processCommand( final String command ) {
 
@@ -273,37 +282,39 @@ final public class NetworkClient {
                 return false;
             }
 
-            // TODO: ADD REQUEST UNIQUE_ID COMMAND?
             String[] parsedString;
             parsedString = command.split( "\\s+" ); //Split line by whitespace
 
             if ( parsedString.length > 2 ) {
                 if ( "/msg".equals( parsedString[0] ) ) {
                     send( Flag.CHAT, Tag.PRIVATE, parsedString[1] );
+                } else if ( isConnected() ) {
+                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command );
+                } else {
+                    return false;
                 }
             }
             if ( parsedString.length == 2 ) {
-                if ( "/file".equals( parsedString[0] ) ) {
+                if ( "/sendFile".equals( parsedString[0] ) ) {
                     sendFile( parsedString[1] );
-
                 } else if ( "/newLobby".equals( parsedString[0] ) ) {
                     send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, parsedString[1] );
-
                 } else if ( "/joinLobby".equals( parsedString[0] ) ) {
                     send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, parsedString[1] );
                 } else if ( isConnected() ) {
                     send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command );
+                } else {
+                    return false;
                 }
             } else if ( parsedString.length == 1 ) {
                 if ( "/globalWho".equals( parsedString[0] ) ) {
                     send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
-
+                } else if ( "/lobbyWho".equals( parsedString[0] ) ) {
+                    send( Flag.REQUEST, Tag.LOBBY_WHO_REQUEST );
                 } else if ( "/leaveLobby".equals( parsedString[0] ) ) {
                     send( Flag.REQUEST, Tag.LEAVE_LOBBY_REQUEST );
-
                 } else if ( "/showLobbies".equals( parsedString[0] ) ) {
                     send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST );
-
                 } else if ( "/disconnect".equals( parsedString[0] ) ) { // Manual client disconnect
                     if ( remoteConnectionIsAlive() ) {
                         send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
@@ -313,15 +324,14 @@ final public class NetworkClient {
                     } else {
                         flushToConsole( "Can't disconnect when you're not connected!" );
                     }
-
                 } else if ( "/yieldTurn".equals( parsedString[0] ) ) { // client turn over
                     endTurn();
                 } else if ( "/beginGame".equals( parsedString[0] ) ) { // request to start game
                     send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST );
-
                 } else if ( "/help".equals( parsedString[0] ) ) {
                     printCommandList();
-
+                } else if ( "/printFile".equals( parsedString[0] ) ) {
+                    send( Flag.FILE, Tag.GET_FILE_REQUEST );
                 } else if ( "/reconnect".equals( parsedString[0] ) ) {
                     if ( remoteConnectionIsAlive() ) {
                         flushToConsole( "You're already connected!" );
@@ -330,12 +340,10 @@ final public class NetworkClient {
                         flushToConsole( "Error! connection isn't alive but socket is!" );
                         return false;
                     }
-
                     flushToConsole( "Attempting to reconnect..." );
                     if ( connect() ) {
                         startRemoteConnection();
                         flushToConsole( "Successfully reconnected!" );
-                        // TODO: create reconnect() method?
                     } else {
                         flushToConsole( "Reconnect failed" );
                     }
@@ -350,10 +358,12 @@ final public class NetworkClient {
                     }
                     return false;
                 } else if ( parsedString[0].length() != 0 && "/".
-                        equals( parsedString[0].charAt( 0 ) ) ) {
+                        equals( parsedString[0].substring( 0, 0 ) ) ) {
                     flushToConsole( "Invalid command, try again, or type /help for a list of commands." );
-                } else {
+                } else if ( isConnected() ) {
                     send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command ); // default to chat
+                } else {
+                    return false;
                 }
             } else {
                 if ( isConnected() ) {
@@ -409,14 +419,6 @@ final public class NetworkClient {
                 }
                 // Continue execution
             }
-            close();
-        }
-
-        /**
-         * Always run this before returning from {@link #run run}!
-         */
-        private void close() {
-            // empty for now
         }
 
     }
@@ -493,16 +495,7 @@ final public class NetworkClient {
          * Always run this before returning from {@link #run run}!
          */
         private void close() {
-            try {
-                if ( writer != null ) {
-                    writer.close();
-                }
-            } catch ( IOException ex ) {
-                ex.printStackTrace();
-            } finally {
-                writer = null;
-
-            }
+            writer = null;
         }
 
     }
@@ -548,6 +541,7 @@ final public class NetworkClient {
         /**
          *
          * @return
+         * @author Christopher Goes
          */
         private NetworkPacket recieveMessage() {
             if(streamIn == null || !isConnected()) {
@@ -601,6 +595,7 @@ final public class NetworkClient {
                 return false;
             } else if ( !message.isEmpty() && message.get( 0 ).getClass().equals( String.class ) ) {
                 stringmessage = (String) message.get( 0 );
+                message = message.subList( 1, message.size() );
             }
 
             // Debugging
@@ -659,10 +654,12 @@ final public class NetworkClient {
                     Conductor.processMessage( tag, sender, message );
                     switch ( tag ) {
                         case NEXT_TURN_INFO:
-                            if ( username.equals( stringmessage ) ) {
+                            if ( stringmessage.isEmpty() ) {
+                                flushToConsole( "Its nobodys turn!" );
+                            } else if ( username.equals( stringmessage ) ) {
                                 flushToConsole( ("It is now my turn!") );
                             } else {
-                                flushToConsole( "It is now " + (Integer) message.get( 0 ) + "'s turn!" );
+                                flushToConsole( "It is now " + stringmessage + "'s turn!" );
                             }
                             break;
                         case YIELD_TURN_RESPONSE:
@@ -703,10 +700,9 @@ final public class NetworkClient {
                             flushToConsole( stringmessage );
                             break;
                         case NEW_LOBBY_RESPONSE:
-                            // TODO: more actions?
                             if ( (Boolean) message.get( 0 ) ) { // approved!
-                                flushToConsole( "Lobby " + message.get( 1 ) + " created!" );
-                                currentLobby = (String) message.get( 1 );
+                                flushToConsole( "Lobby " + stringmessage + " has been created!" );
+                                currentLobby = stringmessage;
                             } else {
                                 // denied, server provides reason
                                 flushToConsole( "Could not create lobby: " + message.get( 1 )
@@ -717,15 +713,18 @@ final public class NetworkClient {
                             uid = (Integer)message.get(0);
                             break;
                         case JOIN_LOBBY_RESPONSE:
-                            currentLobby = stringmessage;
+                            if ( (boolean) message.get( 0 ) ) {
+                                currentLobby = stringmessage;
+                                flushToConsole( "Successfully joined lobby " + currentLobby + "!" );
+                            } else {
+                                flushToConsole( stringmessage );
+                            }
                             break;
                         case LEAVE_LOBBY_RESPONSE:
                             currentLobby = "Not in a Lobby";
                             break;
-                        case CREATE_LOBBY_RESPONSE:
-                            currentLobby = (String) message.get( 1 );
-                            break;
                         case BEGIN_GAME_RESPONSE: // Client will see game started, so just print message
+                        case BEGIN_GAME:
                             flushToConsole( stringmessage );
                             break;
                         default:
@@ -764,6 +763,16 @@ final public class NetworkClient {
                     }
                     break;
 
+                case NOTIFICATION:
+                    switch ( tag ) {
+
+                        case LOBBY:
+                            flushToConsole( stringmessage );
+                            break;
+                        default:
+                            flushToConsole( "Unknown tag: " + tag );
+                }
+                break;
                 default:
                     consoleOut.println( "Unknown flag: " + flag + "\nTag: " + tag );
                     break;

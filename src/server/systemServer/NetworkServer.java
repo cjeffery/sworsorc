@@ -10,6 +10,7 @@ package systemServer;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,14 +22,14 @@ import java.util.List;
  * <p>
  * @author Networking Subteam
  */
-final public class NetworkServer { // TODO: could this possibly a subclass of NetworkClient?
+final public class NetworkServer {
 
     // Clients
-    private static List<ClientObject> clientObjects; // Connected clients
+    private static List<ClientObject> clientObjects = new ArrayList<ClientObject>( 0 ); // Connected clients
     private static int totalClients = 0; // Current Number of connected clients
 
     // Lobbies
-    private static List<Lobby> lobbies; // Game lobbies
+    private static List<Lobby> lobbies = new ArrayList<Lobby>( 0 ); // Game lobbies
     private static int totalLobbies = 0; // Current Number of Game lobbies
 
     // Server
@@ -39,7 +40,6 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
     private static boolean stopped = false; // Stops server if set to true
     private static boolean debug = false;
 
-    // MESSAGES//
     /**
      * Global Chat message
      * <p>
@@ -87,7 +87,24 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
         return false;
     }
 
-    // CLIENT STUFF //
+    /**
+     * Send to all clients in the specified lobby
+     *
+     * @param dalobby
+     * @param flag
+     * @param tag
+     * @param sender
+     * @param message
+     */
+    protected static void sendToEntireLobby( Lobby dalobby, Flag flag, Tag tag, String sender,
+                                             List<Object> message ) {
+        // TODO: this would be much easier if we had...you know...MAPs?
+        for ( ClientObject client : NetworkServer.clientObjects ) {
+            if ( dalobby.isInLobby( client.getHandle() ) ) {
+                client.send( flag, tag, sender, message );
+            }
+        }
+    }
     /**
      * ClientObject will call this on a planned or unplanned disconnection
      * <p>
@@ -133,7 +150,6 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
         return totalClients;
     }
 
-    // LOBBY STUFF //
 
     /**
      * Creates a new lobby
@@ -143,7 +159,6 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
      * @return True if lobby created, False if lobby exists and/or could not be created
      */
     protected static boolean createNewLobby( String lobbyname ) {
-        // TODO: this should be in Lobby. should it send message responses?
         if ( (lobbyname == null || lobbyname.isEmpty()) || lobbyExists( lobbyname ) ) {
             return false;
         } else {
@@ -177,7 +192,8 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
                     return false;
                 } else {
                     leaveLobby( client ); // bit dangerous...
-                    l.join( client );
+                    l.join( client.getHandle() );
+                    client.setCurrentLobby( l );
                     return true;
                 }
             }
@@ -198,13 +214,14 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
         }
         // Search all lobbies for client
         for ( Lobby l : lobbies ) {
-            if ( l.lobbyClients.contains( client ) ) {
-                l.leaveLobby( client );
+            if ( l.isInLobby( client.getHandle() ) ) {
+                l.leaveLobby( client.getHandle() );
                 l.lobbyNotification( "Client " + client.getHandle() + " has left the lobby!" );
                 if ( l.lobbyClients.isEmpty() ) {
                     lobbies.remove( l ); //For now, just kill lobbies when everyone leaves
                     return;
                 }
+                // if (l.isInLobby("")) would work?
                 return;
             }
         }
@@ -220,7 +237,7 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
      * @author Christopher Goes
      */
     protected static List<String> getLobbyUsers( String lobbyName ) {
-        List<String> temp = new ArrayList<>( 0 ); // Empty list instead of null
+        List<String> temp = Collections.emptyList();
         if ( lobbyName != null && !lobbyName.isEmpty() ) {
             for ( Lobby l : lobbies ) {
                 if ( l.getName() != null && l.getName().equals( lobbyName ) ) {
@@ -271,7 +288,6 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
         return totalLobbies;
     }
 
-    // UTILITIES & STUBS //
     /**
      * Generates a unique ID across all clients
      *
@@ -302,7 +318,6 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
     public static void stopServer() {
         stopped = true;
     }
-
 
 
     /**
@@ -337,8 +352,8 @@ final public class NetworkServer { // TODO: could this possibly a subclass of Ne
 
         Socket tempsock;
         ClientObject tempclient;
-        //Spins off new client connections
-        while ( !stopped ) {
+        while ( !stopped ) { //Spins off new client connections
+
             try {
                 System.err.println( "Waiting for next client..." );
                 tempsock = listen.accept(); //Get socket (blocking)

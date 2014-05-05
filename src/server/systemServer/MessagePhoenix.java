@@ -4,6 +4,7 @@
  * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
  * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
+
 package systemServer;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ import java.util.List;
 final public class MessagePhoenix {
 
     // Leave disabled unless you are testing Network internals
-    final private static boolean debug = true; // Change this to enable/disable debugging
+    final private static boolean debug = false; // Change this to enable/disable debugging
 
     /**
      * Test if debugging is enabled
@@ -35,7 +36,6 @@ final public class MessagePhoenix {
     }
 
     // TODO: tag stripping done in MessagePhoenix
-    // TODO: buffer size
     // TODO: need checks for game state on certain actions, such as lobbies
     /**
      * Sending a packed message to the specified output stream
@@ -69,6 +69,8 @@ final public class MessagePhoenix {
      *         A {@link NetworkPacket message} is returned
      *
      * @author Christopher Goes
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
      */
     public static NetworkPacket recieveMessage( final ObjectInputStream reader )
     throws IOException, ClassNotFoundException, NullPointerException

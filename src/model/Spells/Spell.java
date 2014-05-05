@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * All source code is the work of Clinton Jeffery's Spring 2014 Software Engineering
+ * class at the University of Idaho consisting of the following members:
+ * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
+ * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
 
 package Spells;
@@ -41,13 +42,11 @@ import Spells.PL_7.Wizard_Wheel;
 import Units.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
-import javafx.stage.Stage;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -57,7 +56,10 @@ import javax.swing.JPanel;
  * @author Tyler & Tao Zhang
  */
 public class Spell implements Serializable {
-    private Stage popup = new Stage();
+
+    // This was causing network client to panic, it needs to be serializable!
+    // Its not even being used, what is its purpose?
+    //private Stage popup = new Stage();
             
     private static final long serialVersionUID = 1L;
     Characters character;
