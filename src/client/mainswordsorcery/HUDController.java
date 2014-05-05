@@ -716,22 +716,12 @@ public class HUDController {
      * used to start combat
      * called from keyEvent handlers
      *
-     * @author Jay Drage
+     * @author Jay Drage & Shaung
      */
     public void StartCombat(){        
         System.out.println("StartCombat()");
-        ArrayList result = new ArrayList();
-        result = LaunchBotton(selected_stack, target_stack);
-        
-        
-        System.out.println("Result is: " + result.get(5));
-        if (result.get(5) == "true") {
-            //System.out.println("Got true");
-            
-        } 
-        else {
-            //System.out.println("Got false");
-        }
+        LaunchBotton(selected_stack, target_stack);
+
     }
     /**
      * used to start spells
