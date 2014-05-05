@@ -10,8 +10,11 @@ package mainswordsorcery;
 import MoveCalculator.MovementCalculator;
 import Units.ArmyUnit;
 import Units.MoveableUnit;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import javafx.embed.swing.SwingNode;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
@@ -28,15 +31,17 @@ import sshexmap.MapView;
  * 
  */
 public class LaunchCombat {
-    
+        static MoveableUnit selected_combat_unit = new MoveableUnit();
+        static MoveableUnit target_combat_unit = new MoveableUnit();
+        static MoveableUnit selected_combat_unit1 = new MoveableUnit();
+        static MoveableUnit target_combat_unit1 = new MoveableUnit();
+        static ArrayList<ArmyUnit> attackers = new ArrayList<>();
+        static ArrayList<ArmyUnit> defenders = new ArrayList<>();
+        static MapHex Defender_Terrain = new MapHex();
+    public static void LaunchBotton(List selected_stack, List target_stack, MapView hmapContent) {
+        
 
-    public static void LaunchBotton(List selected_stack, List target_stack) {
-
-        boolean choice = true;
-        MoveableUnit selected_combat_unit = new MoveableUnit();
-        MoveableUnit target_combat_unit = new MoveableUnit();
-        MoveableUnit selected_combat_unit1 = new MoveableUnit();
-        MoveableUnit target_combat_unit1 = new MoveableUnit();
+        
         
         selected_combat_unit = (MoveableUnit) selected_stack.get(0);
         if (selected_stack.size() > 1)
@@ -45,8 +50,7 @@ public class LaunchCombat {
         if (target_stack.size() > 1)
         target_combat_unit1 = (MoveableUnit) target_stack.get(1);
 
-        ArrayList<ArmyUnit> attackers = new ArrayList<>();
-        ArrayList<ArmyUnit> defenders = new ArrayList<>();
+        
  
         attackers.add((ArmyUnit) selected_combat_unit);
         if (selected_stack.size() > 1)
@@ -57,7 +61,7 @@ public class LaunchCombat {
         
         
         // Set up Defender's TerrainType
-        MapHex Defender_Terrain = new MapHex();
+       
         MapView temp = MapView.getMapView();
         Defender_Terrain = (MapHex)temp.GetHexMap().GetHex(target_combat_unit.getLocation());
         
@@ -118,14 +122,14 @@ public class LaunchCombat {
             .title("Attacker")
             .message("Attacker's Decision")
             .showWarning();
-            ResultCase(index[0], attackers);
+            ResultCase(index[0], attackers, target_stack, hmapContent);
             
             
             Action DEF = Dialogs.create()
            .title("Defender")
            .message("Defender's Decision")
            .showWarning();
-            ResultCase(index[1], defenders);
+            ResultCase(index[1], defenders, target_stack, hmapContent);
         }
         
         else {
@@ -146,8 +150,13 @@ public class LaunchCombat {
      * @author Shaung
      * @param result 
      */
-    public static void ResultCase(int result, ArrayList<ArmyUnit> Units_stack) {
-    
+    public static void ResultCase(int result, ArrayList<ArmyUnit> Units_stack, List target_stack, MapView hmapContent) {
+        SwingNode hmap = new SwingNode();
+        HashMap<MapHex, Double> moves;
+        //MapView hmapContent;
+        //hmapContent = MapView.getMapView();
+        //hmap.setContent(hmapContent);
+        
         // Elimination
         if (result < 0) {
             Notifications.create()
@@ -192,13 +201,28 @@ public class LaunchCombat {
                 }
                     
             }
-           
-            else {
+            ArrayList<MapHex> canMoveTo;
+            //if (!Units_stack.isEmpty()) {
                 
-                for (int i = 0; i < Units_stack.size(); i++) {
+                //for (int i = 0; i < Units_stack.size(); i++) {
                     // Retreat(Units_stack.get(i));
-                }
-            } 
+                    moves = new HashMap<>();
+                    moves.clear();
+                    
+                    
+                    canMoveTo = new ArrayList<MapHex>();
+                    canMoveTo = MovementCalculator.getRetreatMoves(Defender_Terrain, 
+                                  (MoveableUnit)target_stack.get(0), 3.0/*(double)index[1]*/);
+                    
+                    hmapContent.clearHighlights();      
+                    hmapContent.highlight(canMoveTo, new Color(255,0,0, 255));
+                    
+                for (MapHex canMoveTo1 : canMoveTo) {
+                System.out.println("Can move to: " + (String)canMoveTo1.GetID() + "\n");
+            }
+                            
+                //}
+            //}
            
            
         }

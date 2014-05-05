@@ -324,7 +324,7 @@ public class HUDController {
         if(keyEvent.getText().equalsIgnoreCase("a") 
            && !target_stack.isEmpty() && !selected_stack.isEmpty()
            && phase.getText().equalsIgnoreCase("Combat")){
-            StartCombat();
+            StartCombat(hmapContent);
         }
         //spells
         else if(keyEvent.getText().equalsIgnoreCase("s")
@@ -718,9 +718,9 @@ public class HUDController {
      *
      * @author Jay Drage & Shaung
      */
-    public void StartCombat(){        
+    public void StartCombat(MapView hmapContent){        
         System.out.println("StartCombat()");
-        LaunchBotton(selected_stack, target_stack);
+        LaunchBotton(selected_stack, target_stack, hmapContent);
 
     }
     /**
