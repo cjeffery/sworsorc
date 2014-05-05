@@ -181,6 +181,31 @@ final public class NetworkClient {
     }
 
     /**
+     * Send a chat message, server-determined privacy
+     *
+     * @param message
+     *
+     * @author Christopher Goes
+     */
+    public static void sendChatMessage( String message ) {
+        send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, message );
+
+    }
+
+    /**
+     * Send a private message to the specified user
+     *
+     * @param user
+     * @param message
+     *
+     * @author Christopher Goes
+     */
+    public static void sendPrivateMessage( String user, String message ) {
+        send( Flag.CHAT, Tag.PRIVATE, message );
+
+    }
+
+    /**
      * Sends a message to other users indicating a phase change!
      * <p>
      * @param phase
@@ -287,9 +312,13 @@ final public class NetworkClient {
 
             if ( parsedString.length > 2 ) {
                 if ( "/msg".equals( parsedString[0] ) ) {
-                    send( Flag.CHAT, Tag.PRIVATE, parsedString[1] );
+                    StringBuilder temp = new StringBuilder( parsedString.length );
+                    for ( int i = 2; i < parsedString.length; i++ ) {
+                        temp.append( " " ).append( parsedString[i] );
+                    }
+                    sendPrivateMessage( parsedString[1], temp.toString() );
                 } else if ( isConnected() ) {
-                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command );
+                    sendChatMessage( parsedString[0] );
                 } else {
                     return false;
                 }
@@ -302,7 +331,7 @@ final public class NetworkClient {
                 } else if ( "/joinLobby".equals( parsedString[0] ) ) {
                     send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, parsedString[1] );
                 } else if ( isConnected() ) {
-                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command );
+                    sendChatMessage( parsedString[0] );
                 } else {
                     return false;
                 }
@@ -361,13 +390,13 @@ final public class NetworkClient {
                         equals( parsedString[0].substring( 0, 0 ) ) ) {
                     flushToConsole( "Invalid command, try again, or type /help for a list of commands." );
                 } else if ( isConnected() ) {
-                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command ); // default to chat
+                    sendChatMessage( parsedString[0] );
                 } else {
                     return false;
                 }
             } else {
                 if ( isConnected() ) {
-                    send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, command );
+                    sendChatMessage( parsedString[0] );
                 } else {
                     return false;
                 }

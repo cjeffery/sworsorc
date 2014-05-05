@@ -221,6 +221,7 @@ public class ClientObject {
             } else if ( !lmessage.isEmpty()
                     && lmessage.get( 0 ).getClass().equals( String.class ) ) {
                 smessage = (String) lmessage.get( 0 );
+                lmessage = lmessage.subList( 1, lmessage.size() );
             } else {
                 if ( debug ) {
                     errorOut.println( "This is a poke message" );
@@ -243,8 +244,7 @@ public class ClientObject {
                     switch ( tag ) { // assume lmessage is a single string object
                         case PRIVATE:
                             NetworkServer.
-                                    sendToClient( smessage, flag, tag, sender, MessagePhoenix.
-                                            packMessageContents( lmessage.get( 1 ) ) );
+                                    sendToClient( smessage, flag, tag, sender, lmessage );
                             break;
                         case LOBBY:
                             currentLobby.sendToEntireLobby( flag, tag, sender, smessage );
