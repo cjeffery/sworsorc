@@ -1,0 +1,125 @@
+\pagebreak
+\center{\Large{\textbf{System and Software Design Description(SSDD):\\
+Incorporating Architectural Views and Detailed Design Criteria\\
+For\\
+Swords and Sorcery}}}
+
+\center{Version 1.0}\\
+\linebreak
+\date{\today}
+\linebreak
+\center{Prepared for:\\
+Dr. Clinton Jeffery}\\
+\center{Prepared by:\\
+Keith Drew, ...to be added}\\
+\linebreak
+\linebreak
+\center{University of Idaho\\
+Moscow, Idaho 83844-1010\\}
+
+\section{Introduction}
+	\subsection{Document Purpose, Context, and Intended Audience}
+		\subsubsection{Document Purpose}
+		\subsubsection{Document Context}
+		\subsubsection{Intended Audience}
+	\subsection{Software Purpose, Context, and Intended Audience}
+		\subsubsection{System and Software Purpose}
+		\subsubsection{System and Software Context}
+		\subsubsection{Intended Users of System and Software}
+	\subsection{Definitions, Acronyms, and Abbreviations}
+
+\begin{center}
+\begin{tabularx}{\linewidth}{|p{1.5in}|X|}\hline
+\textbf{Term} & \textbf{Definition}\\
+\hline
+AD & Architectural Description: \"A collection of products to document an architecture.\"\space ISO/IEC 42010:2007\\
+\hline
+Alpha Test & Limited release(s) to selected, outside testers.\\
+\hline
+Architectural View & \"A representation of a whole system from the perspective of a related set of concerns.\"\space ISO/IEC 42010:2007\\
+\hline
+Architecture & \"The fundamental organization of a system embodied in its components, their relationships to each other, and to the environment, and the principles guiding its design and evolution.\"\space ISO/IEC 42010:2007\\
+\hline
+Beta Test & Limited release(s) to cooperating customers wanting early access to developing systems.\\
+\hline
+Design Entity & \"An element (component) of a design that is structurally and functionally distinct from other elements and that is separately named and referenced.\"\space IEEE STD 1016-1998\\
+\hline
+Design View & \"A subset of design entity attribute information that is specifically suited to the needs of a software project activity.\"\space IEEE STD 1016-1998\\
+\hline
+S\&S & Swords and Sorcery\\
+\hline
+SSDD & System and Software Design Document\\
+\hline
+SSRS & System and Software Requirements Specification\\
+\hline
+System & \"A collection of components organized to accomplish a specific function or set of functions.\"\space ISO/IEC 42010:2007\\
+\hline
+System Stakeholder & \"An individual, team, or organization (or classes thereof) with interests in, or concerns, relative to, a system.\"\space ISO/IEC 42010:2007\\
+\hline
+\end{tabularx}
+\end{center}
+
+	\subsection{Document References}
+	\subsection{Overview of Document}
+	\subsection{Document Restrictions}
+\section{Constraints and Concerns}
+	\subsection{Constraints}
+		\subsubsection{Environmental Constraints}
+		\subsubsection{System Requirement Constraints}
+		\subsubsection{User Characteristic Constraints}
+	\subsection{Stakeholder Concerns}
+		%Tabular - insert table here
+\section{System and Software Architecture}
+	\subsection{Developer's Architectural View}
+		\subsubsection{Developer's View Identification}
+		\subsubsection{Developer's View Representation and Description}
+		\subsubsection{Developer's Architectural Rationale} it breaks without text so often it seems
+	\subsection{User's Architectural View}
+		\subsubsection{User's View Identification}
+		\subsubsection{User's View Representation and Description}
+	\subsection{Blank's Architectural View}
+		\subsubsection{Blank's View Identification}
+		\subsubsection{Blank's View Representation and Description}
+	\subsection{Consistency of Architectural Views}
+		\subsubsection{Detail of Inconsistencies Between Architectural Views}
+		\subsubsection{Consistency Analysis and Inconsistency Mitigations}
+\section{Software Detailed Design}
+	\subsection{Developer's Viewpoint Detailed Software Design}
+	\subsection{Component Dictionary}
+
+\small{
+\begin{center}
+\noindent\begin{tabularx}{\linewidth}{|X|X|X|X|X|}\hline
+\textbf{Name} & \textbf{Type/Range} & \textbf{Purpose} & \textbf{Dependencies} & \textbf{Subordinates}\\
+\hline
+Movement Calculator & Utility & Determine Legal Moves & UnitPool, MainMap & Retreat/Move\\
+\hline
+\end{tabularx}
+\end{center}
+}
+	\subsection{Component Detailed Design}
+		\subsubsection{Detailed Design for Component:\\Movement Calculator}
+			\paragraph{Purpose} The movement calculator is a static java class that handles most forms of movement. 
+			\paragraph{Input} The movement calculator takes two inputs to generate a list of moves: the unit moving, and the hex object they are beginning from. To calculate a retreat, the movement calculator takes as input the unit retreating, the hex they are retreating from, and the number of hexes they are required to retreat.
+			\paragraph{Output} The movement calculator produces two main outputs: A hashmap of moves that a unit can reach (within the rules of movement specified by the board game) during a given movement phase, paired with their remaining movement cost after moving to a key hex in the hashmap, or an arraylist of moves that a unit can move to while retreating, during the combat phase.
+			\paragraph{Process} The movement calculator uses recursion to examine the neighbors of the provided hex location. From each neighbor, it evaluates their neighbors, and so on. In both cases (movement/retreat) the recursion is terminated by reaching a lower bound (0) on the limiting value for their movement. For a moving unit, this is their given movement allowance per turn. For a retreating unit, this is the number generated from the combat results table that indicates how many hexes a unit must retreat. For each step of recursion, decisions are made within control flow that are designed to model the rules of the original S\&S board game. These factors include, but are not limited to, hex terrain types, hex edge types, geographical obstacles, and enemy occupation. 
+			\paragraph{Design Constraints and Performance Requirements} The design was constrained by two factors - code complexity and time. By designing the movement calculator to use recursion, the complexity of the component was greatly reduced. However, due to the many factors involved in movement, the design is still complex. Also, the moves available to a unit need to be calculated quickly. However, recursion is not very fast. Thankfully, Colin Clifford added some optimization code to the calculator, which has greatly increased performance with respect to time.
+	\subsection{Data Dictionary}
+\small{
+\begin{center}
+\noindent\begin{tabularx}{\linewidth}{|X|X|X|X|X|}\hline
+\textbf{Name} & \textbf{Type/Range} & \textbf{Defined By...} & \textbf{Referenced By...} & \textbf{Modified By...}\\
+\hline
+UnitPool & HashMap & UnitPool.java & Movement Calculator,... & HUDController\\
+\hline
+\end{tabularx}
+\end{center}
+}
+		%Tabular - insert table here		
+\section{Requirements Traceability}
+	\subsection{Movement}
+		\paragraph{Requirements Description} Our requirement for movement was that a unit would be selected from the GUI and the GUI would highlight all available moves for the given unit. The player could then select the desired location for movement and the unit would move there.
+		\paragraph{Implementation Description} Our implementation of movement uses recursion to generate a list of available moves that are highlighted in the GUI. The moves are then displayed as highlighted hexes. When the controlling player then right-clicks the desired hex (within the highlighted set), the unit moves to the indicated hex. 
+		\paragraph{Differences} There is no difference between our requirement for movement and our implementation of movement.
+\section{Appendix A}
+

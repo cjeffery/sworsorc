@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  1 MAY 2014 15:30
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  4 MAY 2014 18:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -530,8 +530,13 @@ Underfull \hbox (badness 2181) in paragraph at lines 13--15
  []
 
 
-Underfull \hbox (badness 2951) in paragraph at lines 13--15
-\T1/cmr/m/n/10 ter name from Char-ac-ter-
+Underfull \hbox (badness 6592) in paragraph at lines 13--15
+\T1/cmr/m/n/10 called with spe-cific char-
+ []
+
+
+Underfull \hbox (badness 4647) in paragraph at lines 13--15
+\T1/cmr/m/n/10 ac-ter name in Char-ac-ter-
  []
 
 ) (./spell_integration.tex
@@ -553,10 +558,9 @@ Underfull \hbox (badness 1354) in paragraph at lines 21--22
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.710 \item R
-             elevant error logs or problem reports [4] [5] [6]pdfTeX warning (e
-xt4): destination with the same identifier (name{page.1}) has been already used
-, duplicate ignored
+l.708 \item T
+             est plan document [4] [5] [6]pdfTeX warning (ext4): destination wi
+th the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.826 \clearpage
@@ -590,7 +594,7 @@ Here is how much of TeX's memory you used:
  10547 multiletter control sequences out of 15000+600000
  14455 words of font info for 35 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 29i,10n,31p,491b,647s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,10n,31p,491b,641s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/cm-super/cm
 -super-ts1.enc}{/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/cm-super/cm-
 super-t1.enc}</usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sf
@@ -600,7 +604,7 @@ bx1000.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx
 .pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfbx2488.p
 fb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb
 ></usr/local/texlive/2013/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on TP_Template-2.pdf (12 pages, 152674 bytes).
+Output written on TP_Template-2.pdf (12 pages, 152813 bytes).
 PDF statistics:
  301 PDF objects out of 1000 (max. 8388607)
  277 compressed objects within 3 object streams

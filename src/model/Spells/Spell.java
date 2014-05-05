@@ -53,7 +53,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Tyler & Tao Zhang
+ * @author Tyler and Tao Zhang
  */
 public class Spell implements Serializable {
 

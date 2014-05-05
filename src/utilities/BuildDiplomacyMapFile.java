@@ -205,37 +205,39 @@ public class BuildDiplomacyMapFile {
         if (a == 1 && (b < 4 || b > 9)) {
             return false;
         }
-        if (a == 2 && (b < 3 || b > 9)) {
+        else if (a == 2 && (b < 3 || b > 9)) {
             return false;
         }
-        if (a == 3 && (b < 3 || b > 10)) {
+        else if (a == 3 && (b < 3 || b > 10)) {
             return false;
         }
-        if (a == 4 && (b < 2 || b > 10)) {
+        else if (a == 4 && (b < 2 || b > 10)) {
             return false;
         }
-        if (a == 5 && (b < 2 || b > 11)) {
+        else if (a == 5 && (b < 2 || b > 11)) {
             return false;
         }
-        if (a == 6 && (b < 1 || b > 11)) {
+        else if (a == 6 && (b < 1 || b > 11)) {
             return false;
         }
-        if (a == 7 && (b < 2 || b > 11)) {
+        else if (a == 7 && (b < 2 || b > 11)) {
             return false;
         }
-        if (a == 8 && (b < 2 || b > 10)) {
+        else if (a == 8 && (b < 2 || b > 10)) {
             return false;
         }
-        if (a == 9 && (b < 3 || b > 10)) {
+        else if (a == 9 && (b < 3 || b > 10)) {
             return false;
         }
-        if (a == 10 && (b < 3 || b > 9)) {
+        else if (a == 10 && (b < 3 || b > 9)) {
             return false;
         }
-        if (a == 11 && (b < 4 || b > 9)) {
+        else if (a == 11 && (b < 4 || b > 9)) {
             return false;
         }
-        return true;
+        else {
+            return true;
+        }
     }
     
     

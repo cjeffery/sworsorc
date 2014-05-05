@@ -80,7 +80,7 @@ public class MovementCalculatorTest extends TestCase {
      * top of the test method to check different units.
      * @author Keith Drew
      */
-    public void testGetValidMoves()
+    public void testAllRetreatMoves()
     {
         int playerID = 0; // arbitrary number for player ID
         String hexID = "0606"; // Starting hex location

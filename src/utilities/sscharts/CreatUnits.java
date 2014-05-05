@@ -8,10 +8,7 @@
 package sscharts;
 
 
-import static sscharts.ArmyCombatResultsTable.*;
 import Units.*;
-//import ssterrain.*;
-import sshexmap.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**

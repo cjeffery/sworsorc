@@ -30,7 +30,7 @@ import sshexmap.MapView;
 public class LaunchCombat {
     
 
-    public static ArrayList LaunchBotton(List selected_stack, List target_stack) {
+    public static void LaunchBotton(List selected_stack, List target_stack) {
 
         boolean choice = true;
         MoveableUnit selected_combat_unit = new MoveableUnit();
@@ -66,44 +66,27 @@ public class LaunchCombat {
         FriendlyCombatList = getFriendlyList(Defender_Terrain);
         System.out.println("Numbers of friendly units: " + FriendlyCombatList.size());
         
-        for (int i = 0; i < FriendlyCombatList.size(); i++) {
+        for (MapHex FriendlyCombatList1 : FriendlyCombatList) {
             Action Add_into_Attacker_List = Dialogs.create()
             .title("Adding Friendly Units into Combat")
-            .message( "Do you Want to Add" + FriendlyCombatList.get(i).getUnits().get(0).getID() + " to the attackers list?")
+            .message("Do you Want to add friendly unit: " + FriendlyCombatList1.getUnits().get(0).getID().split("[#|@]")[1] + " to the attackers list?")
             .showConfirm();
- 
-        
+            
             if (Add_into_Attacker_List == Dialog.Actions.YES) {
                 Notifications.create()
-                .title("Add into List")
-                .text("Unit added into Attackers List")           
-                .showWarning();
-                attackers.add((ArmyUnit)FriendlyCombatList.get(i).getUnits().get(0));
-            } 
-            else {
+                        .title("Add into List")
+                        .text("Unit added into Attackers List")
+                        .showWarning();
+                attackers.add((ArmyUnit) FriendlyCombatList1.getUnits().get(0));
+            } else {
                 Notifications.create()
-                .title("Discard from List")
-                .text("Unit discard from the Attackers List")           
-                .showWarning();
+                        .title("Discard from List")
+                        .text("Unit discard from the Attackers List")
+                        .showWarning();
             }
-            
-        
         }
 
-        
-        // Details of the Attackers and Defenders List
-        Notifications.create()
-        .title("Details of List")
-        .text("Attacker 1 Race: " + selected_combat_unit.getRace() + "\nAttacker 2 Race: " + selected_combat_unit1.getRace() +
-              "\nAttacker 1 ID: " + selected_combat_unit.getID() + "\nAttacker 2 ID: " + selected_combat_unit1.getID()        
-             )
-        .showWarning();
-        
-        
-        
-        
-
-        
+ 
         // Get Combat Result Here
         ArrayList result = new ArrayList();
         result = PrepareAttackResults(attackers, defenders, Defender_Terrain);
@@ -118,9 +101,6 @@ public class LaunchCombat {
         
 
         // Pop up Combat Result
-
- 
-        
         Action result_of_combat = Dialogs.create()
           .title("Strategy")
           .message( "Are you sure to enforce this combat?" +
@@ -132,56 +112,109 @@ public class LaunchCombat {
           .showConfirm();
 
         if (result_of_combat == Dialog.Actions.YES) {
+
+            //Confirm(index,Defender_Terrain,target_stack);
+            Action ATT = Dialogs.create()
+            .title("Attacker")
+            .message("Attacker's Decision")
+            .showWarning();
+            ResultCase(index[0], attackers);
             
-            // Attacker should eliminate # of units
-            if (index[0] < 0) {
-                Notifications.create()
-                .title("Requires to Eliminate Units")
-                .text("Need to select a unit and eliminate it.")           
-                .showWarning();
-                
-                // Show Diagram for picking up unit
-                
-                // Call elimination function
-            }
             
-            // Attacker should decide to retreat or eliminate # of units
-            else {
-                Notifications.create()
-                .title("Requires to Retreat OR Eliminate Units")
-                .text("Need to select a unit and Retreat OR Eliminate it.")           
-                .showWarning();
-                
-                // Showing the GUI fo Selection
-                
-                // Call Retreat funtion
-                // MoveableUnit, MapHex, Int 
-                MoveableUnit unit = (MoveableUnit)target_stack.get(0);
-                //Double retreatLimit = new Double(index[1]);
-                System.out.println( "Unit Location: " + unit.getLocation());
-                ArrayList<MapHex> retreatMoves = new ArrayList<>
-                        ( MovementCalculator.getRetreatMoves(Defender_Terrain, 
-                                unit, 2 ) );
-                
-                retreatMoves.stream().forEach((retreatMove) -> {
-                    System.out.println( "Moves: " + retreatMove.GetID());
-                });
-                                
-            }
-            
-            result.add("true");
+            Action DEF = Dialogs.create()
+           .title("Defender")
+           .message("Defender's Decision")
+           .showWarning();
+            ResultCase(index[1], defenders);
         }
         
         else {
             
-            result.add("false");
+
         }
-        
+
         attackers.clear();
         defenders.clear();
         FriendlyCombatList.clear();
-        return result;
+      
     }
+    
+
+    
+    
+    /**
+     * @author Shaung
+     * @param result 
+     */
+    public static void ResultCase(int result, ArrayList<ArmyUnit> Units_stack) {
+    
+        // Elimination
+        if (result < 0) {
+            Notifications.create()
+            .title("Elimination Required")
+            .text("You have to eliminate " + result + "units.")           
+            .showWarning();
+            // Call Elimination Function
+            // Elimination(List<MoveableUnit> Units_stack, int elimination_amount);
+        }
+        
+        // Nothing Chnage
+        else if (result == 0) {
+            Notifications.create()
+            .title("Stay in current Status")
+            .text("You don't need to do any changes from this battle.")           
+            .showWarning();
+        }
+        
+        // Retreat or Elimination
+        else {
+           
+           Action result_of_combat = Dialogs.create()
+          .title("Decision")
+          .message( "Result of Combat is: " + result
+                  + "\nDo you want to eliminate any Units?")
+          .showConfirm();
+           
+            if (result_of_combat == Dialog.Actions.YES) {
+               
+                for (int i = 0; i < Units_stack.size(); i++) {
+                    Action Edecision = Dialogs.create()
+                    .title("Decision")
+                    .message( "Result of Combat is: " + result
+                           + "\nDo you want to eliminate This Units: " + Units_stack.get(i).getID().split("[#|@]")[1])
+                    .showConfirm();
+                    if (Edecision == Dialog.Actions.YES) {
+                    
+                        // Elimination(Unit_stack.get(i));
+                         Units_stack.remove(i);
+                    }
+                    
+                }
+                    
+            }
+           
+            else {
+                
+                for (int i = 0; i < Units_stack.size(); i++) {
+                    // Retreat(Units_stack.get(i));
+                }
+            } 
+           
+           
+        }
+           
+           
+           
+           
+           
+          
+           
+           
+        }
+        
+        
+    
+    
     /**
      * 
      * @param currHex
@@ -196,7 +229,7 @@ public class LaunchCombat {
         for( int i = 0; i < 6; i++ )
         {
             // Make sure the neighbor exists
-            if( currHex.getNeighbor( i ) != null && currHex.getNeighbor(i).getUnits() != null)
+            if( currHex.getNeighbor( i ) != null && currHex.getNeighbor(i).getUnits() != null )
                 neighbors.add( currHex.getNeighbor(i));
         }
         
