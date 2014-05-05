@@ -16,8 +16,8 @@
 \begin{document}
 \maketitle
 \pagebreak
-\setcounter{tocdepth}{5}
-\renewcommand\contentsname{\center{Swords and Sorcery\\Table of Contents}}
+\setcounter{tocdepth}{3}
+\renewcommand\contentsname{\center{Swords and Sorcery Design\\Table of Contents}}
 \tableofcontents
 
 \section{Introduction}
@@ -136,12 +136,12 @@ There are multiple developer views within the scope of the S\&S project for CS38
 \subsection{Component Dictionary}
 \small{
 \begin{center}
-\noindent\begin{tabularx}{\linewidth}{|X|X|X|X|X|}\hline
+\noindent\begin{tabularx}{\linewidth}{|l|X|X|X|X|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Purpose} & \textbf{Dependencies} & \textbf{Subordinates}\\
 \hline
-MainMenu Controller & Controller & Define and limit access to main menu & Game.java & \\
+MainMenuController & Controller & Define and limit access to main menu & Game.java & \\
 \hline
-Movement Calculator & Utility & Determine Legal Moves & UnitPool, MainMap & Retreat/Move\\
+MovementCalculator & Utility & Determine Legal Moves & UnitPool, MainMap & Retreat/Move\\
 \hline
 \end{tabularx}
 \end{center}
@@ -158,7 +158,7 @@ Movement Calculator & Utility & Determine Legal Moves & UnitPool, MainMap & Retr
 \subsection{Data Dictionary}
 \small{
 \begin{center}
-\noindent\begin{tabularx}{\linewidth}{|X|X|X|X|X|}\hline
+\noindent\begin{tabularx}{\linewidth}{|l|X|X|X|X|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Defined By...} & \textbf{Referenced By...} & \textbf{Modified By...}\\
 \hline
 HexMap & class/HashMap & HexMap.java & MainMap, DiplomacyMap & HUDController, ...\\
