@@ -398,8 +398,7 @@ public class CombatSimulated extends javax.swing.JFrame {
         //results = PrepareAttackResults(attackers, defencers, hex1);
         
         // ArrayList result involve different datatypes
-        ArrayList result = new ArrayList();
-        result = PrepareAttackResults(attackers, defencers, hex1);
+        ArrayList result = PrepareAttackResults(attackers, defencers, hex1);
         // index contains with # of restreat, # of elitimate, or 0 means no changes
         int[] index = (int[])result.get(0);
         int atk = (int)result.get(1);
@@ -466,12 +465,7 @@ public class CombatSimulated extends javax.swing.JFrame {
                             
                     
                 }
-                
 
-  	    else
-  	    	{
-  	    	 return;	    
-  	    	}
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -530,7 +524,7 @@ public class CombatSimulated extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboNineActionPerformed
 
     /**
-     * @param args the command line arguments
+     * 
      */
     public static void main(/*String args[]*/) {
         /* Set the Nimbus look and feel */
@@ -545,13 +539,7 @@ public class CombatSimulated extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CombatSimulated.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CombatSimulated.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CombatSimulated.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(CombatSimulated.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>

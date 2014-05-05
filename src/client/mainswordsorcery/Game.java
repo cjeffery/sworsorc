@@ -14,10 +14,8 @@ import Units.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
-import java.util.logging.*;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.text.Font;
@@ -187,6 +185,7 @@ public class Game extends Application {
     * static method to get instance of view
     * 
     * @author Joe Higley
+    * @return the instance of view
     */     
     public static Game getInstance() {
         return instance;

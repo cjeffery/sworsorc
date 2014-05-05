@@ -214,7 +214,7 @@ public class MovementCalculator
      */
     public static boolean getUnits(MapHex sourceHex, MoveableUnit movingUnit)
     {
-        ArrayList<String> unitsInHex = new ArrayList<String>();
+        ArrayList<String> unitsInHex;
         if(sourceHex != null){
             unitsInHex = sourceHex.getUnitIDs();
         } else {
@@ -349,7 +349,7 @@ public class MovementCalculator
      * This method returns an ArrayList containing the non-null neighbors of
      * currHex
      * @param currHex
-     * @return ArrayList<MapHex> neighbors
+     * @return neighbor hexes
      * @author Keith Drew
      */
     public static ArrayList<MapHex> getNeighbors( MapHex currHex )
@@ -366,7 +366,7 @@ public class MovementCalculator
     }
     
     /**
-     * This method returns an ArrayList<MapHex> that contains all map hexes that
+     * This method returns an ArrayList of MapHex that contains all map hexes that
      * are valid for the retreating unit to retreat into. This method is also 
      * a wrapper function. It calls getAllRetreatHexesInRange() to populate the 
      * retreatAllowanceCache with all moves valid for retreat within range of 
@@ -378,7 +378,7 @@ public class MovementCalculator
      * @param currentHex
      * @param retreater
      * @param retreatLimit
-     * @return ArrayList<MapHex>
+     * @return list of possible retreating moves
      * @author Keith and Shaung
      */
     public static ArrayList<MapHex> getRetreatMoves( MapHex currentHex, 
