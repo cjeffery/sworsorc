@@ -21,16 +21,22 @@
 \tableofcontents
 
 \section{Introduction}
-	\subsection{Document Purpose, Context, and Intended Audience}
-		\subsubsection{Document Purpose}
-		\subsubsection{Document Context}
-		\subsubsection{Intended Audience}
-	\subsection{Software Purpose, Context, and Intended Audience}
-		\subsubsection{System and Software Purpose}
-		\subsubsection{System and Software Context}
-		\subsubsection{Intended Users of System and Software}
-	\subsection{Definitions, Acronyms, and Abbreviations}
-
+This is the System and Software Design Document for Swords and Sorcery. This is one of five documents that describe the computer adaptation of the Swords and Sorcery board game developed by the Software Engineering class at the University of Idaho in Spring 2014.
+\subsection{Document Purpose, Context, and Intended Audience}
+\subsubsection{Document Purpose}
+The purpose of this document is to describe the system and software design of Swords and Sorcery. 
+\subsubsection{Document Context}
+This document is written as part of a larger document that describes the Swords and Sorcery project developed by the CS383 students at University of Idaho, in Spring 2014. This document only describes the system and software design of the project, which is only a subset of the project.
+\subsubsection{Intended Audience}
+This document is intended to be read by Dr. Clinton Jeffery and members of the class, as well as any interested members of the University of Idaho Computer Science department. This document is not intended to be distributed publicly in any way.
+\subsection{Software Purpose, Context, and Intended Audience}
+\subsubsection{System and Software Purpose}
+The purpose of the Swords and Sorcery system and software is to provide a computer adaptation of the complex board game of the same name. The system is designed to provide multiplayer functionality over the internet, and to simplify the complex rules of the original Swords and Sorcery.
+\subsubsection{System and Software Context}
+The context of this project is, again, restrained to the classroom, as it is an educational project, not intended for distribution. However, the source code for the project, as well as many resources, are available publicly on github.com. 
+\subsubsection{Intended Users of System and Software}
+The intended users of the Swords and Sorcery system are...
+\subsection{Definitions, Acronyms, and Abbreviations}
 \begin{center}
 \begin{tabularx}{\linewidth}{|p{1.5in}|X|}\hline
 \textbf{Term} & \textbf{Definition}\\
@@ -49,6 +55,12 @@ Design Entity & \"An element (component) of a design that is structurally and fu
 \hline
 Design View & \"A subset of design entity attribute information that is specifically suited to the needs of a software project activity.\"\space IEEE STD 1016-1998\\
 \hline
+GUI & Graphical User Interface - What the user sees and interacts with - also called the HUD.\\
+\hline
+HUD & Heads Up Display - What the user sees, with respect to interface - also called the GUI.\\
+\hline
+IP & Internet Protocol - Typically refers to an IP Address.\\
+\hline
 S\&S & Swords and Sorcery\\
 \hline
 SSDD & System and Software Design Document\\
@@ -62,30 +74,55 @@ System Stakeholder & \"An individual, team, or organization (or classes thereof)
 \end{tabularx}
 \end{center}
 
-	\subsection{Document References}
-	\subsection{Overview of Document}
-	\subsection{Document Restrictions}
+\subsection{Document References}
+\begin{enumerate}
+\item CSDS, textit{System and Software Requirements Specification Template}, Version 1.0, July
+31, 2008, Center for Secure and Dependable Systems, University of Idaho, Moscow, ID, 83844.
+
+\item ISO/IEC/IEEE, \textit{IEEE Std 1471-2000 Systems and software engineering -- Recommended practice for architectural description of software intensive systems,} First edition 2007-07-15, International Organization for Standardization and International Electrotechnical Commission, (ISO/IEC), Case postale 56, CH-1211 Geneve 20, Switzerland, and The Institute of Electrical and Electronics Engineers, Inc., (IEEE), 445 Hoes Lane, Piscataway, NJ 08854, USA.
+
+\item IEEE, \textit{IEEE Std 1016-1998 Recommended Practice for Software Design Descriptions}, 1998-09-23, The Institute of Electrical and Electronics Engineers, Inc., (IEEE) 445 Hoes Lane, Piscataway, NJ 08854, USA.
+
+\item 3) ISO/IEC/IEEE, \textit{IEEE Std. 15288-2008 Systems and Software Engineering -- System life cycle processes,}Second edition 2008-02-01, International Organization for Standardization and International Electrotechnical Commission, (ISO/IEC), Case postale 56, CH-1211 Geneve 20, Switzerland, and The Institute of Electrical and Electronics Engineers, Inc., (IEEE), 445 Hoes Lane, Piscataway, NJ 08854, USA.
+
+\item ISO/IEC/IEEE, IEEE Std. 12207-2008, \textit{Systems and software engineering -- Software life cycle processes}, Second edition 2008-02-01, International Organization for Standardization and International Electrotechnical Commission, (ISO/IEC), Case postale 56, CH-1211 Geneve 20, Switzerland, and The Institute of Electrical and Electronics Engineers, Inc., (IEEE), 445 Hoes Lane, Piscataway, NJ 08854, USA.
+\end{enumerate}
+
+\subsection{Overview of Document}
+\paragraph{Section 2} of this document describes the concerns and constraints of the system and software, with respect to environmental constraints, system requirement constraints, and user characteristic constraints. Section 2 also describes stakeholder concerns.
+\paragraph{Section 3} of this document describes the System and Software architecture of Swords and Sorcery, from different points of view, namely the user's point of view and the developer's point of view.
+\paragraph{Section 4} of this document describes the finer details of the software design, listing software and system components that are crucial to the operation of the Swords and Sorcery game. 
+\paragraph{Section 5} of this document describes the requirements traceability of the Swords and Sorcery project, highlighting how our original project requirements have been met, modified, and implemented.
+\subsection{Document Restrictions}
+This document is for LIMITED USE ONLY to UI CS personnel working on the project.
 \section{Constraints and Concerns}
-	\subsection{Constraints}
-		\subsubsection{Environmental Constraints}
-		\subsubsection{System Requirement Constraints}
-		\subsubsection{User Characteristic Constraints}
-	\subsection{Stakeholder Concerns}
-		%Tabular - insert table here
+\subsection{Constraints}
+Swords and Sorcery requires the Java Runtime Environment 8 to run. S\&S also requires the JDK 8.0 and Netbeans 8.0 or better to develop. The game will run on Windows, Mac, and Linux, provided those systems have the mentioned software packages (JRE to play, JDK/Netbeans to develop). To play the game, a network connection is required, as well as the IP Address of the game server. As S\&S is a multiplayer game, one client is required for each player. Typically, this should be done using multiple computers, however, multiple clients can be run on the same computer.
+\subsection{Stakeholder Concerns}
+There are no financial stakeholders, however, Dr. Clinton Jeffery can be considered a stakeholder, as well as each class member. As a class member, our concerns are providing a quality product, while Dr. Jeffery's concerns may include using good design principles, as this is a Software Engineering course. 
+Other concerns include design requirements such as portability, 
 \section{System and Software Architecture}
-	\subsection{Developer's Architectural View}
-		\subsubsection{Developer's View Identification}
-		\subsubsection{Developer's View Representation and Description}
-		\subsubsection{Developer's Architectural Rationale} it breaks without text so often it seems
-	\subsection{User's Architectural View}
-		\subsubsection{User's View Identification}
-		\subsubsection{User's View Representation and Description}
-	\subsection{Blank's Architectural View}
-		\subsubsection{Blank's View Identification}
-		\subsubsection{Blank's View Representation and Description}
-	\subsection{Consistency of Architectural Views}
-		\subsubsection{Detail of Inconsistencies Between Architectural Views}
-		\subsubsection{Consistency Analysis and Inconsistency Mitigations}
+\subsection{Developer's Architectural View}
+	\subsubsection{Developer's View Identification}
+There are multiple developer views within the scope of the S\&S project for CS383. The views represent each subteam, and there are three subteams - HUD Team, Rules Team, and Networking Team. The descriptions of each sub-view follow:
+\paragraph{HUD Team View} The HUD Team view includes all software related to the HUD/GUI and handles how the user(s) interact with the S\&S game. 
+%\includegraphics[scale=•]{•}
+\paragraph{Rules Team View} The Rules Team view includes all software implementations of the S\&S rule set, some of which overlaps with other views. Typically, Rules Team is in charge of implementing internal logic and data structures.
+%\includegraphics[scale=•]{•}
+\paragraph{Networking Team View} The Networking Team view includes all network communication related to the S\&S game. This includes the client/server model, the communication protocols, the server setup and more.
+%\includegraphics[scale=•]{•}
+	\subsubsection{Developer's View Representation and Description}
+	\subsubsection{Developer's Architectural Rationale} it breaks without text so often it seems
+\subsection{User's Architectural View}
+	\subsubsection{User's View Identification}
+	\subsubsection{User's View Representation and Description}
+\subsection{Blank's Architectural View}
+	\subsubsection{Blank's View Identification}
+	\subsubsection{Blank's View Representation and Description}
+\subsection{Consistency of Architectural Views}
+	\subsubsection{Detail of Inconsistencies Between Architectural Views}
+	\subsubsection{Consistency Analysis and Inconsistency Mitigations}
+
 \section{Software Detailed Design}
 	\subsection{Developer's Viewpoint Detailed Software Design}
 	\subsection{Component Dictionary}
