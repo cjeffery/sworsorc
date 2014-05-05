@@ -1,16 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * All source code is the work of Clinton Jeffery's Spring 2014 Software Engineering
+ * class at the University of Idaho consisting of the following members:
+ * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
+ * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
  */
-
 
 //**\UnitRender*,**\NetworkClientT*,**\Hex*Test*,**\Map*Test*,**\Scen*Test*,**\Movement*Test*
 package Units;
 
-
 import Character.Characters;
-import Units.HexStack; // used on line 213
 import java.util.*;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
@@ -55,7 +53,6 @@ public class UnitPool {
     private final SortedMap<String, ArrayList<MoveableUnit>> overStackMap = 
             Collections.synchronizedSortedMap(new TreeMap<String, ArrayList<MoveableUnit>>());
     
-    private int portNum = 0; 
     private static UnitPool INSTANCE;
     
     private HexStack stack = new HexStack();
@@ -248,9 +245,6 @@ public class UnitPool {
         }
     }
     
-   
-
-    
     /**
      * Is used to update the unit location and all of its associated trees.
      * 
@@ -259,17 +253,10 @@ public class UnitPool {
      * 
      * @param unit  : A valid instance of a army units class.
      * @param destinationHexID
-     */
-    
-    
-    
-    
+     */   
     public void addMove(MoveableUnit unit, String destinationHexID){
-        
-       
-        // This horific looking line removes the unit from its current location.
-        hexList.get(unit.getLocation()).remove(hexList.get(unit.getLocation()).indexOf(unit.getID()));
-        
+               
+        removeFromCurrentHex( unit );       
         unit.setLocation(destinationHexID);
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
@@ -291,29 +278,32 @@ public class UnitPool {
                 ;
             
 
-            
-            
-            
-                if ( response == Dialog.Actions.YES )
-                    if (this.teleport(unit))
+            if ( response == Dialog.Actions.YES ) {
+                NetworkClient.send( Flag.GAME, Tag.MOVE_UNIT_TELEPORT, unit );
+                if ( this.teleport( unit ) ) {
                         Dialogs.create()
-                        .title("Teleport")
-                        .masthead("Lucky Dog!")
-                        .message("Unit Teleported to hex " + unit.getLocation() + ".")
-                        .actions(Dialog.Actions.OK)
-                        .showConfirm();
-
-                    else
+                                .title( "Teleport" )
+                                .masthead( "Lucky Dog!" )
+                                .message( "Unit Teleported to hex " + unit.getLocation() + "." )
+                                .actions( Dialog.Actions.OK )
+                                .showConfirm();
+                    } else {
                         Dialogs.create()
-                        .title("Teleport")
-                        .masthead("In the infamous words of Homer Simpson.  Doh!")
-                        .message("A heard of rampaging "
-                                + "ethereal cows trampled your unit to death.  You "
-                                + "should inform the next of kin.")
-                        .actions(Dialog.Actions.OK)
-                        .showConfirm();
+                            .title( "Teleport" )
+                            .masthead( "In the infamous words of Homer Simpson.  Doh!" )
+                            .message( "A heard of rampaging "
+                                    + "ethereal cows trampled your unit to death.  You "
+                                    + "should inform the next of kin." )
+                            .actions( Dialog.Actions.OK )
+                            .showConfirm();
+                }
+            } else {
+                // If I do the requisite calls in conductor right later on, this should work
+                NetworkClient.send( Flag.GAME, Tag.MOVE_UNIT, unit );
+            }
         }
     }
+
     /**
      * Only used by the teleport method. 
      * @param unit
@@ -322,13 +312,16 @@ public class UnitPool {
      */
     private void addMove(MoveableUnit unit, String destinationHexID, boolean Teleport){
         
-        // This horific looking line removes the unit from its current location.
-        hexList.get(unit.getLocation()).remove(hexList.get(unit.getLocation()).indexOf(unit.getID()));
-        
+        removeFromCurrentHex( unit );
         unit.setLocation(destinationHexID);
         this.addToHex(hexList, unit);
-        this.addToUnit(unitMove, unit);
-    
+        this.addToUnit(unitMove, unit);    
+    }
+
+    private void removeFromCurrentHex( MoveableUnit unit ) {
+        // This horific looking line removes the unit from its current location.
+        hexList.get( unit.getLocation() ).remove( hexList.get( unit.getLocation() ).indexOf( unit.
+                getID() ) );
     }
     
     /**
@@ -511,19 +504,6 @@ public class UnitPool {
     }
     
     /**
-     * Unsafe teleport. Risk of unit destruction.
-     * 
-     * Example:
-     * successfulTeleport = teleport(SomeUnit);
-     * 
-     * @param unit
-     * @return 
-     */
-    //public boolean teleport(MoveableUnit unit){
-    //    return this.teleport(unit, false, 7);
-    //}
-    
-    /**
      * Safe teleport used with the teleport spell.
      * 
      * Example:
@@ -531,8 +511,6 @@ public class UnitPool {
      * (optional) or  teleport(someUnit, true, destinationPortal);
      * 
      * @param unit
-     * @param safeTeleport
-     * @param portalNum
      * @return 
      */
     public boolean teleport(MoveableUnit unit){
@@ -541,9 +519,6 @@ public class UnitPool {
         
         if (!this.safeTeleport.contains(unit.getID())){
             
-            //portNum = rNum.nextInt(6);
-            //portalNum = 1;
-            
             destinationHex = teleportDestinationLogic(rNum.nextInt(6));
             
             if (destinationHex.equals(unit.getLocation())){
@@ -551,8 +526,7 @@ public class UnitPool {
                 return false;
             }
             this.addMove(unit, destinationHex, true);
-            return true;
-        
+            return true;        
         }
         else{
             if (this.portalNum.containsKey(unit.getID())){
@@ -577,8 +551,7 @@ public class UnitPool {
      * Used to get hexID from portal Number for the teleport methods.
      * @param destinationPortal
      * @return 
-     */
-    
+     */   
     private String teleportDestinationLogic(int destinationPortal) {
         String destinationHex = "";
         switch (destinationPortal){
@@ -601,9 +574,7 @@ public class UnitPool {
                 destinationHex = "3542";
                 break;
         }
-        return destinationHex;
-    
-    
+        return destinationHex; 
     }
     
 }

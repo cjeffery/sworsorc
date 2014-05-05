@@ -3,18 +3,19 @@ Commands:
     /reconnect - Reconnect to server after being disconnected
     /quit - Exits out of the client
 
-    /showLobbies - List the lobbies available
+    /showLobbies - List the lobbies available (if any)
     /newLobby <lobbyname> - Creates a new lobby
     /joinLobby <lobbyname> - Joins named lobby
     /leaveLobby - Leave the current lobby
 
-    /globalWho - List of current users (connected or in lobby, not sure)
+    /globalWho - List of current users
+    /lobbyWho - List of users in current lobby (if in a lobby)
 
     /yieldTurn - End your turn
     /beginGame - Request to start game
 
-    /file <filename> - Sends file to server
-    /printFile - Not sure what this does...
+    /sendFile <filename> - Sends a file of <filename> to server
+    /printFile - Prints to console file currently on server (ex: agreed upon rules)
 
     /msg <username> - Send a private message to <username>
     

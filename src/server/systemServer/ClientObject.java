@@ -74,12 +74,12 @@ public class ClientObject {
      * @param tag
      */
     protected void send( Flag flag, Tag tag ) {
-        send( flag, tag, null, (Object[]) null );
+        send( null, flag, tag, (Object[]) null );
     }
 
     /**
-     * Send a message to client, no pre-packaging required
-     * Must ensure any collections are either split up, or handled on the receiving end!
+     * Send a lmessage to client, no pre-packaging required
+ Must ensure any collections are either split up, or handled on the receiving end!
      * <p>
      * Writes to socket outgoing connection, hides the protocol details
      * <p>
@@ -93,8 +93,8 @@ public class ClientObject {
     }
 
     /**
-     * Send a message to client, no pre-packaging required
-     * Must ensure any collections are either split up, or handled on the receiving end!
+     * Send a lmessage to client, no pre-packaging required
+ Must ensure any collections are either split up, or handled on the receiving end!
      * <p>
      * Writes to socket outgoing connection, hides the protocol details
      * <p>
@@ -103,8 +103,19 @@ public class ClientObject {
      * @param sender
      * @param message First parameter is assumed to be tag
      */
-    protected void send( Flag flag, Tag tag, String sender, Object... message ) {
+    protected void send( String sender, Flag flag, Tag tag, Object... message ) {
         send( flag, tag, sender, MessagePhoenix.packMessageContents( message ) );
+    }
+
+    /**
+     * default sender
+     *
+     * @param flag
+     * @param tag
+     * @param message
+     */
+    protected void send( Flag flag, Tag tag, Object... message ) {
+        send( flag, tag, null, MessagePhoenix.packMessageContents( message ) );
     }
 
     /**
@@ -135,7 +146,7 @@ public class ClientObject {
 
     /**
      * Handles incoming messages from the client connection it is associated with
-     * Makes the blocking receive until a message arrives
+ Makes the blocking receive until a lmessage arrives
      */
     private class ServerReceivingThread extends Thread {
 
@@ -186,7 +197,7 @@ public class ClientObject {
         /**
          * Processes incoming messages from the client
          * <p>
-         * Uses nested switch statements to parse message flags and tags
+ Uses nested switch statements to parse lmessage flags and tags
          *
          * @param incomingMessage
          *
@@ -197,19 +208,24 @@ public class ClientObject {
         private boolean processMessage( final NetworkPacket incomingMessage ) {
 
             NetworkPacket rawMessage = incomingMessage;
-            String stringmessage = "";
+            String smessage = "";
 
             Tag tag = rawMessage.getTAG();
             Flag flag = rawMessage.getFlag();
             String sender = rawMessage.getSender();
-            List<Object> message = rawMessage.getData();
+            List<Object> lmessage = rawMessage.getData();
 
-            if ( message == null ) {
+            if ( lmessage == null ) {
                 errorOut.println( "Null data!" );
                 return false;
-            } else if ( !message.isEmpty()
-                    && message.get( 0 ).getClass().equals( String.class ) ) {
-                stringmessage = (String) message.get( 0 );
+            } else if ( !lmessage.isEmpty()
+                    && lmessage.get( 0 ).getClass().equals( String.class ) ) {
+                smessage = (String) lmessage.get( 0 );
+                lmessage = lmessage.subList( 1, lmessage.size() );
+            } else {
+                if ( debug ) {
+                    errorOut.println( "This is a poke message" );
+                }
             }
 
             if ( debug ) {
@@ -217,32 +233,31 @@ public class ClientObject {
                 errorOut.println( "Tag: " + tag );
                 errorOut.println( "Flag: " + flag );
                 errorOut.println( "Sender: " + sender );
-                errorOut.println( "Data: " + message.toString() );
-                errorOut.println( "stringmessage: " + stringmessage );
+                errorOut.println( "Data: " + lmessage.toString() );
+                errorOut.println( "stringmessage: " + smessage );
             }
 
             switch ( flag ) {
                 // Tagged Chat Message ex: GLOBAL, LOBBY, PRIVATE, etc
                 case CHAT:
 
-                    switch ( tag ) { // assume message is a single string object
+                    switch ( tag ) { // assume lmessage is a single string object
                         case PRIVATE:
                             NetworkServer.
-                                    sendToClient( stringmessage, flag, tag, sender, MessagePhoenix.
-                                            packMessageContents( message.get( 1 ) ) );
+                                    sendToClient( smessage, flag, tag, sender, lmessage );
                             break;
                         case LOBBY:
-                            currentLobby.sendToEntireLobby( flag, tag, sender, stringmessage );
+                            currentLobby.sendToEntireLobby( flag, tag, sender, smessage );
                             break;
                         case GLOBAL:
-                            NetworkServer.sendToAllClients( flag, tag, sender, message );
+                            NetworkServer.sendToAllClients( flag, tag, sender, lmessage );
                             break;
                         case SEND_CHAT_MESSAGE:
                             if ( currentLobby != null ) {
                                 currentLobby.
-                                        sendToEntireLobby( flag, Tag.LOBBY, sender, stringmessage );
+                                        sendToEntireLobby( flag, Tag.LOBBY, sender, smessage );
                             } else {
-                                NetworkServer.sendToAllClients( flag, Tag.GLOBAL, sender, message );
+                                NetworkServer.sendToAllClients( flag, Tag.GLOBAL, sender, lmessage );
                             }
                             break;
                         default:
@@ -266,7 +281,7 @@ public class ClientObject {
                             consoleOut.println( "Unknown tag: " + tag );
                     }
                     break;
-                // Error message
+                // Error lmessage
                 case ERROR:
 
                     switch ( tag ) {
@@ -283,11 +298,14 @@ public class ClientObject {
 
                         case PHASE_CHANGE:
                             NetworkServer.
-                                    sendToAllClients( flag, tag, "Server", message );
+                                    sendToAllClients( flag, tag, "Server", lmessage );
                             break;
                         case YIELD_TURN_REQUEST:
                             send( Flag.RESPONSE, Tag.YIELD_TURN_RESPONSE );
 
+                            break;
+                        case NEXT_TURN_INFO:
+                            send( flag, tag, currentLobby != null ? currentLobby.current : "" );
                             break;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
@@ -300,7 +318,7 @@ public class ClientObject {
 
                         case GLOBAL_WHO_REQUEST:
                             if ( NetworkServer.getTotalClients() == 0 ) {
-                                send( flag, Tag.GLOBAL_WHO_RESPONSE, null, "No users online." );
+                                send( flag, Tag.GLOBAL_WHO_RESPONSE,  "No users online." );
 
                             } else {
                                 // All currently connected users in all lobbies
@@ -309,66 +327,66 @@ public class ClientObject {
                                 for ( String s : NetworkServer.getAllUserNames() ) {
                                     temp.append( " " ).append( s );
                                 }
-                                send( flag, Tag.GLOBAL_WHO_RESPONSE, null, temp.toString() );
+                                send( flag, Tag.GLOBAL_WHO_RESPONSE,  temp.toString() );
                             }
                             break;
-
-                        case LOBBY_INFO_REQUEST:
-                            if ( currentLobby == null ) {
-                                // Gets all usernames of every lobby on the server, and adds to List
-                                StringBuilder lobbyinfo = new StringBuilder( "Lobbies: " );
-                                for ( String lobby : NetworkServer.getLobbyNames() ) {
-                                    lobbyinfo.append( lobby ).append( Arrays.
-                                            toString( NetworkServer.
-                                                    getLobbyUsers( lobby ).toString().
-                                                    split( " " ) ) );
+                        case LOBBY_WHO_REQUEST:
+                            if ( currentLobby != null ) {
+                                StringBuilder temp = new StringBuilder( (currentLobby.lobbyClients.
+                                                                         size() + " users online: ") );
+                                for ( String s : currentLobby.getUserNames() ) {
+                                    temp.append( " " ).append( s );
                                 }
-                                send( flag, Tag.LOBBY_INFO_RESPONSE, null, lobbyinfo );
+                                send( flag, Tag.LOBBY_WHO_RESPONSE, temp.toString() ); // TODO: may need formatting
                             } else {
-                                send( flag, Tag.LOBBY_INFO_RESPONSE, null, currentLobby.
-                                        getUserNames() );
+                                send( flag, Tag.LOBBY_WHO_RESPONSE, "You're not in a lobby!" );
                             }
+                            break;
+                        case LOBBY_INFO_REQUEST:
+                            StringBuilder temp = new StringBuilder( "There are " + NetworkServer.
+                                    getTotalLobbies() + " lobbies online: " );
+                            for ( String s : NetworkServer.getLobbyNames() ) {
+                                temp.append( " " ).append( s );
+                            }
+                            send( flag, Tag.LOBBY_INFO_RESPONSE, temp.toString() );
                             break;
                         case NEW_LOBBY_REQUEST:
-                            consoleOut.println( "Received request to create lobby: " + message.
-                                    get( 0 ) );
+                            consoleOut.
+                                    println( "Received request to create lobby: " + smessage );
 
-                            if ( NetworkServer.createNewLobby( (String) message.get( 0 ) ) ) {
+                            if ( NetworkServer.createNewLobby( smessage) )  {
                                 NetworkServer.
-                                        joinLobby( (String) message.get( 0 ), ClientObject.this );
-                                send( flag, Tag.NEW_LOBBY_RESPONSE, null, true, "Lobby " + message.
-                                        get( 0 ) + " has been created!" );
+                                        joinLobby( smessage, ClientObject.this );
+                                send( flag, Tag.NEW_LOBBY_RESPONSE, smessage, true );
                             } else {
-                                send( flag, Tag.NEW_LOBBY_RESPONSE, null, false, "Could not create lobby, it probably already exists!" );
+                                send( flag, Tag.NEW_LOBBY_RESPONSE, "Could not create lobby, it probably already exists!", false );
                             }
                             break;
                         case JOIN_LOBBY_REQUEST:
-                            String lobby = (String) message.get( 0 );
                             consoleOut.
-                                    println( "Received request to join lobby: " + lobby + " from client " + handle );
+                                    println( "Received request to join lobby: " + smessage + " from client " + handle );
                             if ( currentLobby != null && currentLobby.getName().
-                                    equals( lobby ) ) {
-                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Cannot join lobby, you're already in it!" );
+                                    equals( smessage ) ) {
+                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Cannot join lobby, you're already in it!", false );
 
                             } else if ( NetworkServer.
-                                    joinLobby( (String) message.get( 0 ), ClientObject.this ) ) {
-                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Successfully joined lobby " + currentLobby + "!" );
+                                    joinLobby( smessage, ClientObject.this ) ) {
+                                send( flag, Tag.JOIN_LOBBY_RESPONSE, currentLobby, true );
                                 currentLobby.
                                         lobbyNotification( "Client " + handle + " has joined the lobby!" );
                             } else {
-                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Failed to join lobby " + lobby + "! It probably doesn't exist!" );
+                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Failed to join lobby " + smessage + "! It probably doesn't exist!", false );
                             }
                             break;
                         case LEAVE_LOBBY_REQUEST: // TODO: improve on this
                             consoleOut.
                                     println( "Client " + handle + " has requested to leave lobby" );
                             NetworkServer.leaveLobby( ClientObject.this );
-                            send( flag, Tag.LEAVE_LOBBY_RESPONSE, "You have successfully left lobby " + message.
-                                    get( 0 ) );
+                            send( flag, Tag.LEAVE_LOBBY_RESPONSE, "You have successfully left lobby " + smessage );
                             currentLobby = null;
                             break;
                         case UID_REQUEST:
-                            send( flag, Tag.UID_RESPONSE, null, NetworkServer.generateUniqueID() );
+                            send( flag, Tag.UID_RESPONSE,  NetworkServer.generateUniqueID() );
                             break;
                         case BEGIN_GAME_REQUEST:
                             if ( currentLobby == null ) {
@@ -391,16 +409,13 @@ public class ClientObject {
                         case GET_FILE_REQUEST:
                             System.out.println( "GET_FILE_REQUEST unhandled" );
                             break;
-                        //How is this different from NEW_LOBBY_REQUEST
-                        case CREATE_LOBBY_REQUEST:
-                            System.out.println( "CREATE_FILE_REQUEST unhandled" );
-                            break;
                         case YIELD_TURN_REQUEST:
                             consoleOut.
                                     println( "Client " + handle + " (id  " + clientID + " ) yielded turn" );
                             if ( currentLobby == null ) {
                                 send( Flag.GAME, Tag.YIELD_TURN_RESPONSE, "", "You requested to yield your turn, but you're not even in a lobby!" );
-                            } else if ( currentLobby.current.getClientID() != clientID ) {
+                            } else if ( currentLobby.current == null ? handle != null : !currentLobby.current.
+                                    equals( handle ) ) {
                                 send( Flag.GAME, Tag.YIELD_TURN_RESPONSE, "", "You requested to yield your turn, but it's not currently your turn!" );
                             } else {
                                 currentLobby.advanceGameTurn(); //tell lobby handler to advance game turn
@@ -427,7 +442,7 @@ public class ClientObject {
                     switch ( tag ) {
                         case DISCONNECT_REQUEST:
                             // Notify client that server recieved request, and is closing its side of the connection
-                            send( Flag.RESPONSE, Tag.DISCONNECT_RESPONSE, null, true ); // true always for now
+                            send( Flag.RESPONSE, Tag.DISCONNECT_RESPONSE,  true ); // true always for now
                             return false;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
@@ -437,11 +452,11 @@ public class ClientObject {
                 case FILE:
 
                     switch ( tag ) {
-                        case GET_FILE_REQUEST:
-                            // TODO: send file
+                        case GET_FILE_REQUEST: // TODO: this is not implemented to any semblance of working
+                            send( Flag.FILE, Tag.GET_FILE_REQUEST, file.toString() );
                             break;
-                        case SEND_FILE_REQUEST:
-                            // TODO: prepare to recieve file
+                        case SEND_FILE_REQUEST: // this also needs work
+                            file = (List<String>) lmessage.get( 0 );
                             break;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
