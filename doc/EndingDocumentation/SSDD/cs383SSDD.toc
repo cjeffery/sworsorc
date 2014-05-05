@@ -25,16 +25,16 @@
 \contentsline {paragraph}{Rules Team View}{7}
 \contentsline {paragraph}{Networking Team View}{7}
 \contentsline {subsubsection}{\numberline {3.1.2}Developer's View Representation and Description}{7}
+\contentsline {paragraph}{HUD Team View Representation and Description}{7}
+\contentsline {paragraph}{Rules Team View Representation and Description}{7}
+\contentsline {paragraph}{Networking Team View Representation and Description}{7}
 \contentsline {subsubsection}{\numberline {3.1.3}Developer's Architectural Rationale}{7}
 \contentsline {subsection}{\numberline {3.2}User's Architectural View}{8}
 \contentsline {subsubsection}{\numberline {3.2.1}User's View Identification}{8}
 \contentsline {subsubsection}{\numberline {3.2.2}User's View Representation and Description}{8}
-\contentsline {subsection}{\numberline {3.3}Blank's Architectural View}{8}
-\contentsline {subsubsection}{\numberline {3.3.1}Blank's View Identification}{8}
-\contentsline {subsubsection}{\numberline {3.3.2}Blank's View Representation and Description}{8}
-\contentsline {subsection}{\numberline {3.4}Consistency of Architectural Views}{8}
-\contentsline {subsubsection}{\numberline {3.4.1}Detail of Inconsistencies Between Architectural Views}{8}
-\contentsline {subsubsection}{\numberline {3.4.2}Consistency Analysis and Inconsistency Mitigations}{8}
+\contentsline {subsection}{\numberline {3.3}Consistency of Architectural Views}{8}
+\contentsline {subsubsection}{\numberline {3.3.1}Detail of Inconsistencies Between Architectural Views}{8}
+\contentsline {subsubsection}{\numberline {3.3.2}Consistency Analysis and Inconsistency Mitigations}{8}
 \contentsline {section}{\numberline {4}Software Detailed Design}{8}
 \contentsline {subsection}{\numberline {4.1}Developer's Viewpoint Detailed Software Design}{8}
 \contentsline {subsection}{\numberline {4.2}Component Dictionary}{8}
@@ -51,4 +51,5 @@
 \contentsline {paragraph}{Requirements Description}{9}
 \contentsline {paragraph}{Implementation Description}{9}
 \contentsline {paragraph}{Differences}{9}
+\contentsline {subsection}{\numberline {5.2}Traceability Analysis}{9}
 \contentsline {section}{\numberline {6}Appendix A}{9}
