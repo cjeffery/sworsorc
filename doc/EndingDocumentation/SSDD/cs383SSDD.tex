@@ -139,21 +139,57 @@ There are multiple developer views within the scope of the S\&S project for CS38
 \noindent\begin{tabularx}{\linewidth}{|l|X|X|X|X|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Purpose} & \textbf{Dependencies} & \textbf{Subordinates}\\
 \hline
+Army Combat Result Table & Static Method & Determine results of combat lookup & Two ArrayLists: Attackers, Defenders & None\\
+\hline
+Army Unit & Class & Unit SubClass & Moveable Unit & All individual unit types\\
+\hline
+Characters & Class & Unit SubClass & Moveable Unit & None\\
+\hline
 MainMenuController & Controller & Define and limit access to main menu & Game.java & \\
 \hline
-MovementCalculator & Utility & Determine Legal Moves & UnitPool, MainMap & Retreat/Move\\
+Moveable Unit & Class & Unit SuperClass & None & ArmyUnit, Character, Monster\\
+\hline
+MovementCalculator & Static Class & Determine Legal Moves & UnitPool, MainMap & Retreat/Move\\
 \hline
 \end{tabularx}
 \end{center}
 }
 
 \subsection{Component Detailed Design}
-	\subsubsection{Detailed Design for Component:\\Movement Calculator}
-		\paragraph{Purpose} The movement calculator is a static java class that handles most forms of movement. 
-		\paragraph{Input} The movement calculator takes two inputs to generate a list of moves: the unit moving, and the hex object they are beginning from. To calculate a retreat, the movement calculator takes as input the unit retreating, the hex they are retreating from, and the number of hexes they are required to retreat.
-		\paragraph{Output} The movement calculator produces two main outputs: A hashmap of moves that a unit can reach (within the rules of movement specified by the board game) during a given movement phase, paired with their remaining movement cost after moving to a key hex in the hashmap, or an arraylist of moves that a unit can move to while retreating, during the combat phase.
-		\paragraph{Process} The movement calculator uses recursion to examine the neighbors of the provided hex location. From each neighbor, it evaluates their neighbors, and so on. In both cases (movement/retreat) the recursion is terminated by reaching a lower bound (0) on the limiting value for their movement. For a moving unit, this is their given movement allowance per turn. For a retreating unit, this is the number generated from the combat results table that indicates how many hexes a unit must retreat. For each step of recursion, decisions are made within control flow that are designed to model the rules of the original S\&S board game. These factors include, but are not limited to, hex terrain types, hex edge types, geographical obstacles, and enemy occupation. 
-		\paragraph{Design Constraints and Performance Requirements} The design was constrained by two factors - code complexity and time. By designing the movement calculator to use recursion, the complexity of the component was greatly reduced. However, due to the many factors involved in movement, the design is still complex. Also, the moves available to a unit need to be calculated quickly. However, recursion is not very fast. Thankfully, Colin Clifford added some optimization code to the calculator, which has greatly increased performance with respect to time.
+\subsection{Detailed Design for Component: Army Unit}
+\paragraph{Purpose} This class contains the data of the Army Units in the game and extends the Movable Unit class. This class contains new data like the strength of a unit and whether or not the units is conjured or demoralized. If a unit is conjured then there are special member variables that contain values that are associated with conjured units. If a unit is demoralized then the strength of the unit is different so a demoralized strength variable was added to the class. The strength and demoralized strength variables are used during the combat phase of a users turn and is used to determine the outcome of combat. 
+\paragraph{Input} The only Inputs to this class are the ones needed to fill the member variables of this class.
+\paragraph{Output} This class by itself has no output produced other than the getter functions in the class.
+\paragraph{Process} Output is obtained by calling the getter functions. 
+\paragraph{Design Constraints and Performance Requirements}	In order for this class to preform correctly all of the needed variables need to be filled out.
+
+\subsection{Detailed Design for Component: Army Combat Results Table}
+\paragraph{Purpose} The purpose of this method is a lookup for the results of Combat. 
+\paragraph{Input} Input needs to be two Array Lists: one is called attackers and one defenders. Also the hex object that the defenders are positioned on is needed. The attackers array list is comprised of all of the attacking Army Units in the combat and the defenders are all of the defending Army Units in the combat. The defenders hex is needed in order to calculate the defence multipliers that the defending units get from the terrain values of the hex object.
+\paragraph{Output} The output of this function is a simple 2 value array corresponding the result of the combat. The first value is what's required of the attackers and the second value is what's required of the defenders. A -1 means the units were killed, a 0 means that there was no result of the combat and any positive number represents the number of hexes a unit has to retreat. 
+\paragraph{Process} The function adds the total strengths of both the attackers and defenders. Then applies the terrain multiplier to the defenders total strength. Finally the ratio of attackers over defenders plus a random dice roll determines the outcome of the combat.  
+\paragraph{Design Constraints and Performance Requirements} One design constraint of the table was that in the game the ratio's have to be reduced to the smallest possible fraction in favour of the defending units. To work around this and index was made to match the determined ratio to the correct look up value on the table. Also the units strength and race is required to be filled out in order for this function to work properly. 
+					
+\subsection{Detailed Design for Component: Characters}
+\paragraph{Purpose} This class contains the data of a Character in the game and extends the Movable Unit class. This class has variables unique to a character: magic level, magic potential, current manna, magic colour, and leadership. The magic level determines the hight level of spell that a character can cast. The magic potential is the maximum amount of manna that a character can have. The magic colour of a character determines when a character's spells have the most effect. Leadership is the influence that a character has in determining the result of army combat. Characters have the special ability to cast spells which uses the magic and manna values to determine the amount and effectiveness of their spells. 
+\paragraph{Input} The only Inputs to this class are the ones needed to fill the member variables of this class.
+\paragraph{Output} This class by itself has no output produced other than the getter functions in the class.
+\paragraph{Process} Output is obtained by calling the getter functions. 
+\paragraph{Design Constraints and Performance Requirements} In order for this class to preform correctly all of the member variables need to be filled out.
+	
+\subsection{Detailed Design for Component: Movable Unit}
+\paragraph{Purpose} The purpose of this class is to have a common class of all moving units that the movement functions can access. This class is a super class of all units that can undergo a movement process. This allows for common data to be accessible by the appropriate functions. This common superclass also allows for the ability to store the data of all units in a single-typed data structure. This class contains member variables for movement allocation of a unit, the working movement allocation of a unit or the amount of movement left in a game turn, the race of the unit, the type of subclass that is inheriting from this class(such as armyUnit or Character), and the unique ID of the unit. The movement allocation of a unit is the amount of movement points allowed at the beginning of a turn then the working movement takes over. The working movement is used in order to keep track of how much a unit has move in a single turn. This allows for a user to partially move a unit in their turn then return to that unit and finish moving it later in the same turn. The race is used in many different calculations for units such as the movement cost per hex of a unit in a particular terrain. The subclass variable is used for typecasting the moveable unit back to the proper subclass in order for the subclass based operations to be executed. Finially the unique ID is used for network based communications to identify the unit that is being acted on. 
+\paragraph{Input} Input needed to make this class function properly are values to fill the member variables of this class. 
+\paragraph{Output} The only output of this class is by getters of the member variables of the class. 
+\paragraph{Process} Call the getter functions.
+\paragraph{Design Constraints and Performance Requirements} One constraint of this class was the necessity to be casted back into the appropriate subclass this was solved by creating the unitType(subclass Type) variable. Also in order for this class to preform right with other classes and functions all of the variables need to be set. 
+	
+\subsubsection{Detailed Design for Component: Movement Calculator}
+\paragraph{Purpose} The movement calculator is a static java class that handles most forms of movement. 
+\paragraph{Input} The movement calculator takes two inputs to generate a list of moves: the unit moving, and the hex object they are beginning from. To calculate a retreat, the movement calculator takes as input the unit retreating, the hex they are retreating from, and the number of hexes they are required to retreat.
+\paragraph{Output} The movement calculator produces two main outputs: A hashmap of moves that a unit can reach (within the rules of movement specified by the board game) during a given movement phase, paired with their remaining movement cost after moving to a key hex in the hashmap, or an arraylist of moves that a unit can move to while retreating, during the combat phase.
+\paragraph{Process} The movement calculator uses recursion to examine the neighbors of the provided hex location. From each neighbor, it evaluates their neighbors, and so on. In both cases (movement/retreat) the recursion is terminated by reaching a lower bound (0) on the limiting value for their movement. For a moving unit, this is their given movement allowance per turn. For a retreating unit, this is the number generated from the combat results table that indicates how many hexes a unit must retreat. For each step of recursion, decisions are made within control flow that are designed to model the rules of the original S\&S board game. These factors include, but are not limited to, hex terrain types, hex edge types, geographical obstacles, and enemy occupation. 
+\paragraph{Design Constraints and Performance Requirements} The design was constrained by two factors - code complexity and time. By designing the movement calculator to use recursion, the complexity of the component was greatly reduced. However, due to the many factors involved in movement, the design is still complex. Also, the moves available to a unit need to be calculated quickly. However, recursion is not very fast. Thankfully, Colin Clifford added some optimization code to the calculator, which has greatly increased performance with respect to time.
 
 \subsection{Data Dictionary}
 \small{
@@ -168,7 +204,7 @@ UnitPool & Sorted TreeMap & UnitPool.java & Movement Calculator, Networking, Mai
 \end{tabularx}
 \end{center}
 }
-		%Tabular - insert table here		
+	
 \section{Requirements Traceability}
 \subsection{Movement}
 	\paragraph{Requirements Description} Our requirement for movement was that a unit would be selected from the GUI and the GUI would highlight all available moves for the given unit. The player could then select the desired location for movement and the unit would move there.

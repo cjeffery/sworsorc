@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.25)  5 MAY 2014 16:06
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.25)  6 MAY 2014 09:49
 entering extended mode
 **cs383SSDD.tex
 
@@ -499,49 +499,159 @@ Overfull \hbox (0.38629pt too wide) in paragraph at lines 84--85
  []
 
 [4] [5]
-Overfull \hbox (2.45274pt too wide) in paragraph at lines 146--146
+Overfull \hbox (4.74767pt too wide) in paragraph at lines 154--154
+[]|\OT1/cmr/bx/n/10.95 Type/Range| 
+ []
+
+
+Overfull \hbox (10.7869pt too wide) in paragraph at lines 154--154
 []|\OT1/cmr/bx/n/10.95 Dependencies| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 146--146
+Overfull \hbox (7.71481pt too wide) in paragraph at lines 154--154
+[]|\OT1/cmr/bx/n/10.95 Subordinates| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Static
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Determine
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+\OT1/cmr/m/n/10.95 re-sults of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+\OT1/cmr/m/n/10.95 com-bat
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Two Ar-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+\OT1/cmr/m/n/10.95 rayLists:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+\OT1/cmr/m/n/10.95 At-tack-ers,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Unit Sub-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Moveable
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 All in-di-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+\OT1/cmr/m/n/10.95 vid-ual unit
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Unit Sub-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Moveable
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
 []|\OT1/cmr/m/n/10.95 Define and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 146--146
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+\OT1/cmr/m/n/10.95 limit ac-cess
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+\OT1/cmr/m/n/10.95 to main
+ []
+
+
+Underfull \hbox (badness 7631) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Unit Su-per-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 ArmyUnit,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+\OT1/cmr/m/n/10.95 Char-ac-ter,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Determine
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
 []|\OT1/cmr/m/n/10.95 UnitPool,
  []
 
-[6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 168--168
+
+Overfull \hbox (2.74832pt too wide) in paragraph at lines 154--154
+[]|\OT1/cmr/m/n/10.95 Retreat/Move| 
+ []
+
+[6] [7] [8] [9]
+Underfull \hbox (badness 10000) in paragraph at lines 204--204
 []|\OT1/cmr/bx/n/10.95 Referenced
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 168--168
+Underfull \hbox (badness 10000) in paragraph at lines 204--204
 []|\OT1/cmr/m/n/10.95 HUDController,
  []
 
-[8]
+[10]
 (C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
 n\SSDD\cs383SSDD.aux) ) 
 Here is how much of TeX's memory you used:
  2924 strings out of 493921
  37125 string characters out of 3147267
- 110191 words of memory out of 3000000
+ 111191 words of memory out of 3000000
  6180 multiletter control sequences out of 15000+200000
  14913 words of font info for 57 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,9n,24p,809b,234s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,9n,24p,1493b,234s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
 :/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program
  Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on cs383SSDD.pdf (8 pages, 110134 bytes).
+Output written on cs383SSDD.pdf (10 pages, 116920 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
+ 55 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
