@@ -1,4 +1,4 @@
-\contentsline {chapter}{\numberline {1}TEST PLAN (TP) TEMPLATE}{1}{chapter.1}
+\contentsline {chapter}{\numberline {1}TEST PLAN (TP) for Game Rules and Play}{1}{chapter.1}
 \select@language {english}
 \select@language {english}
 \select@language {english}
@@ -69,6 +69,7 @@
 \select@language {english}
 \select@language {english}
 \select@language {english}
+\select@language {english}
 \contentsline {section}{\numberline {2}REFERENCES}{2}{section.1.2}
 \select@language {english}
 \select@language {english}
@@ -84,8 +85,7 @@
 \contentsline {section}{\numberline {6}FEATURES TO BE TESTED}{2}{section.1.6}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {7}FEATURES NOT TO BE TESTED}{2}{section.1.7}
-\select@language {english}
+\contentsline {section}{\numberline {7}FEATURES NOT TO BE TESTED}{3}{section.1.7}
 \select@language {english}
 \contentsline {section}{\numberline {8}APPROACH}{3}{section.1.8}
 \select@language {english}
@@ -103,15 +103,15 @@
 \contentsline {subsection}{\numberline {9.1}Reporting a failure}{3}{subsection.1.9.1}
 \contentsline {subsubsection}{\numberline {9.1.1}What Constitutes failure?}{3}{subsubsection.1.9.1.1}
 \contentsline {subsubsection}{\numberline {9.1.2}What Does Not Constitute a failure?}{3}{subsubsection.1.9.1.2}
-\contentsline {subsubsection}{\numberline {9.1.3}What to do when a failure is discovered?}{3}{subsubsection.1.9.1.3}
-\contentsline {subsubsection}{\numberline {9.1.4}What if a specification document is incorrect (e.g. outdated, misstated)?}{3}{subsubsection.1.9.1.4}
+\contentsline {subsubsection}{\numberline {9.1.3}What to do when a failure is discovered?}{4}{subsubsection.1.9.1.3}
+\contentsline {subsubsection}{\numberline {9.1.4}What if a specification document is incorrect (e.g. outdated, misstated)?}{4}{subsubsection.1.9.1.4}
 \contentsline {subsubsection}{\numberline {9.1.5}What sections to include in an SCR?}{4}{subsubsection.1.9.1.5}
 \contentsline {subsection}{\numberline {9.2}Unit Testing Pass/Fail Criteria}{4}{subsection.1.9.2}
 \contentsline {subsection}{\numberline {9.3}Intergration Testing Pass/Fail Criteria}{4}{subsection.1.9.3}
 \contentsline {subsubsection}{\numberline {9.3.1}Character}{4}{subsubsection.1.9.3.1}
 \contentsline {subsubsection}{\numberline {9.3.2}Spells}{4}{subsubsection.1.9.3.2}
 \select@language {english}
-\contentsline {section}{\numberline {10}SUSPENSION CRITERIA}{4}{section.1.10}
+\contentsline {section}{\numberline {10}SUSPENSION CRITERIA}{5}{section.1.10}
 \select@language {english}
 \select@language {english}
 \select@language {english}
@@ -136,12 +136,12 @@
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {15}RESPONSIBILITIES}{5}{section.1.15}
+\contentsline {section}{\numberline {15}RESPONSIBILITIES}{6}{section.1.15}
 \select@language {english}
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {16}SCHEDULE}{5}{section.1.16}
+\contentsline {section}{\numberline {16}SCHEDULE}{6}{section.1.16}
 \select@language {english}
 \select@language {english}
 \select@language {english}

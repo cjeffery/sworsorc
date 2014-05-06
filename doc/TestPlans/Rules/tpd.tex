@@ -1,4 +1,4 @@
-\chapter{TEST PLAN (TP)}
+\chapter{TEST PLAN (TP) for Game Rules and Play}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
 Version 1.1, April 2014
@@ -80,7 +80,7 @@ Prepared by:
 \par}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-Matthew Brown (Rules Team)
+Tao Zhang, Cameron Simon, Matthrew Brown, \\Tyler Jaszkowiak, Ian Westrope, ChiHsiang Wang \\(Rule Team)
 \par}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
@@ -483,26 +483,42 @@ Section\ \ Page}
 {\selectlanguage{english}\color{black}
 This test plan has no unique identifier other than Spring 2014 CS 383 sworsorc. This particular test plan is in conjunction to the rules and game play group test plans. There are many test plans for this group do to the size and span of the group's contents. This test plan, for example, will be known as the Units test plan.}
 
+\section[REFERENCES]{\selectlanguage{english}\bfseries\color{black}
+REFERENCES}
+%{\selectlanguage{english}\itshape\color{black}
+
+{\selectlanguage{english}\color{black}
+Use Cases and State diagrams are available at https://github.com/cjeffery/sworsorc/tree/master/doc }
+
 
 \section[INTRODUCTION]{\bfseries\color{black} INTRODUCTION}
 
-{\selectlanguage{english}\itshape\color{black}
+{\selectlanguage{english}\color{black}
+The purpose of this test plan is to state the processes used by Game Rules and Play Team in testing the Spells and Characters for the Swords \& Sorcery project.(Tao, Cameron)
+\\
+This test plan covers the creation and implementation of the Moveableunit class and its sub class Armyunits. (Matt)
 
-This test plan covers the creation and implementation of the Moveableunit class and its sub class Armyunits. 
+
 }
 
 \section[TEST ITEMS]{\bfseries\color{black} TEST ITEMS}
 
-{\selectlanguage{english}\itshape\color{black}
+{\selectlanguage{english}\color{black}
 
 The army units will be tested for the proper member variable values as well as proper results from the member function of the Moveableunit and Armyunit classes. Variables will tested at creation and members variable will be tested for proper results when applicable. Some example tests will be that the location member variable is properly set during movement. Also another type of test that will be preformed is that conjured units are properly created and and placed in the proper place on the game board. 
 }
 
 {\selectlanguage{english}\color{black}
-[Insert text here.]}
+\begin{itemize}
+\item Class Interfaces
+\item Class Interactions
+\item Spells Implementation
+\item Character 
+\end{itemize}
+}
 
 \section[SOFTWARE RISK ISSUES]{\bfseries\color{black} SOFTWARE RISK ISSUES}
-{\selectlanguage{english}\itshape\color{black}
+{\selectlanguage{english}\color{black}
 
 {\selectlanguage{english}\color{black}
 \begin{itemize}
@@ -519,6 +535,10 @@ The army units will be tested for the proper member variable values as well as p
 \item units are properly represented on HUD
 \item movement location is correct on map
 \item moral status is properly updated after combat
+\item Select character on GUI
+\item Select Spell
+\item Effects of Partial Spells
+\item Manna Costing
 \end{itemize}
 }
 
@@ -529,7 +549,7 @@ What is not tested is the count of the units on the map that correspond to the s
 }
 
 \section[APPROACH]{\bfseries\color{black} APPROACH}
-{\selectlanguage{english}\itshape\color{black}
+{\selectlanguage{english}\color{black}
 
 {\selectlanguage{english}\color{black}
 We will use JUnit tests as well as manual tests to determine the effectiveness and accuracy of the methods and variables tested. 
@@ -537,14 +557,19 @@ We will use JUnit tests as well as manual tests to determine the effectiveness a
 
 \section[ITEM PASS/FAIL CRITERIA]{\bfseries\color{black}
 	 ITEM PASS/FAIL CRITERIA}
-
 {\selectlanguage{english}\color{black}
 Items will receive a PASS once the variables/methods have been test multiple times and under different circumstances and the results of the test were within expected parameters. A FAIL will be received if the test results are not within expected parameters. 
 }
 
+\subsection{Unit Testing Pass/Fail Criteria}
+\subsection{Intergration Testing Pass/Fail Criteria}
+\input{character_integration}
+\input{spell_integration}
+
+
 \section[SUSPENSION CRITERIA]{\bfseries\color{black}
 	 SUSPENSION CRITERIA AND RESUMPTION REQUIREMENTS}
-{\selectlanguage{english}\itshape\color{black}
+{\selectlanguage{english}\color{black}
 
 {\selectlanguage{english}\color{black}
 Tests will be suspended if a bigger piece of code that directly or indirectly effects the code is compromised. Tests will also be suspended once a FAIL has be received for that test. The tests will be resumed once the effected code fixed. 
@@ -573,21 +598,21 @@ There are no special requirements for this test plan.
 }
 
 \section[STAFFING AND TRAINING NEEDS]{\bfseries\color{black} STAFFING AND TRAINING NEEDS}
-{\selectlanguage{english}\itshape\color{black}
+{\selectlanguage{english}\color{black}
 
 {\selectlanguage{english}\color{black}
 Training in JUnit test is required to understand sections of the code. 
 }
 
 \section[RESPONSIBILITIES]{\bfseries\color{black} RESPONSIBILITIES}
-{\selectlanguage{english}\itshape\color{black}
+{\selectlanguage{english}\color{black}
 
 {\selectlanguage{english}\color{black}
 This is a co-operative, no one person is in charge. Tests are divided by group type developers. 
 }
 
 \section[SCHEDULE]{\bfseries\color{black} SCHEDULE}
-{\selectlanguage{english}\itshape\color{black}
+{\selectlanguage{english}\color{black}
 
 
 {\selectlanguage{english}\color{black}
