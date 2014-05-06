@@ -1,0 +1,190 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\parskip=0pt
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vfill
+    \vfill
+    \includegraphics{UIGraphic}
+    \vfill
+    {\bfseries\Large
+        Swords and Sorcery Implementation Description\\
+        University of Idaho, CS 383, Spring 2014\\
+        %\vskip2cm
+        %Keith Drew, ... \\
+        %\vskip2cm
+        \today
+    }    
+    \vfill
+\end{titlepage}
+
+\section{Introduction and Document Description}
+This is a description of the Swords and Sorcery implementation, both in general
+and the implementation of major code modules.
+
+This document particularly describes what was not covered in the design
+documentation, as wekk as places where implementation differs from design.
+
+Sections are:
+\begin{itemize}
+\item Implemetation Overview
+\item Deployment, System Requirements, and Libraries
+\item Building
+\item Major Code Modules
+\begin{itemize}
+	\item The JavaFX HUD	
+	\item The Map Rendering Code
+	\item The Networking System
+	\item The Map File Format
+	\item The Movement Calculator
+	\item ...
+\end{itemize}
+\end{itemize}
+
+================================================================================
+Implementation Overview:
+================================================================================
+
+Swords and Sorcery is programmed in Java 8 (after switching from Java 7),
+and is cross platform across Windows, Mac and Linux.
+
+
+It uses a 2D top-down view and graphics based on the physical game by SPI,
+has a GUI programmed in JavaFX and swing, and some TCP networking
+support.
+
+Unfortunately the implementation remains incomplete, so while some basic
+functionality exists, users will find it impossible to face eachother in battle
+over the internet.
+
+================================================================================
+Deployment, System Requirements, and Libraries:
+================================================================================
+
+Swords and Sorcery requires the Java 8 JRE installed to run. This must be 
+installed by the user independantly before trying to launch the game.
+
+There is no installer package. The program takes the form of two .jar files
+(one for the client, and one for the server), along with a library folder and a 
+resources folder.
+
+In Windows the user should be
+able to launch the program by double clicking one of these .jar files. 
+
+In other supported operating systems the user should be able to launch the program
+with the following command line script
+
+    java -jar client.jar
+
+or 
+
+    java -jar server.jar
+
+The program must be launched from the command line in this manner if the user wishes
+to view debug output.
+
+The only required libraries are
+
+\begin{itemize}
+	\item json-simple 1.1.1
+	\item controlsfx 8.0.5
+\end{itemize}
+
+.jar distributions of these two libraries are included.
+
+Swords and Sorcery isn't the fastest Java code on the block, but should be
+runnable by most contemporary systems.
+
+================================================================================
+Building:
+================================================================================
+
+Swords and Sorcery is hosted on github. If git is installed then the source can
+be downloaded with the following command:
+
+    git clone https://github.com/cjeffery/sworsorc.git
+
+It was programmed using the Netbeans 8 IDE (after switching from netbeans 7.2)
+
+Swords and Sorcery can be compiled from inside Netbeans 8 by selecting either
+the <default config> or the Game build targets to build the client. The server
+can be built by selecting the Server target.
+
+Other build targets exist for debugging or legacy reasons and should be ignored.
+
+Alternatively Swords and Sorcery can be built from the command line with ant,
+using a build script similar to the following:
+
+    ant -f build.xml -q -Dconfig=Game jar
+    ant -f build.xml -q -Dconfig=Server jar
+
+to build the client and server respectively.
+
+Be aware that however the project is built, 
+both client and server will build a file called sworsorc.jar
+
+If both client and server have to exist side by side,
+then the .jar files will have to be renamed to avoid overwriting eachother.
+
+================================================================================
+Major Code Modules
+================================================================================
+
+Swords and Sorcery has several major code modules. Amongst them the following
+have interesting enough implementations to bear discussing:
+
+\begin{itemize}
+	\item The JavaFX HUD	
+	\item The Map Rendering Code
+	\item The Networking System
+	\item The Map File Format
+	\item The Movement Calculator
+    \item ...
+\end{itemize}
+
+================================================================================
+How Major Code Modules fit together
+================================================================================
+Not sure how feasible writing this section will be.
+Ideally would be compared to design.
+
+================================================================================
+The JavaFX HUD
+================================================================================
+Describe Game.java and HUDController.java I guess
+
+================================================================================
+The Map Rendering Code
+================================================================================
+Colin will write this
+
+================================================================================
+The Networking System
+================================================================================
+Network team should write this
+
+================================================================================
+The Map File Format
+================================================================================
+
+================================================================================
+The Movement Calculator
+================================================================================
+Be sure to mention that it uses a recursive algorithm
+
+================================================================================
+Gameplay Model Classes
+================================================================================
+Gameplay team knock yourself out.
+
+UnitPool could also go here, or in it's own section.
+
+
+\end{document}
