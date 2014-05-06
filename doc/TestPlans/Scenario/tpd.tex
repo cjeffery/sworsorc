@@ -1,0 +1,600 @@
+\chapter{TEST PLAN (TP) TEMPLATE}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Version 1.1, April 2014
+\par}
+
+{\centering\bfseries\color{black}
+TEST PLAN: SCENARIO CLASS}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+FOR
+\par}
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Swords \& Sorcery
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+\begin{figure}
+\centering
+\includegraphics[width=3.4354in,height=0.6126in]{uislogan.png}
+\end{figure}
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Version 1
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+6 May 2014
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Prepared for:
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Clinton Jeffery
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Prepared by:
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Tyler Jaszkowiak
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+University of Idaho
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+Moscow, ID \ 83844-1010
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+CS383 TPD
+\par}
+
+\pagebreak
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+RECORD OF CHANGES (Change History)
+\par}
+
+\begin{flushleft}
+\tablehead{}
+\begin{supertabular}{|m{0.5462598in}|m{0.6712598in}|m{1.4212599in}|m{0.23375985in}|m{1.7962599in}|m{0.7337598in}|m{0.6295598in}|}
+\hline
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} Change}\par
+
+\centering {\selectlanguage{english}\bfseries\color{black} Number}\par
+
+~
+ &
+~
+
+\centering \selectlanguage{english}\bfseries\color{black} Date completed
+&
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} Location of
+change }\par
+
+\centering \selectlanguage{english}\bfseries\color{black} (e.g., page or
+figure \#) &
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} A}\par
+
+\centering \selectlanguage{english}\bfseries\color{black} M\newline
+D  &
+~
+
+\centering {\selectlanguage{english}\bfseries\color{black} Brief
+description }\par
+
+\centering \selectlanguage{english}\bfseries\color{black} of change &
+~
+
+\centering \selectlanguage{english}\bfseries\color{black} Approved by
+(initials) &
+~
+
+\centering {\bfseries\color{black} Date }\par
+
+\centering\arraybslash\bfseries\color{black}
+approved\\
+1
+ &
+6 May 2014
+ &
+Document
+ &
+A
+ &
+Creation of Test Plan
+ &
+TJ
+ &
+6 May 2014
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+ &
+~
+\\\hline
+
+
+\end{supertabular}
+\end{flushleft}
+{\selectlanguage{english}\color{black}
+A - ADDED \ M - MODIFIED \ D -- DELETED}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+[ put program /system name here ]
+\par}
+
+\pagebreak
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+TABLE OF CONTENTS
+\par}
+
+{\selectlanguage{english}\bfseries\color{black}
+Section\ \ Page}
+
+\setcounter{tocdepth}{9}
+\renewcommand\contentsname{}
+\tableofcontents
+
+\bigskip
+
+\bigskip
+\setcounter{page}{1}\pagestyle{Convertiv}
+
+\section[IDENTIFIER]{\selectlanguage{english}\bfseries\color{black}
+TEST PLAN IDENTIFIER}
+
+{\selectlanguage{english}\color{black}
+This test plan covers the Scenario class in the Swords \& Sorcery project for 
+Dr. Jeffery's Spring 2014 CS383 class. The Scenario class is part of the Rules 
+and Game Play team's work.}
+
+
+\section[REFERENCES]{\selectlanguage{english}\bfseries\color{black}
+REFERENCES}
+
+{\selectlanguage{english}\color{black}
+The Scenario class itself can be found at https://github.com/cjeffery/sworsorc/blob/master/src/utilities/sscharts/Scenario.java 
+The automated unit tests for the class reside in https://github.com/cjeffery/sworsorc/blob/master/src/test/sschartstests/ScenReaderTest.java 
+The versions refered to in this document shall be that from commit  b86744e0a0d31de79eba0f9663298e7ba1bc7196.
+}
+
+
+
+\section[INTRODUCTION]{\bfseries\color{black} INTRODUCTION}
+
+{\selectlanguage{english}\color{black}
+
+This test plan is to provide as much coverage as possible to the methods 
+and data of the Scenario class by verifying the results of execution 
+against expectations through a series of automated unit tests and a 
+manual GUI test.
+
+}
+
+\section[TEST ITEMS]{\bfseries\color{black} TEST ITEMS}
+
+{\selectlanguage{english}\itshape\color{black}
+These are things you intend to test within the scope of this test
+plan. Essentially, something you will test, a list of what is to be
+tested. This can be developed from the software application
+inventories as well as other sources of documentation and information.
+}
+
+{\selectlanguage{english}\color{black}
+The data read by the Scenario test will be read from one of the simple 
+scenario configuration files and then verified against expectations through 
+the class's accessor methods. These data items include }
+
+{\selectlanguage{english}\color{black}
+\begin{itemize}
+\item The scenario's name
+\item Number of players
+\item Game length
+\item The blue sun's initial position
+\item The names of armies in the scenario
+\item The controlling players of these armies
+\item The setup order of these armies
+\item The movement order of these armies
+\item Names of nations within these armies
+\item Names of the neutrals in the scenario
+\item The provinces controlled by a nation
+\item The characters within a nation
+\item The units within a player nation
+\item The units within a neutral nation
+\item The races of both neutrals and player nations
+\item The reinforcement and replacement description strings
+\item Data related to where a neutral is leaning toward
+\item Whether or not a neutral accepts human sacrifice
+\end{itemize}
+}
+
+{\selectlanguage{english}\color{black}
+Unfortunately, the most complex functionality of the Scenario class 
+cannot be tested by automated unit tests. The unit pool populator requires 
+a manual check. }
+
+\section[SOFTWARE RISK ISSUES]{\bfseries\color{black} SOFTWARE RISK ISSUES}
+{\selectlanguage{english}\color{black}
+
+Identify what software is to be tested and what the critical areas
+are, such as:
+
+\begin{itemize}
+\item Depends on Java's JSON reader and the programmer's understanding of it
+\item Complex data structures such as Map\<String, Map\<String, Integer\>\>
+\item Complex loops to iterate over data structures
+\item Poor documentation surrounding some of these iterators
+\end{itemize}
+}
+
+\section[FEATURES TO BE TESTED]{\bfseries\color{black} FEATURES TO BE TESTED}
+{\selectlanguage{english}\itshape\color{black}
+
+This is a listing of what is to be tested from the USERS viewpoint of
+what the system does. This is not a technical description of the
+software, but a USERS view of the functions.
+
+}
+{\selectlanguage{english}\color{black}
+From the user's perspective, much of this data reading occurs under the hood. 
+In all cases except for populating the unit pool, the Scenario class does not 
+manipulate any pieces of the rest of the project. Other components read the 
+data from the Scenario class. Therefore, while the solar configuration relies 
+on a properly-working Scenario class, this is not apparent to the user because 
+solar configuration is also handled by SolarConfig and HUDInitializer classes.
+
+Therefore, the only visible component being tested by this plan is the placement 
+of units and characters into the correct provinces of the map.}
+
+\section[FEATURES NOT TO BE TESTED]{\bfseries\color{black}
+	 FEATURES NOT TO BE TESTED}
+{\selectlanguage{english}\itshape\color{black}
+
+This is a listing of what is NOT to be tested from both the Users
+viewpoint of what the system does and a configuration
+management/version control view. This is not a technical description
+of the software, but a USERS view of the functions.
+
+}
+{\selectlanguage{english}\color{black}
+All data is verified, but testing the Scenario class alone cannot ensure 
+that it reaches the HUD successfully. Integration tests are required outside 
+of this plan for information such as solar configuration, move order, setup order, 
+game length, and diplomacy.
+}
+
+\section[APPROACH]{\bfseries\color{black} APPROACH}
+{\selectlanguage{english}\color{black}
+The automated unit tests rely on the JUnit tool. Code coverate metrics can 
+also be acquired regarding the automated tests by running the NetBeans Java 
+Code Coverage plugin on the project. This will verify all data read in.
+
+Because units cannot be placed into the unit pool if the map is not loaded, 
+automated testing of unit placement is difficult. Therefore, the placement 
+of units and characters in the correct provinces will have to 
+be verified manually by counting units of each type in one of the scenario's 
+nations when running the game.}
+
+\section[ITEM PASS/FAIL CRITERIA]{\bfseries\color{black}
+	 ITEM PASS/FAIL CRITERIA}
+
+{\selectlanguage{english}\color{black}
+The automated tests must all pass and result in 100% instruction coverage for 
+each of the class's accessor methods. One of the nations in the scenario must 
+have the correct number and types of units loaded into the provinces it controls.}
+
+\section[SUSPENSION CRITERIA]{\bfseries\color{black}
+	 SUSPENSION CRITERIA AND RESUMPTION REQUIREMENTS}
+{\selectlanguage{english}\color{black}
+If any of the accessor method tests fails, the test must be suspended as 
+this is likely due to a change in the class's interface or the scenario 
+itself. Any such bug must be resolved before it makes sense to find others.}
+
+\section[TEST DELIVERABLES]{\bfseries\color{black} TEST DELIVERABLES}
+
+{\selectlanguage{english}\color{black}
+\begin{itemize}
+\item Test plan document
+\item JUnit test cases
+\item A report of passes/failures from JUnit
+\item A coverage report from JaCoCo
+\end{itemize}}
+
+\section[REMAINING TEST TASKS]{\bfseries\color{black} REMAINING TEST TASKS}
+
+{\selectlanguage{english}\color{black}
+All other classes in the project require some level of testing as well. 
+In particular, the HUD and SolarConfig related classes directly affect 
+the performance of Scenario.}
+
+\section[ENVIRONMENTAL NEEDS]{\bfseries\color{black} ENVIRONMENTAL NEEDS}
+
+{\selectlanguage{english}\color{black}
+No specific requirements exist.}
+
+\section[STAFFING AND TRAINING NEEDS]{\bfseries\color{black}
+	 STAFFING AND TRAINING NEEDS}
+{\selectlanguage{english}\color{black}
+Understading of NetBeans, Java, JUnit, and JaCoCo.}
+
+\section[RESPONSIBILITIES]{\bfseries\color{black} RESPONSIBILITIES}
+{\selectlanguage{english}\color{black}
+Anyone may perform these tests. However, as the author of this particular 
+class, it would probably be most efficent to have Tyler Jaszkowiak run 
+them.}
+
+\section[SCHEDULE]{\bfseries\color{black} SCHEDULE}
+{\selectlanguage{english}\color{black}
+Tests will be conducted once before the semester ends.}
+
+\section[PLANNING RISKS AND CONTINGENCIES]{\bfseries\color{black}
+	 PLANNING RISKS AND CONTINGENCIES}
+{\selectlanguage{english}\color{black}
+[Insert text here.]}
+
+\section[APPROVALS]{\bfseries\color{black} APPROVALS}
+{\selectlanguage{english}\color{black}
+Dr. Jeffery has the final word. However, I imagine that the team 
+generating the test documentation will decide which tests can be 
+approved and whether to continue.}
+
+\section[GLOSSARY]{\bfseries\color{black} GLOSSARY}
+{\selectlanguage{english}\color{black}
+JaCoCo: The Java Code Coverage plugin for NetBeans}
+
+\bigskip
