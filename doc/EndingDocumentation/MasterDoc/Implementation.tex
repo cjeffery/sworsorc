@@ -69,6 +69,37 @@ Unfortunately the implementation remains incomplete, so while some basic
 functionality exists, users will find it impossible to face eachother in battle
 over the internet.
 
+What does work includes:
+
+TODO: add to this
+\begin{enumerate}
+\item{Starting a client}
+\item{Starting a server}
+\item{Connecting to a server and communicating back and forth}
+\item{Loading a predetermined scenario}
+\item{Moving units according to their movement allowances}
+\item{Casting basic spells}
+\item{Teleporting}
+\item{Viewing Unit statistics}
+\item{Viewing Army Units, Terrain, or basic Hex Edges on the Main Map}
+\item{Viewing a blank Diplomacy Map}
+\item{Starting a server}
+\item{Seeing the solar display or game phases change when ending a turn}
+\end{enumerate}
+
+What does not work includes:
+
+TODO: remove from this
+\begin{enumerate}
+\item{Game State Synchronization between clients}
+\item{Special Hex Rendering}
+\item{Character or Monster Rendering}
+\item{MiniMap or Diplomacy Map}
+\item{Full retreating or advancing}
+\item{Random Events}
+\item{Starting a server}
+\end{enumerate}
+
 %===============================================================================
 \section{Running, Deployment, System Requirements, and Libraries}
 %===============================================================================
@@ -142,18 +173,18 @@ have interesting enough implementations to bear discussing:
 
 \begin{itemize}
 	\item The JavaFX HUD	
-	\item The Map Rendering Code
+	\item The Map Rendering and the Map View Code
 	\item The Networking System
 	\item The Map File Format
 	\item The Movement Calculator
-    \item ...
+    \item Various Gameplay Classes
 \end{itemize}
 
 %===============================================================================
-\section{How Major Code Modules fit together}
+%\section{How Major Code Modules fit together}
 %===============================================================================
-Not sure how feasible writing this section will be.
-Ideally would be compared to design.
+%Not sure how feasible writing this section will be.
+%Ideally would be compared to design.
 
 %===============================================================================
 \section{The JavaFX HUD}
@@ -161,9 +192,148 @@ Ideally would be compared to design.
 Describe Game.java and HUDController.java I guess
 
 %===============================================================================
-\section{The Map Rendering Code}
+\section{JavaFX MapView interaction}
 %===============================================================================
-Colin will write this
+The GUI was switched to JavaFX partway through the project.
+
+This proved a challenge for the Map View implementation, as there are unique
+challenges using swing widgets in JavaFX based code.
+
+Passable support was fortunately very doable using the SwingNode class,
+as implemented by TODO: WHO DID THIS?
+
+But one unresolved implementation issue was threading concerns.
+
+Any interaction between swing and JavaFX has to be done on the appropriate
+thread. But there wasn't enough time to resolve these threading concerns.
+
+The code seems to work OK, but this bug could conceivably lead to weird
+or inexplicable behavior on certain systems or edge cases.
+
+%===============================================================================
+\section{The Map Rendering Code and the Map View}
+%===============================================================================
+
+None of the Map Rendering code or Map View code was designed.
+It was just pulled out of thin air, using the time-honored alchemical process
+of spontaneous generation.
+
+Fortunately this worked pretty well, as Java's libraries dictate a lot
+of the design up front, and I (Colin) have had some experience in the past
+with Java swing programming.
+
+\subsection{The Map Rendering Code}
+There are a few questionable design decisions, and a bit of duplicate code,
+but overall it worked pretty well and the implementation didn't end up
+inherently broken.
+
+The Map Rendering code is done with Java's swing framework. All rendering
+is done onto standard swing Graphics2D objects that are passed in from the
+Map View.
+
+It consists of two main classes that work in similar ways:
+\begin{enumerate}
+\item{UnitPainter}
+\item{HexPainter}
+\end{enumerate}
+
+Both of these classes are similar, and if they were ever refactored it might
+make sense to have them both inheret from the same class.
+
+Both classes have methods that accept a Graphics2D object from Java's 2D API
+to render on to.
+
+Both classes load a variety of PNG images from disk to assist in rendering.
+Most of the terrain images were drawn by Joe Higley.
+The unit images were drawn by Colin Clifford.
+
+HexPainter is in charge of rendering Hexagons and edges,
+and passes off Unit rendering to UnitPainter.
+
+Unit Rendering involves drawing a partially transparant unit icon,
+and (in the case of Army Units) a status string.
+
+Due to time constraints only Army Units are mostly supported. With characters
+being stubbed in and looking weird.
+
+Edges are rendering using simple straight colored lines using swing.
+There's a bit of hexagon math to prevent two elements of the same edge
+from obscuring eachother, and to draw roads / trails from the center of the
+hexagon to the edge.
+
+
+\subsection{The Map View Code}
+Most of the Map View code is in a single class called (appropriately enough)
+MapView.
+
+MapView is a Swing widget, but the GUI is JavaFX based. So the GUI wraps
+MapView inside a SwingNode object.
+
+MapView does two main things:
+\begin{enumerate}
+\item{Implement various swing widget methods (most notably PaintComponent)}
+\item{Contain methods for necessary math for determining hexagon tiling}
+\end{enumerate}
+
+MapView implements scrollable, so it can be added to a JScrollPane to support
+scrolling.
+
+The PaintComponent method is what interacts with the Map Rendering code.
+
+The hexagon tiling math is interesting
+
+\subsubsection{Hexagon Math}
+Hexagon math was cobbled together from various sources on the internet and
+frenzied scribbles on note-paper. 
+
+It's honestly pretty hairy, so I tried to include helpful comments in
+MapView.
+
+I will not fully describe all the hexagon math here, but I'll share the general
+principles.
+
+Hexagons are oriented such that the top and bottom are horizontal lines,
+as per the physical Swords and Sorcery map.
+
+The width of one hexagon is 64px. But as columns fit together
+smoothly the distance between a column and it's neighbors is 3/4ths that.
+
+The height of a hexagon is the radius (32px) times the square root of 3.
+
+But the key to hexagon tiling was this stackoverflow post:
+http://gamedev.stackexchange.com/a/20762 
+
+Which is to say, Hexagon picking involves converting between hexagon shaped
+and rectangle shaped tilings. Pretty cool.
+
+With this I was able to tile hexagons graphically, and convert mouse coordinates
+to hexagons or hexagon edges.
+
+\subsection{Interaction Between MapView and Map Rendering}
+
+The Map Rendering code has three entry main entry points:
+\begin{enumerate}
+\item{Draw a hexagon}
+\item{Draw a hexagon edge}
+\item{Highlight a hexagon}
+\end{enumerate}
+
+Each of these take a Graphics2D object that is assumed to be pre-translated so
+that the Rendering Code only has to draw off of the origin.
+
+The first two cases used to be merged, but it was important to avoid drawing a
+given edge twice, and to avoid an edge being obscured by a neighboring hexagon.
+
+So MapView takes the following passes:
+\begin{enumerate}
+\item{Requests the Map Rendering code to draw all the hexagons}
+\item{Requests the Map Rendering code to highlight any hexagons that nee
+      highlighting}
+\item{Requests the Map Rendering code to draw all the edges}
+\end{enumerate}
+
+This "layered" approach gives a pretty smooth look, where nothing draws on top
+of stuff it shouldn't too much.
 
 %===============================================================================
 \section{The Networking System}
