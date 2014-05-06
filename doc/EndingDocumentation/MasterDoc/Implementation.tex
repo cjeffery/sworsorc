@@ -5,8 +5,13 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{tabularx}
-\parskip=0pt
 \usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+
+%Add whitespace between paragraphs
+\setlength{\parskip}{\baselineskip}
+%Prevent paragraph indentation
+\setlength{\parindent}{0pt}
+
 \begin{document}
 \begin{titlepage}
     \centering
@@ -24,13 +29,14 @@
     }    
     \vfill
 \end{titlepage}
-
+%===============================================================================
 \section{Introduction and Document Description}
+%===============================================================================
 This is a description of the Swords and Sorcery implementation, both in general
 and the implementation of major code modules.
 
 This document particularly describes what was not covered in the design
-documentation, as wekk as places where implementation differs from design.
+documentation, as well as places where implementation differs from design.
 
 Sections are:
 \begin{itemize}
@@ -48,10 +54,9 @@ Sections are:
 \end{itemize}
 \end{itemize}
 
-================================================================================
-Implementation Overview:
-================================================================================
-
+%===============================================================================
+\section{Implementation Overview}
+%===============================================================================
 Swords and Sorcery is programmed in Java 8 (after switching from Java 7),
 and is cross platform across Windows, Mac and Linux.
 
@@ -64,10 +69,9 @@ Unfortunately the implementation remains incomplete, so while some basic
 functionality exists, users will find it impossible to face eachother in battle
 over the internet.
 
-================================================================================
-Deployment, System Requirements, and Libraries:
-================================================================================
-
+%===============================================================================
+\section{Running, Deployment, System Requirements, and Libraries}
+%===============================================================================
 Swords and Sorcery requires the Java 8 JRE installed to run. This must be 
 installed by the user independantly before trying to launch the game.
 
@@ -78,17 +82,17 @@ resources folder.
 In Windows the user should be
 able to launch the program by double clicking one of these .jar files. 
 
-In other supported operating systems the user should be able to launch the program
-with the following command line script
+In other supported operating systems the user should be able to launch the
+program with Java from the command line, with one of the following commands to
+launch the client or server respectively:
 
-    java -jar client.jar
+\begin{enumerate}
+\item{java -jar client.jar}
+\item{java -jar server.jar}
+\end{enumerate}
 
-or 
-
-    java -jar server.jar
-
-The program must be launched from the command line in this manner if the user wishes
-to view debug output.
+The program must be launched from the command line in this manner if the user
+wishes to view debug output.
 
 The only required libraries are
 
@@ -100,18 +104,15 @@ The only required libraries are
 .jar distributions of these two libraries are included.
 
 Swords and Sorcery isn't the fastest Java code on the block, but should be
-runnable by most contemporary systems.
+runnable by most contemporary systems running Windows, Mac, or Linux.
 
-================================================================================
-Building:
-================================================================================
-
+%===============================================================================
+\section{Building}
+%===============================================================================
 Swords and Sorcery is hosted on github. If git is installed then the source can
 be downloaded with the following command:
 
     git clone https://github.com/cjeffery/sworsorc.git
-
-It was programmed using the Netbeans 8 IDE (after switching from netbeans 7.2)
 
 Swords and Sorcery can be compiled from inside Netbeans 8 by selecting either
 the <default config> or the Game build targets to build the client. The server
@@ -133,10 +134,9 @@ both client and server will build a file called sworsorc.jar
 If both client and server have to exist side by side,
 then the .jar files will have to be renamed to avoid overwriting eachother.
 
-================================================================================
-Major Code Modules
-================================================================================
-
+%===============================================================================
+\section{Major Code Modules}
+%===============================================================================
 Swords and Sorcery has several major code modules. Amongst them the following
 have interesting enough implementations to bear discussing:
 
@@ -149,39 +149,39 @@ have interesting enough implementations to bear discussing:
     \item ...
 \end{itemize}
 
-================================================================================
-How Major Code Modules fit together
-================================================================================
+%===============================================================================
+\section{How Major Code Modules fit together}
+%===============================================================================
 Not sure how feasible writing this section will be.
 Ideally would be compared to design.
 
-================================================================================
-The JavaFX HUD
-================================================================================
+%===============================================================================
+\section{The JavaFX HUD}
+%===============================================================================
 Describe Game.java and HUDController.java I guess
 
-================================================================================
-The Map Rendering Code
-================================================================================
+%===============================================================================
+\section{The Map Rendering Code}
+%===============================================================================
 Colin will write this
 
-================================================================================
-The Networking System
-================================================================================
+%===============================================================================
+\section{The Networking System}
+%===============================================================================
 Network team should write this
 
-================================================================================
-The Map File Format
-================================================================================
+%===============================================================================
+\section{The Map File Format}
+%===============================================================================
 
-================================================================================
-The Movement Calculator
-================================================================================
+%===============================================================================
+\section{The Movement Calculator}
+%===============================================================================
 Be sure to mention that it uses a recursive algorithm
 
-================================================================================
-Gameplay Model Classes
-================================================================================
+%===============================================================================
+\section{Gameplay Model Classes}
+%===============================================================================
 Gameplay team knock yourself out.
 
 UnitPool could also go here, or in it's own section.
