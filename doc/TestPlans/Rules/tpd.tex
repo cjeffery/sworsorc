@@ -495,10 +495,12 @@ Use Cases and State diagrams are available at https://github.com/cjeffery/sworso
 
 {\selectlanguage{english}\color{black}
 The purpose of this test plan is to state the processes used by Game Rules and Play Team in testing the Spells and Characters for the Swords \& Sorcery project.(Tao, Cameron)
-\\
+\newline
+\newline
 This test plan covers the creation and implementation of the Moveableunit class and its sub class Armyunits. (Matt)
-
-
+\newline
+\newline
+This test plan is also to provide as much coverage as possible to the methods and data of the Scenario class by verifying the results of execution against expectations through a series of automated unit tests and a manual GUI test. (Tyler)
 }
 
 \section[TEST ITEMS]{\bfseries\color{black} TEST ITEMS}
@@ -509,12 +511,49 @@ The army units will be tested for the proper member variable values as well as p
 }
 
 {\selectlanguage{english}\color{black}
+\subsection{Character}
 \begin{itemize}
 \item Class Interfaces
 \item Class Interactions
 \item Spells Implementation
 \item Character 
 \end{itemize}
+
+\subsection{Scenario}
+These are things you intend to test within the scope of this test
+plan. Essentially, something you will test, a list of what is to be
+tested. This can be developed from the software application
+inventories as well as other sources of documentation and information.
+\newline
+\newline
+The data read by the Scenario test will be read from one of the simple 
+scenario configuration files and then verified against expectations through 
+the class's accessor methods. These data items include 
+\newline
+\begin{itemize}
+\item The scenario's name
+\item Number of players
+\item Game length
+\item The blue sun's initial position
+\item The names of armies in the scenario
+\item The controlling players of these armies
+\item The setup order of these armies
+\item The movement order of these armies
+\item Names of nations within these armies
+\item Names of the neutrals in the scenario
+\item The provinces controlled by a nation
+\item The characters within a nation
+\item The units within a player nation
+\item The units within a neutral nation
+\item The races of both neutrals and player nations
+\item The reinforcement and replacement description strings
+\item Data related to where a neutral is leaning toward
+\item Whether or not a neutral accepts human sacrifice
+\end{itemize}
+
+Unfortunately, the most complex functionality of the Scenario class 
+cannot be tested by automated unit tests. The unit pool populator requires 
+a manual check.
 }
 
 \section[SOFTWARE RISK ISSUES]{\bfseries\color{black} SOFTWARE RISK ISSUES}
@@ -524,17 +563,39 @@ The army units will be tested for the proper member variable values as well as p
 \begin{itemize}
 \item Improper casting of units
 \item Unit ID's interpreted incorrectly
+\item Depends on Java's JSON reader and the programmer's understanding of it
+\item Complex data structures such as a map of maps
+\item Complex loops to iterate over data structures
+\item Poor documentation surrounding some of these iterators
 \end{itemize}
 }
 
 \section[FEATURES TO BE TESTED]{\bfseries\color{black} FEATURES TO BE TESTED}
 
 {\selectlanguage{english}\color{black}
+\subsection{Scenario}
+From the user's perspective, much of this data reading occurs under the hood. 
+In all cases except for populating the unit pool, the Scenario class does not 
+manipulate any pieces of the rest of the project. Other components read the 
+data from the Scenario class. Therefore, while the solar configuration relies 
+on a properly-working Scenario class, this is not apparent to the user because 
+solar configuration is also handled by SolarConfig and HUDInitializer classes.
+\newline
+\newline
+Therefore, the only visible component being tested by this plan is the placement 
+of units and characters into the correct provinces of the map.
+
+\subsection{Movement}
+
 \begin{itemize}
 \item conjured unit appear when casted
 \item units are properly represented on HUD
 \item movement location is correct on map
 \item moral status is properly updated after combat
+\end{itemize}
+
+\subsection{Character, Spells}
+\begin{itemize}
 \item Select character on GUI
 \item Select Spell
 \item Effects of Partial Spells
@@ -545,6 +606,18 @@ The army units will be tested for the proper member variable values as well as p
 \section[FEATURES NOT TO BE TESTED]{\bfseries\color{black} FEATURES NOT TO BE TESTED}
 
 {\selectlanguage{english}\color{black}
+This is a listing of what is NOT to be tested from both the Users
+viewpoint of what the system does and a configuration
+management/version control view. This is not a technical description
+of the software, but a USERS view of the functions.
+\newline
+\newline
+All data is verified, but testing the Scenario class alone cannot ensure 
+that it reaches the HUD successfully. Integration tests are required outside 
+of this plan for information such as solar configuration, move order, setup order, 
+game length, and diplomacy.
+\newline
+\newline
 What is not tested is the count of the units on the map that correspond to the scenario loaded. Also the type of unit is not test, this is assumed correct. 
 }
 
@@ -552,7 +625,9 @@ What is not tested is the count of the units on the map that correspond to the s
 {\selectlanguage{english}\color{black}
 
 {\selectlanguage{english}\color{black}
+
 We will use JUnit tests as well as manual tests to determine the effectiveness and accuracy of the methods and variables tested. 
+
 }
 
 \section[ITEM PASS/FAIL CRITERIA]{\bfseries\color{black}
@@ -563,6 +638,10 @@ Items will receive a PASS once the variables/methods have been test multiple tim
 
 \subsection{Unit Testing Pass/Fail Criteria}
 \subsection{Intergration Testing Pass/Fail Criteria}
+\subsubsection{Scenario}
+The automated tests must all pass and result in 100% instruction coverage for 
+each of the class's accessor methods. One of the nations in the scenario must 
+have the correct number and types of units loaded into the provinces it controls.
 \input{character_integration}
 \input{spell_integration}
 
@@ -582,6 +661,9 @@ Tests will be suspended if a bigger piece of code that directly or indirectly ef
 \item Test plan document
 \item Test cases
 \item Relevant error logs or problem reports
+\item JUnit test cases
+\item A report of passes/failures from JUnit
+\item A coverage report from JaCoCo
 \end{itemize}
 }
 
@@ -589,6 +671,11 @@ Tests will be suspended if a bigger piece of code that directly or indirectly ef
 
 {\selectlanguage{english}\color{black}
 This is a multi-group project in which many test plans are created for the respective group. Also since the full project as not been completed there will be more tests developed in the future. 
+\newline
+\newline
+All other classes in the project require some level of testing as well. 
+In particular, the HUD and SolarConfig related classes directly affect 
+the performance of Scenario.
 }
 
 \section[ENVIRONMENTAL NEEDS]{\bfseries\color{black} ENVIRONMENTAL NEEDS}
@@ -602,6 +689,9 @@ There are no special requirements for this test plan.
 
 {\selectlanguage{english}\color{black}
 Training in JUnit test is required to understand sections of the code. 
+\newline
+\newline
+Understading of NetBeans, Java, JUnit, and JaCoCo.
 }
 
 \section[RESPONSIBILITIES]{\bfseries\color{black} RESPONSIBILITIES}
@@ -627,8 +717,17 @@ Too many tests will cause a halt in development and since the project wont be co
 
 \section[APPROVALS]{\bfseries\color{black} APPROVALS}
 {\selectlanguage{english}\color{black}
-Dr. J is the evil genius behind the project and is the only one capable of approving this process. 
+Dr. J is the evil genius behind the project and is the only one capable of approving this process.  (Matt)
+\newline
+\newline
+Dr. Jeffery has the final word. However, I imagine that the team 
+generating the test documentation will decide which tests can be 
+approved and whether to continue.(Tyler)
 }
+
+\section[GLOSSARY]{\bfseries\color{black} GLOSSARY}
+{\selectlanguage{english}\color{black}
+JaCoCo: The Java Code Coverage plugin for NetBeans}
 
 
 
