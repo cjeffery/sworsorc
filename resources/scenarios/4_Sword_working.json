@@ -1,0 +1,234 @@
+{
+    "scenarioName": "The War of the Great Sword",
+    "gameLength":14,
+    "numberOfPlayers":2,
+    "blueSunStart":8,
+    
+    "armies": [
+        {
+            "name": "Dark Lord",
+	    "player":1,
+            "setupOrder":1,
+            "moveOrder":1,
+            "nations": [
+                {
+                    "name":"SpiderFolk",
+                    "race":"Spiders",
+                    "provinces": ["Sorcerak"],
+                    "units": {
+                        "WebWarriors":4,
+                        "SpiderLegion":6
+                    },
+                    "characters": [
+                        "Mellanthia"
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 1 shared between this whole army"
+                },
+                {
+                    "name":"ORC",
+                    "race":"Orc",
+                    "provinces":["Ithilgil"],
+                    "units": {
+                        "MediumSpear":18,
+                        "HeavySword":12,
+                        "Bow":2,
+                        "WargRider":8
+                    },
+                    "characters": [
+                        "Krawn the Crazy"
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 1 shared between this whole army"
+                },
+                {
+                    "name":"Mercenary",
+                    "race":"Human",
+                    "provinces": ["Kelgarnth", 
+                        "Citadel of Blood", 
+                        "Graumthog", 
+                        "Sorcerak", 
+                        "Zirkast", 
+                        "Kanathar", 
+                        "Ithilgil", 
+                        "Intas", 
+                        "Krasnia", 
+                        "Dwarfhaven"],
+                    "units": {
+                        "HeavySword":4,
+                        "HeavyHorse":4
+                    },
+                    "characters": [
+                        
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 1 shared between this whole army"
+                },
+                {
+                    "name":"Goblin",
+                    "race":"Goblins",
+                    "provinces": ["Kelgarnth", 
+                        "Citadel of Blood", 
+                        "Graumthog", 
+                        "Sorcerak", 
+                        "Zirkast", 
+                        "Kanathar", 
+                        "Ithilgil", 
+                        "Intas", 
+                        "Krasnia", 
+                        "Dwarfhaven"],
+                    "units": {
+                        "LightSpear":8
+                    },
+                    "characters": [
+                        
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 1 shared between this whole army"
+                },
+                {
+                    "name":"Krasnian",
+                    "race":"Dwarrows",
+                    "provinces":["Krasnia"],
+                    "units": {
+                        "HeavyAxe":6,
+                        "Bow":2
+                    },
+                    "characters": [
+                        
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 1 shared between this whole army"
+                },
+                {
+                    "name":"Zirkastian",
+                    "race":"Dwarrows",
+                    "provinces":["Zirkast"],
+                    "units": {
+                        "HeavyAxe":6
+                    },
+                    "characters": [
+                        
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 1 shared between this whole army"
+                },
+                {
+                    "name":"Convivian",
+                    "race":"Dwarrows",
+                    "provinces":["Convivia"],
+                    "units": {
+                        "HeavyAxe":4,
+                        "Bow":2
+                    },
+                    "characters": [
+                        
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"1 in 1 shared between this whole army"
+                }
+            ]
+            
+        },
+        {
+            "name": "Empire",
+	    "player":2,
+            "setupOrder": 2,
+            "moveOrder": 2,
+            "nations": [
+                {
+                    "name":"ImperialArmy",
+                    "race":"Human",
+                    "provinces":["The Empire","Capella"],
+                    "units": {
+                        "PikeMan":20,
+                        "HeavyHorse":10,
+                        "LightBow":10,
+                        "HeavySword":10
+                    },
+                    "characters": [
+                        "The Paladin Glade",
+                        "Curvenol",
+                        "Weldron"
+                    ],
+                    "reinforcements":"2 Pike units each 1 for teh first 2",
+                    "replacements":"2 in 1 shared for this army"
+                },
+                {
+                    "name":"CorfluCultist",
+                    "race":"Human",
+                    "provinces": ["Ka-Chunk"],
+                    "units": {
+                        "LightHorse":2,
+                        "Zeppelin":4,
+                        "HeavySword":8
+                    },
+                    "characters": [
+                        "Unamit Ahazredit",
+                        "Peg-Leg Gonzo"
+                    ],
+                    "reinforcements":"0",
+                    "replacements":"2 in 1 shared for this army"
+                }
+            ]
+        }
+    ],
+    
+    "neutrals": [
+        {
+            "name": "Elven",
+            "race": "Elves",
+            "provinces": ["Nattily Woods", "Vynar"],
+            "units": {
+              "HorseArcher":2,
+              "LightHorse":10,
+              "LightBow":4,
+              "LightSword":6
+            },
+            "characters": [
+                "Gwaigillion Elengal", "Linfalas"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Empire",
+                "amount":2
+            }
+        },
+        {
+            "name": "SwampCreature",
+            "race":"SwampCreature",
+            "provinces": ["The Swamps"],
+            "units": {
+              "HeavySword":6,
+              "DinosaurLegion":4,
+              "IntelligentMold":3
+            },
+            
+            "characters": [
+                "Sliggoth"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Empire",
+                "amount":0
+            }
+        },
+        {
+            "name": "Cronk",
+            "race": "Cronk",
+            "provinces": ["Aardvark Wallow"],
+            "units": {
+              "HeavyPluglunk":10,
+              "LightBow":4,
+              "LightHorse":2
+            },
+            
+            "characters": [
+                "Raman Cronkevitch", "Svartz Tarnkap"
+            ],
+            "diplomacy": {
+                "leaningTowards": "Empire",
+                "amount":1
+            }
+        }
+    ]
+
+}

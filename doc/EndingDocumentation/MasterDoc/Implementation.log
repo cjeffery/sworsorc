@@ -1,17 +1,17 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.19)  6 MAY 2014 21:34
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.25)  7 MAY 2014 09:15
 entering extended mode
 **Implementation.tex
 
-(C:\Users\Matthew\Documents\GitHub\sworsorc\doc\EndingDocumentation\MasterDoc\I
-mplementation.tex
+(C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
+n\MasterDoc\Implementation.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
 croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
-lician, german, german-x-2012-05-30, greek, gujarati, hindi, hungarian, iceland
+lician, german, german-x-2013-05-26, greek, gujarati, hindi, hungarian, iceland
 ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
  lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
-german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
 ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
 an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
 ishmax, welsh, loaded.
@@ -396,8 +396,8 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@dimlist=\toks24
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
-(C:\Users\Matthew\Documents\GitHub\sworsorc\doc\EndingDocumentation\MasterDoc\I
-mplementation.aux)
+(C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
+n\MasterDoc\Implementation.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
@@ -410,7 +410,8 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
- ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+
+("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count104
 \scratchdimen=\dimen129
@@ -465,8 +466,9 @@ Package pdftex.def Info: UIGraphic.png used on input line 20.
 (pdftex.def)             Requested size: 331.23668pt x 59.22108pt.
  [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/Matthew/Document
-s/GitHub/sworsorc/doc/EndingDocumentation/MasterDoc/UIGraphic.png>]
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/KeisterBox/Docum
+ents/NetBeansProjects/sworsorc/doc/EndingDocumentation/MasterDoc/UIGraphic.png>
+]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 43.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
@@ -481,23 +483,24 @@ Overfull \hbox (66.14616pt too wide) in paragraph at lines 303--305
 http://gamedev.stackexchange.com/a/20762 
  []
 
-[6] [7] [8]
-(C:\Users\Matthew\Documents\GitHub\sworsorc\doc\EndingDocumentation\MasterDoc\I
-mplementation.aux) ) 
+[6] [7] [8] [9]
+(C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
+n\MasterDoc\Implementation.aux) ) 
 Here is how much of TeX's memory you used:
  2783 strings out of 493921
- 35060 string characters out of 3147276
- 97548 words of memory out of 3000000
+ 35151 string characters out of 3147267
+ 99548 words of memory out of 3000000
  6062 multiletter control sequences out of 15000+200000
  5713 words of font info for 21 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  27i,5n,24p,247b,176s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Implementation.pdf (9 pages, 67539 bytes).
+<C:/Program Files/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cms
+y10.pfb>
+Output written on Implementation.pdf (10 pages, 70291 bytes).
 PDF statistics:
- 46 PDF objects out of 1000 (max. 8388607)
+ 49 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
