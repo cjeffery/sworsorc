@@ -117,16 +117,15 @@ Other concerns include design requirements such as portability,
 \subsection{Developer's Architectural View}
 \subsubsection{Developer's View Identification}
 There are multiple developer views within the scope of the S\&S project for CS383. The views represent each subteam, and there are three subteams - HUD Team, Rules Team, and Networking Team. The descriptions of each sub-view follow, as well as an overview diagram.
-\paragraph{Architectural Overview}
-The following class diagram is inaccurate with respect to the project as it currently stands. The inaccuracies are the Chart class, which does not exist, and we discovered is unnecessary, as well as the alliance and player classes, which were never created. The alliance class was never created because we didn't make it that far with the project, and the player class was replaced with flags and variables, as a class was determined to be unneeded. 
-\includepdf{overview.png}
 \paragraph{HUD Team View} The HUD Team view includes all software design related to the HUD/GUI and handles how the user(s) interact with the S\&S game rules and networking. 
 \paragraph{Rules Team View} The Rules Team view includes all software implementations of the S\&S rule set, some of which overlaps with other views. Typically, Rules Team is in charge of implementing internal logic and data structures.
 \paragraph{Networking Team View} The Networking Team view includes all network communication related to the S\&S game. This includes the client/server model, the communication protocols, the server setup and more.
 \subsubsection{Developer's View Representation and Description}
+\paragraph{Architectural Overview}
+The following class diagram is inaccurate with respect to the project as it currently stands. The inaccuracies are the Chart class, which does not exist, and we discovered is unnecessary, as well as the alliance and player classes, which were never created. The alliance class was never created because we didn't make it that far with the project, and the player class was replaced with flags and variables, as a class was determined to be unneeded. 
+\includepdf{overview.png}
 \paragraph{HUD Team View Representation and Description}
-[Insert Description of graphics (UML) here] 
-%\includegraphics[scale=•]{•}
+The HUD team view includes both rules that affect the HUD (movement, hex painting, terrain, etc.) and the actual HUD itself, containing a view of the map, the minimap, character/unit descriptions, the solar display, the main menu, and hosting interactions between the game instance and the user. The HUD team also designed several data structures include the UnitPool and MainMap, for displaying the units and map in the HUD. 
 \paragraph{Rules Team View Representation and Description}
 [Insert Description of graphics (UML) here]
 %\includegraphics[scale=•]{•}
