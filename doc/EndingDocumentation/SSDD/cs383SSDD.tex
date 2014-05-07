@@ -11,14 +11,16 @@
 \usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
 \parskip=0pt
 
-%\titlehead{\centering\includegraphics[width=6cm]{UIGraphic}}
 \title{ \center\includegraphics[width=\linewidth]{UIGraphic}\\
 		\center\textbf{\Large{System and Software Design Description(SSDD):}\\
 		\large{Incorporating Architectural Views and Detailed Design Criteria\\
 		For\\
 		\large{Swords and Sorcery(S\&S)}}\\
 		Version 1.0}}
-\author{University of Idaho Computer Science 383 Class, Spring 2014} 
+\author{Prepared by:\\University of Idaho Computer Science 383 Class, Spring 2014\\
+\bigskip\\
+Prepared for:\\
+Dr. Clinton Jeffery\\} 
 \date{\today} 
 \begin{document}
 \maketitle
@@ -132,7 +134,7 @@ There are multiple developer views within the scope of the S\&S project for CS38
 \paragraph{Networking Team View} The Networking Team view includes all network communication related to the S\&S game. This includes the client/server model, the communication protocols, the server setup and more.
 \subsubsection{Developer's View Representation and Description}
 \paragraph{Architectural Overview}
-The following class diagram is inaccurate with respect to the project as it currently stands. The inaccuracies are the Chart class, which does not exist, and we discovered is unnecessary, as well as the alliance and player classes, which were never created. The alliance class was never created because we didn't make it that far with the project, and the player class was replaced with flags and variables, as a class was determined to be unneeded. 
+The following class diagram is inaccurate with respect to the project as it currently stands. The inaccuracies are the Chart class, which does not exist, and we discovered is unnecessary, as well as the alliance and player classes, which were never created. The alliance class was never created because we didn't make it that far with the project, and the player class was replaced with flags and variables, as a class was determined to be unneeded. Also, the diagram lacks references and design information relating the classes to the HUD and Networking components of S\&S.
 \includepdf{overview.png}
 \paragraph{HUD Team View Representation and Description}
 The HUD team view includes both rules that affect the HUD (movement, hex painting, terrain, etc.) and the actual HUD itself, containing a view of the map, the minimap, character/unit descriptions, the solar display, the main menu, and hosting interactions between the game instance and the user. The HUD team also designed several data structures include the UnitPool and MainMap, for displaying the units and map in the HUD. 
@@ -178,7 +180,7 @@ Army Unit & Class & Unit SubClass & Moveable Unit & All individual unit types\\
 \hline
 Characters & Class & Unit SubClass & Moveable Unit & None\\
 \hline
-ClientObject & Class & Represents an open connection to a client from the server. & Tag, Flag, MessagePhoenix \\
+ClientObject & Class & Represents an open connection to a client from the server. & Tag, Flag, MessagePhoenix & \\
 \hline
 Conductor & Class & Contains public handler methods for incoming network methods. & Tag, Flag & \\
 \hline

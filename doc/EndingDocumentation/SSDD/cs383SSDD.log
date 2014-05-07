@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.25)  7 MAY 2014 12:56
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.25)  7 MAY 2014 13:11
 entering extended mode
 **cs383SSDD.tex
 
@@ -488,18 +488,18 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 ("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
 (C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
 n\SSDD\cs383SSDD.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
-LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
 
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -554,14 +554,14 @@ LaTeX Font Info:    ... okay on input line 23.
 <UIGraphic.png, id=1, 331.2375pt x 59.22125pt>
 File: UIGraphic.png Graphic file (type png)
  <use UIGraphic.png>
-Package pdftex.def Info: UIGraphic.png used on input line 24.
+Package pdftex.def Info: UIGraphic.png used on input line 26.
 (pdftex.def)             Requested size: 452.9679pt x 80.9889pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 24.
+LaTeX Font Info:    Try loading font information for U+msa on input line 26.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 24.
+LaTeX Font Info:    Try loading font information for U+msb on input line 26.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -573,17 +573,17 @@ ents/NetBeansProjects/sworsorc/doc/EndingDocumentation/SSDD/UIGraphic.png>]
 n\SSDD\cs383SSDD.toc [1])
 \tf@toc=\write3
  [2]
-Overfull \hbox (20.35506pt too wide) in paragraph at lines 46--47
+Overfull \hbox (20.35506pt too wide) in paragraph at lines 48--49
 \OT1/cmr/m/n/12 CS383) and any out-go-ing, mo-ti-vated in-di-vid-u-als who find
  the S&S source on www.github.com.
  []
 
 [3]
-Underfull \vbox (badness 10000) detected at line 92
+Underfull \vbox (badness 10000) detected at line 94
  []
 
 [4] [5]
-Overfull \hbox (3.8089pt too wide) in paragraph at lines 130--131
+Overfull \hbox (3.8089pt too wide) in paragraph at lines 132--133
  \OT1/cmr/bx/n/12 HUD Team View[] \OT1/cmr/m/n/10.95 The HUD Team view in-clude
 s all soft-ware de-sign re-lated to the HUD/GUI
  []
@@ -591,34 +591,34 @@ s all soft-ware de-sign re-lated to the HUD/GUI
 <overview.png, id=27, 1554.80875pt x 1186.4325pt>
 File: overview.png Graphic file (type png)
  <use overview.png>
-Package pdftex.def Info: overview.png used on input line 136.
+Package pdftex.def Info: overview.png used on input line 138.
 (pdftex.def)             Requested size: 1554.80496pt x 1186.42961pt.
 File: overview.png Graphic file (type png)
 
 <use overview.png>
-Package pdftex.def Info: overview.png used on input line 136.
+Package pdftex.def Info: overview.png used on input line 138.
 (pdftex.def)             Requested size: 1554.80496pt x 1186.42961pt.
  [6]
 File: overview.png Graphic file (type png)
  <use overview.png>
-Package pdftex.def Info: overview.png used on input line 136.
+Package pdftex.def Info: overview.png used on input line 138.
 (pdftex.def)             Requested size: 1554.80496pt x 1186.42961pt.
 File: overview.png Graphic file (type png)
  <use overview.png>
-Package pdftex.def Info: overview.png used on input line 136.
+Package pdftex.def Info: overview.png used on input line 138.
 (pdftex.def)             Requested size: 597.80846pt x 456.17146pt.
 File: overview.png Graphic file (type png)
 
 <use overview.png>
-Package pdftex.def Info: overview.png used on input line 136.
+Package pdftex.def Info: overview.png used on input line 138.
 (pdftex.def)             Requested size: 597.80846pt x 456.17146pt.
 File: overview.png Graphic file (type png)
  <use overview.png>
-Package pdftex.def Info: overview.png used on input line 136.
+Package pdftex.def Info: overview.png used on input line 138.
 (pdftex.def)             Requested size: 597.80846pt x 456.17146pt.
 File: overview.png Graphic file (type png)
  <use overview.png>
-Package pdftex.def Info: overview.png used on input line 136.
+Package pdftex.def Info: overview.png used on input line 138.
 (pdftex.def)             Requested size: 597.80846pt x 456.17146pt.
  [7 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
 ation/SSDD/overview.png (PNG copy)>] <SequenceOfPlay.png, id=37, 602.25pt x 817
@@ -626,34 +626,34 @@ ation/SSDD/overview.png (PNG copy)>] <SequenceOfPlay.png, id=37, 602.25pt x 817
 File: SequenceOfPlay.png Graphic file (type png)
 
 <use SequenceOfPlay.png>
-Package pdftex.def Info: SequenceOfPlay.png used on input line 150.
+Package pdftex.def Info: SequenceOfPlay.png used on input line 152.
 (pdftex.def)             Requested size: 602.24852pt x 817.05052pt.
 File: SequenceOfPlay.png Graphic file (type png)
  <use SequenceOfPlay.png>
-Package pdftex.def Info: SequenceOfPlay.png used on input line 150.
+Package pdftex.def Info: SequenceOfPlay.png used on input line 152.
 (pdftex.def)             Requested size: 602.24852pt x 817.05052pt.
  [8]
 File: SequenceOfPlay.png Graphic file (type png)
  <use SequenceOfPlay.png>
-Package pdftex.def Info: SequenceOfPlay.png used on input line 150.
+Package pdftex.def Info: SequenceOfPlay.png used on input line 152.
 (pdftex.def)             Requested size: 602.24852pt x 817.05052pt.
 File: SequenceOfPlay.png Graphic file (type png)
 
 <use SequenceOfPlay.png>
-Package pdftex.def Info: SequenceOfPlay.png used on input line 150.
+Package pdftex.def Info: SequenceOfPlay.png used on input line 152.
 (pdftex.def)             Requested size: 597.74562pt x 810.94159pt.
 File: SequenceOfPlay.png Graphic file (type png)
  <use SequenceOfPlay.png>
-Package pdftex.def Info: SequenceOfPlay.png used on input line 150.
+Package pdftex.def Info: SequenceOfPlay.png used on input line 152.
 (pdftex.def)             Requested size: 597.74562pt x 810.94159pt.
 File: SequenceOfPlay.png Graphic file (type png)
  <use SequenceOfPlay.png>
-Package pdftex.def Info: SequenceOfPlay.png used on input line 150.
+Package pdftex.def Info: SequenceOfPlay.png used on input line 152.
 (pdftex.def)             Requested size: 597.74562pt x 810.94159pt.
 File: SequenceOfPlay.png Graphic file (type png)
 
 <use SequenceOfPlay.png>
-Package pdftex.def Info: SequenceOfPlay.png used on input line 150.
+Package pdftex.def Info: SequenceOfPlay.png used on input line 152.
 (pdftex.def)             Requested size: 597.74562pt x 810.94159pt.
  [9 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
 ation/SSDD/SequenceOfPlay.png (PNG copy)>]
@@ -661,67 +661,67 @@ ation/SSDD/SequenceOfPlay.png (PNG copy)>]
 File: KeyMouseButtons.png Graphic file (type png)
 
 <use KeyMouseButtons.png>
-Package pdftex.def Info: KeyMouseButtons.png used on input line 151.
+Package pdftex.def Info: KeyMouseButtons.png used on input line 153.
 (pdftex.def)             Requested size: 1092.07735pt x 577.15483pt.
 File: KeyMouseButtons.png Graphic file (type png)
  <use KeyMouseButtons.png>
-Package pdftex.def Info: KeyMouseButtons.png used on input line 151.
+Package pdftex.def Info: KeyMouseButtons.png used on input line 153.
 (pdftex.def)             Requested size: 1092.07735pt x 577.15483pt.
 File: KeyMouseButtons.png Graphic file (type png)
  <use KeyMouseButtons.png>
-Package pdftex.def Info: KeyMouseButtons.png used on input line 151.
+Package pdftex.def Info: KeyMouseButtons.png used on input line 153.
 (pdftex.def)             Requested size: 1092.07735pt x 577.15483pt.
 File: KeyMouseButtons.png Graphic file (type png)
 
 <use KeyMouseButtons.png>
-Package pdftex.def Info: KeyMouseButtons.png used on input line 151.
+Package pdftex.def Info: KeyMouseButtons.png used on input line 153.
 (pdftex.def)             Requested size: 597.5464pt x 315.79887pt.
 File: KeyMouseButtons.png Graphic file (type png)
  <use KeyMouseButtons.png>
-Package pdftex.def Info: KeyMouseButtons.png used on input line 151.
+Package pdftex.def Info: KeyMouseButtons.png used on input line 153.
 (pdftex.def)             Requested size: 597.5464pt x 315.79887pt.
 File: KeyMouseButtons.png Graphic file (type png)
  <use KeyMouseButtons.png>
-Package pdftex.def Info: KeyMouseButtons.png used on input line 151.
+Package pdftex.def Info: KeyMouseButtons.png used on input line 153.
 (pdftex.def)             Requested size: 597.5464pt x 315.79887pt.
 File: KeyMouseButtons.png Graphic file (type png)
 
 <use KeyMouseButtons.png>
-Package pdftex.def Info: KeyMouseButtons.png used on input line 151.
+Package pdftex.def Info: KeyMouseButtons.png used on input line 153.
 (pdftex.def)             Requested size: 597.5464pt x 315.79887pt.
  [10 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
 tation/SSDD/KeyMouseButtons.png (PNG copy)>]
 <classDiagram.png, id=52, 1302.8675pt x 809.0225pt>
 File: classDiagram.png Graphic file (type png)
  <use classDiagram.png>
-Package pdftex.def Info: classDiagram.png used on input line 159.
+Package pdftex.def Info: classDiagram.png used on input line 161.
 (pdftex.def)             Requested size: 1302.86432pt x 809.02054pt.
 File: classDiagram.png Graphic file (type png)
 
 <use classDiagram.png>
-Package pdftex.def Info: classDiagram.png used on input line 159.
+Package pdftex.def Info: classDiagram.png used on input line 161.
 (pdftex.def)             Requested size: 1302.86432pt x 809.02054pt.
  [11]
 File: classDiagram.png Graphic file (type png)
  <use classDiagram.png>
-Package pdftex.def Info: classDiagram.png used on input line 159.
+Package pdftex.def Info: classDiagram.png used on input line 161.
 (pdftex.def)             Requested size: 1302.86432pt x 809.02054pt.
 File: classDiagram.png Graphic file (type png)
  <use classDiagram.png>
-Package pdftex.def Info: classDiagram.png used on input line 159.
+Package pdftex.def Info: classDiagram.png used on input line 161.
 (pdftex.def)             Requested size: 597.89496pt x 371.26605pt.
 File: classDiagram.png Graphic file (type png)
 
 <use classDiagram.png>
-Package pdftex.def Info: classDiagram.png used on input line 159.
+Package pdftex.def Info: classDiagram.png used on input line 161.
 (pdftex.def)             Requested size: 597.89496pt x 371.26605pt.
 File: classDiagram.png Graphic file (type png)
  <use classDiagram.png>
-Package pdftex.def Info: classDiagram.png used on input line 159.
+Package pdftex.def Info: classDiagram.png used on input line 161.
 (pdftex.def)             Requested size: 597.89496pt x 371.26605pt.
 File: classDiagram.png Graphic file (type png)
  <use classDiagram.png>
-Package pdftex.def Info: classDiagram.png used on input line 159.
+Package pdftex.def Info: classDiagram.png used on input line 161.
 (pdftex.def)             Requested size: 597.89496pt x 371.26605pt.
  [12 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
 tation/SSDD/classDiagram.png (PNG copy)>] <hex.png, id=62, 1651.16875pt x 1388.
@@ -729,98 +729,98 @@ tation/SSDD/classDiagram.png (PNG copy)>] <hex.png, id=62, 1651.16875pt x 1388.
 File: hex.png Graphic file (type png)
 
 <use hex.png>
-Package pdftex.def Info: hex.png used on input line 160.
+Package pdftex.def Info: hex.png used on input line 162.
 (pdftex.def)             Requested size: 1651.16473pt x 1388.18288pt.
 File: hex.png Graphic file (type png)
  <use hex.png>
-Package pdftex.def Info: hex.png used on input line 160.
+Package pdftex.def Info: hex.png used on input line 162.
 (pdftex.def)             Requested size: 1651.16473pt x 1388.18288pt.
 File: hex.png Graphic file (type png)
  <use hex.png>
-Package pdftex.def Info: hex.png used on input line 160.
+Package pdftex.def Info: hex.png used on input line 162.
 (pdftex.def)             Requested size: 1651.16473pt x 1388.18288pt.
 File: hex.png Graphic file (type png)
  <use hex.png>
-Package pdftex.def Info: hex.png used on input line 160.
+Package pdftex.def Info: hex.png used on input line 162.
 (pdftex.def)             Requested size: 597.54445pt x 502.37325pt.
 File: hex.png Graphic file (type png)
  <use hex.png>
-Package pdftex.def Info: hex.png used on input line 160.
+Package pdftex.def Info: hex.png used on input line 162.
 (pdftex.def)             Requested size: 597.54445pt x 502.37325pt.
 File: hex.png Graphic file (type png)
 
 <use hex.png>
-Package pdftex.def Info: hex.png used on input line 160.
+Package pdftex.def Info: hex.png used on input line 162.
 (pdftex.def)             Requested size: 597.54445pt x 502.37325pt.
 File: hex.png Graphic file (type png)
  <use hex.png>
-Package pdftex.def Info: hex.png used on input line 160.
+Package pdftex.def Info: hex.png used on input line 162.
 (pdftex.def)             Requested size: 597.54445pt x 502.37325pt.
  [13 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
 tation/SSDD/hex.png (PNG copy)>]
 <units.png, id=68, 1305.87875pt x 714.67pt>
 File: units.png Graphic file (type png)
  <use units.png>
-Package pdftex.def Info: units.png used on input line 161.
+Package pdftex.def Info: units.png used on input line 163.
 (pdftex.def)             Requested size: 1305.87556pt x 714.66824pt.
 File: units.png Graphic file (type png)
  <use units.png>
-Package pdftex.def Info: units.png used on input line 161.
+Package pdftex.def Info: units.png used on input line 163.
 (pdftex.def)             Requested size: 1305.87556pt x 714.66824pt.
 File: units.png Graphic file (type png)
 
 <use units.png>
-Package pdftex.def Info: units.png used on input line 161.
+Package pdftex.def Info: units.png used on input line 163.
 (pdftex.def)             Requested size: 1305.87556pt x 714.66824pt.
 File: units.png Graphic file (type png)
  <use units.png>
-Package pdftex.def Info: units.png used on input line 161.
+Package pdftex.def Info: units.png used on input line 163.
 (pdftex.def)             Requested size: 597.90195pt x 327.21458pt.
 File: units.png Graphic file (type png)
  <use units.png>
-Package pdftex.def Info: units.png used on input line 161.
+Package pdftex.def Info: units.png used on input line 163.
 (pdftex.def)             Requested size: 597.90195pt x 327.21458pt.
 File: units.png Graphic file (type png)
  <use units.png>
-Package pdftex.def Info: units.png used on input line 161.
+Package pdftex.def Info: units.png used on input line 163.
 (pdftex.def)             Requested size: 597.90195pt x 327.21458pt.
 File: units.png Graphic file (type png)
 
 <use units.png>
-Package pdftex.def Info: units.png used on input line 161.
+Package pdftex.def Info: units.png used on input line 163.
 (pdftex.def)             Requested size: 597.90195pt x 327.21458pt.
  [14 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
 tation/SSDD/units.png (PNG copy)>]
 <dataDiagram.png, id=74, 1462.46375pt x 895.345pt>
 File: dataDiagram.png Graphic file (type png)
  <use dataDiagram.png>
-Package pdftex.def Info: dataDiagram.png used on input line 162.
+Package pdftex.def Info: dataDiagram.png used on input line 164.
 (pdftex.def)             Requested size: 1462.46019pt x 895.34282pt.
 File: dataDiagram.png Graphic file (type png)
 
 <use dataDiagram.png>
-Package pdftex.def Info: dataDiagram.png used on input line 162.
+Package pdftex.def Info: dataDiagram.png used on input line 164.
 (pdftex.def)             Requested size: 1462.46019pt x 895.34282pt.
 File: dataDiagram.png Graphic file (type png)
  <use dataDiagram.png>
-Package pdftex.def Info: dataDiagram.png used on input line 162.
+Package pdftex.def Info: dataDiagram.png used on input line 164.
 (pdftex.def)             Requested size: 1462.46019pt x 895.34282pt.
 File: dataDiagram.png Graphic file (type png)
  <use dataDiagram.png>
-Package pdftex.def Info: dataDiagram.png used on input line 162.
+Package pdftex.def Info: dataDiagram.png used on input line 164.
 (pdftex.def)             Requested size: 597.6949pt x 365.91891pt.
 File: dataDiagram.png Graphic file (type png)
 
 <use dataDiagram.png>
-Package pdftex.def Info: dataDiagram.png used on input line 162.
+Package pdftex.def Info: dataDiagram.png used on input line 164.
 (pdftex.def)             Requested size: 597.6949pt x 365.91891pt.
 File: dataDiagram.png Graphic file (type png)
  <use dataDiagram.png>
-Package pdftex.def Info: dataDiagram.png used on input line 162.
+Package pdftex.def Info: dataDiagram.png used on input line 164.
 (pdftex.def)             Requested size: 597.6949pt x 365.91891pt.
 File: dataDiagram.png Graphic file (type png)
  <use dataDiagram.png>
-Package pdftex.def Info: dataDiagram.png used on input line 162.
+Package pdftex.def Info: dataDiagram.png used on input line 164.
 (pdftex.def)             Requested size: 597.6949pt x 365.91891pt.
  [15 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
 tation/SSDD/dataDiagram.png (PNG copy)>]
@@ -828,34 +828,34 @@ tation/SSDD/dataDiagram.png (PNG copy)>]
 File: CollaborationMoveUnit.png Graphic file (type png)
 
 <use CollaborationMoveUnit.png>
-Package pdftex.def Info: CollaborationMoveUnit.png used on input line 163.
+Package pdftex.def Info: CollaborationMoveUnit.png used on input line 165.
 (pdftex.def)             Requested size: 859.20792pt x 364.36035pt.
 File: CollaborationMoveUnit.png Graphic file (type png)
  <use CollaborationMoveUnit.png>
-Package pdftex.def Info: CollaborationMoveUnit.png used on input line 163.
+Package pdftex.def Info: CollaborationMoveUnit.png used on input line 165.
 (pdftex.def)             Requested size: 859.20792pt x 364.36035pt.
 File: CollaborationMoveUnit.png Graphic file (type png)
 
 <use CollaborationMoveUnit.png>
-Package pdftex.def Info: CollaborationMoveUnit.png used on input line 163.
+Package pdftex.def Info: CollaborationMoveUnit.png used on input line 165.
 (pdftex.def)             Requested size: 859.20792pt x 364.36035pt.
 File: CollaborationMoveUnit.png Graphic file (type png)
  <use CollaborationMoveUnit.png>
-Package pdftex.def Info: CollaborationMoveUnit.png used on input line 163.
+Package pdftex.def Info: CollaborationMoveUnit.png used on input line 165.
 (pdftex.def)             Requested size: 597.64087pt x 253.43881pt.
 File: CollaborationMoveUnit.png Graphic file (type png)
 
 <use CollaborationMoveUnit.png>
-Package pdftex.def Info: CollaborationMoveUnit.png used on input line 163.
+Package pdftex.def Info: CollaborationMoveUnit.png used on input line 165.
 (pdftex.def)             Requested size: 597.64087pt x 253.43881pt.
 File: CollaborationMoveUnit.png Graphic file (type png)
  <use CollaborationMoveUnit.png>
-Package pdftex.def Info: CollaborationMoveUnit.png used on input line 163.
+Package pdftex.def Info: CollaborationMoveUnit.png used on input line 165.
 (pdftex.def)             Requested size: 597.64087pt x 253.43881pt.
 File: CollaborationMoveUnit.png Graphic file (type png)
 
 <use CollaborationMoveUnit.png>
-Package pdftex.def Info: CollaborationMoveUnit.png used on input line 163.
+Package pdftex.def Info: CollaborationMoveUnit.png used on input line 165.
 (pdftex.def)             Requested size: 597.64087pt x 253.43881pt.
  [16 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
 tation/SSDD/CollaborationMoveUnit.png (PNG copy)>] <CharacterCapture.png, id=86
@@ -863,7 +863,7 @@ tation/SSDD/CollaborationMoveUnit.png (PNG copy)>] <CharacterCapture.png, id=86
 File: CharacterCapture.png Graphic file (type png)
 
 <use CharacterCapture.png>
-Package pdftex.def Info: CharacterCapture.png used on input line 164.
+Package pdftex.def Info: CharacterCapture.png used on input line 166.
 (pdftex.def)             Requested size: 447.6714pt x 510.9075pt.
 
 <RandomSpellTerrainEffectsOverview.png, id=87, 1726.45pt x 694.595pt>
@@ -871,21 +871,21 @@ File: RandomSpellTerrainEffectsOverview.png Graphic file (type png)
 
 <use RandomSpellTerrainEffectsOverview.png>
 Package pdftex.def Info: RandomSpellTerrainEffectsOverview.png used on input li
-ne 165.
+ne 167.
 (pdftex.def)             Requested size: 1726.4458pt x 694.5933pt.
 File: RandomSpellTerrainEffectsOverview.png Graphic file (type png)
 
 <use RandomSpellTerrainEffectsOverview.png>
 Package pdftex.def Info: RandomSpellTerrainEffectsOverview.png used on input li
-ne 165.
+ne 167.
 (pdftex.def)             Requested size: 1726.4458pt x 694.5933pt.
 
-Overfull \hbox (12.32832pt too wide) in paragraph at lines 164--165
+Overfull \hbox (12.32832pt too wide) in paragraph at lines 166--167
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 164--165
+Underfull \hbox (badness 10000) in paragraph at lines 166--167
 
  []
 
@@ -895,31 +895,31 @@ File: RandomSpellTerrainEffectsOverview.png Graphic file (type png)
 
 <use RandomSpellTerrainEffectsOverview.png>
 Package pdftex.def Info: RandomSpellTerrainEffectsOverview.png used on input li
-ne 165.
+ne 167.
 (pdftex.def)             Requested size: 1726.4458pt x 694.5933pt.
 File: RandomSpellTerrainEffectsOverview.png Graphic file (type png)
 
 <use RandomSpellTerrainEffectsOverview.png>
 Package pdftex.def Info: RandomSpellTerrainEffectsOverview.png used on input li
-ne 165.
+ne 167.
 (pdftex.def)             Requested size: 597.65434pt x 240.45163pt.
 File: RandomSpellTerrainEffectsOverview.png Graphic file (type png)
 
 <use RandomSpellTerrainEffectsOverview.png>
 Package pdftex.def Info: RandomSpellTerrainEffectsOverview.png used on input li
-ne 165.
+ne 167.
 (pdftex.def)             Requested size: 597.65434pt x 240.45163pt.
 File: RandomSpellTerrainEffectsOverview.png Graphic file (type png)
 
 <use RandomSpellTerrainEffectsOverview.png>
 Package pdftex.def Info: RandomSpellTerrainEffectsOverview.png used on input li
-ne 165.
+ne 167.
 (pdftex.def)             Requested size: 597.65434pt x 240.45163pt.
 File: RandomSpellTerrainEffectsOverview.png Graphic file (type png)
 
 <use RandomSpellTerrainEffectsOverview.png>
 Package pdftex.def Info: RandomSpellTerrainEffectsOverview.png used on input li
-ne 165.
+ne 167.
 (pdftex.def)             Requested size: 597.65434pt x 240.45163pt.
  [18 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
 tation/SSDD/RandomSpellTerrainEffectsOverview.png (PNG copy)>] <SolarCycle.png,
@@ -927,441 +927,441 @@ tation/SSDD/RandomSpellTerrainEffectsOverview.png (PNG copy)>] <SolarCycle.png,
 File: SolarCycle.png Graphic file (type png)
 
 <use SolarCycle.png>
-Package pdftex.def Info: SolarCycle.png used on input line 166.
+Package pdftex.def Info: SolarCycle.png used on input line 168.
 (pdftex.def)             Requested size: 946.53395pt x 842.14421pt.
 File: SolarCycle.png Graphic file (type png)
  <use SolarCycle.png>
-Package pdftex.def Info: SolarCycle.png used on input line 166.
+Package pdftex.def Info: SolarCycle.png used on input line 168.
 (pdftex.def)             Requested size: 946.53395pt x 842.14421pt.
 File: SolarCycle.png Graphic file (type png)
  <use SolarCycle.png>
-Package pdftex.def Info: SolarCycle.png used on input line 166.
+Package pdftex.def Info: SolarCycle.png used on input line 168.
 (pdftex.def)             Requested size: 946.53395pt x 842.14421pt.
 File: SolarCycle.png Graphic file (type png)
 
 <use SolarCycle.png>
-Package pdftex.def Info: SolarCycle.png used on input line 166.
+Package pdftex.def Info: SolarCycle.png used on input line 168.
 (pdftex.def)             Requested size: 597.83751pt x 531.90422pt.
 File: SolarCycle.png Graphic file (type png)
  <use SolarCycle.png>
-Package pdftex.def Info: SolarCycle.png used on input line 166.
+Package pdftex.def Info: SolarCycle.png used on input line 168.
 (pdftex.def)             Requested size: 597.83751pt x 531.90422pt.
 File: SolarCycle.png Graphic file (type png)
  <use SolarCycle.png>
-Package pdftex.def Info: SolarCycle.png used on input line 166.
+Package pdftex.def Info: SolarCycle.png used on input line 168.
 (pdftex.def)             Requested size: 597.83751pt x 531.90422pt.
 File: SolarCycle.png Graphic file (type png)
 
 <use SolarCycle.png>
-Package pdftex.def Info: SolarCycle.png used on input line 166.
+Package pdftex.def Info: SolarCycle.png used on input line 168.
 (pdftex.def)             Requested size: 597.83751pt x 531.90422pt.
  [19 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
 tation/SSDD/SolarCycle.png (PNG copy)>]
-Overfull \hbox (4.74767pt too wide) in paragraph at lines 213--213
+Overfull \hbox (4.74767pt too wide) in paragraph at lines 215--215
 []|\OT1/cmr/bx/n/10.95 Type/Range| 
  []
 
 
-Overfull \hbox (10.7869pt too wide) in paragraph at lines 213--213
+Overfull \hbox (10.7869pt too wide) in paragraph at lines 215--215
 []|\OT1/cmr/bx/n/10.95 Dependencies| 
  []
 
 
-Overfull \hbox (7.71481pt too wide) in paragraph at lines 213--213
+Overfull \hbox (7.71481pt too wide) in paragraph at lines 215--215
 []|\OT1/cmr/bx/n/10.95 Subordinates| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Static
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Determine
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 re-sults of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 com-bat
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Two Ar-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 rayLists:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 At-tack-ers,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Unit Sub-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Moveable
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 All in-di-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 vid-ual unit
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Unit Sub-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Moveable
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Represents
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 client from
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Tag, Flag,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 Mes-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Contains
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 pub-lic han-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 for in-com-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 ing net-work
  []
 
 
-Underfull \hbox (badness 7631) in paragraph at lines 213--213
+Underfull \hbox (badness 7631) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 An enu-mer-
  []
 
 
-Underfull \hbox (badness 2865) in paragraph at lines 213--213
+Underfull \hbox (badness 2865) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 ate con-stant
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 213--213
+Underfull \hbox (badness 1577) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 class pro-vid-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Hex Edge
  []
 
 
-Underfull \hbox (badness 1515) in paragraph at lines 213--213
+Underfull \hbox (badness 1515) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 rain Classes,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Classes to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 col-lect and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 rep-re-sent
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 el-e-ments
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 on hexagon
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Classes to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 rep-re-sent a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 "map" of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 hexagons,
  []
 
 
-Underfull \hbox (badness 3407) in paragraph at lines 213--213
+Underfull \hbox (badness 3407) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 ei-ther diplo-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 macy or
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 ob-ject that
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 man-ages a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 group-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 of client
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Tag, Flag,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 Mes-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Define and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 limit ac-cess
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 to main
  []
 
 
-Underfull \hbox (badness 5446) in paragraph at lines 213--213
+Underfull \hbox (badness 5446) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Renders the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 game map
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 and things
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 MapView,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 Hexagon
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Hexagon
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 Ren-der-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 and re-ceive
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 mes-sages
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 over the
  []
 
 
-Underfull \hbox (badness 7631) in paragraph at lines 213--213
+Underfull \hbox (badness 7631) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Unit Su-per-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 ArmyUnit,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 Char-ac-ter,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Determine
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 UnitPool,
  []
 
 
-Overfull \hbox (2.74832pt too wide) in paragraph at lines 213--213
+Overfull \hbox (2.74832pt too wide) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Retreat/Move| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Manages
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 nec-tion for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Tag, Flag,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 Mes-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Class and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 dent server
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 pro-cess
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 that clients
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 Tag, Flag,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--213
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 Mes-
  []
 
 
-Underfull \hbox (badness 7631) in paragraph at lines 213--213
+Underfull \hbox (badness 7631) in paragraph at lines 215--215
 []|\OT1/cmr/m/n/10.95 An enu-mer-
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 213--213
+Underfull \hbox (badness 1577) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 class pro-vid-
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 213--213
+Underfull \hbox (badness 1796) in paragraph at lines 215--215
 \OT1/cmr/m/n/10.95 eral type of
  []
 
 
-Underfull \vbox (badness 10000) detected at line 213
+Underfull \vbox (badness 10000) detected at line 215
  []
 
 [20] [21] [22] [23] [24] [25] [26]
-Underfull \hbox (badness 10000) in paragraph at lines 323--323
+Underfull \hbox (badness 10000) in paragraph at lines 325--325
 []|\OT1/cmr/bx/n/10.95 Referenced
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 323--323
+Underfull \hbox (badness 10000) in paragraph at lines 325--325
 []|\OT1/cmr/m/n/10.95 HUDController,
  []
 
 
-Underfull \vbox (badness 10000) detected at line 323
+Underfull \vbox (badness 10000) detected at line 325
  []
 
 [27] [28]
@@ -1370,7 +1370,7 @@ n\SSDD\cs383SSDD.aux) )
 Here is how much of TeX's memory you used:
  4338 strings out of 493921
  57440 string characters out of 3147267
- 170144 words of memory out of 3000000
+ 170197 words of memory out of 3000000
  7536 multiletter control sequences out of 15000+200000
  14912 words of font info for 57 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -1380,7 +1380,7 @@ Here is how much of TeX's memory you used:
 12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
 :/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program
  Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on cs383SSDD.pdf (29 pages, 936383 bytes).
+Output written on cs383SSDD.pdf (29 pages, 936554 bytes).
 PDF statistics:
  148 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
