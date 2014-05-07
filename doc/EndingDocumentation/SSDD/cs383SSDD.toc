@@ -5,124 +5,123 @@
 \contentsline {subsubsection}{\numberline {1.1.3}Intended Audience}{3}
 \contentsline {subsection}{\numberline {1.2}Software Purpose, Context, and Intended Audience}{3}
 \contentsline {subsubsection}{\numberline {1.2.1}System and Software Purpose}{3}
-\contentsline {subsubsection}{\numberline {1.2.2}System and Software Context}{4}
-\contentsline {subsubsection}{\numberline {1.2.3}Intended Users of System and Software}{4}
-\contentsline {subsection}{\numberline {1.3}Definitions, Acronyms, and Abbreviations}{5}
-\contentsline {subsection}{\numberline {1.4}Document References}{5}
-\contentsline {subsection}{\numberline {1.5}Overview of Document}{6}
-\contentsline {paragraph}{Section 2}{6}
-\contentsline {paragraph}{Section 3}{6}
-\contentsline {paragraph}{Section 4}{6}
-\contentsline {paragraph}{Section 5}{6}
-\contentsline {subsection}{\numberline {1.6}Document Restrictions}{6}
-\contentsline {section}{\numberline {2}Constraints and Concerns}{7}
-\contentsline {subsection}{\numberline {2.1}Constraints}{7}
-\contentsline {subsection}{\numberline {2.2}Stakeholder Concerns}{7}
-\contentsline {section}{\numberline {3}System and Software Architecture}{7}
-\contentsline {subsection}{\numberline {3.1}Developer's Architectural View}{7}
-\contentsline {subsubsection}{\numberline {3.1.1}Developer's View Identification}{7}
-\contentsline {paragraph}{HUD Team View}{7}
-\contentsline {paragraph}{Rules Team View}{7}
-\contentsline {paragraph}{Networking Team View}{7}
-\contentsline {subsubsection}{\numberline {3.1.2}Developer's View Representation and Description}{7}
-\contentsline {paragraph}{Architectural Overview}{7}
-\contentsline {paragraph}{HUD Team View Representation and Description}{10}
-\contentsline {paragraph}{Rules Team View Representation and Description}{10}
-\contentsline {paragraph}{Networking Team View Representation and Description}{10}
-\contentsline {subsubsection}{\numberline {3.1.3}Developer's Architectural Rationale}{10}
-\contentsline {subsection}{\numberline {3.2}User's Architectural View}{10}
-\contentsline {subsubsection}{\numberline {3.2.1}User's View Identification}{10}
-\contentsline {subsubsection}{\numberline {3.2.2}User's View Representation and Description}{10}
-\contentsline {subsection}{\numberline {3.3}Consistency of Architectural Views}{10}
-\contentsline {subsubsection}{\numberline {3.3.1}Detail of Inconsistencies Between Architectural Views}{10}
-\contentsline {subsubsection}{\numberline {3.3.2}Consistency Analysis and Inconsistency Mitigations}{10}
-\contentsline {section}{\numberline {4}Software Detailed Design}{10}
-\contentsline {subsection}{\numberline {4.1}Developer's Viewpoint Detailed Software Design}{10}
-\contentsline {subsection}{\numberline {4.2}Component Dictionary}{23}
-\contentsline {subsection}{\numberline {4.3}Component Detailed Design}{24}
-\contentsline {subsection}{\numberline {4.4}Detailed Design for Component: Army Unit}{24}
+\contentsline {subsubsection}{\numberline {1.2.2}System and Software Context}{3}
+\contentsline {subsubsection}{\numberline {1.2.3}Intended Users of System and Software}{3}
+\contentsline {subsection}{\numberline {1.3}Definitions, Acronyms, and Abbreviations}{4}
+\contentsline {subsection}{\numberline {1.4}Document References}{4}
+\contentsline {subsection}{\numberline {1.5}Overview of Document}{5}
+\contentsline {paragraph}{Section 2}{5}
+\contentsline {paragraph}{Section 3}{5}
+\contentsline {paragraph}{Section 4}{5}
+\contentsline {paragraph}{Section 5}{5}
+\contentsline {subsection}{\numberline {1.6}Document Restrictions}{5}
+\contentsline {section}{\numberline {2}Constraints and Concerns}{5}
+\contentsline {subsection}{\numberline {2.1}Constraints}{5}
+\contentsline {subsection}{\numberline {2.2}Stakeholder Concerns}{6}
+\contentsline {section}{\numberline {3}System and Software Architecture}{6}
+\contentsline {subsection}{\numberline {3.1}Developer's Architectural View}{6}
+\contentsline {subsubsection}{\numberline {3.1.1}Developer's View Identification}{6}
+\contentsline {paragraph}{HUD Team View}{6}
+\contentsline {paragraph}{Rules Team View}{6}
+\contentsline {paragraph}{Networking Team View}{6}
+\contentsline {subsubsection}{\numberline {3.1.2}Developer's View Representation and Description}{6}
+\contentsline {paragraph}{Architectural Overview}{6}
+\contentsline {paragraph}{HUD Team View Representation and Description}{8}
+\contentsline {paragraph}{Rules Team View Representation and Description}{8}
+\contentsline {paragraph}{Networking Team View Representation and Description}{8}
+\contentsline {subsection}{\numberline {3.2}User's Architectural View}{8}
+\contentsline {subsubsection}{\numberline {3.2.1}User's View Identification}{8}
+\contentsline {subsubsection}{\numberline {3.2.2}User's View Representation and Description}{8}
+\contentsline {subsection}{\numberline {3.3}Consistency of Architectural Views}{11}
+\contentsline {subsubsection}{\numberline {3.3.1}Detail of Inconsistencies Between Architectural Views}{11}
+\contentsline {subsubsection}{\numberline {3.3.2}Consistency Analysis and Inconsistency Mitigations}{11}
+\contentsline {section}{\numberline {4}Software Detailed Design}{11}
+\contentsline {subsection}{\numberline {4.1}Developer's Viewpoint Detailed Software Design}{11}
+\contentsline {subsection}{\numberline {4.2}Component Dictionary}{20}
+\contentsline {subsection}{\numberline {4.3}Component Detailed Design}{22}
+\contentsline {subsection}{\numberline {4.4}Detailed Design for Component: Army Unit}{22}
+\contentsline {paragraph}{Purpose}{22}
+\contentsline {paragraph}{Input}{22}
+\contentsline {paragraph}{Output}{22}
+\contentsline {paragraph}{Process}{22}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{22}
+\contentsline {subsection}{\numberline {4.5}Detailed Design for Component: Army Combat Results Table}{22}
+\contentsline {paragraph}{Purpose}{22}
+\contentsline {paragraph}{Input}{22}
+\contentsline {paragraph}{Output}{22}
+\contentsline {paragraph}{Process}{22}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{22}
+\contentsline {subsection}{\numberline {4.6}Detailed Design for Component: Conductor}{23}
+\contentsline {paragraph}{Purpose}{23}
+\contentsline {paragraph}{Input}{23}
+\contentsline {paragraph}{Output}{23}
+\contentsline {paragraph}{Process}{23}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{23}
+\contentsline {subsection}{\numberline {4.7}Detailed Design for Component: MessagePhoenix}{23}
+\contentsline {paragraph}{Purpose}{23}
+\contentsline {paragraph}{Input}{23}
+\contentsline {paragraph}{Output}{23}
+\contentsline {paragraph}{Process}{23}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{23}
+\contentsline {subsection}{\numberline {4.8}Detailed Design for Component: ClientObject }{23}
+\contentsline {paragraph}{Purpose}{23}
+\contentsline {paragraph}{Input}{24}
+\contentsline {paragraph}{Output}{24}
+\contentsline {paragraph}{Process}{24}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{24}
+\contentsline {subsection}{\numberline {4.9}Detailed Design for Component: NetworkClient }{24}
 \contentsline {paragraph}{Purpose}{24}
 \contentsline {paragraph}{Input}{24}
 \contentsline {paragraph}{Output}{24}
 \contentsline {paragraph}{Process}{24}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{24}
-\contentsline {subsection}{\numberline {4.5}Detailed Design for Component: Army Combat Results Table}{24}
+\contentsline {subsection}{\numberline {4.10}Detailed Design for Component: NetworkServer }{24}
 \contentsline {paragraph}{Purpose}{24}
 \contentsline {paragraph}{Input}{24}
 \contentsline {paragraph}{Output}{24}
 \contentsline {paragraph}{Process}{24}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{24}
-\contentsline {subsection}{\numberline {4.6}Detailed Design for Component: Conductor}{25}
+\contentsline {subsection}{\numberline {4.11}Detailed Design for Component: Tag }{25}
 \contentsline {paragraph}{Purpose}{25}
 \contentsline {paragraph}{Input}{25}
 \contentsline {paragraph}{Output}{25}
 \contentsline {paragraph}{Process}{25}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{25}
-\contentsline {subsection}{\numberline {4.7}Detailed Design for Component: MessagePhoenix}{25}
+\contentsline {subsection}{\numberline {4.12}Detailed Design for Component: Flag }{25}
 \contentsline {paragraph}{Purpose}{25}
 \contentsline {paragraph}{Input}{25}
 \contentsline {paragraph}{Output}{25}
 \contentsline {paragraph}{Process}{25}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{25}
-\contentsline {subsection}{\numberline {4.8}Detailed Design for Component: ClientObject }{25}
+\contentsline {subsection}{\numberline {4.13}Detailed Design for Component: Lobby }{25}
 \contentsline {paragraph}{Purpose}{25}
-\contentsline {paragraph}{Input}{26}
-\contentsline {paragraph}{Output}{26}
-\contentsline {paragraph}{Process}{26}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{26}
-\contentsline {subsection}{\numberline {4.9}Detailed Design for Component: NetworkClient }{26}
+\contentsline {paragraph}{Input}{25}
+\contentsline {paragraph}{Output}{25}
+\contentsline {paragraph}{Process}{25}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{25}
+\contentsline {subsection}{\numberline {4.14}Detailed Design for Component: Characters}{26}
 \contentsline {paragraph}{Purpose}{26}
 \contentsline {paragraph}{Input}{26}
 \contentsline {paragraph}{Output}{26}
 \contentsline {paragraph}{Process}{26}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{26}
-\contentsline {subsection}{\numberline {4.10}Detailed Design for Component: NetworkServer }{26}
+\contentsline {subsection}{\numberline {4.15}Detailed Design for Component: Movable Unit}{26}
 \contentsline {paragraph}{Purpose}{26}
 \contentsline {paragraph}{Input}{26}
 \contentsline {paragraph}{Output}{26}
 \contentsline {paragraph}{Process}{26}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{26}
-\contentsline {subsection}{\numberline {4.11}Detailed Design for Component: Tag }{27}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
+\contentsline {subsubsection}{\numberline {4.15.1}Detailed Design for Component: Movement Calculator}{27}
 \contentsline {paragraph}{Purpose}{27}
 \contentsline {paragraph}{Input}{27}
 \contentsline {paragraph}{Output}{27}
 \contentsline {paragraph}{Process}{27}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
-\contentsline {subsection}{\numberline {4.12}Detailed Design for Component: Flag }{27}
-\contentsline {paragraph}{Purpose}{27}
-\contentsline {paragraph}{Input}{27}
-\contentsline {paragraph}{Output}{27}
-\contentsline {paragraph}{Process}{27}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
-\contentsline {subsection}{\numberline {4.13}Detailed Design for Component: Lobby }{27}
-\contentsline {paragraph}{Purpose}{27}
-\contentsline {paragraph}{Input}{27}
-\contentsline {paragraph}{Output}{27}
-\contentsline {paragraph}{Process}{27}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
-\contentsline {subsection}{\numberline {4.14}Detailed Design for Component: Characters}{28}
-\contentsline {paragraph}{Purpose}{28}
-\contentsline {paragraph}{Input}{28}
-\contentsline {paragraph}{Output}{28}
-\contentsline {paragraph}{Process}{28}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{28}
-\contentsline {subsection}{\numberline {4.15}Detailed Design for Component: Movable Unit}{28}
-\contentsline {paragraph}{Purpose}{28}
-\contentsline {paragraph}{Input}{28}
-\contentsline {paragraph}{Output}{28}
-\contentsline {paragraph}{Process}{28}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{28}
-\contentsline {subsubsection}{\numberline {4.15.1}Detailed Design for Component: Movement Calculator}{29}
-\contentsline {paragraph}{Purpose}{29}
-\contentsline {paragraph}{Input}{29}
-\contentsline {paragraph}{Output}{29}
-\contentsline {paragraph}{Process}{29}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{29}
-\contentsline {subsection}{\numberline {4.16}Data Dictionary}{29}
-\contentsline {section}{\numberline {5}Requirements Traceability}{30}
-\contentsline {subsection}{\numberline {5.1}Movement}{30}
-\contentsline {paragraph}{Requirements Description}{30}
-\contentsline {paragraph}{Implementation Description}{30}
-\contentsline {paragraph}{Differences}{30}
-\contentsline {subsection}{\numberline {5.2}Traceability Analysis}{30}
-\contentsline {section}{\numberline {6}Appendix A}{30}
+\contentsline {subsection}{\numberline {4.16}Data Dictionary}{27}
+\contentsline {section}{\numberline {5}Requirements Traceability}{28}
+\contentsline {subsection}{\numberline {5.1}Movement}{28}
+\contentsline {paragraph}{Requirements Description}{28}
+\contentsline {paragraph}{Implementation Description}{28}
+\contentsline {paragraph}{Differences}{28}
+\contentsline {subsection}{\numberline {5.2}Traceability Analysis}{28}
+\contentsline {section}{\numberline {6}Appendix A}{28}

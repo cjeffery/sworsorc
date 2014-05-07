@@ -1,31 +1,38 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,a4paper,titlepage]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{supertabular}
 \usepackage{tabularx}
+\usepackage{ltablex}
 \usepackage{graphicx}
 \usepackage{pdfpages}
-\parskip=0pt
 \usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
-\title{\center{\textbf{\Large{System and Software Design Description(SSDD):}\\
-\large{Incorporating Architectural Views and Detailed Design Criteria}\\
-\normalsize{For}\\
-\large{Swords and Sorcery}}}\\}
-\author{Keith Drew,...}
+\parskip=0pt
+
+%\titlehead{\centering\includegraphics[width=6cm]{UIGraphic}}
+\title{ \center\includegraphics[width=\linewidth]{UIGraphic}\\
+		\center\textbf{\Large{System and Software Design Description(SSDD):}\\
+		\large{Incorporating Architectural Views and Detailed Design Criteria\\
+		For\\
+		\large{Swords and Sorcery(S\&S)}}\\
+		Version 1.0}}
+\author{University of Idaho Computer Science 383 Class, Spring 2014} 
+\date{\today} 
 \begin{document}
 \maketitle
 \pagebreak
 \setcounter{tocdepth}{3}
 \renewcommand\contentsname{\center{Swords and Sorcery Design\\Table of Contents}}
 \tableofcontents
+\pagebreak
 
 \section{Introduction}
 This is the System and Software Design Document for Swords and Sorcery. This is one of five documents that describe the computer adaptation of the Swords and Sorcery board game developed by the Software Engineering class at the University of Idaho in Spring 2014.
 \subsection{Document Purpose, Context, and Intended Audience}
 \subsubsection{Document Purpose}
-The purpose of this document is to describe the system and software design of Swords and Sorcery. 
+The purpose of this document is to describe the system and software design of Swords and Sorcery. This includes diagrams developed to guide design of S\&S, component descriptions, view descriptions, and requirements traceability.
 \subsubsection{Document Context}
 This document is written as part of a larger document that describes the Swords and Sorcery project developed by the CS383 students at University of Idaho, in Spring 2014. This document only describes the system and software design of the project, which is only a subset of the project.
 \subsubsection{Intended Audience}
@@ -36,10 +43,12 @@ The purpose of the Swords and Sorcery system and software is to provide a comput
 \subsubsection{System and Software Context}
 The context of this project is, again, restrained to the classroom, as it is an educational project, not intended for distribution. However, the source code for the project, as well as many resources, are available publicly on github.com. 
 \subsubsection{Intended Users of System and Software}
-The intended users of the Swords and Sorcery system are...
+The intended users of the Swords and Sorcery system are the developers (students of CS383) and any outgoing, motivated individuals who find the S\&S source on www.github.com. Also included in intended users is the class instructor, Dr. Clinton Jeffery. 
 \subsection{Definitions, Acronyms, and Abbreviations}
+\small{
 \begin{center}
-\begin{tabularx}{\linewidth}{|p{1.5in}|X|}\hline
+\keepXColumns
+\noindent\begin{tabularx}{\linewidth}{|p{1.5in}|X|}\hline
 \textbf{Term} & \textbf{Definition}\\
 \hline
 AD & Architectural Description: \"A collection of products to document an architecture.\"\space ISO/IEC 42010:2007\\
@@ -82,6 +91,7 @@ System Stakeholder & \"An individual, team, or organization (or classes thereof)
 \hline
 \end{tabularx}
 \end{center}
+}
 
 \subsection{Document References}
 \begin{enumerate}
@@ -132,36 +142,33 @@ The HUD team view includes both rules that affect the HUD (movement, hex paintin
 \paragraph{Networking Team View Representation and Description}
 [Insert Description of graphics (UML) here]
 %\includegraphics[scale=•]{•}
-\subsubsection{Developer's Architectural Rationale} it breaks without text so often it seems
 
 \subsection{User's Architectural View}
 	\subsubsection{User's View Identification}
-	The User's view consists of their interactions with the S\&S GUI. This includes starting the client, joining/starting a game lobby, beginning a game, and interacting with the game. 
+	The User's view consists of their interactions with the S\&S GUI. This includes starting the client, joining/starting a game lobby, beginning a game, and interacting with the game. Found here are diagrams representing sequence of play and mouse/key button presses.
 	\subsubsection{User's View Representation and Description}
-	%\includepdf{...}
+	\includepdf{SequenceOfPlay.png}
+	\includepdf{KeyMouseButtons.png}
 \subsection{Consistency of Architectural Views}
 	\subsubsection{Detail of Inconsistencies Between Architectural Views}
 	\subsubsection{Consistency Analysis and Inconsistency Mitigations}
 
 \section{Software Detailed Design}
 \subsection{Developer's Viewpoint Detailed Software Design}
-This section describes the developers viewpoint with respect to the software design. Included are the UML diagrams developed for the S\&S game, from which we began designing S\&S, as well as the state and collaboration diagrams. 
+This section describes the developers viewpoint with respect to the software design. Included are the UML diagrams developed for the S\&S game, from which we began designing S\&S, as well as the state and collaboration diagrams. Many of the diagrams were developed at different points during the semester, reflected by the discrepancies between the SSRS, this document, and the Implementation document. 
 \includepdf{classDiagram.png}
 \includepdf{hex.png}
 \includepdf{units.png}
 \includepdf{dataDiagram.png}
 \includepdf{CollaborationMoveUnit.png}
-\includepdf{CharacterCapture.png}
-\includepdf{GameTurn.png}
-\includepdf{GameTurnSC.png}
-\includepdf{KeyMouseButtons.png}
+\includegraphics{CharacterCapture}
 \includepdf{RandomSpellTerrainEffectsOverview.png}
-\includepdf{SequenceOfPlay.png}
 \includepdf{SolarCycle.png}
 \pagebreak
 \subsection{Component Dictionary}
 \small{
 \begin{center}
+\keepXColumns
 \noindent\begin{tabularx}{\linewidth}{|l|X|X|X|X|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Purpose} & \textbf{Dependencies} & \textbf{Subordinates}\\
 \hline
@@ -289,7 +296,7 @@ NetworkClient must be able to receive network message asynchronously.
 \paragraph{Design Constraints and Performance Requirements} In order for this class to preform correctly all of the member variables need to be filled out.
 	
 \subsection{Detailed Design for Component: Movable Unit}
-\paragraph{Purpose} The purpose of this class is to have a common class of all moving units that the movement functions can access. This class is a super class of all units that can undergo a movement process. This allows for common data to be accessible by the appropriate functions. This common superclass also allows for the ability to store the data of all units in a single-typed data structure. This class contains member variables for movement allocation of a unit, the working movement allocation of a unit or the amount of movement left in a game turn, the race of the unit, the type of subclass that is inheriting from this class(such as armyUnit or Character), and the unique ID of the unit. The movement allocation of a unit is the amount of movement points allowed at the beginning of a turn then the working movement takes over. The working movement is used in order to keep track of how much a unit has move in a single turn. This allows for a user to partially move a unit in their turn then return to that unit and finish moving it later in the same turn. The race is used in many different calculations for units such as the movement cost per hex of a unit in a particular terrain. The subclass variable is used for typecasting the moveable unit back to the proper subclass in order for the subclass based operations to be executed. Finially the unique ID is used for network based communications to identify the unit that is being acted on. 
+\paragraph{Purpose} The purpose of this class is to have a common class of all moving units that the movement functions can access. This class is a super class of all units that can undergo a movement process. This allows for common data to be accessible by the appropriate functions. This common superclass also allows for the ability to store the data of all units in a single-typed data structure. This class contains member variables for movement allocation of a unit, the working movement allocation of a unit or the amount of movement left in a game turn, the race of the unit, the type of subclass that is inheriting from this class(such as armyUnit or Character), and the unique ID of the unit. The movement allocation of a unit is the amount of movement points allowed at the beginning of a turn then the working movement takes over. The working movement is used in order to keep track of how much a unit has move in a single turn. This allows for a user to partially move a unit in their turn then return to that unit and finish moving it later in the same turn. The race is used in many different calculations for units such as the movement cost per hex of a unit in a particular terrain. The subclass variable is used for typecasting the moveable unit back to the proper subclass in order for the subclass based operations to be executed. Finially the unique ID is used for network based communications to identify the unit that is being acted on, as well as determining if two units are friendly/enemy units, based on the owner field of the ID. 
 \paragraph{Input} Input needed to make this class function properly are values to fill the member variables of this class. 
 \paragraph{Output} The only output of this class is by getters of the member variables of the class. 
 \paragraph{Process} Call the getter functions.
@@ -305,6 +312,7 @@ NetworkClient must be able to receive network message asynchronously.
 \subsection{Data Dictionary}
 \small{
 \begin{center}
+\keepXColumns
 \noindent\begin{tabularx}{\linewidth}{|l|X|X|X|X|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Defined By...} & \textbf{Referenced By...} & \textbf{Modified By...}\\
 \hline
