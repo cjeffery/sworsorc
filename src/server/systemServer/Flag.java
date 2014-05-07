@@ -13,7 +13,7 @@ package systemServer;
  * @author Christopher Goes
  */
 public enum Flag {
-    CHAT, CLIENT, ERROR, GAME, REQUEST, RESPONSE, CONNECTION, FILE, OTHER,
+    CHAT, INFO, LOBBY, ERROR, GAME, CONNECTION, FILE, OTHER,
     NULL_FLAG, NOTIFICATION,
 
 }

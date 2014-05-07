@@ -265,9 +265,11 @@ public class ClientObject {
                     }
                     break;
                 // Client stuff
-                case CLIENT:
+                case INFO:
 
                     switch ( tag ) {
+                        case VOTE:
+                        // TODO: voting!
                         case SEND_HANDLE:
                             handle = sender;
                             consoleOut.
@@ -277,11 +279,49 @@ public class ClientObject {
 
                             break;
                         case MESSAGE_TO_SERVER:
+                        case GLOBAL_WHO:
+                            if ( NetworkServer.getTotalClients() == 0 ) {
+                                send( flag, Tag.GLOBAL_WHO, "No users online." );
+
+                            } else {
+                                // All currently connected users in all lobbies
+                                StringBuilder temp = new StringBuilder( (NetworkServer.
+                                                                         getTotalClients() + " users online: ") );
+                                for ( String s : NetworkServer.getAllUserNames() ) {
+                                    temp.append( " " ).append( s );
+                                }
+                                send( flag, Tag.GLOBAL_WHO, temp.toString() );
+                            }
+                            break;
+                        case LOBBY_WHO:
+                            if ( currentLobby != null ) {
+                                StringBuilder temp = new StringBuilder( (currentLobby.lobbyClients.
+                                                                         size() + " users online: ") );
+                                for ( String s : currentLobby.getUserNames() ) {
+                                    temp.append( " " ).append( s );
+                                }
+                                send( flag, Tag.LOBBY_WHO, temp.toString() ); // TODO: may need formatting
+                            } else {
+                                send( flag, Tag.LOBBY_WHO, "You're not in a lobby!" );
+                            }
+                            break;
+                        case LOBBY_INFO:
+                            StringBuilder temp = new StringBuilder( "There are " + NetworkServer.
+                                    getTotalLobbies() + " lobbies online: " );
+                            for ( String s : NetworkServer.getLobbyNames() ) {
+                                temp.append( " " ).append( s );
+                            }
+                            send( flag, Tag.LOBBY_INFO, temp.toString() );
+                            break;
+                        case UID:
+                            send( flag, Tag.UID, NetworkServer.generateUniqueID() );
+                            break;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
                     }
                     break;
-                // Error lmessage
+
+                // Error message
                 case ERROR:
 
                     switch ( tag ) {
@@ -292,6 +332,7 @@ public class ClientObject {
                             consoleOut.println( "Unknown tag: " + tag );
                     }
                     break;
+
                 // Game state update/message/command (Anything related to game)
                 case GAME:
                     switch ( tag ) {
@@ -300,101 +341,17 @@ public class ClientObject {
                             NetworkServer.
                                     sendToAllClients( flag, tag, "Server", lmessage );
                             break;
-                        case YIELD_TURN_REQUEST:
-                            send( Flag.RESPONSE, Tag.YIELD_TURN_RESPONSE );
-
-                            break;
                         case NEXT_TURN_INFO:
                             send( flag, tag, currentLobby != null ? currentLobby.current : "" );
                             break;
-                        default:
-                            consoleOut.println( "Unknown tag: " + tag );
-                    }
-                    break;
-                // Request for inforation ex: REQUEST_LOBBY_INFO
-                case REQUEST:
-                    flag = Flag.RESPONSE; // make life easier
-                    switch ( tag ) {
-
-                        case GLOBAL_WHO_REQUEST:
-                            if ( NetworkServer.getTotalClients() == 0 ) {
-                                send( flag, Tag.GLOBAL_WHO_RESPONSE,  "No users online." );
-
-                            } else {
-                                // All currently connected users in all lobbies
-                                StringBuilder temp = new StringBuilder( (NetworkServer.
-                                                                         getTotalClients() + " users online: ") );
-                                for ( String s : NetworkServer.getAllUserNames() ) {
-                                    temp.append( " " ).append( s );
-                                }
-                                send( flag, Tag.GLOBAL_WHO_RESPONSE,  temp.toString() );
-                            }
-                            break;
-                        case LOBBY_WHO_REQUEST:
-                            if ( currentLobby != null ) {
-                                StringBuilder temp = new StringBuilder( (currentLobby.lobbyClients.
-                                                                         size() + " users online: ") );
-                                for ( String s : currentLobby.getUserNames() ) {
-                                    temp.append( " " ).append( s );
-                                }
-                                send( flag, Tag.LOBBY_WHO_RESPONSE, temp.toString() ); // TODO: may need formatting
-                            } else {
-                                send( flag, Tag.LOBBY_WHO_RESPONSE, "You're not in a lobby!" );
-                            }
-                            break;
-                        case LOBBY_INFO_REQUEST:
-                            StringBuilder temp = new StringBuilder( "There are " + NetworkServer.
-                                    getTotalLobbies() + " lobbies online: " );
-                            for ( String s : NetworkServer.getLobbyNames() ) {
-                                temp.append( " " ).append( s );
-                            }
-                            send( flag, Tag.LOBBY_INFO_RESPONSE, temp.toString() );
-                            break;
-                        case NEW_LOBBY_REQUEST:
-                            consoleOut.
-                                    println( "Received request to create lobby: " + smessage );
-
-                            if ( NetworkServer.createNewLobby( smessage) )  {
-                                NetworkServer.
-                                        joinLobby( smessage, ClientObject.this );
-                                send( flag, Tag.NEW_LOBBY_RESPONSE, smessage, true );
-                            } else {
-                                send( flag, Tag.NEW_LOBBY_RESPONSE, "Could not create lobby, it probably already exists!", false );
-                            }
-                            break;
-                        case JOIN_LOBBY_REQUEST:
-                            consoleOut.
-                                    println( "Received request to join lobby: " + smessage + " from client " + handle );
-                            if ( currentLobby != null && currentLobby.getName().
-                                    equals( smessage ) ) {
-                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Cannot join lobby, you're already in it!", false );
-
-                            } else if ( NetworkServer.
-                                    joinLobby( smessage, ClientObject.this ) ) {
-                                send( flag, Tag.JOIN_LOBBY_RESPONSE, currentLobby, true );
-                                currentLobby.
-                                        lobbyNotification( "Client " + handle + " has joined the lobby!" );
-                            } else {
-                                send( flag, Tag.JOIN_LOBBY_RESPONSE, "Failed to join lobby " + smessage + "! It probably doesn't exist!", false );
-                            }
-                            break;
-                        case LEAVE_LOBBY_REQUEST: // TODO: improve on this
-                            consoleOut.
-                                    println( "Client " + handle + " has requested to leave lobby" );
-                            NetworkServer.leaveLobby( ClientObject.this );
-                            send( flag, Tag.LEAVE_LOBBY_RESPONSE, "You have successfully left lobby " + smessage );
-                            currentLobby = null;
-                            break;
-                        case UID_REQUEST:
-                            send( flag, Tag.UID_RESPONSE,  NetworkServer.generateUniqueID() );
-                            break;
-                        case BEGIN_GAME_REQUEST:
+                        case BEGIN_GAME:
                             if ( currentLobby == null ) {
-                                send( flag, Tag.BEGIN_GAME_RESPONSE,
+                                send( flag, Tag.BEGIN_GAME,
                                         "You requested to start the game, but you aren't even in a lobby!" );
                             } else {
                                 currentLobby.
-                                        lobbyNotification("Client " + sender + " has requested to start a game in lobby " + currentLobby.getName() );
+                                        lobbyNotification( "Client " + sender + " has requested to start a game in lobby " + currentLobby.
+                                                getName() );
                                 // TODO: VOTING
                                 currentLobby.beginGame();
                                 currentLobby.pokeEntireLobby( flag, Tag.BEGIN_GAME );
@@ -403,20 +360,14 @@ public class ClientObject {
                                 send( Flag.GAME, Tag.INIT_GAME_PLEASE );
                             }
                             break;
-                        case SEND_FILE_REQUEST:
-                            System.out.println( "SEND_FILE_REQUEST unhandled" );
-                            break;
-                        case GET_FILE_REQUEST:
-                            System.out.println( "GET_FILE_REQUEST unhandled" );
-                            break;
-                        case YIELD_TURN_REQUEST:
+                        case YIELD_TURN:
                             consoleOut.
                                     println( "Client " + handle + " (id  " + clientID + " ) yielded turn" );
                             if ( currentLobby == null ) {
-                                send( Flag.GAME, Tag.YIELD_TURN_RESPONSE, "", "You requested to yield your turn, but you're not even in a lobby!" );
+                                send( Flag.GAME, Tag.YIELD_TURN, "", "You requested to yield your turn, but you're not even in a lobby!" );
                             } else if ( currentLobby.current == null ? handle != null : !currentLobby.current.
                                     equals( handle ) ) {
-                                send( Flag.GAME, Tag.YIELD_TURN_RESPONSE, "", "You requested to yield your turn, but it's not currently your turn!" );
+                                send( Flag.GAME, Tag.YIELD_TURN, "", "You requested to yield your turn, but it's not currently your turn!" );
                             } else {
                                 currentLobby.advanceGameTurn(); //tell lobby handler to advance game turn
                             }
@@ -425,13 +376,49 @@ public class ClientObject {
                             consoleOut.println( "Unknown tag: " + tag );
                     }
                     break;
-                // Response to information request ex: LOBBY_INFO
-                case RESPONSE:
-                    flag = Flag.REQUEST;
+
+                case LOBBY:
                     switch ( tag ) {
 
-                        case VOTE_RESPONSE:
-                        // TODO: voting!
+                        case NEW_LOBBY:
+                            consoleOut.
+                                    println( "Received request to create lobby: " + smessage );
+
+                            if ( NetworkServer.createNewLobby( smessage) )  {
+                                NetworkServer.
+                                        joinLobby( smessage, ClientObject.this );
+                                send( flag, Tag.NEW_LOBBY, smessage, true );
+                            } else {
+                                send( flag, Tag.NEW_LOBBY, "Could not create lobby, it probably already exists!", false );
+                            }
+                            break;
+                        case JOIN_LOBBY:
+                            consoleOut.
+                                    println( "Received request to join lobby: " + smessage + " from client " + handle );
+                            if ( currentLobby != null && currentLobby.getName().
+                                    equals( smessage ) ) {
+                                send( flag, Tag.JOIN_LOBBY, "Cannot join lobby, you're already in it!", false );
+
+                            } else if ( NetworkServer.
+                                    joinLobby( smessage, ClientObject.this ) ) {
+                                send( flag, Tag.JOIN_LOBBY, currentLobby, true );
+                                currentLobby.
+                                        lobbyNotification( "Client " + handle + " has joined the lobby!" );
+                            } else {
+                                send( flag, Tag.JOIN_LOBBY, "Failed to join lobby " + smessage + "! It probably doesn't exist!", false );
+                            }
+                            break;
+                        case LEAVE_LOBBY: // TODO: improve on this eg booleans
+                            consoleOut.
+                                    println( "Client " + handle + " has requested to leave lobby" );
+                            NetworkServer.leaveLobby( ClientObject.this );
+                            send( flag, Tag.LEAVE_LOBBY, "You have successfully left lobby " + smessage );
+                            currentLobby = null;
+                            break;
+
+
+
+
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
                     }
@@ -440,9 +427,9 @@ public class ClientObject {
                 case CONNECTION:
 
                     switch ( tag ) {
-                        case DISCONNECT_REQUEST:
+                        case DISCONNECT:
                             // Notify client that server recieved request, and is closing its side of the connection
-                            send( Flag.RESPONSE, Tag.DISCONNECT_RESPONSE,  true ); // true always for now
+                            send( Flag.CONNECTION, Tag.DISCONNECT, true ); // true always for now
                             return false;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
@@ -452,19 +439,21 @@ public class ClientObject {
                 case FILE:
 
                     switch ( tag ) {
-                        case GET_FILE_REQUEST: // TODO: this is not implemented to any semblance of working
-                            send( Flag.FILE, Tag.GET_FILE_REQUEST, file.toString() );
+                        case GET_FILE: // TODO: this is not implemented to any semblance of working
+                            send( Flag.FILE, Tag.GET_FILE, file.toString() );
                             break;
-                        case SEND_FILE_REQUEST: // this also needs work
+                        case SEND_FILE: // this also needs work
                             file = (List<String>) lmessage.get( 0 );
                             break;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
                     }
                     break;
+
                 // Anything that doesn't fall into above categories ex: GENERIC
                 case OTHER:
                     switch ( tag ) {
+                        case GENERIC:
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
                     }
