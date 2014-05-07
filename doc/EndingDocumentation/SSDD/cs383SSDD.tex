@@ -171,7 +171,7 @@ This section describes the developers viewpoint with respect to the software des
 \small{
 \begin{center}
 \keepXColumns
-\noindent\begin{tabularx}{\linewidth}{|l|X|X|X|X|}\hline
+\noindent\begin{tabularx}{\linewidth}{|p{1.5in}|X|X|X|X|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Purpose} & \textbf{Dependencies} & \textbf{Subordinates}\\
 \hline
 Army Combat Result Table & Static Method & Determine results of combat lookup & Two ArrayLists: Attackers, Defenders & None\\
@@ -210,6 +210,8 @@ NetworkClient & Class & Manages network connection for client. & Tag, Flag, Mess
 \hline
 NetworkServer & Class and Process & The independent server process that clients connect to. & Tag, Flag, MessagePhoenix & ClientObject\\
 \hline
+Solar Display & Class & Tracks solar position, updates HUD image & Scenario/Game Rules & Spell Casting/HUD Controller\\
+\hline
 Tag & Enum Class & An enumerated constant class providing identifiers for each general type of network message. & & \\
 \hline
 \end{tabularx}
@@ -231,6 +233,14 @@ Tag & Enum Class & An enumerated constant class providing identifiers for each g
 \paragraph{Process} The function adds the total strengths of both the attackers and defenders. Then applies the terrain multiplier to the defenders total strength. Finally the ratio of attackers over defenders plus a random dice roll determines the outcome of the combat.  
 \paragraph{Design Constraints and Performance Requirements} One design constraint of the table was that in the game the ratio's have to be reduced to the smallest possible fraction in favour of the defending units. To work around this and index was made to match the determined ratio to the correct look up value on the table. Also the units strength and race is required to be filled out in order for this function to work properly. 
 
+\subsection{Detailed Design for Component: ClientObject }
+\paragraph{Purpose} ClientObject is used by the server. ClientObject is a class which represents a client who has connected to the server. ClientObject is not something that runs on the client machine. NetworkServer creates an instance of ClientObject for each new connection to the server. ClientObject is responsible for the socket to the client. The main activity of a ClientObject instance is to listen for incoming messages from the client represented by the ClientObject, which it accomplishes by an independent thread, and to send messages to the client through the network socket.
+\paragraph{Input} ClientObject receives messages from the associated client. 
+\paragraph{Output} NetworkServer and other ClientObjects are allowed
+to send message to the associated client through ClientObject.
+\paragraph{Process} ClientObject's listener thread reads and process messages from the connected client. Other threads request the writer
+\paragraph{Design Constraints and Performance Requirements}
+
 \subsection{Detailed Design for Component: Conductor}
 \paragraph{Purpose} The Conductor class is used by the client. When NetworkClient detects an incoming message that alters the state of the game (such as a unit being moved), it calls a method inside of the Conductor class. The purpose of putting handler code in the Conductor class rather than inside of NetworkClient was to seperate the code in NetworkClient that deal with internal networking objects (like sockets) from the code that deals with other game object (like unitPool).
 \paragraph{Input} Each message in the Conductor class is invoked with parameters received via an incoming network message.
@@ -245,14 +255,6 @@ Tag & Enum Class & An enumerated constant class providing identifiers for each g
 \paragraph{Output} MessagePhoenix can return the NetworkPacket received from a network connection. 
 \paragraph{Process} Receiving a message initiates a blocking read from the network socket. Sending a message writes to the network socket immediately. 
 \paragraph{Design Constraints and Performance Requirements} MessagePhoenix needs to accomodate a variety of message types. 
-
-\subsection{Detailed Design for Component: ClientObject }
-\paragraph{Purpose} ClientObject is used by the server. ClientObject is a class which represents a client who has connected to the server. ClientObject is not something that runs on the client machine. NetworkServer creates an instance of ClientObject for each new connection to the server. ClientObject is responsible for the socket to the client. The main activity of a ClientObject instance is to listen for incoming messages from the client represented by the ClientObject, which it accomplishes by an independent thread, and to send messages to the client through the network socket.
-\paragraph{Input} ClientObject receives messages from the associated client. 
-\paragraph{Output} NetworkServer and other ClientObjects are allowed
-to send message to the associated client through ClientObject.
-\paragraph{Process} ClientObject's listener thread reads and process messages from the connected client. Other threads request the writer
-\paragraph{Design Constraints and Performance Requirements}
 
 \subsection{Detailed Design for Component: NetworkClient }
 \paragraph{Purpose} NetworkClient is used by the client. NetworkClient provides an interface that other client-side components can use to interact with the network. NetworkClient creates the connection to the server, and sends and receives messages over the network.
@@ -296,7 +298,14 @@ NetworkClient must be able to receive network message asynchronously.
 \paragraph{Output} This class by itself has no output produced other than the getter functions in the class.
 \paragraph{Process} Output is obtained by calling the getter functions. 
 \paragraph{Design Constraints and Performance Requirements} In order for this class to preform correctly all of the member variables need to be filled out.
-	
+
+\subsection{Detailed Design for Component: Solar Display}
+\paragraph{Purpose} The purpose of the solar display class is to maintain the progress of the solar chart, as defined in the rules of S\&S. The solar display class also updates the HUDController with the proper information, ie state, to display for the solar chart.
+\paragraph{Input} The starting locations of the blue and red suns, read from the game scenario being loaded, are the only input to the solar display class.
+\paragraph{Output} The output of the solar display class is the information the HUDController needs to update the solar display image. The solar display class returns the image that needs to be displayed in the solar display section of the hud, as well as the state of the suns.
+\paragraph{Process} The solar display class performs a rotation by incrementing the positions of each sun, then determines whether the state of the suns change. The states that can be returned are for the blue and red suns, and are dependent upon the yellow sun. The possible states for the blue and red suns are equilibrium, ascension, and descension. The last task the solar display performs is to update the HUD accordingly. 
+\paragraph{Design Constraints and Performance Requirements} The only design constraints/requirements for the solar display are that the information passed to the HUD is accurate with respect to the S\&S rules of gameplay. The solar positioning must also be correctly loaded from the scenario information. 
+
 \subsection{Detailed Design for Component: Movable Unit}
 \paragraph{Purpose} The purpose of this class is to have a common class of all moving units that the movement functions can access. This class is a super class of all units that can undergo a movement process. This allows for common data to be accessible by the appropriate functions. This common superclass also allows for the ability to store the data of all units in a single-typed data structure. This class contains member variables for movement allocation of a unit, the working movement allocation of a unit or the amount of movement left in a game turn, the race of the unit, the type of subclass that is inheriting from this class(such as armyUnit or Character), and the unique ID of the unit. The movement allocation of a unit is the amount of movement points allowed at the beginning of a turn then the working movement takes over. The working movement is used in order to keep track of how much a unit has move in a single turn. This allows for a user to partially move a unit in their turn then return to that unit and finish moving it later in the same turn. The race is used in many different calculations for units such as the movement cost per hex of a unit in a particular terrain. The subclass variable is used for typecasting the moveable unit back to the proper subclass in order for the subclass based operations to be executed. Finially the unique ID is used for network based communications to identify the unit that is being acted on, as well as determining if two units are friendly/enemy units, based on the owner field of the ID. 
 \paragraph{Input} Input needed to make this class function properly are values to fill the member variables of this class. 

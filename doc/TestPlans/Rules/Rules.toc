@@ -60,7 +60,7 @@
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {2}REFERENCES}{1}{section.1.2}
+\contentsline {section}{\numberline {2}REFERENCES}{2}{section.1.2}
 \select@language {english}
 \select@language {english}
 \contentsline {section}{\numberline {3}INTRODUCTION}{2}{section.1.3}
@@ -70,69 +70,78 @@
 \select@language {english}
 \select@language {english}
 \select@language {english}
+\contentsline {subsection}{\numberline {4.1}Character}{2}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {4.2}Scenario}{2}{subsection.1.4.2}
 \select@language {english}
-\contentsline {section}{\numberline {5}SOFTWARE RISK ISSUES}{2}{section.1.5}
-\select@language {english}
-\select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {6}FEATURES TO BE TESTED}{2}{section.1.6}
-\select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {7}FEATURES NOT TO BE TESTED}{2}{section.1.7}
-\select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {8}APPROACH}{3}{section.1.8}
+\contentsline {section}{\numberline {5}SOFTWARE RISK ISSUES}{3}{section.1.5}
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {9}ITEM PASS/FAIL CRITERIA}{3}{section.1.9}
+\contentsline {section}{\numberline {6}FEATURES TO BE TESTED}{3}{section.1.6}
+\select@language {english}
+\contentsline {subsection}{\numberline {6.1}Scenario}{3}{subsection.1.6.1}
+\contentsline {subsection}{\numberline {6.2}Movement}{4}{subsection.1.6.2}
+\contentsline {subsection}{\numberline {6.3}Character, Spells}{4}{subsection.1.6.3}
+\select@language {english}
+\contentsline {section}{\numberline {7}FEATURES NOT TO BE TESTED}{4}{section.1.7}
 \select@language {english}
 \select@language {english}
-\contentsline {subsection}{\numberline {9.1}Unit Testing Pass/Fail Criteria}{3}{subsection.1.9.1}
-\contentsline {subsection}{\numberline {9.2}Intergration Testing Pass/Fail Criteria}{3}{subsection.1.9.2}
-\contentsline {subsubsection}{\numberline {9.2.1}Character}{3}{subsubsection.1.9.2.1}
-\contentsline {subsubsection}{\numberline {9.2.2}Spells}{3}{subsubsection.1.9.2.2}
-\contentsline {section}{\numberline {10}SUSPENSION CRITERIA}{3}{section.1.10}
-\select@language {english}
-\select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {11}TEST DELIVERABLES}{4}{section.1.11}
-\select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {12}REMAINING TEST TASKS}{4}{section.1.12}
-\select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {13}ENVIRONMENTAL NEEDS}{4}{section.1.13}
-\select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {14}STAFFING AND TRAINING NEEDS}{4}{section.1.14}
+\contentsline {section}{\numberline {8}APPROACH}{4}{section.1.8}
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {15}RESPONSIBILITIES}{4}{section.1.15}
+\contentsline {section}{\numberline {9}ITEM PASS/FAIL CRITERIA}{4}{section.1.9}
+\select@language {english}
+\select@language {english}
+\contentsline {subsection}{\numberline {9.1}Unit Testing Pass/Fail Criteria}{4}{subsection.1.9.1}
+\contentsline {subsection}{\numberline {9.2}Intergration Testing Pass/Fail Criteria}{4}{subsection.1.9.2}
+\contentsline {subsubsection}{\numberline {9.2.1}Scenario}{4}{subsubsection.1.9.2.1}
+\contentsline {subsubsection}{\numberline {9.2.2}Character}{5}{subsubsection.1.9.2.2}
+\contentsline {subsubsection}{\numberline {9.2.3}Spells}{6}{subsubsection.1.9.2.3}
+\contentsline {section}{\numberline {10}SUSPENSION CRITERIA}{6}{section.1.10}
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {16}SCHEDULE}{4}{section.1.16}
+\contentsline {section}{\numberline {11}TEST DELIVERABLES}{6}{section.1.11}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {12}REMAINING TEST TASKS}{7}{section.1.12}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {13}ENVIRONMENTAL NEEDS}{7}{section.1.13}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {14}STAFFING AND TRAINING NEEDS}{7}{section.1.14}
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {17}PLANNING RISKS AND CONTINGENCIES}{4}{section.1.17}
-\select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {18}APPROVALS}{4}{section.1.18}
+\contentsline {section}{\numberline {15}RESPONSIBILITIES}{7}{section.1.15}
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {19}APPENDIX A. \ [insert name here{]}}{1}{section.1.19}
-\select@language {english}
+\contentsline {section}{\numberline {16}SCHEDULE}{7}{section.1.16}
 \select@language {english}
 \select@language {english}
 \select@language {english}
+\contentsline {section}{\numberline {17}PLANNING RISKS AND CONTINGENCIES}{7}{section.1.17}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {20}APPENDIX B. \ [insert name here{]}}{1}{section.1.20}
+\contentsline {section}{\numberline {18}APPROVALS}{7}{section.1.18}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {19}GLOSSARY}{7}{section.1.19}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {20}APPENDIX A. \ [insert name here{]}}{1}{section.1.20}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {21}APPENDIX B. \ [insert name here{]}}{1}{section.1.21}
 \select@language {english}
 \select@language {english}
 \select@language {english}
