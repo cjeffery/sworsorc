@@ -59,11 +59,10 @@ public class MainMenuController {
     @FXML protected void LoadScenario(ActionEvent event) {
             //TODO change GUI to show possible scenario files and pass
             //selected file to initScenario() below.
+            String currentDir = System.getProperty("user.dir") + File.separator;
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Resource File");
-            FileChooser.ExtensionFilter extFilter = 
-                new FileChooser.ExtensionFilter("*", "*");
-            fileChooser.getExtensionFilters().add(extFilter);
+            fileChooser.setInitialDirectory(new File(currentDir + "/resources/scenarios")); 
             File file = fileChooser.showOpenDialog(stage);
             if(file != null)
             {
@@ -72,7 +71,7 @@ public class MainMenuController {
                 Game.getInstance().initScenario(chosenScenario);
             }
             else {
-                //Game.getInstance().initScenario("filename");
+                //Game.getInstance().initScenario("resources/scenarios/");
             }
     }
     //activated by "Network" button
