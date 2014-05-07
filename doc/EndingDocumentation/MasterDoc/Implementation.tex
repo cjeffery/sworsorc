@@ -352,9 +352,36 @@ Be sure to mention that it uses a recursive algorithm
 %===============================================================================
 \section{Gameplay Model Classes}
 %===============================================================================
-Gameplay team knock yourself out.
+\subsection{Army Units}
+When implementation came around we discovered that having sub-classes for every 
+different army unit sub-type was not practical. Instead a single army unit is 
+with different flags to describe the unit is used. The main super class of 
+movable units is still used with the sub-classes army unit, character, and 
+monster but then stops there. Also a race and nation variable unit had to be 
+added to the class in order for things like the movement calculator to work. 
 
-UnitPool could also go here, or in it's own section.
+\subsection{Characters}
+Characters have a series of variables needed for spell casting, leadership, and 
+diplomacy. Something new is the idea of a spell book, a class that reads it's 
+character's information to determine what spells can be cast. In order for this
+class to work properly the character class contains a spell book and the spell
+book contains its corresponding character. In order for the scenario reader to 
+work properly a character creator was made in the character class that takes the
+name of a character, finds the matching data on the character, and creates a 
+character with the data.
+
+\subsection{Spells}
+For spells to work properly they needed to exist separate from the main program.
+This was implemented by creating a separate GUI for spells. When a character 
+"casts" a spell the spell book class is called upon which created a GUI with 
+all spell options that character has. Once a spell is chosen the user has the 
+option of reading the details of the spell or casting the spell once a spell is 
+"cast" the effects of the spell are added to the games state and the spell book 
+is terminated.
+
+\subsection{Combat}
+
+\subsection{Unit Pool}
 
 
 \end{document}
