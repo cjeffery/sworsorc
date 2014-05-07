@@ -51,6 +51,8 @@ Architecture & \"The fundamental organization of a system embodied in its compon
 \hline
 Beta Test & Limited release(s) to cooperating customers wanting early access to developing systems.\\
 \hline
+Client & The process the user directly interacts with, containing, among other things, the GUI.\\
+\hline
 Design Entity & \"An element (component) of a design that is structurally and functionally distinct from other elements and that is separately named and referenced.\"\space IEEE STD 1016-1998\\
 \hline
 Design View & \"A subset of design entity attribute information that is specifically suited to the needs of a software project activity.\"\space IEEE STD 1016-1998\\
@@ -66,6 +68,8 @@ HUD & Heads Up Display - What the user sees, with respect to interface - also ca
 IP & Internet Protocol - Typically refers to an IP Address.\\
 \hline
 S\&S & Swords and Sorcery\\
+\hline
+Server & The (single) process that a client connects and sends messages to. \\
 \hline
 SSDD & System and Software Design Document\\
 \hline
@@ -150,23 +154,37 @@ Army Unit & Class & Unit SubClass & Moveable Unit & All individual unit types\\
 \hline
 Characters & Class & Unit SubClass & Moveable Unit & None\\
 \hline
+ClientObject & Class & Represents an open connection to a client from the server. & Tag, Flag, MessagePhoenix \\
+\hline
+Conductor & Class & Contains public handler methods for incoming network methods. & Tag, Flag & \\
+\hline
+Flag & Enum Class & An enumerate constant class providing identifiers for each concrete type of network message. & & \\
+\hline
 Hexagon Classes & Model & Represents a hexagon & Hex Edge Classes, Terrain Classes, UnitPool & \\
 \hline
 Hex Edge Classes & Model & Classes to collect and represent elements on hexagon edges & Hex Classes & \\
 \hline
 Hexagon Map Classes & Model & Classes to represent a "map" of hexagons, either diplomacy or game. & Hex Classes & \\
 \hline
+Lobby & Class & A server-side object that manages a grouping of client connection. & Tag, Flag, MessagePhoenix & \\ 
+\hline
 MainMenuController & Controller & Define and limit access to main menu & Game.java & \\
 \hline
 Map Rendering Classes & View & Renders the game map and things on it & MapView, Hexagon Classes, Hex Edge Classes & \\
 \hline
-MapView &
-View &
-A GUI widget to act as a container for the Map Rendering code & Hexagon Classes, Map Rendering Classes & \\
+MapView & View & A GUI widget to act as a container for the Map Rendering code & Hexagon Classes, Map Rendering Classes & \\
+\hline
+MessagePhoenix & Utility Class & Used to pack, unpack, send and receive messages over the network & Tag, Flag & \\
 \hline
 Moveable Unit & Class & Unit SuperClass & None & ArmyUnit, Character, Monster\\
 \hline
 MovementCalculator & Static Class & Determine Legal Moves & UnitPool, MainMap & Retreat/Move\\
+\hline
+NetworkClient & Class & Manages network connection for client. & Tag, Flag, MessagePhoenix & Conductor \\
+\hline
+NetworkServer & Class and Process & The independent server process that clients connect to. & Tag, Flag, MessagePhoenix & ClientObject\\
+\hline
+Tag & Enum Class & An enumerated constant class providing identifiers for each general type of network message. & & \\
 \hline
 \end{tabularx}
 \end{center}
@@ -186,7 +204,66 @@ MovementCalculator & Static Class & Determine Legal Moves & UnitPool, MainMap & 
 \paragraph{Output} The output of this function is a simple 2 value array corresponding the result of the combat. The first value is what's required of the attackers and the second value is what's required of the defenders. A -1 means the units were killed, a 0 means that there was no result of the combat and any positive number represents the number of hexes a unit has to retreat. 
 \paragraph{Process} The function adds the total strengths of both the attackers and defenders. Then applies the terrain multiplier to the defenders total strength. Finally the ratio of attackers over defenders plus a random dice roll determines the outcome of the combat.  
 \paragraph{Design Constraints and Performance Requirements} One design constraint of the table was that in the game the ratio's have to be reduced to the smallest possible fraction in favour of the defending units. To work around this and index was made to match the determined ratio to the correct look up value on the table. Also the units strength and race is required to be filled out in order for this function to work properly. 
-					
+
+\subsection{Detailed Design for Component: Conductor}
+\paragraph{Purpose} The Conductor class is used by the client. When NetworkClient detects an incoming message that alters the state of the game (such as a unit being moved), it calls a method inside of the Conductor class. The purpose of putting handler code in the Conductor class rather than inside of NetworkClient was to seperate the code in NetworkClient that deal with internal networking objects (like sockets) from the code that deals with other game object (like unitPool).
+\paragraph{Input} Each message in the Conductor class is invoked with parameters received via an incoming network message.
+\paragraph{Output} The methods in the Conductor class may respond to an incoming message through any public interface. For example, the Conductor class may alter UnitPool in response to a network message.
+\paragraph{Process} An incoming message is received inside of NetworkClient. NetworkClient determines the type of message, and forwards the message to Conductor is appropriate. Conductor checks the tag of the message, to determine the message type, and calls the appropriate code for the message type.
+\paragraph{Design Constraints and Performance Requirements} Conductor was designed to let other team members work conveniently with networking code, without having to stare at networking internal details.
+
+
+\subsection{Detailed Design for Component: MessagePhoenix}
+\paragraph{Purpose} MessagePhoenix contains the methods to create, send, and receive messages over the network. This functionality is used by both the client and server. MessagePhoenix is intended to be called indirectly by client code through NetworkClient, (as well as by the Server).
+\paragraph{Input} MessagePhoenix requires a reference to an input or output object stream associated with a network socket. The utility methods in MessagePhoenix also accept any number of Objects (using a variable length parameter list), which will be packaged and sent over the network. The first two objects of a message must be a Flag and Tag, which identify the message. 
+\paragraph{Output} MessagePhoenix can return the NetworkPacket received from a network connection. 
+\paragraph{Process} Receiving a message initiates a blocking read from the network socket. Sending a message writes to the network socket immediately. 
+\paragraph{Design Constraints and Performance Requirements} MessagePhoenix needs to accomodate a variety of message types. 
+
+\subsection{Detailed Design for Component: ClientObject }
+\paragraph{Purpose} ClientObject is used by the server. ClientObject is a class which represents a client who has connected to the server. ClientObject is not something that runs on the client machine. NetworkServer creates an instance of ClientObject for each new connection to the server. ClientObject is responsible for the socket to the client. The main activity of a ClientObject instance is to listen for incoming messages from the client represented by the ClientObject, which it accomplishes by an independent thread, and to send messages to the client through the network socket.
+\paragraph{Input} ClientObject receives messages from the associated client. 
+\paragraph{Output} NetworkServer and other ClientObjects are allowed
+to send message to the associated client through ClientObject.
+\paragraph{Process} ClientObject's listener thread reads and process messages from the connected client. Other threads request the writer
+\paragraph{Design Constraints and Performance Requirements}
+
+\subsection{Detailed Design for Component: NetworkClient }
+\paragraph{Purpose} NetworkClient is used by the client. NetworkClient provides an interface that other client-side components can use to interact with the network. NetworkClient creates the connection to the server, and sends and receives messages over the network.
+\paragraph{Input} NetworkClient listens for incoming messages from the network. Some messages impact the internal state of NetworkClient, and other messages are forwarded to Conductor.
+\paragraph{Output} NetworkClient provides a public interface for sending message over the network.
+\paragraph{Process} To send a message, NetworkClient uses MessagePhoenix along with the network socket. On receiving a message, NetworkClient may respond internally, or forward the message to Conductor is the message concerns non-networking parts of the code (like unit movement).
+\paragraph{Design Constraints and Performance Requirements}
+NetworkClient must be able to receive network message asynchronously. 
+
+\subsection{Detailed Design for Component: NetworkServer }
+\paragraph{Purpose} NetworkServer is the main process that runs on the server machine. It waits for incoming connection requests. It creates a ClientObject for each connected client, and manages the group of connected clients through their ClientObject representations. 
+\paragraph{Input} NetworkServer receives connection requests from client processes.
+\paragraph{Output} NetworkServer creates new threaded ClientObject instances for each connection.
+\paragraph{Process} When a connection is opened, the ClientObject instances is created (initiating an exchange of information, like user names, between the client and server), and stored in a list of connections.
+\paragraph{Design Constraints and Performance Requirements} NetworkServer must be efficient enough to handle the expected number of connections. For our puposes, the demands on the NetworkServer are fairly minimal, and few performance issues have arisen.
+
+\subsection{Detailed Design for Component: Tag }
+\paragraph{Purpose} The Tag class contains "message tags". A message tag is the second object in a network packet. The tag identifies the concrete type of message. For example, the ``SEND HANDLE'' tag identifies a message as containing the handle (the username) of the new connection. By examining the Tag of a message, we can correctly interpret the other contents of the message. 
+\paragraph{Input} The Tag class receives no input. 
+\paragraph{Output} The Tag class does not produce output. 
+\paragraph{Process} None. 
+\paragraph{Design Constraints and Performance Requirements} None.
+
+\subsection{Detailed Design for Component: Flag }
+\paragraph{Purpose} The Flag class contains "message flags". A message flag is the first object in a network packet. The flag identifies the general type of a message. For example, there is a "REQUEST" and "RESPONSE" flag. The motivation for this is because many interactions with the server follow a REQUEST, ACCEPT or DENY format. For example, you might ``REQUEST'' ``SEND HANDLE'' in one message, and expect a ``RESPONSE'' ``SEND HANDLE''.
+\paragraph{Input} None.
+\paragraph{Output} None.
+\paragraph{Process} None.
+\paragraph{Design Constraints and Performance Requirements} None.
+	
+\subsection{Detailed Design for Component: Lobby }
+\paragraph{Purpose} The Lobby class is used by the server. Lobby represents a grouping of client connections (ClientObjects, which live on the server), and is used to manage a game instance. Lobby can remember things like the current turn. 
+\paragraph{Input} A Lobby can receive messages from the NetworkServer, or forward messages from the connected ClientObjects. 
+\paragraph{Output} A Lobby can forward messages received from one ClientObject to all clients in the Lobby.
+\paragraph{Process} Clients are added to or removed from (by client request) a particular lobby. 
+\paragraph{Design Constraints and Performance Requirements} None.
+
 \subsection{Detailed Design for Component: Characters}
 \paragraph{Purpose} This class contains the data of a Character in the game and extends the Movable Unit class. This class has variables unique to a character: magic level, magic potential, current manna, magic colour, and leadership. The magic level determines the hight level of spell that a character can cast. The magic potential is the maximum amount of manna that a character can have. The magic colour of a character determines when a character's spells have the most effect. Leadership is the influence that a character has in determining the result of army combat. Characters have the special ability to cast spells which uses the magic and manna values to determine the amount and effectiveness of their spells. 
 \paragraph{Input} The only Inputs to this class are the ones needed to fill the member variables of this class.
