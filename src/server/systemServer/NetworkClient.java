@@ -106,7 +106,7 @@ final public class NetworkClient {
      * @param ip_addr The IP address to connect to
      * @return whether it exploded or not (true is good)
      *
-     * @author Colin the Stupendous
+     * @author Colin Clifford
      */
     public static boolean initializeClient(String username, String ip_addr) {
         serverName = ip_addr;
@@ -226,7 +226,7 @@ final public class NetworkClient {
      * the next user, or the next game turn may start, or the game may end.
      */
     public static void endTurn() {
-        send( Flag.GAME, Tag.YIELD_TURN_REQUEST );
+        send( Flag.GAME, Tag.YIELD_TURN );
     }
     
     /**
@@ -234,18 +234,25 @@ final public class NetworkClient {
      * @param lobby
      */
     public static void createLobby(String lobby) {
-        send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, lobby);
+        send( Flag.LOBBY, Tag.NEW_LOBBY, lobby );
     }
 
+    /**
+     * Attempt to join a lobby
+     *
+     * @param lobby
+     *
+     * @author Christopher Goes
+     */
     public static void joinLobby(String lobby) {
-        send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, lobby);
+        send( Flag.LOBBY, Tag.JOIN_LOBBY, lobby );
     }
     
     /**
      * request to start game
      */
     public static void startGame() {
-        send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST);
+        send( Flag.GAME, Tag.BEGIN_GAME );
     }
     
     public static boolean isPhasing() {
@@ -257,12 +264,11 @@ final public class NetworkClient {
      *
      * @return
      *
-     * @author Christopher Goes
+     * @author Colin Clifford(hope i spelled that right), Christopher Goes
      */
     public static int generateUniqueID() {
         uid = -1;
-        send( Flag.REQUEST, Tag.UID_REQUEST );
-        //return -1;
+        send( Flag.INFO, Tag.UID );
         while(uid == -1) {
             try { Thread.sleep(1); } catch(InterruptedException e) {}
         }
@@ -327,9 +333,9 @@ final public class NetworkClient {
                 if ( "/sendFile".equals( parsedString[0] ) ) {
                     sendFile( parsedString[1] );
                 } else if ( "/newLobby".equals( parsedString[0] ) ) {
-                    send( Flag.REQUEST, Tag.NEW_LOBBY_REQUEST, parsedString[1] );
+                    send( Flag.LOBBY, Tag.NEW_LOBBY, parsedString[1] );
                 } else if ( "/joinLobby".equals( parsedString[0] ) ) {
-                    send( Flag.REQUEST, Tag.JOIN_LOBBY_REQUEST, parsedString[1] );
+                    send( Flag.LOBBY, Tag.JOIN_LOBBY, parsedString[1] );
                 } else if ( isConnected() ) {
                     sendChatMessage( parsedString[0] );
                 } else {
@@ -337,16 +343,16 @@ final public class NetworkClient {
                 }
             } else if ( parsedString.length == 1 ) {
                 if ( "/globalWho".equals( parsedString[0] ) ) {
-                    send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
+                    send( Flag.INFO, Tag.GLOBAL_WHO );
                 } else if ( "/lobbyWho".equals( parsedString[0] ) ) {
-                    send( Flag.REQUEST, Tag.LOBBY_WHO_REQUEST );
+                    send( Flag.INFO, Tag.LOBBY_WHO );
                 } else if ( "/leaveLobby".equals( parsedString[0] ) ) {
-                    send( Flag.REQUEST, Tag.LEAVE_LOBBY_REQUEST );
+                    send( Flag.LOBBY, Tag.LEAVE_LOBBY );
                 } else if ( "/showLobbies".equals( parsedString[0] ) ) {
-                    send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST );
+                    send( Flag.LOBBY, Tag.LOBBY_INFO );
                 } else if ( "/disconnect".equals( parsedString[0] ) ) { // Manual client disconnect
                     if ( remoteConnectionIsAlive() ) {
-                        send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
+                        send( Flag.CONNECTION, Tag.DISCONNECT );
                     } else if ( isConnected() ) {
                         flushToConsole( "Error! connection isn't alive but socket is!" );
                         return false;
@@ -356,11 +362,11 @@ final public class NetworkClient {
                 } else if ( "/yieldTurn".equals( parsedString[0] ) ) { // client turn over
                     endTurn();
                 } else if ( "/beginGame".equals( parsedString[0] ) ) { // request to start game
-                    send( Flag.REQUEST, Tag.BEGIN_GAME_REQUEST );
+                    send( Flag.GAME, Tag.BEGIN_GAME );
                 } else if ( "/help".equals( parsedString[0] ) ) {
                     printCommandList();
                 } else if ( "/printFile".equals( parsedString[0] ) ) {
-                    send( Flag.FILE, Tag.GET_FILE_REQUEST );
+                    send( Flag.FILE, Tag.GET_FILE );
                 } else if ( "/reconnect".equals( parsedString[0] ) ) {
                     if ( remoteConnectionIsAlive() ) {
                         flushToConsole( "You're already connected!" );
@@ -382,7 +388,7 @@ final public class NetworkClient {
                     if ( isConnected() ) {
                         flushToConsole( "Still connected to server, disconnecting" );
                         if ( remoteConnectionIsAlive() ) {
-                            send( Flag.CONNECTION, Tag.DISCONNECT_REQUEST );
+                            send( Flag.CONNECTION, Tag.DISCONNECT );
                         }
                     }
                     return false;
@@ -656,12 +662,23 @@ final public class NetworkClient {
                     }
                     break;
                 // Server-Client Network command communication
-                case CLIENT:
+                case INFO:
 
                     switch ( tag ) {
                         case SEND_HANDLE:
                         case MESSAGE_FROM_SERVER:
-
+                        case GLOBAL_WHO:
+                            flushToConsole( stringmessage );
+                            break;
+                        case LOBBY_WHO:
+                            flushToConsole( stringmessage );
+                            break;
+                        case LOBBY_INFO:
+                            flushToConsole( stringmessage );
+                            break;
+                        case UID:
+                            uid = (Integer) message.get( 0 );
+                            break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
@@ -679,7 +696,6 @@ final public class NetworkClient {
                     break;
                 // Game state update/message/command (Anything related to game)
                 case GAME:
-                    // Move processing of GAME flag to conductor
                     Conductor.processMessage( tag, sender, message );
                     switch ( tag ) {
                         case NEXT_TURN_INFO:
@@ -691,7 +707,7 @@ final public class NetworkClient {
                                 flushToConsole( "It is now " + stringmessage + "'s turn!" );
                             }
                             break;
-                        case YIELD_TURN_RESPONSE:
+                        case YIELD_TURN:
                             // TODO: finish phasing implementation
                             if ( (boolean) message.get( 0 ) ) {
                                 phasing = false;
@@ -705,30 +721,18 @@ final public class NetworkClient {
                                 Game.getInstance().initScenarioCallback();
                             }});                            
                             break;
+                        case BEGIN_GAME:
+                            flushToConsole( stringmessage );
+                            break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
                     break;
-                // Request for inforation ex: REQUEST_LOBBY_INFO
-                case REQUEST: // Client doesn't usually get requests currently
-                    flag = Flag.RESPONSE; // programmers are lazy
-                    switch ( tag ) {
-                        default:
-                            flushToConsole( "Unknown tag: " + tag );
-                    }
-                    break;
-                // Response to information request ex: LOBBY_INFO
-                case RESPONSE: // Incoming from server
-                    flag = Flag.REQUEST; // lifeEasiness++
+                // Lobby management tags
+                case LOBBY:
                     switch ( tag ) {
 
-                        case GLOBAL_WHO_RESPONSE:
-                            flushToConsole( stringmessage );
-                            break;
-                        case LOBBY_INFO_RESPONSE:
-                            flushToConsole( stringmessage );
-                            break;
-                        case NEW_LOBBY_RESPONSE:
+                        case NEW_LOBBY:
                             if ( (Boolean) message.get( 0 ) ) { // approved!
                                 flushToConsole( "Lobby " + stringmessage + " has been created!" );
                                 currentLobby = stringmessage;
@@ -738,10 +742,8 @@ final public class NetworkClient {
                                         + "!\n" );
                             }
                             break;
-                        case UID_RESPONSE:
-                            uid = (Integer)message.get(0);
-                            break;
-                        case JOIN_LOBBY_RESPONSE:
+
+                        case JOIN_LOBBY:
                             if ( (boolean) message.get( 0 ) ) {
                                 currentLobby = stringmessage;
                                 flushToConsole( "Successfully joined lobby " + currentLobby + "!" );
@@ -749,13 +751,10 @@ final public class NetworkClient {
                                 flushToConsole( stringmessage );
                             }
                             break;
-                        case LEAVE_LOBBY_RESPONSE:
+                        case LEAVE_LOBBY:
                             currentLobby = "Not in a Lobby";
                             break;
-                        case BEGIN_GAME_RESPONSE: // Client will see game started, so just print message
-                        case BEGIN_GAME:
-                            flushToConsole( stringmessage );
-                            break;
+
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
@@ -764,7 +763,7 @@ final public class NetworkClient {
                 case CONNECTION:
 
                     switch ( tag ) {
-                        case DISCONNECT_RESPONSE:
+                        case DISCONNECT:
                             if ( (boolean) message.get( 0 ) ) {
                                 disconnect();
                                 return false;
@@ -776,10 +775,20 @@ final public class NetworkClient {
                             flushToConsole( "Unknown tag: " + tag );
                     }
                     break;
-                // Anything related to file transfer, either for network or game state(for now)
+                // Anything related to file transfer, either for network or game state
                 case FILE:
 
                     switch ( tag ) {
+                        case GET_FILE:
+                            // TODO: print file
+                            break;
+                        case SEND_FILE:
+                            if ( (boolean) message.get( 0 ) ) {
+                                flushToConsole( "File sent successfully!" );
+                            } else {
+                                flushToConsole( "Error: server did not recieve file!" );
+                            }
+                            break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
@@ -787,15 +796,17 @@ final public class NetworkClient {
                 // Anything that doesn't fall into above categories ex: GENERIC
                 case OTHER:
                     switch ( tag ) {
+                        case GENERIC:
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
                     break;
 
-                case NOTIFICATION:
+                case NOTIFICATION: // Doing nothing than print for now
                     switch ( tag ) {
-
-                        case LOBBY:
+                        case GLOBAL: // Incoming Broadcast to all connected clients
+                        case LOBBY: // lobby-wide broadcast
+                        case PRIVATE: // direct to user, like if doing something not good
                             flushToConsole( stringmessage );
                             break;
                         default:
@@ -889,11 +900,11 @@ final public class NetworkClient {
         }
         // TODO: hello message?
         // Send username
-        send( Flag.CLIENT, Tag.SEND_HANDLE );
+        send( Flag.INFO, Tag.SEND_HANDLE );
         // Request list of clients:
-        send( Flag.REQUEST, Tag.GLOBAL_WHO_REQUEST );
+        send( Flag.INFO, Tag.GLOBAL_WHO );
         // Request list of lobbies:
-        send( Flag.REQUEST, Tag.LOBBY_INFO_REQUEST );
+        send( Flag.INFO, Tag.LOBBY_INFO );
     }
 
     /**
@@ -1147,7 +1158,7 @@ final public class NetworkClient {
         try {
             temp = Files.readAllLines( Paths.get( networkDirectory + filename ), Charset.
                     forName( "UTF-8" ) );
-            send( Flag.FILE, Tag.SEND_FILE_REQUEST, temp );
+            send( Flag.FILE, Tag.SEND_FILE, temp );
         } catch ( IOException e ) {
             System.err.println( "Could not open file! Error thrown: " + e );
         }

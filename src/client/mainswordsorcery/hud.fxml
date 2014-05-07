@@ -51,6 +51,7 @@
                         <MenuItem mnemonicParsing="false" text="Goals" />
                         <MenuItem mnemonicParsing="false" onAction="#DisplayDiplomacy" text="Diplomacy" fx:id="Diplomacy" />
                         <MenuItem mnemonicParsing="false" text="Alliance" />
+                        <MenuItem mnemonicParsing="false" onAction="#MakeCurrentPlayer" text="Become Current Player" fx:id="BecomeCurrentPlayer" />
                       </items>
                     </Menu>
                   </menus>
@@ -82,16 +83,18 @@
                         <Font name="System Bold" size="12.0" fx:id="x1" />
                       </font>
                     </Text>
-                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Red Sun:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Phase:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Leading Points:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Victory Points:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Blue Sun:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Red Sun:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Phase:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Leading Points:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Victory Points:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Blue Sun:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <Text font="$x1" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Player:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Points" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <Text fx:id="BlueState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Text id="RedSun" fx:id="RedState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                    <Text fx:id="phase" strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Text fx:id="BlueState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Text fx:id="currentPlayerText" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Text id="RedSun" fx:id="RedState" strokeType="OUTSIDE" strokeWidth="0.0" text="Equilibrium" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Text fx:id="phase" strokeType="OUTSIDE" strokeWidth="0.0" text="Phase" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Text fx:id="turn" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                   </children>
                   <columnConstraints>
@@ -107,6 +110,7 @@
                     <RowConstraints maxHeight="50.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="50.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="50.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="49.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="49.0" minHeight="10.0" percentHeight="16.66" prefHeight="-1.0" valignment="CENTER" vgrow="SOMETIMES" />
                   </rowConstraints>
                 </GridPane>
@@ -152,7 +156,7 @@
                     <Separator prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="TOP" />
                     <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1">
                       <children>
-                        <Button fx:id="phaseButton" mnemonicParsing="false" onAction="#ChangePhase" prefHeight="45.0" prefWidth="86.501953125" text="End Movement Phase" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Button fx:id="phaseButton" mnemonicParsing="false" onAction="#ChangePhase" prefHeight="45.0" prefWidth="86.501953125" text="End Spell Phase" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0">
                           <font>
                             <Font name="Palatino Linotype Bold" size="16.0" />
                           </font>

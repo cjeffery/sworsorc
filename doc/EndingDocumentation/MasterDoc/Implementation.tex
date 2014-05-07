@@ -347,14 +347,64 @@ Network team should write this
 %===============================================================================
 \section{The Movement Calculator}
 %===============================================================================
-Be sure to mention that it uses a recursive algorithm
+The MovementCalculator class has 12 methods and two static fields. The static 
+fields are for optimization of movement and retreating. The optimization of 
+movement uses the allowanceCache HashMap to hold only the fast routes that the 
+method getValidMoves(...) finds. getValidMoves(...) is a public static method 
+that recursively populates an ArrayList of MapHex objects based on constraints
+that apply to the unit that is moving. These constraints include terrain types, 
+hex edges, enemy occupation and zone of control, and the movement allowance 
+allotted to the unit per turn. The hashmap that optimizes the getValidMoves(...)
+method holds each valid MapHex that the unit can reach as a key and the unit's 
+remaining movement allowance for moving into that hex. This allows a dynamic
+movement system, where a player may move a unit twice or more in a movement 
+phase, while the unit still remains in the bound of its movement allowance.
+The other field in MovementCalculator, retreatAllowanceCache, serves a similar
+purpose as allowance cache, but is used by the retreat methods. Retreating is
+also done recursively, and all valid moves for a retreating unit are generated
+and added to the hashmap, retreatAllowanceCache. From there, the hash map is 
+filtered according to the S\&S rules for retreating from combat. There is a 
+stated hierarchy of locations that a unit can retreat to, which the method 
+filters for and follows, ultimately generating and returning a list of 
+hexes that a unit can retreat to. If the size of the ArrayList returned is 
+zero, or if the ArrayList is null, then the unit has no valid retreat 
+locations, and should be destroyed. The remaining methods that are undescribed
+here are simply helper methods for the main methods, or wrappers, as in the 
+case of wrapperMovement(...). 
 
 %===============================================================================
 \section{Gameplay Model Classes}
 %===============================================================================
-Gameplay team knock yourself out.
+\subsection{Army Units}
+When implementation came around we discovered that having sub-classes for every 
+different army unit sub-type was not practical. Instead a single army unit is 
+with different flags to describe the unit is used. The main super class of 
+movable units is still used with the sub-classes army unit, character, and 
+monster but then stops there. Also a race and nation variable unit had to be 
+added to the class in order for things like the movement calculator to work. 
 
-UnitPool could also go here, or in it's own section.
+\subsection{Characters}
+Characters have a series of variables needed for spell casting, leadership, and 
+diplomacy. Something new is the idea of a spell book, a class that reads it's 
+character's information to determine what spells can be cast. In order for this
+class to work properly the character class contains a spell book and the spell
+book contains its corresponding character. In order for the scenario reader to 
+work properly a character creator was made in the character class that takes the
+name of a character, finds the matching data on the character, and creates a 
+character with the data.
+
+\subsection{Spells}
+For spells to work properly they needed to exist separate from the main program.
+This was implemented by creating a separate GUI for spells. When a character 
+"casts" a spell the spell book class is called upon which created a GUI with 
+all spell options that character has. Once a spell is chosen the user has the 
+option of reading the details of the spell or casting the spell once a spell is 
+"cast" the effects of the spell are added to the games state and the spell book 
+is terminated.
+
+\subsection{Combat}
+
+\subsection{Unit Pool}
 
 
 \end{document}

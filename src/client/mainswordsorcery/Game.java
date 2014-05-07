@@ -37,7 +37,13 @@ public class Game extends Application {
     //current client player id
     //set to 0 for testing convenience
     //changed by network
-    int PlayerID = 0;
+    int PlayerID = 1;
+    int currentTurnPlayer = 1; //player who has current control
+    //the number of players that have already played their turn
+    //this game turn. When this equals scenario players then signal new
+    //game turn.
+    int numPlayersGoneThisTurn = 1;
+    int currentGameTurn = 1;
     /** true if a scenario is loaded */
     boolean scenarioLoaded;
     String chosenScenario;
