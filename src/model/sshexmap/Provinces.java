@@ -100,8 +100,8 @@ public class Provinces {
     
     /**
      * Get a random hexID string in a given Province set. This hex cannot be 
-     * a water type
-     * TODO: add check for vortices, bottomless plungehole
+     * a water type or bottomless plungehole
+     * TODO: add check for vortices
      * 
      * @author Tyler Jaszkowiak
      * @param province_names a list of provinces to select from
@@ -130,8 +130,9 @@ public class Provinces {
         index = rand.nextInt(res.size());
         String hexid = res.get(index);
         
-        // recalculate if water chosen
-        while (MainMap.GetInstance().GetHex(hexid).getTerrainType() instanceof TTWater) {
+        // recalculate if water or bottomless plungehole chosen
+        while (MainMap.GetInstance().GetHex(hexid).getTerrainType() instanceof TTWater ||
+                hexid.equals("1752")) {
             index = rand.nextInt(res.size());
             hexid = res.get(index);
         }
