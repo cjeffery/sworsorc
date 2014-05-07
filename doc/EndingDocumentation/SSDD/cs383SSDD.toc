@@ -37,43 +37,43 @@
 \contentsline {subsubsection}{\numberline {3.3.2}Consistency Analysis and Inconsistency Mitigations}{7}
 \contentsline {section}{\numberline {4}Software Detailed Design}{7}
 \contentsline {subsection}{\numberline {4.1}Developer's Viewpoint Detailed Software Design}{7}
-\contentsline {subsection}{\numberline {4.2}Component Dictionary}{7}
-\contentsline {subsection}{\numberline {4.3}Component Detailed Design}{7}
-\contentsline {subsection}{\numberline {4.4}Detailed Design for Component: Army Unit}{7}
-\contentsline {paragraph}{Purpose}{7}
-\contentsline {paragraph}{Input}{7}
-\contentsline {paragraph}{Output}{8}
-\contentsline {paragraph}{Process}{8}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{8}
-\contentsline {subsection}{\numberline {4.5}Detailed Design for Component: Army Combat Results Table}{8}
-\contentsline {paragraph}{Purpose}{8}
-\contentsline {paragraph}{Input}{8}
-\contentsline {paragraph}{Output}{8}
-\contentsline {paragraph}{Process}{8}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{8}
-\contentsline {subsection}{\numberline {4.6}Detailed Design for Component: Characters}{8}
-\contentsline {paragraph}{Purpose}{8}
-\contentsline {paragraph}{Input}{8}
-\contentsline {paragraph}{Output}{8}
-\contentsline {paragraph}{Process}{9}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{9}
-\contentsline {subsection}{\numberline {4.7}Detailed Design for Component: Movable Unit}{9}
+\contentsline {subsection}{\numberline {4.2}Component Dictionary}{8}
+\contentsline {subsection}{\numberline {4.3}Component Detailed Design}{9}
+\contentsline {subsection}{\numberline {4.4}Detailed Design for Component: Army Unit}{9}
 \contentsline {paragraph}{Purpose}{9}
 \contentsline {paragraph}{Input}{9}
 \contentsline {paragraph}{Output}{9}
 \contentsline {paragraph}{Process}{9}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{9}
-\contentsline {subsubsection}{\numberline {4.7.1}Detailed Design for Component: Movement Calculator}{9}
+\contentsline {subsection}{\numberline {4.5}Detailed Design for Component: Army Combat Results Table}{9}
 \contentsline {paragraph}{Purpose}{9}
 \contentsline {paragraph}{Input}{9}
 \contentsline {paragraph}{Output}{9}
+\contentsline {paragraph}{Process}{9}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{9}
+\contentsline {subsection}{\numberline {4.6}Detailed Design for Component: Characters}{10}
+\contentsline {paragraph}{Purpose}{10}
+\contentsline {paragraph}{Input}{10}
+\contentsline {paragraph}{Output}{10}
 \contentsline {paragraph}{Process}{10}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{10}
-\contentsline {subsection}{\numberline {4.8}Data Dictionary}{10}
-\contentsline {section}{\numberline {5}Requirements Traceability}{10}
-\contentsline {subsection}{\numberline {5.1}Movement}{10}
-\contentsline {paragraph}{Requirements Description}{10}
-\contentsline {paragraph}{Implementation Description}{10}
-\contentsline {paragraph}{Differences}{10}
-\contentsline {subsection}{\numberline {5.2}Traceability Analysis}{10}
-\contentsline {section}{\numberline {6}Appendix A}{10}
+\contentsline {subsection}{\numberline {4.7}Detailed Design for Component: Movable Unit}{10}
+\contentsline {paragraph}{Purpose}{10}
+\contentsline {paragraph}{Input}{10}
+\contentsline {paragraph}{Output}{10}
+\contentsline {paragraph}{Process}{10}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{10}
+\contentsline {subsubsection}{\numberline {4.7.1}Detailed Design for Component: Movement Calculator}{11}
+\contentsline {paragraph}{Purpose}{11}
+\contentsline {paragraph}{Input}{11}
+\contentsline {paragraph}{Output}{11}
+\contentsline {paragraph}{Process}{11}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{11}
+\contentsline {subsection}{\numberline {4.8}Data Dictionary}{11}
+\contentsline {section}{\numberline {5}Requirements Traceability}{12}
+\contentsline {subsection}{\numberline {5.1}Movement}{12}
+\contentsline {paragraph}{Requirements Description}{12}
+\contentsline {paragraph}{Implementation Description}{12}
+\contentsline {paragraph}{Differences}{12}
+\contentsline {subsection}{\numberline {5.2}Traceability Analysis}{12}
+\contentsline {section}{\numberline {6}Appendix A}{12}

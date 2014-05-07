@@ -55,7 +55,11 @@ Design Entity & \"An element (component) of a design that is structurally and fu
 \hline
 Design View & \"A subset of design entity attribute information that is specifically suited to the needs of a software project activity.\"\space IEEE STD 1016-1998\\
 \hline
+Edge & The edge between two hexes. Edges can include roads, walls, streams, etc. and can effect movement or combat\\
+\hline
 GUI & Graphical User Interface - What the user sees and interacts with - also called the HUD.\\
+\hline
+Hexagon & A hexagon shaped location on the game or diplomacy map that can contain things like units, edges, or terrain. Or the mathematical hexagon shape.\\
 \hline
 HUD & Heads Up Display - What the user sees, with respect to interface - also called the GUI.\\
 \hline
@@ -133,6 +137,7 @@ There are multiple developer views within the scope of the S\&S project for CS38
 \section{Software Detailed Design}
 	\subsection{Developer's Viewpoint Detailed Software Design}
 
+\pagebreak
 \subsection{Component Dictionary}
 \small{
 \begin{center}
@@ -145,7 +150,19 @@ Army Unit & Class & Unit SubClass & Moveable Unit & All individual unit types\\
 \hline
 Characters & Class & Unit SubClass & Moveable Unit & None\\
 \hline
+Hexagon Classes & Model & Represents a hexagon & Hex Edge Classes, Terrain Classes, UnitPool & \\
+\hline
+Hex Edge Classes & Model & Classes to collect and represent elements on hexagon edges & Hex Classes & \\
+\hline
+Hexagon Map Classes & Model & Classes to represent a "map" of hexagons, either diplomacy or game. & Hex Classes & \\
+\hline
 MainMenuController & Controller & Define and limit access to main menu & Game.java & \\
+\hline
+Map Rendering Classes & View & Renders the game map and things on it & MapView, Hexagon Classes, Hex Edge Classes & \\
+\hline
+MapView &
+View &
+A GUI widget to act as a container for the Map Rendering code & Hexagon Classes, Map Rendering Classes & \\
 \hline
 Moveable Unit & Class & Unit SuperClass & None & ArmyUnit, Character, Monster\\
 \hline
