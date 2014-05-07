@@ -38,91 +38,91 @@
 \contentsline {subsubsection}{\numberline {3.3.2}Consistency Analysis and Inconsistency Mitigations}{10}
 \contentsline {section}{\numberline {4}Software Detailed Design}{10}
 \contentsline {subsection}{\numberline {4.1}Developer's Viewpoint Detailed Software Design}{10}
-\contentsline {subsection}{\numberline {4.2}Component Dictionary}{11}
-\contentsline {subsection}{\numberline {4.3}Component Detailed Design}{12}
-\contentsline {subsection}{\numberline {4.4}Detailed Design for Component: Army Unit}{12}
-\contentsline {paragraph}{Purpose}{12}
-\contentsline {paragraph}{Input}{12}
-\contentsline {paragraph}{Output}{12}
-\contentsline {paragraph}{Process}{12}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{12}
-\contentsline {subsection}{\numberline {4.5}Detailed Design for Component: Army Combat Results Table}{12}
-\contentsline {paragraph}{Purpose}{12}
-\contentsline {paragraph}{Input}{12}
-\contentsline {paragraph}{Output}{12}
-\contentsline {paragraph}{Process}{12}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{12}
-\contentsline {subsection}{\numberline {4.6}Detailed Design for Component: Conductor}{13}
-\contentsline {paragraph}{Purpose}{13}
-\contentsline {paragraph}{Input}{13}
-\contentsline {paragraph}{Output}{13}
-\contentsline {paragraph}{Process}{13}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{13}
-\contentsline {subsection}{\numberline {4.7}Detailed Design for Component: MessagePhoenix}{13}
-\contentsline {paragraph}{Purpose}{13}
-\contentsline {paragraph}{Input}{13}
-\contentsline {paragraph}{Output}{13}
-\contentsline {paragraph}{Process}{13}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{13}
-\contentsline {subsection}{\numberline {4.8}Detailed Design for Component: ClientObject }{13}
-\contentsline {paragraph}{Purpose}{13}
-\contentsline {paragraph}{Input}{14}
-\contentsline {paragraph}{Output}{14}
-\contentsline {paragraph}{Process}{14}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{14}
-\contentsline {subsection}{\numberline {4.9}Detailed Design for Component: NetworkClient }{14}
-\contentsline {paragraph}{Purpose}{14}
-\contentsline {paragraph}{Input}{14}
-\contentsline {paragraph}{Output}{14}
-\contentsline {paragraph}{Process}{14}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{14}
-\contentsline {subsection}{\numberline {4.10}Detailed Design for Component: NetworkServer }{14}
-\contentsline {paragraph}{Purpose}{14}
-\contentsline {paragraph}{Input}{14}
-\contentsline {paragraph}{Output}{14}
-\contentsline {paragraph}{Process}{14}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{14}
-\contentsline {subsection}{\numberline {4.11}Detailed Design for Component: Tag }{15}
-\contentsline {paragraph}{Purpose}{15}
-\contentsline {paragraph}{Input}{15}
-\contentsline {paragraph}{Output}{15}
-\contentsline {paragraph}{Process}{15}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{15}
-\contentsline {subsection}{\numberline {4.12}Detailed Design for Component: Flag }{15}
-\contentsline {paragraph}{Purpose}{15}
-\contentsline {paragraph}{Input}{15}
-\contentsline {paragraph}{Output}{15}
-\contentsline {paragraph}{Process}{15}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{15}
-\contentsline {subsection}{\numberline {4.13}Detailed Design for Component: Lobby }{15}
-\contentsline {paragraph}{Purpose}{15}
-\contentsline {paragraph}{Input}{15}
-\contentsline {paragraph}{Output}{15}
-\contentsline {paragraph}{Process}{15}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{15}
-\contentsline {subsection}{\numberline {4.14}Detailed Design for Component: Characters}{16}
-\contentsline {paragraph}{Purpose}{16}
-\contentsline {paragraph}{Input}{16}
-\contentsline {paragraph}{Output}{16}
-\contentsline {paragraph}{Process}{16}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{16}
-\contentsline {subsection}{\numberline {4.15}Detailed Design for Component: Movable Unit}{16}
-\contentsline {paragraph}{Purpose}{16}
-\contentsline {paragraph}{Input}{16}
-\contentsline {paragraph}{Output}{16}
-\contentsline {paragraph}{Process}{16}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{16}
-\contentsline {subsubsection}{\numberline {4.15.1}Detailed Design for Component: Movement Calculator}{17}
-\contentsline {paragraph}{Purpose}{17}
-\contentsline {paragraph}{Input}{17}
-\contentsline {paragraph}{Output}{17}
-\contentsline {paragraph}{Process}{17}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{17}
-\contentsline {subsection}{\numberline {4.16}Data Dictionary}{17}
-\contentsline {section}{\numberline {5}Requirements Traceability}{18}
-\contentsline {subsection}{\numberline {5.1}Movement}{18}
-\contentsline {paragraph}{Requirements Description}{18}
-\contentsline {paragraph}{Implementation Description}{18}
-\contentsline {paragraph}{Differences}{18}
-\contentsline {subsection}{\numberline {5.2}Traceability Analysis}{18}
-\contentsline {section}{\numberline {6}Appendix A}{18}
+\contentsline {subsection}{\numberline {4.2}Component Dictionary}{23}
+\contentsline {subsection}{\numberline {4.3}Component Detailed Design}{24}
+\contentsline {subsection}{\numberline {4.4}Detailed Design for Component: Army Unit}{24}
+\contentsline {paragraph}{Purpose}{24}
+\contentsline {paragraph}{Input}{24}
+\contentsline {paragraph}{Output}{24}
+\contentsline {paragraph}{Process}{24}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{24}
+\contentsline {subsection}{\numberline {4.5}Detailed Design for Component: Army Combat Results Table}{24}
+\contentsline {paragraph}{Purpose}{24}
+\contentsline {paragraph}{Input}{24}
+\contentsline {paragraph}{Output}{24}
+\contentsline {paragraph}{Process}{24}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{24}
+\contentsline {subsection}{\numberline {4.6}Detailed Design for Component: Conductor}{25}
+\contentsline {paragraph}{Purpose}{25}
+\contentsline {paragraph}{Input}{25}
+\contentsline {paragraph}{Output}{25}
+\contentsline {paragraph}{Process}{25}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{25}
+\contentsline {subsection}{\numberline {4.7}Detailed Design for Component: MessagePhoenix}{25}
+\contentsline {paragraph}{Purpose}{25}
+\contentsline {paragraph}{Input}{25}
+\contentsline {paragraph}{Output}{25}
+\contentsline {paragraph}{Process}{25}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{25}
+\contentsline {subsection}{\numberline {4.8}Detailed Design for Component: ClientObject }{25}
+\contentsline {paragraph}{Purpose}{25}
+\contentsline {paragraph}{Input}{26}
+\contentsline {paragraph}{Output}{26}
+\contentsline {paragraph}{Process}{26}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{26}
+\contentsline {subsection}{\numberline {4.9}Detailed Design for Component: NetworkClient }{26}
+\contentsline {paragraph}{Purpose}{26}
+\contentsline {paragraph}{Input}{26}
+\contentsline {paragraph}{Output}{26}
+\contentsline {paragraph}{Process}{26}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{26}
+\contentsline {subsection}{\numberline {4.10}Detailed Design for Component: NetworkServer }{26}
+\contentsline {paragraph}{Purpose}{26}
+\contentsline {paragraph}{Input}{26}
+\contentsline {paragraph}{Output}{26}
+\contentsline {paragraph}{Process}{26}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{26}
+\contentsline {subsection}{\numberline {4.11}Detailed Design for Component: Tag }{27}
+\contentsline {paragraph}{Purpose}{27}
+\contentsline {paragraph}{Input}{27}
+\contentsline {paragraph}{Output}{27}
+\contentsline {paragraph}{Process}{27}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
+\contentsline {subsection}{\numberline {4.12}Detailed Design for Component: Flag }{27}
+\contentsline {paragraph}{Purpose}{27}
+\contentsline {paragraph}{Input}{27}
+\contentsline {paragraph}{Output}{27}
+\contentsline {paragraph}{Process}{27}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
+\contentsline {subsection}{\numberline {4.13}Detailed Design for Component: Lobby }{27}
+\contentsline {paragraph}{Purpose}{27}
+\contentsline {paragraph}{Input}{27}
+\contentsline {paragraph}{Output}{27}
+\contentsline {paragraph}{Process}{27}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
+\contentsline {subsection}{\numberline {4.14}Detailed Design for Component: Characters}{28}
+\contentsline {paragraph}{Purpose}{28}
+\contentsline {paragraph}{Input}{28}
+\contentsline {paragraph}{Output}{28}
+\contentsline {paragraph}{Process}{28}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{28}
+\contentsline {subsection}{\numberline {4.15}Detailed Design for Component: Movable Unit}{28}
+\contentsline {paragraph}{Purpose}{28}
+\contentsline {paragraph}{Input}{28}
+\contentsline {paragraph}{Output}{28}
+\contentsline {paragraph}{Process}{28}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{28}
+\contentsline {subsubsection}{\numberline {4.15.1}Detailed Design for Component: Movement Calculator}{29}
+\contentsline {paragraph}{Purpose}{29}
+\contentsline {paragraph}{Input}{29}
+\contentsline {paragraph}{Output}{29}
+\contentsline {paragraph}{Process}{29}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{29}
+\contentsline {subsection}{\numberline {4.16}Data Dictionary}{29}
+\contentsline {section}{\numberline {5}Requirements Traceability}{30}
+\contentsline {subsection}{\numberline {5.1}Movement}{30}
+\contentsline {paragraph}{Requirements Description}{30}
+\contentsline {paragraph}{Implementation Description}{30}
+\contentsline {paragraph}{Differences}{30}
+\contentsline {subsection}{\numberline {5.2}Traceability Analysis}{30}
+\contentsline {section}{\numberline {6}Appendix A}{30}
