@@ -6,6 +6,7 @@
 
 package mainswordsorcery;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +15,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sscharts.Scenario;
 
 /**
  *
@@ -26,6 +29,9 @@ public class MainMenuController {
      * example code in HUDController.java
      * @author Jay Drage        
      */
+    Stage  stage;
+    private String chosenScenario;
+     
     public void initialize(){
         
     }
@@ -35,14 +41,14 @@ public class MainMenuController {
         //in the future "Start Game" should be greyed out or unclickable before a scenario is loaded
         //comment:Jay Drage
         LoadScenario(event);
+        setScenario();
         //check if scenario is loaded and if true then display
         //main hud map
         if(Game.getInstance().scenarioLoaded){
             HUDController c = Game.getInstance().hudController;
             c.initializeSunStuff();
-            
             Node node = (Node) event.getSource();
-            Stage stage=(Stage) node.getScene().getWindow();
+            stage=(Stage) node.getScene().getWindow();
 
             stage.setScene(Game.getInstance().getHudScene());
             stage.setFullScreen(Game.getInstance().fullscreen);
@@ -51,9 +57,23 @@ public class MainMenuController {
     }
     //activated by "Load Scenario" button
     @FXML protected void LoadScenario(ActionEvent event) {
-           //TODO change GUI to show possible scenario files and pass
-           //selected file to initScenario() below.
-           Game.getInstance().initScenario( "filename" );
+            //TODO change GUI to show possible scenario files and pass
+            //selected file to initScenario() below.
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            FileChooser.ExtensionFilter extFilter = 
+                new FileChooser.ExtensionFilter("*", "*");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showOpenDialog(stage);
+            if(file != null)
+            {
+                chosenScenario = new String();
+                chosenScenario = file.getPath();
+                Game.getInstance().initScenario(chosenScenario);
+            }
+            else {
+                //Game.getInstance().initScenario("filename");
+            }
     }
     //activated by "Network" button
     @FXML protected void GotoNetworkLobby(ActionEvent event){
@@ -62,5 +82,9 @@ public class MainMenuController {
     //activated by "Quit" button
     @FXML protected void Quit(ActionEvent event) {
         Game.getInstance().stop();
+    }
+    public void setScenario()
+    {
+        Game.getInstance().chosenScenario = chosenScenario;
     }
 }

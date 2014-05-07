@@ -12,6 +12,7 @@ package mainswordsorcery;
  * @author Joe Higley
  */
 import Units.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -39,6 +40,7 @@ public class Game extends Application {
     int PlayerID = 0;
     /** true if a scenario is loaded */
     boolean scenarioLoaded;
+    String chosenScenario;
     /** the singleton unit hash tree UnitPool variable */
     UnitPool unitPool;
     //Stage setup content
@@ -254,19 +256,38 @@ public class Game extends Application {
     public void initScenarioCallback() {
         //set to true to load sample scenario
         //set to false to run actual initScenario
-        boolean testScenario = true;
+        boolean testScenario = false;
         unitPool = UnitPool.getInstance();
         unitPool.clear();
         if(testScenario){
-            // initialize dummy scenario, populate unit pool from it
+            // initialize dummy scenario, populate unit pool from it'
+            
             Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
             Scenario.populatePool();
             
             //scenario loading complete
             scenarioLoaded = true;
         }
-        else{
-            //TODO implement real initScenario by providing choice of 
+        else {
+            //TODO implement real initScenario by providing choice of
+            /*FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            FileChooser.ExtensionFilter extFilter = 
+                new FileChooser.ExtensionFilter("*", "*");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showOpenDialog(stage);
+            if(file != null)
+            */
+            //{   
+                //chosenScenario = file.getPath();
+                Scenario.Initialize(chosenScenario);
+                Scenario.populatePool();
+                scenarioLoaded = true;
+            //}
+            //else {
+              //  Scenario.Initialize("resources/scenarios/7_Dwarro_Orcish_War.json");
+                //Scenario.populatePool();
+            //}
             //     config file (in resources/scenarios)
         }
     }

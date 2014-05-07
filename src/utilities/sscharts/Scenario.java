@@ -518,4 +518,8 @@ public class Scenario {
     public static Boolean acceptsSacrifice(String neutralName) {
         return acceptsSacrifice.get(neutralName);
     }
+
+    public void initScenario(String chosenScenario) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
