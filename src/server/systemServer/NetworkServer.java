@@ -116,7 +116,7 @@ final public class NetworkServer {
             System.err.println( "null client passed to clientDisconnected!" );
             return;
         }
-        leaveLobby( client ); // Leave any lobby client may be in
+        leaveLobby( client.getHandle() ); // Leave any lobby client may be in
         clientObjects.remove( client ); // Remove from list of clients
         totalClients--; // Decrement total clients
         if ( debug ) {
@@ -191,7 +191,7 @@ final public class NetworkServer {
                 if ( l.isInLobby( client.getHandle() ) ) {
                     return false;
                 } else {
-                    leaveLobby( client ); // bit dangerous...
+                    leaveLobby( client.getHandle() ); // bit dangerous...
                     l.join( client.getHandle() );
                     client.setCurrentLobby( l );
                     return true;
@@ -208,21 +208,22 @@ final public class NetworkServer {
      * <p>
      * @param client
      */
-    protected static void leaveLobby( ClientObject client ) { // TODO: boolean return?
+    protected static void leaveLobby( String client ) { // TODO: boolean return?
         if ( client == null ) {
             return;
         }
         // Search all lobbies for client
         for ( Lobby l : lobbies ) {
-            if ( l.isInLobby( client.getHandle() ) ) {
-                l.leaveLobby( client.getHandle() );
-                l.lobbyNotification( "Client " + client.getHandle() + " has left the lobby!" );
+            if ( l.isInLobby( client ) ) {
+                l.leaveLobby( client );
                 if ( l.lobbyClients.isEmpty() ) {
                     lobbies.remove( l ); //For now, just kill lobbies when everyone leaves
+                    totalLobbies--;
+                    return;
+                } else {
+                    l.lobbyNotification( "Client " + client + " has left the lobby!" );
                     return;
                 }
-                // if (l.isInLobby("")) would work?
-                return;
             }
         }
     }
@@ -237,7 +238,6 @@ final public class NetworkServer {
      * @author Christopher Goes
      */
     protected static List<String> getLobbyUsers( String lobbyName ) {
-        List<String> temp = Collections.emptyList();
         if ( lobbyName != null && !lobbyName.isEmpty() ) {
             for ( Lobby l : lobbies ) {
                 if ( l.getName() != null && l.getName().equals( lobbyName ) ) {
@@ -245,7 +245,7 @@ final public class NetworkServer {
                 }
             }
         }
-        return temp;
+        return Collections.emptyList();
     }
 
     /**

@@ -10,7 +10,8 @@ package systemServer;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
@@ -252,7 +253,8 @@ final public class NetworkClient {
      * request to start game
      */
     public static void startGame() {
-        send( Flag.GAME, Tag.BEGIN_GAME );
+        // TODO: stub
+        //send( Flag.GAME, Tag.BEGIN_GAME );
     }
     
     public static boolean isPhasing() {
@@ -347,9 +349,10 @@ final public class NetworkClient {
                 } else if ( "/lobbyWho".equals( parsedString[0] ) ) {
                     send( Flag.INFO, Tag.LOBBY_WHO );
                 } else if ( "/leaveLobby".equals( parsedString[0] ) ) {
+                    currentLobby = "";
                     send( Flag.LOBBY, Tag.LEAVE_LOBBY );
                 } else if ( "/showLobbies".equals( parsedString[0] ) ) {
-                    send( Flag.LOBBY, Tag.LOBBY_INFO );
+                    send( Flag.INFO, Tag.LOBBY_INFO );
                 } else if ( "/disconnect".equals( parsedString[0] ) ) { // Manual client disconnect
                     if ( remoteConnectionIsAlive() ) {
                         send( Flag.CONNECTION, Tag.DISCONNECT );
@@ -449,8 +452,9 @@ final public class NetworkClient {
                 } else if ( line.isEmpty() ) {
                     System.err.println( "Empty line" );
                 } else if ( !(processCommand( line )) ) {
-                    flushToConsole( "Later gator!" );
-                    stopClient(); // Shutdown everything
+                    //flushToConsole( "Later gator!" );
+                    //stopClient(); // Shutdown everything
+                    System.err.println( "Unable to process command!" );
                 }
                 // Continue execution
             }
@@ -703,16 +707,16 @@ final public class NetworkClient {
                                 flushToConsole( "Its nobodys turn!" );
                             } else if ( username.equals( stringmessage ) ) {
                                 flushToConsole( ("It is now my turn!") );
+                                phasing = true;
                             } else {
                                 flushToConsole( "It is now " + stringmessage + "'s turn!" );
                             }
                             break;
                         case YIELD_TURN:
-                            // TODO: finish phasing implementation
                             if ( (boolean) message.get( 0 ) ) {
                                 phasing = false;
                             } else {
-                                flushToConsole( "Could not yield turn!" );
+                                flushToConsole( stringmessage );
                             }
                             break;
                         case INIT_GAME_PLEASE: //setup scenario
@@ -722,7 +726,11 @@ final public class NetworkClient {
                             }});                            
                             break;
                         case BEGIN_GAME:
-                            flushToConsole( stringmessage );
+                            if ( stringmessage.isEmpty() ) {
+                                startGame();
+                            } else {
+                                flushToConsole( stringmessage );
+                            }
                             break;
                         default:
                             flushToConsole( "Unknown tag: " + tag );
@@ -751,22 +759,42 @@ final public class NetworkClient {
                                 flushToConsole( stringmessage );
                             }
                             break;
-                        case LEAVE_LOBBY:
-                            currentLobby = "Not in a Lobby";
+                        case LEAVE_LOBBY: // Server booted the client
+                            flushToConsole( "You've left lobby " + currentLobby + "!" );
+                            currentLobby = "";
                             break;
 
                         default:
                             flushToConsole( "Unknown tag: " + tag );
                     }
                     break;
-                // Connection messages/commands ex: DISCONNECT_REQUEST
+                // Connection messages/commands ex: DISCONNECT
                 case CONNECTION:
 
                     switch ( tag ) {
                         case DISCONNECT:
                             if ( (boolean) message.get( 0 ) ) {
-                                disconnect();
-                                return false;
+                                killThread();
+                                /*
+                                 * Platform.runLater( new Runnable() {                                    @Override
+                                    public void run() {
+                                        while ( true ) {
+                                            try {
+                                                Thread.sleep( 500 );
+                                            } catch ( InterruptedException ex ) {
+                                                ex.printStackTrace();
+                                            }
+                                            if ( socket.isClosed() ) {
+                                                streamIn = null;
+                                                return;
+                                            }
+                                        }
+                                    }
+
+                                } );
+                                 */
+                                //disconnect();
+                                return true;
                             } else {
                                 flushToConsole( "Server refused request to disconnect!\nYou are still connected, try again in a little bit, server might be overloaded." );
                                 return true;
@@ -1087,16 +1115,6 @@ final public class NetworkClient {
             e.printStackTrace();
         }
         return null;
-    }
-
-    /**
-     * Disconnects client from server
-     * <p>
-     * @author Christopher Goes
-     */
-    private static void disconnect() {
-        killRemoteConnection();
-        flushToConsole( "Disconnected!" );
     }
 
     /**

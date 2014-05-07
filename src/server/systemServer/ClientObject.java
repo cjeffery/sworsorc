@@ -221,7 +221,7 @@ public class ClientObject {
             } else if ( !lmessage.isEmpty()
                     && lmessage.get( 0 ).getClass().equals( String.class ) ) {
                 smessage = (String) lmessage.get( 0 );
-                lmessage = lmessage.subList( 1, lmessage.size() );
+                lmessage = new ArrayList<>( lmessage.subList( 1, lmessage.size() ) );
             } else {
                 if ( debug ) {
                     errorOut.println( "This is a poke message" );
@@ -346,7 +346,7 @@ public class ClientObject {
                             break;
                         case BEGIN_GAME:
                             if ( currentLobby == null ) {
-                                send( flag, Tag.BEGIN_GAME,
+                                send( flag, tag,
                                         "You requested to start the game, but you aren't even in a lobby!" );
                             } else {
                                 currentLobby.
@@ -364,11 +364,12 @@ public class ClientObject {
                             consoleOut.
                                     println( "Client " + handle + " (id  " + clientID + " ) yielded turn" );
                             if ( currentLobby == null ) {
-                                send( Flag.GAME, Tag.YIELD_TURN, "", "You requested to yield your turn, but you're not even in a lobby!" );
+                                send( flag, tag, "You requested to yield your turn, but you're not even in a lobby!", false );
                             } else if ( currentLobby.current == null ? handle != null : !currentLobby.current.
                                     equals( handle ) ) {
-                                send( Flag.GAME, Tag.YIELD_TURN, "", "You requested to yield your turn, but it's not currently your turn!" );
+                                send( flag, tag, "You requested to yield your turn, but it's not currently your turn!", false );
                             } else {
+                                send( flag, tag, true );
                                 currentLobby.advanceGameTurn(); //tell lobby handler to advance game turn
                             }
                             break;
@@ -401,18 +402,18 @@ public class ClientObject {
 
                             } else if ( NetworkServer.
                                     joinLobby( smessage, ClientObject.this ) ) {
-                                send( flag, Tag.JOIN_LOBBY, currentLobby, true );
+                                send( flag, Tag.JOIN_LOBBY, currentLobby.getName(), true );
                                 currentLobby.
                                         lobbyNotification( "Client " + handle + " has joined the lobby!" );
                             } else {
                                 send( flag, Tag.JOIN_LOBBY, "Failed to join lobby " + smessage + "! It probably doesn't exist!", false );
                             }
                             break;
-                        case LEAVE_LOBBY: // TODO: improve on this eg booleans
+                        case LEAVE_LOBBY:
                             consoleOut.
                                     println( "Client " + handle + " has requested to leave lobby" );
-                            NetworkServer.leaveLobby( ClientObject.this );
-                            send( flag, Tag.LEAVE_LOBBY, "You have successfully left lobby " + smessage );
+                            NetworkServer.leaveLobby( getHandle() );
+                            //send( flag, Tag.LEAVE_LOBBY, "You have successfully left lobby " + smessage );
                             currentLobby = null;
                             break;
 
