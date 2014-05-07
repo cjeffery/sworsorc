@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.25)  7 MAY 2014 10:38
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.25)  7 MAY 2014 10:54
 entering extended mode
 **cs383SSDD.tex
 
@@ -387,13 +387,63 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen130
 \Gin@req@width=\dimen131
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
-Package: geometry 2010/09/12 v5.6 Page Geometry
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdfpages\pdfpages.sty"
+Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\calc.sty"
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count102
+\calc@Bcount=\count103
+\calc@Adimen=\dimen132
+\calc@Bdimen=\dimen133
+\calc@Askip=\skip51
+\calc@Bskip=\skip52
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count104
+\calc@Cskip=\skip53
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\eso-pic\eso-pic.sty"
+Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\atbegshi.sty"
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty"
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdfpages\pppdftex.def"
+File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
+)
+\AM@pagebox=\box29
+\AM@toc@title=\toks24
+\c@AM@survey=\count105
+\AM@templatesizebox=\box30
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty"
 Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
@@ -401,49 +451,51 @@ Package ifvtex Info: VTeX not detected.
 ("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-\Gm@cnth=\count102
-\Gm@cntv=\count103
-\c@Gm@tempcnt=\count104
-\Gm@bindingoffset=\dimen132
-\Gm@wd@mp=\dimen133
-\Gm@odd@mp=\dimen134
-\Gm@even@mp=\dimen135
-\Gm@layoutwidth=\dimen136
-\Gm@layoutheight=\dimen137
-\Gm@layouthoffset=\dimen138
-\Gm@layoutvoffset=\dimen139
-\Gm@dimlist=\toks24
+\Gm@cnth=\count106
+\Gm@cntv=\count107
+\c@Gm@tempcnt=\count108
+\Gm@bindingoffset=\dimen134
+\Gm@wd@mp=\dimen135
+\Gm@odd@mp=\dimen136
+\Gm@even@mp=\dimen137
+\Gm@layoutwidth=\dimen138
+\Gm@layoutheight=\dimen139
+\Gm@layouthoffset=\dimen140
+\Gm@layoutvoffset=\dimen141
+\Gm@dimlist=\toks25
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
 (C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
 n\SSDD\cs383SSDD.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
 
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count105
-\scratchdimen=\dimen140
-\scratchbox=\box29
-\nofMPsegments=\count106
-\nofMParguments=\count107
-\everyMPshowfont=\toks25
-\MPscratchCnt=\count108
-\MPscratchDim=\dimen141
-\MPnumerator=\count109
-\makeMPintoPDFobject=\count110
-\everyMPtoPDFconversion=\toks26
+\scratchcounter=\count109
+\scratchdimen=\dimen142
+\scratchbox=\box31
+\nofMPsegments=\count110
+\nofMParguments=\count111
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count112
+\MPscratchDim=\dimen143
+\MPnumerator=\count113
+\makeMPintoPDFobject=\count114
+\everyMPtoPDFconversion=\toks27
 )
+\AtBeginShipoutBox=\box32
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -478,11 +530,11 @@ LaTeX Font Info:    ... okay on input line 16.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 17.
+LaTeX Font Info:    Try loading font information for U+msa on input line 18.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 17.
+LaTeX Font Info:    Try loading font information for U+msb on input line 18.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -493,398 +545,431 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 n\SSDD\cs383SSDD.toc [2])
 \tf@toc=\write3
  [3] [4] [5]
-Overfull \hbox (0.38629pt too wide) in paragraph at lines 92--93
+Overfull \hbox (0.38629pt too wide) in paragraph at lines 93--94
 \OT1/cmr/m/it/12 tions\OT1/cmr/m/n/12 , 1998-09-23, The In-sti-tute of Elec-tri
 -cal and Elec-tron-ics En-gi-neers, Inc., (IEEE)
  []
 
-[6] [7] [8]
-Overfull \hbox (4.74767pt too wide) in paragraph at lines 189--189
+[6] <overview.png, id=23, 1554.80875pt x 1186.4325pt>
+File: overview.png Graphic file (type png)
+ <use overview.png>
+Package pdftex.def Info: overview.png used on input line 122.
+(pdftex.def)             Requested size: 1554.80496pt x 1186.42961pt.
+File: overview.png Graphic file (type png)
+
+<use overview.png>
+Package pdftex.def Info: overview.png used on input line 122.
+(pdftex.def)             Requested size: 1554.80496pt x 1186.42961pt.
+ [7]
+File: overview.png Graphic file (type png)
+ <use overview.png>
+Package pdftex.def Info: overview.png used on input line 122.
+(pdftex.def)             Requested size: 1554.80496pt x 1186.42961pt.
+File: overview.png Graphic file (type png)
+ <use overview.png>
+Package pdftex.def Info: overview.png used on input line 122.
+(pdftex.def)             Requested size: 597.80846pt x 456.17146pt.
+File: overview.png Graphic file (type png)
+
+<use overview.png>
+Package pdftex.def Info: overview.png used on input line 122.
+(pdftex.def)             Requested size: 597.80846pt x 456.17146pt.
+File: overview.png Graphic file (type png)
+ <use overview.png>
+Package pdftex.def Info: overview.png used on input line 122.
+(pdftex.def)             Requested size: 597.80846pt x 456.17146pt.
+File: overview.png Graphic file (type png)
+ <use overview.png>
+Package pdftex.def Info: overview.png used on input line 122.
+(pdftex.def)             Requested size: 597.80846pt x 456.17146pt.
+ [8 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/SSDD/overview.png (PNG copy)>] [9]
+Overfull \hbox (4.74767pt too wide) in paragraph at lines 193--193
 []|\OT1/cmr/bx/n/10.95 Type/Range| 
  []
 
 
-Overfull \hbox (10.7869pt too wide) in paragraph at lines 189--189
+Overfull \hbox (10.7869pt too wide) in paragraph at lines 193--193
 []|\OT1/cmr/bx/n/10.95 Dependencies| 
  []
 
 
-Overfull \hbox (7.71481pt too wide) in paragraph at lines 189--189
+Overfull \hbox (7.71481pt too wide) in paragraph at lines 193--193
 []|\OT1/cmr/bx/n/10.95 Subordinates| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Static
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Determine
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 re-sults of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 com-bat
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Two Ar-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 rayLists:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 At-tack-ers,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Unit Sub-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Moveable
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 All in-di-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 vid-ual unit
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Unit Sub-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Moveable
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Represents
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 client from
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Tag, Flag,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 Mes-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Contains
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 pub-lic han-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 for in-com-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 ing net-work
  []
 
 
-Underfull \hbox (badness 7631) in paragraph at lines 189--189
+Underfull \hbox (badness 7631) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 An enu-mer-
  []
 
 
-Underfull \hbox (badness 2865) in paragraph at lines 189--189
+Underfull \hbox (badness 2865) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 ate con-stant
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 189--189
+Underfull \hbox (badness 1577) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 class pro-vid-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Hex Edge
  []
 
 
-Underfull \hbox (badness 1515) in paragraph at lines 189--189
+Underfull \hbox (badness 1515) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 rain Classes,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Classes to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 col-lect and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 rep-re-sent
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 el-e-ments
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 on hexagon
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Classes to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 rep-re-sent a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 "map" of
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 hexagons,
  []
 
 
-Underfull \hbox (badness 3407) in paragraph at lines 189--189
+Underfull \hbox (badness 3407) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 ei-ther diplo-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 macy or
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 ob-ject that
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 man-ages a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 group-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 of client
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Tag, Flag,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 Mes-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Define and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 limit ac-cess
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 to main
  []
 
 
-Underfull \hbox (badness 5446) in paragraph at lines 189--189
+Underfull \hbox (badness 5446) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Renders the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 game map
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 and things
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 MapView,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 Hexagon
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Hexagon
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 Ren-der-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 and re-ceive
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 mes-sages
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 over the
  []
 
 
-Underfull \hbox (badness 7631) in paragraph at lines 189--189
+Underfull \hbox (badness 7631) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Unit Su-per-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 ArmyUnit,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 Char-ac-ter,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Determine
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 UnitPool,
  []
 
 
-Overfull \hbox (2.74832pt too wide) in paragraph at lines 189--189
+Overfull \hbox (2.74832pt too wide) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Retreat/Move| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Manages
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 nec-tion for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Tag, Flag,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 Mes-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Class and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 dent server
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 pro-cess
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 that clients
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 Tag, Flag,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--189
+Underfull \hbox (badness 10000) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 Mes-
  []
 
 
-Underfull \hbox (badness 7631) in paragraph at lines 189--189
+Underfull \hbox (badness 7631) in paragraph at lines 193--193
 []|\OT1/cmr/m/n/10.95 An enu-mer-
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 189--189
+Underfull \hbox (badness 1577) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 class pro-vid-
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 189--189
+Underfull \hbox (badness 1796) in paragraph at lines 193--193
 \OT1/cmr/m/n/10.95 eral type of
  []
 
@@ -892,35 +977,35 @@ Underfull \hbox (badness 1796) in paragraph at lines 189--189
 Overfull \vbox (590.24326pt too high) has occurred while \output is active []
 
 
-[9] [10] [11] [12] [13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 298--298
+[10] [11] [12] [13] [14] [15]
+Underfull \hbox (badness 10000) in paragraph at lines 302--302
 []|\OT1/cmr/bx/n/10.95 Referenced
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 298--298
+Underfull \hbox (badness 10000) in paragraph at lines 302--302
 []|\OT1/cmr/m/n/10.95 HUDController,
  []
 
-[15] [16]
+[16] [17]
 (C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
 n\SSDD\cs383SSDD.aux) ) 
 Here is how much of TeX's memory you used:
- 2924 strings out of 493921
- 37125 string characters out of 3147267
- 122190 words of memory out of 3000000
- 6180 multiletter control sequences out of 15000+200000
+ 4167 strings out of 493921
+ 54738 string characters out of 3147267
+ 148070 words of memory out of 3000000
+ 7392 multiletter control sequences out of 15000+200000
  14913 words of font info for 57 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,9n,24p,1493b,234s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,18n,42p,1493b,419s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
 :/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program
  Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on cs383SSDD.pdf (16 pages, 130017 bytes).
+Output written on cs383SSDD.pdf (17 pages, 254917 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
+ 80 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
