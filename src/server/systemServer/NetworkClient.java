@@ -125,8 +125,8 @@ final public class NetworkClient {
         startLocalStreams();
         startCommandProcessor();
         if ( connect() ) {
-            startRemoteConnection();
             clientInitialized = true;
+            startRemoteConnection();
         } else {
             clientInitialized = false;
         }
