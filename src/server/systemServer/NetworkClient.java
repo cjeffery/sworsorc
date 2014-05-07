@@ -63,7 +63,6 @@ final public class NetworkClient {
     private static ArrayBlockingQueue<String> commandQueue;
     private volatile static int uid;
 
-
     // Flags
     private static boolean clientInitialized = false;
     final private static boolean debug = MessagePhoenix.debugStatus();
@@ -160,6 +159,9 @@ final public class NetworkClient {
      * @author Christopher Goes
      */
     public static void send( Flag flag, Tag tag, Object... message ) {
+        if ( !clientInitialized ) {
+            return;
+        }
         // Assume any outgoing messages from the client, are from the client
         writeToQueue( new NetworkPacket( flag, tag, username, MessagePhoenix.
                 packMessageContents( message ) ) );
@@ -174,6 +176,9 @@ final public class NetworkClient {
      * @author Christopher Goes
      */
     public static void userInput( String command ) {
+        if ( !clientInitialized ) { // rough hack
+            return;
+        }
         try {
             commandQueue.put( command );
         } catch ( InterruptedException ex ) {
