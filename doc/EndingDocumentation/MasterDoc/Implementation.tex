@@ -347,7 +347,30 @@ Network team should write this
 %===============================================================================
 \section{The Movement Calculator}
 %===============================================================================
-Be sure to mention that it uses a recursive algorithm
+The MovementCalculator class has 12 methods and two static fields. The static 
+fields are for optimization of movement and retreating. The optimization of 
+movement uses the allowanceCache HashMap to hold only the fast routes that the 
+method getValidMoves(...) finds. getValidMoves(...) is a public static method 
+that recursively populates an ArrayList of MapHex objects based on constraints
+that apply to the unit that is moving. These constraints include terrain types, 
+hex edges, enemy occupation and zone of control, and the movement allowance 
+allotted to the unit per turn. The hashmap that optimizes the getValidMoves(...)
+method holds each valid MapHex that the unit can reach as a key and the unit's 
+remaining movement allowance for moving into that hex. This allows a dynamic
+movement system, where a player may move a unit twice or more in a movement 
+phase, while the unit still remains in the bound of its movement allowance.
+The other field in MovementCalculator, retreatAllowanceCache, serves a similar
+purpose as allowance cache, but is used by the retreat methods. Retreating is
+also done recursively, and all valid moves for a retreating unit are generated
+and added to the hashmap, retreatAllowanceCache. From there, the hash map is 
+filtered according to the S\&S rules for retreating from combat. There is a 
+stated hierarchy of locations that a unit can retreat to, which the method 
+filters for and follows, ultimately generating and returning a list of 
+hexes that a unit can retreat to. If the size of the ArrayList returned is 
+zero, or if the ArrayList is null, then the unit has no valid retreat 
+locations, and should be destroyed. The remaining methods that are undescribed
+here are simply helper methods for the main methods, or wrappers, as in the 
+case of wrapperMovement(...). 
 
 %===============================================================================
 \section{Gameplay Model Classes}
