@@ -102,7 +102,7 @@ public class Scenario {
                         unit.setRace(nationRace);
                         // TODO: look for conflicts and stacks of too many
                         // TODO: avoid water, vortices, bottomless plungehole
-                        randHexID = Provinces.getRandHex(nationProvinces);
+                        randHexID = Provinces.getRandSafeHex(nationProvinces);
                         System.out.println("Adding to unit pool: " + player + ": " + unit.getUnitType() + ", " + randHexID);
                         pool.addUnit(player, unit, randHexID);
                     }
@@ -142,7 +142,7 @@ public class Scenario {
                     unit.setRace(neutralRace);
                     // TODO: look for conflicts and stacks of too many
                     // TODO: avoid water, vortices, bottomless plungehole
-                    randHexID = Provinces.getRandHex(neutralProvinces);
+                    randHexID = Provinces.getRandSafeHex(neutralProvinces);
                     System.out.println("Adding to unit pool: " + player + ": " + unit.getUnitType() + ", " + randHexID);
                     pool.addUnit(player, unit, randHexID);
                 }

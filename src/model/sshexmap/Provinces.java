@@ -8,6 +8,9 @@
 package sshexmap;
 
 import java.util.*;
+import ssterrain.ITTVortex;
+import ssterrain.TTWater;
+import ssterrain.TerrainType;
 
 /**
  * simple wrapper class for provinces
@@ -92,6 +95,47 @@ public class Provinces {
         // now get a random hex from that province
         index = rand.nextInt(res.size());
         String hexid = res.get(index);
+        return hexid;
+    }   
+    
+    /**
+     * Get a random hexID string in a given Province set. This hex cannot be 
+     * a water type
+     * TODO: add check for vortices, bottomless plungehole
+     * 
+     * @author Tyler Jaszkowiak
+     * @param province_names a list of provinces to select from
+     * @return A random hex ID string in the province set
+     */
+    public static String getRandSafeHex(List<String> province_names) {
+        if(provinceMap == null) {
+            System.out.println("Did you call provinces before map was loaded?");
+            return null;
+        }
+        // choose a random province from the list
+        Random rand = new Random();
+        int index = rand.nextInt(province_names.size());
+        String province_name = province_names.get(index);
+        
+        //generate arraylist of hexes in the province
+        ArrayList<String> res = new ArrayList<String>();
+        TreeSet<String> hexes = provinceMap.get(province_name);
+        if(hexes == null) {
+            System.out.println("No hexes in province " + province_name);
+            return null;
+        }
+        res.addAll( provinceMap.get(province_name) );
+        
+        // now get a random hex from that province
+        index = rand.nextInt(res.size());
+        String hexid = res.get(index);
+        
+        // recalculate if water chosen
+        while (MainMap.GetInstance().GetHex(hexid).getTerrainType() instanceof TTWater) {
+            index = rand.nextInt(res.size());
+            hexid = res.get(index);
+        }
+        
         return hexid;
     }   
     
