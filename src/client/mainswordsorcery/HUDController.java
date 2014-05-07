@@ -42,6 +42,7 @@ import sshexmap.MapHex;
 import sshexmap.MapView;
 import ssterrain.TTSwamp;
 import ssterrain.TerrainType;
+import sscharts.Scenario;
 import systemServer.NetworkClient;
 
 
@@ -63,6 +64,7 @@ public class HUDController {
     @FXML private Text phase;
     @FXML private Text RedState;
     @FXML private Text BlueState;
+    @FXML private Text currentPlayerText;
     
     //currently selected unit and target unit
     MoveableUnit selected_unit;
@@ -96,7 +98,9 @@ public class HUDController {
      */
     public void initialize(){
         //hdip.setContent(MapView.getDipView());
-        phase.setText("Movement");
+        phase.setText("Spell");
+        currentPlayerText.setText(Integer.toString(
+                                        Game.getInstance().currentTurnPlayer));
         //Display map in map_view
         hmapContent = MapView.getMapView();
         hmap.setContent(hmapContent);
@@ -131,7 +135,8 @@ public class HUDController {
             @Override
             public void handle (MouseEvent mouseEvent) {
                 //finds out at which hex a mouse event occured
-                String hexID = hmapContent.hexAt((int)mouseEvent.getX(), (int)mouseEvent.getY());
+                String hexID = hmapContent.hexAt((int)mouseEvent.getX(), 
+                                                 (int)mouseEvent.getY());
                 currentHex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);
                 //allows deselecting of unit with left mouse button
                 if( mouseEvent.isPrimaryButtonDown() && selected_unit != null){
@@ -142,19 +147,29 @@ public class HUDController {
                     SelectUnit( hexID, currentHex );
                 }             
                 //move unit with right mouse button in movement phase
-                else if( mouseEvent.isSecondaryButtonDown() && selected_unit != null && phase.getText().equalsIgnoreCase("Movement")){
+                else if( mouseEvent.isSecondaryButtonDown() 
+                         && selected_unit != null 
+                         && phase.getText().equalsIgnoreCase("Movement")){
                     MoveUnit( hexID, currentHex );
                 }
                 //allows deselecting of target unit with right mouse button
-                else if( mouseEvent.isSecondaryButtonDown() && target_unit != null){
+                else if( mouseEvent.isSecondaryButtonDown() 
+                         && target_unit != null){
                     DetargetUnit( hexID, currentHex );
                 }                    
                  //choose target unit in combat or spell phase
                 else if( mouseEvent.isSecondaryButtonDown() //right mouse button
-                         && !phase.getText().equalsIgnoreCase("Movement") //check phase
-                         && target_unit == null){ //check if target unit already chosen
+                         //check phase
+                         && !phase.getText().equalsIgnoreCase("Movement") 
+                         //check if target unit already chosen
+                         && target_unit == null){ 
                     TargetUnit( hexID, currentHex );
                 }
+                //retreat if combat lost
+                /*
+                elseif(){
+                }
+                */
                 mouseEvent.consume();
             }
 	});
@@ -234,7 +249,8 @@ public class HUDController {
         mini_map.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
 		public void handle (MouseEvent mouseEvent) {
-			System.out.println("X: " + mouseEvent.getX() + " Y: " + mouseEvent.getY());
+			System.out.println("X: " + mouseEvent.getX() + 
+                                           " Y: " + mouseEvent.getY());
 		}
 	});
         
@@ -242,7 +258,7 @@ public class HUDController {
         undo_button.addEventHandler(MouseEvent.MOUSE_ENTERED, 
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    Image img = new Image("file:resources/images/undo_hover.png");
+                  Image img = new Image("file:resources/images/undo_hover.png");
                     undo_pic.setImage(img);
                 }
         });  
@@ -258,16 +274,16 @@ public class HUDController {
         undo_button.addEventHandler(MouseEvent.MOUSE_PRESSED, 
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    Image img = new Image("file:resources/images/undo_click.png");
-                    undo_pic.setImage(img);
+                  Image img = new Image("file:resources/images/undo_click.png");
+                  undo_pic.setImage(img);
                 }
         });
         //set undo image on mouse released
         undo_button.addEventHandler(MouseEvent.MOUSE_RELEASED, 
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    Image img = new Image("file:resources/images/undo_hover.png");
-                    undo_pic.setImage(img);
+                  Image img = new Image("file:resources/images/undo_hover.png");
+                  undo_pic.setImage(img);
                 }
         });
         /**
@@ -323,13 +339,21 @@ public class HUDController {
         //attack
         if(keyEvent.getText().equalsIgnoreCase("a") 
            && !target_stack.isEmpty() && !selected_stack.isEmpty()
-           && phase.getText().equalsIgnoreCase("Combat")){
+           && phase.getText().equalsIgnoreCase("Combat")
+           && (selected_stack.get(0).getID().charAt(0)-48 // check if unit is 
+                == Game.getInstance().PlayerID)      // current player's unit
+           && (target_stack.get(0).getID().charAt(0)-48 // check if unit is not
+                != Game.getInstance().PlayerID)        // current player's unit
+           && Game.getInstance().currentTurnPlayer //check if it is player's
+                == Game.getInstance().PlayerID)    //turn    
+        {
             StartCombat(hmapContent);
         }
         //spells
         else if(keyEvent.getText().equalsIgnoreCase("s")
                 && !target_stack.isEmpty() && !selected_stack.isEmpty() 
-                && phase.getText().equalsIgnoreCase("Spell")){
+                && phase.getText().equalsIgnoreCase("Spell"))
+        {
             StartSpell();
         }
     }
@@ -374,7 +398,8 @@ public class HUDController {
         //update target stack panel
         try {
             DisplayStack(UnitsPane, selected_stack, true);
-        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+        } catch (InvocationTargetException | NoSuchMethodException 
+                | IllegalAccessException ex) {
             Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
@@ -386,21 +411,28 @@ public class HUDController {
      * @author Jay Drage
      */
     public void MoveUnit( String hexID, MapHex hex ){
-        if( moves.containsKey(hex) ) {
-            final UnitPool pool = UnitPool.getInstance();
-            hmapContent.clearHighlights();
-            //pool.addMove((ArmyUnit)selected_unit, hex.GetID());
-            selected_unit.setWorkingMovement( moves.get(hex) );
-            pool.addMove(selected_unit, hex.GetID());
-            //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
-            hmapContent.repaint();
-            selected_unit = null;
-            selected_stack.clear();
-            //update target stack panel
-            try {
-                DisplayStack(UnitsPane, selected_stack, true);
-            } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
-                Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+        if(selected_stack.get(0).getID().charAt(0)-48 // check if unit is 
+                == Game.getInstance().PlayerID        // player's unit
+           && Game.getInstance().currentTurnPlayer //check if it is player's
+                == Game.getInstance().PlayerID)    //turn
+        {
+            if( moves.containsKey(hex) ) {
+                final UnitPool pool = UnitPool.getInstance();
+                hmapContent.clearHighlights();
+                //pool.addMove((ArmyUnit)selected_unit, hex.GetID());
+                selected_unit.setWorkingMovement( moves.get(hex) );
+                pool.addMove(selected_unit, hex.GetID());
+                //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
+                hmapContent.repaint();
+                selected_unit = null;
+                selected_stack.clear();
+                //update target stack panel
+                try {
+                    DisplayStack(UnitsPane, selected_stack, true);
+                } catch (InvocationTargetException | NoSuchMethodException 
+                        | IllegalAccessException ex) {
+                    Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
@@ -419,7 +451,8 @@ public class HUDController {
         //update target stack panel
         try {
             DisplayStack(TargetsPane, target_stack, false);
-        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+        } catch (InvocationTargetException | NoSuchMethodException 
+                | IllegalAccessException ex) {
             Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -447,7 +480,8 @@ public class HUDController {
         //update target stack panel
         try {
             DisplayStack(TargetsPane, target_stack, false);
-        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {
+        } catch (InvocationTargetException | NoSuchMethodException 
+                | IllegalAccessException ex) {
             Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -632,49 +666,79 @@ public class HUDController {
         else {
             System.out.println("Game's hudController reference is NOT correct!");
         }
-        
-        switch(phaseButton.getText()){
-            case "End Movement Phase":
-                UnitPool.getInstance().endMovementPhase();
-                HexStack stack = new HexStack();
-                if(UnitPool.getInstance().getOverStack() != null && UnitPool.getInstance().getOverStack().size() > 0)
-                    stack.removeOverStack(UnitPool.getInstance().getOverStack());
-                //clear unit move highlights if present
-                if( hmapContent.highlightSet != null ){
-                    hmapContent.clearHighlights();
-                }
-                phaseButton.setText("End Spell Phase");
-                phase.setText("Spell");
-                NetworkClient.sendPhaseChange("Spell");
-                break;
-        
-            case "End Spell Phase":
-                phaseButton.setText("End Combat Phase");
-                phase.setText("Combat");
-                NetworkClient.sendPhaseChange("Combat");
-                break;
-            
-            case "End Combat Phase":
-                phaseButton.setText("End Turn");
-                phase.setText("End");
-                NetworkClient.endTurn();
-                break;
-                
-            case "End Turn":
-                phaseButton.setText("End Movement Phase");
-                phase.setText("Movement");
-                int x = parseInt(turn.getText());
-                x++;
-                turn.setText(Integer.toString(x));
-                
-                SolarDisplay.SunCalc();
-                Image Sun = new Image(SolarDisplay.GetSunImage());
-                SunImage.setImage(Sun);
-        
-                RedState.setText(SolarDisplay.GetRedState());
-                BlueState.setText(SolarDisplay.GetBlueState());
-                NetworkClient.sendPhaseChange("Movement");
-                break;
+        // only allow current player to make phase changes
+        if(Game.getInstance().currentTurnPlayer == Game.getInstance().PlayerID)
+        {
+            switch(phaseButton.getText()){
+                case "End Spell Phase":
+                    phaseButton.setText("End Movement Phase");
+                    phase.setText("Movement");
+                    NetworkClient.sendPhaseChange("Movement");
+                    break;
+
+                case "End Movement Phase":
+                    UnitPool.getInstance().endMovementPhase();
+                    HexStack stack = new HexStack();
+                    if(UnitPool.getInstance().getOverStack() != null 
+                       && UnitPool.getInstance().getOverStack().size() > 0)
+                       stack.removeOverStack(UnitPool.getInstance().getOverStack());
+                    //clear unit move highlights if present
+                    if( hmapContent.highlightSet != null ){
+                        hmapContent.clearHighlights();
+                    }
+                    phaseButton.setText("End Combat Phase");
+                    phase.setText("Combat");
+                    NetworkClient.sendPhaseChange("Combat");
+                    break;
+
+                case "End Combat Phase":
+                    phaseButton.setText("End Turn");
+                    phase.setText("End");
+                    NetworkClient.endTurn();
+                    break;
+
+                case "End Turn":
+                    NetworkClient.sendPhaseChange("Movement");
+                    phaseButton.setText("End Spell Phase");
+                    phase.setText("Spell");
+                    // end game turn, all players finished
+                    if(Game.getInstance().numPlayersGoneThisTurn 
+                            == Scenario.getInstance().getNumberOfPlayers())
+                    {
+                        int x = parseInt(turn.getText());
+                        x++;
+                        turn.setText(Integer.toString(x));
+
+                        SolarDisplay.SunCalc();
+                        Image Sun = new Image(SolarDisplay.GetSunImage());
+                        SunImage.setImage(Sun);
+                        RedState.setText(SolarDisplay.GetRedState());
+                        BlueState.setText(SolarDisplay.GetBlueState());
+                        //set back to first player
+                        Game.getInstance().numPlayersGoneThisTurn = 1;
+                        Game.getInstance().currentTurnPlayer = 1;
+                        Game.getInstance().currentGameTurn += 1;
+                        currentPlayerText.setText("1");
+                    }
+                    // same game turn, next player turn
+                    else
+                    {
+                        //move to next player
+                        Game.getInstance().numPlayersGoneThisTurn += 1;
+                        Game.getInstance().currentTurnPlayer += 1;
+                        //update display
+                        currentPlayerText.setText(
+                                Integer.toString(
+                                        Game.getInstance().currentTurnPlayer));
+                    }
+
+                    break;
+            }
+        }
+        else
+        {
+            chat_box.appendText("You are not current player. " +
+                                "To change players go to Scenario menu\n");
         }
         
     }
@@ -716,6 +780,7 @@ public class HUDController {
      * used to start combat
      * called from keyEvent handlers
      *
+     * @param hmapContent
      * @author Jay Drage & Shaung
      */
     public void StartCombat(MapView hmapContent){        
@@ -738,5 +803,15 @@ public class HUDController {
                tempCaster = null;
             }
         }
+    }
+    /**
+     * changes Game.PlayerID to current player
+     * used for testing with only one client
+     * to disable remove MenuItem from hud.fxml
+     * 
+     * @author Jay Drage
+     */
+    public void MakeCurrentPlayer(){
+        Game.getInstance().PlayerID = Game.getInstance().currentTurnPlayer;
     }
 }
