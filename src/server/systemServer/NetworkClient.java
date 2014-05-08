@@ -12,6 +12,7 @@ import java.net.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
@@ -639,7 +640,7 @@ final public class NetworkClient {
                 return false;
             } else if ( !message.isEmpty() && message.get( 0 ).getClass().equals( String.class ) ) {
                 stringmessage = (String) message.get( 0 );
-                message = message.subList( 1, message.size() );
+                message = new ArrayList<>( message.subList( 1, message.size() ) ); // fix sublist issue
             }
 
             // Debugging
@@ -751,7 +752,7 @@ final public class NetworkClient {
                                 currentLobby = stringmessage;
                             } else {
                                 // denied, server provides reason
-                                flushToConsole( "Could not create lobby: " + message.get( 1 )
+                                flushToConsole( "Could not create lobby: " + stringmessage
                                         + "!\n" );
                             }
                             break;

@@ -12,12 +12,10 @@ package mainswordsorcery;
  * @author Joe Higley
  */
 import Units.*;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.*;
@@ -28,7 +26,6 @@ import sscharts.Scenario;
 import systemServer.*;
 
 import static javafx.application.Application.launch;
-import sscharts.RandomEventTable;
 
 /**
  *
@@ -310,16 +307,18 @@ public class Game extends Application {
                     .title("Enter servers IP address (blank for default)")
                     .masthead("Enter servers IP address (blank for default)")
                     .showTextInput();
-        if(ip == null || ip.equals(""))
+        if ( ip == null || ip.isEmpty() ) {
             ip = "127.0.0.1";
+        }
         
         String username =
                 Dialogs.create()
                        .title("Choose a username (blank for default)")
                        .masthead("Choose a username (blank for default)")
                        .showTextInput();
-        if(username == null || username.equals(""))
+        if ( username == null || username.isEmpty() ) {
             username = "FRANCIBALD";
+        }
 
         if( !NetworkClient.initializeClient(username, ip)
            && ip.equals("127.0.0.1"))
@@ -329,10 +328,13 @@ public class Game extends Application {
             NetworkServer.startServer();
             if( !NetworkClient.initializeClient(username, ip) ) {      
                 System.out.println("Well shucks it still failed :\\");
-                return;
-            }      
+            } else {
+                // If we created the default server, then create a default lobby
+                // This is so multiple clients don't all try to create default :-)
+                NetworkClient.createLobby( "Default" );
+
+            }
         }
         
-        NetworkClient.createLobby( "Default" );
     }
 }

@@ -22,6 +22,7 @@ import javax.swing.JTextField;
  * @author Tao and Cameron
  */
 public final class Characters extends MoveableUnit{
+    private static final long serialVersionUID = 1L;
     protected String  Name;
     // a character's magic power level may differ from his average MagicPL
     protected int MagicPL;
@@ -64,19 +65,19 @@ public final class Characters extends MoveableUnit{
     public void CastSpell(){
         //Spell_Book sb = new Spell_Book(c);
         //sb.getSpellBook();
-        spellBook.getSpellBook();
+        spellBook.getSpellBook(); // todo
         
     }
     
     public void hideSpellWindow(){
-        spellBook.hideWindow();
+        spellBook.hideWindow(); // TODO: this will do nothing currently!
     }
     
     public boolean checkManna(double x){
         return CurrentManna >= x;
     }
     public void CostManna(double mc){
-        CurrentManna = CurrentManna - mc;
+        CurrentManna -= mc;
     }
     
     /** ===========================

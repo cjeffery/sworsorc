@@ -25,7 +25,7 @@ public final class Spell_Book implements Serializable {
 
     // Find a different way to do this please
     // Serialze information for the dialog, and then display the dialog in the calling class
-    Stage popup = new Stage();
+    //Stage popup = new Stage();
     
     /** ==========================
      *      Character info
@@ -208,14 +208,16 @@ public final class Spell_Book implements Serializable {
       //mainFrame.setVisible(false); 
     }
     
-    public void hideWindow(){
+    public void hideWindow() {
         //mainFrame.setVisible(false);
-        popup.close();
+        //popup.close();
     }
 
-    public void getSpellBook() {
+    public Stage getSpellBook() {
         getSpellBookOld();
-        popup = JFXpopup.getJFXPopup(MainSpellListPanel);
+        // This is public, it shouldn't be setting a class member anyway
+        // TODO: Stage can't be a class data member
+        return JFXpopup.getJFXPopup( MainSpellListPanel );
     }
     
     private void getSpellBookOld(){
