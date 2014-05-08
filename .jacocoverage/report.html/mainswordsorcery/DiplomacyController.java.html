@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DiplomacyController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;sworsorc&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">mainswordsorcery</a> &gt; <span class="el_source">DiplomacyController.java</span></div><h1>DiplomacyController.java</h1><pre class="source lang-java linenums">/*
+ * All source code is the work of Clinton Jeffery's Spring 2014 Software Engineering 
+ * class at the University of Idaho consisting of the following members:
+ * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
+ * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
+ */
+package mainswordsorcery;
+/**
+ *
+ * @author Sean
+ */
+import java.io.IOException;
+import javafx.embed.swing.SwingNode;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import sscharts.Scenario;
+import sshexmap.MapView;
+
+<span class="nc" id="L22">public class DiplomacyController {</span>
+    
+    @FXML private ScrollPane dip_view;
+<span class="nc" id="L25">    SwingNode hdip = new SwingNode();</span>
+    int numberOfPlayers;
+    
+    public void initialize(){
+<span class="nc" id="L29">        hdip.setContent(MapView.getDipView());</span>
+<span class="nc" id="L30">        dip_view.setContent(hdip);</span>
+<span class="nc" id="L31">        numberOfPlayers = Scenario.getNumberOfPlayers();</span>
+<span class="nc" id="L32">    }</span>
+    
+    @FXML protected void Exit(ActionEvent event) throws IOException {
+<span class="nc" id="L35">        Node node = (Node) event.getSource();</span>
+<span class="nc" id="L36">        Stage stage=(Stage) node.getScene().getWindow();</span>
+<span class="nc" id="L37">        stage.setScene(Game.getInstance().getHudScene());</span>
+<span class="nc" id="L38">        stage.setFullScreen(Game.getInstance().fullscreen);</span>
+<span class="nc" id="L39">        stage.show();</span>
+<span class="nc" id="L40">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

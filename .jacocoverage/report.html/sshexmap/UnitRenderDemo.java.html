@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UnitRenderDemo.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;sworsorc&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">sshexmap</a> &gt; <span class="el_source">UnitRenderDemo.java</span></div><h1>UnitRenderDemo.java</h1><pre class="source lang-java linenums">package sshexmap;
+
+import MoveCalculator.MovementCalculator;
+import Units.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Random;
+import javax.swing.*;
+
+public class UnitRenderDemo implements MouseListener, KeyListener {
+    private MapView mapView;
+    private MainMap map;
+    private UnitPool pool;
+    private MoveableUnit selected_unit;
+    private ArrayList&lt;MapHex&gt; canMoveTo;
+<span class="nc" id="L16">    public UnitRenderDemo() {</span>
+<span class="nc" id="L17">        JFrame window = new JFrame(&quot;Game Map&quot;); </span>
+<span class="nc" id="L18">        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L19">        map = MainMap.GetInstance();</span>
+<span class="nc" id="L20">        mapView = new MapView(map);</span>
+<span class="nc" id="L21">        JScrollPane scrollPane = new JScrollPane(mapView);</span>
+<span class="nc" id="L22">        window.add(scrollPane);</span>
+
+<span class="nc" id="L24">        pool = UnitPool.getInstance();</span>
+        
+<span class="nc" id="L26">        ArmyUnit[] human = {</span>
+            new PikeMan(), new HeavyHorse(), new LightBow(), new HeavySword(),
+            new RocRider(), new LightHorse(), new Zeppelin()
+        };
+<span class="nc" id="L30">        ArmyUnit[] elven = {</span>
+            new HorseArcher(), new LightBow(), new LightHorse(),
+            new LightSword(), new MediumSpear()
+        };
+<span class="nc" id="L34">        ArmyUnit[] orc = {</span>
+            new LightSpear(), new WargRider(), new HeavySword(), new Bow(),
+            new LightSword()
+        };
+<span class="nc" id="L38">        ArmyUnit[] goblin = {</span>
+            new LightSpear()
+        };
+<span class="nc" id="L41">        ArmyUnit[] swamp = {</span>
+            new HeavySword(), new DinosaurLegion(), new IntelligentMold(),
+        };
+<span class="nc" id="L44">        ArmyUnit[] cronk = {</span>
+            new HeavyPluglunk(), new Bow(), new LightHorse()
+        };
+<span class="nc" id="L47">        ArmyUnit[] conjured = {</span>
+            new ZombieInfantry(null, 0), new CentauroidCavalry(null, 0),
+            new WyvernAirtroops(null, 0), new KoboldicInfantry(null, 0),
+            new WraithTroops(null, 0), new DemonicInfantry(null, 0)     
+        };
+<span class="nc" id="L52">        ArmyUnit[] dwarvish = {</span>
+            new Bow(), new HeavyAxe(), new LightHorse()
+        };
+<span class="nc" id="L55">        ArmyUnit[] arachnid = {</span>
+            new WebWarriors(), new SpiderLegion()
+        };
+        
+<span class="nc" id="L59">        ArmyUnit[][] armies = {human, elven, orc, goblin, swamp, cronk,</span>
+                               conjured, dwarvish, arachnid};
+<span class="nc" id="L61">        Race[] races = {Race.Human, Race.Elves, Race.Orc, Race.Goblins,</span>
+                        Race.SwampCreature, Race.Cronk, Race.Human,
+                        Race.Dwarrows, Race.Spiders};
+<span class="nc" id="L64">        int x = 1, y = 1;</span>
+<span class="nc" id="L65">        Random r = new Random();</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        for(int i = 0; i &lt; armies.length; i++) {</span>
+<span class="nc" id="L67">            y = 1;</span>
+<span class="nc" id="L68">            ArmyUnit[] army = armies[i];</span>
+<span class="nc" id="L69">            Race race = races[i];</span>
+            
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            for(ArmyUnit u : army) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">                if(u instanceof WyvernAirtroops)</span>
+<span class="nc" id="L73">                    u.setRace(Race.Dragon);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                else if(u instanceof KoboldicInfantry)</span>
+<span class="nc" id="L75">                    u.setRace(Race.Dwarrows);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                else if(u instanceof CentauroidCavalry)</span>
+<span class="nc" id="L77">                    u.setRace(Race.Elves);</span>
+                else
+<span class="nc" id="L79">                    u.setRace(race);</span>
+<span class="nc" id="L80">                u.setDemoralized(r.nextBoolean());</span>
+<span class="nc" id="L81">                pool.addUnit(1, u, HexMap.GetIDFromCoords(x, y));</span>
+<span class="nc" id="L82">                y++;</span>
+            }
+
+<span class="nc" id="L85">            x++;</span>
+        }
+        
+<span class="nc" id="L88">        ArmyUnit unit = new PikeMan();</span>
+<span class="nc" id="L89">        unit.setRace(Race.Human);</span>
+<span class="nc" id="L90">        pool.addUnit(0, unit, &quot;0101&quot;);</span>
+
+<span class="nc" id="L92">        window.pack();</span>
+<span class="nc" id="L93">        window.setVisible(true);</span>
+<span class="nc" id="L94">    }</span>
+
+    public static void main(String[] args) {
+        //ScenarioConfigurationReader scenario;
+        //scenario = new ScenarioConfigurationReader(&quot;resources/scenarios/2_Dwarrows.json&quot;);
+       
+<span class="nc" id="L100">        javax.swing.SwingUtilities.invokeLater(new Runnable() {</span>
+            @Override
+            public void run() {
+<span class="nc" id="L103">                UnitRenderDemo md = new UnitRenderDemo();</span>
+<span class="nc" id="L104">                md.mapView.addMouseListener(md);</span>
+<span class="nc" id="L105">                md.mapView.addKeyListener(md);</span>
+<span class="nc" id="L106">            }</span>
+        });
+<span class="nc" id="L108">    }    </span>
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L112">    }</span>
+
+<span class="nc" id="L114">    @Override public void mousePressed(MouseEvent e) {}</span>
+<span class="nc" id="L115">    @Override public void mouseReleased(MouseEvent e){}</span>
+<span class="nc" id="L116">    @Override public void mouseEntered(MouseEvent e) {}</span>
+<span class="nc" id="L117">    @Override public void mouseExited(MouseEvent e) {}</span>
+<span class="nc" id="L118">    @Override public void keyTyped(KeyEvent e) {}</span>
+    
+    @Override public void keyPressed(KeyEvent e) {
+        /*int key = e.getKeyCode();*/
+
+<span class="nc" id="L123">    }</span>
+
+<span class="nc" id="L125">    @Override public void keyReleased(KeyEvent e) {}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

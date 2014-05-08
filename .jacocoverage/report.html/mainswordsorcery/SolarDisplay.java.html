@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SolarDisplay.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;sworsorc&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">mainswordsorcery</a> &gt; <span class="el_source">SolarDisplay.java</span></div><h1>SolarDisplay.java</h1><pre class="source lang-java linenums">/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+
+package mainswordsorcery;
+
+import sscharts.Scenario;
+
+/**
+*
+* @author Johnathan Flake
+* CS 383 - University of Idaho
+* 2/27/2014 - 4/15/2014
+*/
+
+
+public class SolarDisplay {
+    /**
+* @param args the command line arguments
+*/
+
+
+        static String SunImage, BlueState, RedState;
+        
+<span class="nc" id="L27">        static int BlueSunStart = Scenario.getBlueSunStart();</span>
+        // the red sun is half-way around the orbit, which ranges 1-12, not 0-11
+<span class="nc" id="L29">        static int RedSunStart = (BlueSunStart + 5)%12 + 1;</span>
+<span class="nc" id="L30">        static int YellowSunStart = 1;</span>
+        
+<span class="nc" id="L32">        static int SolarDayNum = YellowSunStart;</span>
+<span class="nc" id="L33">        static int RedSunVal = RedSunStart;</span>
+<span class="nc" id="L34">        static int BlueSunVal = BlueSunStart;</span>
+        
+    private static SolarDisplay instance;
+
+    // static method to get instance of view
+    public static SolarDisplay getInstance() {
+<span class="nc" id="L40">        return instance;</span>
+    }
+    
+<span class="nc" id="L43">    public SolarDisplay() {</span>
+<span class="nc" id="L44">        instance = this;   </span>
+<span class="nc" id="L45">    }</span>
+    
+    public static String GetRedState(){
+        //return RedState+&quot; (&quot;+RedSunVal+&quot;)&quot;; // &lt;- useful for debugging
+<span class="nc" id="L49">        return RedState;</span>
+    }
+    public static String GetBlueState(){
+        //return BlueState+&quot; (&quot;+BlueSunVal+&quot;)&quot;; // &lt;- useful for debugging
+<span class="nc" id="L53">        return BlueState;</span>
+    }
+    public static String GetSunImage(){
+<span class="nc" id="L56">        return SunImage;</span>
+    }
+    
+    public static void SunCheck() {
+<span class="nc bnc" id="L60" title="All 13 branches missed.">        switch (SolarDayNum){</span>
+                case 1: case 2: case 27:
+<span class="nc bnc" id="L62" title="All 4 branches missed.">                    if (RedSunVal &gt; 2 &amp;&amp; RedSunVal &lt; 6){</span>
+<span class="nc" id="L63">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L64">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L65">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L67" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 2 &amp;&amp; BlueSunVal &lt; 6){</span>
+<span class="nc" id="L68">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L69">                        BlueState =(&quot;Ascension&quot;);</span>
+<span class="nc" id="L70">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L73">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L74">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L75">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L77">                break;</span>
+                case 3: case 4:
+<span class="nc bnc" id="L79" title="All 4 branches missed.">                    if (RedSunVal &gt; 3 &amp;&amp; RedSunVal &lt; 7){</span>
+<span class="nc" id="L80">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L81">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L82">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L84" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 3 &amp;&amp; BlueSunVal &lt; 7){</span>
+<span class="nc" id="L85">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L86">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L87">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L90">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L91">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L92">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L94">                break;</span>
+                    case 5: case 6:
+<span class="nc bnc" id="L96" title="All 4 branches missed.">                    if (RedSunVal &gt; 4 &amp;&amp; RedSunVal &lt; 8){</span>
+<span class="nc" id="L97">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L98">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L99">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L101" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 4 &amp;&amp; BlueSunVal &lt; 8){</span>
+<span class="nc" id="L102">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L103">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L104">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L107">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L108">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L109">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L111">                break;</span>
+                    case 7: case 8: case 9:
+<span class="nc bnc" id="L113" title="All 4 branches missed.">                    if (RedSunVal &gt; 5 &amp;&amp; RedSunVal &lt; 9){</span>
+<span class="nc" id="L114">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L115">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L116">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L118" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 5 &amp;&amp; BlueSunVal &lt; 9){</span>
+<span class="nc" id="L119">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L120">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L121">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L124">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L125">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L126">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L128">                break;</span>
+                    case 10: case 11:
+<span class="nc bnc" id="L130" title="All 4 branches missed.">                    if (RedSunVal &gt; 6 &amp;&amp; RedSunVal &lt; 10){</span>
+<span class="nc" id="L131">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L132">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L133">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L135" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 6 &amp;&amp; BlueSunVal &lt; 10){</span>
+<span class="nc" id="L136">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L137">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L138">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L141">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L142">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L143">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L145">                break;</span>
+                    case 12: case 13:
+<span class="nc bnc" id="L147" title="All 4 branches missed.">                    if (RedSunVal &gt; 7 &amp;&amp; RedSunVal &lt; 11){</span>
+<span class="nc" id="L148">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L149">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L150">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L152" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 7 &amp;&amp; BlueSunVal &lt; 11){</span>
+<span class="nc" id="L153">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L154">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L155">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L158">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L159">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L160">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L162">                break;</span>
+                    case 14: case 15:
+<span class="nc bnc" id="L164" title="All 4 branches missed.">                    if (RedSunVal &gt; 8 &amp;&amp; RedSunVal &lt; 12){</span>
+<span class="nc" id="L165">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L166">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L167">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L169" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 8 &amp;&amp; BlueSunVal &lt; 12){</span>
+<span class="nc" id="L170">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L171">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L172">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L175">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L176">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L177">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L179">                break;</span>
+                    case 16: case 17:
+<span class="nc bnc" id="L181" title="All 4 branches missed.">                    if (RedSunVal &gt; 9 &amp;&amp; RedSunVal &lt; 13){</span>
+<span class="nc" id="L182">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L183">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L184">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L186" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 9 &amp;&amp; BlueSunVal &lt; 13){</span>
+<span class="nc" id="L187">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L188">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L189">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L192">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L193">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L194">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L196">                break;</span>
+                    case 18: case 19: case 20:
+<span class="nc bnc" id="L198" title="All 6 branches missed.">                    if (RedSunVal == 11 || RedSunVal == 12</span>
+                            || RedSunVal == 1){
+<span class="nc" id="L200">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L201">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L202">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L204" title="All 6 branches missed.">                    else if (BlueSunVal == 11 || BlueSunVal == 12</span>
+                            || BlueSunVal == 1){
+<span class="nc" id="L206">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L207">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L208">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L211">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L212">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L213">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L215">                break;</span>
+                    case 21: case 22:
+<span class="nc bnc" id="L217" title="All 6 branches missed.">                    if (RedSunVal == 12 || RedSunVal == 1</span>
+                            || RedSunVal == 2){
+<span class="nc" id="L219">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L220">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L221">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L223" title="All 6 branches missed.">                    else if (BlueSunVal == 12 || BlueSunVal == 1</span>
+                            || BlueSunVal == 2){
+<span class="nc" id="L225">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L226">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L227">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L230">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L231">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L232">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L234">                break;</span>
+                    case 23: case 24:
+<span class="nc bnc" id="L236" title="All 4 branches missed.">                    if (RedSunVal &gt; 0 &amp;&amp; RedSunVal &lt; 4){</span>
+<span class="nc" id="L237">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L238">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L239">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L241" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 0 &amp;&amp; BlueSunVal &lt; 4){</span>
+<span class="nc" id="L242">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L243">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L244">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L247">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L248">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L249">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+<span class="nc" id="L251">                break;</span>
+                    case 25: case 26:
+<span class="nc bnc" id="L253" title="All 4 branches missed.">                    if (RedSunVal &gt; 1 &amp;&amp; RedSunVal &lt; 5){</span>
+<span class="nc" id="L254">                        RedState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L255">                        BlueState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L256">                        SunImage = (&quot;file:resources/images/RedSun.png&quot;);</span>
+                    }
+<span class="nc bnc" id="L258" title="All 4 branches missed.">                    else if (BlueSunVal &gt; 1 &amp;&amp; BlueSunVal &lt; 5){</span>
+<span class="nc" id="L259">                        RedState = (&quot;Descension&quot;);</span>
+<span class="nc" id="L260">                        BlueState = (&quot;Ascension&quot;);</span>
+<span class="nc" id="L261">                        SunImage = (&quot;file:resources/images/BlueSun.png&quot;);</span>
+                    }
+                    else{
+<span class="nc" id="L264">                        RedState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L265">                        BlueState = (&quot;Equilibrium&quot;);</span>
+<span class="nc" id="L266">                        SunImage = (&quot;file:resources/images/YellowSun.png&quot;);</span>
+                    }
+                break;
+            }
+<span class="nc" id="L270">    }</span>
+    
+    public static void SunCalc() {
+<span class="nc bnc" id="L273" title="All 2 branches missed.">            if (SolarDayNum &lt; 27) {</span>
+<span class="nc" id="L274">            SolarDayNum++;</span>
+            }
+            else {
+<span class="nc" id="L277">                SolarDayNum = 1;</span>
+            }
+<span class="nc bnc" id="L279" title="All 2 branches missed.">            if (RedSunVal &lt; 12){</span>
+<span class="nc" id="L280">                RedSunVal++;</span>
+            }
+            else {
+<span class="nc" id="L283">                RedSunVal = 1;</span>
+            }
+<span class="nc bnc" id="L285" title="All 2 branches missed.">            if (BlueSunVal &lt; 12){</span>
+<span class="nc" id="L286">                BlueSunVal++;</span>
+            }
+            else {
+<span class="nc" id="L289">                BlueSunVal = 1;</span>
+            }
+//            SolarDay.setText(&quot;Day: &quot; + SolarDayNum);
+<span class="nc" id="L292">            SunCheck();</span>
+<span class="nc" id="L293">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

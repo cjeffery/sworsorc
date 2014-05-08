@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>HexPainter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;sworsorc&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">sshexmap</a> &gt; <span class="el_source">HexPainter.java</span></div><h1>HexPainter.java</h1><pre class="source lang-java linenums">package sshexmap;
+
+import Units.ArmyUnit;
+import Units.MoveableUnit;
+import Units.UnitPainter;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.image.*;
+import java.io.*;
+import java.net.URL;
+import java.util.*;
+import javax.imageio.*;
+import ssterrain.*;
+
+/** A class that does nothing but draw hexes! Right now it's somewhat closely
+    tied to MapWidget, but if you ever need to draw hexes outside of the 
+    map you could probably use or tweak it */
+public class HexPainter {
+    private final double hexRadius, width, height;
+    private final Path2D.Double hexMask;
+    private Map&lt;String, BufferedImage&gt; images;
+<span class="fc" id="L23">    String path = &quot;resources/images/hex/&quot;;</span>
+    
+    private UnitPainter up;
+    
+    private void loadImages() throws IOException {
+<span class="fc" id="L28">        images = new TreeMap&lt;String, BufferedImage&gt;();</span>
+
+        //hax for special hexes. make them look like castles until they're ready
+<span class="fc" id="L31">        String[] special = {</span>
+            &quot;gateway of evil&quot;, &quot;balkathos&quot;, &quot;citadel of blood&quot;, 
+            &quot;gateway to the empire&quot;, &quot;castle of brandon&quot;, 
+            &quot;battleaxe stronghold&quot;, &quot;the ruins&quot;, &quot;castle krawn&quot;,
+            &quot;the bottomless plungehole&quot;, &quot;citadel of ice&quot;,
+            &quot;city of urf durfal&quot;, &quot;temple of the corflu cultists&quot;,
+            &quot;fountain of health&quot;, &quot;castle dalarna&quot;, &quot;the iron fortress&quot;,
+            &quot;castle gund&quot;, &quot;strakhenville&quot;, &quot;altar of the elder gods&quot;,
+            &quot;the tombs of the damned&quot;, &quot;gerlod&quot;
+        };
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for(String s : special) {</span>
+<span class="fc" id="L42">            File f = new File( path + &quot;castle&quot; + &quot;_hex.png&quot; );</span>
+<span class="fc" id="L43">            BufferedImage img = ImageIO.read(f);</span>
+<span class="fc" id="L44">            images.put(s + &quot;_hex.png&quot;, img);</span>
+        }     
+        
+<span class="fc" id="L47">        String[] types = {</span>
+            &quot;clear&quot;, &quot;broken&quot;, &quot;cultivated&quot;, &quot;forest&quot;, &quot;karoo&quot;, &quot;mountains&quot;,
+            &quot;rough&quot;, &quot;swamp&quot;, &quot;vortex&quot;, &quot;water&quot;, &quot;woods&quot;, &quot;dragon tunnel&quot;,
+            &quot;glacier&quot;,
+            &quot;bridge&quot;, &quot;portal&quot;, &quot;city&quot;, &quot;castle&quot;, &quot;mount greymoor&quot;,
+            &quot;glade keep&quot;
+            //&quot;gateway of evil&quot;, &quot;balkathos&quot;
+        };
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for(String s : types) {</span>
+<span class="fc" id="L56">            File f = new File( path + s + &quot;_hex.png&quot; );</span>
+<span class="fc" id="L57">            BufferedImage img = ImageIO.read(f);</span>
+<span class="fc" id="L58">            images.put(s + &quot;_hex.png&quot;, img);</span>
+        }
+<span class="fc" id="L60">    }</span>
+    
+    /**
+     * Constructs a hex painter, loads all relevant images
+     * @param hexRadius The radius of a hexagon in pixels
+     * @throws IOException 
+     */
+<span class="fc" id="L67">    public HexPainter(double hexRadius) throws IOException {</span>
+<span class="fc" id="L68">        this.hexRadius = hexRadius;</span>
+<span class="fc" id="L69">        width  = hexRadius*2;</span>
+<span class="fc" id="L70">        height = hexRadius*Math.sqrt(3);</span>
+        //not sure if this number should be 6 or 7
+<span class="fc" id="L72">        hexMask = hexShape(hexRadius);</span>
+
+<span class="fc" id="L74">        loadImages();</span>
+        
+<span class="fc" id="L76">        up = new UnitPainter(hexRadius);</span>
+<span class="fc" id="L77">    }</span>
+    
+    public static Path2D.Double hexShape(double hexRadius) {
+<span class="fc" id="L80">        double w  = hexRadius*2;</span>
+<span class="fc" id="L81">        double h = hexRadius*Math.sqrt(3);</span>
+<span class="fc" id="L82">        Path2D.Double hex_shape = new Path2D.Double(Path2D.WIND_NON_ZERO, 7);</span>
+<span class="fc" id="L83">        hex_shape.moveTo(0,      h*0.5);</span>
+<span class="fc" id="L84">        hex_shape.lineTo(w*0.25, 0    );</span>
+<span class="fc" id="L85">        hex_shape.lineTo(w*0.75, 0    );</span>
+<span class="fc" id="L86">        hex_shape.lineTo(w,      h*0.5);</span>
+<span class="fc" id="L87">        hex_shape.lineTo(w*0.75, h    );</span>
+<span class="fc" id="L88">        hex_shape.lineTo(w*0.25, h    );</span>
+<span class="fc" id="L89">        hex_shape.closePath();     </span>
+<span class="fc" id="L90">        return hex_shape;</span>
+    }
+
+    /**
+     * Renders a single hex, not including edges or highlighing
+     * @param g2 The Graphics object to draw on
+     * @param h The hex to draw
+     */
+    public void paintHex(Graphics2D g2, Hex h) {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if(h == null)</span>
+<span class="nc" id="L100">            return;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if( h instanceof MapHex ) {</span>
+<span class="nc" id="L102">            paintTerrain(g2, (MapHex)h);</span>
+<span class="nc" id="L103">            paintImprovements(g2, (MapHex)h);</span>
+<span class="nc" id="L104">            paintRoad(g2, (MapHex)h);</span>
+<span class="nc" id="L105">            paintUnits(g2, (MapHex)h);</span>
+            //paintEdges(g2, (MapHex)h, edgeMask);
+            //...
+        }
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if( h instanceof DiplomacyHex ) {</span>
+<span class="nc" id="L110">            paintDiplomacyHex(g2, (DiplomacyHex)h);</span>
+            //...
+        }
+<span class="nc" id="L113">    }</span>
+    
+    public void paintUnits(Graphics2D g2, MapHex h) {
+<span class="nc" id="L116">        ArrayList&lt;MoveableUnit&gt; units = h.getUnits();</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">        if(units != null &amp;&amp; units.size() != 0) {</span>
+<span class="nc" id="L118">            up.paintUnits(g2, units);</span>
+        }
+
+<span class="nc" id="L121">    }</span>
+        
+    /**
+     * Renders the terrain of a hex
+     * @param g2 The Graphics object to draw on
+     * @param h  The hex to draw
+     */
+    public void paintTerrain(Graphics2D g2, MapHex h) {
+<span class="nc" id="L129">        TerrainType t = h.getTerrainType();</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if(t == null)</span>
+<span class="nc" id="L131">            return;</span>
+<span class="nc" id="L132">        String str = t.toString().toLowerCase() + &quot;_hex.png&quot;;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        if(h.GetHexName() != null) {</span>
+<span class="nc bnc" id="L134" title="All 6 branches missed.">            switch(h.GetHexName()) {</span>
+                //certain named hexes maybe(?) can just be drawn as default
+                case &quot;Toll Troll&quot;:
+<span class="nc" id="L137">                    break;</span>
+                //otherwise load a specific image for them
+                default:
+<span class="nc" id="L140">                    str = h.GetHexName().toLowerCase() + &quot;_hex.png&quot;;</span>
+            }
+        }
+<span class="nc" id="L143">        drawImage(g2, str, images);</span>
+<span class="nc" id="L144">    }</span>
+    
+    public void paintRoad(Graphics2D g2, MapHex h) {
+<span class="nc" id="L147">        Color c = new Color(150, 75, 0);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        for(int t = 0; t &lt; 2; t++) {</span>
+            Stroke s;
+            HexEdgeType type;
+<span class="nc" id="L151">            float dash[] = { 3.0f };</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            if(t == 0){</span>
+<span class="nc" id="L153">                type = HexEdgeType.Trail;</span>
+                //c = new Color(0, 0, 0);
+<span class="nc" id="L155">                s = new BasicStroke(3, BasicStroke.CAP_BUTT,</span>
+                                       BasicStroke.JOIN_MITER,
+                                       1.0f, dash, 0.0f);
+            }
+            else {
+<span class="nc" id="L160">                type = HexEdgeType.Road;</span>
+                //c = new Color(0, 0, 0);
+<span class="nc" id="L162">                s = new BasicStroke(3);      </span>
+            }
+
+<span class="nc" id="L165">            ArrayList&lt;Integer&gt; roads = new ArrayList&lt;Integer&gt;();</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">            for(int i = 0; i &lt; 6; i++) {</span>
+<span class="nc" id="L167">                HexEdge e = h.getEdge(i);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">                if( e.contains( type ) )//|| e.contains( HexEdgeType.Trail ) )</span>
+<span class="nc" id="L169">                    roads.add(i);            </span>
+            }
+
+            //if(roads.size() == 2) {
+<span class="nc" id="L173">            double cx = width/2.0, cy = height/2.0;</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            for(Integer dir : roads) {</span>
+<span class="nc" id="L175">                double x = 0, y = 0;</span>
+<span class="nc bnc" id="L176" title="All 7 branches missed.">                switch(dir) {</span>
+<span class="nc" id="L177">                    case 0: x = width*0.875; y = height*0.25; break;</span>
+<span class="nc" id="L178">                    case 1: x = width*0.50;  y = 0;           break;</span>
+<span class="nc" id="L179">                    case 2: x = width*0.125; y = height*0.25; break;</span>
+<span class="nc" id="L180">                    case 3: x = width*0.125; y = height*0.75; break;</span>
+<span class="nc" id="L181">                    case 4: x = width*0.50;  y = height;      break;</span>
+<span class="nc" id="L182">                    case 5: x = width*0.875; y = height*0.75; break;</span>
+                }
+<span class="nc" id="L184">                g2.setColor( c );</span>
+<span class="nc" id="L185">                g2.setStroke( s );</span>
+<span class="nc" id="L186">                g2.drawLine((int)x, (int)y, (int)cx, (int)cy);</span>
+<span class="nc" id="L187">            }</span>
+
+        }
+<span class="nc" id="L190">    }</span>
+    
+    /**
+     * Renders the improvments of a hex. TODO: not totally sure what this
+     * entails yet to be honest.
+     * @param g2 The Graphics object to draw on
+     * @param h The hex to draw
+     */
+    public void paintImprovements(Graphics2D g2, MapHex h) {
+<span class="nc" id="L199">        ArrayList&lt;ImprovedTerrainType&gt; improvements = h.getImprovements();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        for(ImprovedTerrainType i : improvements) {</span>
+<span class="nc" id="L201">            String str = i.toString().toLowerCase() + &quot;_hex.png&quot;;</span>
+<span class="nc" id="L202">            drawImage(g2, str, images);</span>
+<span class="nc" id="L203">        }</span>
+<span class="nc" id="L204">    }</span>
+    
+    public double[] edgeEndpoints(int direction) {
+<span class="nc" id="L207">        double x1 = 0, y1 = 0, x2 = 0, y2 = 0;</span>
+        /* TODO remove duplicate coordinate code */
+<span class="nc bnc" id="L209" title="All 7 branches missed.">        switch(direction) {</span>
+            case 0: 
+<span class="nc" id="L211">                x1 = width*.75; x2 = width;</span>
+<span class="nc" id="L212">                y1 = 0;         y2 = height/2;</span>
+<span class="nc" id="L213">                break;</span>
+            case 1:
+<span class="nc" id="L215">                x1 = width*.25; x2 = width*.75;</span>
+<span class="nc" id="L216">                y1 = 0;         y2 = 0;</span>
+<span class="nc" id="L217">                break;</span>
+            case 2:
+<span class="nc" id="L219">                x1 = 0;         x2 = width*.25;</span>
+<span class="nc" id="L220">                y1 = height/2;  y2 = 0;</span>
+<span class="nc" id="L221">                break;</span>
+            case 3:
+<span class="nc" id="L223">                x1 = 0;         x2 = width*.25;</span>
+<span class="nc" id="L224">                y1 = height/2;  y2 = height;</span>
+<span class="nc" id="L225">                break;</span>
+            case 4:
+<span class="nc" id="L227">                x1 = width*.25; x2 = width*.75;</span>
+<span class="nc" id="L228">                y1 = height;    y2 = height;</span>
+<span class="nc" id="L229">                break;</span>
+            case 5: 
+<span class="nc" id="L231">                x1 = width*.75; x2 = width;</span>
+<span class="nc" id="L232">                y1 = height;    y2 = height/2;</span>
+                break;
+        }
+<span class="nc" id="L235">        double[] res = new double[4];</span>
+<span class="nc" id="L236">        res[0] = x1; res[1] = y1;</span>
+<span class="nc" id="L237">        res[2] = x2; res[3] = y2;</span>
+<span class="nc" id="L238">        return res;</span>
+    }
+    
+    /**
+     * Renders a simple edge type between the given coordinates
+     * @param g2 The Graphics object to draw on
+     * @param edge The edge to draw
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2 
+     */
+    public void paintEdge(Graphics2D g2, MapHex h, int direction) {
+<span class="nc" id="L251">        HexEdge edge = h.getEdge(direction);</span>
+<span class="nc" id="L252">        int size = edge.elements.size();</span>
+<span class="nc" id="L253">        int i = 0;</span>
+<span class="nc" id="L254">        double[] points = edgeEndpoints(direction);</span>
+<span class="nc" id="L255">        double x1 = points[0], y1 = points[1];</span>
+<span class="nc" id="L256">        double x2 = points[2], y2 = points[3];</span>
+        
+<span class="nc bnc" id="L258" title="All 2 branches missed.">        for(HexEdgeType edge_t : edge.elements.keySet()) {</span>
+            //original 
+<span class="nc" id="L260">            boolean drawEdge = true;</span>
+<span class="nc bnc" id="L261" title="All 5 branches missed.">            switch(edge_t) {</span>
+                case ProvinceBorder:
+<span class="nc" id="L263">                    g2.setColor( Color.RED );</span>
+<span class="nc" id="L264">                    break;</span>
+                case Stream:
+<span class="nc" id="L266">                    g2.setColor( Color.BLUE );</span>
+<span class="nc" id="L267">                    g2.setStroke(new BasicStroke(3));</span>
+<span class="nc" id="L268">                    break;</span>
+                case Wall:
+<span class="nc" id="L270">                    g2.setColor( Color.BLACK );</span>
+<span class="nc" id="L271">                    g2.setStroke(new BasicStroke(3));</span>
+<span class="nc" id="L272">                    break;</span>
+                case Gate:
+<span class="nc" id="L274">                     g2.setColor( Color.LIGHT_GRAY );</span>
+<span class="nc" id="L275">                    g2.setStroke(new BasicStroke(3));</span>
+<span class="nc" id="L276">                    break;               </span>
+                default:
+<span class="nc" id="L278">                    drawEdge = false;</span>
+                    //System.out.println(&quot;unhandled paintEdge case &quot; + edge);
+            }
+<span class="nc bnc" id="L281" title="All 2 branches missed.">            if(drawEdge) {</span>
+                //offset is the position to draw in: 0, 1, -1, 2, -2, 3, -3
+<span class="nc" id="L283">                int offset = (i+1)/2;</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">                offset *= ( (i%2 == 1) ? 1 : -1 );</span>
+
+                //angle is the angle that corresponds to the direction
+                //px and py are the xy angle coefficients for that angle
+<span class="nc" id="L288">                double angle = direction*(Math.PI / 3) + (Math.PI / 6);</span>
+
+                //dx, dy will be the offset to avoid overlapping multiple elements
+                //width is the brush width
+<span class="nc" id="L292">                int width = 3;</span>
+<span class="nc" id="L293">                double dx =  Math.cos(angle)*offset*width;</span>
+<span class="nc" id="L294">                double dy = -Math.sin(angle)*offset*width;  </span>
+
+<span class="nc" id="L296">                g2.setStroke(new BasicStroke(width));</span>
+<span class="nc" id="L297">                g2.drawLine((int)(x1+dx), (int)(y1+dy),</span>
+                            (int)(x2+dx), (int)(y2+dy));
+<span class="nc" id="L299">                i++;</span>
+            }
+<span class="nc" id="L301">        }</span>
+<span class="nc" id="L302">    }</span>
+    
+    /**
+     * Renders an image onto the given Graphics object at the origin
+     * @param g2 The Graphics object to draw on
+     * @param imageID  The key for the image collection
+     */
+    public static Boolean drawImage(Graphics2D g2, String imageID,
+                                    Map&lt;String, BufferedImage&gt; imageMap) {
+<span class="nc bnc" id="L311" title="All 4 branches missed.">        if(!imageMap.containsKey(imageID) || imageMap.get(imageID) == null) {</span>
+<span class="nc" id="L312">            System.out.println(&quot;Image &quot; + imageID + &quot; wasn't loaded&quot;);</span>
+<span class="nc" id="L313">            return false;</span>
+        }
+        //TODO: coefficients should be based on radius (and zoom?)
+<span class="nc" id="L316">        AffineTransform at = AffineTransform.getScaleInstance(.5, .5);</span>
+        //g2.drawImage(images.get(str), 0, 0, null);
+<span class="nc" id="L318">        g2.drawRenderedImage(imageMap.get(imageID), at);</span>
+<span class="nc" id="L319">        return true;</span>
+    }
+    
+    public void paintDiplomacyHex(Graphics2D g2, DiplomacyHex h) {
+<span class="nc bnc" id="L323" title="All 2 branches missed.">        if(h.GetIsPlayerHex()) {</span>
+<span class="nc" id="L324">            String s = &quot;&quot;;</span>
+<span class="nc bnc" id="L325" title="All 26 branches missed.">            switch(h.GetID()) {</span>
+<span class="nc" id="L326">                case &quot;0601&quot;: s = &quot;A&quot;; break;</span>
+<span class="nc" id="L327">                case &quot;1104&quot;: s = &quot;B&quot;; break;</span>
+<span class="nc" id="L328">                case &quot;1109&quot;: s = &quot;C&quot;; break;</span>
+<span class="nc" id="L329">                case &quot;0611&quot;: s = &quot;D&quot;; break;</span>
+<span class="nc" id="L330">                case &quot;0109&quot;: s = &quot;E&quot;; break;</span>
+<span class="nc" id="L331">                case &quot;0104&quot;: s = &quot;F&quot;; break;</span>
+            }
+<span class="nc" id="L333">            g2.setColor( new Color(255, 127, 127) );</span>
+<span class="nc" id="L334">            g2.fill(hexMask);</span>
+<span class="nc" id="L335">            g2.setColor( Color.BLACK );</span>
+<span class="nc" id="L336">            g2.drawString(s, (int)(width / 2), (int)(height / 2));</span>
+<span class="nc" id="L337">        }</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">        else if(h.GetIsNeutralHex()) {</span>
+<span class="nc" id="L339">            g2.setColor( Color.RED );</span>
+<span class="nc" id="L340">            g2.fill(hexMask);</span>
+<span class="nc" id="L341">            g2.setColor( Color.BLACK );</span>
+<span class="nc" id="L342">            g2.drawString(&quot;Neutral&quot;, (int)(width / 4), (int)(height / 2));</span>
+        }
+        else
+<span class="nc" id="L345">            drawImage(g2, &quot;clear_hex.png&quot;, images);</span>
+        
+<span class="nc" id="L347">    }</span>
+    
+    /**
+     * Draws a hexagon shaped highlight at the origin
+     * @param g2 The graphics object to draw on
+     */
+    public void highlight(Graphics2D g2, Color c) {
+<span class="nc" id="L354">        g2.setColor( c );</span>
+<span class="nc" id="L355">        g2.fill(hexMask);</span>
+<span class="nc" id="L356">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>
