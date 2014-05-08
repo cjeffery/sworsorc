@@ -423,7 +423,7 @@ public class HUDController {
                 selected_unit.setWorkingMovement( moves.get(hex) );
                 pool.addMove(selected_unit, hex.GetID());
                 //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
-                hmapContent.repaint();
+                
                 selected_unit = null;
                 selected_stack.clear();
                 //update target stack panel

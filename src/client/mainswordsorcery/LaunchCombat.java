@@ -10,6 +10,7 @@ package mainswordsorcery;
 import MoveCalculator.MovementCalculator;
 import Units.ArmyUnit;
 import Units.MoveableUnit;
+import Units.UnitPool;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -201,10 +202,11 @@ public class LaunchCombat {
                 }
                     
             }
+            final UnitPool pool = UnitPool.getInstance();
             ArrayList<MapHex> canMoveTo;
-            //if (!Units_stack.isEmpty()) {
+            if (!Units_stack.isEmpty()) {
                 
-                //for (int i = 0; i < Units_stack.size(); i++) {
+                for (int i = 0; i < Units_stack.size(); i++) {
                     // Retreat(Units_stack.get(i));
                     moves = new HashMap<>();
                     moves.clear();
@@ -212,17 +214,19 @@ public class LaunchCombat {
                     
                     canMoveTo = new ArrayList<MapHex>();
                     canMoveTo = MovementCalculator.getRetreatMoves(Defender_Terrain, 
-                                  (MoveableUnit)target_stack.get(0), 3.0/*(double)index[1]*/);
+                                  (MoveableUnit)target_stack.get(0), (double)result);
                     
                     hmapContent.clearHighlights();      
-                    hmapContent.highlight(canMoveTo, new Color(255,0,0, 255));
+                    hmapContent.highlight(canMoveTo, new Color(255,0,0, 50));
+                    pool.addMove(Units_stack.get(i), canMoveTo.get(1).GetID());
+                    hmapContent.repaint();
                     
                 for (MapHex canMoveTo1 : canMoveTo) {
                 System.out.println("Can move to: " + (String)canMoveTo1.GetID() + "\n");
             }
                             
-                //}
-            //}
+                }
+            }
            
            
         }
