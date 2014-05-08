@@ -61,6 +61,8 @@ Architectural View & \"A representation of a whole system from the perspective o
 \hline
 Architecture & \"The fundamental organization of a system embodied in its components, their relationships to each other, and to the environment, and the principles guiding its design and evolution.\"\space ISO/IEC 42010:2007\\
 \hline
+Army Unit & An instance of the class ArmyUnit, which is a subclass of MovableUnit.\\
+\hline
 Beta Test & Limited release(s) to cooperating customers wanting early access to developing systems.\\
 \hline
 Client & The process the user directly interacts with, containing, among other things, the GUI.\\
@@ -75,9 +77,13 @@ GUI & Graphical User Interface - What the user sees and interacts with - also ca
 \hline
 Hexagon & A hexagon shaped location on the game or diplomacy map that can contain things like units, edges, or terrain. Or the mathematical hexagon shape.\\
 \hline
+HexID & A unique hex identification string.\\
+\hline
 HUD & Heads Up Display - What the user sees, with respect to interface - also called the GUI.\\
 \hline
 IP & Internet Protocol - Typically refers to an IP Address.\\
+\hline
+PlayerID & An integer representing one of the factions described in this scenario.\\
 \hline
 S\&S & Swords and Sorcery\\
 \hline
@@ -90,6 +96,8 @@ SSRS & System and Software Requirements Specification\\
 System & \"A collection of components organized to accomplish a specific function or set of functions.\"\space ISO/IEC 42010:2007\\
 \hline
 System Stakeholder & \"An individual, team, or organization (or classes thereof) with interests in, or concerns, relative to, a system.\"\space ISO/IEC 42010:2007\\
+\hline
+Unit & An instance of a MoveableUnit\\
 \hline
 \end{tabularx}
 \end{center}
@@ -174,21 +182,53 @@ This section describes the developers viewpoint with respect to the software des
 \noindent\begin{tabularx}{\linewidth}{|p{1.5in}|X|X|X|X|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Purpose} & \textbf{Dependencies} & \textbf{Subordinates}\\
 \hline
+AddMove & UnitPool Method & Move a unit to a new hex & Two array lists: hexList, unitMove & None\\
+\hline
+AddUnit & UnitPool Method & Add a unit to the sorted tree map & Tree map: pool & None\\
+\hline
 Army Combat Result Table & Static Method & Determine results of combat lookup & Two ArrayLists: Attackers, Defenders & None\\
 \hline
 Army Unit & Class & Unit SubClass & Moveable Unit & All individual unit types\\
 \hline
 Characters & Class & Unit SubClass & Moveable Unit & None\\
 \hline
+Clear & UnitPool Method & Cleans up the UnitPool for testing purposes. & The entire data structure & None\\
+\hline
+ClearOverStack & UnitPool Method & Clears an over-stacked array. & Sorted map: overStackMap & None\\
+\hline
 ClientObject & Class & Represents an open connection to a client from the server. & Tag, Flag, MessagePhoenix & \\
 \hline
 Conductor & Class & Contains public handler methods for incoming network methods. & Tag, Flag & \\
 \hline
+EndMovementPhase & UnitPool Method & Prepares the UnitPool for the next move phase. & Sorted map: unitMove & None\\
+\hline
 Flag & Enum Class & An enumerate constant class providing identifiers for each concrete type of network message. & & \\
+\hline
+GetAllPlayerUnits & UnitPool Method & Gets all player units. & Tree map: pool & None\\
+\hline
+GetInstance & UnitPool Method & Gets a Singleton instance of UnitPool. & None & None\\
+\hline
+GetOverStack & UnitPool Method & Gets hexes in violation of over-stack rule. & Tree map: overStackMap & None\\
+\hline
+GetPlayerSpecificUnits & UnitPool Method & Get all units by type owned by a player. & Sort map: pool & None\\
+\hline
+GetSafeTeleport & UnitPool Method & Determine if a unit can safely teleport. & Array list: safeTeleport & None\\
+\hline
+GetTeleportDestination & UnitPool Method & Get a unit destination portal. & Sorted map: portalNum & None\\
+\hline
+GetUnit & UnitPool Method & Retrieves a  units. & Sorted map: pool & None\\
+\hline
+GetUnitHexMove & UnitPool Method & Retrieves all hexes a unit has moved through. & Array list: unitMove & None\\
+\hline
+GetUnitInHex & UnitPool Method & Retrieves all units in a hex. & Array list: hexList & None\\
 \hline
 Hexagon Classes & Model & Represents a hexagon & Hex Edge Classes, Terrain Classes, UnitPool & \\
 \hline
 Hex Edge Classes & Model & Classes to collect and represent elements on hexagon edges & Hex Classes & \\
+\hline
+HexStack & Class & Ensure compliance with the games stacked rules. & UnitPool & None\\
+\hline
+HexStacked & Class & Implements rules for stacks. & UnitPool & None\\
 \hline
 Hexagon Map Classes & Model & Classes to represent a "map" of hexagons, either diplomacy or game. & Hex Classes & \\
 \hline
@@ -210,9 +250,23 @@ NetworkClient & Class & Manages network connection for client. & Tag, Flag, Mess
 \hline
 NetworkServer & Class and Process & The independent server process that clients connect to. & Tag, Flag, MessagePhoenix & ClientObject\\
 \hline
+OverStackWarning & Static Method & Notifies player of an over-stack condition. & UnitPool & HUDController\\
+\hline
+RemoveOverStack & Method & Removes units from an over-stacked hex. & UnitPool & HUDController\\
+\hline
+RemoveUnit & UnitPool Method & Removes a single unit. & Sorted map: pool & None\\
+\hline
+SetSafeTeleport & UnitPool Method & Sets the units that can safely teleport. & Array list: safeTeleport & None\\
+\hline
 Solar Display & Class & Tracks solar position, updates HUD image & Scenario/Game Rules & Spell Casting/HUD Controller\\
 \hline
 Tag & Enum Class & An enumerated constant class providing identifiers for each general type of network message. & & \\
+\hline
+Teleport & UnitPool Method & Teleports a unit to a new portal. & Sort of map: pool & None\\
+\hline 
+UndoMove & UnitPool Method & Undo a unit's previous move. & Two array lists: hexList, unitMove & None\\
+\hline
+UnitPool & Class & Track and manipulate all units in the game. & None & MovableUnit, hexStack\\
 \hline
 \end{tabularx}
 \end{center}
@@ -319,6 +373,165 @@ NetworkClient must be able to receive network message asynchronously.
 \paragraph{Output} The movement calculator produces two main outputs: A hashmap of moves that a unit can reach (within the rules of movement specified by the board game) during a given movement phase, paired with their remaining movement cost after moving to a key hex in the hashmap, or an arraylist of moves that a unit can move to while retreating, during the combat phase.
 \paragraph{Process} The movement calculator uses recursion to examine the neighbors of the provided hex location. From each neighbor, it evaluates their neighbors, and so on. In both cases (movement/retreat) the recursion is terminated by reaching a lower bound (0) on the limiting value for their movement. For a moving unit, this is their given movement allowance per turn. For a retreating unit, this is the number generated from the combat results table that indicates how many hexes a unit must retreat. For each step of recursion, decisions are made within control flow that are designed to model the rules of the original S\&S board game. These factors include, but are not limited to, hex terrain types, hex edge types, geographical obstacles, and enemy occupation. 
 \paragraph{Design Constraints and Performance Requirements} The design was constrained by two factors - code complexity and time. By designing the movement calculator to use recursion, the complexity of the component was greatly reduced. However, due to the many factors involved in movement, the design is still complex. Also, the moves available to a unit need to be calculated quickly. However, recursion is not very fast. Thankfully, Colin Clifford added some optimization code to the calculator, which has greatly increased performance with respect to time.
+\subsection{Detailed Design for Component: Unit Pool}
+\paragraph{Purpose} Maintain all units and their positions in the game.
+\paragraph{Input} The inputs to this class are units, teleport information, and hex ID's.
+\paragraph{Output} The outputs of this class are units and hex ID's. 
+\paragraph{Process} Methods are in place to control the creation, destruction, and movement of units.
+\paragraph{Design Constraints and Performance Requirements} All manipulation of units must occur in this class.
+
+\subsection{Detailed Design for Component: Hex Stack}
+\paragraph{Purpose} To enforce the board game rules for stacking units.
+\paragraph{Input} Unit IDs and units. 
+\paragraph{Output} Boolean value indicating if the hex is within the max stack limits.
+\paragraph{Process} Ensures that the number of units in any given hex at the end of the movement phase are in compliance with stack rules.
+
+\subsection{Detailed Design for Component: Add Move}
+\paragraph{Purpose} Update the location of a unit
+\paragraph{Input} Unit and destination hex ID.
+\paragraph{Output} None
+\paragraph{Process} Remove the unit from its originating hex and places it in its destination hex.
+\paragraph{Design Constraints and Performance Requirements} All movement must use this method.
+
+\subsection{Detailed Design for Component: Add Move Stack}
+\paragraph{Purpose} Use with network update process at the end of the movement phase.
+\paragraph{Input} Origin hex ID and destination hex ID
+\paragraph{Output} None
+\paragraph{Process} All units in an origin hex are moved to the corresponding destination hex.
+\paragraph{Design Constraints and Performance Requirements} Must only be used in the network update.
+
+\subsection{Detailed Design for Component: Add Unit}
+\paragraph{Purpose} To add a new unit to the unit pool during scenario creation, replacement, and reinforcement phases.
+\paragraph{Input} Player ID, unit, and starting location.
+\paragraph{Output} None
+\paragraph{Process} The player ID, the class name of the unit, and a unique number are combined together to produce a unique ID for the unit and then it's location is initialized.
+\paragraph{Design Constraints and Performance Requirements} All units must be created with this function.
+
+\subsection{Detailed Design for Component: Clear}
+\paragraph{Purpose} It is only for the purposes of testing. Ensures that the unit pool is completely devoid of any units.
+\paragraph{Input} None
+\paragraph{Output} None
+\paragraph{Process} Clears all the data structures.
+
+\subsection{Detailed Design for Component: Clear Over Stack}
+\paragraph{Purpose} Once All Hexes Are Forced into compliance with the stack rule it clears the stack data structure.
+\paragraph{Input} None
+\paragraph{Output} None
+\paragraph{Process} Calls the Clear Method of the Data Structure.
+
+\subsection{Detailed Design for Component: End Movement Phase}
+\paragraph{Purpose} Call all housekeeping methods at the end of the movement phase.  Including but not limited to stacked methods.
+\paragraph{Input} None
+\paragraph{Output} None
+\paragraph{Process} Call methods to ensure each hex complies with stack rules. Reset appropriate data structures.
+\paragraph{Design Constraints and Performance Requirements} Ensure that all end of phase movement rules are enforced.
+
+\subsection{Detailed Design for Component: Get All Player Units}
+\paragraph{Purpose} Get a complete list of all player units for purposes of reinforcements and replacements.
+\paragraph{Input} Player ID.
+\paragraph{Output} Tree map of units.
+\paragraph{Process} Retrieve all units in the pool that belong to the current player.
+
+\subsection{Detailed Design for Component: Get Instance}
+\paragraph{Purpose} To retrieve the unit pool Singleton.
+\paragraph{Input} None
+\paragraph{Output} Unit Pool
+\paragraph{Process} Retrieves the unit pool Singleton.
+\paragraph{Design Constraints and Performance Requirements} The unit pool has to be a Singleton in order to avoid units being out of sync.
+
+\subsection{Detailed Design for Component: Get Over Stack}
+\paragraph{Purpose} Retrieve all units violating the unit stacking rules.
+\paragraph{Input} None
+\paragraph{Output} An array list of units.
+\paragraph{Process} At the end of the current movement phase and once all stacks are brought into compliance, the over stacked array is reset.
+
+\subsection{Detailed Design for Component: Get Player Specific Units}
+\paragraph{Purpose} To find all units of a specific type that belong to one player.
+\paragraph{Input} Player ID and units class name.
+\paragraph{Output} An array list of units.
+\paragraph{Process} Sorts through the unit pool and retrieves all units of a particular type by player ID.
+
+\subsection{Detailed Design for Component: Get Safe Teleport}
+\paragraph{Purpose} Retrieve the list of all units that can safely teleport. This list was generated during the spell phase.
+\paragraph{Input} Unit ID.
+\paragraph{Output} A Boolean value.
+\paragraph{Process} Checks if the unit ID is contained inside of the safe teleport list.
+\paragraph{Design Constraints and Performance Requirements} All units attempting to teleport must be evaluated against this flag.
+
+\subsection{Detailed Design for Component: getUnit}
+\paragraph{Purpose} Retrieve an instance of a unit from the unit pool.
+\paragraph{Input}  Unit ID.
+\paragraph{Output} Instance of a MoveableUnit.
+\paragraph{Process} The unit ID is used to retrieve a instance of a movable unit from the unit pool.
+\paragraph{Design Constraints and Performance Requirements} any reference to a instance of a movable unit must come from this method.
+
+\subsection{Detailed Design for Component: getUnitHexMove}
+\paragraph{Purpose} Retrieve every movement a unit has made in the current movement phase.
+\paragraph{Input} Unit ID
+\paragraph{Output} Unit
+\paragraph{Process} Looks up the unit's ID and returns hexIDs for each hex the unit has stopped in.
+\paragraph{Design Constraints and Performance Requirements} Can only be used during the players current movement phase.
+
+\subsection{Detailed Design for Component: getUnitsInHex}
+\paragraph{Purpose} Retrieve all units currently occupying a given hex.  In effect it retrieves the stack of units.
+\paragraph{Input} Hex ID
+\paragraph{Output} A list of unit IDs.
+\paragraph{Process} Searches the hex list array for any units it contains.
+
+\subsection{Detailed Design for Component: removeUnit}
+\paragraph{Purpose} Eliminate any unit that has been destroyed, from the unit pool.
+\paragraph{Input} Unit
+\paragraph{Output} None
+\paragraph{Process} Removes unit from the sorted tree map.
+
+\subsection{Detailed Design for Component: setSafeTeleport}
+\paragraph{Purpose} Sets the flag for all units in a stack, with a casting character, to allow a nondestructive teleport.
+\paragraph{Input} An array list of unit IDs
+\paragraph{Output} None
+\paragraph{Process} Sets a flag for each unit in a stack to true.
+\paragraph{Design Constraints and Performance Requirements} Only used during the players current spell phase.
+
+\subsection{Detailed Design for Component: setTeleportDestination}
+\paragraph{Purpose} To set the portal number the units will travel to during the spell phase.
+\paragraph{Input} An array list of unit IDs
+\paragraph{Output} None
+\paragraph{Process} During the spell phase each unit in the casters hex will have their destination portal sent.
+\paragraph{Design Constraints and Performance Requirements} Must only be used during the current players spell phase.
+
+\subsection{Detailed Design for Component: teleport}
+\paragraph{Purpose} When a unit enters a portal hex it is either moved to a random portal, a predetermined portal, destroyed, or nothing happens. The process is controlled by any flags that may have been set during the spell phase.
+\paragraph{Input} Unit
+\paragraph{Output} Boolean value
+\paragraph{Process} If the safety flag is set the unit is either randomly moved to a new portal or left in place. If the portal number is indicated the new unit will move to that specified portal. If neither teleport flag is set the unit will be teleported to a random portal which includes the possibility of destruction.
+\paragraph{Design Constraints and Performance Requirements} Only used during the current players movement phase.
+
+\subsection{Detailed Design for Component: undoMove}
+\paragraph{Purpose} Step back to the previous hex a unit stopped in.
+\paragraph{Input} Unit ID
+\paragraph{Output} The previous hex ID.
+\paragraph{Process} Moved to the previous index of a discrete unit in the unit move data structure. 
+\paragraph{Design Constraints and Performance Requirements} Can only be used during the players current movement phase.
+
+\subsection{Detailed Design for Component: hexStack}
+\paragraph{Purpose} Implements the games stack rules.
+\paragraph{Input} The inputs for this class include hexes and units.
+\paragraph{Output} Boolean values, information indicating stack compliance, and GUI elements used to bring components into compliance with the rules.
+\paragraph{Process} Checks occupied hexes for compliance with the stack rule. Eliminate excessive units for hexes that are out of compliance with the rules.
+\paragraph{Design Constraints and Performance Requirements} Only used during the current players movement phase. 
+
+\subsection{Detailed Design for Component: overStackWarning}
+\paragraph{Purpose} Warn the player if they have a stack that is in violation of the rules.
+\paragraph{Input} Array list of unit IDs
+\paragraph{Output} Boolean value
+\paragraph{Process} Counts the number of units in a hex and returns false if there are too many units in a hex.
+\paragraph{Design Constraints and Performance Requirements} Characters are excluded from the count as they are not army units.  Only used during the current players movement phase.
+
+\subsection{Detailed Design for Component: removeOverStack}
+\paragraph{Purpose} To bring a stack into compliance with the rules.
+\paragraph{Input} Sorted map of units identified by hex ID
+\paragraph{Output} None
+\paragraph{Process} Displays a GUI showing all the units in all the stacks. Allows you to select the units to be eliminated. Then eliminates the selected units.
+\paragraph{Design Constraints and Performance Requirements} Characters are excluded from the count as they are not army units.  Only used during the current players movement phase.  
 
 \subsection{Data Dictionary}
 \small{
@@ -329,7 +542,27 @@ NetworkClient must be able to receive network message asynchronously.
 \hline
 HexMap & class/HashMap & HexMap.java & MainMap, DiplomacyMap & HUDController, ...\\
 \hline
-UnitPool & Sorted TreeMap & UnitPool.java & Movement Calculator, Networking, MainMap, etc. & HUDController\\
+UnitPool & Class/SortedMap & UnitPool.java & Movement Calculator, Networking, MainMap, Spell, Combat, Stack & HUDController, Networking, Spell, Combat, Stack\\
+\hline
+Pool & SortedMap & UnitPool.java & UnitPool & UnitPool\\
+\hline
+HexList & SortedMap & UnitPool.java & UnitPool & UnitPool\\
+\hline
+UnitMove & SortedMap & UnitPool.java & UnitPool & UnitPool\\
+\hline
+PortalNum & SortedMap & UnitPool.java & UnitPool & UnitPool\\
+\hline
+SafeTeleport & ArrayList & UnitPool.java & UnitPool & UnitPool\\
+\hline
+OverStackMap & SortedMap & UnitPool.java & UnitPool & UnitPool\\
+\hline
+INSTANCE & UnitPool & UnitPool.java & UnitPool & UnitPool\\
+\hline
+Stack & Stack & UnitPool.java & UnitPool & UnitPool\\
+\hline
+Options & Final object[2] ,[0]Yes, [1]No & UnitPool.java & UnitPool & None\\
+\hline
+PortNum & Int & UnitPool.java & UnitPool & UnitPool\\
 \hline
 \end{tabularx}
 \end{center}
@@ -337,9 +570,19 @@ UnitPool & Sorted TreeMap & UnitPool.java & Movement Calculator, Networking, Mai
 	
 \section{Requirements Traceability}
 \subsection{Movement}
-	\paragraph{Requirements Description} Our requirement for movement was that a unit would be selected from the GUI and the GUI would highlight all available moves for the given unit. The player could then select the desired location for movement and the unit would move there.
-	\paragraph{Implementation Description} Our implementation of movement uses recursion to generate a list of available moves that are highlighted in the GUI. The moves are then displayed as highlighted hexes. When the controlling player then right-clicks the desired hex (within the highlighted set), the unit moves to the indicated hex. 
-	\paragraph{Differences} There is no difference between our requirement for movement and our implementation of movement.
+\paragraph{Requirements Description} Our requirement for movement was that a unit would be selected from the GUI and the GUI would highlight all available moves for the given unit. The player could then select the desired location for movement and the unit would move there.
+\paragraph{Implementation Description} Our implementation of movement uses recursion to generate a list of available moves that are highlighted in the GUI. The moves are then displayed as highlighted hexes. When the controlling player then right-clicks the desired hex (within the highlighted set), the unit moves to the indicated hex. 
+\paragraph{Differences} There is no difference between our requirement for movement and our implementation of movement.
+
+\subsection{Unit HashMap} 
+\paragraph{Requirements Description} This was left completely out of the design. 
+\paragraph{Implementation Description} Implemented a way to track all the units in the game.
+\paragraph{Differences} It was added as a design modification during one of our sprints. The rules of the game required tracking of units, manipulation of persistent units, a way to create, and destroy those units. The class name is UnitPool.
+
+\subsection{Stack Class} 
+\paragraph{Requirements Description} Movable units aggregated into stacks, which then formed composites of map hexes. The class was originally named Stack.
+\paragraph{Implementation Description} The stacked class now aggregates into the unit pool.
+\paragraph{Differences} It is a completely redesigned aggregation.  The unit pool class ended up tracking all of the units instead of the individual Map Hex as originally designed.  It was only logical to redesign the class diagram and associated aggregations. The name of the class had to be changed to HexStack as the "Stack" class is already exists in the Java libraries.
 
 \subsection{Traceability Analysis}
 [Describe the consistency of our requirements descriptions and implementation in general]
