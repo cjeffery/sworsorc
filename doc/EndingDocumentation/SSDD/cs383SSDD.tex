@@ -145,7 +145,10 @@ There are multiple developer views within the scope of the S\&S project for CS38
 The following class diagram is inaccurate with respect to the project as it currently stands. The inaccuracies are the Chart class, which does not exist, and we discovered is unnecessary, as well as the alliance and player classes, which were never created. The alliance class was never created because we didn't make it that far with the project, and the player class was replaced with flags and variables, as a class was determined to be unneeded. Also, the diagram lacks references and design information relating the classes to the HUD and Networking components of S\&S.
 \includepdf{overview.png}
 \paragraph{HUD Team View Representation and Description}
-The HUD team view includes both rules that affect the HUD (movement, hex painting, terrain, etc.) and the actual HUD itself, containing a view of the map, the minimap, character/unit descriptions, the solar display, the main menu, and hosting interactions between the game instance and the user. The HUD team also designed several data structures include the UnitPool and MainMap, for displaying the units and map in the HUD. 
+The HUD team view includes rules that affect the HUD (movement, hex painting, terrain, etc.) and the actual HUD itself, containing a view of the map, the minimap, character/unit descriptions, the solar display, the main menu, and hosting interactions between the game instance and the user. The HUD team also designed several data structures include the UnitPool and MainMap, for displaying the units and map in the HUD. Following is a collaboration diagram that shows a rough idea of the design from the HUD Team view.
+\begin{center}
+\includegraphics[width=\linewidth]{HUDTeamCollab.png}
+\end{center}
 \paragraph{Rules Team View Representation and Description}
 [Insert Description of graphics (UML) here]
 %\includegraphics[scale=•]{•}
@@ -569,20 +572,27 @@ PortNum & Int & UnitPool.java & UnitPool & UnitPool\\
 }
 	
 \section{Requirements Traceability}
-\subsection{Movement}
+\subsection{Components}
+
+\subsubsection{Movement}
 \paragraph{Requirements Description} Our requirement for movement was that a unit would be selected from the GUI and the GUI would highlight all available moves for the given unit. The player could then select the desired location for movement and the unit would move there.
 \paragraph{Implementation Description} Our implementation of movement uses recursion to generate a list of available moves that are highlighted in the GUI. The moves are then displayed as highlighted hexes. When the controlling player then right-clicks the desired hex (within the highlighted set), the unit moves to the indicated hex. 
 \paragraph{Differences} There is no difference between our requirement for movement and our implementation of movement.
 
-\subsection{Unit HashMap} 
+\subsubsection{Unit HashMap} 
 \paragraph{Requirements Description} This was left completely out of the design. 
 \paragraph{Implementation Description} Implemented a way to track all the units in the game.
 \paragraph{Differences} It was added as a design modification during one of our sprints. The rules of the game required tracking of units, manipulation of persistent units, a way to create, and destroy those units. The class name is UnitPool.
 
-\subsection{Stack Class} 
+\subsubsection{Stack Class} 
 \paragraph{Requirements Description} Movable units aggregated into stacks, which then formed composites of map hexes. The class was originally named Stack.
 \paragraph{Implementation Description} The stacked class now aggregates into the unit pool.
 \paragraph{Differences} It is a completely redesigned aggregation.  The unit pool class ended up tracking all of the units instead of the individual Map Hex as originally designed.  It was only logical to redesign the class diagram and associated aggregations. The name of the class had to be changed to HexStack as the "Stack" class is already exists in the Java libraries.
+
+\subsubsection{MoveableUnit}
+\paragraph{Requirements Description} 
+\paragraph{Implementation Description}
+\paragraph{Differences}
 
 \subsection{Traceability Analysis}
 [Describe the consistency of our requirements descriptions and implementation in general]
