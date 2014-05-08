@@ -396,11 +396,12 @@ character with the data.
 \subsection{Spells}
 For spells to work properly they needed to exist separate from the main program.
 This was implemented by creating a separate GUI for spells. When a character 
-"casts" a spell the spell book class is called upon which created a GUI with 
+``casts" a spell, the spell book class is called upon which created a GUI with 
 all spell options that character has. Once a spell is chosen the user has the 
-option of reading the details of the spell or casting the spell once a spell is 
-"cast" the effects of the spell are added to the games state and the spell book 
-is terminated.
+option of reading the details of the spell or casting the spell. 
+\newline
+\newline
+Once a spell is ``cast", the specific spell class will be called and ask to select target(s) to cast. After a target is selected, limitations will be checked to see if succeed to cast the spell or not. If succeed, the effects of the spell are added to the games state. If not, there are two choise: ``Recast" depending on different limitations or ``OK" to terminate current spell implementation. Whatever the spell is cast or not, options that cast other spells or end spell phase are available.
 
 \subsection{Combat}
 
