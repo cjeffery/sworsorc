@@ -261,6 +261,8 @@ HexStacked & Class & Implements rules for stacks. & UnitPool & None\\
 \hline
 Hexagon Map Classes & Model & Classes to represent a "map" of hexagons, either diplomacy or game. & Hex Classes & \\
 \hline
+Launch Combat & Static Method & Implement Combat Phase & Moveable Unit, Army Combat Results Table, HUDController, MovementCalculator & None\\
+\hline
 Lobby & Class & A server-side object that manages a grouping of client connection. & Tag, Flag, MessagePhoenix & \\ 
 \hline
 MainMenuController & Controller & Define and limit access to main menu & Game.java & \\
@@ -285,9 +287,13 @@ RemoveOverStack & Method & Removes units from an over-stacked hex. & UnitPool & 
 \hline
 RemoveUnit & UnitPool Method & Removes a single unit. & Sorted map: pool & None\\
 \hline
+Retreat & Static Method & Implement Retreat after Combat & Launch Combat, MovementCalculator & None\\
+\hline
 SetSafeTeleport & UnitPool Method & Sets the units that can safely teleport. & Array list: safeTeleport & None\\
 \hline
 Solar Display & Class & Tracks solar position, updates HUD image & Scenario/Game Rules & Spell Casting/HUD Controller\\
+\hline
+Spell Cast & Static Class & Perform Spell effects on given characters/units & None\\
 \hline
 Tag & Enum Class & An enumerated constant class providing identifiers for each general type of network message. & & \\
 \hline
@@ -374,6 +380,28 @@ NetworkClient must be able to receive network message asynchronously.
 \paragraph{Output} A Lobby can forward messages received from one ClientObject to all clients in the Lobby.
 \paragraph{Process} Clients are added to or removed from (by client request) a particular lobby. 
 \paragraph{Design Constraints and Performance Requirements} None.
+
+\subsection{Detailed Design for Component: LaunchCombat}
+\paragraph{Purpose} The LaunchCombat is a public static Java class, which allows players to see combat details, and then they can decide to enforce the Combat between units or not.
+\paragraph{Input} Two ArrayList $<$MoveableUnit$>$ attackers and defenders, and the object from MapView so it can highlight those hexes for showing more combat information.
+\paragraph{Output} Confirmation for players to decide enforce combat, if yes, shows the combat result and give options of retreat or eliminate certain units.
+\paragraph{Process} The LaunchCombat first takes input Moveable units, this connect with the HUDcontroller class: left mouse click to get selected\_stack, and right mouse click to get target\_stack. When a player in the combat phase, they should pick both units then press $'$A$'$ to launch the combat. When clicked A button, first it shows dialogs to ask the attacker player if they want to add friendly units which surround the defender units into the combat, then it will pop out units detail include Attacks' strength, Defenders' strength, Defenders' Terrain type, and Defenders' strength after Terrain Type bonus with a confirmation dialog. The certain player should click yes button for showing combat result, or click no for doing nothing. If the player clicks yes button, the Combat result will shows as a notification on the right bottom conner, with this result both attacker player and defender player may meet three situations: Nothing Change, Retreat, Elimination. If the combat result returns 0, then the certain player doesn't need to do any reactions from this combat, if the result is a negative number, the certain player should eliminate numbers(since result is a integer number) of units from the units list; if the result is a positive number, then the player should decide to eliminate the unit OR retreat the unit.
+\paragraph{Design Constraints and Performance Requirements} 
+One Design Constraint is that the LaunchCombat only can be used while the Combat Phase, and both of Attacker Units and Defender Units should be selected. 
+
+\subsection{Detailed Design for Component: Retreat}
+\paragraph{Purpose} After the combat, players should decide to retreat the units if the result requires.
+\paragraph{Input} ArrayList$<$ArmyUnit$>$, combat result
+\paragraph{Output} It will highlight those hexes which the certain units can retreat to with red color, and right click the mouse button for retreating the certain units to certain hex.
+\paragraph{Process} First the result came from the LaunchCombat, so the player can get it's result value(negative, positive integer, or zero), if the result is a positive number then the player should decide to retreat the units or not, if not, then they should eliminate the unit, if yes, execute the Retreat function. The retreat function will send necessary input for the method getRetreatMove in the class Movement Calculator, so it can get which hexes that the certain units can move to, and it will highlight the available hexes with red color.
+\paragraph{Design Constraints and Performance Requirements} Retreat function will only be called while the combat result sent, in the other words, it needs to know the attackers list, defenders' list, and the combat result. For each units will be sent a message to ask for retreating if necessary.
+
+\subsection{Detailed Design for Component: Spell Cast}
+\paragraph{Purpose} The purpose of this class is to perform spells during the spell cast phase of the game.  These spells can have a variety of affects like destroying units, moving units, demoralizing units, along with many more.  
+\paragraph{Input} The character object and user input for things like unit to be cast on, number of targets, or manna to be transferred.  
+\paragraph{Output} The effects to units/characters.  This includes things like demoralization, graphical walls, or movement of units on map.
+\paragraph{Process} This class takes in the necessary information for the spell being cast.  Determines what the effects will be based on user input and character magic potential, then displays the effect on the map.
+\paragraph{Design Constraints and Performance Requirements} In order to perform a spell cast all information for that spell must be known.  This includes things like limits, range of spell, distance to target, and character manna potential.  
 
 \subsection{Detailed Design for Component: Characters}
 \paragraph{Purpose} This class contains the data of a Character in the game and extends the Movable Unit class. This class has variables unique to a character: magic level, magic potential, current manna, magic colour, and leadership. The magic level determines the hight level of spell that a character can cast. The magic potential is the maximum amount of manna that a character can have. The magic colour of a character determines when a character's spells have the most effect. Leadership is the influence that a character has in determining the result of army combat. Characters have the special ability to cast spells which uses the magic and manna values to determine the amount and effectiveness of their spells. 
@@ -569,9 +597,13 @@ NetworkClient must be able to receive network message asynchronously.
 \noindent\begin{tabularx}{\linewidth}{|l|X|X|X|X|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Defined By...} & \textbf{Referenced By...} & \textbf{Modified By...}\\
 \hline
+allowance Cache & HashMap & Movement Calculator & Movement Calculator & Movement Calculator\\
+\hline
+retreat Allowance Cache & HashMap & Movement Calculator & Movement Calculator & Movement Calculator\\
+\hline
 HexMap & class/HashMap & HexMap.java & MainMap, DiplomacyMap & HUDController, ...\\
 \hline
-UnitPool & Class/SortedMap & UnitPool.java & Movement Calculator, Networking, MainMap, Spell, Combat, Stack & HUDController, Networking, Spell, Combat, Stack\\
+UnitPool & Class, SortedMap & UnitPool.java & Movement Calculator, Networking, MainMap, Spell, Combat, Stack & HUDController, Networking, Spell, Combat, Stack\\
 \hline
 Pool & SortedMap & UnitPool.java & UnitPool & UnitPool\\
 \hline
@@ -592,6 +624,16 @@ Stack & Stack & UnitPool.java & UnitPool & UnitPool\\
 Options & Final object[2] ,[0]Yes, [1]No & UnitPool.java & UnitPool & None\\
 \hline
 PortNum & Int & UnitPool.java & UnitPool & UnitPool\\
+\hline
+HexStack & Class & HexStack.java & UnitPool & UnitPool\\
+\hline
+UnitCount & SortedMap & HexStack.java & UnitPool & UnitPool\\
+\hline
+UnitRemoveList & ArayList & HexStack.java & UnitPool & UnitPool\\
+\hline
+PopupScene & Scene & HexStack.java & UnitPool & UnitPool\\
+\hline
+Count & Integer & HexStack.java & UnitPool & UnitPool\\
 \hline
 \end{tabularx}
 \end{center}
