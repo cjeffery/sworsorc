@@ -11,6 +11,7 @@ import Character.Characters;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.Serializable;
+import javafx.stage.Stage;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
@@ -24,7 +25,7 @@ public final class Spell_Book implements Serializable {
 
     // Find a different way to do this please
     // Serialze information for the dialog, and then display the dialog in the calling class
-    //Stage popup = new Stage();
+    Stage popup = new Stage();
     
     /** ==========================
      *      Character info
@@ -55,7 +56,6 @@ public final class Spell_Book implements Serializable {
     private JPanel PLSixPanel;
     private JPanel PLSevenPanel;
     private JPanel MainSpellListPanel;
-    private JLabel statusLabel;
 
     // counter to count how many spells each power level this character can cast
     public int PL1_count;
@@ -117,16 +117,13 @@ public final class Spell_Book implements Serializable {
     }
     
     public Spell[] MySpells(Characters character){
-    //public Spell[] MySpells(Character x) {
         Spell[] myList;
         int nSpells = 0;
-        //if( x.AvgMagicPL == 0) {
         if(character.getMagicPL() == 0){
             myList = new Spell[1];
             myList[0] = new Spell("void", 0, 0, mainFrame, character);
         } else {
             for(int i = 0; i < 32; i++) {
-                //if( list[i].Level <= x.MagicPL+1 && list[i].ManaCost <= x.MannaLevel) {
                 if(list[i].Level <= character.getMagicPL()+1 
                         && list[i].ManaCost <= character.getCurrentManna()){
                     nSpells++;
@@ -135,7 +132,6 @@ public final class Spell_Book implements Serializable {
             myList = new Spell[nSpells];
             int j = 0;
             for(int i = 0; i < 32; i++) {
-                //if( list[i].Level <= x.MagicPL+1 && list[i].ManaCost <= x.MannaLevel) {
                 if(list[i].Level <= character.getMagicPL()+1 
                         && list[i].ManaCost <= character.getCurrentManna()){
                     myList[j] = list[i];
@@ -214,12 +210,12 @@ public final class Spell_Book implements Serializable {
     
     public void hideWindow(){
         //mainFrame.setVisible(false);
-       // popup.close();
+        popup.close();
     }
 
     public void getSpellBook() {
         getSpellBookOld();
-        //popup = JFXpopup.getJFXPopup(MainSpellListPanel);
+        popup = JFXpopup.getJFXPopup(MainSpellListPanel);
     }
     
     private void getSpellBookOld(){
