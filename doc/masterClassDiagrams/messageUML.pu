@@ -1,0 +1,16 @@
+@startuml
+title Sending and Receiving Messages In-Game
+
+NetworkClient -> MessagePhoenix : Initiates Send Message
+MessagePhoenix ->  MessagePhoenix: Packs Message
+MessagePhoenix ->  ClientObject: Sends Network Message
+ClientObject -> Lobby : Forward Message To Lobby
+
+Lobby -> ClientObject : Send Message To Other Clients
+ClientObject -> MessagePhoenix : Sends Network Message
+NetworkClient -> MessagePhoenix : Requests Message
+MessagePhoenix ->  MessagePhoenix: Unpacks Message
+MessagePhoenix ->  NetworkClient: Receives Message
+
+@enduml
+

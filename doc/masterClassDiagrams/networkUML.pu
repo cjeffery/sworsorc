@@ -1,0 +1,25 @@
+@startuml
+hide circle
+
+class NetworkClient
+class NetworkServer
+class ClientObject
+class Lobby
+class Conductor
+
+title Networking Client-Server Organization
+
+NetworkServer "1" --  NetworkClient : Opens Connection
+NetworkClient "1" - "1" ClientObject : Send/Receive Messages
+NetworkServer "1" o- "0..*" Lobby
+NetworkServer "1" o-- "0..*" ClientObject
+
+Lobby "1" o-- "0..*" ClientObject
+
+
+NetworkClient -- Conductor : Calls Handler > 
+Conductor - HUDController : Triggers Event >
+Conductor - Game : Changes State >
+
+@enduml
+
