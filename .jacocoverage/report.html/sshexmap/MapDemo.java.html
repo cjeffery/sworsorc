@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MapDemo.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;sworsorc&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">sshexmap</a> &gt; <span class="el_source">MapDemo.java</span></div><h1>MapDemo.java</h1><pre class="source lang-java linenums">package sshexmap;
+
+import MoveCalculator.MovementCalculator;
+import Units.*;
+import java.awt.Color;
+import java.awt.event.*;
+import java.util.ArrayList;
+import javax.swing.*;
+
+public class MapDemo extends JComponent implements MouseListener, KeyListener {
+    private MapView mapView;
+    private MainMap map;
+    private UnitPool pool;
+    private MoveableUnit selected_unit;
+    private ArrayList&lt;MapHex&gt; canMoveTo;
+<span class="nc" id="L16">    public MapDemo() {</span>
+<span class="nc" id="L17">        JFrame window = new JFrame(&quot;Game Map&quot;); </span>
+<span class="nc" id="L18">        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L19">        map = MainMap.GetInstance();</span>
+<span class="nc" id="L20">        mapView = new MapView(map);</span>
+<span class="nc" id="L21">        JScrollPane scrollPane = new JScrollPane(mapView);</span>
+<span class="nc" id="L22">        window.add(scrollPane);</span>
+
+<span class="nc" id="L24">        pool = UnitPool.getInstance();</span>
+        
+<span class="nc" id="L26">        ArmyUnit unit = new LightSword();</span>
+<span class="nc" id="L27">        unit.setRace(Race.Elves);</span>
+<span class="nc" id="L28">        pool.addUnit(0, unit, &quot;0606&quot;);</span>
+        //ArrayList&lt;String&gt; units = pool.getUnitsInHex(&quot;0606&quot;);
+        //if(units != null)
+        //    for(String s : units)
+        //        System.out.println(s);
+
+<span class="nc" id="L34">        window.pack();</span>
+<span class="nc" id="L35">        window.setVisible(true);</span>
+<span class="nc" id="L36">    }</span>
+
+    public static void main(String[] args) {
+        //ScenarioConfigurationReader scenario;
+        //scenario = new ScenarioConfigurationReader(&quot;resources/scenarios/2_Dwarrows.json&quot;);
+       
+<span class="nc" id="L42">        javax.swing.SwingUtilities.invokeLater(new Runnable() {</span>
+            public void run() {
+<span class="nc" id="L44">                MapDemo md = new MapDemo();</span>
+<span class="nc" id="L45">                md.mapView.addMouseListener(md);</span>
+<span class="nc" id="L46">                md.mapView.addKeyListener(md);</span>
+<span class="nc" id="L47">            }</span>
+        });
+<span class="nc" id="L49">    }    </span>
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+<span class="nc" id="L53">        String hexID = mapView.hexAt(e.getX(), e.getY());</span>
+<span class="nc" id="L54">        MapHex hex = map.GetHex(hexID);</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if(hex == null)</span>
+<span class="nc" id="L56">            return;</span>
+<span class="nc" id="L57">        System.out.println(&quot;===START===&quot;);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if(selected_unit == null) {</span>
+<span class="nc" id="L59">            System.out.println(&quot;no unit selected&quot;);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">            if(hex.getUnits() == null) {</span>
+<span class="nc" id="L61">                System.out.println(&quot;no units in hex&quot;);</span>
+<span class="nc" id="L62">                return;</span>
+            }
+<span class="nc" id="L64">            System.out.println(&quot;highlighting moves&quot;);</span>
+<span class="nc" id="L65">            canMoveTo = new ArrayList&lt;MapHex&gt;();</span>
+<span class="nc" id="L66">            ArrayList&lt;MoveableUnit&gt; units = hex.getUnits();</span>
+<span class="nc" id="L67">            selected_unit = null;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">            for( MoveableUnit u : units) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                if(u != null)</span>
+<span class="nc" id="L70">                    selected_unit = u;</span>
+<span class="nc" id="L71">            }</span>
+<span class="nc" id="L72">            System.out.println(&quot;Selected &quot; + selected_unit + &quot;, size of stack: &quot; + hex.getUnits().size() );</span>
+<span class="nc" id="L73">            canMoveTo.clear();</span>
+<span class="nc" id="L74">            MovementCalculator.getValidMoves(selected_unit, hex, 5, canMoveTo );</span>
+<span class="nc" id="L75">            mapView.highlight(canMoveTo, new Color(0,0,255, 70));</span>
+<span class="nc" id="L76">        }</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        else if( canMoveTo.contains(hex) ) {</span>
+<span class="nc" id="L78">            System.out.println(&quot;unit selected, can move to destination&quot;);</span>
+            //hack because unitpool isn't finished
+            //pool.clearPool();
+            
+<span class="nc" id="L82">            mapView.clearHighlights();</span>
+<span class="nc" id="L83">            pool.addMove((ArmyUnit)selected_unit, hex.GetID());</span>
+            //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
+<span class="nc" id="L85">            mapView.repaint();</span>
+<span class="nc" id="L86">            selected_unit = null;</span>
+        }
+        else {
+<span class="nc" id="L89">            System.out.println(&quot;unit sleected, cannot move to destination&quot;);</span>
+        }
+        //JOptionPane.showMessageDialog(null, &quot;&quot; + res.size() );      
+<span class="nc" id="L92">    }</span>
+
+<span class="nc" id="L94">    @Override public void mousePressed(MouseEvent e) {}</span>
+<span class="nc" id="L95">    @Override public void mouseReleased(MouseEvent e){}</span>
+<span class="nc" id="L96">    @Override public void mouseEntered(MouseEvent e) {}</span>
+<span class="nc" id="L97">    @Override public void mouseExited(MouseEvent e) {}</span>
+<span class="nc" id="L98">    @Override public void keyTyped(KeyEvent e) {}</span>
+    
+    @Override public void keyPressed(KeyEvent e) {
+        /*int key = e.getKeyCode();*/
+
+<span class="nc" id="L103">    }</span>
+
+<span class="nc" id="L105">    @Override public void keyReleased(KeyEvent e) {}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

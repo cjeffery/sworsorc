@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;sworsorc&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">mainswordsorcery</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">/*
+ * All source code is the work of Clinton Jeffery's Spring 2014 Software Engineering
+ * class at the University of Idaho consisting of the following members:
+ * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
+ * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
+ */
+
+package mainswordsorcery;
+
+/**
+ *
+ * @author Joe Higley
+ */
+import Units.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Random;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.*;
+import javafx.scene.text.Font;
+import javafx.stage.*;
+import org.controlsfx.dialog.Dialogs;
+import sscharts.Scenario;
+import systemServer.*;
+
+import static javafx.application.Application.launch;
+
+/**
+ *
+ * @author higle_000
+ */
+public class Game extends Application {
+    //current client player id
+    //set to 0 for testing convenience
+    //changed by network
+<span class="nc" id="L40">    int PlayerID = 1;</span>
+<span class="nc" id="L41">    int currentTurnPlayer = 1; //player who has current control</span>
+    //the number of players that have already played their turn
+    //this game turn. When this equals scenario players then signal new
+    //game turn.
+<span class="nc" id="L45">    int numPlayersGoneThisTurn = 1;</span>
+<span class="nc" id="L46">    int currentGameTurn = 1;</span>
+    /** true if a scenario is loaded */
+    boolean scenarioLoaded;
+    String chosenScenario;
+    /** the singleton unit hash tree UnitPool variable */
+    UnitPool unitPool;
+    //Stage setup content
+    private Parent main;
+    private Parent hud;
+    private Parent diplo;
+    /** JavaFX scene for the main menu */
+    private Scene mainMenu;
+    /** JavaFX scene for the HUD window */
+    private Scene hudWindow;
+    /** JavaFX scene for the Diplomacy window */
+    private Scene Diplomacy;
+    
+    /** Stored reference to the HUDController instance used by JavaFX*/
+    public HUDController hudController;
+
+    /* window options, for development convenience */
+<span class="nc" id="L67">    static int window_flag = 0; //0 = fullscreen, 1 = left, 2 = right, 3 = wind</span>
+<span class="nc" id="L68">    public boolean fullscreen = true;</span>
+    double screenX;
+    double screenY;
+    double screenW;
+    double screenH;
+    
+    /** part of an ugly hack to set screen dimensions if command line option
+     * is entered
+     */ 
+    private void setScreenDimensions() {
+<span class="nc" id="L78">        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();</span>
+<span class="nc" id="L79">        screenX = screenBounds.getMinX();</span>
+<span class="nc" id="L80">        screenY = screenBounds.getMinY();</span>
+<span class="nc" id="L81">        screenW = screenBounds.getWidth();</span>
+<span class="nc" id="L82">        screenH = screenBounds.getHeight();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        fullscreen = (window_flag == 0);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if(window_flag == 1) {</span>
+<span class="nc" id="L85">            screenW /= 2;          </span>
+        }
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        else if(window_flag == 2) {</span>
+<span class="nc" id="L88">            screenX = (screenX = screenW / 2);</span>
+<span class="nc" id="L89">            screenW /= 2;</span>
+        }
+<span class="nc" id="L91">        stage.setX(screenX);</span>
+<span class="nc" id="L92">        stage.setY(screenY);</span>
+<span class="nc" id="L93">        stage.setWidth(screenW);</span>
+<span class="nc" id="L94">        stage.setHeight(screenH);</span>
+                
+<span class="nc" id="L96">    }</span>
+    private Stage stage;
+    public Stage getStage() {
+<span class="nc" id="L99">        return stage;</span>
+    }
+    
+    @Override
+    public void start(Stage st) throws IOException {
+<span class="nc" id="L104">        stage = st;</span>
+<span class="nc" id="L105">        setScreenDimensions();</span>
+        
+<span class="nc" id="L107">        main = createScene(&quot;MainMenu.fxml&quot;);</span>
+<span class="nc" id="L108">        hud = createScene(&quot;hud.fxml&quot;);</span>
+<span class="nc" id="L109">        diplo = createScene(&quot;Diplomacy.fxml&quot;);</span>
+
+        //We can create main normally:
+<span class="nc" id="L112">        main = createScene(&quot;MainMenu.fxml&quot;);         </span>
+        
+        //We need to use an fxmlLoader instance to load the HUD, in order to
+        //get a reference to the correct controller instance.
+        //If we use the static methods, we'll get reference to two
+        //different controller instances:
+<span class="nc" id="L118">        FXMLLoader fxmlLoader = new FXMLLoader(); </span>
+<span class="nc" id="L119">        URL url = getClass().getResource(&quot;hud.fxml&quot;);</span>
+<span class="nc" id="L120">        fxmlLoader.setLocation(url);</span>
+        
+<span class="nc" id="L122">        hud = fxmlLoader.load(url.openStream()); //Load the hud, call this only once!</span>
+
+        
+        //Use the same loader to get a reference to the actual controller instance:
+<span class="nc" id="L126">        hudController = (HUDController) fxmlLoader.getController();</span>
+       
+        // load the Main Menu font.
+<span class="nc" id="L129">        URL fontURL = new URL(&quot;file:resources/font/upcjb.ttf&quot;);</span>
+<span class="nc" id="L130">        Font.loadFont(</span>
+<span class="nc" id="L131">            fontURL.toExternalForm(), </span>
+            10
+        );
+        // get the css file
+<span class="nc" id="L135">        String mainCSS = getClass().getResource(&quot;mainMenu.css&quot;).toExternalForm();</span>
+        
+<span class="nc" id="L137">        main.getStylesheets().add(mainCSS);</span>
+//        hud.getStylesheets().add(mainCSS);
+<span class="nc" id="L139">        mainMenu = new Scene(main, screenW, screenH);        </span>
+<span class="nc" id="L140">        hudWindow = new Scene(hud, screenW, screenH);</span>
+
+<span class="nc" id="L142">        Diplomacy = new Scene(diplo, 300, 300);</span>
+        
+
+<span class="nc" id="L145">        stage.setTitle(&quot;Scenario&quot;);</span>
+<span class="nc" id="L146">        stage.setScene(mainMenu);</span>
+        
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        if(fullscreen) {</span>
+<span class="nc" id="L149">            stage.setFullScreen(true);</span>
+<span class="nc" id="L150">            stage.setFullScreenExitHint(&quot;&quot;);</span>
+        }
+        
+<span class="nc" id="L153">        stage.show();</span>
+<span class="nc" id="L154">    }</span>
+    
+    /**
+     * Cleanup code goes here
+     */
+    @Override
+    public void stop() {
+<span class="nc" id="L161">        System.exit(0);     </span>
+<span class="nc" id="L162">    }</span>
+
+    /**
+     * The main() method is ignored in correctly deployed JavaFX application.
+     * main() serves only as fallback in case the application can not be
+     * launched through deployment artifacts, e.g., in IDEs with limited FX
+     * support. NetBeans ignores main().
+     *
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        for(String s : args) {</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if(s.equals(&quot;left&quot;)) {</span>
+<span class="nc" id="L175">                window_flag = 1;</span>
+<span class="nc" id="L176">                break;</span>
+            }
+<span class="nc bnc" id="L178" title="All 2 branches missed.">            if(s.equals(&quot;right&quot;)) {</span>
+<span class="nc" id="L179">                window_flag = 2;</span>
+<span class="nc" id="L180">                break;</span>
+            }
+<span class="nc bnc" id="L182" title="All 2 branches missed.">            if(s.equals(&quot;window&quot;)) {</span>
+<span class="nc" id="L183">                 window_flag = 3;</span>
+<span class="nc" id="L184">                 break;</span>
+            }
+        }
+<span class="nc" id="L187">        launch(args);</span>
+<span class="nc" id="L188">    }</span>
+   
+    private static Game instance;
+<span class="nc" id="L191">    public Game() {</span>
+<span class="nc" id="L192">           scenarioLoaded = false;</span>
+<span class="nc" id="L193">           instance = this;</span>
+<span class="nc" id="L194">    }</span>
+   /**
+    * static method to get instance of view
+    * 
+    * @author Joe Higley
+    * @return the instance of view
+    */     
+    public static Game getInstance() {
+<span class="nc" id="L202">        return instance;</span>
+    }  
+   /**
+    * Setup a scene with the correct fxml layout
+    * 
+    * @author Joe Higley
+    */    
+    public Parent createScene(String str) throws IOException{
+<span class="nc" id="L210">        Parent root = FXMLLoader.load(getClass().getResource(str));</span>
+<span class="nc" id="L211">        return root;</span>
+    }
+   /**
+    * Returns HudScene scene
+    * 
+    * @author Joe Higley
+    */     
+    public Scene getHudScene(){
+<span class="nc" id="L219">        return hudWindow;</span>
+    }
+   /**
+    * Returns Main Menu scene
+    * 
+    * @author Joe Higley
+    */    
+    public Scene getMainScene(){
+<span class="nc" id="L227">        return mainMenu;</span>
+    }
+    /**
+    * Returns Diplomacy Map scene
+    * 
+    * @author Sean Shepherd
+    */   
+    public Scene getDiploScene(){
+<span class="nc" id="L235">        return Diplomacy;</span>
+    }
+   /**
+    * SolarDisplay code goes here
+    * 
+    * @author Joe Higley
+    */
+    public int getNum(){
+<span class="nc" id="L243">        Random rand = new Random();</span>
+<span class="nc" id="L244">        int x = rand.nextInt(9);</span>
+<span class="nc" id="L245">        return x;</span>
+    }
+    
+    /** 
+     * used to initialize scenario. called from MainMenuController::LoadScenario()
+     * 
+     * @author Jay Drage
+     * @param scenarioFile the path/filename of the scenario to be loaded.
+     */
+    public void initScenario(String scenarioFile) {
+<span class="nc bnc" id="L255" title="All 2 branches missed.">        if(!NetworkClient.clientIsInitialized()) {</span>
+<span class="nc" id="L256">            initNetwork();</span>
+        }        
+<span class="nc" id="L258">        NetworkClient.startGame();</span>
+<span class="nc" id="L259">        scenarioLoaded = true;//fixme this shouldn't be here</span>
+<span class="nc" id="L260">    }</span>
+
+    public void initScenarioCallback() {
+        //set to true to load sample scenario
+        //set to false to run actual initScenario
+<span class="nc" id="L265">        boolean testScenario = false;</span>
+<span class="nc" id="L266">        unitPool = UnitPool.getInstance();</span>
+<span class="nc" id="L267">        unitPool.clear();</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">        if(testScenario){</span>
+            // initialize dummy scenario, populate unit pool from it'
+            
+<span class="nc" id="L271">            Scenario.Initialize(&quot;resources/scenarios/7_Dwarro_Orcish_War.json&quot;);</span>
+<span class="nc" id="L272">            Scenario.populatePool();</span>
+            
+            //scenario loading complete
+<span class="nc" id="L275">            scenarioLoaded = true;</span>
+        }
+        else {
+            //TODO implement real initScenario by providing choice of
+            /*FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle(&quot;Open Resource File&quot;);
+            FileChooser.ExtensionFilter extFilter = 
+                new FileChooser.ExtensionFilter(&quot;*&quot;, &quot;*&quot;);
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showOpenDialog(stage);
+            if(file != null)
+            */
+            //{   
+                //chosenScenario = file.getPath();
+<span class="nc" id="L289">                Scenario.Initialize(chosenScenario);</span>
+<span class="nc" id="L290">                Scenario.populatePool();</span>
+<span class="nc" id="L291">                scenarioLoaded = true;</span>
+            //}
+            //else {
+              //  Scenario.Initialize(&quot;resources/scenarios/7_Dwarro_Orcish_War.json&quot;);
+                //Scenario.populatePool();
+            //}
+            //     config file (in resources/scenarios)
+        }
+<span class="nc" id="L299">    }</span>
+    /** 
+     * used to initialize network. called from MainMenuController::GotoNetworkLobby()
+     * 
+     * @author Jay Drage        
+     */
+    public void initNetwork(){
+<span class="nc" id="L306">        String ip = Dialogs.create()</span>
+<span class="nc" id="L307">                    .title(&quot;Enter servers IP address (blank for default)&quot;)</span>
+<span class="nc" id="L308">                    .masthead(&quot;Enter servers IP address (blank for default)&quot;)</span>
+<span class="nc" id="L309">                    .showTextInput();</span>
+<span class="nc bnc" id="L310" title="All 4 branches missed.">        if(ip == null || ip.equals(&quot;&quot;))</span>
+<span class="nc" id="L311">            ip = &quot;127.0.0.1&quot;;</span>
+        
+        String username =
+<span class="nc" id="L314">                Dialogs.create()</span>
+<span class="nc" id="L315">                       .title(&quot;Choose a username (blank for default)&quot;)</span>
+<span class="nc" id="L316">                       .masthead(&quot;Choose a username (blank for default)&quot;)</span>
+<span class="nc" id="L317">                       .showTextInput();</span>
+<span class="nc bnc" id="L318" title="All 4 branches missed.">        if(username == null || username.equals(&quot;&quot;))</span>
+<span class="nc" id="L319">            username = &quot;FRANCIBALD&quot;;</span>
+
+<span class="nc bnc" id="L321" title="All 2 branches missed.">        if( !NetworkClient.initializeClient(username, ip)</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">           &amp;&amp; ip.equals(&quot;127.0.0.1&quot;))</span>
+        {
+<span class="nc" id="L324">            System.out.println(&quot;Failed to init network&quot;);</span>
+<span class="nc" id="L325">            System.out.println(&quot;So better try starting a server&quot;);</span>
+<span class="nc" id="L326">            NetworkServer.startServer();</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">            if( !NetworkClient.initializeClient(username, ip) ) {      </span>
+<span class="nc" id="L328">                System.out.println(&quot;Well shucks it still failed :\\&quot;);</span>
+<span class="nc" id="L329">                return;</span>
+            }      
+        }
+        
+<span class="nc" id="L333">        NetworkClient.createLobby( &quot;Default&quot; );</span>
+<span class="nc" id="L334">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

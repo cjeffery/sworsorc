@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UnitPainter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;sworsorc&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">Units</a> &gt; <span class="el_source">UnitPainter.java</span></div><h1>UnitPainter.java</h1><pre class="source lang-java linenums">/*
+ * All source code is the work of Clinton Jeffery's Spring 2014 Software Engineering
+ * class at the University of Idaho consisting of the following members:
+ * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
+ * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
+ */
+package Units;
+
+import java.awt.*;
+import java.awt.geom.*;
+import java.awt.image.*;
+import java.io.*;
+import java.util.*;
+import javax.imageio.*;
+import sshexmap.HexPainter;
+
+
+/** A class that does nothing but draw units! */
+public class UnitPainter {
+    private final double hexRadius, width, height;
+    private final Path2D.Double hexMask;
+    private Map&lt;String, BufferedImage&gt; images;
+<span class="fc" id="L23">    String path = &quot;resources/images/units/&quot;;</span>
+    
+    private void loadImages() throws IOException {
+<span class="fc" id="L26">        images = new TreeMap&lt;String, BufferedImage&gt;();</span>
+<span class="fc" id="L27">        String[] types = {</span>
+            &quot;LightBow&quot;, &quot;PikeMan&quot;, &quot;HeavyHorse&quot;, &quot;SpiderLegion&quot;, &quot;WebWarriors&quot;,
+            &quot;LightHorse&quot;, &quot;HeavyAxe&quot;, &quot;Bow&quot;, &quot;DemonicInfantry&quot;, &quot;WraithTroops&quot;,
+            &quot;KoboldicInfantry&quot;, &quot;WyvernAirtroops&quot;, &quot;CentauroidCavalry&quot;,
+            &quot;ZombieInfantry&quot;, &quot;HeavyPluglunk&quot;, &quot;IntelligentMold&quot;,
+            &quot;DinosaurLegion&quot;, &quot;HeavySword&quot;, &quot;LightSword&quot;, &quot;WargRider&quot;,
+            &quot;LightSpear&quot;, &quot;MediumSpear&quot;, &quot;HorseArcher&quot;, &quot;Zeppelin&quot;, &quot;RocRider&quot;,
+            &quot;stack_badge&quot;, &quot;demoralized_badge&quot;, &quot;generic&quot;
+        };
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        for(String s : types) {            </span>
+<span class="fc" id="L37">            BufferedImage img = null;</span>
+            try {
+<span class="fc" id="L39">                File f = new File( path + s + &quot;.png&quot; );</span>
+<span class="fc" id="L40">                img = ImageIO.read(f);</span>
+<span class="nc" id="L41">            } catch(IOException e) {</span>
+<span class="nc" id="L42">                System.out.println(&quot;couldn't load: &quot; + s);</span>
+<span class="nc" id="L43">                File f = new File( path + &quot;generic.png&quot; );</span>
+<span class="nc" id="L44">                img = ImageIO.read(f);</span>
+<span class="fc" id="L45">            }</span>
+<span class="fc" id="L46">            images.put(s, img);</span>
+        }
+<span class="fc" id="L48">    }</span>
+    
+    /**
+     * Constructs a unit painter, loads all relevant images
+     * @param hexRadius The radius of a hexagon in pixels
+     * @throws IOException 
+     */
+<span class="fc" id="L55">    public UnitPainter(double hexRadius) throws IOException {</span>
+<span class="fc" id="L56">        this.hexRadius = hexRadius;</span>
+<span class="fc" id="L57">        width  = hexRadius*2;</span>
+<span class="fc" id="L58">        height = hexRadius*Math.sqrt(3);</span>
+        //not sure if this number should be 6 or 7
+<span class="fc" id="L60">        hexMask = HexPainter.hexShape(hexRadius);</span>
+<span class="fc" id="L61">        loadImages();</span>
+<span class="fc" id="L62">    }</span>
+
+    /**
+     * Renders all the units in a hex
+     * FIXME: WHAT ABOUT STACKS?
+     * @param g2 The Graphics object to draw on (this will have the origin
+                 AT the hex to draw on
+     * @param units The units to draw
+     */
+    public void paintUnits(Graphics2D g2, ArrayList&lt;MoveableUnit&gt; units) {
+        //HexPainter.drawImage(g2, &quot;fighter.png&quot;, images);
+        //only draw one unit for now
+<span class="nc bnc" id="L74" title="All 4 branches missed.">        if(units == null || units.isEmpty())</span>
+<span class="nc" id="L75">            return;</span>
+<span class="nc" id="L76">        MoveableUnit unit = units.get(0);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        boolean stacked = units.size() &gt; 1;</span>
+<span class="nc" id="L78">        paintUnit(g2, unit, stacked );</span>
+<span class="nc" id="L79">    }</span>
+    
+    private void paintUnit(Graphics2D g2, MoveableUnit unit, boolean stacked) {
+<span class="nc" id="L82">        UnitType t = unit.getUnitType();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if(t == null) {</span>
+<span class="nc" id="L84">            System.out.println(&quot;Cannot draw unit &quot; + unit.toString()</span>
+                               + &quot; as it has no unit type&quot;);
+<span class="nc" id="L86">            return;</span>
+        }
+<span class="nc bnc" id="L88" title="All 4 branches missed.">        switch( unit.getUnitType() ) {</span>
+            case ArmyUnit:
+<span class="nc" id="L90">                paintArmyUnit(g2, (ArmyUnit)unit, stacked);</span>
+<span class="nc" id="L91">                break;</span>
+            case Character:
+                //System.out.println(&quot;Drawing characters isn't supported yet&quot;
+                //                   + &quot; - bug colin if it needs implementing&quot;);
+<span class="nc" id="L95">                g2.setColor( new Color(0xff, 0xff, 0xff, 127) ); </span>
+<span class="nc" id="L96">                g2.fill(hexMask);</span>
+<span class="nc" id="L97">                HexPainter.drawImage(g2, &quot;generic&quot;, images );</span>
+<span class="nc" id="L98">                break;</span>
+            case Monster:
+<span class="nc" id="L100">                System.out.println(&quot;Drawing monsters isn't supported yet&quot;</span>
+                                   + &quot; - bug colin if it needs implementing&quot;);
+<span class="nc" id="L102">                g2.setColor( new Color(0xff, 0xff, 0xff, 127) ); </span>
+<span class="nc" id="L103">                g2.fill(hexMask);</span>
+<span class="nc" id="L104">                HexPainter.drawImage(g2, &quot;generic&quot;, images );</span>
+                break;
+        }
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        if(stacked)</span>
+<span class="nc" id="L108">            HexPainter.drawImage(g2, &quot;stack_badge&quot;, images );</span>
+<span class="nc" id="L109">    }</span>
+
+    /* only display null nation error output one time */
+<span class="fc" id="L112">    static boolean error_displayed = false;</span>
+    /**
+     * gets background color corresponding to unit's nation.
+     * Used to render the unit's background.
+     * 
+     * @param unit the unit to be rendered
+     * @return A color object representing the RGB color of the unit's nation
+     */
+    public static Color getBGColor(MoveableUnit unit ) {
+        Color c;
+<span class="nc" id="L122">        int a = 127; //the alpha value</span>
+        
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if(unit instanceof Conjured) {</span>
+<span class="nc" id="L125">            return new Color(0xff, 0x00, 0x00, a); //red            </span>
+        }
+        
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        if(unit.getNation() == null) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            if(error_displayed == false) {</span>
+<span class="nc" id="L130">                System.out.println(&quot;UnitPainter.java - unit's nation is null&quot;);</span>
+<span class="nc" id="L131">                error_displayed = true;</span>
+            }
+<span class="nc" id="L133">            return new Color(0xff, 0xff, 0xff, a);</span>
+        }
+<span class="nc bnc" id="L135" title="All 17 branches missed.">        switch(unit.getNation()) {</span>
+            case Conjured:
+<span class="nc" id="L137">                c = new Color(0xfb, 0x35, 0x3f, a); //red</span>
+<span class="nc" id="L138">                break;                </span>
+            case Convivian:
+<span class="nc" id="L140">                c = new Color(0xcd, 0x42, 0x41, a); //blood red! &gt;:O</span>
+<span class="nc" id="L141">                break;</span>
+            case CorfluCultist:
+<span class="nc" id="L143">                c = new Color(0xa6, 0x7c, 0x89, a); //purple</span>
+<span class="nc" id="L144">                break;</span>
+            case Cronk:
+<span class="nc" id="L146">                c = new Color(0xf9, 0x28, 0x27, a); //orange</span>
+<span class="nc" id="L147">                break;                </span>
+            case Elven:
+<span class="nc" id="L149">                c = new Color(0x34, 0x60, 0x45, a); //dark green</span>
+<span class="nc" id="L150">                break;                </span>
+            case Goblin:
+<span class="nc" id="L152">                c = new Color(0xee, 0x7d, 0x2f, a); //pumpkin</span>
+<span class="nc" id="L153">                break;</span>
+            case ImperialArmy:
+<span class="nc" id="L155">                c = new Color(0x31, 0x65, 0xb4, a); //blue</span>
+<span class="nc" id="L156">                break;                </span>
+            case IndependentHuman:
+<span class="nc" id="L158">                c = new Color(0x6a, 0x95, 0xc9, a); //blue     </span>
+<span class="nc" id="L159">                break;</span>
+            case Krasnian:
+<span class="nc" id="L161">                c = new Color(0xf6, 0x3d, 0x42, a); //hot red  </span>
+<span class="nc" id="L162">                break;</span>
+            case Mercenary:     
+<span class="nc" id="L164">                c = new Color(0xc4, 0xc3, 0xbc, a); //grey</span>
+<span class="nc" id="L165">                break;</span>
+            case ORC:                
+<span class="nc" id="L167">                c = new Color(0xfd, 0xdb, 0x41, a); //yellow</span>
+<span class="nc" id="L168">                break;                </span>
+            case SpiderFolk:
+<span class="nc" id="L170">                c = new Color(0xff, 0xff, 0xff, a); //white (TODO MAKE BLACK)</span>
+<span class="nc" id="L171">                break;</span>
+            case SwampCreature:
+<span class="nc" id="L173">                c = new Color(0xa4, 0xb1, 0x52, a); //light green</span>
+<span class="nc" id="L174">                break;                </span>
+            case WhiteORC:    
+<span class="nc" id="L176">                c = new Color(0xf2, 0xf3, 0xe8, a); //white</span>
+<span class="nc" id="L177">                break;</span>
+            case Zirkastian:           
+<span class="nc" id="L179">                c = new Color(0xc4, 0xc2, 0xbb, a); //grey</span>
+<span class="nc" id="L180">                break;</span>
+            default:
+<span class="nc" id="L182">                System.out.println(&quot;UnitPainter.java - unhandled nation&quot;);</span>
+            case none:
+<span class="nc" id="L184">                c = new Color(0xff, 0xff, 0xff, a); //white </span>
+                break;
+        }
+<span class="nc" id="L187">        return c;</span>
+    }
+    
+    private String getArmyUnitStatusLine(ArmyUnit unit) {
+        boolean defense_halved;
+<span class="nc" id="L192">        defense_halved = (unit instanceof HeavyHorse);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">        int strength = unit.isDemoralized() ? unit.getDemoralizedStrength()</span>
+<span class="nc" id="L194">                                            : unit.getStrength();        </span>
+<span class="nc bnc" id="L195" title="All 4 branches missed.">        return &quot;&quot; + (defense_halved ? &quot;(&quot; : &quot;&quot;)</span>
+                  + strength
+                  + (defense_halved ? &quot;)&quot; : &quot;&quot;)
+<span class="nc" id="L198">                  +      unit.getRaceCode()</span>
+<span class="nc" id="L199">                  + (int)unit.getMovement();</span>
+    }
+    
+    private void paintArmyUnit(Graphics2D g2, ArmyUnit unit, boolean stacked) {
+<span class="nc" id="L203">        Color bgColor = getBGColor(unit);</span>
+<span class="nc" id="L204">        String status = getArmyUnitStatusLine(unit);</span>
+        
+        //used for positioning text
+        //no idea how fast this is, it could be cached if needed
+<span class="nc" id="L208">        FontMetrics fm = g2.getFontMetrics();</span>
+<span class="nc" id="L209">        int status_w = fm.stringWidth( status );</span>
+        //int status_h = fm.getHeight();
+        
+<span class="nc" id="L212">        g2.setColor( bgColor ); </span>
+<span class="nc" id="L213">        g2.fill(hexMask);</span>
+        
+<span class="nc" id="L215">        HexPainter.drawImage(g2, unit.toString(), images);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">        if(unit.isDemoralized())</span>
+<span class="nc" id="L217">            HexPainter.drawImage(g2, &quot;demoralized_badge&quot;, images );            </span>
+        
+<span class="nc" id="L219">        g2.setColor( Color.BLACK );</span>
+<span class="nc" id="L220">        g2.drawString(status,</span>
+                      (int)(width/2.0 - status_w/2.0),
+                      (int)(height - 8 ));        
+<span class="nc" id="L223">    }</span>
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LaunchCombat.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;sworsorc&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">mainswordsorcery</a> &gt; <span class="el_source">LaunchCombat.java</span></div><h1>LaunchCombat.java</h1><pre class="source lang-java linenums">/*
+ * All source code is the work of Clinton Jeffery's Spring 2014 Software Engineering 
+ * class at the University of Idaho consisting of the following members:
+ * Brown, Clifford, Drage, Drew, Flake, Fuhrman, Goes, Goetsche, Higley,
+ * Jaszkowiak, Klingenberg, Pearhill, Sheppard, Simon, Wang, Westrope, Zhang
+ */
+
+package mainswordsorcery;
+
+import MoveCalculator.MovementCalculator;
+import Units.ArmyUnit;
+import Units.MoveableUnit;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javafx.embed.swing.SwingNode;
+import org.controlsfx.control.Notifications;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
+import static sscharts.ArmyCombatResultsTable.PrepareAttackResults;
+import sshexmap.MapHex;
+import sshexmap.MapView;
+
+
+/**
+ *
+ * @author Shaung
+ * 
+ * 
+ */
+<span class="nc" id="L33">public class LaunchCombat {</span>
+<span class="nc" id="L34">        static MoveableUnit selected_combat_unit = new MoveableUnit();</span>
+<span class="nc" id="L35">        static MoveableUnit target_combat_unit = new MoveableUnit();</span>
+<span class="nc" id="L36">        static MoveableUnit selected_combat_unit1 = new MoveableUnit();</span>
+<span class="nc" id="L37">        static MoveableUnit target_combat_unit1 = new MoveableUnit();</span>
+<span class="nc" id="L38">        static ArrayList&lt;ArmyUnit&gt; attackers = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L39">        static ArrayList&lt;ArmyUnit&gt; defenders = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L40">        static MapHex Defender_Terrain = new MapHex();</span>
+    public static void LaunchBotton(List selected_stack, List target_stack, MapView hmapContent) {
+        
+
+        
+        
+<span class="nc" id="L46">        selected_combat_unit = (MoveableUnit) selected_stack.get(0);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (selected_stack.size() &gt; 1)</span>
+<span class="nc" id="L48">        selected_combat_unit1 = (MoveableUnit) selected_stack.get(1);</span>
+<span class="nc" id="L49">        target_combat_unit = (MoveableUnit) target_stack.get(0);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (target_stack.size() &gt; 1)</span>
+<span class="nc" id="L51">        target_combat_unit1 = (MoveableUnit) target_stack.get(1);</span>
+
+        
+ 
+<span class="nc" id="L55">        attackers.add((ArmyUnit) selected_combat_unit);</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (selected_stack.size() &gt; 1)</span>
+<span class="nc" id="L57">        attackers.add((ArmyUnit) selected_combat_unit1);</span>
+<span class="nc" id="L58">        defenders.add((ArmyUnit) target_combat_unit);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (target_stack.size() &gt; 1)</span>
+<span class="nc" id="L60">        defenders.add((ArmyUnit) target_combat_unit1);</span>
+        
+        
+        // Set up Defender's TerrainType
+       
+<span class="nc" id="L65">        MapView temp = MapView.getMapView();</span>
+<span class="nc" id="L66">        Defender_Terrain = (MapHex)temp.GetHexMap().GetHex(target_combat_unit.getLocation());</span>
+        
+        // Add Friendly Unit into Attackers List
+<span class="nc" id="L69">        ArrayList&lt;MapHex&gt; FriendlyCombatList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L70">        FriendlyCombatList = getFriendlyList(Defender_Terrain);</span>
+<span class="nc" id="L71">        System.out.println(&quot;Numbers of friendly units: &quot; + FriendlyCombatList.size());</span>
+        
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        for (MapHex FriendlyCombatList1 : FriendlyCombatList) {</span>
+<span class="nc" id="L74">            Action Add_into_Attacker_List = Dialogs.create()</span>
+<span class="nc" id="L75">            .title(&quot;Adding Friendly Units into Combat&quot;)</span>
+<span class="nc" id="L76">            .message(&quot;Do you Want to add friendly unit: &quot; + FriendlyCombatList1.getUnits().get(0).getID().split(&quot;[#|@]&quot;)[1] + &quot; to the attackers list?&quot;)</span>
+<span class="nc" id="L77">            .showConfirm();</span>
+            
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            if (Add_into_Attacker_List == Dialog.Actions.YES) {</span>
+<span class="nc" id="L80">                Notifications.create()</span>
+<span class="nc" id="L81">                        .title(&quot;Add into List&quot;)</span>
+<span class="nc" id="L82">                        .text(&quot;Unit added into Attackers List&quot;)</span>
+<span class="nc" id="L83">                        .showWarning();</span>
+<span class="nc" id="L84">                attackers.add((ArmyUnit) FriendlyCombatList1.getUnits().get(0));</span>
+            } else {
+<span class="nc" id="L86">                Notifications.create()</span>
+<span class="nc" id="L87">                        .title(&quot;Discard from List&quot;)</span>
+<span class="nc" id="L88">                        .text(&quot;Unit discard from the Attackers List&quot;)</span>
+<span class="nc" id="L89">                        .showWarning();</span>
+            }
+<span class="nc" id="L91">        }</span>
+
+ 
+        // Get Combat Result Here
+<span class="nc" id="L95">        ArrayList result = new ArrayList();</span>
+<span class="nc" id="L96">        result = PrepareAttackResults(attackers, defenders, Defender_Terrain);</span>
+<span class="nc" id="L97">        int[] index = (int[])result.get(0);</span>
+<span class="nc" id="L98">        int atk = (int)result.get(1);</span>
+<span class="nc" id="L99">        int def = (int)result.get(2);</span>
+<span class="nc" id="L100">        int after_def = (int)result.get(3);</span>
+<span class="nc" id="L101">        double ratio = (double)result.get(4);</span>
+        
+        
+
+        
+
+        // Pop up Combat Result
+<span class="nc" id="L108">        Action result_of_combat = Dialogs.create()</span>
+<span class="nc" id="L109">          .title(&quot;Strategy&quot;)</span>
+<span class="nc" id="L110">          .message( &quot;Are you sure to enforce this combat?&quot; +</span>
+                    &quot;\nAttackers Strength: &quot; + atk + 
+                    &quot;\nDefenders Strength: &quot; + def + 
+<span class="nc" id="L113">                    &quot;\nDefenders' Terrain Type is: &quot; + Defender_Terrain.getTerrainType() +</span>
+                    &quot;\nAfter Terrain Bonus: &quot; + after_def
+                  )
+<span class="nc" id="L116">          .showConfirm();</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (result_of_combat == Dialog.Actions.YES) {</span>
+
+            //Confirm(index,Defender_Terrain,target_stack);
+<span class="nc" id="L121">            Action ATT = Dialogs.create()</span>
+<span class="nc" id="L122">            .title(&quot;Attacker&quot;)</span>
+<span class="nc" id="L123">            .message(&quot;Attacker's Decision&quot;)</span>
+<span class="nc" id="L124">            .showWarning();</span>
+<span class="nc" id="L125">            ResultCase(index[0], attackers, target_stack, hmapContent);</span>
+            
+            
+<span class="nc" id="L128">            Action DEF = Dialogs.create()</span>
+<span class="nc" id="L129">           .title(&quot;Defender&quot;)</span>
+<span class="nc" id="L130">           .message(&quot;Defender's Decision&quot;)</span>
+<span class="nc" id="L131">           .showWarning();</span>
+<span class="nc" id="L132">            ResultCase(index[1], defenders, target_stack, hmapContent);</span>
+        }
+        
+        else {
+            
+
+        }
+
+<span class="nc" id="L140">        attackers.clear();</span>
+<span class="nc" id="L141">        defenders.clear();</span>
+<span class="nc" id="L142">        FriendlyCombatList.clear();</span>
+      
+<span class="nc" id="L144">    }</span>
+    
+
+    
+    
+    /**
+     * @author Shaung
+     * @param result 
+     */
+    public static void ResultCase(int result, ArrayList&lt;ArmyUnit&gt; Units_stack, List target_stack, MapView hmapContent) {
+<span class="nc" id="L154">        SwingNode hmap = new SwingNode();</span>
+        HashMap&lt;MapHex, Double&gt; moves;
+        //MapView hmapContent;
+        //hmapContent = MapView.getMapView();
+        //hmap.setContent(hmapContent);
+        
+        // Elimination
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (result &lt; 0) {</span>
+<span class="nc" id="L162">            Notifications.create()</span>
+<span class="nc" id="L163">            .title(&quot;Elimination Required&quot;)</span>
+<span class="nc" id="L164">            .text(&quot;You have to eliminate &quot; + result + &quot;units.&quot;)           </span>
+<span class="nc" id="L165">            .showWarning();</span>
+            // Call Elimination Function
+            // Elimination(List&lt;MoveableUnit&gt; Units_stack, int elimination_amount);
+        }
+        
+        // Nothing Chnage
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        else if (result == 0) {</span>
+<span class="nc" id="L172">            Notifications.create()</span>
+<span class="nc" id="L173">            .title(&quot;Stay in current Status&quot;)</span>
+<span class="nc" id="L174">            .text(&quot;You don't need to do any changes from this battle.&quot;)           </span>
+<span class="nc" id="L175">            .showWarning();</span>
+        }
+        
+        // Retreat or Elimination
+        else {
+           
+<span class="nc" id="L181">           Action result_of_combat = Dialogs.create()</span>
+<span class="nc" id="L182">          .title(&quot;Decision&quot;)</span>
+<span class="nc" id="L183">          .message( &quot;Result of Combat is: &quot; + result</span>
+                  + &quot;\nDo you want to eliminate any Units?&quot;)
+<span class="nc" id="L185">          .showConfirm();</span>
+           
+<span class="nc bnc" id="L187" title="All 2 branches missed.">            if (result_of_combat == Dialog.Actions.YES) {</span>
+               
+<span class="nc bnc" id="L189" title="All 2 branches missed.">                for (int i = 0; i &lt; Units_stack.size(); i++) {</span>
+<span class="nc" id="L190">                    Action Edecision = Dialogs.create()</span>
+<span class="nc" id="L191">                    .title(&quot;Decision&quot;)</span>
+<span class="nc" id="L192">                    .message( &quot;Result of Combat is: &quot; + result</span>
+<span class="nc" id="L193">                           + &quot;\nDo you want to eliminate This Units: &quot; + Units_stack.get(i).getID().split(&quot;[#|@]&quot;)[1])</span>
+<span class="nc" id="L194">                    .showConfirm();</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">                    if (Edecision == Dialog.Actions.YES) {</span>
+                    
+                        // Elimination(Unit_stack.get(i));
+<span class="nc" id="L198">                         Units_stack.remove(i);</span>
+                    }
+                    
+                }
+                    
+            }
+            ArrayList&lt;MapHex&gt; canMoveTo;
+            //if (!Units_stack.isEmpty()) {
+                
+                //for (int i = 0; i &lt; Units_stack.size(); i++) {
+                    // Retreat(Units_stack.get(i));
+<span class="nc" id="L209">                    moves = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L210">                    moves.clear();</span>
+                    
+                    
+<span class="nc" id="L213">                    canMoveTo = new ArrayList&lt;MapHex&gt;();</span>
+<span class="nc" id="L214">                    canMoveTo = MovementCalculator.getRetreatMoves(Defender_Terrain, </span>
+<span class="nc" id="L215">                                  (MoveableUnit)target_stack.get(0), 3.0/*(double)index[1]*/);</span>
+                    
+<span class="nc" id="L217">                    hmapContent.clearHighlights();      </span>
+<span class="nc" id="L218">                    hmapContent.highlight(canMoveTo, new Color(255,0,0, 255));</span>
+                    
+<span class="nc bnc" id="L220" title="All 2 branches missed.">                for (MapHex canMoveTo1 : canMoveTo) {</span>
+<span class="nc" id="L221">                System.out.println(&quot;Can move to: &quot; + (String)canMoveTo1.GetID() + &quot;\n&quot;);</span>
+<span class="nc" id="L222">            }</span>
+                            
+                //}
+            //}
+           
+           
+        }
+           
+           
+           
+           
+           
+          
+           
+           
+<span class="nc" id="L237">        }</span>
+        
+        
+    
+    
+    /**
+     * 
+     * @param currHex
+     * @author Shaung &amp; Kidth
+     * @return ArrayList&lt;MapHex&gt;
+     * 
+     */
+    public static ArrayList&lt;MapHex&gt; getFriendlyList( MapHex currHex )
+    {
+<span class="nc" id="L251">        ArrayList&lt;MapHex&gt; neighbors = new ArrayList&lt;&gt;();</span>
+        //For each hex edge, 0-5, get the neighboring hex, if it's valid
+<span class="nc bnc" id="L253" title="All 2 branches missed.">        for( int i = 0; i &lt; 6; i++ )</span>
+        {
+            // Make sure the neighbor exists
+<span class="nc bnc" id="L256" title="All 4 branches missed.">            if( currHex.getNeighbor( i ) != null &amp;&amp; currHex.getNeighbor(i).getUnits() != null )</span>
+<span class="nc" id="L257">                neighbors.add( currHex.getNeighbor(i));</span>
+        }
+        
+        
+<span class="nc" id="L261">        return neighbors;</span>
+    }
+    
+    
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>
