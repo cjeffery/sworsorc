@@ -1,7 +1,9 @@
-\chapter{TEST PLAN (TP) TEMPLATE}
+\chapter{TEST PLAN}
+
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-Version 1.0, April 2014
+Version 1.1\\
+\today
 \par}
 
 \ 
@@ -10,9 +12,6 @@ Version 1.0, April 2014
 FOREWORD
 \par}
 \bigskip
-
-{\centering\bfseries\color{black}
-TEST PLAN (TP)}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
 FOR
@@ -26,38 +25,12 @@ Swords and Sorcery
 \par}
 
 
-\bigskip
 
-
-\bigskip
-
-
-\bigskip
 
 \begin{figure}
 \centering
-\includegraphics[width=3.4354in,height=0.6126in]{uislogan.png}
+%%\includegraphics[width=3.4354in,height=0.6126in]{uislogan.png}
 \end{figure}
-
-\bigskip
-
-
-\bigskip
-
-
-\bigskip
-
-
-\bigskip
-
-{\centering\selectlanguage{english}\bfseries\color{black}
-Version 0.5
-\par}
-
-{\centering\selectlanguage{english}\bfseries\color{black}
-\today
-\par}
-
 
 \bigskip
 
@@ -67,6 +40,7 @@ Version 0.5
 {\centering\selectlanguage{english}\bfseries\color{black}
 Prepared for: 
 \par
+Software Engineering: CS 383\\
 Dr. Jeffery
 \par}
 
@@ -80,13 +54,25 @@ Prepared by:
 \par}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-Keith Drew\\
-Ian Westrope\\
-Jonathan Flake\\
-Colin Clifford\\
-David Klingenberg\\
-Sean Shepherd\\
+Keith Drew,
+ Ian Westrope,
+ Jonathan Flake,
+ Colin Clifford,
+ David Klingenberg,
+ Sean Shepherd,
+ Chris,
+ Gabe,
+ John,
+ Wayne, 
+ Tao Zhang,
+ Cameron Simon,
+ Matthrew Brown,
+ Tyler Jaszkowiak,
+ Ian Westrope,
+ ChiHsiang Wang,
 \par}
+
+\bigskip
 
 {\centering\selectlanguage{english}\bfseries\color{black}
 University of Idaho
@@ -96,9 +82,7 @@ University of Idaho
 Moscow, ID \ 83844-1010
 \par}
 
-{\centering\selectlanguage{english}\bfseries\color{black}
-CS383 TPD
-\par}
+
 
 \pagebreak
 
@@ -165,33 +149,33 @@ approved\\
  &
 
 \\\hline
-~
+~1
  &
-~
+~April, 2014
  &
-~
+~Original HUD team document.
  &
-~
+~A
  &
-~
+~Original HUD team document.
  &
-~
- &
+~HUD Team
+ &April, 2014
 ~
 \\\hline
-~
+~2
  &
-~
+~May 5, 2014
  &
-~
+~Entire Document
  &
-~
+~M
  &
-~
+~Concatenated all team documents together.
  &
-~
+~DRK
  &
-~
+~May 5, 2014
 \\\hline
 ~
  &
@@ -465,7 +449,7 @@ approved\\
 A - ADDED \ M - MODIFIED \ D -- DELETED}
 
 {\centering\selectlanguage{english}\bfseries\color{black}
-Swords and Sorcery V 0.5
+Swords and Sorcery Alpha 0.5
 \par}
 
 \pagebreak
@@ -490,7 +474,7 @@ Section\ \ Page}
 TEST PLAN IDENTIFIER}
 
 {\selectlanguage{english}\color{black}
-TestPlan 0.1\\}
+TestPlan 1.5\\}
 
 
 \section[REFERENCES]{\selectlanguage{english}\bfseries\color{black}
@@ -499,18 +483,67 @@ REFERENCES}
 {\selectlanguage{english}\color{black}
 Use cases and UML diagrams are available on the class website, as well as game rules.\\
 http://www2.cs.uidaho.edu/~jeffery/courses/383/ \\
+The code itself can be found at https://github.com/cjeffery/sworsorc/tree/master/src\\
+The automated unit tests are located at https://github.com/cjeffery/sworsorc/tree/master/src/test
 }
 
 \section[INTRODUCTION]{\bfseries\color{black} INTRODUCTION}
 
 {\selectlanguage{english}\color{black}
-Our plan is to integrate the working hud/game code and test that it works in tangent, as opposed to only working in discrete locations of the project. We will be using junit tests to evaluate discrete methods and manual tests to test the GUI and game logic.
+Our plan is to integrate the working hud/game code and test that it works in tangent, as opposed to only working in discrete locations of the project. We will be using junit tests to evaluate discrete methods and manual tests to test the GUI and game logic. To plan and document manually test for GUI components as they are developed.  As new code is integrated the unit tests will be rerun to ensure integration did not break any component. Manual tests will be rerun on a case-by-case basis. All tests will be run the day before the end of a sprint and before deliverable presentation.
+
 }
 
 \section[TEST ITEMS]{\bfseries\color{black} TEST ITEMS}
+
+{\selectlanguage{english}\color{black}
+
+The army units will be tested for the proper member variable values as well as proper results from the member function of the Moveableunit and Armyunit classes. Variables will tested at creation and members variable will be tested for proper results when applicable. Some example tests will be that the location member variable is properly set during movement. Also another type of test that will be preformed is that conjured units are properly created and and placed in the proper place on the game board. 
+}
+
+{\selectlanguage{english}\color{black}
+\subsection{Character}
+\begin{itemize}
+\item Class Interfaces
+\item Class Interactions
+\item Spells Implementation
+\item Character 
+\end{itemize}
+
+\subsection{Scenario}
+The data read by the Scenario test will be read from one of the simple 
+scenario configuration files and then verified against expectations through 
+the class's accessor methods. These data items include 
+\newline
+\begin{itemize}
+\item The scenario's name
+\item Number of players
+\item Game length
+\item The blue sun's initial position
+\item The names of armies in the scenario
+\item The controlling players of these armies
+\item The setup order of these armies
+\item The movement order of these armies
+\item Names of nations within these armies
+\item Names of the neutrals in the scenario
+\item The provinces controlled by a nation
+\item The characters within a nation
+\item The units within a player nation
+\item The units within a neutral nation
+\item The races of both neutrals and player nations
+\item The reinforcement and replacement description strings
+\item Data related to where a neutral is leaning toward
+\item Whether or not a neutral accepts human sacrifice
+\end{itemize}
+
+Unfortunately, the most complex functionality of the Scenario class 
+cannot be tested by automated unit tests. The unit pool populator requires 
+a manual check.
+
+\subsection	{Additional items to be tested.}
+
 {\selectlanguage{english}\color{black}
 \begin{itemize}
-\item Code Coverage (esp. Model)
 \item GUI Tests
 \begin{itemize}
 \item Hexes/Units tile ok, look ok
@@ -524,6 +557,8 @@ Our plan is to integrate the working hud/game code and test that it works in tan
 \item Other manual tests (game compiles and runs on different platforms)
 \item Auto tests - Junit
 \item Ensure all files under resources can be loaded (if feasible)
+\item The user can initiate connection and disconnection from the server.
+\item The user can... (Network stuff)
 \end{itemize}
 }
 
@@ -537,28 +572,78 @@ Software to be tested includes the following:
 \item  Incorporating Networking with GUI and game logic may be difficult
 \item  Undetected Logic Errors (ULEs)
 \item  Misinterpretation of Rules
+\item  Connection Failures: For whatever reason, we have no access to a server, or can't connect over user's network
+\item  Networking code is unable to connect with other code elements.
+\item  Networking code can be integrated, but is too complicated for anyone to work with.
+\item Improper casting of units
+\item Unit ID's interpreted incorrectly
+\item Depends on Java's JSON reader and the programmer's understanding of it
+\item Complex data structures such as a map of maps
+\item Complex loops to iterate over data structures
+\item Poor documentation surrounding some of these iterators
+\item Poor documentation in general
+\item 3rd party library's. Including json-simple-1.1.1 and controlsfx-8.0.5
 \end{enumerate}
+}
 }
 
 \section[FEATURES TO BE TESTED]{\bfseries\color{black} FEATURES TO BE TESTED}
+{\selectlanguage{english}\color{black}
+\subsection{Scenario}
+From the user's perspective, much of this data reading occurs under the hood. 
+In all cases except for populating the unit pool, the Scenario class does not 
+manipulate any pieces of the rest of the project. Other components read the 
+data from the Scenario class. Therefore, while the solar configuration relies 
+on a properly-working Scenario class, this is not apparent to the user because 
+solar configuration is also handled by SolarConfig and HUDInitializer classes.
+\newline
+\newline
+Therefore, the only visible component being tested by this plan is the placement 
+of units and characters into the correct provinces of the map.
+
+\subsection{Movement}
+
+\begin{itemize}
+\item conjured unit appear when casted
+\item units are properly represented on HUD
+\item movement location is correct on map
+\item moral status is properly updated after combat
+\end{itemize}
+
+\subsection{Character, Spells}
+\begin{itemize}
+\item Select character on GUI
+\item Select Spell
+\item Effects of Partial Spells
+\item Manna Costing
+\end{itemize}
+}
 
 {\selectlanguage{english}\color{black}
+\subsection {Additional Features}
 \begin{itemize}
+\item 1 Complete Turn
 \item Movement
 \item Teleporting
-\item Chat 
+\item Network 
 \item Loading
 \item Solar Display
 \item Diplomacy Display
 \end{itemize}
 }
+
 \section[FEATURES NOT TO BE TESTED]{\bfseries\color{black}
 	 FEATURES NOT TO BE TESTED}
 {\selectlanguage{english}\color{black}
+All data is verified, but testing the Scenario class alone cannot ensure 
+that it reaches the HUD successfully. Integration tests are required outside 
+of this plan for information such as solar configuration, move order, setup order, 
+game length, and diplomacy.
+\newline
+\newline
+What is not tested is the count of the units on the map that correspond to the scenario loaded. Also the type of unit is not test, this is assumed correct. 
 \begin{itemize}
-\item Game networking
 \item Full game
-\item Spell casting
 \item Everything in backlog
 \end{itemize}
 }
@@ -594,11 +679,11 @@ All tests should meet the specifications of the Swords and Sorcery board game ru
 
 \section[REMAINING TEST TASKS]{\bfseries\color{black} REMAINING TEST TASKS}
 {\selectlanguage{english}\color{black}
-There are many remaining test tasks, as we have not achieved a working game yet. Remaining tests include full combat, spell casting, scenario loading, full gameplay, etc. }
+There are many remaining test tasks, as we have not achieved a working game yet. Remaining tests include full combat, spell casting, scenario loading, full gameplay, etc. We also anticipate unexpected integration requirements to be added to the test plan.}
 
 \section[ENVIRONMENTAL NEEDS]{\bfseries\color{black} ENVIRONMENTAL NEEDS}
 {\selectlanguage{english}\color{black}
-We need two computers connected over the internet, using Gabe's RaspberryPi. Otherwise, we cannot test full networking capabilities and full gameplay as intended. 
+In the final test, we'll need a remote machine to host the server code. Along with two computers connected over the internet too the server. Otherwise, we cannot test full networking capabilities and full gameplay as intended. 
 }
 
 \section[RESPONSIBILITIES]{\bfseries\color{black} RESPONSIBILITIES}
@@ -612,7 +697,7 @@ The hierarchy of "inchargeness" is as follows:
 }
 \section[SCHEDULE]{\bfseries\color{black} SCHEDULE}
 {\selectlanguage{english}\color{black}
-Junit tests should be implemented and run as functionality is added to classes and packages. Manual testing will be done as the GUI is developed and functionality added, as well as when more aspects of other group's code are added. 
+Junit tests should be implemented and run as functionality is added to classes and packages. Manual testing will be done as the GUI is developed and functionality added, as well as when more aspects of other group's code are added. Test to be rerun before demonstration day.
 }
 
 \section[PLANNING RISKS AND CONTINGENCIES]{\bfseries\color{black}
