@@ -1,0 +1,28 @@
+﻿Concatenated all the test plans into one master document.
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file:   doc/TestPlans/HUD/TP_Template.aux
+#	new file:   doc/TestPlans/HUD/TP_Template.log
+#	new file:   doc/TestPlans/HUD/TP_Template.out
+#	new file:   doc/TestPlans/HUD/TP_Template.pdf
+#	new file:   doc/TestPlans/HUD/TP_Template.synctex.gz
+#	new file:   doc/TestPlans/HUD/TP_Template.toc
+#	new file:   doc/TestPlans/HUD/tpd.aux
+#	modified:   doc/TestPlans/HUD/tpd.tex
+#	new file:   doc/TestPlans/MasterDoc/TP_Template.aux
+#	new file:   doc/TestPlans/MasterDoc/TP_Template.log
+#	new file:   doc/TestPlans/MasterDoc/TP_Template.out
+#	new file:   doc/TestPlans/MasterDoc/TP_Template.pdf
+#	new file:   doc/TestPlans/MasterDoc/TP_Template.synctex.gz
+#	new file:   doc/TestPlans/MasterDoc/TP_Template.tex
+#	new file:   doc/TestPlans/MasterDoc/TP_Template.toc
+#	new file:   doc/TestPlans/MasterDoc/tpd.aux
+#	new file:   doc/TestPlans/MasterDoc/tpd.tex
+#	modified:   doc/TestPlans/Units/tpd.tex
+#	modified:   doc/Thumbs.db
+#
+
