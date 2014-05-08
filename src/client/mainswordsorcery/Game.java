@@ -147,7 +147,7 @@ public class Game extends Application {
         stage.setScene(mainMenu);
         
         if(fullscreen) {
-            stage.setFullScreen(false);
+            stage.setFullScreen(true);
             stage.setFullScreenExitHint("");
         }
         
