@@ -143,40 +143,61 @@ There are multiple developer views within the scope of the S\&S project for CS38
 \subsubsection{Developer's View Representation and Description}
 \paragraph{Architectural Overview}
 The following class diagram is inaccurate with respect to the project as it currently stands. The inaccuracies are the Chart class, which does not exist, and we discovered is unnecessary, as well as the alliance and player classes, which were never created. The alliance class was never created because we didn't make it that far with the project, and the player class was replaced with flags and variables, as a class was determined to be unneeded. Also, the diagram lacks references and design information relating the classes to the HUD and Networking components of S\&S.
-\includepdf{overview.png}
+\begin{center}
+\includegraphics[width=\linewidth]{overview.png}
+\end{center}
 \paragraph{HUD Team View Representation and Description}
 The HUD team view includes rules that affect the HUD (movement, hex painting, terrain, etc.) and the actual HUD itself, containing a view of the map, the minimap, character/unit descriptions, the solar display, the main menu, and hosting interactions between the game instance and the user. The HUD team also designed several data structures include the UnitPool and MainMap, for displaying the units and map in the HUD. Following is a collaboration diagram that shows a rough idea of the design from the HUD Team view.
 \begin{center}
 \includegraphics[width=\linewidth]{HUDTeamCollab.png}
 \end{center}
 \paragraph{Rules Team View Representation and Description}
-[Insert Description of graphics (UML) here]
+The rules team view covers the implementation of the rules from the actual boardgame, S\&S. This includes things like combat, spell casting, charts implementation, unit implementation and other rules related tasks. The design view for the rules team consists of how those rules interact with each other and the other groups (HUD, Networking).
 %\includegraphics[scale=•]{•}
 \paragraph{Networking Team View Representation and Description}
-[Insert Description of graphics (UML) here]
+The networking team view covers the client/server implementation and design for S\&S. Their overall view of design was a client/server model which hosts communication over the network and message passign for updating the state of a game. 
 %\includegraphics[scale=•]{•}
 
 \subsection{User's Architectural View}
-	\subsubsection{User's View Identification}
-	The User's view consists of their interactions with the S\&S GUI. This includes starting the client, joining/starting a game lobby, beginning a game, and interacting with the game. Found here are diagrams representing sequence of play and mouse/key button presses.
-	\subsubsection{User's View Representation and Description}
-	\includepdf{SequenceOfPlay.png}
-	\includepdf{KeyMouseButtons.png}
-\subsection{Consistency of Architectural Views}
-	\subsubsection{Detail of Inconsistencies Between Architectural Views}
-	\subsubsection{Consistency Analysis and Inconsistency Mitigations}
+\subsubsection{User's View Identification}
+The User's view consists of their interactions with the S\&S GUI. This includes starting the client, joining/starting a game lobby, beginning a game, and interacting with the game. Found here are diagrams representing sequence of play and mouse/key button presses.
+\subsubsection{User's View Representation and Description}
+\begin{center}
+\includegraphics[width=\linewidth]{SequenceOfPlay.png}
+\end{center}	
+\pagebreak
+\begin{center}
+\includegraphics[width=\linewidth]{KeyMouseButtons.png}
+\end{center}
+\pagebreak
 
 \section{Software Detailed Design}
 \subsection{Developer's Viewpoint Detailed Software Design}
 This section describes the developers viewpoint with respect to the software design. Included are the UML diagrams developed for the S\&S game, from which we began designing S\&S, as well as the state and collaboration diagrams. Many of the diagrams were developed at different points during the semester, reflected by the discrepancies between the SSRS, this document, and the Implementation document. 
-\includepdf{classDiagram.png}
-\includepdf{hex.png}
-\includepdf{units.png}
-\includepdf{dataDiagram.png}
-\includepdf{CollaborationMoveUnit.png}
-\includegraphics{CharacterCapture}
-\includepdf{RandomSpellTerrainEffectsOverview.png}
-\includepdf{SolarCycle.png}
+\begin{center}
+\includegraphics[width=\linewidth]{classDiagram.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{hex.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{units.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{dataDiagram.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{CollaborationMoveUnit.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{CharacterCapture}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{RandomSpellTerrainEffectsOverview.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{SolarCycle.png}
+\end{center}
 \pagebreak
 \subsection{Component Dictionary}
 \small{
