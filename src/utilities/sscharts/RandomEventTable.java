@@ -9,6 +9,9 @@ package sscharts;
 //package MainSwordSorcery;
 
 import java.util.Random;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  * email me if anyone has questions or need changes.
@@ -23,7 +26,21 @@ public class RandomEventTable {
     Random RandomGenerator = new Random();
     private static RandomEventTable INSTANCE;
     
+    
+    
+    public void DisplayEvent(){
+        RandomEvenTableNewEvent();
         
+        Action response = Dialogs.create()
+                .title("Teleport")
+                .masthead("Random Event!\nNot Fully Implmented.")
+                .message("Random Event: " + eventDescription)
+                .actions(Dialog.Actions.OK)    
+                .showConfirm()
+                ;
+    }
+    
+    
     private void KeyLookup(int sixSidedDieOne, int sixSidedDieTwo){
         if (ValidaedDiceRangeForRandomEventTable(sixSidedDieOne, sixSidedDieTwo))
         switch (sixSidedDieOne) {

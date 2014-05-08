@@ -37,6 +37,7 @@ import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 import static sscharts.ArmyCombatResultsTable.PrepareAttackResults;
 import static mainswordsorcery.LaunchCombat.*;
+import sscharts.RandomEventTable;
 import sscharts.Scenario;
 import sshexmap.MapHex;
 import sshexmap.MapView;
@@ -112,6 +113,7 @@ public class HUDController {
         //setup network
         connectedToServer = usernameEntered = ipEntered = false;
         chat_box.setText("Enter your username!");
+        
     }
     
     /**
@@ -125,6 +127,7 @@ public class HUDController {
 
         RedState.setText(SolarDisplay.GetRedState());
         BlueState.setText(SolarDisplay.GetBlueState());
+        
     }
     
     /**
@@ -708,7 +711,8 @@ public class HUDController {
                         int x = parseInt(turn.getText());
                         x++;
                         turn.setText(Integer.toString(x));
-
+                        
+                        RandomEventTable.getInstance().DisplayEvent();
                         SolarDisplay.SunCalc();
                         Image Sun = new Image(SolarDisplay.GetSunImage());
                         SunImage.setImage(Sun);

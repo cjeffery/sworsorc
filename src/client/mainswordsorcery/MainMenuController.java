@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sscharts.RandomEventTable;
 import sscharts.Scenario;
 
 /**
@@ -53,6 +54,7 @@ public class MainMenuController {
             stage.setScene(Game.getInstance().getHudScene());
             stage.setFullScreen(Game.getInstance().fullscreen);
             stage.show();
+            RandomEventTable.getInstance().DisplayEvent();
         }
     }
     //activated by "Load Scenario" button

@@ -28,6 +28,7 @@ import sscharts.Scenario;
 import systemServer.*;
 
 import static javafx.application.Application.launch;
+import sscharts.RandomEventTable;
 
 /**
  *
@@ -65,7 +66,7 @@ public class Game extends Application {
 
     /* window options, for development convenience */
     static int window_flag = 0; //0 = fullscreen, 1 = left, 2 = right, 3 = wind
-    public boolean fullscreen = true;
+    public boolean fullscreen = false;
     double screenX;
     double screenY;
     double screenW;
@@ -146,11 +147,13 @@ public class Game extends Application {
         stage.setScene(mainMenu);
         
         if(fullscreen) {
-            stage.setFullScreen(true);
+            stage.setFullScreen(false);
             stage.setFullScreenExitHint("");
         }
         
         stage.show();
+        
+        
     }
     
     /**
