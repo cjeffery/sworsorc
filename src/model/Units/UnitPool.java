@@ -127,6 +127,8 @@ public class UnitPool {
         this.addToHex(hexList, unit);
         this.addToUnit(unitMove, unit);
         MapView.getMapView().repaint();
+        
+        NetworkClient.send(Flag.GAME, Tag.ADD_UNIT, playerID, unit, location);
     }
     
     /**
