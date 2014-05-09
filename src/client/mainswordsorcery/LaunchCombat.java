@@ -178,7 +178,7 @@ public class LaunchCombat {
         
         // Retreat or Elimination
         else {
-           
+           final UnitPool pool = UnitPool.getInstance();
            Action result_of_combat = Dialogs.create()
           .title("Decision")
           .message( "Result of Combat is: " + result
@@ -194,15 +194,12 @@ public class LaunchCombat {
                            + "\nDo you want to eliminate This Units: " + Units_stack.get(i).getID().split("[#|@]")[1])
                     .showConfirm();
                     if (Edecision == Dialog.Actions.YES) {
-                    
-                        // Elimination(Unit_stack.get(i));
-                         Units_stack.remove(i);
+                        for (ArmyUnit Units_stack1 : Units_stack) {
+                            pool.removeUnit(Units_stack1);
+                        } 
                     }
-                    
                 }
-                    
             }
-            final UnitPool pool = UnitPool.getInstance();
             ArrayList<MapHex> canMoveTo;
             if (!Units_stack.isEmpty()) {
                 
@@ -219,16 +216,14 @@ public class LaunchCombat {
                     hmapContent.clearHighlights();      
                     ((ArmyUnit)Units_stack.get(i)).SetDemoralized(true);
                     pool.addMove(Units_stack.get(i), canMoveTo.get(1).GetID());
-                    hmapContent.repaint();
                     
                 for (MapHex canMoveTo1 : canMoveTo) {
                 System.out.println("Can move to: " + (String)canMoveTo1.GetID() + "\n");
-            }
+                }
                             
                 }
             }
-           
-           
+            hmapContent.repaint();
         }
            
            
