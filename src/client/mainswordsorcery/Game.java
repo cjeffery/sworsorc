@@ -256,7 +256,7 @@ public class Game extends Application {
         if(!NetworkClient.clientIsInitialized()) {
             initNetwork();
         }        
-        NetworkClient.startGame();
+        //NetworkClient.startGame();
         scenarioLoaded = true;//fixme this shouldn't be here
     }
 

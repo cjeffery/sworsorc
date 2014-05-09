@@ -26,7 +26,7 @@ public enum Tag {
     // Utilities
     UID, VOTE, // Unique ID, Lobby voting
     MESSAGE_TO_SERVER, MESSAGE_FROM_SERVER, // Any special "under the hood" message
-    DISCONNECT, GENERIC, GENERIC_ERROR, NULL_TAG, 
+    DISCONNECT, ERROR, NULL_TAG, 
     SEND_FILE, GET_FILE, // File transfer
 
     // Game stuff

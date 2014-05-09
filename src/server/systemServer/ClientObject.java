@@ -279,6 +279,8 @@ public class ClientObject {
 
                             break;
                         case MESSAGE_TO_SERVER:
+                            // empty
+                            break;
                         case GLOBAL_WHO:
                             if ( NetworkServer.getTotalClients() == 0 ) {
                                 send( flag, Tag.GLOBAL_WHO, "No users online." );
@@ -326,8 +328,11 @@ public class ClientObject {
 
                     switch ( tag ) {
                         case INVALID_GAME_ACTION:
-                        case GENERIC_ERROR:
-
+                            errorOut.println( "Invalid game action: " + smessage );
+                            break;
+                        case ERROR:
+                            errorOut.println( "Generic error message: " + smessage );
+                            break;
                         default:
                             consoleOut.println( "Unknown tag: " + tag );
                     }
@@ -353,12 +358,10 @@ public class ClientObject {
                             } else {
                                 currentLobby.lobbyNotification( "Client " + sender + " has requested to start a game!" );
                                 // TODO: VOTING
-                                currentLobby.lobbyNotification( "The Game has begun!" );
+                                send( Flag.GAME, Tag.INIT_GAME_PLEASE );  //selected client in charge of game setup
                                 currentLobby.beginGame();
                                 currentLobby.pokeEntireLobby( flag, Tag.BEGIN_GAME );
-
-                                //selected client in charge of game setup
-                                send( Flag.GAME, Tag.INIT_GAME_PLEASE );
+                                currentLobby.lobbyNotification( "The Game has begun!" );
                             }
                             break;
                         case YIELD_TURN:
@@ -414,7 +417,6 @@ public class ClientObject {
                             consoleOut.
                                     println( "Client " + handle + " has requested to leave lobby" );
                             NetworkServer.leaveLobby( getHandle() );
-                            //send( flag, Tag.LEAVE_LOBBY, "You have successfully left lobby " + smessage );
                             currentLobby = null;
                             break;
 
@@ -453,14 +455,7 @@ public class ClientObject {
                     break;
 
                 // Anything that doesn't fall into above categories ex: GENERIC
-                case OTHER:
-                    switch ( tag ) {
-                        case GENERIC:
-                        default:
-                            consoleOut.println( "Unknown tag: " + tag );
-                    }
-                    break;
-
+                case OTHER:                   
                 default:
                     consoleOut.println( "Unknown flag: " + flag + "\nTag: " + tag );
                     break;

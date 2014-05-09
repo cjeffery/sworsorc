@@ -214,7 +214,7 @@ final public class NetworkClient {
      * @author Christopher Goes
      */
     public static void sendPrivateMessage( String user, String message ) {
-        send( Flag.CHAT, Tag.PRIVATE, message );
+        send( Flag.CHAT, Tag.PRIVATE, user, message );
         //todo: echo to console?
 
     }
@@ -242,6 +242,7 @@ final public class NetworkClient {
      */
     public static void endTurn() {
         send( Flag.GAME, Tag.YIELD_TURN );
+        phasing = false;
     }
     
     
@@ -339,74 +340,77 @@ final public class NetworkClient {
             parsedString = command.split( "\\s+" ); //Split line by whitespace
 
             if ( parsedString.length > 2 ) {
-                if ( "/msg".equals( parsedString[0] ) ) {
+                if ( "/msg".equalsIgnoreCase( parsedString[0] ) ) {
                     StringBuilder temp = new StringBuilder( parsedString.length );
                     for ( int i = 2; i < parsedString.length; i++ ) {
                         temp.append( " " ).append( parsedString[i] );
                     }
                     sendPrivateMessage( parsedString[1], temp.toString() );
                 } else if ( isConnected() ) {
-                    sendChatMessage( parsedString[0] );
+                    sendChatMessage( command );
                 } else {
+                    System.err.println( "Shouldn't get here in the command thread!" );
                     return false;
                 }
             }
             if ( parsedString.length == 2 ) {
-                if ( "/sendFile".equals( parsedString[0] ) ) {
+                if ( "/sendFile".equalsIgnoreCase( parsedString[0] ) ) {
                     sendFile( parsedString[1] );
-                } else if ( "/newLobby".equals( parsedString[0] ) ) {
+                } else if ( "/newLobby".equalsIgnoreCase( parsedString[0] ) ) {
                     send( Flag.LOBBY, Tag.NEW_LOBBY, parsedString[1] );
-                } else if ( "/joinLobby".equals( parsedString[0] ) ) {
+                } else if ( "/joinLobby".equalsIgnoreCase( parsedString[0] ) ) {
                     send( Flag.LOBBY, Tag.JOIN_LOBBY, parsedString[1] );
                 } else if ( isConnected() ) {
-                    sendChatMessage( parsedString[0] );
+                    sendChatMessage( command );
                 } else {
+                    System.err.println( "Shouldn't get here in the command thread!" );
                     return false;
                 }
             } else if ( parsedString.length == 1 ) {
-                if ( "/globalWho".equals( parsedString[0] ) ) {
+                if ( "/globalWho".equalsIgnoreCase( parsedString[0] ) ) {
                     send( Flag.INFO, Tag.GLOBAL_WHO );
-                } else if ( "/lobbyWho".equals( parsedString[0] ) ) {
+                } else if ( "/lobbyWho".equalsIgnoreCase( parsedString[0] ) ) {
                     send( Flag.INFO, Tag.LOBBY_WHO );
-                } else if ( "/leaveLobby".equals( parsedString[0] ) ) {
+                } else if ( "/leaveLobby".equalsIgnoreCase( parsedString[0] ) ) {
                     currentLobby = "";
                     send( Flag.LOBBY, Tag.LEAVE_LOBBY );
-                } else if ( "/showLobbies".equals( parsedString[0] ) ) {
+                } else if ( "/showLobbies".equalsIgnoreCase( parsedString[0] ) ) {
                     send( Flag.INFO, Tag.LOBBY_INFO );
-                } else if ( "/disconnect".equals( parsedString[0] ) ) { // Manual client disconnect
+                } else if ( "/disconnect".equalsIgnoreCase( parsedString[0] ) ) { // Manual client disconnect
                     if ( remoteConnectionIsAlive() ) {
                         send( Flag.CONNECTION, Tag.DISCONNECT );
                     } else if ( isConnected() ) {
                         flushToConsole( "Error! connection isn't alive but socket is!" );
-                        return false;
                     } else {
                         flushToConsole( "Can't disconnect when you're not connected!" );
                     }
-                } else if ( "/yieldTurn".equals( parsedString[0] ) ) { // client turn over
+                } else if ( "/yieldTurn".equalsIgnoreCase( parsedString[0] ) ) { // client turn over
                     endTurn();
-                } else if ( "/beginGame".equals( parsedString[0] ) ) { // request to start game
+                } else if ( "/beginGame".equalsIgnoreCase( parsedString[0] ) ) { // request to start game
                     send( Flag.GAME, Tag.BEGIN_GAME );
-                } else if ( "/help".equals( parsedString[0] ) ) {
+                } else if ( "/help".equalsIgnoreCase( parsedString[0] ) ) {
                     printCommandList();
-                } else if ( "/printFile".equals( parsedString[0] ) ) {
+                } else if ( "/printFile".equalsIgnoreCase( parsedString[0] ) ) {
                     send( Flag.FILE, Tag.GET_FILE );
-                } else if ( "/reconnect".equals( parsedString[0] ) ) {
+                } else if ( "/reconnect".equalsIgnoreCase( parsedString[0] ) ) {
                     if ( remoteConnectionIsAlive() ) {
                         flushToConsole( "You're already connected!" );
                         return true;
                     } else if ( isConnected() ) {
                         flushToConsole( "Error! connection isn't alive but socket is!" );
-                        return false;
+                        return true;
                     }
                     flushToConsole( "Attempting to reconnect..." );
                     if ( connect() ) {
                         startRemoteConnection();
                         flushToConsole( "Successfully reconnected!" );
+                        return true;
                     } else {
                         flushToConsole( "Reconnect failed" );
+                        return true;
                     }
 
-                } else if ( "/quit".equals( parsedString[0] ) ) {
+                } else if ( "/quit".equalsIgnoreCase( parsedString[0] ) ) {
                     flushToConsole( "Exiting client..." );
                     if ( isConnected() ) {
                         flushToConsole( "Still connected to server, disconnecting" );
@@ -419,16 +423,17 @@ final public class NetworkClient {
                         equals( parsedString[0].substring( 0, 0 ) ) ) {
                     flushToConsole( "Invalid command, try again, or type /help for a list of commands." );
                 } else if ( isConnected() ) {
-                    sendChatMessage( parsedString[0] );
+                    sendChatMessage( command );
                 } else {
+                    System.err.println( "Shouldn't get here in the command thread!" );
                     return false;
                 }
             } else {
                 if ( isConnected() ) {
-                    sendChatMessage( parsedString[0] );
+                    sendChatMessage( command );
                 } else {
-                    return false;
-                }
+                    System.err.println( "Shouldn't get here in the command thread!" );
+                    return false;                }
             }
             return true;
         }
@@ -472,8 +477,8 @@ final public class NetworkClient {
                 } else if ( line.isEmpty() ) {
                     System.err.println( "Empty line" );
                 } else if ( !(processCommand( line )) ) {
-                    //flushToConsole( "Later gator!" );
-                    //stopClient(); // Shutdown everything
+                    flushToConsole( "Later gator!" );
+                    stopClient(); // Shutdown everything
                     System.err.println( "Unable to process command!" );
                 }
                 // Continue execution
@@ -670,6 +675,7 @@ final public class NetworkClient {
             switch ( flag ) {
                 // Tagged Chat Message ex: GLOBAL, LOBBY, PRIVATE, etc
                 case CHAT:
+                case NOTIFICATION: // for now, should identify its different somehow later on
 
                     switch ( tag ) {
                         case PRIVATE:
@@ -692,11 +698,7 @@ final public class NetworkClient {
                         case SEND_HANDLE:
                         case MESSAGE_FROM_SERVER:
                         case GLOBAL_WHO:
-                            flushToConsole( stringmessage );
-                            break;
                         case LOBBY_WHO:
-                            flushToConsole( stringmessage );
-                            break;
                         case LOBBY_INFO:
                             flushToConsole( stringmessage );
                             break;
@@ -712,10 +714,13 @@ final public class NetworkClient {
 
                     switch ( tag ) {
                         case INVALID_GAME_ACTION:
-                        case GENERIC_ERROR:
-
+                            flushToConsole( "Invalid game action: " + stringmessage );
+                            break;
+                        case ERROR:
+                            flushToConsole( "Generic error message: " + stringmessage );
+                            break;
                         default:
-                            flushToConsole( "Unknown tag: " + tag );
+                            consoleOut.println( "Unknown tag: " + tag );
                     }
                     break;
                 // Game state update/message/command (Anything related to game)
@@ -724,7 +729,7 @@ final public class NetworkClient {
                         case NEXT_TURN_INFO:
                             if ( stringmessage.isEmpty() ) {
                                 flushToConsole( "Its nobodys turn!" );
-                            } else if ( username.equals( stringmessage ) ) {
+                            } else if ( username.equalsIgnoreCase( stringmessage ) ) {
                                 flushToConsole( ("It is now my turn!") );
                                 phasing = true;
                             } else {
@@ -738,20 +743,22 @@ final public class NetworkClient {
                                 flushToConsole( stringmessage );
                             }
                             break;
+                        case BEGIN_GAME:
                         case INIT_GAME_PLEASE: //setup scenario
                             Platform.runLater( new Runnable() {
                                 public void run() {
-                                Game.getInstance().initScenarioCallback();
+                                    Game.getInstance().initScenarioCallback();
                             }});                            
                             break;
-                        case BEGIN_GAME:
-                            if ( stringmessage.isEmpty() ) {
+                        /*
+                         * case BEGIN_GAME:                            if ( stringmessage.isEmpty() ) {
                                 //startGame();
                                 // TODO: begin the game, not just send another message to loop through
                             } else {
                                 flushToConsole( stringmessage );
                             }
                             break;
+                         */
                         default:
                             Conductor.processMessage( tag, sender, message );
                         //flushToConsole( "Unknown tag: " + tag );
@@ -823,25 +830,7 @@ final public class NetworkClient {
                     }
                     break;
                 // Anything that doesn't fall into above categories ex: GENERIC
-                case OTHER:
-                    switch ( tag ) {
-                        case GENERIC:
-                        default:
-                            flushToConsole( "Unknown tag: " + tag );
-                    }
-                    break;
-
-                case NOTIFICATION: // Doing nothing than print for now
-                    switch ( tag ) {
-                        case GLOBAL: // Incoming Broadcast to all connected clients
-                        case LOBBY: // lobby-wide broadcast
-                        case PRIVATE: // direct to user, like if doing something not good
-                            flushToConsole( stringmessage );
-                            break;
-                        default:
-                            flushToConsole( "Unknown tag: " + tag );
-                }
-                break;
+                case OTHER:           
                 default:
                     consoleOut.println( "Unknown flag: " + flag + "\nTag: " + tag );
                     break;

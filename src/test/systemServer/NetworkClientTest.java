@@ -8,7 +8,6 @@
 package systemServer;
 
 import junit.framework.TestCase;
-import mainswordsorcery.Game;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -135,7 +134,7 @@ public class NetworkClientTest extends TestCase {
     public void testSendPhaseChange() {
         System.out.println("sendPhaseChange");
         String phase = "";
-        NetworkClient.sendPhaseChange(phase);
+        NetworkClient.sendPhaseChange( phase, "" );
    
     }
 
