@@ -1,4 +1,4 @@
-\title {TEST PLAN}
+\chapter{TEST PLAN}
 
 
 {\centering\selectlanguage{english}\bfseries\color{black}
@@ -504,7 +504,8 @@ This test plan covers the creation and implementation of the Moveableunit class 
 \newline
 This test plan is also to provide as much coverage as possible to the methods and data of the Scenario class by verifying the results of execution against expectations through a series of automated unit tests and a manual GUI test. (Tyler)
 
-\subsection
+\selectlanguage{english}\color{black}
+\subsection{Network View}
 This test plan for the networking portion of the project. It will outline how we test networking, and how we'll test integration of networking into other code.
 }
 
@@ -567,11 +568,7 @@ a manual check.
 \end{itemize}
 %% VVV
 
-\subsection	{Additional items to be tested.}
-
-{\selectlanguage{english}\color{black}
-\begin{itemize}
-\item GUI Tests
+\subsection{GUI}
 \begin{itemize}
 \item Hexes/Units tile ok, look ok
 \item Mouse clicks work
@@ -579,13 +576,34 @@ a manual check.
 \item Game starting (networked, scenario)
 \item General gameplay (to the extent it's implemented)
 \item Unit movement
-\item Other
+\item Diplomacy map displays thru menu bar selection
+\item MouseEvents on main map correspond to correct hexID
+\item Selecting unit/stack works with left mouse click
+\item Selecting a unit/stack displays unit information in correct pane
+\item Deselecting unit/stack works with left mouse click after unit/stack has been selected.
+\item Targeting unit/stack works with right mouse click
+\item Targeting unit/stack displays unit information in correct pane
+\item Detargeting unit/stack works with right mouse click after unit/stack has been selected.
+\item Selecting a target is not possible during movement phase
+\item Move unit works with right click once a unit has been selected
+\item Movement calculator correctly displays the available locations to move to
+\item If friendly and target units are selected during combat phase, 'a' will start combat
+\item If friendly and target units are selected during the spell phase, 's' will cast spell
+\item Keyboard Events don't affect the message box when message box is not selected
+\item Message box clears itself after every message is entered
+\item Chat box displays messages from others on the server
+\item Sun positions and display only update after every game turn
+\item Initial sun position corresponds to that in the scenario
 \end{itemize}
+
+
+\subsection	{Additional items to be tested.}
+
+{\selectlanguage{english}\color{black}
+\begin{itemize}
 \item Other manual tests (game compiles and runs on different platforms)
 \item Auto tests - Junit
 \item Ensure all files under resources can be loaded (if feasible)
-\item The user can initiate connection and disconnection from the server.
-\item The user can... (Network stuff)
 \end{itemize}
 }
 

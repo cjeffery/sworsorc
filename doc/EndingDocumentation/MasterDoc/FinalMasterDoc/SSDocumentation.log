@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.27)  9 MAY 2014 09:04
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.27)  9 MAY 2014 09:39
 entering extended mode
 **C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterDoc/Fi
 nalMasterDoc/SSDocumentation.tex
@@ -2136,7 +2136,7 @@ Package pdftex.def Info: TP.pdf, page1 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [93 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterDo
 c/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=932, page=2, 614.295pt x 794.97pt>
+<TP.pdf, id=931, page=2, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 2>
 Package pdftex.def Info: TP.pdf, page2 used on input line 39.
@@ -2152,7 +2152,7 @@ Package pdftex.def Info: TP.pdf, page2 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [94 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterDo
 c/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=936, page=3, 614.295pt x 794.97pt>
+<TP.pdf, id=935, page=3, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 3>
 Package pdftex.def Info: TP.pdf, page3 used on input line 39.
@@ -2168,7 +2168,7 @@ Package pdftex.def Info: TP.pdf, page3 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [95 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterDo
 c/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=940, page=4, 614.295pt x 794.97pt>
+<TP.pdf, id=939, page=4, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 4>
 Package pdftex.def Info: TP.pdf, page4 used on input line 39.
@@ -2184,7 +2184,7 @@ Package pdftex.def Info: TP.pdf, page4 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [96 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterDo
 c/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=944, page=5, 614.295pt x 794.97pt>
+<TP.pdf, id=943, page=5, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 5>
 Package pdftex.def Info: TP.pdf, page5 used on input line 39.
@@ -2200,7 +2200,7 @@ Package pdftex.def Info: TP.pdf, page5 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [97 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterDo
 c/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=949, page=6, 614.295pt x 794.97pt>
+<TP.pdf, id=948, page=6, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 6>
 Package pdftex.def Info: TP.pdf, page6 used on input line 39.
@@ -2216,7 +2216,7 @@ Package pdftex.def Info: TP.pdf, page6 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [98 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterDo
 c/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1053, page=7, 614.295pt x 794.97pt>
+<TP.pdf, id=1055, page=7, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 7>
 Package pdftex.def Info: TP.pdf, page7 used on input line 39.
@@ -2232,7 +2232,7 @@ Package pdftex.def Info: TP.pdf, page7 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [99 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterDo
 c/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1062, page=8, 614.295pt x 794.97pt>
+<TP.pdf, id=1064, page=8, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 8>
 Package pdftex.def Info: TP.pdf, page8 used on input line 39.
@@ -2248,7 +2248,7 @@ Package pdftex.def Info: TP.pdf, page8 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [100 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1066, page=9, 614.295pt x 794.97pt>
+<TP.pdf, id=1068, page=9, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 9>
 Package pdftex.def Info: TP.pdf, page9 used on input line 39.
@@ -2264,7 +2264,7 @@ Package pdftex.def Info: TP.pdf, page9 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [101 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1070, page=10, 614.295pt x 794.97pt>
+<TP.pdf, id=1072, page=10, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 10>
 Package pdftex.def Info: TP.pdf, page10 used on input line 39.
@@ -2280,7 +2280,7 @@ Package pdftex.def Info: TP.pdf, page10 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [102 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1074, page=11, 614.295pt x 794.97pt>
+<TP.pdf, id=1076, page=11, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 11>
 Package pdftex.def Info: TP.pdf, page11 used on input line 39.
@@ -2296,7 +2296,7 @@ Package pdftex.def Info: TP.pdf, page11 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [103 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1079, page=12, 614.295pt x 794.97pt>
+<TP.pdf, id=1081, page=12, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 12>
 Package pdftex.def Info: TP.pdf, page12 used on input line 39.
@@ -2312,7 +2312,7 @@ Package pdftex.def Info: TP.pdf, page12 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [104 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1083, page=13, 614.295pt x 794.97pt>
+<TP.pdf, id=1085, page=13, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 13>
 Package pdftex.def Info: TP.pdf, page13 used on input line 39.
@@ -2328,7 +2328,7 @@ Package pdftex.def Info: TP.pdf, page13 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [105 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1087, page=14, 614.295pt x 794.97pt>
+<TP.pdf, id=1089, page=14, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 14>
 Package pdftex.def Info: TP.pdf, page14 used on input line 39.
@@ -2344,7 +2344,7 @@ Package pdftex.def Info: TP.pdf, page14 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [106 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1091, page=15, 614.295pt x 794.97pt>
+<TP.pdf, id=1093, page=15, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 15>
 Package pdftex.def Info: TP.pdf, page15 used on input line 39.
@@ -2360,7 +2360,7 @@ Package pdftex.def Info: TP.pdf, page15 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [107 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/TP.pdf>]
-<TP.pdf, id=1095, page=16, 614.295pt x 794.97pt>
+<TP.pdf, id=1097, page=16, 614.295pt x 794.97pt>
 File: TP.pdf Graphic file (type pdf)
  <use TP.pdf, page 16>
 Package pdftex.def Info: TP.pdf, page16 used on input line 39.
@@ -2376,7 +2376,23 @@ Package pdftex.def Info: TP.pdf, page16 used on input line 39.
 (pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
  [108 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/TP.pdf>]
-<metrics_report.pdf, id=1099, 597.50829pt x 845.0471pt>
+<TP.pdf, id=1101, page=17, 614.295pt x 794.97pt>
+File: TP.pdf Graphic file (type pdf)
+ <use TP.pdf, page 17>
+Package pdftex.def Info: TP.pdf, page17 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP.pdf Graphic file (type pdf)
+
+<use TP.pdf, page 17>
+Package pdftex.def Info: TP.pdf, page17 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP.pdf Graphic file (type pdf)
+ <use TP.pdf, page 17>
+Package pdftex.def Info: TP.pdf, page17 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [109 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+oc/FinalMasterDoc/TP.pdf>]
+<metrics_report.pdf, id=1106, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf>
@@ -2387,7 +2403,7 @@ File: metrics_report.pdf Graphic file (type pdf)
 Package pdftex.def Info: metrics_report.pdf used on input line 40.
 (pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
 
-<metrics_report.pdf, id=1102, page=1, 597.50829pt x 845.0471pt>
+<metrics_report.pdf, id=1109, page=1, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf, page 1>
@@ -2411,9 +2427,9 @@ File: metrics_report.pdf Graphic file (type pdf)
 <use metrics_report.pdf, page 1>
 Package pdftex.def Info: metrics_report.pdf, page1 used on input line 40.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
- [109 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+ [110 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/metrics_report.pdf>]
-<metrics_report.pdf, id=1114, page=2, 597.50829pt x 845.0471pt>
+<metrics_report.pdf, id=1120, page=2, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf, page 2>
@@ -2428,9 +2444,9 @@ File: metrics_report.pdf Graphic file (type pdf)
 <use metrics_report.pdf, page 2>
 Package pdftex.def Info: metrics_report.pdf, page2 used on input line 40.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
- [110 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+ [111 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/metrics_report.pdf>]
-<metrics_report.pdf, id=1118, page=3, 597.50829pt x 845.0471pt>
+<metrics_report.pdf, id=1124, page=3, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf, page 3>
@@ -2445,9 +2461,9 @@ File: metrics_report.pdf Graphic file (type pdf)
 <use metrics_report.pdf, page 3>
 Package pdftex.def Info: metrics_report.pdf, page3 used on input line 40.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
- [111 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+ [112 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/metrics_report.pdf>]
-<metrics_report.pdf, id=1122, page=4, 597.50829pt x 845.0471pt>
+<metrics_report.pdf, id=1128, page=4, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf, page 4>
@@ -2462,9 +2478,9 @@ File: metrics_report.pdf Graphic file (type pdf)
 <use metrics_report.pdf, page 4>
 Package pdftex.def Info: metrics_report.pdf, page4 used on input line 40.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
- [112 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+ [113 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/metrics_report.pdf>]
-<metrics_report.pdf, id=1130, page=5, 597.50829pt x 845.0471pt>
+<metrics_report.pdf, id=1136, page=5, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf, page 5>
@@ -2479,9 +2495,9 @@ File: metrics_report.pdf Graphic file (type pdf)
 <use metrics_report.pdf, page 5>
 Package pdftex.def Info: metrics_report.pdf, page5 used on input line 40.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
- [113 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+ [114 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/metrics_report.pdf>]
-<metrics_report.pdf, id=1136, page=6, 597.50829pt x 845.0471pt>
+<metrics_report.pdf, id=1142, page=6, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf, page 6>
@@ -2496,9 +2512,9 @@ File: metrics_report.pdf Graphic file (type pdf)
 <use metrics_report.pdf, page 6>
 Package pdftex.def Info: metrics_report.pdf, page6 used on input line 40.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
- [114 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+ [115 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/metrics_report.pdf>]
-<metrics_report.pdf, id=1143, page=7, 597.50829pt x 845.0471pt>
+<metrics_report.pdf, id=1150, page=7, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf, page 7>
@@ -2513,9 +2529,9 @@ File: metrics_report.pdf Graphic file (type pdf)
 <use metrics_report.pdf, page 7>
 Package pdftex.def Info: metrics_report.pdf, page7 used on input line 40.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
- [115 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+ [116 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/metrics_report.pdf>]
-<metrics_report.pdf, id=1148, page=8, 597.50829pt x 845.0471pt>
+<metrics_report.pdf, id=1154, page=8, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf, page 8>
@@ -2530,9 +2546,9 @@ File: metrics_report.pdf Graphic file (type pdf)
 <use metrics_report.pdf, page 8>
 Package pdftex.def Info: metrics_report.pdf, page8 used on input line 40.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
- [116 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+ [117 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/metrics_report.pdf>]
-<metrics_report.pdf, id=1152, page=9, 597.50829pt x 845.0471pt>
+<metrics_report.pdf, id=1158, page=9, 597.50829pt x 845.0471pt>
 File: metrics_report.pdf Graphic file (type pdf)
 
 <use metrics_report.pdf, page 9>
@@ -2547,15 +2563,15 @@ File: metrics_report.pdf Graphic file (type pdf)
 <use metrics_report.pdf, page 9>
 Package pdftex.def Info: metrics_report.pdf, page9 used on input line 40.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
- [117 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
+ [118 <C:/Users/David/Documents/GitHub/sworsorc/doc/EndingDocumentation/MasterD
 oc/FinalMasterDoc/metrics_report.pdf>]
 (C:\Users\David\Documents\GitHub\sworsorc\doc\EndingDocumentation\MasterDoc\Fin
 alMasterDoc\SSDocumentation.aux) ) 
 Here is how much of TeX's memory you used:
- 4431 strings out of 493921
- 60707 string characters out of 3149688
+ 4434 strings out of 493921
+ 60756 string characters out of 3149688
  120833 words of memory out of 3000000
- 7658 multiletter control sequences out of 15000+200000
+ 7661 multiletter control sequences out of 15000+200000
  9496 words of font info for 36 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  39i,18n,43p,432b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -2568,9 +2584,9 @@ blic/amsfonts/cm/cmr12.pfb><C:/Users/David/MikTeX/fonts/type1/public/amsfonts/c
 m/cmr17.pfb><C:/Users/David/MikTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C
 :/Users/David/MikTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/David/M
 ikTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on SSDocumentation.pdf (117 pages, 1917956 bytes).
+Output written on SSDocumentation.pdf (118 pages, 1920416 bytes).
 PDF statistics:
- 1178 PDF objects out of 1200 (max. 8388607)
+ 1184 PDF objects out of 1200 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 656 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 661 words of extra memory for PDF output out of 10000 (max. 10000000)
 
