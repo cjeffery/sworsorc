@@ -214,10 +214,10 @@ public class LaunchCombat {
                     
                     canMoveTo = new ArrayList<MapHex>();
                     canMoveTo = MovementCalculator.getRetreatMoves(Defender_Terrain, 
-                                  (MoveableUnit)target_stack.get(0), (double)result);
+                                  (MoveableUnit)target_stack.get(i), (double)result);
                     
                     hmapContent.clearHighlights();      
-                    hmapContent.highlight(canMoveTo, new Color(255,0,0, 50));
+                    ((ArmyUnit)Units_stack.get(i)).SetDemoralized(true);
                     pool.addMove(Units_stack.get(i), canMoveTo.get(1).GetID());
                     hmapContent.repaint();
                     
