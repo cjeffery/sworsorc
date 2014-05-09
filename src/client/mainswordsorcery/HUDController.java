@@ -8,7 +8,12 @@ package mainswordsorcery;
 import Character.*;
 import MoveCalculator.MovementCalculator;
 import Units.*;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -36,6 +41,11 @@ import sshexmap.MapView;
 import systemServer.NetworkClient;
 
 import static java.lang.Integer.parseInt;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import static mainswordsorcery.LaunchCombat.LaunchBotton;
 
 
@@ -44,7 +54,7 @@ public class HUDController {
     @FXML private TabPane TargetsPane;
     @FXML private MenuBar menuBar;
     @FXML private TextField message_box;
-    @FXML private TextArea chat_box;
+    @FXML public TextArea chat_box;
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
     @FXML private SwingNode hex_map;
@@ -69,6 +79,8 @@ public class HUDController {
     private ArrayList<MapHex> canMoveTo;
     private HashMap<MapHex, Double> moves;
     private MapHex currentHex;
+    //End of Game popup
+    JFrame frame;
     
 
     public MapView hmapContent;//MapView swing object set into hmap
@@ -354,6 +366,11 @@ public class HUDController {
         //This is only used for testing. no in game value.
         else if(keyEvent.getText().equalsIgnoreCase("x")){
             System.out.println(target_unit);
+        }
+        //keyboard shortcut to quickly allow client to become
+        //current player
+        else if(keyEvent.getText().equalsIgnoreCase("b")){
+            MakeCurrentPlayer();
         }
     }
     /** 
@@ -645,7 +662,18 @@ public class HUDController {
         stage.setFullScreen(Game.getInstance().fullscreen);
         stage.show();
     }
-    
+    /**
+     * Same as Quit(ActionEvent event) but does not require
+     * a JavaFX ActionEvent.
+     * @param event
+     * @author Jay Drage
+     */
+    private void QuitNoEvent() {
+        Stage stage = (Stage) menuBar.getScene().getWindow();
+        stage.setScene(Game.getInstance().getMainScene());
+        stage.setFullScreen(Game.getInstance().fullscreen);
+        stage.show();
+    }
     /** 
      * SolarDisplay code goes here
      * 
@@ -704,21 +732,31 @@ public class HUDController {
                     if(Game.getInstance().numPlayersGoneThisTurn 
                             == Scenario.getInstance().getNumberOfPlayers())
                     {
-                        int x = parseInt(turn.getText());
-                        x++;
-                        turn.setText(Integer.toString(x));
-                        
-                        RandomEventTable.getInstance().DisplayEvent();
-                        SolarDisplay.SunCalc();
-                        Image Sun = new Image(SolarDisplay.GetSunImage());
-                        SunImage.setImage(Sun);
-                        RedState.setText(SolarDisplay.GetRedState());
-                        BlueState.setText(SolarDisplay.GetBlueState());
                         //set back to first player
                         Game.getInstance().numPlayersGoneThisTurn = 1;
                         Game.getInstance().currentTurnPlayer = 1;
                         Game.getInstance().currentGameTurn += 1;
                         currentPlayerText.setText("1");
+                        //check if game is over
+                        //if current turn is greater than scenario game length
+                        if(Game.getInstance().currentGameTurn 
+                                > Scenario.getInstance().getGameLength() ){
+                            chat_box.appendText("Game is over\n\n");
+                            EndOfGameGUI();
+                        }
+                        else{ //continue to next game turn
+                            int x = parseInt(turn.getText());
+                            x++;
+                            turn.setText(Integer.toString(x));
+
+                            RandomEventTable.getInstance().DisplayEvent();
+                            SolarDisplay.SunCalc();
+                            Image Sun = new Image(SolarDisplay.GetSunImage());
+                            SunImage.setImage(Sun);
+                            RedState.setText(SolarDisplay.GetRedState());
+                            BlueState.setText(SolarDisplay.GetBlueState());
+                        }
+                        
                     }
                     // same game turn, next player turn
                     else
@@ -828,7 +866,7 @@ public class HUDController {
      * used to start spells
      * called from keyEvent handlers
      *
-     * @author Jay Drage
+     * @author Jay Drage and Tao
      */
     public void StartSpell(){
         System.out.println("StartSpell()");
@@ -849,5 +887,70 @@ public class HUDController {
      */
     public void MakeCurrentPlayer(){
         Game.getInstance().PlayerID = Game.getInstance().currentTurnPlayer;
+    }
+    /**
+     * This displays the end of game popup.
+     * It allows game to quit or continue playing
+     * @author Jay Drage
+     */
+    public void EndOfGameGUI(){
+        int frameWidth = 450, frameHeigth = 600;
+        frame = new JFrame("Game Over");
+        frame.setSize(frameWidth, frameHeigth);
+        frame.setLayout(new BorderLayout());
+        frame.setLocationRelativeTo(null);
+        frame.addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowClosing( WindowEvent e )
+            {  
+            }
+        });
+        StringBuilder sb = new StringBuilder(128);
+        sb.append("<html>");
+        sb.append("<p style=\"font-size:20px;text-align: center;\">");
+        sb.append("You Lose");
+        sb.append("<br>");
+        sb.append("The world was sucked into a ");
+        sb.append("rift portal and trampled ");
+        sb.append("by ethereal cows");
+        sb.append("</p>");
+        sb.append("</html>");
+        JLabel notice = new JLabel(sb.toString(), 0);
+        JButton Quit_button = new JButton("Quit Game");
+        Quit_button.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                frame.dispose();
+                //TODO change to allow going to main menu
+                System.exit(0);
+            }
+        });
+        
+        JButton KeepPlaying_button = new JButton("Keep Playing");
+        KeepPlaying_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                frame.dispose();
+            }
+        });
+        
+        JPanel selection = new JPanel();
+        selection.setLayout(new FlowLayout());
+        selection.add(Quit_button);
+        selection.add(KeepPlaying_button);
+        
+        ImageIcon EndGameImage = new ImageIcon("resources/images/EtherealCow.jpg");
+        java.awt.Image img = EndGameImage.getImage();
+        java.awt.Image ScaledImage = img.getScaledInstance(frameWidth, frameHeigth, 1);
+        EndGameImage.setImage(ScaledImage);
+        JPanel image_panel = new JPanel();
+        //image_panel.setLayout(new BorderLayout());
+        JLabel image_lable = new JLabel("",EndGameImage, JLabel.CENTER);
+        
+        image_panel.add(image_lable);
+        frame.add(image_panel, BorderLayout.CENTER);
+        frame.add(selection, BorderLayout.SOUTH);
+        frame.add(notice, BorderLayout.NORTH);
+        frame.setVisible(true);
     }
 }

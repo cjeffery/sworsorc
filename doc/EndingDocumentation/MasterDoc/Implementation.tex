@@ -54,14 +54,13 @@ and is cross platform across Windows, Mac and Linux.
 
 
 It uses a 2D top-down view and graphics based on the physical game by SPI,
-has a GUI programmed in JavaFX and swing, and some TCP networking
-support.
+has a GUI programmed in JavaFX and swing, and TCP/IP networking support.
 
 Unfortunately the implementation remains incomplete, so while some basic
-functionality exists, users will find it impossible to face eachother in battle
+functionality exists, users will find it extremely difficult to face each other in battle
 over the internet.
 
-What works or partially works (to the best of my knowledge) includes:
+What works or partially works (to the best of our knowledge) includes:
 
 \begin{enumerate}
 \item{Starting a new game (partial)}
@@ -78,9 +77,11 @@ What works or partially works (to the best of my knowledge) includes:
 \item{Starting a client}
 \item{Starting a server}
 \item{Connecting to a server and communicating back and forth}
+\item{Tagged Chat: Lobby-wide and Server-wide}
+\item{Show online users by lobby/server}
+\item{Lobbies: show, create, join, leave}
 \item{Viewing Army Units, Terrain, or basic Hex Edges on the Main Map}
 \item{Viewing a blank Diplomacy Map}
-\item{Starting a server}
 \item{Seeing the solar display or game phases change when ending a turn}
 \end{enumerate}
 
@@ -105,7 +106,7 @@ What does not work (to the best of my knowledge) includes:
 \item{Character or Monster Rendering}
 \item{MiniMap or Diplomacy Map}
 \item{Random Events}
-\item{Starting a server}
+\item{User to user chat}
 \end{enumerate}
 
 %===============================================================================
@@ -379,25 +380,48 @@ of stuff it shouldn't too much.
 %===============================================================================
 \section{The Networking System}
 %===============================================================================
-Unfortunately the networking system didn't get very well integrated with the
-rest of the codebase. It should be pointed out that despite this the Network
-implementation is good code and had a lot of work put into it.
 
-There is some limited integration, and it can be used for communicating between
-different clients. However clients cannot effectively play a game together.
+The goal was to implement network communication of state changes, basic lobby funcationality, and basic chat. 
 
-Networking is divided into client/server. With "thick" clients. 
-The server mainly exists to forward messages between clients, or make decisions
-that need to be made on the server.
+Since we did not integrate our design with the rest of the game at the beginning, there was no logging subsystem setup to track any and all 
+changes to game state. Therefore, our implementation utlimatly involved trying to get individual parts working by hardcoding messages in
+the requisite areas of code.
 
-One effect of this is that cheating is trivial, fortunately the game isn't
-implemented enough to make cheating worthwile.
+\subsection{Networking Model}
 
-Network messages have a TAG and a FLAG. These are the core of the networking
-protocol, a TAG is a category and a FLAG is the particular message type.
+The Networking model used is the infamous client/server model established by Quake. 
+The basic model is thus: clients who want to play together connect to a server, and the server facilitates the connection between them, 
+and sometimes takes on the processing chores of clients as well.
 
-Network messages can pass an array of Java objects. Anything that can be
-serialized with the Java Serialization library.
+In our implementation of the model, there are "thick" clients that handle almost all of the processing chores, 
+with the server's primary job being to forward messages between clients and facilitate network functionality such as Lobbies, Chat, and Polling.
+This is similiar to the peer to peer model used by RTS games, with thick clients processing messages recieved, but just with a server inbetween.
+
+Of course, this opens more opportunies for cheating than I want to think of, and an incredible amount of vulnerabilities. If this game were to 
+hypothetically go mass-market, there would need to be a major overhaul before release, for the sake of user security( not to mention online game quality )
+
+\subsection{Messages}
+
+Network Messages consist of the following:
+\begin{itemize}
+\item{FLAG:  message category (ex: GAME or CHAT)}
+\item{TAG:  specific type of message (ex: LOBBY combined with a CHAT flag for Lobby chat)}
+\item{Sender: String specifying who sent the message, either the handle of a user, global server, or a specific sub-system}
+\item{Data: a List of POJOs (Plain Old Java Objects) which encapsulates any messages being sent. This is a semi-rough hack to allow for
+ (almost) any class to be sent over the network, which we needed with units, spells, and the like}
+\end{itemize}
+
+This was better than sending strings, since creating the command parsing and execution framework, where strings send over the network
+execute commands on the client recieving to change the state, would've possibly required a complete redesign of the core code.
+
+It was not, however, anywhere near decent. The major issues we ran into were parsing the list of data, which led to null pointer exceptions
+and strange output, and the fact that any object sent needed to be Serializable. JavaFX, unfortunatly, is not, and this led to exceptions and terminated
+connections whenever a class with a JavaFX object was attemped to be sent over the network.
+
+The message format did serve its purpose, however, and we were able to get some limited funcationality using it.
+
+
+
 
 
 %===============================================================================

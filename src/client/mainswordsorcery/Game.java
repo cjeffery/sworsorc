@@ -143,6 +143,7 @@ public class Game extends Application {
         stage.setTitle("Scenario");
         stage.setScene(mainMenu);
         
+        fullscreen = false; //We need to resize windows, in order to show multiple clients on one machine.
         if(fullscreen) {
             stage.setFullScreen(true);
             stage.setFullScreenExitHint("");

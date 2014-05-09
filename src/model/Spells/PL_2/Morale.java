@@ -23,13 +23,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import mainswordsorcery.Game;
 import Units.ArmyUnit;
+import java.io.Serializable;
 import sshexmap.HexMap;
 
 /**
  *
  * @author Tao Zhang
  */
-public final class Morale {
+public final class Morale implements Serializable{
     int MoraleRange = 7;
     int MoraleMannaCost = 3;
     
@@ -42,10 +43,56 @@ public final class Morale {
     
     public Morale(Characters c){
         character = c;
-        
         getTarget();
+    }
+    
+    public void getTarget(){
+        while(target_hex == null){
+            target_hex = Game.getInstance().hudController.target_unit.location;
+        }
+        if(((ArmyUnit)Game.getInstance().hudController.target_unit).isDemoralized() == true){
+            //System.out.println("**********************cast Spell");
+            //performSpellEffects();
+            checkRange();
+        }
+        else{
+            //System.out.println("***************cast fail");
+            Game.getInstance().hudController.chat_box.appendText(
+                    "Target is not demoralized.\n" + " Select another target\n");
+        }
+    }
+    
+    public boolean checkLimits(){
+        boolean limit = true;
+        
+        //limit = checkRange();
+        //if( fit all the limits ){
+          //  limit = true;
+        //}
+        
+        return limit; 
+    }
+    
+    public void checkRange(){
+        int distance = HexMap.distance(character.location, target_hex);
+        if(distance <= MoraleRange){
+            performSpellEffects();
+        }else{
+            Game.getInstance().hudController.chat_box.appendText(
+                    "Target is not in range.\n" + " Select another target\n");
+        }
+    }
+    
+    public void performSpellEffects(){
+        ((ArmyUnit)Game.getInstance().hudController.target_unit).SetDemoralized(false);
+        Game.getInstance().hudController.hmapContent.repaint();
+
+        prepareGUI();
+            
+        CostManna();
         
     }
+    
     
     public void prepareGUI(){
         frame = new JFrame("Morale");
@@ -93,63 +140,6 @@ public final class Morale {
         frame.add(notice, BorderLayout.NORTH);
         frame.setVisible(true);
     }   
-    
-    public void getTarget(){
-        System.out.println("test");
-        while(target_hex == null){
-            target_hex = Game.getInstance().hudController.target_unit.location;
-        }
-        System.out.println(target_hex);
-        performSpellEffects();
-    }
-    
-    public boolean checkLimits(){
-        boolean limit = true;
-        
-        limit = checkRange();
-        //if( fit all the limits ){
-          //  limit = true;
-        //}
-        
-        return limit; 
-    }
-    
-    public boolean checkRange(){
-        boolean go = true;
-        int distance = HexMap.distance(character.location, target_hex);
-        if(distance > MoraleRange){
-            go = false;
-        }
-        return go; 
-    }
-    
-    public void performSpellEffects(){
-        // this function is used to perform the spell effects
-        // like cost mana, or the real effects described in rules
-        if(checkLimits() == true){
-            // perform
-            while(target_hex == null){
-                target_hex = Game.getInstance().hudController.target_unit.location;
-            }
-            //Jay Drage - added, might not be correct
-            ((ArmyUnit)Game.getInstance().hudController.target_unit).SetDemoralized(false);
-            Game.getInstance().hudController.hmapContent.repaint();
-            
-            // what I am thinking about performing some data effects
-            // is that we can make a tmp data file that stores all the
-            // char or unit info, 
-            // then we can just go into that file and change the data
-            // then we read the file again for refresh the game data
-            prepareGUI();
-            
-        }else{
-            // show warning that it desn't fit all the limitations
-            System.out.println("Limits not fit");
-            //System.exit(0);
-            System.out.println("Please select a unit in range 7!");
-        }
-        
-    }
     
     public boolean successCast(){
         return true;

@@ -8,37 +8,14 @@
 package Spells;
 
 import Character.Characters;
-import Spells.PL_1.C_Z_I;
-import Spells.PL_1.Force_Wall;
-import Spells.PL_1.TP_Protection;
-import Spells.PL_2.C_C_C;
-import Spells.PL_2.Fear;
-import Spells.PL_2.Manna_Transfer;
-import Spells.PL_2.Morale;
-import Spells.PL_2.River_Crossing;
-import Spells.PL_3.C_W_A;
-import Spells.PL_3.Dispell_Magicks;
-import Spells.PL_3.Enhance_Stature;
-import Spells.PL_3.Forest;
-import Spells.PL_3.Immobilization;
-import Spells.PL_3.Monsoon;
-import Spells.PL_3.Vortex_Suppression;
-import Spells.PL_4.Building;
-import Spells.PL_4.C_K_I;
-import Spells.PL_4.Distintegration;
-import Spells.PL_4.Ersatz_Winter;
-import Spells.PL_4.Vortex_Creation;
-import Spells.PL_5.B_C_T;
-import Spells.PL_5.C_W_T;
-import Spells.PL_5.Planar_Return;
-import Spells.PL_5.Summon_Demon;
-import Spells.PL_6.Banish_Demon;
-import Spells.PL_6.Berserkergang;
-import Spells.PL_6.Bind_Demon;
-import Spells.PL_6.C_D_I;
-import Spells.PL_6.Firestorm;
-import Spells.PL_6.Summon_Force;
-import Spells.PL_7.Wizard_Wheel;
+import Spells.PL_1.*;
+import Spells.PL_2.*;
+import Spells.PL_3.*;
+import Spells.PL_4.*;
+import Spells.PL_5.*;
+import Spells.PL_6.*;
+import Spells.PL_7.*;
+import Spells.Spell_Book;
 import Units.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -47,6 +24,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -59,7 +39,7 @@ public class Spell implements Serializable {
 
     // This was causing network client to panic, it needs to be serializable!
     // Its not even being used, what is its purpose?
-    //private Stage popup = new Stage();
+    // public Stage popup;
             
     private static final long serialVersionUID = 1L;
     Characters character;
@@ -70,23 +50,25 @@ public class Spell implements Serializable {
     
     public static ArmyUnit conjured = null;
     
+    @FXML public Button sButton;
     public  JButton spellbutton;
     private JFrame spellFrame;
+ 
+    //public JFrame BookFrame;
     
-    public JFrame BookFrame;
-    
-    public Spell(String n, int lv, double mc, JFrame mainf, Characters c) {
+    public Spell(String n, int lv, double mc, Characters c) {
         Name  = n;
         Level = lv;
         ManaCost  = mc;   
-        BookFrame = mainf;
+        //BookFrame = mainf;
+        sButton = new javafx.scene.control.Button(n);
         spellbutton = new JButton(n);
         character = c;
         
         spellbutton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                //BookFrame.dispose();
+                //Spell_Book.hideWindow();
                 showSpellDetails();
                 showButtonDemo();
             }
@@ -100,8 +82,9 @@ public class Spell implements Serializable {
         spellFrame.addWindowListener( new WindowAdapter() {
             @Override
             public void windowClosing( WindowEvent e )
-            {  //System.exit(0); 
-                BookFrame.setVisible(true);
+            {   //System.exit(0); 
+                //BookFrame.setVisible(true);
+                //Spell_Book.popupBook.close();
             }
         });
         
@@ -128,7 +111,8 @@ public class Spell implements Serializable {
             @Override
             public void actionPerformed(ActionEvent e){
                 spellFrame.dispose();
-                BookFrame.setVisible(true);
+                //BookFrame.setVisible(true);
+                //popup.;
             }
         });
         
@@ -179,7 +163,7 @@ public class Spell implements Serializable {
                 Morale morale = new Morale(character);
                 break;
             case "Fear":
-                Fear fear = new Fear();
+                Fear fear = new Fear(character);
                 break;
             case "Conjure Centauroid Cavalry":
                 C_C_C c_c_c = new C_C_C(character);
@@ -223,9 +207,8 @@ public class Spell implements Serializable {
             case "Ersatz Winter":
                 Ersatz_Winter e_w = new Ersatz_Winter();
                 break;
-            case "Teleporation Control":
-
-                //Teleporation_Control t_c = new Teleporation_Control();
+            case "Teleportation Control":
+                Teleportation_Control t_c = new Teleportation_Control(character);
                 break;
             case "Conjure Koboldic Infantry":
                 C_K_I c_k_i = new C_K_I(character);
