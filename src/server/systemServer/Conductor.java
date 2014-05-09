@@ -61,13 +61,26 @@ final public class Conductor {
      * @param data
      */
     public static void processMessage( Tag tag, String sender, List<Object> data ) {
-
+        MoveableUnit temp = new MoveableUnit();
+        String smessage = "";
+        if ( !data.isEmpty() ) {
+            if ( data.get( 0 ).getClass().equals( MoveableUnit.class ) ) {
+                temp = (MoveableUnit) data.get( 0 );
+            } else if ( data.get( 0 ).getClass().equals( String.class ) ) {
+                smessage = (String) data.get( 0 );
+            }
+        } else { // todo: this could decapitate any pokes
+            System.err.println( "(Conductor) Empty data!" );
+            return;
+        }
         switch ( tag ) {
             case ADD_UNIT:
-                pool.addUnit( 0, (MoveableUnit) (data.get( 0 )) );
+                
+                //temp = (MoveableUnit) data.get( 0 );
+                pool.addUnit( 0, temp );
                 if (data.size() == 2){
                     pool.addUnit((Integer)data.get(1), 
-                            (MoveableUnit) data.get( 0 ), 
+                            temp,
                             (String)data.get(2));
                 }
                 break;
@@ -84,11 +97,9 @@ final public class Conductor {
                 break;
             case PHASE_CHANGE:
                 hud.
-                        setPhaseText( data.get( 0 ).getClass().equals( String.class ) ? (String) data.
-                                get( 0 ) : "" );
+                        setPhaseText( smessage );
                 hud.
-                        setPhaseButtonText( data.get( 1 ).getClass().equals( String.class ) ? (String) data.
-                                get( 1 ) : "" );
+                        setPhaseButtonText( smessage );
                 break;
             default:
                 System.err.println( "(Conductor) Unknown tag: " + tag );
