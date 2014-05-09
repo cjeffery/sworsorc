@@ -37,6 +37,7 @@ public class Lobby {
         this.name = name;
         this.lobbyID = lobbyID;
         this.gameStarted = false;
+        this.current = "";
     }
 
     /**
@@ -117,9 +118,13 @@ public class Lobby {
      */
     public void beginGame() {
         if ( !gameStarted ) {
-            current = lobbyClients.get( 0 );
-            sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO, current );
-            gameStarted = true;
+            if ( !lobbyClients.isEmpty() ) {
+                current = lobbyClients.get( 0 );
+                gameStarted = true;
+                sendToEntireLobby( Flag.GAME, Tag.NEXT_TURN_INFO, current );
+            } else {
+                System.err.println( "Error: Can't begin game when there are no users in lobby!" );
+            }
         }
         else {
             System.out.println("Game already started");

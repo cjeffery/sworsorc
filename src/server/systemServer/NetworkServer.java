@@ -61,7 +61,9 @@ final public class NetworkServer {
      */
     protected static void sendToAllClients( Flag flag, Tag tag, String sender, List<Object> message ) {
         for ( ClientObject client : clientObjects ) {
-            client.send( flag, tag, sender, message );
+            if ( !client.getHandle().equals( sender ) ) {
+                client.send( flag, tag, sender, message );
+            }
         }
     }
 
@@ -98,9 +100,8 @@ final public class NetworkServer {
      */
     protected static void sendToEntireLobby( Lobby dalobby, Flag flag, Tag tag, String sender,
                                              List<Object> message ) {
-        // TODO: this would be much easier if we had...you know...MAPs?
         for ( ClientObject client : NetworkServer.clientObjects ) {
-            if ( dalobby.isInLobby( client.getHandle() ) ) {
+            if ( dalobby.isInLobby( client.getHandle() ) && !client.getHandle().equals( sender ) ) {
                 client.send( flag, tag, sender, message );
             }
         }

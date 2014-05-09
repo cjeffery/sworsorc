@@ -196,6 +196,11 @@ final public class NetworkClient {
      */
     public static void sendChatMessage( String message ) {
         send( Flag.CHAT, Tag.SEND_CHAT_MESSAGE, message );
+        if ( !currentLobby.isEmpty() ) {
+            flushToConsole( "(" + currentLobby + ") " + message );
+        } else {
+            flushToConsole( "(GLOBAL) " + message );
+        }
 
     }
 
@@ -209,6 +214,7 @@ final public class NetworkClient {
      */
     public static void sendPrivateMessage( String user, String message ) {
         send( Flag.CHAT, Tag.PRIVATE, message );
+        //todo: echo to console?
 
     }
 
@@ -218,9 +224,10 @@ final public class NetworkClient {
      * @param phase
      *
      * @author Game Pearhill
+     * @param endphase
      */
-    public static void sendPhaseChange( String phase ) {
-        send( Flag.GAME, Tag.PHASE_CHANGE, phase );
+    public static void sendPhaseChange( String phase, String endphase ) {
+        send( Flag.GAME, Tag.PHASE_CHANGE, phase, endphase );
     }
 
     /**
@@ -259,8 +266,7 @@ final public class NetworkClient {
      * request to start game
      */
     public static void startGame() {
-        // TODO: stub
-        //send( Flag.GAME, Tag.BEGIN_GAME );
+        send( Flag.GAME, Tag.BEGIN_GAME );
     }
     
     public static boolean isPhasing() {
@@ -640,7 +646,7 @@ final public class NetworkClient {
                 return false;
             } else if ( !message.isEmpty() && message.get( 0 ).getClass().equals( String.class ) ) {
                 stringmessage = (String) message.get( 0 );
-                message = new ArrayList<>( message.subList( 1, message.size() ) ); // fix sublist issue
+                message = new ArrayList<>( message.subList( 1, message.size() ) );
             }
 
             // Debugging
@@ -706,7 +712,6 @@ final public class NetworkClient {
                     break;
                 // Game state update/message/command (Anything related to game)
                 case GAME:
-                    Conductor.processMessage( tag, sender, message );
                     switch ( tag ) {
                         case NEXT_TURN_INFO:
                             if ( stringmessage.isEmpty() ) {
@@ -733,19 +738,20 @@ final public class NetworkClient {
                             break;
                         case BEGIN_GAME:
                             if ( stringmessage.isEmpty() ) {
-                                startGame();
+                                //startGame();
+                                // TODO: begin the game, not just send another message to loop through
                             } else {
                                 flushToConsole( stringmessage );
                             }
                             break;
                         default:
-                            flushToConsole( "Unknown tag: " + tag );
+                            Conductor.processMessage( tag, sender, message );
+                        //flushToConsole( "Unknown tag: " + tag );
                     }
                     break;
                 // Lobby management tags
                 case LOBBY:
                     switch ( tag ) {
-
                         case NEW_LOBBY:
                             if ( (Boolean) message.get( 0 ) ) { // approved!
                                 flushToConsole( "Lobby " + stringmessage + " has been created!" );
@@ -781,25 +787,6 @@ final public class NetworkClient {
                         case DISCONNECT:
                             if ( (boolean) message.get( 0 ) ) {
                                 killThread();
-                                /*
-                                 * Platform.runLater( new Runnable() {                                    @Override
-                                    public void run() {
-                                        while ( true ) {
-                                            try {
-                                                Thread.sleep( 500 );
-                                            } catch ( InterruptedException ex ) {
-                                                ex.printStackTrace();
-                                            }
-                                            if ( socket.isClosed() ) {
-                                                streamIn = null;
-                                                return;
-                                            }
-                                        }
-                                    }
-
-                                } );
-                                 */
-                                //disconnect();
                                 return true;
                             } else {
                                 flushToConsole( "Server refused request to disconnect!\nYou are still connected, try again in a little bit, server might be overloaded." );

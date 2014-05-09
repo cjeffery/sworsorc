@@ -33,6 +33,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import org.controlsfx.control.Notifications;
 import sscharts.RandomEventTable;
 import sscharts.Scenario;
@@ -41,11 +46,6 @@ import sshexmap.MapView;
 import systemServer.NetworkClient;
 
 import static java.lang.Integer.parseInt;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import static mainswordsorcery.LaunchCombat.LaunchBotton;
 
 
@@ -639,7 +639,6 @@ public class HUDController {
         if ( !"".equals( message_box.getText() ) ) {
             NetworkClient.userInput( message_box.getText() );
             message_box.clear();
-            //chat_box.clear(); do we need this here?
         }
     }
     
@@ -674,6 +673,27 @@ public class HUDController {
         stage.setFullScreen(Game.getInstance().fullscreen);
         stage.show();
     }
+
+    /**
+     *
+     * @param p
+     *
+     * @author Christopher Goes
+     */
+    public void setPhaseButtonText( String p ) {
+        phaseButton.setText( p );
+    }
+
+    /**
+     *
+     * @param p
+     *
+     * @author Christopher Goes
+     */
+    public void setPhaseText( String p ) {
+        phase.setText( p );
+    }
+
     /** 
      * SolarDisplay code goes here
      * 
@@ -700,7 +720,7 @@ public class HUDController {
                 case "End Spell Phase":
                     phaseButton.setText("End Movement Phase");
                     phase.setText("Movement");
-                    NetworkClient.sendPhaseChange("Movement");
+                    NetworkClient.sendPhaseChange( "Movement", "End Movement Phase" );
                     break;
 
                 case "End Movement Phase":
@@ -715,7 +735,7 @@ public class HUDController {
                     }
                     phaseButton.setText("End Combat Phase");
                     phase.setText("Combat");
-                    NetworkClient.sendPhaseChange("Combat");
+                    NetworkClient.sendPhaseChange( "Combat", "End Combat Phase" );
                     break;
 
                 case "End Combat Phase":
@@ -725,9 +745,9 @@ public class HUDController {
                     break;
 
                 case "End Turn":
-                    NetworkClient.sendPhaseChange("Movement");
                     phaseButton.setText("End Spell Phase");
-                    phase.setText("Spell");
+                    phase.setText( "Spell" );
+                    NetworkClient.sendPhaseChange( "Spell", "End spell Phase" );
                     // end game turn, all players finished
                     if(Game.getInstance().numPlayersGoneThisTurn 
                             == Scenario.getInstance().getNumberOfPlayers())
@@ -781,26 +801,11 @@ public class HUDController {
         
     }
     
-
     @FXML protected void DisplayDiplomacy(ActionEvent event) {
         Stage stage = (Stage) menuBar.getScene().getWindow();
         stage.setScene(Game.getInstance().getDiploScene());
         stage.show();
     }
-
-    /**
-     * Connect to server
-     *
-     * @return 
-     * @author Gabe Pearhill
-     * @return 
-     */
-    //Moving this to HUD proper, see Game.java / MainMenuController
-    //public boolean connectToServer() {
-    //    NetworkClient.setServerName(ipAddress);
-    //    NetworkClient.setUsername(username);
-    //    return NetworkClient.initializeClient();
-    //}
     
     /**
      * A simple function to post a message to the chat box from outside of the 

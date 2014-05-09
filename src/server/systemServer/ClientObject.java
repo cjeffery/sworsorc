@@ -338,8 +338,7 @@ public class ClientObject {
                     switch ( tag ) {
 
                         case PHASE_CHANGE:
-                            NetworkServer.
-                                    sendToAllClients( flag, tag, "Server", lmessage );
+                            currentLobby.sendToEntireLobby( flag, tag, "Server", smessage );
                             break;
                         case NEXT_TURN_INFO:
                             send( flag, tag, currentLobby != null ? currentLobby.current : "" );
@@ -349,10 +348,9 @@ public class ClientObject {
                                 send( flag, tag,
                                         "You requested to start the game, but you aren't even in a lobby!" );
                             } else {
-                                currentLobby.
-                                        lobbyNotification( "Client " + sender + " has requested to start a game in lobby " + currentLobby.
-                                                getName() );
+                                currentLobby.lobbyNotification( "Client " + sender + " has requested to start a game!" );
                                 // TODO: VOTING
+                                currentLobby.lobbyNotification( "The Game has begun!" );
                                 currentLobby.beginGame();
                                 currentLobby.pokeEntireLobby( flag, Tag.BEGIN_GAME );
 

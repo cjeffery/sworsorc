@@ -10,6 +10,8 @@ import Units.MoveableUnit;
 import Units.UnitPool;
 import java.util.List;
 import java.util.Map;
+import mainswordsorcery.Game;
+import mainswordsorcery.HUDController;
 
 /**
  * Receives messages passed from NetworkClient and executes the necessary methods
@@ -46,6 +48,7 @@ import java.util.Map;
 final public class Conductor {
 
     private final static UnitPool pool = UnitPool.getInstance();
+    private final static HUDController hud = Game.getInstance().hudController;
 
     /**
      * Processes all messages passed from NetworkClient
@@ -73,6 +76,14 @@ final public class Conductor {
             case MOVE_UNIT_TELEPORT:
                 pool.addMove( (MoveableUnit) data.get( 0 ), (String) data.get( 1 ), (boolean) data.
                         get( 2 ) );
+                break;
+            case PHASE_CHANGE:
+                hud.
+                        setPhaseText( data.get( 0 ).getClass().equals( String.class ) ? (String) data.
+                                get( 0 ) : "" );
+                hud.
+                        setPhaseButtonText( data.get( 1 ).getClass().equals( String.class ) ? (String) data.
+                                get( 1 ) : "" );
                 break;
             default:
                 System.err.println( "(Conductor) Unknown tag: " + tag );

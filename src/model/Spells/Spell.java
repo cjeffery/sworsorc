@@ -15,7 +15,6 @@ import Spells.PL_4.*;
 import Spells.PL_5.*;
 import Spells.PL_6.*;
 import Spells.PL_7.*;
-import Spells.Spell_Book;
 import Units.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -24,9 +23,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -50,7 +46,7 @@ public class Spell implements Serializable {
     
     public static ArmyUnit conjured = null;
     
-    @FXML public Button sButton;
+    //@FXML public Button sButton;
     public  JButton spellbutton;
     private JFrame spellFrame;
  
@@ -61,7 +57,7 @@ public class Spell implements Serializable {
         Level = lv;
         ManaCost  = mc;   
         //BookFrame = mainf;
-        sButton = new javafx.scene.control.Button(n);
+        //sButton = new javafx.scene.control.Button(n);
         spellbutton = new JButton(n);
         character = c;
         
