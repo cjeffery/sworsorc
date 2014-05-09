@@ -3,7 +3,6 @@ package sscharts;
 import static ObjectCreator.ObjectCreator.CreateObject;
 import static Character.CharacterMaker.createCharacter;
 import Units.*;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
