@@ -5,19 +5,15 @@ package mainswordsorcery;
  *
  * @author Joe Higley
  */
+import Character.*;
 import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.Color;
-import Character.*;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.Observable;
 import javafx.beans.value.*;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
@@ -33,17 +29,14 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialogs;
-import static sscharts.ArmyCombatResultsTable.PrepareAttackResults;
-import static mainswordsorcery.LaunchCombat.*;
+import sscharts.RandomEventTable;
 import sscharts.Scenario;
 import sshexmap.MapHex;
 import sshexmap.MapView;
-import ssterrain.TTSwamp;
-import ssterrain.TerrainType;
-import sscharts.Scenario;
 import systemServer.NetworkClient;
+
+import static java.lang.Integer.parseInt;
+import static mainswordsorcery.LaunchCombat.LaunchBotton;
 
 
 public class HUDController {
@@ -68,7 +61,7 @@ public class HUDController {
     
     //currently selected unit and target unit
     MoveableUnit selected_unit;
-    MoveableUnit target_unit;
+    public MoveableUnit target_unit;
     //currently selected stack of units and target units
     List &lt;MoveableUnit&gt; selected_stack;
     List &lt;MoveableUnit&gt; target_stack;
@@ -78,18 +71,18 @@ public class HUDController {
     private MapHex currentHex;
     
 
-    MapView hmapContent;//MapView swing object set into hmap
-<span class="nc" id="L82">    SwingNode hmap = new SwingNode();</span>
+    public MapView hmapContent;//MapView swing object set into hmap
+<span class="nc" id="L75">    SwingNode hmap = new SwingNode();</span>
     
     String username, ipAddress;
     boolean usernameEntered, ipEntered, connectedToServer;
 
-<span class="nc" id="L87">    public HUDController() {</span>
-<span class="nc" id="L88">        selected_stack = new ArrayList &lt;&gt;();</span>
-<span class="nc" id="L89">        target_stack = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L90">        this.selected_unit = null;</span>
-<span class="nc" id="L91">        this.target_unit = null;</span>
-<span class="nc" id="L92">    }</span>
+<span class="nc" id="L80">    public HUDController() {</span>
+<span class="nc" id="L81">        selected_stack = new ArrayList &lt;&gt;();</span>
+<span class="nc" id="L82">        target_stack = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L83">        this.selected_unit = null;</span>
+<span class="nc" id="L84">        this.target_unit = null;</span>
+<span class="nc" id="L85">    }</span>
     
     /** 
      * initialize() is used to connect GUI view elements with model elements. 
@@ -98,221 +91,223 @@ public class HUDController {
      */
     public void initialize(){
         //hdip.setContent(MapView.getDipView());
-<span class="nc" id="L101">        phase.setText(&quot;Spell&quot;);</span>
-<span class="nc" id="L102">        currentPlayerText.setText(Integer.toString(</span>
-<span class="nc" id="L103">                                        Game.getInstance().currentTurnPlayer));</span>
+<span class="nc" id="L94">        phase.setText(&quot;Spell&quot;);</span>
+<span class="nc" id="L95">        currentPlayerText.setText(Integer.toString(</span>
+<span class="nc" id="L96">                                        Game.getInstance().currentTurnPlayer));</span>
         //Display map in map_view
-<span class="nc" id="L105">        hmapContent = MapView.getMapView();</span>
-<span class="nc" id="L106">        hmap.setContent(hmapContent);</span>
-<span class="nc" id="L107">        map_view.setContent(hmap);</span>
+<span class="nc" id="L98">        hmapContent = MapView.getMapView();</span>
+<span class="nc" id="L99">        hmap.setContent(hmapContent);</span>
+<span class="nc" id="L100">        map_view.setContent(hmap);</span>
         
         //adds mouse support to hmap
-<span class="nc" id="L110">        setupEventHandlers();</span>
+<span class="nc" id="L103">        setupEventHandlers();</span>
         
         //setup network
-<span class="nc" id="L113">        connectedToServer = usernameEntered = ipEntered = false;</span>
-<span class="nc" id="L114">        chat_box.setText(&quot;Enter your username!&quot;);</span>
-<span class="nc" id="L115">    }</span>
+<span class="nc" id="L106">        connectedToServer = usernameEntered = ipEntered = false;</span>
+<span class="nc" id="L107">        chat_box.setText(&quot;Enter your username!&quot;);</span>
+        
+<span class="nc" id="L109">    }</span>
     
     /**
      * Initialization of the Solar Display
      * Johnathan Flake
      */
     void initializeSunStuff() {
-<span class="nc" id="L122">        SolarDisplay.SunCheck();</span>
-<span class="nc" id="L123">        Image Sun = new Image(SolarDisplay.GetSunImage());</span>
-<span class="nc" id="L124">        SunImage.setImage(Sun);</span>
+<span class="nc" id="L116">        SolarDisplay.SunCheck();</span>
+<span class="nc" id="L117">        Image Sun = new Image(SolarDisplay.GetSunImage());</span>
+<span class="nc" id="L118">        SunImage.setImage(Sun);</span>
 
-<span class="nc" id="L126">        RedState.setText(SolarDisplay.GetRedState());</span>
-<span class="nc" id="L127">        BlueState.setText(SolarDisplay.GetBlueState());</span>
-<span class="nc" id="L128">    }</span>
+<span class="nc" id="L120">        RedState.setText(SolarDisplay.GetRedState());</span>
+<span class="nc" id="L121">        BlueState.setText(SolarDisplay.GetBlueState());</span>
+        
+<span class="nc" id="L123">    }</span>
     
     /**
      * big messy function to set up event handlers
      */
     void setupEventHandlers() {
-<span class="nc" id="L134">        hmap.setOnMousePressed(new EventHandler&lt;MouseEvent&gt;() {</span>
+<span class="nc" id="L129">        hmap.setOnMousePressed(new EventHandler&lt;MouseEvent&gt;() {</span>
             @Override
             public void handle (MouseEvent mouseEvent) {
                 //finds out at which hex a mouse event occured
-<span class="nc" id="L138">                String hexID = hmapContent.hexAt((int)mouseEvent.getX(), </span>
-<span class="nc" id="L139">                                                 (int)mouseEvent.getY());</span>
-<span class="nc" id="L140">                currentHex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);</span>
+<span class="nc" id="L133">                String hexID = hmapContent.hexAt((int)mouseEvent.getX(), </span>
+<span class="nc" id="L134">                                                 (int)mouseEvent.getY());</span>
+<span class="nc" id="L135">                currentHex = (MapHex)hmapContent.GetHexMap().GetHex(hexID);</span>
                 //allows deselecting of unit with left mouse button
-<span class="nc bnc" id="L142" title="All 4 branches missed.">                if( mouseEvent.isPrimaryButtonDown() &amp;&amp; selected_unit != null){</span>
-<span class="nc" id="L143">                    DeselectUnit( hexID, currentHex );</span>
+<span class="nc bnc" id="L137" title="All 4 branches missed.">                if( mouseEvent.isPrimaryButtonDown() &amp;&amp; selected_unit != null){</span>
+<span class="nc" id="L138">                    DeselectUnit( hexID, currentHex );</span>
                 }           
                 //select a unit if none previously selected
-<span class="nc bnc" id="L146" title="All 2 branches missed.">                else if( mouseEvent.isPrimaryButtonDown()){</span>
-<span class="nc" id="L147">                    SelectUnit( hexID, currentHex );</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                else if( mouseEvent.isPrimaryButtonDown()){</span>
+<span class="nc" id="L142">                    SelectUnit( hexID, currentHex );</span>
                 }             
                 //move unit with right mouse button in movement phase
-<span class="nc bnc" id="L150" title="All 4 branches missed.">                else if( mouseEvent.isSecondaryButtonDown() </span>
+<span class="nc bnc" id="L145" title="All 4 branches missed.">                else if( mouseEvent.isSecondaryButtonDown() </span>
                          &amp;&amp; selected_unit != null 
-<span class="nc bnc" id="L152" title="All 2 branches missed.">                         &amp;&amp; phase.getText().equalsIgnoreCase(&quot;Movement&quot;)){</span>
-<span class="nc" id="L153">                    MoveUnit( hexID, currentHex );</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">                         &amp;&amp; phase.getText().equalsIgnoreCase(&quot;Movement&quot;)){</span>
+<span class="nc" id="L148">                    MoveUnit( hexID, currentHex );</span>
                 }
                 //allows deselecting of target unit with right mouse button
-<span class="nc bnc" id="L156" title="All 4 branches missed.">                else if( mouseEvent.isSecondaryButtonDown() </span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">                else if( mouseEvent.isSecondaryButtonDown() </span>
                          &amp;&amp; target_unit != null){
-<span class="nc" id="L158">                    DetargetUnit( hexID, currentHex );</span>
+<span class="nc" id="L153">                    DetargetUnit( hexID, currentHex );</span>
                 }                    
                  //choose target unit in combat or spell phase
-<span class="nc bnc" id="L161" title="All 2 branches missed.">                else if( mouseEvent.isSecondaryButtonDown() //right mouse button</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">                else if( mouseEvent.isSecondaryButtonDown() //right mouse button</span>
                          //check phase
-<span class="nc bnc" id="L163" title="All 4 branches missed.">                         &amp;&amp; !phase.getText().equalsIgnoreCase(&quot;Movement&quot;) </span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">                         &amp;&amp; !phase.getText().equalsIgnoreCase(&quot;Movement&quot;) </span>
                          //check if target unit already chosen
                          &amp;&amp; target_unit == null){ 
-<span class="nc" id="L166">                    TargetUnit( hexID, currentHex );</span>
+<span class="nc" id="L161">                    TargetUnit( hexID, currentHex );</span>
                 }
                 //retreat if combat lost
                 /*
                 elseif(){
                 }
                 */
-<span class="nc" id="L173">                mouseEvent.consume();</span>
-<span class="nc" id="L174">            }</span>
+<span class="nc" id="L168">                mouseEvent.consume();</span>
+<span class="nc" id="L169">            }</span>
 	});
         /**adds keyboard support to map_view
          * @author Jay Drage
          */
-<span class="nc" id="L179">        map_view.addEventHandler(KeyEvent.KEY_PRESSED, </span>
-<span class="nc" id="L180">            new EventHandler&lt;KeyEvent&gt;() {</span>
+<span class="nc" id="L174">        map_view.addEventHandler(KeyEvent.KEY_PRESSED, </span>
+<span class="nc" id="L175">            new EventHandler&lt;KeyEvent&gt;() {</span>
                 @Override
                 public void handle(KeyEvent keyEvent) {
-<span class="nc" id="L183">                    KeyEventWrapper(keyEvent);</span>
-<span class="nc" id="L184">                };</span>
+<span class="nc" id="L178">                    KeyEventWrapper(keyEvent);</span>
+<span class="nc" id="L179">                };</span>
         });
         /**adds keyboard support to UnitsPane
          * @author Jay Drage
          */
-<span class="nc" id="L189">        UnitsPane.addEventHandler(KeyEvent.KEY_PRESSED, </span>
-<span class="nc" id="L190">            new EventHandler&lt;KeyEvent&gt;() {</span>
+<span class="nc" id="L184">        UnitsPane.addEventHandler(KeyEvent.KEY_PRESSED, </span>
+<span class="nc" id="L185">            new EventHandler&lt;KeyEvent&gt;() {</span>
                 @Override
                 public void handle(KeyEvent keyEvent) {
-<span class="nc" id="L193">                    KeyEventWrapper(keyEvent);</span>
-<span class="nc" id="L194">                };</span>
+<span class="nc" id="L188">                    KeyEventWrapper(keyEvent);</span>
+<span class="nc" id="L189">                };</span>
         });
         /**adds keyboard support to TargetsPane
          * @author Jay Drage
          */
-<span class="nc" id="L199">        TargetsPane.addEventHandler(KeyEvent.KEY_PRESSED, </span>
-<span class="nc" id="L200">            new EventHandler&lt;KeyEvent&gt;() {</span>
+<span class="nc" id="L194">        TargetsPane.addEventHandler(KeyEvent.KEY_PRESSED, </span>
+<span class="nc" id="L195">            new EventHandler&lt;KeyEvent&gt;() {</span>
                 @Override
                 public void handle(KeyEvent keyEvent) {
-<span class="nc" id="L203">                    KeyEventWrapper(keyEvent);</span>
-<span class="nc" id="L204">                };</span>
+<span class="nc" id="L198">                    KeyEventWrapper(keyEvent);</span>
+<span class="nc" id="L199">                };</span>
         });
         /**adds keyboard support to undo_button
          * @author Jay Drage
          */
-<span class="nc" id="L209">        undo_button.addEventHandler(KeyEvent.KEY_PRESSED, </span>
-<span class="nc" id="L210">            new EventHandler&lt;KeyEvent&gt;() {</span>
+<span class="nc" id="L204">        undo_button.addEventHandler(KeyEvent.KEY_PRESSED, </span>
+<span class="nc" id="L205">            new EventHandler&lt;KeyEvent&gt;() {</span>
                 @Override
                 public void handle(KeyEvent keyEvent) {
-<span class="nc" id="L213">                    KeyEventWrapper(keyEvent);</span>
-<span class="nc" id="L214">                };</span>
+<span class="nc" id="L208">                    KeyEventWrapper(keyEvent);</span>
+<span class="nc" id="L209">                };</span>
         });
         /**adds keyboard support to chat_box
          * @author Jay Drage
          */
-<span class="nc" id="L219">        chat_box.addEventHandler(KeyEvent.KEY_PRESSED, </span>
-<span class="nc" id="L220">            new EventHandler&lt;KeyEvent&gt;() {</span>
+<span class="nc" id="L214">        chat_box.addEventHandler(KeyEvent.KEY_PRESSED, </span>
+<span class="nc" id="L215">            new EventHandler&lt;KeyEvent&gt;() {</span>
                 @Override
                 public void handle(KeyEvent keyEvent) {
-<span class="nc" id="L223">                    KeyEventWrapper(keyEvent);</span>
-<span class="nc" id="L224">                };</span>
+<span class="nc" id="L218">                    KeyEventWrapper(keyEvent);</span>
+<span class="nc" id="L219">                };</span>
         });
         /**adds keyboard support to phaseButton
          * @author Jay Drage
          */
-<span class="nc" id="L229">        phaseButton.addEventHandler(KeyEvent.KEY_PRESSED, </span>
-<span class="nc" id="L230">            new EventHandler&lt;KeyEvent&gt;() {</span>
+<span class="nc" id="L224">        phaseButton.addEventHandler(KeyEvent.KEY_PRESSED, </span>
+<span class="nc" id="L225">            new EventHandler&lt;KeyEvent&gt;() {</span>
                 @Override
                 public void handle(KeyEvent keyEvent) {
-<span class="nc" id="L233">                    KeyEventWrapper(keyEvent);</span>
-<span class="nc" id="L234">                };</span>
+<span class="nc" id="L228">                    KeyEventWrapper(keyEvent);</span>
+<span class="nc" id="L229">                };</span>
         });
         /**adds keyboard support to mini_map
          * @author Jay Drage
          */
-<span class="nc" id="L239">        mini_map.addEventHandler(KeyEvent.KEY_PRESSED, </span>
-<span class="nc" id="L240">            new EventHandler&lt;KeyEvent&gt;() {</span>
+<span class="nc" id="L234">        mini_map.addEventHandler(KeyEvent.KEY_PRESSED, </span>
+<span class="nc" id="L235">            new EventHandler&lt;KeyEvent&gt;() {</span>
                 @Override
                 public void handle(KeyEvent keyEvent) {
-<span class="nc" id="L243">                    KeyEventWrapper(keyEvent);</span>
-<span class="nc" id="L244">                };</span>
+<span class="nc" id="L238">                    KeyEventWrapper(keyEvent);</span>
+<span class="nc" id="L239">                };</span>
         });
         /** adds mouse support to mini_map
          * @author Jay Drage
          */
-<span class="nc" id="L249">        mini_map.setOnMousePressed(new EventHandler&lt;MouseEvent&gt;() {</span>
+<span class="nc" id="L244">        mini_map.setOnMousePressed(new EventHandler&lt;MouseEvent&gt;() {</span>
                 @Override
 		public void handle (MouseEvent mouseEvent) {
-<span class="nc" id="L252">			System.out.println(&quot;X: &quot; + mouseEvent.getX() + </span>
-<span class="nc" id="L253">                                           &quot; Y: &quot; + mouseEvent.getY());</span>
-<span class="nc" id="L254">		}</span>
+<span class="nc" id="L247">			System.out.println(&quot;X: &quot; + mouseEvent.getX() + </span>
+<span class="nc" id="L248">                                           &quot; Y: &quot; + mouseEvent.getY());</span>
+<span class="nc" id="L249">		}</span>
 	});
         
         //set undo image on hover
-<span class="nc" id="L258">        undo_button.addEventHandler(MouseEvent.MOUSE_ENTERED, </span>
-<span class="nc" id="L259">            new EventHandler&lt;MouseEvent&gt;() {</span>
+<span class="nc" id="L253">        undo_button.addEventHandler(MouseEvent.MOUSE_ENTERED, </span>
+<span class="nc" id="L254">            new EventHandler&lt;MouseEvent&gt;() {</span>
                 @Override public void handle(MouseEvent e) {
-<span class="nc" id="L261">                  Image img = new Image(&quot;file:resources/images/undo_hover.png&quot;);</span>
-<span class="nc" id="L262">                    undo_pic.setImage(img);</span>
-<span class="nc" id="L263">                }</span>
+<span class="nc" id="L256">                  Image img = new Image(&quot;file:resources/images/undo_hover.png&quot;);</span>
+<span class="nc" id="L257">                    undo_pic.setImage(img);</span>
+<span class="nc" id="L258">                }</span>
         });  
         //return to original undo image on mouse off
-<span class="nc" id="L266">        undo_button.addEventHandler(MouseEvent.MOUSE_EXITED, </span>
-<span class="nc" id="L267">            new EventHandler&lt;MouseEvent&gt;() {</span>
+<span class="nc" id="L261">        undo_button.addEventHandler(MouseEvent.MOUSE_EXITED, </span>
+<span class="nc" id="L262">            new EventHandler&lt;MouseEvent&gt;() {</span>
                 @Override public void handle(MouseEvent e) {
-<span class="nc" id="L269">                    Image img = new Image(&quot;file:resources/images/undo.png&quot;);</span>
-<span class="nc" id="L270">                    undo_pic.setImage(img);</span>
-<span class="nc" id="L271">                }</span>
+<span class="nc" id="L264">                    Image img = new Image(&quot;file:resources/images/undo.png&quot;);</span>
+<span class="nc" id="L265">                    undo_pic.setImage(img);</span>
+<span class="nc" id="L266">                }</span>
         });
         //set undo image on mouse clicked
-<span class="nc" id="L274">        undo_button.addEventHandler(MouseEvent.MOUSE_PRESSED, </span>
-<span class="nc" id="L275">            new EventHandler&lt;MouseEvent&gt;() {</span>
+<span class="nc" id="L269">        undo_button.addEventHandler(MouseEvent.MOUSE_PRESSED, </span>
+<span class="nc" id="L270">            new EventHandler&lt;MouseEvent&gt;() {</span>
                 @Override public void handle(MouseEvent e) {
-<span class="nc" id="L277">                  Image img = new Image(&quot;file:resources/images/undo_click.png&quot;);</span>
-<span class="nc" id="L278">                  undo_pic.setImage(img);</span>
-<span class="nc" id="L279">                }</span>
+<span class="nc" id="L272">                  Image img = new Image(&quot;file:resources/images/undo_click.png&quot;);</span>
+<span class="nc" id="L273">                  undo_pic.setImage(img);</span>
+<span class="nc" id="L274">                }</span>
         });
         //set undo image on mouse released
-<span class="nc" id="L282">        undo_button.addEventHandler(MouseEvent.MOUSE_RELEASED, </span>
-<span class="nc" id="L283">            new EventHandler&lt;MouseEvent&gt;() {</span>
+<span class="nc" id="L277">        undo_button.addEventHandler(MouseEvent.MOUSE_RELEASED, </span>
+<span class="nc" id="L278">            new EventHandler&lt;MouseEvent&gt;() {</span>
                 @Override public void handle(MouseEvent e) {
-<span class="nc" id="L285">                  Image img = new Image(&quot;file:resources/images/undo_hover.png&quot;);</span>
-<span class="nc" id="L286">                  undo_pic.setImage(img);</span>
-<span class="nc" id="L287">                }</span>
+<span class="nc" id="L280">                  Image img = new Image(&quot;file:resources/images/undo_hover.png&quot;);</span>
+<span class="nc" id="L281">                  undo_pic.setImage(img);</span>
+<span class="nc" id="L282">                }</span>
         });
         /**
          * Allows changing of selected_unit from selected_stack
          * with the UnitsPane
          * @author Jay Drage
          */
-<span class="nc" id="L294">        UnitsPane.getSelectionModel().selectedItemProperty().addListener(</span>
-<span class="nc" id="L295">            new ChangeListener&lt;Tab&gt;(){</span>
+<span class="nc" id="L289">        UnitsPane.getSelectionModel().selectedItemProperty().addListener(</span>
+<span class="nc" id="L290">            new ChangeListener&lt;Tab&gt;(){</span>
                 @Override
                 public void changed(ObservableValue&lt;? extends Tab&gt; ov, Tab oldTab, Tab newTab) {
-<span class="nc bnc" id="L298" title="All 2 branches missed.">                    if(selected_stack.isEmpty() == false){</span>
-<span class="nc" id="L299">                        selected_unit = selected_stack.get(UnitsPane.getTabs().indexOf(newTab));</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">                    if(selected_stack.isEmpty() == false){</span>
+<span class="nc" id="L294">                        selected_unit = selected_stack.get(UnitsPane.getTabs().indexOf(newTab));</span>
                     }
                     //highlight valid hexes if in movement phase
                     //canMoveTo = new ArrayList&lt;&gt;();
                     //canMoveTo.clear();
-<span class="nc" id="L304">                    moves = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L305">                    moves.clear();</span>
-<span class="nc bnc" id="L306" title="All 2 branches missed.">                    if(phase.getText().equalsIgnoreCase(&quot;Movement&quot;)){</span>
-<span class="nc" id="L307">                        hmapContent.clearHighlights();</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">                        if(selected_unit != null){</span>
-<span class="nc" id="L309">                            moves = MovementCalculator.movementWrapper(selected_unit, currentHex);</span>
-<span class="nc" id="L310">                            canMoveTo = new ArrayList&lt;MapHex&gt;(moves.keySet());</span>
+<span class="nc" id="L299">                    moves = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L300">                    moves.clear();</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">                    if(phase.getText().equalsIgnoreCase(&quot;Movement&quot;)){</span>
+<span class="nc" id="L302">                        hmapContent.clearHighlights();</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">                        if(selected_unit != null){</span>
+<span class="nc" id="L304">                            moves = MovementCalculator.movementWrapper(selected_unit, currentHex);</span>
+<span class="nc" id="L305">                            canMoveTo = new ArrayList&lt;MapHex&gt;(moves.keySet());</span>
                             //MovementCalculator.getValidMoves(selected_unit, currentHex, selected_unit.getMovement(), canMoveTo );
-<span class="nc" id="L312">                            hmapContent.highlight(canMoveTo, new Color(0,0,255, 70));</span>
+<span class="nc" id="L307">                            hmapContent.highlight(canMoveTo, new Color(0,0,255, 70));</span>
                         }
                     }
-<span class="nc" id="L315">                }</span>
+<span class="nc" id="L310">                }</span>
             }
         );
         /**
@@ -320,15 +315,15 @@ public class HUDController {
          * with the TargetsPane
          * @author Jay Drage
          */
-<span class="nc" id="L323">        TargetsPane.getSelectionModel().selectedItemProperty().addListener(</span>
-<span class="nc" id="L324">            new ChangeListener&lt;Tab&gt;(){</span>
+<span class="nc" id="L318">        TargetsPane.getSelectionModel().selectedItemProperty().addListener(</span>
+<span class="nc" id="L319">            new ChangeListener&lt;Tab&gt;(){</span>
                 @Override
                 public void changed(ObservableValue&lt;? extends Tab&gt; ov, Tab oldTab, Tab newTab) {
-<span class="nc" id="L327">                    target_unit = target_stack.get(TargetsPane.getTabs().indexOf(newTab));</span>
-<span class="nc" id="L328">                }</span>
+<span class="nc" id="L322">                    target_unit = target_stack.get(TargetsPane.getTabs().indexOf(newTab));</span>
+<span class="nc" id="L323">                }</span>
             }
         );
-<span class="nc" id="L331">    }</span>
+<span class="nc" id="L326">    }</span>
     /**
      * Function that is called for keyEvents
      * simply reduces clutter in code
@@ -337,26 +332,30 @@ public class HUDController {
      */
     public void KeyEventWrapper(KeyEvent keyEvent){
         //attack
-<span class="nc bnc" id="L340" title="All 2 branches missed.">        if(keyEvent.getText().equalsIgnoreCase(&quot;a&quot;) </span>
-<span class="nc bnc" id="L341" title="All 4 branches missed.">           &amp;&amp; !target_stack.isEmpty() &amp;&amp; !selected_stack.isEmpty()</span>
-<span class="nc bnc" id="L342" title="All 2 branches missed.">           &amp;&amp; phase.getText().equalsIgnoreCase(&quot;Combat&quot;)</span>
-<span class="nc" id="L343">           &amp;&amp; (selected_stack.get(0).getID().charAt(0)-48 // check if unit is </span>
-<span class="nc bnc" id="L344" title="All 2 branches missed.">                == Game.getInstance().PlayerID)      // current player's unit</span>
-<span class="nc" id="L345">           &amp;&amp; (target_stack.get(0).getID().charAt(0)-48 // check if unit is not</span>
-<span class="nc bnc" id="L346" title="All 2 branches missed.">                != Game.getInstance().PlayerID)        // current player's unit</span>
-<span class="nc" id="L347">           &amp;&amp; Game.getInstance().currentTurnPlayer //check if it is player's</span>
-<span class="nc bnc" id="L348" title="All 2 branches missed.">                == Game.getInstance().PlayerID)    //turn    </span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">        if(keyEvent.getText().equalsIgnoreCase(&quot;a&quot;) </span>
+<span class="nc bnc" id="L336" title="All 4 branches missed.">           &amp;&amp; !target_stack.isEmpty() &amp;&amp; !selected_stack.isEmpty()</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">           &amp;&amp; phase.getText().equalsIgnoreCase(&quot;Combat&quot;)</span>
+<span class="nc" id="L338">           &amp;&amp; (selected_stack.get(0).getID().charAt(0)-48 // check if unit is </span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">                == Game.getInstance().PlayerID)      // current player's unit</span>
+<span class="nc" id="L340">           &amp;&amp; (target_stack.get(0).getID().charAt(0)-48 // check if unit is not</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">                != Game.getInstance().PlayerID)        // current player's unit</span>
+<span class="nc" id="L342">           &amp;&amp; Game.getInstance().currentTurnPlayer //check if it is player's</span>
+<span class="nc bnc" id="L343" title="All 2 branches missed.">                == Game.getInstance().PlayerID)    //turn    </span>
         {
-<span class="nc" id="L350">            StartCombat(hmapContent);</span>
+<span class="nc" id="L345">            StartCombat(hmapContent);</span>
         }
         //spells
-<span class="nc bnc" id="L353" title="All 2 branches missed.">        else if(keyEvent.getText().equalsIgnoreCase(&quot;s&quot;)</span>
-<span class="nc bnc" id="L354" title="All 4 branches missed.">                &amp;&amp; !target_stack.isEmpty() &amp;&amp; !selected_stack.isEmpty() </span>
-<span class="nc bnc" id="L355" title="All 2 branches missed.">                &amp;&amp; phase.getText().equalsIgnoreCase(&quot;Spell&quot;))</span>
+<span class="nc bnc" id="L348" title="All 2 branches missed.">        else if(keyEvent.getText().equalsIgnoreCase(&quot;s&quot;)</span>
+<span class="nc bnc" id="L349" title="All 4 branches missed.">                &amp;&amp; !target_stack.isEmpty() &amp;&amp; !selected_stack.isEmpty() </span>
+<span class="nc bnc" id="L350" title="All 2 branches missed.">                &amp;&amp; phase.getText().equalsIgnoreCase(&quot;Spell&quot;))</span>
         {
-<span class="nc" id="L357">            StartSpell();</span>
+<span class="nc" id="L352">            StartSpell();</span>
         }
-<span class="nc" id="L359">    }</span>
+        //This is only used for testing. no in game value.
+<span class="nc bnc" id="L355" title="All 2 branches missed.">        else if(keyEvent.getText().equalsIgnoreCase(&quot;x&quot;)){</span>
+<span class="nc" id="L356">            System.out.println(target_unit);</span>
+        }
+<span class="nc" id="L358">    }</span>
     /** 
      * deselects a unit with left mouse button
      * sets selected_unit to null
@@ -367,16 +366,16 @@ public class HUDController {
      * @author Jay Drage
      */
     public void DeselectUnit(String hexID, MapHex hex){
-<span class="nc" id="L370">        hmapContent.clearHighlights();</span>
-<span class="nc" id="L371">        selected_unit = null;</span>
-<span class="nc" id="L372">        selected_stack.clear();</span>
+<span class="nc" id="L369">        hmapContent.clearHighlights();</span>
+<span class="nc" id="L370">        selected_unit = null;</span>
+<span class="nc" id="L371">        selected_stack.clear();</span>
         //update target stack panel
         try {
-<span class="nc" id="L375">            DisplayStack(UnitsPane, selected_stack, true);</span>
-<span class="nc" id="L376">        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {</span>
-<span class="nc" id="L377">            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L378">        }        </span>
-<span class="nc" id="L379">    }</span>
+<span class="nc" id="L374">            DisplayStack(UnitsPane, selected_stack, true);</span>
+<span class="nc" id="L375">        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException ex) {</span>
+<span class="nc" id="L376">            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L377">        }        </span>
+<span class="nc" id="L378">    }</span>
     /** 
      * selects a unit
      * left mouse button sets unit to selected_unit
@@ -387,22 +386,22 @@ public class HUDController {
      * @author Jay Drage
      */
     public void SelectUnit(String hexID, MapHex hex){
-<span class="nc bnc" id="L390" title="All 2 branches missed.">        if(hex == null){</span>
-<span class="nc" id="L391">            return;</span>
+<span class="nc bnc" id="L389" title="All 2 branches missed.">        if(hex == null){</span>
+<span class="nc" id="L390">            return;</span>
         }
         //check if there is a previously selected unit, return if hex is empty of units
-<span class="nc bnc" id="L394" title="All 2 branches missed.">        if(hex.getUnits() == null) {</span>
-<span class="nc" id="L395">            return;</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">        if(hex.getUnits() == null) {</span>
+<span class="nc" id="L394">            return;</span>
         }
-<span class="nc" id="L397">        selected_stack = hex.getUnits();</span>
+<span class="nc" id="L396">        selected_stack = hex.getUnits();</span>
         //update target stack panel
         try {
-<span class="nc" id="L400">            DisplayStack(UnitsPane, selected_stack, true);</span>
-<span class="nc" id="L401">        } catch (InvocationTargetException | NoSuchMethodException </span>
+<span class="nc" id="L399">            DisplayStack(UnitsPane, selected_stack, true);</span>
+<span class="nc" id="L400">        } catch (InvocationTargetException | NoSuchMethodException </span>
                 | IllegalAccessException ex) {
-<span class="nc" id="L403">            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L404">        }        </span>
-<span class="nc" id="L405">    }</span>
+<span class="nc" id="L402">            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L403">        }        </span>
+<span class="nc" id="L404">    }</span>
     /** 
      * Moves selected unit with right mouse button
      * 
@@ -411,31 +410,31 @@ public class HUDController {
      * @author Jay Drage
      */
     public void MoveUnit( String hexID, MapHex hex ){
-<span class="nc" id="L414">        if(selected_stack.get(0).getID().charAt(0)-48 // check if unit is </span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">                == Game.getInstance().PlayerID        // player's unit</span>
-<span class="nc" id="L416">           &amp;&amp; Game.getInstance().currentTurnPlayer //check if it is player's</span>
-<span class="nc bnc" id="L417" title="All 2 branches missed.">                == Game.getInstance().PlayerID)    //turn</span>
+<span class="nc" id="L413">        if(selected_stack.get(0).getID().charAt(0)-48 // check if unit is </span>
+<span class="nc bnc" id="L414" title="All 2 branches missed.">                == Game.getInstance().PlayerID        // player's unit</span>
+<span class="nc" id="L415">           &amp;&amp; Game.getInstance().currentTurnPlayer //check if it is player's</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">                == Game.getInstance().PlayerID)    //turn</span>
         {
-<span class="nc bnc" id="L419" title="All 2 branches missed.">            if( moves.containsKey(hex) ) {</span>
-<span class="nc" id="L420">                final UnitPool pool = UnitPool.getInstance();</span>
-<span class="nc" id="L421">                hmapContent.clearHighlights();</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">            if( moves.containsKey(hex) ) {</span>
+<span class="nc" id="L419">                final UnitPool pool = UnitPool.getInstance();</span>
+<span class="nc" id="L420">                hmapContent.clearHighlights();</span>
                 //pool.addMove((ArmyUnit)selected_unit, hex.GetID());
-<span class="nc" id="L423">                selected_unit.setWorkingMovement( moves.get(hex) );</span>
-<span class="nc" id="L424">                pool.addMove(selected_unit, hex.GetID());</span>
+<span class="nc" id="L422">                selected_unit.setWorkingMovement( moves.get(hex) );</span>
+<span class="nc" id="L423">                pool.addMove(selected_unit, hex.GetID());</span>
                 //pool.addUnit(0, (ArmyUnit)selected_unit, hex.GetID());
-<span class="nc" id="L426">                hmapContent.repaint();</span>
-<span class="nc" id="L427">                selected_unit = null;</span>
-<span class="nc" id="L428">                selected_stack.clear();</span>
+                
+<span class="nc" id="L426">                selected_unit = null;</span>
+<span class="nc" id="L427">                selected_stack.clear();</span>
                 //update target stack panel
                 try {
-<span class="nc" id="L431">                    DisplayStack(UnitsPane, selected_stack, true);</span>
-<span class="nc" id="L432">                } catch (InvocationTargetException | NoSuchMethodException </span>
+<span class="nc" id="L430">                    DisplayStack(UnitsPane, selected_stack, true);</span>
+<span class="nc" id="L431">                } catch (InvocationTargetException | NoSuchMethodException </span>
                         | IllegalAccessException ex) {
-<span class="nc" id="L434">                    Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L435">                }</span>
+<span class="nc" id="L433">                    Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L434">                }</span>
             }
         }
-<span class="nc" id="L438">    }</span>
+<span class="nc" id="L437">    }</span>
     /**
      * Detargets a unit
      * sets target_unit to null
@@ -446,16 +445,16 @@ public class HUDController {
      * @author Jay Drage
      */
     public void DetargetUnit( String hexID, MapHex hex ){
-<span class="nc" id="L449">        target_unit = null;</span>
-<span class="nc" id="L450">        target_stack.clear();</span>
+<span class="nc" id="L448">        target_unit = null;</span>
+<span class="nc" id="L449">        target_stack.clear();</span>
         //update target stack panel
         try {
-<span class="nc" id="L453">            DisplayStack(TargetsPane, target_stack, false);</span>
-<span class="nc" id="L454">        } catch (InvocationTargetException | NoSuchMethodException </span>
+<span class="nc" id="L452">            DisplayStack(TargetsPane, target_stack, false);</span>
+<span class="nc" id="L453">        } catch (InvocationTargetException | NoSuchMethodException </span>
                 | IllegalAccessException ex) {
-<span class="nc" id="L456">            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L457">        }</span>
-<span class="nc" id="L458">    }</span>
+<span class="nc" id="L455">            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L456">        }</span>
+<span class="nc" id="L457">    }</span>
     /**
      * Targets a unit with right click
      * works only when not in movement phase
@@ -467,54 +466,54 @@ public class HUDController {
      * @author Jay Drage
      */
     public void TargetUnit( String hexID, MapHex hex ){
-<span class="nc bnc" id="L470" title="All 2 branches missed.">        if(hex == null){</span>
-<span class="nc" id="L471">            return;</span>
+<span class="nc bnc" id="L469" title="All 2 branches missed.">        if(hex == null){</span>
+<span class="nc" id="L470">            return;</span>
         }
         //check if there is a previously selected target unit, return if hex is empty of units
-<span class="nc bnc" id="L474" title="All 2 branches missed.">        if(hex.getUnits() == null) {</span>
-<span class="nc" id="L475">            return;</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">        if(hex.getUnits() == null) {</span>
+<span class="nc" id="L474">            return;</span>
         }
-<span class="nc" id="L477">        target_stack = hex.getUnits();</span>
-<span class="nc" id="L478">        target_unit = null;</span>
-<span class="nc" id="L479">        target_unit = target_stack.get(0);</span>
+<span class="nc" id="L476">        target_stack = hex.getUnits();</span>
+<span class="nc" id="L477">        target_unit = null;</span>
+<span class="nc" id="L478">        target_unit = target_stack.get(0);</span>
         //update target stack panel
         try {
-<span class="nc" id="L482">            DisplayStack(TargetsPane, target_stack, false);</span>
-<span class="nc" id="L483">        } catch (InvocationTargetException | NoSuchMethodException </span>
+<span class="nc" id="L481">            DisplayStack(TargetsPane, target_stack, false);</span>
+<span class="nc" id="L482">        } catch (InvocationTargetException | NoSuchMethodException </span>
                 | IllegalAccessException ex) {
-<span class="nc" id="L485">            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
-<span class="nc" id="L486">        }</span>
-<span class="nc" id="L487">    }</span>
+<span class="nc" id="L484">            Logger.getLogger(HUDController.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L485">        }</span>
+<span class="nc" id="L486">    }</span>
     //called when clicking a friendly hex
     @FXML protected void DisplayUnits(ActionEvent event) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-<span class="nc" id="L490">        List &lt;MoveableUnit&gt; AU = new ArrayList &lt;&gt;();</span>
-<span class="nc" id="L491">        AU.add(selected_unit);</span>
-<span class="nc" id="L492">        DisplayStack(UnitsPane, AU, true);</span>
-<span class="nc" id="L493">    }</span>
+<span class="nc" id="L489">        List &lt;MoveableUnit&gt; AU = new ArrayList &lt;&gt;();</span>
+<span class="nc" id="L490">        AU.add(selected_unit);</span>
+<span class="nc" id="L491">        DisplayStack(UnitsPane, AU, true);</span>
+<span class="nc" id="L492">    }</span>
     //called when clicking an enemy hex
     @FXML protected void DisplayTargets(ActionEvent event) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-<span class="nc" id="L496">        List &lt;MoveableUnit&gt; AU = new ArrayList &lt;&gt;();</span>
-<span class="nc" id="L497">        AU.add(target_unit);</span>
-<span class="nc" id="L498">        DisplayStack(TargetsPane, AU, false);</span>
-<span class="nc" id="L499">    }</span>
+<span class="nc" id="L495">        List &lt;MoveableUnit&gt; AU = new ArrayList &lt;&gt;();</span>
+<span class="nc" id="L496">        AU.add(target_unit);</span>
+<span class="nc" id="L497">        DisplayStack(TargetsPane, AU, false);</span>
+<span class="nc" id="L498">    }</span>
     /** 
      * constructs the tab pane for the selected hex
      * @author Joe Higley      
      */
     protected void DisplayStack(TabPane tp, List &lt;MoveableUnit&gt; AU, Boolean isMyUnit) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-<span class="nc" id="L505">        ClearTitles(tp); //empty the tab pane</span>
-<span class="nc" id="L506">        int x = AU.size();</span>
+<span class="nc" id="L504">        ClearTitles(tp); //empty the tab pane</span>
+<span class="nc" id="L505">        int x = AU.size();</span>
 //        int x = Game.getInstance().getNum(); //this is just a random number of units, will be replaced later
         //create array of tabs
-<span class="nc" id="L509">        Tab[] tabs = new Tab[x];</span>
-<span class="nc bnc" id="L510" title="All 2 branches missed.">        for(int i=0; i &lt; x; i++) {</span>
-<span class="nc" id="L511">            tabs[i] = new Tab();</span>
-<span class="nc" id="L512">            tabs[i].setText(AU.get(i).toString());</span>
-<span class="nc" id="L513">            FillStats(tabs[i], AU.get(i), isMyUnit); //add contents of the tab</span>
+<span class="nc" id="L508">        Tab[] tabs = new Tab[x];</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">        for(int i=0; i &lt; x; i++) {</span>
+<span class="nc" id="L510">            tabs[i] = new Tab();</span>
+<span class="nc" id="L511">            tabs[i].setText(AU.get(i).toString());</span>
+<span class="nc" id="L512">            FillStats(tabs[i], AU.get(i), isMyUnit); //add contents of the tab</span>
         }
         //add tabs to tab pane
-<span class="nc" id="L516">        tp.getTabs().addAll(tabs);</span>
-<span class="nc" id="L517">    }</span>
+<span class="nc" id="L515">        tp.getTabs().addAll(tabs);</span>
+<span class="nc" id="L516">    }</span>
 
     /** 
      * fills the contents of a tab pane
@@ -523,94 +522,94 @@ public class HUDController {
      */
     public void FillStats(Tab tp, MoveableUnit AU, Boolean isMyUnit) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
         //total number of details
-<span class="nc" id="L526">        int details = 0;</span>
+<span class="nc" id="L525">        int details = 0;</span>
         //stats are kept in a GridPane inside a ScrollPane in case of more stats than space
-<span class="nc" id="L528">        ScrollPane scroll = new ScrollPane();</span>
-<span class="nc" id="L529">        GridPane grid = new GridPane();</span>
+<span class="nc" id="L527">        ScrollPane scroll = new ScrollPane();</span>
+<span class="nc" id="L528">        GridPane grid = new GridPane();</span>
         //set grid formats (may be replaced by css file later)
-<span class="nc" id="L531">        grid.setAlignment(Pos.CENTER);</span>
-<span class="nc" id="L532">        grid.setVgap(8);</span>
-<span class="nc" id="L533">        grid.setHgap(15);</span>
-<span class="nc" id="L534">        grid.setPadding(new Insets(5, 5, 5, 5));</span>
+<span class="nc" id="L530">        grid.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L531">        grid.setVgap(8);</span>
+<span class="nc" id="L532">        grid.setHgap(15);</span>
+<span class="nc" id="L533">        grid.setPadding(new Insets(5, 5, 5, 5));</span>
         
         //set column1 format
-<span class="nc" id="L537">        ColumnConstraints column1 = new ColumnConstraints();</span>
-<span class="nc" id="L538">        column1.setHalignment(HPos.LEFT);</span>
-<span class="nc" id="L539">        column1.setPercentWidth(65);</span>
-<span class="nc" id="L540">        grid.getColumnConstraints().add(column1); </span>
+<span class="nc" id="L536">        ColumnConstraints column1 = new ColumnConstraints();</span>
+<span class="nc" id="L537">        column1.setHalignment(HPos.LEFT);</span>
+<span class="nc" id="L538">        column1.setPercentWidth(65);</span>
+<span class="nc" id="L539">        grid.getColumnConstraints().add(column1); </span>
         //set column2 format
-<span class="nc" id="L542">        ColumnConstraints column2 = new ColumnConstraints();</span>
-<span class="nc" id="L543">        column2.setHalignment(HPos.RIGHT);</span>
-<span class="nc" id="L544">        column2.setPercentWidth(35);</span>
-<span class="nc" id="L545">        grid.getColumnConstraints().add(column2);</span>
+<span class="nc" id="L541">        ColumnConstraints column2 = new ColumnConstraints();</span>
+<span class="nc" id="L542">        column2.setHalignment(HPos.RIGHT);</span>
+<span class="nc" id="L543">        column2.setPercentWidth(35);</span>
+<span class="nc" id="L544">        grid.getColumnConstraints().add(column2);</span>
         
-<span class="nc bnc" id="L547" title="All 2 branches missed.">        if(AU.getUnitType() == UnitType.Character){</span>
+<span class="nc bnc" id="L546" title="All 2 branches missed.">        if(AU.getUnitType() == UnitType.Character){</span>
             //labels and function names
-<span class="nc" id="L549">            List &lt;String&gt; stats = new ArrayList&lt;&gt;(Arrays.asList(&quot;Name: &quot;, &quot;Race&quot;, &quot;MagicPL: &quot;, &quot;Manna: &quot;, &quot;Movement: &quot;));</span>
-<span class="nc" id="L550">            List &lt;String&gt; funcs = new ArrayList&lt;&gt;(Arrays.asList(&quot;getName&quot;, &quot;getRace&quot;, &quot;getMagicPL&quot;, &quot;getCurrentManna&quot;, &quot;getMovement&quot;));</span>
+<span class="nc" id="L548">            List &lt;String&gt; stats = new ArrayList&lt;&gt;(Arrays.asList(&quot;Name: &quot;, &quot;Race&quot;, &quot;MagicPL: &quot;, &quot;Manna: &quot;, &quot;Movement: &quot;));</span>
+<span class="nc" id="L549">            List &lt;String&gt; funcs = new ArrayList&lt;&gt;(Arrays.asList(&quot;getName&quot;, &quot;getRace&quot;, &quot;getMagicPL&quot;, &quot;getCurrentManna&quot;, &quot;getMovement&quot;));</span>
             //adds stats to GridPane (will be replaced with call to unit stats)
-<span class="nc bnc" id="L552" title="All 2 branches missed.">            for(int i=0; i &lt; stats.size(); i++){</span>
-<span class="nc" id="L553">                Label l = new Label(stats.get(i));</span>
-<span class="nc" id="L554">                l.setFont(Font.font(null, FontWeight.BOLD, 12));</span>
+<span class="nc bnc" id="L551" title="All 2 branches missed.">            for(int i=0; i &lt; stats.size(); i++){</span>
+<span class="nc" id="L552">                Label l = new Label(stats.get(i));</span>
+<span class="nc" id="L553">                l.setFont(Font.font(null, FontWeight.BOLD, 12));</span>
                 //&quot;get&quot; method to be called
-<span class="nc" id="L556">                Method method = AU.getClass().getMethod(funcs.get(i));</span>
-<span class="nc" id="L557">                Object b = method.invoke(AU); //get desired data</span>
-<span class="nc" id="L558">                TextField tf = new TextField(String.valueOf(b));</span>
-<span class="nc" id="L559">                tf.setAlignment(Pos.CENTER_RIGHT);</span>
+<span class="nc" id="L555">                Method method = AU.getClass().getMethod(funcs.get(i));</span>
+<span class="nc" id="L556">                Object b = method.invoke(AU); //get desired data</span>
+<span class="nc" id="L557">                TextField tf = new TextField(String.valueOf(b));</span>
+<span class="nc" id="L558">                tf.setAlignment(Pos.CENTER_RIGHT);</span>
             
                 //add stats to new row of GridPane
-<span class="nc" id="L562">                grid.add(l, 0, i);</span>
-<span class="nc" id="L563">                grid.add(tf, 1, i);</span>
-<span class="nc" id="L564">                details = i;</span>
+<span class="nc" id="L561">                grid.add(l, 0, i);</span>
+<span class="nc" id="L562">                grid.add(tf, 1, i);</span>
+<span class="nc" id="L563">                details = i;</span>
             }
-<span class="nc" id="L566">        }</span>
+<span class="nc" id="L565">        }</span>
         else{
             //labels and function names
-<span class="nc" id="L569">            List &lt;String&gt; stats = new ArrayList&lt;&gt;(Arrays.asList(&quot;Race: &quot;, &quot;Demoralized: &quot;, &quot;Strength: &quot;, &quot;Movement: &quot;));</span>
-<span class="nc" id="L570">            List &lt;String&gt; funcs = new ArrayList&lt;&gt;(Arrays.asList(&quot;getRace&quot;, &quot;isDemoralized&quot;, &quot;getStrength&quot;, &quot;getMovement&quot;));</span>
+<span class="nc" id="L568">            List &lt;String&gt; stats = new ArrayList&lt;&gt;(Arrays.asList(&quot;Race: &quot;, &quot;Demoralized: &quot;, &quot;Strength: &quot;, &quot;Movement: &quot;));</span>
+<span class="nc" id="L569">            List &lt;String&gt; funcs = new ArrayList&lt;&gt;(Arrays.asList(&quot;getRace&quot;, &quot;isDemoralized&quot;, &quot;getStrength&quot;, &quot;getMovement&quot;));</span>
             //adds stats to GridPane (will be replaced with call to unit stats)
-<span class="nc bnc" id="L572" title="All 2 branches missed.">            for(int i=0; i &lt; stats.size(); i++){</span>
-<span class="nc" id="L573">                Label l = new Label(stats.get(i));</span>
-<span class="nc" id="L574">                l.setFont(Font.font(null, FontWeight.BOLD, 12));</span>
+<span class="nc bnc" id="L571" title="All 2 branches missed.">            for(int i=0; i &lt; stats.size(); i++){</span>
+<span class="nc" id="L572">                Label l = new Label(stats.get(i));</span>
+<span class="nc" id="L573">                l.setFont(Font.font(null, FontWeight.BOLD, 12));</span>
                 //&quot;get&quot; method to be called
-<span class="nc" id="L576">                Method method = AU.getClass().getMethod(funcs.get(i));</span>
-<span class="nc" id="L577">                Object b = method.invoke(AU); //get desired data</span>
-<span class="nc" id="L578">                TextField tf = new TextField(String.valueOf(b));</span>
-<span class="nc" id="L579">                tf.setAlignment(Pos.CENTER_RIGHT);</span>
+<span class="nc" id="L575">                Method method = AU.getClass().getMethod(funcs.get(i));</span>
+<span class="nc" id="L576">                Object b = method.invoke(AU); //get desired data</span>
+<span class="nc" id="L577">                TextField tf = new TextField(String.valueOf(b));</span>
+<span class="nc" id="L578">                tf.setAlignment(Pos.CENTER_RIGHT);</span>
             
                 //add stats to new row of GridPane
-<span class="nc" id="L582">                grid.add(l, 0, i);</span>
-<span class="nc" id="L583">                grid.add(tf, 1, i);</span>
-<span class="nc" id="L584">                details = i;</span>
+<span class="nc" id="L581">                grid.add(l, 0, i);</span>
+<span class="nc" id="L582">                grid.add(tf, 1, i);</span>
+<span class="nc" id="L583">                details = i;</span>
             }
         }
         
-<span class="nc bnc" id="L588" title="All 2 branches missed.">        if(isMyUnit){</span>
-<span class="nc" id="L589">            Button b = new Button(&quot;Cast Spell&quot;);</span>
-<span class="nc" id="L590">            b.setOnAction(new EventHandler&lt;ActionEvent&gt;() {</span>
+<span class="nc bnc" id="L587" title="All 2 branches missed.">        if(isMyUnit){</span>
+<span class="nc" id="L588">            Button b = new Button(&quot;Cast Spell&quot;);</span>
+<span class="nc" id="L589">            b.setOnAction(new EventHandler&lt;ActionEvent&gt;() {</span>
                 @Override public void handle(ActionEvent e) {
-<span class="nc" id="L592">                    StartSpell();</span>
-<span class="nc" id="L593">                }</span>
+<span class="nc" id="L591">                    StartSpell();</span>
+<span class="nc" id="L592">                }</span>
             });
         
-<span class="nc" id="L596">            grid.add(b, 0, details+1, 2, 1);</span>
+<span class="nc" id="L595">            grid.add(b, 0, details+1, 2, 1);</span>
         }
         
         
         //add GridPane to ScrollPane
-<span class="nc" id="L601">        scroll.setFitToWidth(true);</span>
-<span class="nc" id="L602">        scroll.setContent(grid);</span>
+<span class="nc" id="L600">        scroll.setFitToWidth(true);</span>
+<span class="nc" id="L601">        scroll.setContent(grid);</span>
         //add ScrollPane to Tab
-<span class="nc" id="L604">        tp.setContent(scroll);</span>
-<span class="nc" id="L605">    }</span>
+<span class="nc" id="L603">        tp.setContent(scroll);</span>
+<span class="nc" id="L604">    }</span>
     
     /** 
      * 
      * @author Joe Higley      
      */    
     protected void ClearTitles(TabPane tp) {
-<span class="nc" id="L612">        tp.getTabs().clear();</span>
-<span class="nc" id="L613">    }</span>
+<span class="nc" id="L611">        tp.getTabs().clear();</span>
+<span class="nc" id="L612">    }</span>
     
     /** 
      * Displays user text in chat_box
@@ -620,12 +619,12 @@ public class HUDController {
      * @param event
      */    
     @FXML protected void SubmitToChat(ActionEvent event) {
-<span class="nc bnc" id="L623" title="All 2 branches missed.">        if ( !&quot;&quot;.equals( message_box.getText() ) ) {</span>
-<span class="nc" id="L624">            NetworkClient.userInput( message_box.getText() );</span>
-<span class="nc" id="L625">            message_box.clear();</span>
+<span class="nc bnc" id="L622" title="All 2 branches missed.">        if ( !&quot;&quot;.equals( message_box.getText() ) ) {</span>
+<span class="nc" id="L623">            NetworkClient.userInput( message_box.getText() );</span>
+<span class="nc" id="L624">            message_box.clear();</span>
             //chat_box.clear(); do we need this here?
         }
-<span class="nc" id="L628">    }</span>
+<span class="nc" id="L627">    }</span>
     
     /**
      * Undo the last move made
@@ -633,19 +632,19 @@ public class HUDController {
      * @param event 
      */
     @FXML protected void undoMove(ActionEvent event) {
-<span class="nc" id="L636">        UnitPool.getInstance().undoMove(null);</span>
-<span class="nc" id="L637">    }</span>
+<span class="nc" id="L635">        UnitPool.getInstance().undoMove(null);</span>
+<span class="nc" id="L636">    }</span>
     
     /** 
      * Changes current scene to main menu and shows main menu     * 
      * @author Joe Higley      
      */
     @FXML protected void Quit(ActionEvent event) {
-<span class="nc" id="L644">        Stage stage = (Stage) menuBar.getScene().getWindow();</span>
-<span class="nc" id="L645">        stage.setScene(Game.getInstance().getMainScene());</span>
-<span class="nc" id="L646">        stage.setFullScreen(Game.getInstance().fullscreen);</span>
-<span class="nc" id="L647">        stage.show();</span>
-<span class="nc" id="L648">    }</span>
+<span class="nc" id="L643">        Stage stage = (Stage) menuBar.getScene().getWindow();</span>
+<span class="nc" id="L644">        stage.setScene(Game.getInstance().getMainScene());</span>
+<span class="nc" id="L645">        stage.setFullScreen(Game.getInstance().fullscreen);</span>
+<span class="nc" id="L646">        stage.show();</span>
+<span class="nc" id="L647">    }</span>
     
     /** 
      * SolarDisplay code goes here
@@ -660,55 +659,56 @@ public class HUDController {
          * are checking against the proper instance. This code should have no
          * effect besides printing to System.out: 
          */
-<span class="nc bnc" id="L663" title="All 2 branches missed.">        if (Game.getInstance().hudController == this){</span>
-<span class="nc" id="L664">            System.out.println(&quot;Game's hudController reference is correct!&quot;);</span>
+<span class="nc bnc" id="L662" title="All 2 branches missed.">        if (Game.getInstance().hudController == this){</span>
+<span class="nc" id="L663">            System.out.println(&quot;Game's hudController reference is correct!&quot;);</span>
         }
         else {
-<span class="nc" id="L667">            System.out.println(&quot;Game's hudController reference is NOT correct!&quot;);</span>
+<span class="nc" id="L666">            System.out.println(&quot;Game's hudController reference is NOT correct!&quot;);</span>
         }
         // only allow current player to make phase changes
-<span class="nc bnc" id="L670" title="All 2 branches missed.">        if(Game.getInstance().currentTurnPlayer == Game.getInstance().PlayerID)</span>
+<span class="nc bnc" id="L669" title="All 2 branches missed.">        if(Game.getInstance().currentTurnPlayer == Game.getInstance().PlayerID)</span>
         {
-<span class="nc bnc" id="L672" title="All 18 branches missed.">            switch(phaseButton.getText()){</span>
+<span class="nc bnc" id="L671" title="All 18 branches missed.">            switch(phaseButton.getText()){</span>
                 case &quot;End Spell Phase&quot;:
-<span class="nc" id="L674">                    phaseButton.setText(&quot;End Movement Phase&quot;);</span>
-<span class="nc" id="L675">                    phase.setText(&quot;Movement&quot;);</span>
-<span class="nc" id="L676">                    NetworkClient.sendPhaseChange(&quot;Movement&quot;);</span>
-<span class="nc" id="L677">                    break;</span>
+<span class="nc" id="L673">                    phaseButton.setText(&quot;End Movement Phase&quot;);</span>
+<span class="nc" id="L674">                    phase.setText(&quot;Movement&quot;);</span>
+<span class="nc" id="L675">                    NetworkClient.sendPhaseChange(&quot;Movement&quot;);</span>
+<span class="nc" id="L676">                    break;</span>
 
                 case &quot;End Movement Phase&quot;:
-<span class="nc" id="L680">                    UnitPool.getInstance().endMovementPhase();</span>
-<span class="nc" id="L681">                    HexStack stack = new HexStack();</span>
-<span class="nc bnc" id="L682" title="All 2 branches missed.">                    if(UnitPool.getInstance().getOverStack() != null </span>
-<span class="nc bnc" id="L683" title="All 2 branches missed.">                       &amp;&amp; UnitPool.getInstance().getOverStack().size() &gt; 0)</span>
-<span class="nc" id="L684">                       stack.removeOverStack(UnitPool.getInstance().getOverStack());</span>
+<span class="nc" id="L679">                    UnitPool.getInstance().endMovementPhase();</span>
+<span class="nc" id="L680">                    HexStack stack = new HexStack();</span>
+<span class="nc bnc" id="L681" title="All 2 branches missed.">                    if(UnitPool.getInstance().getOverStack() != null </span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">                       &amp;&amp; UnitPool.getInstance().getOverStack().size() &gt; 0)</span>
+<span class="nc" id="L683">                       stack.removeOverStack(UnitPool.getInstance().getOverStack());</span>
                     //clear unit move highlights if present
-<span class="nc bnc" id="L686" title="All 2 branches missed.">                    if( hmapContent.highlightSet != null ){</span>
-<span class="nc" id="L687">                        hmapContent.clearHighlights();</span>
+<span class="nc bnc" id="L685" title="All 2 branches missed.">                    if( hmapContent.highlightSet != null ){</span>
+<span class="nc" id="L686">                        hmapContent.clearHighlights();</span>
                     }
-<span class="nc" id="L689">                    phaseButton.setText(&quot;End Combat Phase&quot;);</span>
-<span class="nc" id="L690">                    phase.setText(&quot;Combat&quot;);</span>
-<span class="nc" id="L691">                    NetworkClient.sendPhaseChange(&quot;Combat&quot;);</span>
-<span class="nc" id="L692">                    break;</span>
+<span class="nc" id="L688">                    phaseButton.setText(&quot;End Combat Phase&quot;);</span>
+<span class="nc" id="L689">                    phase.setText(&quot;Combat&quot;);</span>
+<span class="nc" id="L690">                    NetworkClient.sendPhaseChange(&quot;Combat&quot;);</span>
+<span class="nc" id="L691">                    break;</span>
 
                 case &quot;End Combat Phase&quot;:
-<span class="nc" id="L695">                    phaseButton.setText(&quot;End Turn&quot;);</span>
-<span class="nc" id="L696">                    phase.setText(&quot;End&quot;);</span>
-<span class="nc" id="L697">                    NetworkClient.endTurn();</span>
-<span class="nc" id="L698">                    break;</span>
+<span class="nc" id="L694">                    phaseButton.setText(&quot;End Turn&quot;);</span>
+<span class="nc" id="L695">                    phase.setText(&quot;End&quot;);</span>
+<span class="nc" id="L696">                    NetworkClient.endTurn();</span>
+<span class="nc" id="L697">                    break;</span>
 
                 case &quot;End Turn&quot;:
-<span class="nc" id="L701">                    NetworkClient.sendPhaseChange(&quot;Movement&quot;);</span>
-<span class="nc" id="L702">                    phaseButton.setText(&quot;End Spell Phase&quot;);</span>
-<span class="nc" id="L703">                    phase.setText(&quot;Spell&quot;);</span>
+<span class="nc" id="L700">                    NetworkClient.sendPhaseChange(&quot;Movement&quot;);</span>
+<span class="nc" id="L701">                    phaseButton.setText(&quot;End Spell Phase&quot;);</span>
+<span class="nc" id="L702">                    phase.setText(&quot;Spell&quot;);</span>
                     // end game turn, all players finished
-<span class="nc" id="L705">                    if(Game.getInstance().numPlayersGoneThisTurn </span>
-<span class="nc bnc" id="L706" title="All 2 branches missed.">                            == Scenario.getInstance().getNumberOfPlayers())</span>
+<span class="nc" id="L704">                    if(Game.getInstance().numPlayersGoneThisTurn </span>
+<span class="nc bnc" id="L705" title="All 2 branches missed.">                            == Scenario.getInstance().getNumberOfPlayers())</span>
                     {
-<span class="nc" id="L708">                        int x = parseInt(turn.getText());</span>
-<span class="nc" id="L709">                        x++;</span>
-<span class="nc" id="L710">                        turn.setText(Integer.toString(x));</span>
-
+<span class="nc" id="L707">                        int x = parseInt(turn.getText());</span>
+<span class="nc" id="L708">                        x++;</span>
+<span class="nc" id="L709">                        turn.setText(Integer.toString(x));</span>
+                        
+<span class="nc" id="L711">                        RandomEventTable.getInstance().DisplayEvent();</span>
 <span class="nc" id="L712">                        SolarDisplay.SunCalc();</span>
 <span class="nc" id="L713">                        Image Sun = new Image(SolarDisplay.GetSunImage());</span>
 <span class="nc" id="L714">                        SunImage.setImage(Sun);</span>
@@ -783,11 +783,47 @@ public class HUDController {
      * @param hmapContent
      * @author Jay Drage &amp; Shaung
      */
-    public void StartCombat(MapView hmapContent){        
-<span class="nc" id="L787">        System.out.println(&quot;StartCombat()&quot;);</span>
-<span class="nc" id="L788">        LaunchBotton(selected_stack, target_stack, hmapContent);</span>
+    public void StartCombat(MapView hmapContent){  
+        
+<span class="nc" id="L788">        System.out.println(&quot;StartCombat()&quot;);</span>
+<span class="nc bnc" id="L789" title="All 2 branches missed.">        if (!CheckNext()) {</span>
+<span class="nc" id="L790">            Notifications.create()</span>
+<span class="nc" id="L791">                        .title(&quot;Not a Valid Command&quot;)</span>
+<span class="nc" id="L792">                        .text(&quot;Error Target: Out of range.&quot;)</span>
+<span class="nc" id="L793">                        .showError();</span>
+        }
+            
+        else 
+<span class="nc" id="L797">        LaunchBotton(selected_stack, target_stack, hmapContent);</span>
 
-<span class="nc" id="L790">    }</span>
+<span class="nc" id="L799">    }</span>
+    
+    /**
+     * @author Shaung
+     * 
+     * 
+     */
+    
+    public boolean CheckNext() {
+<span class="nc" id="L808">    boolean next = false;</span>
+<span class="nc" id="L809">        MapHex slected_Terrain = new MapHex();</span>
+<span class="nc" id="L810">        MapHex target_Terrain = new MapHex();</span>
+        
+<span class="nc" id="L812">        MapView temp = MapView.getMapView();</span>
+<span class="nc" id="L813">        target_Terrain = (MapHex)temp.GetHexMap().GetHex(target_stack.get(0).getLocation());</span>
+<span class="nc" id="L814">        slected_Terrain = (MapHex)temp.GetHexMap().GetHex(selected_stack.get(0).getLocation());</span>
+        
+<span class="nc bnc" id="L816" title="All 2 branches missed.">        for (int i = 0; i &lt; 6; i++) {</span>
+<span class="nc bnc" id="L817" title="All 2 branches missed.">            if (target_Terrain.getNeighbor(i).GetID() == slected_Terrain.GetID()) {</span>
+<span class="nc" id="L818">                next = true;</span>
+            }
+        }
+        
+<span class="nc" id="L822">    return next;</span>
+    }
+    
+    
+    
     /**
      * used to start spells
      * called from keyEvent handlers
@@ -795,15 +831,15 @@ public class HUDController {
      * @author Jay Drage
      */
     public void StartSpell(){
-<span class="nc" id="L798">        System.out.println(&quot;StartSpell()&quot;);</span>
-<span class="nc bnc" id="L799" title="All 2 branches missed.">        if(selected_unit != null){</span>
-<span class="nc bnc" id="L800" title="All 2 branches missed.">            if(selected_unit.getUnitType() == UnitType.Character){</span>
-<span class="nc" id="L801">               Characters tempCaster = (Characters) selected_unit;</span>
-<span class="nc" id="L802">               tempCaster.CastSpell();</span>
-<span class="nc" id="L803">               tempCaster = null;</span>
+<span class="nc" id="L834">        System.out.println(&quot;StartSpell()&quot;);</span>
+<span class="nc bnc" id="L835" title="All 2 branches missed.">        if(selected_unit != null){</span>
+<span class="nc bnc" id="L836" title="All 2 branches missed.">            if(selected_unit.getUnitType() == UnitType.Character){</span>
+<span class="nc" id="L837">               Characters tempCaster = (Characters) selected_unit;</span>
+<span class="nc" id="L838">               tempCaster.CastSpell();</span>
+<span class="nc" id="L839">               tempCaster = null;</span>
             }
         }
-<span class="nc" id="L806">    }</span>
+<span class="nc" id="L842">    }</span>
     /**
      * changes Game.PlayerID to current player
      * used for testing with only one client
@@ -812,7 +848,7 @@ public class HUDController {
      * @author Jay Drage
      */
     public void MakeCurrentPlayer(){
-<span class="nc" id="L815">        Game.getInstance().PlayerID = Game.getInstance().currentTurnPlayer;</span>
-<span class="nc" id="L816">    }</span>
+<span class="nc" id="L851">        Game.getInstance().PlayerID = Game.getInstance().currentTurnPlayer;</span>
+<span class="nc" id="L852">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>
