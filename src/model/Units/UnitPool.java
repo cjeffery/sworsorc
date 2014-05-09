@@ -205,7 +205,7 @@ public class UnitPool {
 
         // Send unit being added to the rest of the players
         // Does we need to send playerID as well? Seems to be included in the units information
-        NetworkClient.send( Flag.GAME, Tag.ADD_UNIT, unit );
+        NetworkClient.send( Flag.GAME, Tag.ADD_UNIT, playerId, unit ); // i think that is the unit ID
     }
     
     /**

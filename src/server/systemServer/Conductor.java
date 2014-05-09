@@ -75,31 +75,27 @@ final public class Conductor {
         }
         switch ( tag ) {
             case ADD_UNIT:
-                
-                //temp = (MoveableUnit) data.get( 0 );
-                pool.addUnit( 0, temp );
-                if (data.size() == 2){
-                    pool.addUnit((Integer)data.get(1), 
-                            temp,
-                            (String)data.get(2));
+                if ( data.size() == 3 ) {
+                    pool.addUnit( (Integer) data.get( 1 ), temp, (String) data.get( 2 ) );
+                } else if ( data.size() == 2 ) {
+                    pool.addUnit( (int) data.get( 1 ), temp );
+                } else {
+                    System.err.println( "Conductor shouldn't reach here!" );
                 }
                 break;
             case REMOVE_UNIT:
-                pool.removeUnit( (MoveableUnit) data.get( 0 ) );
+                pool.removeUnit( temp );
                 break;
             case MOVE_UNIT:
                 pool.
-                        addMoveNetwork( (MoveableUnit) data.get( 0 ) );
+                        addMoveNetwork( temp );
                 break;
             case MOVE_UNIT_TELEPORT:
-                pool.addMove( (MoveableUnit) data.get( 0 ), (String) data.get( 1 ), (boolean) data.
-                        get( 2 ) );
+                pool.addMove( temp, (String) data.get( 1 ), (boolean) data.get( 2 ) );
                 break;
             case PHASE_CHANGE:
-                hud.
-                        setPhaseText( smessage );
-                hud.
-                        setPhaseButtonText( smessage );
+                hud.setPhaseText( smessage );
+                hud.setPhaseButtonText( smessage );
                 break;
             default:
                 System.err.println( "(Conductor) Unknown tag: " + tag );
