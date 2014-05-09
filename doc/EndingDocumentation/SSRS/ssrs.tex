@@ -1,0 +1,513 @@
+% This file was converted to LaTeX by Writer2LaTeX ver. 1.2
+% see http://writer2latex.sourceforge.net for more info
+\documentclass[twoside,letterpaper,pdftex]{article}
+\usepackage[ascii]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,textcomp}
+\usepackage{color}
+\usepackage{array}
+\usepackage{supertabular}
+\usepackage[final]{pdfpages}
+\usepackage{hhline}
+\usepackage{hyperref}
+\setboolean{@twoside}{false}
+\hypersetup{pdftex, colorlinks=true, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue, pdftitle=SYSTEMS AND SOFTWARE REQUIREMENTS SPECIFICATION (SSRS) TEMPLATE, pdfauthor=Clinton Jeffery, pdfsubject=, pdfkeywords=}
+%\usepackage[pdftex]{graphicx}
+% footnotes configuration
+\makeatletter
+\renewcommand\thefootnote{\arabic{footnote}}
+\makeatother
+% Outline numbering
+\setcounter{secnumdepth}{3}
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\arabic{section}.\arabic{subsection}}
+\renewcommand\thesubsubsection{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+\renewcommand\thesubparagraph{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.null{paragraph}.\arabic{subparagraph}}
+\makeatletter
+\newcommand\arraybslash{\let\\\@arraycr}
+\makeatother
+% Page layout (geometry)
+\setlength\voffset{-1in}
+\setlength\hoffset{-1in}
+\setlength\topmargin{0.5in}
+\setlength\oddsidemargin{1in}
+\setlength\evensidemargin{1in}
+\setlength\textheight{8.278in}
+\setlength\textwidth{6.5in}
+\setlength\footskip{0.561in}
+\setlength\headheight{0.5in}
+\setlength\headsep{0.461in}
+% Footnote rule
+\setlength{\skip\footins}{0.0469in}
+\renewcommand\footnoterule{\vspace*{-0.0071in}\setlength\leftskip{0pt}\setlength\rightskip{0pt plus 1fil}\noindent\textcolor{black}{\rule{0.25\columnwidth}{0.0071in}}\vspace*{0.0398in}}
+% Pages styles
+\makeatletter
+\newcommand\ps@Standard{
+  \renewcommand\@oddhead{\rmfamily\color{black} University of Idaho CS Department Instructional Use\hfill \hfill NOT FOR RELEASE}
+  \renewcommand\@evenhead{\@oddhead}
+  \renewcommand\@oddfoot{{\foreignlanguage{english}{\textcolor{black}{SSRS Page }}}{\foreignlanguage{english}{\textcolor{black}{\thepage{}}}}}
+  \renewcommand\@evenfoot{\@oddfoot}
+  \renewcommand\thepage{\arabic{page}}
+}
+\newcommand\ps@Convertviii{
+  \renewcommand\@oddhead{\selectlanguage{english}\rmfamily\color{black} University of Idaho CS Department Instructional Use\hfill \hfill NOT FOR RELEASE}
+  \renewcommand\@evenhead{\@oddhead}
+  \renewcommand\@oddfoot{{\foreignlanguage{english}{\textcolor{black}{SSRS Page }}}{\foreignlanguage{english}{\textcolor{black}{\thepage{}}}}}
+  \renewcommand\@evenfoot{\@oddfoot}
+  \renewcommand\thepage{\arabic{page}}
+}
+\newcommand\ps@Convertvii{
+  \renewcommand\@oddhead{\selectlanguage{english}\rmfamily\color{black} University of Idaho CS Department Instructional Use\hfill \hfill NOT FOR RELEASE}
+  \renewcommand\@evenhead{\@oddhead}
+  \renewcommand\@oddfoot{{\foreignlanguage{english}{\textcolor{black}{SSRS Page }}}{\foreignlanguage{english}{\textcolor{black}{\thepage{}}}}}
+  \renewcommand\@evenfoot{\@oddfoot}
+  \renewcommand\thepage{\arabic{page}}
+}
+\newcommand\ps@Convertvi{
+  \renewcommand\@oddhead{\selectlanguage{english}\rmfamily\color{black} University of Idaho CS Department Instructional Use\hfill \hfill \hfill \hfill  \ \ \ \ \ NOT FOR RELEASE}
+  \renewcommand\@evenhead{\@oddhead}
+  \renewcommand\@oddfoot{{\foreignlanguage{english}{\textcolor{black}{SSRS Page }}}{\foreignlanguage{english}{\textcolor{black}{\thepage{}}}}}
+  \renewcommand\@evenfoot{\@oddfoot}
+  \renewcommand\thepage{\arabic{page}}
+}
+\newcommand\ps@Convertv{
+  \renewcommand\@oddhead{\selectlanguage{english}\rmfamily\color{black} University of Idaho CS Department Instructional Use\hfill \hfill NOT FOR RELEASE}
+  \renewcommand\@evenhead{\@oddhead}
+  \renewcommand\@oddfoot{{\foreignlanguage{english}{\textcolor{black}{SSRS Page }}}{\foreignlanguage{english}{\textcolor{black}{\thepage{}}}}}
+  \renewcommand\@evenfoot{\@oddfoot}
+  \renewcommand\thepage{\arabic{page}}
+}
+\newcommand\ps@Convertiv{
+  \renewcommand\@oddhead{\selectlanguage{english}\rmfamily\color{black} University of Idaho CS Department Instructional Use\hfill \hfill \hfill \hfill  \ \ \ \ \ \ NOT FOR RELEASE}
+  \renewcommand\@evenhead{\@oddhead}
+  \renewcommand\@oddfoot{{\foreignlanguage{english}{\textcolor{black}{SSRS Page }}}{\foreignlanguage{english}{\textcolor{black}{\thepage{}}}}}
+  \renewcommand\@evenfoot{\@oddfoot}
+  \renewcommand\thepage{\arabic{page}}
+}
+\newcommand\ps@Convertii{
+  \renewcommand\@oddhead{}
+  \renewcommand\@evenhead{\@oddhead}
+  \renewcommand\@oddfoot{}
+  \renewcommand\@evenfoot{\@oddfoot}
+  \renewcommand\thepage{\arabic{page}}
+}
+\makeatother
+\pagestyle{Standard}
+\setlength\tabcolsep{1mm}
+\renewcommand\arraystretch{1.3}
+\title{SYSTEMS AND SOFTWARE REQUIREMENTS SPECIFICATION (SSRS) TEMPLATE}
+\author{Ian Westrope}
+\date{2013-09-10}
+\begin{document}
+
+\clearpage{\centering\bfseries
+SYSTEMS AND SOFTWARE \ REQUIREMENTS SPECIFICATION (SSRS) FOR 
+\par}
+
+
+\bigskip
+
+{\centering\bfseries
+CS383 Spring 2014 Project: Swords and Sorcery
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\bfseries
+{}
+\par}
+
+\begin{center}
+\includegraphics[width=3.4362in,height=0.6134in]{uislogan.png}
+\end{center}
+
+\bigskip
+
+
+\bigskip
+
+{\centering\bfseries
+Version 1.0
+\par}
+
+{\centering\bfseries
+5/9/14
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\bfseries
+Prepared for:
+\par}
+
+{\centering\bfseries
+CS 383	Software Engineering Spring 2014
+\par}
+
+
+\bigskip
+
+
+\bigskip
+
+{\centering\bfseries
+Prepared by:
+\par}
+
+{\centering\bfseries
+[insert your name(s)]
+\par}
+
+{\centering\bfseries
+University of Idaho
+\par}
+
+{\centering\bfseries
+Moscow, ID \ 83844-1010
+\par}
+
+
+\clearpage{\centering\selectlanguage{english}\bfseries\color{black}
+\foreignlanguage{english}{\MakeUppercase{\ Swords and Sorcery SSRS}}
+\par}
+
+{\centering\selectlanguage{english}\bfseries\color{black}
+TABLE OF CONTENTS
+\par}
+
+
+\bigskip
+
+{\selectlanguage{english}\bfseries\color{black}
+Section\ \ Page}
+
+\setcounter{tocdepth}{9}
+\renewcommand\contentsname{}
+\tableofcontents
+
+\bigskip
+
+\clearpage\clearpage\setcounter{page}{1}\pagestyle{Convertii}
+\section[Introduction]{\rmfamily\bfseries Introduction}
+\hypertarget{RefHeading15659017292}{}{
+{\textit{
+This section the document should introduce the project, customer,
+audience, etc., without delving into too much detail, because those
+details are provided in subsequent sections.}}}
+
+\subsection[IDENTIFICATION]{\rmfamily\bfseries IDENTIFICATION}
+\hypertarget{RefHeading15859017292}{}{\itshape
+}
+
+{
+The system which this document applies is titled Swords and Sorcery, or S \& S for short. It is currently in version 1.0.}
+
+\subsection[PURPOSE]{\rmfamily\bfseries PURPOSE}
+\hypertarget{RefHeading16059017292}{}{\itshape
+}
+
+{
+The purpose of the system under development is to
+create a computerized version of the board game Swords and Sorcery. 
+While the system will be used by anyone who wants to play the game
+, this document is intended to be read and understood
+by University of Idaho computer science software designers and coders.}
+
+\subsection[SCOPE]{\rmfamily\bfseries SCOPE}
+\hypertarget{RefHeading16259017292}{}{\itshape
+}
+
+{
+This project began development at the beginning of Spring Semester 2014. As a class
+we began by identifying requirements, we then moved onto a brief phase of design before
+jumping right into implementation. We have done some testing, but most of this project
+is still underdevelopment. This project is sponsored by Dr. Jeffery, and is developed by
+the Software Engineering class. Currently the project is able to be ran on any machine
+capable of running the Java Virtual Environment.}
+
+\subsection[DEFINITIONS, ACRONYMS, AND ABBREVIATIONS]{\rmfamily\bfseries
+DEFINITIONS, ACRONYMS, AND ABBREVIATIONS}
+\hypertarget{RefHeading16459017292}{}{\itshape
+This section shall list and define all special terms, acronyms
+and abbreviations used throughout this document. A
+tabular form is preferable, but not mandatory.}
+
+
+\bigskip
+
+\begin{flushleft}
+\tablefirsthead{}
+\tablehead{}
+\tabletail{}
+\tablelasttail{}
+\begin{supertabular}{|m{1.3587599in}|m{5.00806in}|}
+\hline
+\centering{\bfseries Term or Acronym} &
+\centering\arraybslash{\bfseries Definition}\\\hline
+{Alpha test} &
+{Limited release(s) to selected, outside testers}\\\hline
+{Beta test} &
+{Limited release(s) to cooperating customers wanting early access to developing
+systems}\\\hline
+{Final test} &
+{aka, Acceptance test, release of full functionality to customer for
+approval}\\\hline
+{DFD} &
+{Data Flow Diagram}\\\hline
+{SDD} &
+{Software Design Document, aka SDS, Software Design Specification}\\\hline
+{SRS} &
+{Software Requirements Specification}\\\hline
+{SSRS} &
+{System and Software Requirements Specification}\\\hline
+{S \& S}
+ &
+{Swords and Sorcery}
+\\\hline
+{TCP/IP}
+ &
+{Transmission Control Protocol and Internet Protocol}
+\\\hline
+~
+ &
+~
+\\\hline
+~
+ &
+~
+\\\hline
+\end{supertabular}
+\end{flushleft}
+
+\subsection[OVERVIEW AND RESTRICTIONS]{\rmfamily\bfseries OVERVIEW AND
+RESTRICTIONS}
+\hypertarget{RefHeading16859017292}{}{\itshape
+}
+
+{
+This document is for limited release only to UI CS personnel working
+on the project.}
+
+
+\bigskip
+
+{
+Section 2 of this document describes the system under development
+from a holistic point of view. Functions,
+characteristics, constraints, assumptions, dependencies, and overall
+requirements are defined from the system-level perspective.}
+
+
+\bigskip
+
+{
+Section 3 of this document describes the specific requirements of
+the system being developed. Interfaces, features, and specific
+requirements are enumerated and described to a degree sufficient
+for a knowledgeable designer or coder to
+begin crafting an architectural solution to the proposed system.}
+
+
+\bigskip
+
+{
+Section 4 provides the requirements traceability information for the
+project. Each feature of the system is indexed by
+the SSRS requirement number.}
+
+
+\bigskip
+
+{
+Sections 5 and up are appendices including original information and
+communications used to create this document.}
+
+\clearpage\section[OVERALL DESCRIPTION]{\rmfamily\bfseries OVERALL DESCRIPTION}
+\hypertarget{RefHeading17059017292}{}{
+{\textit{ }}}
+
+\subsection[PRODUCT PERSPECTIVE]{\rmfamily\bfseries PRODUCT PERSPECTIVE}
+\hypertarget{RefHeading17259017292}{}{
+\foreignlanguage{english}{\textit{ }}}
+
+{\selectlanguage{english}\color{black}
+Swords and Sworcery is an independent product and all of it's functions are completely 
+self-contained.}
+
+\subsection[PRODUCT FUNCTIONS]{\rmfamily\bfseries PRODUCT FUNCTIONS}
+\hypertarget{RefHeading17459017292}{}{\itshape
+}
+
+This project's main function is to create a computerized version of the board
+game Swords and Sorcery, specifically the army game. This includes the game 
+being a multi-player game to be playable over a network. The game functions
+are as follows
+
+\begin{itemize}
+\item Create/Join a game
+\item Play through the different phases:
+\begin{itemize}
+  \item Movement: move units and characters on the board
+  \item Combat: complete combat between two different stacks of units
+  \item Spell: cast a spell with a character
+\end{itemize}
+\item Communicate the results of these phases over the network to other instances of the game
+\item Communicate with other players through chat over the network
+\item End the game
+\end{itemize}
+
+\subsection[USER CHARACTERISTICS]{\rmfamily\bfseries USER CHARACTERISTICS}
+\hypertarget{RefHeading17659017292}{}{\itshape
+}
+
+The intended users of this product are anyone who wants to play the game. The user
+should have an education level of at least middle school so they can understand the
+rules of the game. They should have some experience of the rules of Swords and Sorcery.
+The intended user needs no technical expertise to run this application.
+
+\subsection[CONSTRAINTS]{\rmfamily\bfseries CONSTRAINTS}
+\hypertarget{RefHeading17859017292}{}{\itshape
+}
+
+Swords and Sorcery is constrained by the rules set by the physical board game. Also due to the networking it is constrained to following the protocols over the network. Hardware requirements are just having enough memory to hold and run Swords and Sorcery, and have the hardware necessary to run the Java Run-Time Environment. 
+
+\subsection[ASSUMPTIONS AND DEPENDENCIES]{\rmfamily\bfseries ASSUMPTIONS AND
+DEPENDENCIES}
+\hypertarget{RefHeading18059017292}{}{\itshape
+}
+
+We assume that the Java Run-Time Environment will be able to run Java 8 code, but if future versions of the Java Run-Time Environment do not support Java 8 code then the Swords and Sorcery code base will need to be updated accordingly.
+
+\subsection[SYSTEM LEVEL (NON{}-FUNCTIONAL) REQUIREMENTS]{\rmfamily\bfseries
+SYSTEM LEVEL (NON-FUNCTIONAL) REQUIREMENTS}
+\hypertarget{RefHeading18259017292}{}{\itshape
+}
+
+\subsubsection[Site dependencies]{\rmfamily\bfseries Site dependencies}
+\hypertarget{RefHeading18459017292}{}{
+{\textit{ }}
+{\textit{ }}}
+
+Swords and Sorcery has very few site dependencies. It requires a mouse and keyboard for input and a monitor for output. To run Swords and Sorcery requires the Java Run Time Environment that can run Java 8 applications. Also the computer needs to have a network connection.
+
+\subsubsection[Safety, security and privacy requirements]{\rmfamily\bfseries
+Safety, security and privacy requirements}
+\hypertarget{RefHeading18659017292}{}{\itshape
+}
+
+Sword and Sorcery had no safety, security, or privacy requirements.
+
+\subsubsection[Performance requirements]{\rmfamily\bfseries Performance
+requirements}
+\hypertarget{RefHeading18859017292}{}{\itshape
+}
+
+Swords and Sorcery software application should be able to support up to seven users playing the same
+game over the network.
+
+\subsubsection[System and software quality]{\rmfamily\bfseries System and software
+quality}
+\hypertarget{RefHeading19059017292}{}{\itshape
+}
+
+This project shall have the ability to perform all of the required functions with consistent results. Swords and Sorcery shall also be able to be playable on any machine capable of running Java as that is what Swords and Sorcery will run on. It shall also be able to be used by anyone capable of understanding the rules to the board game.
+
+
+\subsubsection[Packaging and delivery requirements]{\rmfamily\bfseries
+Packaging and delivery requirements}
+\hypertarget{RefHeading19259017292}{}{\itshape
+}
+
+The game and all of its documentation is available at https://github.com/cjeffery/sworsorc
+
+\subsubsection[Personnel{}-related requirements]{\rmfamily\bfseries
+Personnel-related requirements}
+\hypertarget{RefHeading19459017292}{}{
+{\textit{ }}\foreignlanguage{english}{ }}
+
+{\selectlanguage{english}\color{black}
+The system under development has no special personnel-related characteristics. }
+
+\subsubsection[Training{}-related requirements]{\selectlanguage{english}\rmfamily\bfseries\color{black} Training-related
+requirements}
+\hypertarget{RefHeading19659017292}{}{\selectlanguage{english}\color{black}
+\foreignlanguage{english}{\textit{ }}\foreignlanguage{english}{ \ \ }}
+
+{\selectlanguage{english}\color{black}
+No training materials or expectations are tied to this project other than the limited help screens built into the
+software and the rule book for the board game.}
+
+\subsubsection[Logistics{}-related requirements]{\selectlanguage{english}\rmfamily\bfseries\color{black}
+Logistics-related requirements}
+\hypertarget{RefHeading19859017292}{}{\selectlanguage{english}\itshape\color{black}
+}
+
+{The system requirements for Swords and Sorcery are any machine capable of running Java 8 run time environment.}
+
+\subsubsection[Precedence and criticality of requirements]{\selectlanguage{english}\rmfamily\bfseries\color{black}
+Precedence and criticality of requirements}
+\hypertarget{RefHeading20259017292}{}{\selectlanguage{english}\itshape\color{black}
+}
+
+{\selectlanguage{english}\color{black}
+All requirements stated above have equal weight, since there are no requirements for safety, security, or privacy all of the requirements were given an equal weight.}
+
+\clearpage\section[SPECIFIC REQUIREMENTS]{\selectlanguage{english}\rmfamily\bfseries\color{black} SPECIFIC REQUIREMENTS}
+\hypertarget{RefHeading20459017292}{}{\selectlanguage{english}\itshape\color{black}
+}
+
+\subsection[EXTERNAL INTERFACE REQUIREMENTS]{\selectlanguage{english}\rmfamily\bfseries\color{black} EXTERNAL INTERFACE
+REQUIREMENTS}
+\hypertarget{RefHeading20659017292}{}{\selectlanguage{english}\itshape\color{black}
+}
+
+\subsubsection[Hardware Interfaces]{\selectlanguage{english}\rmfamily\bfseries\color{black} Hardware Interfaces}
+\hypertarget{RefHeading20859017292}{}{\selectlanguage{english}\color{black}
+\foreignlanguage{english}{\ Swords and Sorcery did not require any hardware interfaces.}}
+
+\subsubsection[Software Interfaces]{\selectlanguage{english}\rmfamily\bfseries\color{black} Software Interfaces}
+\hypertarget{RefHeading21059017292}{}{\selectlanguage{english}\color{black}
+\foreignlanguage{english}{\ Swords and Sorcery only required TCP/IP as the only software interface due to needing a network connection.}}
+
+\subsubsection[User Interfaces]{\selectlanguage{english}\rmfamily\bfseries\color{black} User Interfaces}
+\hypertarget{RefHeading21259017292}{}{\selectlanguage{english}\color{black}
+\foreignlanguage{english}{\ The user interface required for Swords and Sorcery is the Java Run-Time Environment. This is a requirement resulting from the implementation not the design of the project. }}
+
+\bigskip
+
+
+\bigskip
+
+\bigskip
+\clearpage\setcounter{page}{1}\pagestyle{Convertiv}
+
+\bigskip
+
+
+\clearpage\setcounter{page}{1}\pagestyle{Convertv}
+\subsection[SYSTEM FEATURES]{\selectlanguage{english}\rmfamily\bfseries\color{black} SYSTEM FEATURES}
+\hypertarget{RefHeading21659017292}{}{\selectlanguage{english}\itshape\color{black}
+}
+
+\subsubsection[\ Use Case Diagrams]{\foreignlanguage{english}{\ Use Case Diagrams}}
+\hypertarget{RefHeading21859017292}{}{\selectlanguage{english}\color{black}
+A pdf of our use case diagrams is inserted starting on the following page.}
+
+
+\includepdf[pages=-, offset=75 -75]{use_cases.pdf}
+
+\bigskip
+\end{document}
