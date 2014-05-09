@@ -540,6 +540,18 @@ Unfortunately, the most complex functionality of the Scenario class
 cannot be tested by automated unit tests. The unit pool populator requires 
 a manual check.
 
+%% CCC
+\subsection{Network}
+\begin{itemize}
+  \item Client connects and disconnects from the server.
+  \item Server detects new client connections.
+  \item Client and server can exchange messages.
+  \item Client and server are able to identify message type and content.
+  \item Client messages are received by related clients.
+  \item Network events trigger GUI events properly.
+\end{itemize}
+%% VVV
+
 \subsection	{Additional items to be tested.}
 
 {\selectlanguage{english}\color{black}
@@ -567,6 +579,7 @@ a manual check.
 Software to be tested includes the following:
 
 \begin{enumerate}
+\item User's network configuration prevents networking.
 \item  GUI - Doesn't load working map, can't support unit movement
 \item  JSON Library - Loads scenario incorrectly, if not at all
 \item  Incorporating Networking with GUI and game logic may be difficult
@@ -646,12 +659,40 @@ What is not tested is the count of the units on the map that correspond to the s
 \item Full game
 \item Everything in backlog
 \end{itemize}
+
+
+\subsection{Network}
+JUnit tests will be used to test both sides of the network (that is,
+the client and the server networking code), in isolation.
+
+Manual testing will be needed to ensure integration of the networking
+code with elements of the graphical user interface, as well as testing
+that the client and server work over physically distinct machines.
+Because of the limited resources for manual testing, manual testing
+will test a subset of possible interactions, with the assumption that
+core network obstacles will block all messages (i.e. no connection can
+be made over the network), or no messages. The graphic effects of
+network events will also be tested manually.
 }
 
 \section[APPROACH]{\bfseries\color{black} APPROACH}
 {\selectlanguage{english}\color{black}
 The plan is to use Junit tests and manual tests to ensure that our code follows the rules of the game and works itself. Junit tests are done according to the individuals who have developed the methods being tested, and those are not listed here. However, they should be able to be run together and work. The manual tests will work as though a mock player (tester) is running the game. They should be able to select a unit, move a unit, teleport a unit, advance and view the solar display, send chat messages, and view the diplomacy display. Functionalities of each display should also be tested. For example, a unit with a move allowance should only be viewed moving at or under their limit and a chat message should be sent from one user and be seen by all users.
 }
+
+\subsection{Network}
+JUnit tests will be used to test both sides of the network (that is,
+the client and the server networking code), in isolation.
+
+Manual testing will be needed to ensure integration of the networking
+code with elements of the graphical user interface, as well as testing
+that the client and server work over physically distinct machines.
+Because of the limited resources for manual testing, manual testing
+will test a subset of possible interactions, with the assumption that
+core network obstacles will block all messages (i.e. no connection can
+be made over the network), or no messages. The graphic effects of
+network events will also be tested manually.
+
 
 \section[ITEM PASS/FAIL CRITERIA]{\bfseries\color{black}
 	 ITEM PASS/FAIL CRITERIA}
