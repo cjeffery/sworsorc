@@ -12,9 +12,14 @@ import Character.Characters;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.Serializable;
+import javafx.embed.swing.SwingNode;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import mainswordsorcery.Game;
 
 /**
  *
@@ -26,7 +31,7 @@ public final class Spell_Book implements Serializable {
 
     // Find a different way to do this please
     // Serialze information for the dialog, and then display the dialog in the calling class
-    Stage popup = new Stage();
+    // Stage popup = new Stage();
     
     /** ==========================
      *      Character info
@@ -41,6 +46,7 @@ public final class Spell_Book implements Serializable {
      *      GUI Values
      * ===========================
      */
+    public static Stage popupBook = new Stage();
     public  JFrame mainFrame;
     private JScrollPane scrollpanel;
     
@@ -75,44 +81,44 @@ public final class Spell_Book implements Serializable {
         prepareGUI();
         
         list = new Spell[32];
-        list[0]  = new Spell("Teleportation Protection", 1, 2, mainFrame,c);
-        list[1]  = new Spell("Force Wall", 1, 2, mainFrame,c);
-        list[2]  = new Spell("Conjure Zombie Infantry", 1, 1, mainFrame, c);
+        list[0]  = new Spell("Teleportation Protection", 1, 2, c);
+        list[1]  = new Spell("Force Wall", 1, 2,c);
+        list[2]  = new Spell("Conjure Zombie Infantry", 1, 1, c);
         
-        list[3]  = new Spell("Manna Transfer", 2, 2, mainFrame, c);
-        list[4]  = new Spell("River Crossing", 2, 2, mainFrame, c);
-        list[5]  = new Spell("Morale", 2, 3, mainFrame,c);
-        list[6]  = new Spell("Fear", 2, 3, mainFrame, c);
-        list[7]  = new Spell("Conjure Centauroid Cavalry", 2, 1, mainFrame, c);
+        list[3]  = new Spell("Manna Transfer", 2, 2, c);
+        list[4]  = new Spell("River Crossing", 2, 2,  c);
+        list[5]  = new Spell("Morale", 2, 3, c);
+        list[6]  = new Spell("Fear", 2, 3,  c);
+        list[7]  = new Spell("Conjure Centauroid Cavalry", 2, 1,  c);
         
-        list[8]  = new Spell("Monsoon", 3, 5, mainFrame, c);
-        list[9]  = new Spell("Enhance Stature", 3, 1, mainFrame, c);
-        list[10] = new Spell("Forest", 3, 2, mainFrame, c);
-        list[11] = new Spell("Vortex Suppression", 3, 2, mainFrame, c);
-        list[12] = new Spell("Immobilization", 3, 1, mainFrame, c);
-        list[13] = new Spell("Conjure Wyvern Airtroops", 3, 1.5, mainFrame, c);
-        list[14] = new Spell("Dispell Magicks", 3, 3, mainFrame, c);
+        list[8]  = new Spell("Monsoon", 3, 5,  c);
+        list[9]  = new Spell("Enhance Stature", 3, 1,  c);
+        list[10] = new Spell("Forest", 3, 2,  c);
+        list[11] = new Spell("Vortex Suppression", 3, 2,  c);
+        list[12] = new Spell("Immobilization", 3, 1,  c);
+        list[13] = new Spell("Conjure Wyvern Airtroops", 3, 1.5,  c);
+        list[14] = new Spell("Dispell Magicks", 3, 3,  c);
         
-        list[15] = new Spell("Disintegration", 4, 6, mainFrame, c);
-        list[16] = new Spell("Building", 4, 5, mainFrame, c);
-        list[17] = new Spell("Vortex Creation", 4, 2, mainFrame, c);
-        list[18] = new Spell("Ersatz Winter", 4, 8, mainFrame, c);
-        list[19] = new Spell("Teleportation Control", 4, 4, mainFrame, c);
-        list[20] = new Spell("Conjure Koboldic Infantry", 4, 1, mainFrame, c);
+        list[15] = new Spell("Disintegration", 4, 6,  c);
+        list[16] = new Spell("Building", 4, 5,  c);
+        list[17] = new Spell("Vortex Creation", 4, 2,  c);
+        list[18] = new Spell("Ersatz Winter", 4, 8,  c);
+        list[19] = new Spell("Teleportation Control", 4, 4,  c);
+        list[20] = new Spell("Conjure Koboldic Infantry", 4, 1,  c);
         
-        list[21] = new Spell("Planar Return", 5, 6, mainFrame, c);
-        list[22] = new Spell("Summon Demon", 5, 8, mainFrame, c);
-        list[23] = new Spell("Banish Conjured Troops", 5, 3, mainFrame, c);
-        list[24] = new Spell("Conjure Wraith Troops", 5, 1.5, mainFrame, c);
+        list[21] = new Spell("Planar Return", 5, 6,  c);
+        list[22] = new Spell("Summon Demon", 5, 8,  c);
+        list[23] = new Spell("Banish Conjured Troops", 5, 3,  c);
+        list[24] = new Spell("Conjure Wraith Troops", 5, 1.5,  c);
         
-        list[25] = new Spell("Bind Demon", 6, 4, mainFrame, c);
-        list[26] = new Spell("Banish Demon", 6, 6, mainFrame, c);
-        list[27] = new Spell("Summon Force", 6, 5, mainFrame, c);
-        list[28] = new Spell("Firestorm", 6, 10, mainFrame, c);
-        list[29] = new Spell("Berserkergang", 6, 2, mainFrame, c);
-        list[30] = new Spell("Conjure Demonic Infantry", 6, 2, mainFrame, c);
+        list[25] = new Spell("Bind Demon", 6, 4,  c);
+        list[26] = new Spell("Banish Demon", 6, 6,  c);
+        list[27] = new Spell("Summon Force", 6, 5,  c);
+        list[28] = new Spell("Firestorm", 6, 10,  c);
+        list[29] = new Spell("Berserkergang", 6, 2,  c);
+        list[30] = new Spell("Conjure Demonic Infantry", 6, 2,  c);
         
-        list[31] = new Spell("Wizard Wheel", 7, 6, mainFrame, c);
+        list[31] = new Spell("Wizard Wheel", 7, 6,  c);
         
         
     }
@@ -122,7 +128,7 @@ public final class Spell_Book implements Serializable {
         int nSpells = 0;
         if(character.getMagicPL() == 0){
             myList = new Spell[1];
-            myList[0] = new Spell("void", 0, 0, mainFrame, character);
+            myList[0] = new Spell("void", 0, 0, character);
         } else {
             for(int i = 0; i < 32; i++) {
                 if(list[i].Level <= character.getMagicPL()+1 
@@ -209,9 +215,11 @@ public final class Spell_Book implements Serializable {
       //mainFrame.setVisible(false); 
     }
     
-    public void hideWindow() {
+    public static void hideWindow() {
         //mainFrame.setVisible(false);
-        popup.close();
+        //popup.close();
+        popupBook.hide();
+        //return popupBook;
     }
 
     public Stage getSpellBook() {
@@ -219,6 +227,27 @@ public final class Spell_Book implements Serializable {
         // This is public, it shouldn't be setting a class member anyway
         // TODO: Stage can't be a class data member
         return JFXpopup.getJFXPopup( MainSpellListPanel );
+        //Stage popup = new Stage();
+        /*
+        SwingNode swingGui = new SwingNode();
+
+        swingGui.setContent(MainSpellListPanel);
+        
+        ScrollPane root = new ScrollPane();
+        
+        Scene popScene = new Scene(root,200,300);
+        VBox vb = new VBox();
+        vb.getChildren().add(swingGui);
+        
+        root.setContent(vb);
+        
+        popupBook.centerOnScreen();
+        popupBook.setScene(popScene);
+        popupBook.initOwner(Game.getInstance().getStage());
+        //popup.setFullScreen(true);
+        popupBook.show();
+        return popupBook;
+                */
     }
     
     private void getSpellBookOld(){
