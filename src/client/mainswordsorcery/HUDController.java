@@ -69,7 +69,7 @@ public class HUDController {
     
     //currently selected unit and target unit
     MoveableUnit selected_unit;
-    MoveableUnit target_unit;
+    public MoveableUnit target_unit;
     //currently selected stack of units and target units
     List <MoveableUnit> selected_stack;
     List <MoveableUnit> target_stack;
@@ -79,7 +79,7 @@ public class HUDController {
     private MapHex currentHex;
     
 
-    MapView hmapContent;//MapView swing object set into hmap
+    public MapView hmapContent;//MapView swing object set into hmap
     SwingNode hmap = new SwingNode();
     
     String username, ipAddress;
@@ -358,6 +358,10 @@ public class HUDController {
                 && phase.getText().equalsIgnoreCase("Spell"))
         {
             StartSpell();
+        }
+        //This is only used for testing. no in game value.
+        else if(keyEvent.getText().equalsIgnoreCase("x")){
+            System.out.println(target_unit);
         }
     }
     /** 
