@@ -802,6 +802,12 @@ public class HUDController {
 
     }
     
+    /**
+     * @author Shaung
+     * 
+     * 
+     */
+    
     public boolean CheckNext() {
     boolean next = false;
         MapHex slected_Terrain = new MapHex();
