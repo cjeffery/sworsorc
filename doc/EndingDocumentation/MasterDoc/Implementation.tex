@@ -189,12 +189,6 @@ have interesting enough implementations to bear discussing:
 \end{itemize}
 
 %===============================================================================
-%\section{How Major Code Modules fit together}
-%===============================================================================
-%Not sure how feasible writing this section will be.
-%Ideally would be compared to design.
-
-%===============================================================================
 \section{The JavaFX HUD}
 %===============================================================================
 JavaFX was chosen over swing for the GUI because it's newer and more active
@@ -378,11 +372,44 @@ of stuff it shouldn't too much.
 %===============================================================================
 \section{The Networking System}
 %===============================================================================
-Network team should write this
+Unfortunately the networking system didn't get very well integrated with the
+rest of the codebase. It should be pointed out that despite this the Network
+implementation is good code and had a lot of work put into it.
+
+There is some limited integration, and it can be used for communicating between
+different clients. However clients cannot effectively play a game together.
+
+Networking is divided into client/server. With "thick" clients. 
+The server mainly exists to forward messages between clients, or make decisions
+that need to be made on the server.
+
+One effect of this is that cheating is trivial, fortunately the game isn't
+implemented enough to make cheating worthwile.
+
+Network messages have a TAG and a FLAG. These are the core of the networking
+protocol, a TAG is a category and a FLAG is the particular message type.
+
+Network messages can pass an array of Java objects. Anything that can be
+serialized with the Java Serialization library.
+
 
 %===============================================================================
 \section{The Map File Format}
 %===============================================================================
+The MainMap data is stored in a large XML file
+
+It has the following information including 
+
+\begin{itemize}
+\item{Hex ID}
+\item{Whether it's a capital, town, city, or castle hex}
+\item{Whether it's a town hex}
+\item{Neighboring Hex IDs}
+\item{Province Name}
+\item{Whether it's a vortex or portal}
+\item{What sorts of hex edges there are}
+\item{Whether the hex has a name}
+\end{itemize}
 
 %===============================================================================
 \section{The Movement Calculator}
