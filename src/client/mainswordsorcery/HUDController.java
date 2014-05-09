@@ -62,7 +62,7 @@ public class HUDController {
     @FXML private ImageView undo_pic;
     
     @FXML private ImageView SunImage;
-    @FXML private Button phaseButton;
+    @FXML public Button phaseButton;
     @FXML private Text turn;
     @FXML private Text phase;
     @FXML private Text RedState;
@@ -680,7 +680,7 @@ public class HUDController {
      *
      * @author Christopher Goes
      */
-    public void setPhaseButtonText( String p ) {
+    @FXML public void setPhaseButtonText( String p ) {
         phaseButton.setText( p );
     }
 
@@ -690,7 +690,7 @@ public class HUDController {
      *
      * @author Christopher Goes
      */
-    public void setPhaseText( String p ) {
+    @FXML public void setPhaseText( String p ) {
         phase.setText( p );
     }
 

@@ -178,16 +178,20 @@ public class ClientObject {
          * @return List received, or null if not connected
          */
         private NetworkPacket recieveMessage() {
-            NetworkPacket res;
+            NetworkPacket res = new NetworkPacket();
             try {
                 res = MessagePhoenix.recieveMessage( ClientObject.this.streamIn );
-                return res;
-            } catch ( IOException | ClassNotFoundException |
-                      NullPointerException ex ) { // the lack of this was the cause of a lot of issues...watch in future
-                ex.printStackTrace();
+            } catch ( IOException ex ) {
+                if ( debug ) {
+                    errorOut.println( "recieveMessage IOException: " + ex );
+                }
                 killThread();
-                return null;
+            } catch ( ClassNotFoundException | NullPointerException ex ) {
+                errorOut.
+                        println( "Critical exception in ServerRecievingThread: recieveMessage: " + ex + "\nKilling thread..." );
+                killThread();
             }
+            return res;
         }
 
         private void killThread() {
@@ -213,7 +217,7 @@ public class ClientObject {
             Tag tag = rawMessage.getTAG();
             Flag flag = rawMessage.getFlag();
             String sender = rawMessage.getSender();
-            List<Object> lmessage = rawMessage.getData();
+            List<Object> lmessage = new ArrayList<>( rawMessage.getData() );
 
             if ( lmessage == null ) {
                 errorOut.println( "Null data!" );
@@ -255,9 +259,9 @@ public class ClientObject {
                         case SEND_CHAT_MESSAGE:
                             if ( currentLobby != null ) {
                                 currentLobby.
-                                        sendToEntireLobby( flag, tag, sender, smessage );
+                                        sendToEntireLobby( flag, Tag.LOBBY, sender, smessage );
                             } else {
-                                NetworkServer.sendToAllClients( flag, tag, sender, lmessage );
+                                NetworkServer.sendToAllClients( flag, Tag.GLOBAL, sender, lmessage );
                             }
                             break;
                         default:
@@ -343,6 +347,7 @@ public class ClientObject {
                     switch ( tag ) {
 
                         case ADD_UNIT:
+                        case REMOVE_UNIT:
                             currentLobby.sendToEntireLobby(flag, tag, "Server", lmessage);
                             break;
                         case PHASE_CHANGE:
@@ -392,25 +397,24 @@ public class ClientObject {
                             if ( NetworkServer.createNewLobby( smessage) )  {
                                 NetworkServer.
                                         joinLobby( smessage, ClientObject.this );
-                                send( flag, Tag.NEW_LOBBY, smessage, true );
+                                send( flag, tag, smessage, true );
                             } else {
-                                send( flag, Tag.NEW_LOBBY, "Could not create lobby, it probably already exists!", false );
+                                send( flag, tag, "Could not create lobby, it probably already exists!", false );
                             }
                             break;
                         case JOIN_LOBBY:
                             consoleOut.
                                     println( "Received request to join lobby: " + smessage + " from client " + handle );
-                            if ( currentLobby != null && currentLobby.getName().
-                                    equals( smessage ) ) {
-                                send( flag, Tag.JOIN_LOBBY, "Cannot join lobby, you're already in it!", false );
+                            if ( currentLobby != null && currentLobby.getName().equals( smessage ) ) {
+                                send( flag, tag, "Cannot join lobby, you're already in it!", false );
 
                             } else if ( NetworkServer.
                                     joinLobby( smessage, ClientObject.this ) ) {
-                                send( flag, Tag.JOIN_LOBBY, currentLobby.getName(), true );
+                                send( flag, tag, currentLobby.getName(), true );
                                 currentLobby.
                                         lobbyNotification( "Client " + handle + " has joined the lobby!" );
                             } else {
-                                send( flag, Tag.JOIN_LOBBY, "Failed to join lobby " + smessage + "! It probably doesn't exist!", false );
+                                send( flag, tag, "Failed to join lobby " + smessage + "! It probably doesn't exist!", false );
                             }
                             break;
                         case LEAVE_LOBBY:
