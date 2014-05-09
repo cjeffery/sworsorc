@@ -337,6 +337,9 @@ public class ClientObject {
                 case GAME:
                     switch ( tag ) {
 
+                        case ADD_UNIT:
+                            currentLobby.sendToEntireLobby(flag, tag, "Server", lmessage);
+                            break;
                         case PHASE_CHANGE:
                             currentLobby.sendToEntireLobby( flag, tag, "Server", smessage );
                             break;

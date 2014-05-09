@@ -7,6 +7,7 @@
 
 package systemServer;
 
+import Units.MoveableUnit;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
@@ -243,6 +244,13 @@ final public class NetworkClient {
         send( Flag.GAME, Tag.YIELD_TURN );
     }
     
+    
+    public static void demoralizeUnit(MoveableUnit unit){
+        send(Flag.GAME, Tag.DEMORALIZE_UNIT, unit);
+    }
+    public static void moralizeUnit(MoveableUnit unit){
+        send(Flag.GAME, Tag.MORALIZE_UNIT, unit);
+    }
     /**
      * Try to create a lobby
      * @param lobby

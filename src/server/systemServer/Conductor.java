@@ -64,7 +64,12 @@ final public class Conductor {
 
         switch ( tag ) {
             case ADD_UNIT:
-                pool.addUnit( 0, (MoveableUnit) data.get( 0 ) );
+                pool.addUnit( 0, (MoveableUnit) (data.get( 0 )) );
+                if (data.size() == 2){
+                    pool.addUnit((Integer)data.get(1), 
+                            (MoveableUnit) data.get( 0 ), 
+                            (String)data.get(2));
+                }
                 break;
             case REMOVE_UNIT:
                 pool.removeUnit( (MoveableUnit) data.get( 0 ) );

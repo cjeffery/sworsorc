@@ -36,7 +36,7 @@ public enum Tag {
     MOVE_UNIT, MOVE_UNIT_TELEPORT, // Move a unit from one location to another, this is network update
     PLACE_UNIT, // Send to have all clients place a unit
     INIT_GAME_PLEASE, // Send to client that's in charge of loading scenario
-    
+    DEMORALIZE_UNIT, MORALIZE_UNIT //Change status of unit on other clients
 
 
 
