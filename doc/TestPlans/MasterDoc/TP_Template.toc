@@ -54,7 +54,7 @@
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {2}REFERENCES}{1}{section.1.2}
+\contentsline {section}{\numberline {2}REFERENCES}{2}{section.1.2}
 \select@language {english}
 \select@language {english}
 \contentsline {section}{\numberline {3}INTRODUCTION}{2}{section.1.3}
@@ -66,46 +66,49 @@
 \select@language {english}
 \contentsline {subsection}{\numberline {4.1}Character}{2}{subsection.1.4.1}
 \contentsline {subsection}{\numberline {4.2}Scenario}{2}{subsection.1.4.2}
-\contentsline {subsection}{\numberline {4.3}Additional items to be tested.}{3}{subsection.1.4.3}
+\contentsline {subsection}{\numberline {4.3}Network}{3}{subsection.1.4.3}
+\contentsline {subsection}{\numberline {4.4}Additional items to be tested.}{3}{subsection.1.4.4}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {5}SOFTWARE RISK ISSUES}{3}{section.1.5}
+\contentsline {section}{\numberline {5}SOFTWARE RISK ISSUES}{4}{section.1.5}
 \select@language {english}
 \select@language {english}
 \select@language {english}
 \contentsline {section}{\numberline {6}FEATURES TO BE TESTED}{4}{section.1.6}
 \select@language {english}
 \contentsline {subsection}{\numberline {6.1}Scenario}{4}{subsection.1.6.1}
-\contentsline {subsection}{\numberline {6.2}Movement}{4}{subsection.1.6.2}
-\contentsline {subsection}{\numberline {6.3}Character, Spells}{4}{subsection.1.6.3}
+\contentsline {subsection}{\numberline {6.2}Movement}{5}{subsection.1.6.2}
+\contentsline {subsection}{\numberline {6.3}Character, Spells}{5}{subsection.1.6.3}
 \select@language {english}
 \select@language {english}
 \contentsline {subsection}{\numberline {6.4}Additional Features}{5}{subsection.1.6.4}
 \select@language {english}
 \contentsline {section}{\numberline {7}FEATURES NOT TO BE TESTED}{5}{section.1.7}
 \select@language {english}
+\contentsline {subsection}{\numberline {7.1}Network}{6}{subsection.1.7.1}
 \select@language {english}
-\contentsline {section}{\numberline {8}APPROACH}{5}{section.1.8}
+\contentsline {section}{\numberline {8}APPROACH}{6}{section.1.8}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {9}ITEM PASS/FAIL CRITERIA}{5}{section.1.9}
+\contentsline {subsection}{\numberline {8.1}Network}{6}{subsection.1.8.1}
+\contentsline {section}{\numberline {9}ITEM PASS/FAIL CRITERIA}{6}{section.1.9}
 \select@language {english}
 \select@language {english}
 \contentsline {section}{\numberline {10}SUSPENSION CRITERIA}{6}{section.1.10}
 \select@language {english}
-\contentsline {section}{\numberline {11}TEST DELIVERABLES}{6}{section.1.11}
+\contentsline {section}{\numberline {11}TEST DELIVERABLES}{7}{section.1.11}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {12}REMAINING TEST TASKS}{6}{section.1.12}
+\contentsline {section}{\numberline {12}REMAINING TEST TASKS}{7}{section.1.12}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {13}ENVIRONMENTAL NEEDS}{6}{section.1.13}
+\contentsline {section}{\numberline {13}ENVIRONMENTAL NEEDS}{7}{section.1.13}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {14}RESPONSIBILITIES}{6}{section.1.14}
+\contentsline {section}{\numberline {14}RESPONSIBILITIES}{7}{section.1.14}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {15}SCHEDULE}{6}{section.1.15}
+\contentsline {section}{\numberline {15}SCHEDULE}{7}{section.1.15}
 \select@language {english}
 \select@language {english}
 \contentsline {section}{\numberline {16}PLANNING RISKS AND CONTINGENCIES}{7}{section.1.16}
@@ -114,7 +117,7 @@
 \contentsline {section}{\numberline {17}APPROVALS}{7}{section.1.17}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {18}GLOSSARY}{7}{section.1.18}
+\contentsline {section}{\numberline {18}GLOSSARY}{8}{section.1.18}
 \select@language {english}
 \select@language {english}
 \select@language {english}

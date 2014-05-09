@@ -787,11 +787,41 @@ public class HUDController {
      * @param hmapContent
      * @author Jay Drage & Shaung
      */
-    public void StartCombat(MapView hmapContent){        
+    public void StartCombat(MapView hmapContent){  
+        
         System.out.println("StartCombat()");
+        if (!CheckNext()) {
+            Notifications.create()
+                        .title("Not a Valid Command")
+                        .text("Error Target: Out of range.")
+                        .showError();
+        }
+            
+        else 
         LaunchBotton(selected_stack, target_stack, hmapContent);
 
     }
+    
+    public boolean CheckNext() {
+    boolean next = false;
+        MapHex slected_Terrain = new MapHex();
+        MapHex target_Terrain = new MapHex();
+        
+        MapView temp = MapView.getMapView();
+        target_Terrain = (MapHex)temp.GetHexMap().GetHex(target_stack.get(0).getLocation());
+        slected_Terrain = (MapHex)temp.GetHexMap().GetHex(selected_stack.get(0).getLocation());
+        
+        for (int i = 0; i < 6; i++) {
+            if (target_Terrain.getNeighbor(i).GetID() == slected_Terrain.GetID()) {
+                next = true;
+            }
+        }
+        
+    return next;
+    }
+    
+    
+    
     /**
      * used to start spells
      * called from keyEvent handlers

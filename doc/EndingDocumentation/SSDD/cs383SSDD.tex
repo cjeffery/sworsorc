@@ -73,6 +73,9 @@ Design View & \"A subset of design entity attribute information that is specific
 \hline
 Edge & The edge between two hexes. Edges can include roads, walls, streams, etc. and can effect movement or combat\\
 \hline
+FX Scene Builder & A tool used for easily creating layouts in FXML to work with javaFX.\\
+\hline
+FXML & FXML is a declarative XML-based language created by Oracle Corporation for defining the user interface of a JavaFX 2.0 application.\\
 Edge Element & A particular element (such as a road) on a given edge, one edge can contain multiple elements.\\
 \hline
 GUI & Graphical User Interface - What the user sees and interacts with - also called the HUD.\\
@@ -87,15 +90,23 @@ HUD & Heads Up Display - What the user sees, with respect to interface - also ca
 \hline
 IP & Internet Protocol - Typically refers to an IP Address.\\
 \hline
+JavaFX & A software platform for creating and delivering rich applications that can run on a wide variety of devices.\\
+\hline
+Pane & A container for some form of action or information.  JavaFX has many, including Anchor Panes, Grid Panes, Box Panes and more.\\
+\hline
 PlayerID & An integer representing one of the factions described in this scenario.\\
 \hline
 S\&S & Swords and Sorcery\\
+\hline
+Scene & The fxml file that is to be loaded into a stage for displaying to the screen.\\
 \hline
 Server & The (single) process that a client connects and sends messages to. \\
 \hline
 SSDD & System and Software Design Document\\
 \hline
 SSRS & System and Software Requirements Specification\\
+\hline
+Stage & This is essentially the container for the application.  Load different scenes into the stage to switch which is visible at the time.\\
 \hline
 System & \"A collection of components organized to accomplish a specific function or set of functions.\"\space ISO/IEC 42010:2007\\
 \hline
@@ -109,14 +120,14 @@ Unit & An instance of a MoveableUnit\\
 
 \subsection{Document References}
 \begin{enumerate}
-\item CSDS, textit{System and Software Requirements Specification Template}, Version 1.0, July
+\item CSDS, \textit{System and Software Requirements Specification Template}, Version 1.0, July
 31, 2008, Center for Secure and Dependable Systems, University of Idaho, Moscow, ID, 83844.
 
 \item ISO/IEC/IEEE, \textit{IEEE Std 1471-2000 Systems and software engineering -- Recommended practice for architectural description of software intensive systems,} First edition 2007-07-15, International Organization for Standardization and International Electrotechnical Commission, (ISO/IEC), Case postale 56, CH-1211 Geneve 20, Switzerland, and The Institute of Electrical and Electronics Engineers, Inc., (IEEE), 445 Hoes Lane, Piscataway, NJ 08854, USA.
 
 \item IEEE, \textit{IEEE Std 1016-1998 Recommended Practice for Software Design Descriptions}, 1998-09-23, The Institute of Electrical and Electronics Engineers, Inc., (IEEE) 445 Hoes Lane, Piscataway, NJ 08854, USA.
 
-\item 3) ISO/IEC/IEEE, \textit{IEEE Std. 15288-2008 Systems and Software Engineering -- System life cycle processes,}Second edition 2008-02-01, International Organization for Standardization and International Electrotechnical Commission, (ISO/IEC), Case postale 56, CH-1211 Geneve 20, Switzerland, and The Institute of Electrical and Electronics Engineers, Inc., (IEEE), 445 Hoes Lane, Piscataway, NJ 08854, USA.
+\item ISO/IEC/IEEE, \textit{IEEE Std. 15288-2008 Systems and Software Engineering -- System life cycle processes,}Second edition 2008-02-01, International Organization for Standardization and International Electrotechnical Commission, (ISO/IEC), Case postale 56, CH-1211 Geneve 20, Switzerland, and The Institute of Electrical and Electronics Engineers, Inc., (IEEE), 445 Hoes Lane, Piscataway, NJ 08854, USA.
 
 \item ISO/IEC/IEEE, IEEE Std. 12207-2008, \textit{Systems and software engineering -- Software life cycle processes}, Second edition 2008-02-01, International Organization for Standardization and International Electrotechnical Commission, (ISO/IEC), Case postale 56, CH-1211 Geneve 20, Switzerland, and The Institute of Electrical and Electronics Engineers, Inc., (IEEE), 445 Hoes Lane, Piscataway, NJ 08854, USA.
 \end{enumerate}
@@ -212,7 +223,7 @@ This section describes the developers viewpoint with respect to the software des
 \small{
 \begin{center}
 \keepXColumns
-\noindent\begin{tabularx}{\linewidth}{|p{1.5in}|X|X|X|X|}\hline
+\noindent\begin{tabularx}{\linewidth}{|p{1in}|X|X|X|p{1in}|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Purpose} & \textbf{Dependencies} & \textbf{Subordinates}\\
 \hline
 AddMove & UnitPool Method & Move a unit to a new hex & Two array lists: hexList, unitMove & None\\
@@ -233,51 +244,61 @@ ClientObject & Class & Represents an open connection to a client from the server
 \hline
 Conductor & Class & Contains public handler methods for incoming network methods. & Tag, Flag & \\
 \hline
-EndMovementPhase & UnitPool Method & Prepares the UnitPool for the next move phase. & Sorted map: unitMove & None\\
+Diplomacy & fxml file & Fxml used by Diplomacy Controller & Diplomacy Controller &\\
+\hline
+Diplomacy Controller & Controller Class & Controls the Diplomacy map scene & Depends on HUD Controller, MapView, and Scenario. & \\
+\hline
+End Movement Phase & UnitPool Method & Prepares the UnitPool for the next move phase. & Sorted map: unitMove & None\\
 \hline
 Flag & Enum Class & An enumerate constant class providing identifiers for each concrete type of network message. & & \\
 \hline
-GetAllPlayerUnits & UnitPool Method & Gets all player units. & Tree map: pool & None\\
+Game & java & Starts the application and sets up stage. & & \\
+\hline
+Get All Player Units & UnitPool Method & Gets all player units. & Tree map: pool & None\\
 \hline
 GetInstance & UnitPool Method & Gets a Singleton instance of UnitPool. & None & None\\
 \hline
 GetOverStack & UnitPool Method & Gets hexes in violation of over-stack rule. & Tree map: overStackMap & None\\
 \hline
-GetPlayerSpecificUnits & UnitPool Method & Get all units by type owned by a player. & Sort map: pool & None\\
+Get Player Specific Units & UnitPool Method & Get all units by type owned by a player. & Sort map: pool & None\\
 \hline
-GetSafeTeleport & UnitPool Method & Determine if a unit can safely teleport. & Array list: safeTeleport & None\\
+Get Safe Teleport & UnitPool Method & Determine if a unit can safely teleport. & Array list: safeTeleport & None\\
 \hline
-GetTeleportDestination & UnitPool Method & Get a unit destination portal. & Sorted map: portalNum & None\\
+Get Teleport Destination & UnitPool Method & Get a unit destination portal. & Sorted map: portalNum & None\\
 \hline
 GetUnit & UnitPool Method & Retrieves a  units. & Sorted map: pool & None\\
 \hline
-GetUnitHexMove & UnitPool Method & Retrieves all hexes a unit has moved through. & Array list: unitMove & None\\
+Get Unit Hex Move & UnitPool Method & Retrieves all hexes a unit has moved through. & Array list: unitMove & None\\
 \hline
-GetUnitInHex & UnitPool Method & Retrieves all units in a hex. & Array list: hexList & None\\
+Get Unit In Hex & UnitPool Method & Retrieves all units in a hex. & Array list: hexList & None\\
 \hline
-
 Hexagon Classes & Model & Represents a hexagon & Hex Edge Classes, Terrain Classes, UnitPool & Hexagon \\
 \hline
 Hex Edge Classes & Model & Classes to collect and represent elements on hexagon edges & Hex Classes & Hexagon Classes \\
 \hline
 HexStack & Class & Ensure compliance with the games stacked rules. & UnitPool & None\\
 \hline
-HexStacked & Class & Implements rules for stacks. & UnitPool & None\\
+Hex Stacked & Class & Implements rules for stacks. & UnitPool & None\\
 \hline
 Hexagon Map Classes & Model & Classes to represent a "map" of hexagons, either diplomacy or game. & Hexagon Classes &
 MapView, Hexagon Classes \\
 \hline
-Launch Combat & Static Method & Implement Combat Phase & Moveable Unit, Army Combat Results Table, HUDController, MovementCalculator & None\\
+hud & fxml & Layout for the game Hud & HUD Controller & None\\
+\hline
+HUDController & javafx controller & Handles actions and events triggered in hud scene & hud.fxml & None\\
+\hline
+Launch Combat & Static Method & Implement Combat Phase & Moveable Unit, Army Combat Results Table, HUDController, Movement Calculator & None\\
 \hline
 Lobby & Class & A server-side object that manages a grouping of client connection. & Tag, Flag, MessagePhoenix & \\ 
 \hline
-MainMenuController & Controller & Define and limit access to main menu & Game.java & \\
+mainMenu & fxml & Layout for the main menu & Main Menu Controller.java & None\\
+\hline
+Main Menu Controller & JavaFX Controller & Handles actions and events triggered in mainMenu  & Scene & mainMenu.fxml\\
 \hline
 Hex Rendering & View & Renders the game map and things on it & MapView, Hexagon Classes, Hex Edge Classes & \\
 \hline
 MapView & View & A GUI widget to display the results of the Hex Rendering code & Hexagon Classes, Hex Rendering &
 JavaFX GUI \\
-
 \hline
 MessagePhoenix & Utility Class & Used to pack, unpack, send and receive messages over the network & Tag, Flag & \\
 \hline
@@ -289,17 +310,17 @@ NetworkClient & Class & Manages network connection for client. & Tag, Flag, Mess
 \hline
 NetworkServer & Class and Process & The independent server process that clients connect to. & Tag, Flag, MessagePhoenix & ClientObject\\
 \hline
-OverStackWarning & Static Method & Notifies player of an over-stack condition. & UnitPool & HUDController\\
+Over Stack Warning & Static Method & Notifies player of an over-stack condition. & UnitPool & HUD Controller\\
 \hline
-RemoveOverStack & Method & Removes units from an over-stacked hex. & UnitPool & HUDController\\
+Remove Over Stack & Method & Removes units from an over-stacked hex. & UnitPool & HUD Controller\\
 \hline
 RemoveUnit & UnitPool Method & Removes a single unit. & Sorted map: pool & None\\
 \hline
-Retreat & Static Method & Implement Retreat after Combat & Launch Combat, MovementCalculator & None\\
+Retreat & Static Method & Implement Retreat after Combat & Launch Combat, Movement Calculator & None\\
 \hline
 SetSafeTeleport & UnitPool Method & Sets the units that can safely teleport. & Array list: safeTeleport & None\\
 \hline
-Solar Display & Class & Tracks solar position, updates HUD image & Scenario/Game Rules & Spell Casting/HUD Controller\\
+Solar Display & Class & Tracks solar position, updates HUD image & Scenario/Game Rules & Spell Casting, HUD Controller\\
 \hline
 Spell Cast & Static Class & Perform Spell effects on given characters/units & None\\
 \hline
@@ -316,21 +337,21 @@ UnitPool & Class & Track and manipulate all units in the game. & None & MovableU
 }
 
 \subsection{Component Detailed Design}
-\subsection{Detailed Design for Component: Army Unit}
+\subsubsection{Detailed Design for Component: Army Unit}
 \paragraph{Purpose} This class contains the data of the Army Units in the game and extends the Movable Unit class. This class contains new data like the strength of a unit and whether or not the units are conjured or demoralized. If a unit is conjured then there are special member variables that contain values that are associated with conjured units. If a unit is demoralized then the strength of the unit is different so a demoralized strength variable was added to the class. The strength and demoralized strength variables are used during the combat phase of a users turn and is used to determine the outcome of combat. 
 \paragraph{Input} The only Inputs to this class are the ones needed to fill the member variables of this class.
 \paragraph{Output} This class by itself has no output produced other than the getter functions in the class.
 \paragraph{Process} Output is obtained by calling the getter functions. 
 \paragraph{Design Constraints and Performance Requirements}	In order for this class to preform correctly all of the needed variables need to be filled out.
 
-\subsection{Detailed Design for Component: Army Combat Results Table}
+\subsubsection{Detailed Design for Component: Army Combat Results Table}
 \paragraph{Purpose} The purpose of this method is a lookup for the results of Combat. 
 \paragraph{Input} Input needs to be two Array Lists: one is called attackers and one defenders. Also the hex object that the defenders are positioned on is needed. The attackers array list is comprised of all of the attacking Army Units in the combat and the defenders are all of the defending Army Units in the combat. The defenders hex is needed in order to calculate the defence multipliers that the defending units get from the terrain values of the hex object.
 \paragraph{Output} The output of this function is a simple 2 value array corresponding the result of the combat. The first value is what's required of the attackers and the second value is what's required of the defenders. A -1 means the units were killed, a 0 means that there was no result of the combat and any positive number represents the number of hexes a unit has to retreat. 
 \paragraph{Process} The function adds the total strengths of both the attackers and defenders. Then applies the terrain multiplier to the defenders total strength. Finally the ratio of attackers over defenders plus a random dice roll determines the outcome of the combat.  
 \paragraph{Design Constraints and Performance Requirements} One design constraint of the table was that in the game the ratio's have to be reduced to the smallest possible fraction in favour of the defending units. To work around this and index was made to match the determined ratio to the correct look up value on the table. Also the units strength and race is required to be filled out in order for this function to work properly. 
 
-\subsection{Detailed Design for Component: ClientObject }
+\subsubsection{Detailed Design for Component: ClientObject }
 \paragraph{Purpose} ClientObject is used by the server. ClientObject is a class which represents a client who has connected to the server. ClientObject is not something that runs on the client machine. NetworkServer creates an instance of ClientObject for each new connection to the server. ClientObject is responsible for the socket to the client. The main activity of a ClientObject instance is to listen for incoming messages from the client represented by the ClientObject, which it accomplishes by an independent thread, and to send messages to the client through the network socket.
 \paragraph{Input} ClientObject receives messages from the associated client. 
 \paragraph{Output} NetworkServer and other ClientObjects are allowed
@@ -338,22 +359,37 @@ to send message to the associated client through ClientObject.
 \paragraph{Process} ClientObject's listener thread reads and process messages from the connected client. Other threads request the writer
 \paragraph{Design Constraints and Performance Requirements}
 
-\subsection{Detailed Design for Component: Conductor}
+\subsubsection{Detailed Design for Component: Conductor}
 \paragraph{Purpose} The Conductor class is used by the client. When NetworkClient detects an incoming message that alters the state of the game (such as a unit being moved), it calls a method inside of the Conductor class. The purpose of putting handler code in the Conductor class rather than inside of NetworkClient was to seperate the code in NetworkClient that deal with internal networking objects (like sockets) from the code that deals with other game object (like unitPool).
 \paragraph{Input} Each message in the Conductor class is invoked with parameters received via an incoming network message.
 \paragraph{Output} The methods in the Conductor class may respond to an incoming message through any public interface. For example, the Conductor class may alter UnitPool in response to a network message.
 \paragraph{Process} An incoming message is received inside of NetworkClient. NetworkClient determines the type of message, and forwards the message to Conductor is appropriate. Conductor checks the tag of the message, to determine the message type, and calls the appropriate code for the message type.
 \paragraph{Design Constraints and Performance Requirements} Conductor was designed to let other team members work conveniently with networking code, without having to stare at networking internal details.
 
+\subsubsection{Detailed Design for Component: DiplomacyController }
+\paragraph{Purpose} Controls the Diplomacy map scene
+\paragraph{Input} N/A
+\paragraph{Output} Shows diplomacy map
+\paragraph{Process} This class sets a swingnode content to that of a MapView instance of the 
+		diplomacy map and also has a button that returns the scene to that of the HUD.
+\paragraph{Design Constraints and Performance Requirements} This class depends on the 
+		HUDController class which is where it is called from. 
 
-\subsection{Detailed Design for Component: MessagePhoenix}
+\subsubsection{Detailed Design for Component: Diplomacy.fxml }
+\paragraph{Purpose} The fxml used for displaying the diplomacy map scene.
+\paragraph{Input} N/A
+\paragraph{Output} The diplomacy map scene.
+\paragraph{Process} It is read in and then displayed by selecting Diplomacy from the HUD
+\paragraph{Design Constraints and Performance Requirements} N/A
+
+\subsubsection{Detailed Design for Component: MessagePhoenix}
 \paragraph{Purpose} MessagePhoenix contains the methods to create, send, and receive messages over the network. This functionality is used by both the client and server. MessagePhoenix is intended to be called indirectly by client code through NetworkClient, (as well as by the Server).
 \paragraph{Input} MessagePhoenix requires a reference to an input or output object stream associated with a network socket. The utility methods in MessagePhoenix also accept any number of Objects (using a variable length parameter list), which will be packaged and sent over the network. The first two objects of a message must be a Flag and Tag, which identify the message. 
 \paragraph{Output} MessagePhoenix can return the NetworkPacket received from a network connection. 
 \paragraph{Process} Receiving a message initiates a blocking read from the network socket. Sending a message writes to the network socket immediately. 
 \paragraph{Design Constraints and Performance Requirements} MessagePhoenix needs to accomodate a variety of message types. 
 
-\subsection{Detailed Design for Component: NetworkClient }
+\subsubsection{Detailed Design for Component: NetworkClient }
 \paragraph{Purpose} NetworkClient is used by the client. NetworkClient provides an interface that other client-side components can use to interact with the network. NetworkClient creates the connection to the server, and sends and receives messages over the network.
 \paragraph{Input} NetworkClient listens for incoming messages from the network. Some messages impact the internal state of NetworkClient, and other messages are forwarded to Conductor.
 \paragraph{Output} NetworkClient provides a public interface for sending message over the network.
@@ -361,35 +397,35 @@ to send message to the associated client through ClientObject.
 \paragraph{Design Constraints and Performance Requirements}
 NetworkClient must be able to receive network message asynchronously. 
 
-\subsection{Detailed Design for Component: NetworkServer }
+\subsubsection{Detailed Design for Component: NetworkServer }
 \paragraph{Purpose} NetworkServer is the main process that runs on the server machine. It waits for incoming connection requests. It creates a ClientObject for each connected client, and manages the group of connected clients through their ClientObject representations. 
 \paragraph{Input} NetworkServer receives connection requests from client processes.
 \paragraph{Output} NetworkServer creates new threaded ClientObject instances for each connection.
 \paragraph{Process} When a connection is opened, the ClientObject instances is created (initiating an exchange of information, like user names, between the client and server), and stored in a list of connections.
 \paragraph{Design Constraints and Performance Requirements} NetworkServer must be efficient enough to handle the expected number of connections. For our puposes, the demands on the NetworkServer are fairly minimal, and few performance issues have arisen.
 
-\subsection{Detailed Design for Component: Tag }
+\subsubsection{Detailed Design for Component: Tag }
 \paragraph{Purpose} The Tag class contains "message tags". A message tag is the second object in a network packet. The tag identifies the concrete type of message. For example, the ``SEND HANDLE'' tag identifies a message as containing the handle (the username) of the new connection. By examining the Tag of a message, we can correctly interpret the other contents of the message. 
 \paragraph{Input} The Tag class receives no input. 
 \paragraph{Output} The Tag class does not produce output. 
 \paragraph{Process} None. 
 \paragraph{Design Constraints and Performance Requirements} None.
 
-\subsection{Detailed Design for Component: Flag }
+\subsubsection{Detailed Design for Component: Flag }
 \paragraph{Purpose} The Flag class contains "message flags". A message flag is the first object in a network packet. The flag identifies the general type of a message. For example, there is a "REQUEST" and "RESPONSE" flag. The motivation for this is because many interactions with the server follow a REQUEST, ACCEPT or DENY format. For example, you might ``REQUEST'' ``SEND HANDLE'' in one message, and expect a ``RESPONSE'' ``SEND HANDLE''.
 \paragraph{Input} None.
 \paragraph{Output} None.
 \paragraph{Process} None.
 \paragraph{Design Constraints and Performance Requirements} None.
 	
-\subsection{Detailed Design for Component: Lobby }
+\subsubsection{Detailed Design for Component: Lobby }
 \paragraph{Purpose} The Lobby class is used by the server. Lobby represents a grouping of client connections (ClientObjects, which live on the server), and is used to manage a game instance. Lobby can remember things like the current turn. 
 \paragraph{Input} A Lobby can receive messages from the NetworkServer, or forward messages from the connected ClientObjects. 
 \paragraph{Output} A Lobby can forward messages received from one ClientObject to all clients in the Lobby.
 \paragraph{Process} Clients are added to or removed from (by client request) a particular lobby. 
 \paragraph{Design Constraints and Performance Requirements} None.
 
-\subsection{Detailed Design for Component: LaunchCombat}
+\subsubsection{Detailed Design for Component: LaunchCombat}
 \paragraph{Purpose} The LaunchCombat is a public static Java class, which allows players to see combat details, and then they can decide to enforce the Combat between units or not.
 \paragraph{Input} Two ArrayList $<$MoveableUnit$>$ attackers and defenders, and the object from MapView so it can highlight those hexes for showing more combat information.
 \paragraph{Output} Confirmation for players to decide enforce combat, if yes, shows the combat result and give options of retreat or eliminate certain units.
@@ -397,210 +433,244 @@ NetworkClient must be able to receive network message asynchronously.
 \paragraph{Design Constraints and Performance Requirements} 
 One Design Constraint is that the LaunchCombat only can be used while the Combat Phase, and both of Attacker Units and Defender Units should be selected. 
 
-\subsection{Detailed Design for Component: Retreat}
+\subsubsection{Detailed Design for Component: Retreat}
 \paragraph{Purpose} After the combat, players should decide to retreat the units if the result requires.
 \paragraph{Input} ArrayList$<$ArmyUnit$>$, combat result
 \paragraph{Output} It will highlight those hexes which the certain units can retreat to with red color, and right click the mouse button for retreating the certain units to certain hex.
 \paragraph{Process} First the result came from the LaunchCombat, so the player can get it's result value(negative, positive integer, or zero), if the result is a positive number then the player should decide to retreat the units or not, if not, then they should eliminate the unit, if yes, execute the Retreat function. The retreat function will send necessary input for the method getRetreatMove in the class Movement Calculator, so it can get which hexes that the certain units can move to, and it will highlight the available hexes with red color.
 \paragraph{Design Constraints and Performance Requirements} Retreat function will only be called while the combat result sent, in the other words, it needs to know the attackers list, defenders' list, and the combat result. For each units will be sent a message to ask for retreating if necessary.
 
-\subsection{Detailed Design for Component: Spell Cast}
+\subsubsection{Detailed Design for Component: Spell Cast}
 \paragraph{Purpose} The purpose of this class is to perform spells during the spell cast phase of the game.  These spells can have a variety of affects like destroying units, moving units, demoralizing units, along with many more.  
 \paragraph{Input} The character object and user input for things like unit to be cast on, number of targets, or manna to be transferred.  
 \paragraph{Output} The effects to units/characters.  This includes things like demoralization, graphical walls, or movement of units on map.
 \paragraph{Process} This class takes in the necessary information for the spell being cast.  Determines what the effects will be based on user input and character magic potential, then displays the effect on the map.
 \paragraph{Design Constraints and Performance Requirements} In order to perform a spell cast all information for that spell must be known.  This includes things like limits, range of spell, distance to target, and character manna potential.  
 
-\subsection{Detailed Design for Component: Characters}
+\subsubsection{Detailed Design for Component: Characters}
 \paragraph{Purpose} This class contains the data of a Character in the game and extends the Movable Unit class. This class has variables unique to a character: magic level, magic potential, current manna, magic colour, and leadership. The magic level determines the hight level of spell that a character can cast. The magic potential is the maximum amount of manna that a character can have. The magic colour of a character determines when a character's spells have the most effect. Leadership is the influence that a character has in determining the result of army combat. Characters have the special ability to cast spells which uses the magic and manna values to determine the amount and effectiveness of their spells. 
 \paragraph{Input} The only Inputs to this class are the ones needed to fill the member variables of this class.
 \paragraph{Output} This class by itself has no output produced other than the getter functions in the class.
 \paragraph{Process} Output is obtained by calling the getter functions. 
 \paragraph{Design Constraints and Performance Requirements} In order for this class to preform correctly all of the member variables need to be filled out.
 
-\subsection{Detailed Design for Component: Solar Display}
+\subsubsection{Detailed Design for Component: Solar Display}
 \paragraph{Purpose} The purpose of the solar display class is to maintain the progress of the solar chart, as defined in the rules of S\&S. The solar display class also updates the HUDController with the proper information, ie state, to display for the solar chart.
 \paragraph{Input} The starting locations of the blue and red suns, read from the game scenario being loaded, are the only input to the solar display class.
 \paragraph{Output} The output of the solar display class is the information the HUDController needs to update the solar display image. The solar display class returns the image that needs to be displayed in the solar display section of the hud, as well as the state of the suns.
 \paragraph{Process} The solar display class performs a rotation by incrementing the positions of each sun, then determines whether the state of the suns change. The states that can be returned are for the blue and red suns, and are dependent upon the yellow sun. The possible states for the blue and red suns are equilibrium, ascension, and descension. The last task the solar display performs is to update the HUD accordingly. 
 \paragraph{Design Constraints and Performance Requirements} The only design constraints/requirements for the solar display are that the information passed to the HUD is accurate with respect to the S\&S rules of gameplay. The solar positioning must also be correctly loaded from the scenario information. 
 
-\subsection{Detailed Design for Component: Movable Unit}
+\subsubsection{Detailed Design for Component: Movable Unit}
 \paragraph{Purpose} The purpose of this class is to have a common class of all moving units that the movement functions can access. This class is a super class of all units that can undergo a movement process. This allows for common data to be accessible by the appropriate functions. This common superclass also allows for the ability to store the data of all units in a single-typed data structure. This class contains member variables for movement allocation of a unit, the working movement allocation of a unit or the amount of movement left in a game turn, the race of the unit, the type of subclass that is inheriting from this class(such as armyUnit or Character), and the unique ID of the unit. The movement allocation of a unit is the amount of movement points allowed at the beginning of a turn then the working movement takes over. The working movement is used in order to keep track of how much a unit has move in a single turn. This allows for a user to partially move a unit in their turn then return to that unit and finish moving it later in the same turn. The race is used in many different calculations for units such as the movement cost per hex of a unit in a particular terrain. The subclass variable is used for typecasting the moveable unit back to the proper subclass in order for the subclass based operations to be executed. Finially the unique ID is used for network based communications to identify the unit that is being acted on, as well as determining if two units are friendly/enemy units, based on the owner field of the ID. 
 \paragraph{Input} Input needed to make this class function properly are values to fill the member variables of this class. 
 \paragraph{Output} The only output of this class is by getters of the member variables of the class. 
 \paragraph{Process} Call the getter functions.
 \paragraph{Design Constraints and Performance Requirements} One constraint of this class was the necessity to be casted back into the appropriate subclass this was solved by creating the unitType(subclass Type) variable. Also in order for this class to preform right with other classes and functions all of the variables need to be set. 
-	
+
 \subsubsection{Detailed Design for Component: Movement Calculator}
 \paragraph{Purpose} The movement calculator is a static java class that handles most forms of movement. 
 \paragraph{Input} The movement calculator takes two inputs to generate a list of moves: the unit moving, and the hex object they are beginning from. To calculate a retreat, the movement calculator takes as input the unit retreating, the hex they are retreating from, and the number of hexes they are required to retreat.
 \paragraph{Output} The movement calculator produces two main outputs: A hashmap of moves that a unit can reach (within the rules of movement specified by the board game) during a given movement phase, paired with their remaining movement cost after moving to a key hex in the hashmap, or an arraylist of moves that a unit can move to while retreating, during the combat phase.
 \paragraph{Process} The movement calculator uses recursion to examine the neighbors of the provided hex location. From each neighbor, it evaluates their neighbors, and so on. In both cases (movement/retreat) the recursion is terminated by reaching a lower bound (0) on the limiting value for their movement. For a moving unit, this is their given movement allowance per turn. For a retreating unit, this is the number generated from the combat results table that indicates how many hexes a unit must retreat. For each step of recursion, decisions are made within control flow that are designed to model the rules of the original S\&S board game. These factors include, but are not limited to, hex terrain types, hex edge types, geographical obstacles, and enemy occupation. 
 \paragraph{Design Constraints and Performance Requirements} The design was constrained by two factors - code complexity and time. By designing the movement calculator to use recursion, the complexity of the component was greatly reduced. However, due to the many factors involved in movement, the design is still complex. Also, the moves available to a unit need to be calculated quickly. However, recursion is not very fast. Thankfully, Colin Clifford added some optimization code to the calculator, which has greatly increased performance with respect to time.
-\subsection{Detailed Design for Component: Unit Pool}
+
+\subsubsection{Detailed Design for Component: Unit Pool}
 \paragraph{Purpose} Maintain all units and their positions in the game.
 \paragraph{Input} The inputs to this class are units, teleport information, and hex ID's.
 \paragraph{Output} The outputs of this class are units and hex ID's. 
 \paragraph{Process} Methods are in place to control the creation, destruction, and movement of units.
 \paragraph{Design Constraints and Performance Requirements} All manipulation of units must occur in this class.
 
-\subsection{Detailed Design for Component: Hex Stack}
+\subsubsection{Detailed Design for Component: Hex Stack}
 \paragraph{Purpose} To enforce the board game rules for stacking units.
 \paragraph{Input} Unit IDs and units. 
 \paragraph{Output} Boolean value indicating if the hex is within the max stack limits.
 \paragraph{Process} Ensures that the number of units in any given hex at the end of the movement phase are in compliance with stack rules.
 
-\subsection{Detailed Design for Component: Add Move}
+\subsubsection{Detailed Design for Component: Add Move}
 \paragraph{Purpose} Update the location of a unit
 \paragraph{Input} Unit and destination hex ID.
 \paragraph{Output} None
 \paragraph{Process} Remove the unit from its originating hex and places it in its destination hex.
 \paragraph{Design Constraints and Performance Requirements} All movement must use this method.
 
-\subsection{Detailed Design for Component: Add Move Stack}
+\subsubsection{Detailed Design for Component: Add Move Stack}
 \paragraph{Purpose} Use with network update process at the end of the movement phase.
 \paragraph{Input} Origin hex ID and destination hex ID
 \paragraph{Output} None
 \paragraph{Process} All units in an origin hex are moved to the corresponding destination hex.
 \paragraph{Design Constraints and Performance Requirements} Must only be used in the network update.
 
-\subsection{Detailed Design for Component: Add Unit}
+\subsubsection{Detailed Design for Component: Add Unit}
 \paragraph{Purpose} To add a new unit to the unit pool during scenario creation, replacement, and reinforcement phases.
 \paragraph{Input} Player ID, unit, and starting location.
 \paragraph{Output} None
 \paragraph{Process} The player ID, the class name of the unit, and a unique number are combined together to produce a unique ID for the unit and then it's location is initialized.
 \paragraph{Design Constraints and Performance Requirements} All units must be created with this function.
 
-\subsection{Detailed Design for Component: Clear}
+\subsubsection{Detailed Design for Component: Clear}
 \paragraph{Purpose} It is only for the purposes of testing. Ensures that the unit pool is completely devoid of any units.
 \paragraph{Input} None
 \paragraph{Output} None
 \paragraph{Process} Clears all the data structures.
 
-\subsection{Detailed Design for Component: Clear Over Stack}
+\subsubsection{Detailed Design for Component: Clear Over Stack}
 \paragraph{Purpose} Once All Hexes Are Forced into compliance with the stack rule it clears the stack data structure.
 \paragraph{Input} None
 \paragraph{Output} None
 \paragraph{Process} Calls the Clear Method of the Data Structure.
 
-\subsection{Detailed Design for Component: End Movement Phase}
+\subsubsection{Detailed Design for Component: End Movement Phase}
 \paragraph{Purpose} Call all housekeeping methods at the end of the movement phase.  Including but not limited to stacked methods.
 \paragraph{Input} None
 \paragraph{Output} None
 \paragraph{Process} Call methods to ensure each hex complies with stack rules. Reset appropriate data structures.
 \paragraph{Design Constraints and Performance Requirements} Ensure that all end of phase movement rules are enforced.
 
-\subsection{Detailed Design for Component: Get All Player Units}
+\subsubsection{Detailed Design for Component: Get All Player Units}
 \paragraph{Purpose} Get a complete list of all player units for purposes of reinforcements and replacements.
 \paragraph{Input} Player ID.
 \paragraph{Output} Tree map of units.
 \paragraph{Process} Retrieve all units in the pool that belong to the current player.
 
-\subsection{Detailed Design for Component: Get Instance}
+\subsubsection{Detailed Design for Component: Get Instance}
 \paragraph{Purpose} To retrieve the unit pool Singleton.
 \paragraph{Input} None
 \paragraph{Output} Unit Pool
 \paragraph{Process} Retrieves the unit pool Singleton.
 \paragraph{Design Constraints and Performance Requirements} The unit pool has to be a Singleton in order to avoid units being out of sync.
 
-\subsection{Detailed Design for Component: Get Over Stack}
+\subsubsection{Detailed Design for Component: Get Over Stack}
 \paragraph{Purpose} Retrieve all units violating the unit stacking rules.
 \paragraph{Input} None
 \paragraph{Output} An array list of units.
 \paragraph{Process} At the end of the current movement phase and once all stacks are brought into compliance, the over stacked array is reset.
 
-\subsection{Detailed Design for Component: Get Player Specific Units}
+\subsubsection{Detailed Design for Component: Get Player Specific Units}
 \paragraph{Purpose} To find all units of a specific type that belong to one player.
 \paragraph{Input} Player ID and units class name.
 \paragraph{Output} An array list of units.
 \paragraph{Process} Sorts through the unit pool and retrieves all units of a particular type by player ID.
 
-\subsection{Detailed Design for Component: Get Safe Teleport}
+\subsubsection{Detailed Design for Component: Get Safe Teleport}
 \paragraph{Purpose} Retrieve the list of all units that can safely teleport. This list was generated during the spell phase.
 \paragraph{Input} Unit ID.
 \paragraph{Output} A Boolean value.
 \paragraph{Process} Checks if the unit ID is contained inside of the safe teleport list.
 \paragraph{Design Constraints and Performance Requirements} All units attempting to teleport must be evaluated against this flag.
 
-\subsection{Detailed Design for Component: getUnit}
+\subsubsection{Detailed Design for Component: getUnit}
 \paragraph{Purpose} Retrieve an instance of a unit from the unit pool.
 \paragraph{Input}  Unit ID.
 \paragraph{Output} Instance of a MoveableUnit.
 \paragraph{Process} The unit ID is used to retrieve a instance of a movable unit from the unit pool.
 \paragraph{Design Constraints and Performance Requirements} any reference to a instance of a movable unit must come from this method.
 
-\subsection{Detailed Design for Component: getUnitHexMove}
+\subsubsection{Detailed Design for Component: getUnitHexMove}
 \paragraph{Purpose} Retrieve every movement a unit has made in the current movement phase.
 \paragraph{Input} Unit ID
 \paragraph{Output} Unit
 \paragraph{Process} Looks up the unit's ID and returns hexIDs for each hex the unit has stopped in.
 \paragraph{Design Constraints and Performance Requirements} Can only be used during the players current movement phase.
 
-\subsection{Detailed Design for Component: getUnitsInHex}
+\subsubsection{Detailed Design for Component: getUnitsInHex}
 \paragraph{Purpose} Retrieve all units currently occupying a given hex.  In effect it retrieves the stack of units.
 \paragraph{Input} Hex ID
 \paragraph{Output} A list of unit IDs.
 \paragraph{Process} Searches the hex list array for any units it contains.
 
-\subsection{Detailed Design for Component: removeUnit}
+\subsubsection{Detailed Design for Component: removeUnit}
 \paragraph{Purpose} Eliminate any unit that has been destroyed, from the unit pool.
 \paragraph{Input} Unit
 \paragraph{Output} None
 \paragraph{Process} Removes unit from the sorted tree map.
 
-\subsection{Detailed Design for Component: setSafeTeleport}
+\subsubsection{Detailed Design for Component: setSafeTeleport}
 \paragraph{Purpose} Sets the flag for all units in a stack, with a casting character, to allow a nondestructive teleport.
 \paragraph{Input} An array list of unit IDs
 \paragraph{Output} None
 \paragraph{Process} Sets a flag for each unit in a stack to true.
 \paragraph{Design Constraints and Performance Requirements} Only used during the players current spell phase.
 
-\subsection{Detailed Design for Component: setTeleportDestination}
+\subsubsection{Detailed Design for Component: setTeleportDestination}
 \paragraph{Purpose} To set the portal number the units will travel to during the spell phase.
 \paragraph{Input} An array list of unit IDs
 \paragraph{Output} None
 \paragraph{Process} During the spell phase each unit in the casters hex will have their destination portal sent.
 \paragraph{Design Constraints and Performance Requirements} Must only be used during the current players spell phase.
 
-\subsection{Detailed Design for Component: teleport}
+\subsubsection{Detailed Design for Component: teleport}
 \paragraph{Purpose} When a unit enters a portal hex it is either moved to a random portal, a predetermined portal, destroyed, or nothing happens. The process is controlled by any flags that may have been set during the spell phase.
 \paragraph{Input} Unit
 \paragraph{Output} Boolean value
 \paragraph{Process} If the safety flag is set the unit is either randomly moved to a new portal or left in place. If the portal number is indicated the new unit will move to that specified portal. If neither teleport flag is set the unit will be teleported to a random portal which includes the possibility of destruction.
 \paragraph{Design Constraints and Performance Requirements} Only used during the current players movement phase.
 
-\subsection{Detailed Design for Component: undoMove}
+\subsubsection{Detailed Design for Component: undoMove}
 \paragraph{Purpose} Step back to the previous hex a unit stopped in.
 \paragraph{Input} Unit ID
 \paragraph{Output} The previous hex ID.
 \paragraph{Process} Moved to the previous index of a discrete unit in the unit move data structure. 
 \paragraph{Design Constraints and Performance Requirements} Can only be used during the players current movement phase.
 
-\subsection{Detailed Design for Component: hexStack}
+\subsubsection{Detailed Design for Component: hexStack}
 \paragraph{Purpose} Implements the games stack rules.
 \paragraph{Input} The inputs for this class include hexes and units.
 \paragraph{Output} Boolean values, information indicating stack compliance, and GUI elements used to bring components into compliance with the rules.
 \paragraph{Process} Checks occupied hexes for compliance with the stack rule. Eliminate excessive units for hexes that are out of compliance with the rules.
 \paragraph{Design Constraints and Performance Requirements} Only used during the current players movement phase. 
 
-\subsection{Detailed Design for Component: overStackWarning}
+\subsubsection{Detailed Design for Component: overStackWarning}
 \paragraph{Purpose} Warn the player if they have a stack that is in violation of the rules.
 \paragraph{Input} Array list of unit IDs
 \paragraph{Output} Boolean value
 \paragraph{Process} Counts the number of units in a hex and returns false if there are too many units in a hex.
 \paragraph{Design Constraints and Performance Requirements} Characters are excluded from the count as they are not army units.  Only used during the current players movement phase.
 
-\subsection{Detailed Design for Component: removeOverStack}
+\subsubsection{Detailed Design for Component: removeOverStack}
 \paragraph{Purpose} To bring a stack into compliance with the rules.
 \paragraph{Input} Sorted map of units identified by hex ID
 \paragraph{Output} None
 \paragraph{Process} Displays a GUI showing all the units in all the stacks. Allows you to select the units to be eliminated. Then eliminates the selected units.
 \paragraph{Design Constraints and Performance Requirements} Characters are excluded from the count as they are not army units.  Only used during the current players movement phase.  
 
-%===============================================================================
-%Wooo colin was here. this comment is just so I can find my stuff easier
-\subsection{Detailed Design for Component: Hexagon Classes}
+\subsubsection{Detailed Design for Component: mainMenu.fxml}
+\paragraph{Purpose}  This file contains all the layout panes, buttons and labels for the Main Menu of the game as well as their sizes and positions.
+\paragraph{Input} This requires no input.
+\paragraph{Output} Visually displays a layout for the Main Menu.
+\paragraph{Process} This is loaded into a scene and displayed when placed in the stage.
+\paragraph{Design Constraints and Performance Requirements}	This layout was designed for compatibility with virtually any screen resolution.  But does start to cut things off when it reaches the dimensions of the ``Swords \& Sorcery" label.
+
+\subsubsection{Detailed Design for Component: hud.fxml}
+\paragraph{Purpose} This file contains all the layout panes, buttons and labels for the in game HUD as well as their sizes and positions.
+\paragraph{Input} This requires no input.
+\paragraph{Output} Visually displays a layout for the HUD.
+\paragraph{Process} This is loaded into a scene and displayed when placed in the stage by a call from the MainMenuController.java.
+\paragraph{Design Constraints and Performance Requirements}	This layout was designed for compatibility with virtually any screen resolution.  But does start to cut things off when It reaches the dimensions of the game information panel on the right side of the screen as these dimensions do not scale.
+
+\subsubsection{Detailed Design for Component: MainMenuController.java}
+\paragraph{Purpose} This manages the controls of the buttons in the mainMenu.fxml layout.  It is used for loading the game/scenario and quitting the application completely.
+\paragraph{Input} Action calls from buttons on the mainMenu layout.
+\paragraph{Output} There is no output for this.
+\paragraph{Process} This is designated as a target in the corresponding fxml file to handle all of its actions.  It’s functions are called by actions and events specified in the layout.
+\paragraph{Design Constraints and Performance Requirements}	 Every functions can only be called via actions from the layout and therefore sometimes you must make a function that  is called by your action and only calls an external function.
+
+\subsubsection{Detailed Design for Component: HUDController.java}
+\paragraph{Purpose} This manages the controls of the mapview, selected units, target units, chat/message boxes, and the menu bar in the hud.fxml layout.  It is used for playing the game and displaying necessary information about the game.
+\paragraph{Input} Action calls from buttons, the main map, keyboard, and chat server.
+\paragraph{Output} Outputs messages to the game server.
+\paragraph{Process} This is designated as a target in the corresponding fxml file to handle all of its actions.  Its functions are called by actions and events specified in the layout.
+\paragraph{Design Constraints and Performance Requirements}	Every functions can only be called via actions from the layout and therefore sometimes you must make a function that  is called by your action and only calls an external function.  We also implemented an initialize function that loads in and sets up the game map and other initial functionality.
+
+\subsubsection{Detailed Design for Component: Game.java}
+\paragraph{Purpose} This starts the application.
+\paragraph{Input} No input for this.
+\paragraph{Output} No output for this.
+\paragraph{Process} This loads the scenes with their appropriate fxml files then loads the stage with the appropriate scene.
+\paragraph{Design Constraints and Performance Requirements}	A JavaFX main file is static.  This is a mentionable note because it effects how you handle switching scenes and calling information from the scene in other java files.
+
+\subsubsection{Detailed Design for Component: Hexagon Classes}
 \paragraph{Purpose} To collect data pertaining to a hexagon
 \paragraph{Input}
 Hexagons are constructed from sections of XML data.
@@ -617,7 +687,7 @@ as the MapHex class reflects the state of the UnitPool with respect to units in 
 It was important that hexes could be queried for what hexes or edges neighbor them.
 Hex IDs correspond to the numbering scheme from the game map.
 
-\subsection{Detailed Design for Component: Hex Edges}
+\subsubsection{Detailed Design for Component: Hex Edges}
 \paragraph{Purpose} To collect data pertaining to an edge between two hexagons
 \paragraph{Input}
 Hex Edges are constructed from sections of XML data.
@@ -632,7 +702,7 @@ Components are organized in a standard Java collections class.
 It was important that when two neighboring hexes point to the edge between them
 that it's the same edge object regardless of what side you looked from.
 
-\subsection{Detailed Design for Component: Map Classes}
+\subsubsection{Detailed Design for Component: Map Classes}
 \paragraph{Purpose} To act as a collection to store Hexagons in a logical 2D plane.
 \paragraph{Input}
 Maps are constructed with .XML data. They use this .XML data to construct
@@ -644,7 +714,7 @@ Two types of Map classes. MainMap and DiplomacyMap. They store their respective
 types of hexes. Apart from that pretty simple code to look up hexes in the hashmap
 when one is requested.
 
-\subsection{Detailed Design for Component: Hex Rendering}
+\subsubsection{Detailed Design for Component: Hex Rendering}
 \paragraph{Purpose} To render anything visible on the map.
 \paragraph{Input}
 MapView calls the Hex Rendering code, and passes it a hex to draw, a hex to highlight,
@@ -659,7 +729,7 @@ Highlighting and unit background colors are done with transparency.
 \paragraph{Design Constraints and Performance Requirements}
 Use swing to render stuff.
 
-\subsection{Detailed Design for Component: Map View}
+\subsubsection{Detailed Design for Component: Map View}
 \paragraph{Purpose} To be a GUI frontend widgit to the Hex Rendering.
 \paragraph{Input}
 The GUI framework calls various event driven functions according to GUI stuff.
@@ -672,15 +742,12 @@ Lots of the calls from the GUI framework are trivial. But one important
 method is paintComponent, which is passed a Graphics object to paint on when
 painting should happen. It does this by using a for loop over all the hexes
 it should render, and passing that to the hex rendering code.
-
 Apart from this there are methods to turn GUI coordinates into Hex IDs or 
 edge coordinates. This is done with math similar to the following:
 http://gamedev.stackexchange.com/a/20762
 \paragraph{Design Constraints and Performance Requirements}
 Same as Hex Rendering. An extra constraint after initial implementation was to
 work with JavaFX.
-%===============================================================================
-
 
 \subsection{Data Dictionary}
 \small{
@@ -753,10 +820,89 @@ Count & Integer & HexStack.java & UnitPool & UnitPool\\
 \paragraph{Implementation Description} The stacked class now aggregates into the unit pool.
 \paragraph{Differences} It is a completely redesigned aggregation.  The unit pool class ended up tracking all of the units instead of the individual Map Hex as originally designed.  It was only logical to redesign the class diagram and associated aggregations. The name of the class had to be changed to HexStack as the "Stack" class is already exists in the Java libraries.
 
+\subsubsection{DiplomacyController} 
+\paragraph{Requirements Description} Allow player to move Diplomacy Marker.
+\paragraph{Implementation Description} We implemented a diplomacy map view, but it has no functionality towards displaying current game status.
+\paragraph{Differences} This difference stems from time and priority constraints. The diplomacy map was deemed low priority compared to combat, magic, movement, and scenarios.
+
+\subsubsection{Combat}
+\paragraph{Requirements Description} The Combat should allow player 
+to pick more than two units on the map, check their relations(Friendly 
+units or not), then shows their combat information, and a confirmation 
+for the combat. After the combat it should give choice to retreat or 
+eliminate certain units.
+\paragraph{Implementation Description} There has several part in 
+the combat phase need to take care about. We designed two adapters with 
+HUDController class and the Retreat and Elimination Class. So the 
+LaunchCombat class will handle everything about combat, it pass 
+necessary variables into the Movement Calculator and the Combat Result 
+Table, after get the return values, it will shows the commands for 
+players with GUI.
+\paragraph{Differences} There is no much difference between the 
+requirement and our implementation, only the Retreat part we decided to 
+make it a randomly select an available hex for moving.
+
 \subsubsection{MoveableUnit}
-\paragraph{Requirements Description} 
+\paragraph{Requirements Description} We required units, but didn't specify how they should be designed. However, we designed them.
+\paragraph{Implementation Description} Every unit we have implemented, that can move on the map, inherits from MoveableUnit. 
+\paragraph{Differences} We didn't have anything, and we built units.
+
+\subsection{Hex Rendering} 
+\paragraph{Requirements Description}
+Render spells, special hexes, Army Units, Characters, 
+Combat Indications, Special Effects, Edges, Terrain, and 
+anything else required by the army game.
 \paragraph{Implementation Description}
+Render most Army Units, Terrain, and Edges.
+
 \paragraph{Differences}
+Rendering wasn't specified in the design, but there were lots of 
+design elements that would require specific rendering support.
+
+Not all of which got implemented.
+
+Rendering code went pretty smoothly, so this was
+mostly just from lack of time to add everything in the face of
+more pressing concerns.
+
+\subsubsection{MapView}
+\paragraph{Requirements Description} 
+Swing GUI widget to use Hex Rendering code to render Hexes in a game or diplomacy map.
+\paragraph{Implementation Description}
+Swing GUI widget inside a SwingNode JavaFX class. Renders hexes in a game or diplomacy map.
+\paragraph{Differences}
+The JavaFX integration was unforseen, but apart from that there aren't many major differences.
+There was some talk of stuff like being able to pan with the mouse, but this didn't happen
+due to time constraints.
+
+One notable problem is JavaFX / Swing threading constraints being broken,
+it's suspect that this is leading to this component throwing exceptions
+on some computers.
+
+
+\subsection{Hexagon, Edge, and Map Classes} 
+\paragraph{Requirements Description}
+Hexagons have neighbors and tessalate onto a map.
+Hexagons can be modified by persistent spell or
+random event effects.
+Hexagons know what stacks they contain.
+Hexagons have a terrain type and edges.
+
+\paragraph{Implementation Description}
+MainMap or DiplomacyMap class loads itself from XML file.
+
+This constructs a bunch of hexes, and the edges between them.
+
+Map Hexes have an association with UnitPool to know what units
+are in them, but are otherwise pretty static.
+
+Map Hexes have terrain, edges, and a combat and movement cost.
+\paragraph{Differences}
+In the end Hexagons ended up being pretty static.
+
+To fully support the design they'd have to
+react to things like spells or random events.
+But this did not get implemented.
 
 \subsection{Hex Rendering} 
 \paragraph{Requirements Description}
@@ -816,7 +962,22 @@ react to things like spells or random events.
 But this did not get implemented.
 
 \subsection{Traceability Analysis}
-[Describe the consistency of our requirements descriptions and implementation in general]
+\subsubsection{Attack Units} Combat between units has been implemented 
+well, but different from the original design in that we should have
+added friendly units which surround defenders in the combat. And 
+after the Attack Units we should decide the certain player to retreat or 
+eliminate units, that's the feature what we didn't design before.
+\subsubsection{Retreat} For the retreat part, we finally designed to let 
+units retreat to a randomly available hex.
+\subsubsection{Choose Leader} Instead of choose the leader, in this 
+project we used List to implement stack units. So far our work doesn't 
+really need to pick who is the leader in the game.
+\subsubsection{View Character/Unit Statistics} There has several 
+different kinds of situation need to show unit's statistics. We 
+implement different styles for showing details for different situation. 
+For example, while a player picks a units, it will shows the information 
+on the main frame, but when the player want to enforce combat, there 
+will pop out another windows for Combat Details.
 
 \section{Appendix A}
 
