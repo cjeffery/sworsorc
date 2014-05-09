@@ -347,6 +347,7 @@ public class ClientObject {
                     switch ( tag ) {
 
                         case ADD_UNIT:
+                        case REMOVE_UNIT:
                             currentLobby.sendToEntireLobby(flag, tag, "Server", lmessage);
                             break;
                         case PHASE_CHANGE:

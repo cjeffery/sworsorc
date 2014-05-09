@@ -69,7 +69,7 @@ final public class Conductor {
             } else if ( data.get( 0 ).getClass().equals( String.class ) ) {
                 smessage = (String) data.get( 0 );
             }
-        } else { // todo: this could decapitate any pokes
+        } else if ( sender.isEmpty() ) {
             System.err.println( "(Conductor) Empty data!" );
             return;
         }
