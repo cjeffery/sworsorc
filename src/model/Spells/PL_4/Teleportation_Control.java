@@ -101,6 +101,7 @@ public final class Teleportation_Control {
                 pool.addMove((MoveableUnit)caster, target_hex);
                 Game.getInstance().hudController.hmapContent.repaint();
                 
+                
                 /* David's code, spell is being changed for now
                 unitpool.setSafeTeleport(unitpool.getUnitsInHex(caster.getLocation()), true);
                 // need functions to select the portal
@@ -139,5 +140,18 @@ public final class Teleportation_Control {
         
         
     }
-        
+       
+    public boolean successCast(){
+        return true;
+    }
+    
+    public void CostManna(){
+        if(successCast()){
+            caster.CostManna(4);
+        }else{
+            // do nothing
+        }
+    }
+    
+    
 }
