@@ -44,14 +44,6 @@ Sections are:
 \item Deployment, System Requirements, and Libraries
 \item Building
 \item Major Code Modules
-\begin{itemize}
-	\item The JavaFX HUD	
-	\item The Map Rendering Code
-	\item The Networking System
-	\item The Map File Format
-	\item The Movement Calculator
-	\item ...
-\end{itemize}
 \end{itemize}
 
 %===============================================================================
@@ -69,33 +61,49 @@ Unfortunately the implementation remains incomplete, so while some basic
 functionality exists, users will find it impossible to face eachother in battle
 over the internet.
 
-What does work includes:
+What works or partially works (to the best of my knowledge) includes:
 
-TODO: add to this
 \begin{enumerate}
+\item{Starting a new game (partial)}
+\item{Selecting a Scenario}
+\item{End Inter-Phase}
+\item{Move}
+\item{Teleport}
+\item{Select Unit From Stack}
+\item{Attack}
+\item{Advancing Units (partial)}
+\item{Retreating (partial}
+\item{View Unit Statistics}
+\item{Spellcasting (partial)}
 \item{Starting a client}
 \item{Starting a server}
 \item{Connecting to a server and communicating back and forth}
-\item{Loading a predetermined scenario}
-\item{Moving units according to their movement allowances}
-\item{Casting basic spells}
-\item{Teleporting}
-\item{Viewing Unit statistics}
 \item{Viewing Army Units, Terrain, or basic Hex Edges on the Main Map}
 \item{Viewing a blank Diplomacy Map}
 \item{Starting a server}
 \item{Seeing the solar display or game phases change when ending a turn}
 \end{enumerate}
 
-What does not work includes:
+What does not work (to the best of my knowledge) includes:
 
-TODO: remove from this
 \begin{enumerate}
+\item{Join Game}
+\item{Set Up}
+\item{Resume Game}
+\item{Save Game}
+\item{Select Ally Candidate}
+\item{Carry}
+\item{Choose Leader}
+\item{Spend Combat Manna}
+\item{Rally}
+\item{Manna Transfer}
+\item{Diplomacy or Emissaries or Prisoners}
+\item{Sacrifice}
+\item{Dragon Blockades}
 \item{Game State Synchronization between clients}
 \item{Special Hex Rendering}
 \item{Character or Monster Rendering}
 \item{MiniMap or Diplomacy Map}
-\item{Full retreating or advancing}
 \item{Random Events}
 \item{Starting a server}
 \end{enumerate}
@@ -189,7 +197,39 @@ have interesting enough implementations to bear discussing:
 %===============================================================================
 \section{The JavaFX HUD}
 %===============================================================================
-Describe Game.java and HUDController.java I guess
+JavaFX was chosen over swing for the GUI because it's newer and more active
+than swing. And because it supports scaling natively (as opposed to needing to
+use kludges to scale stuff in swing).
+
+JavaFX organizes user interfaces into Stages and Scenes. A stage displays a 
+scene. Very theatrical.
+
+JavaFX uses .fxml files to describe interfaces. These can be thought of as
+similar to HTML.
+
+mainMenu.fxml describes the layout for the Main Options menu which is the first
+menu that is seen on program launch.
+
+Likewise hud.fxml describes the layout of the actual game screen.
+
+JavaFX also has classes called Controller Classes, that determine the behavior
+of programs that use these layouts.
+
+In our project MainMenuController.java controls the Main Menu, and is in charge
+of, for instance, calling a function that actually starts the game when the
+user hits the "Start Game" button.
+
+HUDController likewise controlls the Main Game screen and has several notable
+features:
+
+\begin{itemize}
+\begin{item} Load the game map into it's panel \end{item}
+\begin{item} Update the Sun Position Display at the end of every turn \end{item}
+\begin{item} Select units when the map is clicked on. And display their stats
+\end{item}
+\begin{item} Send messages from the chat box to the server, and vice versa
+\end{item}
+\end{itemize}
 
 %===============================================================================
 \section{JavaFX MapView interaction}
@@ -411,6 +451,18 @@ The LaunchCombat functin first takes inputs Movable units, this connects with th
 First the result came from the LaunchCombat, so the player can get its result value(negative, positive integer, or zero), if the result is a positive number then the player should decide to retreat the units or not, if not, then they should eliminate the unit, if yes, execute the Retreat function. The retreat function will send necessary input for the method getRetreatMove in the class Movement Calculator, so it can get which hexes that the certain units can move to. And it will highlight those available hexes with red color, then the units will be randomly assigned to move to an available hex.
 
 \subsection{Unit Pool}
+Unitpool wasn't in the design.
+
+It was added as a design modification during one of our sprints. The rules of the game required tracking of units, manipulation of persistent units, a way to create, and destroy those units. The class name is UnitPool.
+
+\subsection{HexStack}
+HexStack was originally going to be named Stack, and a component of a Hex.
+
+In the implementation it exists to aggregate units in the UnitPool.
+
+It's named HexStack instead of Stack to avoid a name conflict with the Java library.
+
+
 
 
 \end{document}
