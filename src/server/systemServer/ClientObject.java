@@ -255,9 +255,9 @@ public class ClientObject {
                         case SEND_CHAT_MESSAGE:
                             if ( currentLobby != null ) {
                                 currentLobby.
-                                        sendToEntireLobby( flag, Tag.LOBBY, sender, smessage );
+                                        sendToEntireLobby( flag, tag, sender, smessage );
                             } else {
-                                NetworkServer.sendToAllClients( flag, Tag.GLOBAL, sender, lmessage );
+                                NetworkServer.sendToAllClients( flag, tag, sender, lmessage );
                             }
                             break;
                         default:
