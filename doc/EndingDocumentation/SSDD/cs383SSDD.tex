@@ -92,6 +92,8 @@ IP & Internet Protocol - Typically refers to an IP Address.\\
 \hline
 JavaFX & A software platform for creating and delivering rich applications that can run on a wide variety of devices.\\
 \hline
+JSON & JavaScript Object Notation - a lightweight data format based off of the javascript programming language that is easy for both humans and machines to read and write.\\
+\hline
 Pane & A container for some form of action or information.  JavaFX has many, including Anchor Panes, Grid Panes, Box Panes and more.\\
 \hline
 PlayerID & An integer representing one of the factions described in this scenario.\\
@@ -167,11 +169,19 @@ The HUD team view includes rules that affect the HUD (movement, hex painting, te
 \includegraphics[width=\linewidth]{HUDTeamCollab.png}
 \end{center}
 \paragraph{Rules Team View Representation and Description}
-The rules team view covers the implementation of the rules from the actual boardgame, S\&S. This includes things like combat, spell casting, charts implementation, unit implementation and other rules related tasks. The design view for the rules team consists of how those rules interact with each other and the other groups (HUD, Networking).
-%\includegraphics[scale=•]{•}
+The rules team view covers the implementation of the rules from the actual boardgame, S\&S. This includes things like combat, spell casting, charts implementation, unit implementation and other rules related tasks. The design view for the rules team consists of how those rules interact with each other and the other groups (HUD, Networking). Following is their design for MoveableUnits, which many of their components were dependent on.
+\begin{center}
+\includegraphics[width=\linewidth]{units.png}
+\end{center}
 \paragraph{Networking Team View Representation and Description}
 The networking team view covers the client/server implementation and design for S\&S. Their overall view of design was a client/server model which hosts communication over the network and message passign for updating the state of a game. 
-%\includegraphics[scale=•]{•}
+\begin{center}
+\includegraphics[width=\linewidth]{networkUML.png}
+\end{center}
+
+\begin{center}
+\includegraphics[width=\linewidth]{messageUML.png}
+\end{center}
 
 \subsection{User's Architectural View}
 \subsubsection{User's View Identification}
@@ -223,8 +233,8 @@ This section describes the developers viewpoint with respect to the software des
 \small{
 \begin{center}
 \keepXColumns
-\noindent\begin{tabularx}{\linewidth}{|p{1in}|X|X|X|p{1in}|}\hline
-\textbf{Name} & \textbf{Type/Range} & \textbf{Purpose} & \textbf{Dependencies} & \textbf{Subordinates}\\
+\noindent\begin{tabularx}{\linewidth}{|X|X|p{2in}|X|X|}\hline
+\textbf{Name} & \textbf{Type-Range} & \textbf{Purpose} & \textbf{Dependenc-ies} & \textbf{Subordina-tes}\\
 \hline
 AddMove & UnitPool Method & Move a unit to a new hex & Two array lists: hexList, unitMove & None\\
 \hline
@@ -262,6 +272,8 @@ GetOverStack & UnitPool Method & Gets hexes in violation of over-stack rule. & T
 \hline
 Get Player Specific Units & UnitPool Method & Get all units by type owned by a player. & Sort map: pool & None\\
 \hline
+getRand-SafeHex & Static Method & Given a list of provinces, return a pseudo-random hex ID from the map that is in those provinces and not water. & MainMap, MapHex & None \\
+\hline
 Get Safe Teleport & UnitPool Method & Determine if a unit can safely teleport. & Array list: safeTeleport & None\\
 \hline
 Get Teleport Destination & UnitPool Method & Get a unit destination portal. & Sorted map: portalNum & None\\
@@ -285,7 +297,7 @@ MapView, Hexagon Classes \\
 \hline
 hud & fxml & Layout for the game Hud & HUD Controller & None\\
 \hline
-HUDController & javafx controller & Handles actions and events triggered in hud scene & hud.fxml & None\\
+HUD Controller & javafx controller & Handles actions and events triggered in hud scene & hud.fxml & None\\
 \hline
 Launch Combat & Static Method & Implement Combat Phase & Moveable Unit, Army Combat Results Table, HUDController, Movement Calculator & None\\
 \hline
@@ -304,7 +316,7 @@ MessagePhoenix & Utility Class & Used to pack, unpack, send and receive messages
 \hline
 Moveable Unit & Class & Unit SuperClass & None & ArmyUnit, Character, Monster\\
 \hline
-MovementCalculator & Static Class & Determine Legal Moves & UnitPool, MainMap & Retreat/Move\\
+Movement Calculator & Static Class & Determine Legal Moves & UnitPool, MainMap & Retreat/Move\\
 \hline
 NetworkClient & Class & Manages network connection for client. & Tag, Flag, MessagePhoenix & Conductor \\
 \hline
@@ -312,13 +324,17 @@ NetworkServer & Class and Process & The independent server process that clients 
 \hline
 Over Stack Warning & Static Method & Notifies player of an over-stack condition. & UnitPool & HUD Controller\\
 \hline
+PopulatePool & Static Method & Fill the unit pool with appropriate units/characters in their specified locations. & Provinces, Characters, Units, object creator, character maker, getRandSafeHex() & None \\
+\hline
 Remove Over Stack & Method & Removes units from an over-stacked hex. & UnitPool & HUD Controller\\
 \hline
 RemoveUnit & UnitPool Method & Removes a single unit. & Sorted map: pool & None\\
 \hline
 Retreat & Static Method & Implement Retreat after Combat & Launch Combat, Movement Calculator & None\\
 \hline
-SetSafeTeleport & UnitPool Method & Sets the units that can safely teleport. & Array list: safeTeleport & None\\
+Scenario & Singleton Class & Store data about game scenario, for components, fill unit pool with units and characters appropriately. & JSONArray, JSONObject, JSON simple parser, Provinces, Characters, Units, object creator, character maker & populatePool() \\
+\hline
+SetSafe Teleport & UnitPool Method & Sets the units that can safely teleport. & Array list: safeTeleport & None\\
 \hline
 Solar Display & Class & Tracks solar position, updates HUD image & Scenario/Game Rules & Spell Casting, HUD Controller\\
 \hline
@@ -749,6 +765,27 @@ http://gamedev.stackexchange.com/a/20762
 Same as Hex Rendering. An extra constraint after initial implementation was to
 work with JavaFX.
 
+\subsubsection{Detailed Design for Component: Scenario}
+\paragraph{Purpose} This class is tasked with reading in data from the scenario configuration JSON files and temporarily storing it within the Java program. Most of this data is then accessed and processed by other components of the project. This data includes anything one may want to know about a scenario including its name, number of players, blue sun initial position, the armies and nations participating, as well as their provinces, units, and characters and additional information on neutrals and diplomacy. In addition to storing information, the Scenario class must also populate the unit pool with characters and units of the scenario in their appropriate provinces.
+\paragraph{Input} The Scenario is told what file to load the data from by a call to its static method Initialize(). From this file, it reads the scenario information.
+\paragraph{Output} Scenario stores information and will add units and characters to the unit pool at their appropriate hex addresses.
+\paragraph{Process} The Scenario is told what file to load the data from by a call to its static method Initialize(). From this file, it reads the scenario information, looping through complex data structures where necessary. Once populatePool() is also called from the outside, it loops through stored data about units, characters, and their provinces in order to add these objects to the unit pool in appropriate hexes.
+\paragraph{Design Constraints and Performance Requirements} While no hard performance requirements were specified, it was implied that reading the scenario file and populating the unit pool should not require an unreasonable amount of time such that the user will become impatient.
+
+\subsubsection{Detailed Design for Component: populatePool()}
+\paragraph{Purpose} The pool populator traverses through the data acquired about each player nation and neutral so that it may fill the unit pool with the coorect units and characters in the appropriate provinces.
+\paragraph{Input} The data already contained in the Scenario class.
+\paragraph{Output} Several new additions to the unit pool that reflect the units and characters posessed by neutrals and player nations in the Scenario.
+\paragraph{Process} For each player army in the Scenario, the unit pool traverses through its nations, keeping track of the controlling player. For each of these nations (which have a distince nation and race), the units and characters lists are traversed. Appropriate units are added to that player's branch of the unit pool in random hexes scattered throughout the provinces controlled by the nation. Then neutral nations are traversed in a similar manner.
+\paragraph{Design Constraints and Performance Requirements} Must be accurate and relatively timely.
+
+\subsubsection{Detailed Design for Component: getRandSafeHex()}
+\paragraph{Purpose} Return a pseudo-random hex ID that is not water terrain from a list of provinces.
+\paragraph{Input} A list of provinces and the data contained in MainMap.
+\paragraph{Output} A random hex ID that does not correspond to a water type and is in the listed provinces.
+\paragraph{Process} First a pseudo-random province from the list is chosen. Then a pseudo-random hex is chosen from the list of hexes in that province. While this hex is not water, a new random one is chosen. The final choice is returned.
+\paragraph{Design Constraints and Performance Requirements} Must be accurate and relatively timely.
+
 \subsection{Data Dictionary}
 \small{
 \begin{center}
@@ -797,6 +834,8 @@ UnitRemoveList & ArayList & HexStack.java & UnitPool & UnitPool\\
 PopupScene & Scene & HexStack.java & UnitPool & UnitPool\\
 \hline
 Count & Integer & HexStack.java & UnitPool & UnitPool\\
+\hline
+Scenario & singleton class, collection of ints, strings, bools, String Lists, Maps, and Maps of Maps. & Scenario.java & Game, SolarConfig & Game\\
 \hline
 \end{tabularx}
 \end{center}
