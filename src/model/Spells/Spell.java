@@ -262,7 +262,7 @@ public class Spell implements Serializable {
             conjured.setRace(Race.Conjured);
             conjured.setNation(character.getNation());
             UnitPool unitpool = UnitPool.getInstance();
-            unitpool.addUnit(1, conjured, character.getLocation());
+            unitpool.addUnit(Integer.parseInt(character.getID()), conjured, character.getLocation());
 
             //insert the conjured unit into the Unit Pool
             conjured = null;
