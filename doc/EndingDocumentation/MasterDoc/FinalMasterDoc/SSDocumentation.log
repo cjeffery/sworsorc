@@ -1,7 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.25)  4 MAY 2014 18:18
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.4.25)  9 MAY 2014 08:19
 entering extended mode
 **SSDocumentation.tex
-(C:\Users\KeisterBox\School\CS-383\MasterDocumentationDoc\SSDocumentation.tex
+
+(C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
+n\MasterDoc\FinalMasterDoc\SSDocumentation.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -15,8 +17,8 @@ an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
 ishmax, welsh, loaded.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\size12.clo"
-File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\size10.clo"
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -366,13 +368,63 @@ Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \TX@cols=\count100
 \TX@ftn=\toks23
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
-Package: geometry 2010/09/12 v5.6 Page Geometry
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdfpages\pdfpages.sty"
+Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\calc.sty"
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count101
+\calc@Bcount=\count102
+\calc@Adimen=\dimen121
+\calc@Bdimen=\dimen122
+\calc@Askip=\skip48
+\calc@Bskip=\skip49
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count103
+\calc@Cskip=\skip50
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\eso-pic\eso-pic.sty"
+Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\atbegshi.sty"
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty"
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdfpages\pppdftex.def"
+File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
+)
+\AM@pagebox=\box28
+\AM@toc@title=\toks24
+\c@AM@survey=\count104
+\AM@templatesizebox=\box29
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty"
 Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
@@ -380,115 +432,2102 @@ Package ifvtex Info: VTeX not detected.
 ("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-\Gm@cnth=\count101
-\Gm@cntv=\count102
-\c@Gm@tempcnt=\count103
-\Gm@bindingoffset=\dimen121
-\Gm@wd@mp=\dimen122
-\Gm@odd@mp=\dimen123
-\Gm@even@mp=\dimen124
-\Gm@layoutwidth=\dimen125
-\Gm@layoutheight=\dimen126
-\Gm@layouthoffset=\dimen127
-\Gm@layoutvoffset=\dimen128
-\Gm@dimlist=\toks24
+\Gm@cnth=\count105
+\Gm@cntv=\count106
+\c@Gm@tempcnt=\count107
+\Gm@bindingoffset=\dimen123
+\Gm@wd@mp=\dimen124
+\Gm@odd@mp=\dimen125
+\Gm@even@mp=\dimen126
+\Gm@layoutwidth=\dimen127
+\Gm@layoutheight=\dimen128
+\Gm@layouthoffset=\dimen129
+\Gm@layoutvoffset=\dimen130
+\Gm@dimlist=\toks25
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
-(C:\Users\KeisterBox\School\CS-383\MasterDocumentationDoc\SSDocumentation.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
+(C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
+n\MasterDoc\FinalMasterDoc\SSDocumentation.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
+LaTeX Font Info:    ... okay on input line 22.
 
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count104
-\scratchdimen=\dimen129
-\scratchbox=\box28
-\nofMPsegments=\count105
-\nofMParguments=\count106
-\everyMPshowfont=\toks25
-\MPscratchCnt=\count107
-\MPscratchDim=\dimen130
-\MPnumerator=\count108
-\makeMPintoPDFobject=\count109
-\everyMPtoPDFconversion=\toks26
+\scratchcounter=\count108
+\scratchdimen=\dimen131
+\scratchbox=\box30
+\nofMPsegments=\count109
+\nofMParguments=\count110
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count111
+\MPscratchDim=\dimen132
+\MPnumerator=\count112
+\makeMPintoPDFobject=\count113
+\everyMPtoPDFconversion=\toks27
 )
-*geometry* driver: auto-detecting
+\AtBeginShipoutBox=\box31
+
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
 * driver: pdftex
-* paper: a4paper
+* paper: letterpaper
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
-* modes: 
-* h-part:(L,W,R)=(72.26999pt, 452.9679pt, 72.26999pt)
-* v-part:(T,H,B)=(72.26999pt, 700.50687pt, 72.26999pt)
-* \paperwidth=597.50787pt
-* \paperheight=845.04684pt
-* \textwidth=452.9679pt
-* \textheight=700.50687pt
+* modes: twoside 
+* h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=469.75502pt
+* \textheight=650.43001pt
 * \oddsidemargin=0.0pt
 * \evensidemargin=0.0pt
 * \topmargin=-37.0pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=12.0pt
+* \topskip=10.0pt
 * \footskip=30.0pt
-* \marginparwidth=35.0pt
-* \marginparsep=10.0pt
+* \marginparwidth=121.0pt
+* \marginparsep=11.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
 * \@twocolumnfalse
-* \@twosidefalse
-* \@mparswitchfalse
+* \@twosidetrue
+* \@mparswitchtrue
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 <UIGraphic.png, id=1, 331.2375pt x 59.22125pt>
 File: UIGraphic.png Graphic file (type png)
  <use UIGraphic.png>
-Package pdftex.def Info: UIGraphic.png used on input line 15.
-(pdftex.def)             Requested size: 331.23668pt x 59.22108pt.
+Package pdftex.def Info: UIGraphic.png used on input line 23.
+(pdftex.def)             Requested size: 469.75502pt x 83.99081pt.
+LaTeX Font Info:    Try loading font information for U+msa on input line 23.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 23.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/KeisterBox/Schoo
-l/CS-383/MasterDocumentationDoc/UIGraphic.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 31.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/KeisterBox/Docum
+ents/NetBeansProjects/sworsorc/doc/EndingDocumentation/MasterDoc/FinalMasterDoc
+/UIGraphic.png>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 29.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 31.
- [1]
-(C:\Users\KeisterBox\School\CS-383\MasterDocumentationDoc\SSDocumentation.aux) 
-) 
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 29.
+
+<ssrs.pdf, id=11, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf>
+Package pdftex.def Info: ssrs.pdf used on input line 36.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf>
+Package pdftex.def Info: ssrs.pdf used on input line 36.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+ [2]
+<ssrs.pdf, id=18, page=1, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 1>
+Package pdftex.def Info: ssrs.pdf, page1 used on input line 36.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 1>
+Package pdftex.def Info: ssrs.pdf, page1 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 1>
+Package pdftex.def Info: ssrs.pdf, page1 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 1>
+Package pdftex.def Info: ssrs.pdf, page1 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 1>
+Package pdftex.def Info: ssrs.pdf, page1 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [3 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=168, page=2, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 2>
+Package pdftex.def Info: ssrs.pdf, page2 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 2>
+Package pdftex.def Info: ssrs.pdf, page2 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 2>
+Package pdftex.def Info: ssrs.pdf, page2 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [4 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=172, page=3, 614.295pt 
+x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 3>
+Package pdftex.def Info: ssrs.pdf, page3 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 3>
+Package pdftex.def Info: ssrs.pdf, page3 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 3>
+Package pdftex.def Info: ssrs.pdf, page3 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [5 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=245, page=4, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 4>
+Package pdftex.def Info: ssrs.pdf, page4 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 4>
+Package pdftex.def Info: ssrs.pdf, page4 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 4>
+Package pdftex.def Info: ssrs.pdf, page4 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [6 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=249, page=5, 614.295pt 
+x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 5>
+Package pdftex.def Info: ssrs.pdf, page5 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 5>
+Package pdftex.def Info: ssrs.pdf, page5 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 5>
+Package pdftex.def Info: ssrs.pdf, page5 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [7 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=259, page=6, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 6>
+Package pdftex.def Info: ssrs.pdf, page6 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 6>
+Package pdftex.def Info: ssrs.pdf, page6 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 6>
+Package pdftex.def Info: ssrs.pdf, page6 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [8 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=263, page=7, 614.295pt 
+x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 7>
+Package pdftex.def Info: ssrs.pdf, page7 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 7>
+Package pdftex.def Info: ssrs.pdf, page7 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 7>
+Package pdftex.def Info: ssrs.pdf, page7 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [9 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=267, page=8, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 8>
+Package pdftex.def Info: ssrs.pdf, page8 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 8>
+Package pdftex.def Info: ssrs.pdf, page8 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 8>
+Package pdftex.def Info: ssrs.pdf, page8 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [10 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=271, page=9, 614.295pt
+ x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 9>
+Package pdftex.def Info: ssrs.pdf, page9 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 9>
+Package pdftex.def Info: ssrs.pdf, page9 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 9>
+Package pdftex.def Info: ssrs.pdf, page9 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [11 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=295, page=10, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 10>
+Package pdftex.def Info: ssrs.pdf, page10 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 10>
+Package pdftex.def Info: ssrs.pdf, page10 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 10>
+Package pdftex.def Info: ssrs.pdf, page10 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [12 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=312, page=11, 614.295p
+t x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 11>
+Package pdftex.def Info: ssrs.pdf, page11 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 11>
+Package pdftex.def Info: ssrs.pdf, page11 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 11>
+Package pdftex.def Info: ssrs.pdf, page11 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+
+[13 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=318, page=12, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 12>
+Package pdftex.def Info: ssrs.pdf, page12 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 12>
+Package pdftex.def Info: ssrs.pdf, page12 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 12>
+Package pdftex.def Info: ssrs.pdf, page12 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [14 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=325, page=13, 614.295p
+t x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 13>
+Package pdftex.def Info: ssrs.pdf, page13 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 13>
+Package pdftex.def Info: ssrs.pdf, page13 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 13>
+Package pdftex.def Info: ssrs.pdf, page13 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+
+[15 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=330, page=14, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 14>
+Package pdftex.def Info: ssrs.pdf, page14 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 14>
+Package pdftex.def Info: ssrs.pdf, page14 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 14>
+Package pdftex.def Info: ssrs.pdf, page14 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [16 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=335, page=15, 614.295p
+t x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 15>
+Package pdftex.def Info: ssrs.pdf, page15 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 15>
+Package pdftex.def Info: ssrs.pdf, page15 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 15>
+Package pdftex.def Info: ssrs.pdf, page15 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+
+[17 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=340, page=16, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 16>
+Package pdftex.def Info: ssrs.pdf, page16 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 16>
+Package pdftex.def Info: ssrs.pdf, page16 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 16>
+Package pdftex.def Info: ssrs.pdf, page16 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [18 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=345, page=17, 614.295p
+t x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 17>
+Package pdftex.def Info: ssrs.pdf, page17 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 17>
+Package pdftex.def Info: ssrs.pdf, page17 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 17>
+Package pdftex.def Info: ssrs.pdf, page17 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+
+[19 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=351, page=18, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 18>
+Package pdftex.def Info: ssrs.pdf, page18 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 18>
+Package pdftex.def Info: ssrs.pdf, page18 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 18>
+Package pdftex.def Info: ssrs.pdf, page18 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [20 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=356, page=19, 614.295p
+t x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 19>
+Package pdftex.def Info: ssrs.pdf, page19 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 19>
+Package pdftex.def Info: ssrs.pdf, page19 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 19>
+Package pdftex.def Info: ssrs.pdf, page19 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+
+[21 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=361, page=20, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 20>
+Package pdftex.def Info: ssrs.pdf, page20 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 20>
+Package pdftex.def Info: ssrs.pdf, page20 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 20>
+Package pdftex.def Info: ssrs.pdf, page20 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [22 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=366, page=21, 614.295p
+t x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 21>
+Package pdftex.def Info: ssrs.pdf, page21 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 21>
+Package pdftex.def Info: ssrs.pdf, page21 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 21>
+Package pdftex.def Info: ssrs.pdf, page21 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+
+[23 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=371, page=22, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 22>
+Package pdftex.def Info: ssrs.pdf, page22 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 22>
+Package pdftex.def Info: ssrs.pdf, page22 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 22>
+Package pdftex.def Info: ssrs.pdf, page22 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [24 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=376, page=23, 614.295p
+t x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 23>
+Package pdftex.def Info: ssrs.pdf, page23 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 23>
+Package pdftex.def Info: ssrs.pdf, page23 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 23>
+Package pdftex.def Info: ssrs.pdf, page23 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+
+[25 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=382, page=24, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 24>
+Package pdftex.def Info: ssrs.pdf, page24 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 24>
+Package pdftex.def Info: ssrs.pdf, page24 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 24>
+Package pdftex.def Info: ssrs.pdf, page24 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [26 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=387, page=25, 614.295p
+t x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 25>
+Package pdftex.def Info: ssrs.pdf, page25 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 25>
+Package pdftex.def Info: ssrs.pdf, page25 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 25>
+Package pdftex.def Info: ssrs.pdf, page25 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+
+[27 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<ssrs.pdf, id=392, page=26, 614.295pt x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 26>
+Package pdftex.def Info: ssrs.pdf, page26 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 26>
+Package pdftex.def Info: ssrs.pdf, page26 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 26>
+Package pdftex.def Info: ssrs.pdf, page26 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [28 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/ssrs.pdf>] <ssrs.pdf, id=397, page=27, 614.295p
+t x 794.97pt>
+File: ssrs.pdf Graphic file (type pdf)
+
+<use ssrs.pdf, page 27>
+Package pdftex.def Info: ssrs.pdf, page27 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 27>
+Package pdftex.def Info: ssrs.pdf, page27 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: ssrs.pdf Graphic file (type pdf)
+ <use ssrs.pdf, page 27>
+Package pdftex.def Info: ssrs.pdf, page27 used on input line 36.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+
+[29 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocument
+ation/MasterDoc/FinalMasterDoc/ssrs.pdf>]
+<cs383SSDD.pdf, id=402, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf>
+Package pdftex.def Info: cs383SSDD.pdf used on input line 37.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf>
+Package pdftex.def Info: cs383SSDD.pdf used on input line 37.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+ <cs383SSDD.pdf, id=405, page=1, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 1>
+Package pdftex.def Info: cs383SSDD.pdf, page1 used on input line 37.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 1>
+Package pdftex.def Info: cs383SSDD.pdf, page1 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 1>
+Package pdftex.def Info: cs383SSDD.pdf, page1 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 1>
+Package pdftex.def Info: cs383SSDD.pdf, page1 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 1>
+Package pdftex.def Info: cs383SSDD.pdf, page1 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [30 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=422, page=2, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 2>
+Package pdftex.def Info: cs383SSDD.pdf, page2 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 2>
+Package pdftex.def Info: cs383SSDD.pdf, page2 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 2>
+Package pdftex.def Info: cs383SSDD.pdf, page2 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [31 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=427, page=3, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 3>
+Package pdftex.def Info: cs383SSDD.pdf, page3 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 3>
+Package pdftex.def Info: cs383SSDD.pdf, page3 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 3>
+Package pdftex.def Info: cs383SSDD.pdf, page3 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [32 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=431, page=4, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 4>
+Package pdftex.def Info: cs383SSDD.pdf, page4 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 4>
+Package pdftex.def Info: cs383SSDD.pdf, page4 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 4>
+Package pdftex.def Info: cs383SSDD.pdf, page4 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [33 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=435, page=5, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 5>
+Package pdftex.def Info: cs383SSDD.pdf, page5 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 5>
+Package pdftex.def Info: cs383SSDD.pdf, page5 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 5>
+Package pdftex.def Info: cs383SSDD.pdf, page5 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [34 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=439, page=6, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 6>
+Package pdftex.def Info: cs383SSDD.pdf, page6 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 6>
+Package pdftex.def Info: cs383SSDD.pdf, page6 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 6>
+Package pdftex.def Info: cs383SSDD.pdf, page6 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [35 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=453, page=7, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 7>
+Package pdftex.def Info: cs383SSDD.pdf, page7 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 7>
+Package pdftex.def Info: cs383SSDD.pdf, page7 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 7>
+Package pdftex.def Info: cs383SSDD.pdf, page7 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [36 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=462, page=8, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 8>
+Package pdftex.def Info: cs383SSDD.pdf, page8 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 8>
+Package pdftex.def Info: cs383SSDD.pdf, page8 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 8>
+Package pdftex.def Info: cs383SSDD.pdf, page8 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [37 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=467, page=9, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 9>
+Package pdftex.def Info: cs383SSDD.pdf, page9 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 9>
+Package pdftex.def Info: cs383SSDD.pdf, page9 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 9>
+Package pdftex.def Info: cs383SSDD.pdf, page9 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [38 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=472, page=10, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 10>
+Package pdftex.def Info: cs383SSDD.pdf, page10 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 10>
+Package pdftex.def Info: cs383SSDD.pdf, page10 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 10>
+Package pdftex.def Info: cs383SSDD.pdf, page10 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [39 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=478, page=11, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 11>
+Package pdftex.def Info: cs383SSDD.pdf, page11 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 11>
+Package pdftex.def Info: cs383SSDD.pdf, page11 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 11>
+Package pdftex.def Info: cs383SSDD.pdf, page11 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [40 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=484, page=12, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 12>
+Package pdftex.def Info: cs383SSDD.pdf, page12 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 12>
+Package pdftex.def Info: cs383SSDD.pdf, page12 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 12>
+Package pdftex.def Info: cs383SSDD.pdf, page12 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [41 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=488, page=13, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 13>
+Package pdftex.def Info: cs383SSDD.pdf, page13 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 13>
+Package pdftex.def Info: cs383SSDD.pdf, page13 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 13>
+Package pdftex.def Info: cs383SSDD.pdf, page13 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [42 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=493, page=14, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 14>
+Package pdftex.def Info: cs383SSDD.pdf, page14 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 14>
+Package pdftex.def Info: cs383SSDD.pdf, page14 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 14>
+Package pdftex.def Info: cs383SSDD.pdf, page14 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [43 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=499, page=15, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 15>
+Package pdftex.def Info: cs383SSDD.pdf, page15 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 15>
+Package pdftex.def Info: cs383SSDD.pdf, page15 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 15>
+Package pdftex.def Info: cs383SSDD.pdf, page15 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [44 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=504, page=16, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 16>
+Package pdftex.def Info: cs383SSDD.pdf, page16 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 16>
+Package pdftex.def Info: cs383SSDD.pdf, page16 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 16>
+Package pdftex.def Info: cs383SSDD.pdf, page16 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [45 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=509, page=17, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 17>
+Package pdftex.def Info: cs383SSDD.pdf, page17 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 17>
+Package pdftex.def Info: cs383SSDD.pdf, page17 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 17>
+Package pdftex.def Info: cs383SSDD.pdf, page17 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [46 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=514, page=18, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 18>
+Package pdftex.def Info: cs383SSDD.pdf, page18 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 18>
+Package pdftex.def Info: cs383SSDD.pdf, page18 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 18>
+Package pdftex.def Info: cs383SSDD.pdf, page18 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [47 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=519, page=19, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 19>
+Package pdftex.def Info: cs383SSDD.pdf, page19 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 19>
+Package pdftex.def Info: cs383SSDD.pdf, page19 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 19>
+Package pdftex.def Info: cs383SSDD.pdf, page19 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [48 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=524, page=20, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 20>
+Package pdftex.def Info: cs383SSDD.pdf, page20 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 20>
+Package pdftex.def Info: cs383SSDD.pdf, page20 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 20>
+Package pdftex.def Info: cs383SSDD.pdf, page20 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [49 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=531, page=21, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 21>
+Package pdftex.def Info: cs383SSDD.pdf, page21 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 21>
+Package pdftex.def Info: cs383SSDD.pdf, page21 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 21>
+Package pdftex.def Info: cs383SSDD.pdf, page21 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [50 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=535, page=22, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 22>
+Package pdftex.def Info: cs383SSDD.pdf, page22 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 22>
+Package pdftex.def Info: cs383SSDD.pdf, page22 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 22>
+Package pdftex.def Info: cs383SSDD.pdf, page22 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [51 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=539, page=23, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 23>
+Package pdftex.def Info: cs383SSDD.pdf, page23 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 23>
+Package pdftex.def Info: cs383SSDD.pdf, page23 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 23>
+Package pdftex.def Info: cs383SSDD.pdf, page23 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [52 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=543, page=24, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 24>
+Package pdftex.def Info: cs383SSDD.pdf, page24 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 24>
+Package pdftex.def Info: cs383SSDD.pdf, page24 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 24>
+Package pdftex.def Info: cs383SSDD.pdf, page24 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [53 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=547, page=25, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 25>
+Package pdftex.def Info: cs383SSDD.pdf, page25 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 25>
+Package pdftex.def Info: cs383SSDD.pdf, page25 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 25>
+Package pdftex.def Info: cs383SSDD.pdf, page25 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [54 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=551, page=26, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 26>
+Package pdftex.def Info: cs383SSDD.pdf, page26 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 26>
+Package pdftex.def Info: cs383SSDD.pdf, page26 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 26>
+Package pdftex.def Info: cs383SSDD.pdf, page26 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [55 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=556, page=27, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 27>
+Package pdftex.def Info: cs383SSDD.pdf, page27 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 27>
+Package pdftex.def Info: cs383SSDD.pdf, page27 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 27>
+Package pdftex.def Info: cs383SSDD.pdf, page27 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [56 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=560, page=28, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 28>
+Package pdftex.def Info: cs383SSDD.pdf, page28 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 28>
+Package pdftex.def Info: cs383SSDD.pdf, page28 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 28>
+Package pdftex.def Info: cs383SSDD.pdf, page28 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [57 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=564, page=29, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 29>
+Package pdftex.def Info: cs383SSDD.pdf, page29 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 29>
+Package pdftex.def Info: cs383SSDD.pdf, page29 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 29>
+Package pdftex.def Info: cs383SSDD.pdf, page29 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [58 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=578, page=30, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 30>
+Package pdftex.def Info: cs383SSDD.pdf, page30 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 30>
+Package pdftex.def Info: cs383SSDD.pdf, page30 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 30>
+Package pdftex.def Info: cs383SSDD.pdf, page30 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [59 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=582, page=31, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 31>
+Package pdftex.def Info: cs383SSDD.pdf, page31 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 31>
+Package pdftex.def Info: cs383SSDD.pdf, page31 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 31>
+Package pdftex.def Info: cs383SSDD.pdf, page31 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [60 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=586, page=32, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 32>
+Package pdftex.def Info: cs383SSDD.pdf, page32 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 32>
+Package pdftex.def Info: cs383SSDD.pdf, page32 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 32>
+Package pdftex.def Info: cs383SSDD.pdf, page32 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [61 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=591, page=33, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 33>
+Package pdftex.def Info: cs383SSDD.pdf, page33 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 33>
+Package pdftex.def Info: cs383SSDD.pdf, page33 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 33>
+Package pdftex.def Info: cs383SSDD.pdf, page33 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [62 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=595, page=34, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 34>
+Package pdftex.def Info: cs383SSDD.pdf, page34 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 34>
+Package pdftex.def Info: cs383SSDD.pdf, page34 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 34>
+Package pdftex.def Info: cs383SSDD.pdf, page34 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [63 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=599, page=35, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 35>
+Package pdftex.def Info: cs383SSDD.pdf, page35 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 35>
+Package pdftex.def Info: cs383SSDD.pdf, page35 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 35>
+Package pdftex.def Info: cs383SSDD.pdf, page35 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [64 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=603, page=36, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 36>
+Package pdftex.def Info: cs383SSDD.pdf, page36 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 36>
+Package pdftex.def Info: cs383SSDD.pdf, page36 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 36>
+Package pdftex.def Info: cs383SSDD.pdf, page36 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [65 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=607, page=37, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 37>
+Package pdftex.def Info: cs383SSDD.pdf, page37 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 37>
+Package pdftex.def Info: cs383SSDD.pdf, page37 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 37>
+Package pdftex.def Info: cs383SSDD.pdf, page37 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [66 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=611, page=38, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 38>
+Package pdftex.def Info: cs383SSDD.pdf, page38 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 38>
+Package pdftex.def Info: cs383SSDD.pdf, page38 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 38>
+Package pdftex.def Info: cs383SSDD.pdf, page38 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [67 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=616, page=39, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 39>
+Package pdftex.def Info: cs383SSDD.pdf, page39 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 39>
+Package pdftex.def Info: cs383SSDD.pdf, page39 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 39>
+Package pdftex.def Info: cs383SSDD.pdf, page39 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [68 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=620, page=40, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 40>
+Package pdftex.def Info: cs383SSDD.pdf, page40 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 40>
+Package pdftex.def Info: cs383SSDD.pdf, page40 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 40>
+Package pdftex.def Info: cs383SSDD.pdf, page40 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [69 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=624, page=41, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 41>
+Package pdftex.def Info: cs383SSDD.pdf, page41 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 41>
+Package pdftex.def Info: cs383SSDD.pdf, page41 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 41>
+Package pdftex.def Info: cs383SSDD.pdf, page41 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [70 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=628, page=42, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 42>
+Package pdftex.def Info: cs383SSDD.pdf, page42 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 42>
+Package pdftex.def Info: cs383SSDD.pdf, page42 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 42>
+Package pdftex.def Info: cs383SSDD.pdf, page42 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [71 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=632, page=43, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 43>
+Package pdftex.def Info: cs383SSDD.pdf, page43 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 43>
+Package pdftex.def Info: cs383SSDD.pdf, page43 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 43>
+Package pdftex.def Info: cs383SSDD.pdf, page43 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [72 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=636, page=44, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 44>
+Package pdftex.def Info: cs383SSDD.pdf, page44 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 44>
+Package pdftex.def Info: cs383SSDD.pdf, page44 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 44>
+Package pdftex.def Info: cs383SSDD.pdf, page44 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [73 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=641, page=45, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 45>
+Package pdftex.def Info: cs383SSDD.pdf, page45 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 45>
+Package pdftex.def Info: cs383SSDD.pdf, page45 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 45>
+Package pdftex.def Info: cs383SSDD.pdf, page45 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [74 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=645, page=46, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 46>
+Package pdftex.def Info: cs383SSDD.pdf, page46 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 46>
+Package pdftex.def Info: cs383SSDD.pdf, page46 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 46>
+Package pdftex.def Info: cs383SSDD.pdf, page46 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [75 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<cs383SSDD.pdf, id=649, page=47, 597.50829pt x 845.0471pt>
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 47>
+Package pdftex.def Info: cs383SSDD.pdf, page47 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+ <use cs383SSDD.pdf, page 47>
+Package pdftex.def Info: cs383SSDD.pdf, page47 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: cs383SSDD.pdf Graphic file (type pdf)
+
+<use cs383SSDD.pdf, page 47>
+Package pdftex.def Info: cs383SSDD.pdf, page47 used on input line 37.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [76 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/cs383SSDD.pdf>]
+<Implementation.pdf, id=653, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf>
+Package pdftex.def Info: Implementation.pdf used on input line 38.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf>
+Package pdftex.def Info: Implementation.pdf used on input line 38.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+
+<Implementation.pdf, id=656, page=1, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 1>
+Package pdftex.def Info: Implementation.pdf, page1 used on input line 38.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 1>
+Package pdftex.def Info: Implementation.pdf, page1 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 1>
+Package pdftex.def Info: Implementation.pdf, page1 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 1>
+Package pdftex.def Info: Implementation.pdf, page1 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 1>
+Package pdftex.def Info: Implementation.pdf, page1 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [77 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=66
+6, page=2, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 2>
+Package pdftex.def Info: Implementation.pdf, page2 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 2>
+Package pdftex.def Info: Implementation.pdf, page2 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 2>
+Package pdftex.def Info: Implementation.pdf, page2 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [78 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=67
+8, page=3, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 3>
+Package pdftex.def Info: Implementation.pdf, page3 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 3>
+Package pdftex.def Info: Implementation.pdf, page3 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 3>
+Package pdftex.def Info: Implementation.pdf, page3 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [79 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=68
+3, page=4, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 4>
+Package pdftex.def Info: Implementation.pdf, page4 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 4>
+Package pdftex.def Info: Implementation.pdf, page4 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 4>
+Package pdftex.def Info: Implementation.pdf, page4 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [80 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=68
+7, page=5, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 5>
+Package pdftex.def Info: Implementation.pdf, page5 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 5>
+Package pdftex.def Info: Implementation.pdf, page5 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 5>
+Package pdftex.def Info: Implementation.pdf, page5 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [81 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=69
+1, page=6, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 6>
+Package pdftex.def Info: Implementation.pdf, page6 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 6>
+Package pdftex.def Info: Implementation.pdf, page6 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 6>
+Package pdftex.def Info: Implementation.pdf, page6 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [82 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=69
+5, page=7, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 7>
+Package pdftex.def Info: Implementation.pdf, page7 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 7>
+Package pdftex.def Info: Implementation.pdf, page7 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 7>
+Package pdftex.def Info: Implementation.pdf, page7 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [83 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=69
+9, page=8, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 8>
+Package pdftex.def Info: Implementation.pdf, page8 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 8>
+Package pdftex.def Info: Implementation.pdf, page8 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 8>
+Package pdftex.def Info: Implementation.pdf, page8 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [84 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=70
+3, page=9, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 9>
+Package pdftex.def Info: Implementation.pdf, page9 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 9>
+Package pdftex.def Info: Implementation.pdf, page9 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 9>
+Package pdftex.def Info: Implementation.pdf, page9 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [85 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=70
+8, page=10, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 10>
+Package pdftex.def Info: Implementation.pdf, page10 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 10>
+Package pdftex.def Info: Implementation.pdf, page10 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 10>
+Package pdftex.def Info: Implementation.pdf, page10 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [86 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=71
+2, page=11, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 11>
+Package pdftex.def Info: Implementation.pdf, page11 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 11>
+Package pdftex.def Info: Implementation.pdf, page11 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 11>
+Package pdftex.def Info: Implementation.pdf, page11 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [87 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=71
+6, page=12, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 12>
+Package pdftex.def Info: Implementation.pdf, page12 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 12>
+Package pdftex.def Info: Implementation.pdf, page12 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 12>
+Package pdftex.def Info: Implementation.pdf, page12 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [88 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=72
+0, page=13, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 13>
+Package pdftex.def Info: Implementation.pdf, page13 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 13>
+Package pdftex.def Info: Implementation.pdf, page13 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 13>
+Package pdftex.def Info: Implementation.pdf, page13 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [89 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=72
+4, page=14, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 14>
+Package pdftex.def Info: Implementation.pdf, page14 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 14>
+Package pdftex.def Info: Implementation.pdf, page14 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 14>
+Package pdftex.def Info: Implementation.pdf, page14 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [90 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=72
+8, page=15, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 15>
+Package pdftex.def Info: Implementation.pdf, page15 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 15>
+Package pdftex.def Info: Implementation.pdf, page15 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 15>
+Package pdftex.def Info: Implementation.pdf, page15 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [91 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <Implementation.pdf, id=74
+1, page=16, 597.50829pt x 845.0471pt>
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 16>
+Package pdftex.def Info: Implementation.pdf, page16 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+ <use Implementation.pdf, page 16>
+Package pdftex.def Info: Implementation.pdf, page16 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: Implementation.pdf Graphic file (type pdf)
+
+<use Implementation.pdf, page 16>
+Package pdftex.def Info: Implementation.pdf, page16 used on input line 38.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [92 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/Implementation.pdf>] <TP_Template.pdf, id=745, 
+614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf>
+Package pdftex.def Info: TP_Template.pdf used on input line 39.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf>
+Package pdftex.def Info: TP_Template.pdf used on input line 39.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+ <TP_Template.pdf, id=748, page=1, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 1>
+Package pdftex.def Info: TP_Template.pdf, page1 used on input line 39.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 1>
+Package pdftex.def Info: TP_Template.pdf, page1 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 1>
+Package pdftex.def Info: TP_Template.pdf, page1 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 1>
+Package pdftex.def Info: TP_Template.pdf, page1 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 1>
+Package pdftex.def Info: TP_Template.pdf, page1 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [93 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/TP_Template.pdf>]
+<TP_Template.pdf, id=920, page=2, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 2>
+Package pdftex.def Info: TP_Template.pdf, page2 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 2>
+Package pdftex.def Info: TP_Template.pdf, page2 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 2>
+Package pdftex.def Info: TP_Template.pdf, page2 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [94 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/TP_Template.pdf>]
+<TP_Template.pdf, id=924, page=3, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 3>
+Package pdftex.def Info: TP_Template.pdf, page3 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 3>
+Package pdftex.def Info: TP_Template.pdf, page3 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 3>
+Package pdftex.def Info: TP_Template.pdf, page3 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [95 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/TP_Template.pdf>]
+<TP_Template.pdf, id=928, page=4, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 4>
+Package pdftex.def Info: TP_Template.pdf, page4 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 4>
+Package pdftex.def Info: TP_Template.pdf, page4 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 4>
+Package pdftex.def Info: TP_Template.pdf, page4 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [96 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/TP_Template.pdf>]
+<TP_Template.pdf, id=932, page=5, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 5>
+Package pdftex.def Info: TP_Template.pdf, page5 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 5>
+Package pdftex.def Info: TP_Template.pdf, page5 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 5>
+Package pdftex.def Info: TP_Template.pdf, page5 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [97 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/TP_Template.pdf>]
+<TP_Template.pdf, id=976, page=6, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 6>
+Package pdftex.def Info: TP_Template.pdf, page6 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 6>
+Package pdftex.def Info: TP_Template.pdf, page6 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 6>
+Package pdftex.def Info: TP_Template.pdf, page6 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [98 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/TP_Template.pdf>]
+<TP_Template.pdf, id=1023, page=7, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 7>
+Package pdftex.def Info: TP_Template.pdf, page7 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 7>
+Package pdftex.def Info: TP_Template.pdf, page7 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 7>
+Package pdftex.def Info: TP_Template.pdf, page7 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [99 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocumen
+tation/MasterDoc/FinalMasterDoc/TP_Template.pdf>]
+<TP_Template.pdf, id=1027, page=8, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 8>
+Package pdftex.def Info: TP_Template.pdf, page8 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 8>
+Package pdftex.def Info: TP_Template.pdf, page8 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 8>
+Package pdftex.def Info: TP_Template.pdf, page8 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [100 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/TP_Template.pdf>] <TP_Template.pdf, id=1031, p
+age=9, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 9>
+Package pdftex.def Info: TP_Template.pdf, page9 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 9>
+Package pdftex.def Info: TP_Template.pdf, page9 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 9>
+Package pdftex.def Info: TP_Template.pdf, page9 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [101 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/TP_Template.pdf>] <TP_Template.pdf, id=1035, p
+age=10, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 10>
+Package pdftex.def Info: TP_Template.pdf, page10 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 10>
+Package pdftex.def Info: TP_Template.pdf, page10 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 10>
+Package pdftex.def Info: TP_Template.pdf, page10 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [102 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/TP_Template.pdf>] <TP_Template.pdf, id=1039, p
+age=11, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 11>
+Package pdftex.def Info: TP_Template.pdf, page11 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 11>
+Package pdftex.def Info: TP_Template.pdf, page11 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 11>
+Package pdftex.def Info: TP_Template.pdf, page11 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [103 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/TP_Template.pdf>] <TP_Template.pdf, id=1044, p
+age=12, 614.295pt x 794.97pt>
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 12>
+Package pdftex.def Info: TP_Template.pdf, page12 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+ <use TP_Template.pdf, page 12>
+Package pdftex.def Info: TP_Template.pdf, page12 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: TP_Template.pdf Graphic file (type pdf)
+
+<use TP_Template.pdf, page 12>
+Package pdftex.def Info: TP_Template.pdf, page12 used on input line 39.
+(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+ [104 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/TP_Template.pdf>] <metrics_report.pdf, id=1048
+, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf>
+Package pdftex.def Info: metrics_report.pdf used on input line 40.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf>
+Package pdftex.def Info: metrics_report.pdf used on input line 40.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+
+<metrics_report.pdf, id=1051, page=1, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 1>
+Package pdftex.def Info: metrics_report.pdf, page1 used on input line 40.
+(pdftex.def)             Requested size: 597.50682pt x 845.04504pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 1>
+Package pdftex.def Info: metrics_report.pdf, page1 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 1>
+Package pdftex.def Info: metrics_report.pdf, page1 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 1>
+Package pdftex.def Info: metrics_report.pdf, page1 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 1>
+Package pdftex.def Info: metrics_report.pdf, page1 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [105 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/metrics_report.pdf>] <metrics_report.pdf, id=1
+062, page=2, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 2>
+Package pdftex.def Info: metrics_report.pdf, page2 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 2>
+Package pdftex.def Info: metrics_report.pdf, page2 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 2>
+Package pdftex.def Info: metrics_report.pdf, page2 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [106 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/metrics_report.pdf>] <metrics_report.pdf, id=1
+066, page=3, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 3>
+Package pdftex.def Info: metrics_report.pdf, page3 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 3>
+Package pdftex.def Info: metrics_report.pdf, page3 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 3>
+Package pdftex.def Info: metrics_report.pdf, page3 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [107 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/metrics_report.pdf>] <metrics_report.pdf, id=1
+070, page=4, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 4>
+Package pdftex.def Info: metrics_report.pdf, page4 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 4>
+Package pdftex.def Info: metrics_report.pdf, page4 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 4>
+Package pdftex.def Info: metrics_report.pdf, page4 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [108 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/metrics_report.pdf>] <metrics_report.pdf, id=1
+078, page=5, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 5>
+Package pdftex.def Info: metrics_report.pdf, page5 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 5>
+Package pdftex.def Info: metrics_report.pdf, page5 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 5>
+Package pdftex.def Info: metrics_report.pdf, page5 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [109 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/metrics_report.pdf>] <metrics_report.pdf, id=1
+085, page=6, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 6>
+Package pdftex.def Info: metrics_report.pdf, page6 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 6>
+Package pdftex.def Info: metrics_report.pdf, page6 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 6>
+Package pdftex.def Info: metrics_report.pdf, page6 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [110 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/metrics_report.pdf>] <metrics_report.pdf, id=1
+092, page=7, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 7>
+Package pdftex.def Info: metrics_report.pdf, page7 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 7>
+Package pdftex.def Info: metrics_report.pdf, page7 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 7>
+Package pdftex.def Info: metrics_report.pdf, page7 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [111 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/metrics_report.pdf>] <metrics_report.pdf, id=1
+096, page=8, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 8>
+Package pdftex.def Info: metrics_report.pdf, page8 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 8>
+Package pdftex.def Info: metrics_report.pdf, page8 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 8>
+Package pdftex.def Info: metrics_report.pdf, page8 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [112 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/metrics_report.pdf>] <metrics_report.pdf, id=1
+100, page=9, 597.50829pt x 845.0471pt>
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 9>
+Package pdftex.def Info: metrics_report.pdf, page9 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+ <use metrics_report.pdf, page 9>
+Package pdftex.def Info: metrics_report.pdf, page9 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+File: metrics_report.pdf Graphic file (type pdf)
+
+<use metrics_report.pdf, page 9>
+Package pdftex.def Info: metrics_report.pdf, page9 used on input line 40.
+(pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
+ [113 <C:/Users/KeisterBox/Documents/NetBeansProjects/sworsorc/doc/EndingDocume
+ntation/MasterDoc/FinalMasterDoc/metrics_report.pdf>]
+(C:\Users\KeisterBox\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentatio
+n\MasterDoc\FinalMasterDoc\SSDocumentation.aux) ) 
 Here is how much of TeX's memory you used:
- 2781 strings out of 493921
- 34897 string characters out of 3147267
- 94548 words of memory out of 3000000
- 6060 multiletter control sequences out of 15000+200000
- 5108 words of font info for 19 fonts, out of 3000000 for 9000
+ 4416 strings out of 493921
+ 61493 string characters out of 3147267
+ 120738 words of memory out of 3000000
+ 7643 multiletter control sequences out of 15000+200000
+ 9496 words of font info for 36 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,4n,24p,248b,141s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on SSDocumentation.pdf (2 pages, 43139 bytes).
+ 39i,18n,43p,342b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+r10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on SSDocumentation.pdf (113 pages, 1900575 bytes).
 PDF statistics:
- 23 PDF objects out of 1000 (max. 8388607)
+ 1126 PDF objects out of 1200 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 636 words of extra memory for PDF output out of 10000 (max. 10000000)
 
