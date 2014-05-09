@@ -12,12 +12,10 @@ package mainswordsorcery;
  * @author Joe Higley
  */
 import Units.*;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.*;
@@ -37,13 +35,13 @@ public class Game extends Application {
     //current client player id
     //set to 0 for testing convenience
     //changed by network
-<span class="nc" id="L40">    int PlayerID = 1;</span>
-<span class="nc" id="L41">    int currentTurnPlayer = 1; //player who has current control</span>
+<span class="nc" id="L38">    int PlayerID = 1;</span>
+<span class="nc" id="L39">    int currentTurnPlayer = 1; //player who has current control</span>
     //the number of players that have already played their turn
     //this game turn. When this equals scenario players then signal new
     //game turn.
-<span class="nc" id="L45">    int numPlayersGoneThisTurn = 1;</span>
-<span class="nc" id="L46">    int currentGameTurn = 1;</span>
+<span class="nc" id="L43">    int numPlayersGoneThisTurn = 1;</span>
+<span class="nc" id="L44">    int currentGameTurn = 1;</span>
     /** true if a scenario is loaded */
     boolean scenarioLoaded;
     String chosenScenario;
@@ -64,8 +62,8 @@ public class Game extends Application {
     public HUDController hudController;
 
     /* window options, for development convenience */
-<span class="nc" id="L67">    static int window_flag = 0; //0 = fullscreen, 1 = left, 2 = right, 3 = wind</span>
-<span class="nc" id="L68">    public boolean fullscreen = true;</span>
+<span class="nc" id="L65">    static int window_flag = 0; //0 = fullscreen, 1 = left, 2 = right, 3 = wind</span>
+<span class="nc" id="L66">    public boolean fullscreen = false;</span>
     double screenX;
     double screenY;
     double screenW;
@@ -75,82 +73,84 @@ public class Game extends Application {
      * is entered
      */ 
     private void setScreenDimensions() {
-<span class="nc" id="L78">        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();</span>
-<span class="nc" id="L79">        screenX = screenBounds.getMinX();</span>
-<span class="nc" id="L80">        screenY = screenBounds.getMinY();</span>
-<span class="nc" id="L81">        screenW = screenBounds.getWidth();</span>
-<span class="nc" id="L82">        screenH = screenBounds.getHeight();</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">        fullscreen = (window_flag == 0);</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">        if(window_flag == 1) {</span>
-<span class="nc" id="L85">            screenW /= 2;          </span>
+<span class="nc" id="L76">        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();</span>
+<span class="nc" id="L77">        screenX = screenBounds.getMinX();</span>
+<span class="nc" id="L78">        screenY = screenBounds.getMinY();</span>
+<span class="nc" id="L79">        screenW = screenBounds.getWidth();</span>
+<span class="nc" id="L80">        screenH = screenBounds.getHeight();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        fullscreen = (window_flag == 0);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if(window_flag == 1) {</span>
+<span class="nc" id="L83">            screenW /= 2;          </span>
         }
-<span class="nc bnc" id="L87" title="All 2 branches missed.">        else if(window_flag == 2) {</span>
-<span class="nc" id="L88">            screenX = (screenX = screenW / 2);</span>
-<span class="nc" id="L89">            screenW /= 2;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        else if(window_flag == 2) {</span>
+<span class="nc" id="L86">            screenX = (screenX = screenW / 2);</span>
+<span class="nc" id="L87">            screenW /= 2;</span>
         }
-<span class="nc" id="L91">        stage.setX(screenX);</span>
-<span class="nc" id="L92">        stage.setY(screenY);</span>
-<span class="nc" id="L93">        stage.setWidth(screenW);</span>
-<span class="nc" id="L94">        stage.setHeight(screenH);</span>
+<span class="nc" id="L89">        stage.setX(screenX);</span>
+<span class="nc" id="L90">        stage.setY(screenY);</span>
+<span class="nc" id="L91">        stage.setWidth(screenW);</span>
+<span class="nc" id="L92">        stage.setHeight(screenH);</span>
                 
-<span class="nc" id="L96">    }</span>
+<span class="nc" id="L94">    }</span>
     private Stage stage;
     public Stage getStage() {
-<span class="nc" id="L99">        return stage;</span>
+<span class="nc" id="L97">        return stage;</span>
     }
     
     @Override
     public void start(Stage st) throws IOException {
-<span class="nc" id="L104">        stage = st;</span>
-<span class="nc" id="L105">        setScreenDimensions();</span>
+<span class="nc" id="L102">        stage = st;</span>
+<span class="nc" id="L103">        setScreenDimensions();</span>
         
-<span class="nc" id="L107">        main = createScene(&quot;MainMenu.fxml&quot;);</span>
-<span class="nc" id="L108">        hud = createScene(&quot;hud.fxml&quot;);</span>
-<span class="nc" id="L109">        diplo = createScene(&quot;Diplomacy.fxml&quot;);</span>
+<span class="nc" id="L105">        main = createScene(&quot;MainMenu.fxml&quot;);</span>
+<span class="nc" id="L106">        hud = createScene(&quot;hud.fxml&quot;);</span>
+<span class="nc" id="L107">        diplo = createScene(&quot;Diplomacy.fxml&quot;);</span>
 
         //We can create main normally:
-<span class="nc" id="L112">        main = createScene(&quot;MainMenu.fxml&quot;);         </span>
+<span class="nc" id="L110">        main = createScene(&quot;MainMenu.fxml&quot;);         </span>
         
         //We need to use an fxmlLoader instance to load the HUD, in order to
         //get a reference to the correct controller instance.
         //If we use the static methods, we'll get reference to two
         //different controller instances:
-<span class="nc" id="L118">        FXMLLoader fxmlLoader = new FXMLLoader(); </span>
-<span class="nc" id="L119">        URL url = getClass().getResource(&quot;hud.fxml&quot;);</span>
-<span class="nc" id="L120">        fxmlLoader.setLocation(url);</span>
+<span class="nc" id="L116">        FXMLLoader fxmlLoader = new FXMLLoader(); </span>
+<span class="nc" id="L117">        URL url = getClass().getResource(&quot;hud.fxml&quot;);</span>
+<span class="nc" id="L118">        fxmlLoader.setLocation(url);</span>
         
-<span class="nc" id="L122">        hud = fxmlLoader.load(url.openStream()); //Load the hud, call this only once!</span>
+<span class="nc" id="L120">        hud = fxmlLoader.load(url.openStream()); //Load the hud, call this only once!</span>
 
         
         //Use the same loader to get a reference to the actual controller instance:
-<span class="nc" id="L126">        hudController = (HUDController) fxmlLoader.getController();</span>
+<span class="nc" id="L124">        hudController = (HUDController) fxmlLoader.getController();</span>
        
         // load the Main Menu font.
-<span class="nc" id="L129">        URL fontURL = new URL(&quot;file:resources/font/upcjb.ttf&quot;);</span>
-<span class="nc" id="L130">        Font.loadFont(</span>
-<span class="nc" id="L131">            fontURL.toExternalForm(), </span>
+<span class="nc" id="L127">        URL fontURL = new URL(&quot;file:resources/font/upcjb.ttf&quot;);</span>
+<span class="nc" id="L128">        Font.loadFont(</span>
+<span class="nc" id="L129">            fontURL.toExternalForm(), </span>
             10
         );
         // get the css file
-<span class="nc" id="L135">        String mainCSS = getClass().getResource(&quot;mainMenu.css&quot;).toExternalForm();</span>
+<span class="nc" id="L133">        String mainCSS = getClass().getResource(&quot;mainMenu.css&quot;).toExternalForm();</span>
         
-<span class="nc" id="L137">        main.getStylesheets().add(mainCSS);</span>
+<span class="nc" id="L135">        main.getStylesheets().add(mainCSS);</span>
 //        hud.getStylesheets().add(mainCSS);
-<span class="nc" id="L139">        mainMenu = new Scene(main, screenW, screenH);        </span>
-<span class="nc" id="L140">        hudWindow = new Scene(hud, screenW, screenH);</span>
+<span class="nc" id="L137">        mainMenu = new Scene(main, screenW, screenH);        </span>
+<span class="nc" id="L138">        hudWindow = new Scene(hud, screenW, screenH);</span>
 
-<span class="nc" id="L142">        Diplomacy = new Scene(diplo, 300, 300);</span>
+<span class="nc" id="L140">        Diplomacy = new Scene(diplo, 300, 300);</span>
         
 
-<span class="nc" id="L145">        stage.setTitle(&quot;Scenario&quot;);</span>
-<span class="nc" id="L146">        stage.setScene(mainMenu);</span>
+<span class="nc" id="L143">        stage.setTitle(&quot;Scenario&quot;);</span>
+<span class="nc" id="L144">        stage.setScene(mainMenu);</span>
         
-<span class="nc bnc" id="L148" title="All 2 branches missed.">        if(fullscreen) {</span>
-<span class="nc" id="L149">            stage.setFullScreen(true);</span>
-<span class="nc" id="L150">            stage.setFullScreenExitHint(&quot;&quot;);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if(fullscreen) {</span>
+<span class="nc" id="L147">            stage.setFullScreen(true);</span>
+<span class="nc" id="L148">            stage.setFullScreenExitHint(&quot;&quot;);</span>
         }
         
-<span class="nc" id="L153">        stage.show();</span>
+<span class="nc" id="L151">        stage.show();</span>
+        
+        
 <span class="nc" id="L154">    }</span>
     
     /**
@@ -307,30 +307,35 @@ public class Game extends Application {
 <span class="nc" id="L307">                    .title(&quot;Enter servers IP address (blank for default)&quot;)</span>
 <span class="nc" id="L308">                    .masthead(&quot;Enter servers IP address (blank for default)&quot;)</span>
 <span class="nc" id="L309">                    .showTextInput();</span>
-<span class="nc bnc" id="L310" title="All 4 branches missed.">        if(ip == null || ip.equals(&quot;&quot;))</span>
+<span class="nc bnc" id="L310" title="All 4 branches missed.">        if ( ip == null || ip.isEmpty() ) {</span>
 <span class="nc" id="L311">            ip = &quot;127.0.0.1&quot;;</span>
-        
-        String username =
-<span class="nc" id="L314">                Dialogs.create()</span>
-<span class="nc" id="L315">                       .title(&quot;Choose a username (blank for default)&quot;)</span>
-<span class="nc" id="L316">                       .masthead(&quot;Choose a username (blank for default)&quot;)</span>
-<span class="nc" id="L317">                       .showTextInput();</span>
-<span class="nc bnc" id="L318" title="All 4 branches missed.">        if(username == null || username.equals(&quot;&quot;))</span>
-<span class="nc" id="L319">            username = &quot;FRANCIBALD&quot;;</span>
-
-<span class="nc bnc" id="L321" title="All 2 branches missed.">        if( !NetworkClient.initializeClient(username, ip)</span>
-<span class="nc bnc" id="L322" title="All 2 branches missed.">           &amp;&amp; ip.equals(&quot;127.0.0.1&quot;))</span>
-        {
-<span class="nc" id="L324">            System.out.println(&quot;Failed to init network&quot;);</span>
-<span class="nc" id="L325">            System.out.println(&quot;So better try starting a server&quot;);</span>
-<span class="nc" id="L326">            NetworkServer.startServer();</span>
-<span class="nc bnc" id="L327" title="All 2 branches missed.">            if( !NetworkClient.initializeClient(username, ip) ) {      </span>
-<span class="nc" id="L328">                System.out.println(&quot;Well shucks it still failed :\\&quot;);</span>
-<span class="nc" id="L329">                return;</span>
-            }      
         }
         
-<span class="nc" id="L333">        NetworkClient.createLobby( &quot;Default&quot; );</span>
-<span class="nc" id="L334">    }</span>
+        String username =
+<span class="nc" id="L315">                Dialogs.create()</span>
+<span class="nc" id="L316">                       .title(&quot;Choose a username (blank for default)&quot;)</span>
+<span class="nc" id="L317">                       .masthead(&quot;Choose a username (blank for default)&quot;)</span>
+<span class="nc" id="L318">                       .showTextInput();</span>
+<span class="nc bnc" id="L319" title="All 4 branches missed.">        if ( username == null || username.isEmpty() ) {</span>
+<span class="nc" id="L320">            username = &quot;FRANCIBALD&quot;;</span>
+        }
+
+<span class="nc bnc" id="L323" title="All 2 branches missed.">        if( !NetworkClient.initializeClient(username, ip)</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">           &amp;&amp; ip.equals(&quot;127.0.0.1&quot;))</span>
+        {
+<span class="nc" id="L326">            System.out.println(&quot;Failed to init network&quot;);</span>
+<span class="nc" id="L327">            System.out.println(&quot;So better try starting a server&quot;);</span>
+<span class="nc" id="L328">            NetworkServer.startServer();</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">            if( !NetworkClient.initializeClient(username, ip) ) {      </span>
+<span class="nc" id="L330">                System.out.println(&quot;Well shucks it still failed :\\&quot;);</span>
+            } else {
+                // If we created the default server, then create a default lobby
+                // This is so multiple clients don't all try to create default :-)
+<span class="nc" id="L334">                NetworkClient.createLobby( &quot;Default&quot; );</span>
+
+            }
+        }
+        
+<span class="nc" id="L339">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.0.201403182114</span></div></body></html>
