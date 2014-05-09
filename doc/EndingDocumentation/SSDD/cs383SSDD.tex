@@ -256,15 +256,16 @@ GetUnitHexMove & UnitPool Method & Retrieves all hexes a unit has moved through.
 GetUnitInHex & UnitPool Method & Retrieves all units in a hex. & Array list: hexList & None\\
 \hline
 
-Hexagon Classes & Model & Represents a hexagon & Hex Edge Classes, Terrain Classes, UnitPool & \\
+Hexagon Classes & Model & Represents a hexagon & Hex Edge Classes, Terrain Classes, UnitPool & Hexagon \\
 \hline
-Hex Edge Classes & Model & Classes to collect and represent elements on hexagon edges & Hex Classes & \\
+Hex Edge Classes & Model & Classes to collect and represent elements on hexagon edges & Hex Classes & Hexagon Classes \\
 \hline
 HexStack & Class & Ensure compliance with the games stacked rules. & UnitPool & None\\
 \hline
 HexStacked & Class & Implements rules for stacks. & UnitPool & None\\
 \hline
-Hexagon Map Classes & Model & Classes to represent a "map" of hexagons, either diplomacy or game. & Hexagon Classes & \\
+Hexagon Map Classes & Model & Classes to represent a "map" of hexagons, either diplomacy or game. & Hexagon Classes &
+MapView, Hexagon Classes \\
 \hline
 Launch Combat & Static Method & Implement Combat Phase & Moveable Unit, Army Combat Results Table, HUDController, MovementCalculator & None\\
 \hline
@@ -274,7 +275,8 @@ MainMenuController & Controller & Define and limit access to main menu & Game.ja
 \hline
 Hex Rendering & View & Renders the game map and things on it & MapView, Hexagon Classes, Hex Edge Classes & \\
 \hline
-MapView & View & A GUI widget to display the results of the Hex Rendering code & Hexagon Classes, Hex Rendering& \\
+MapView & View & A GUI widget to display the results of the Hex Rendering code & Hexagon Classes, Hex Rendering &
+JavaFX GUI \\
 
 \hline
 MessagePhoenix & Utility Class & Used to pack, unpack, send and receive messages over the network & Tag, Flag & \\
@@ -715,9 +717,10 @@ Options & Final object[2] ,[0]Yes, [1]No & UnitPool.java & UnitPool & None\\
 \hline
 PortNum & Int & UnitPool.java & UnitPool & UnitPool\\
 \hline
-HexMap's HashMap & HashMap<String,Hex> & HexMap.java & Hexagon Map Classes & Hexagon Map Classes\\
+HexMap's HexID map & HashMap & HexMap.java & Hexagon Map Classes & Hexagon Map Classes\\
 \hline
-Hex Edge's element TreeMap<edgeType, EdgeElement> & HexMap.java & Hexagon Map Classes & Hexagon Map Classes\\
+Hex Edge Elements & TreeMap & HexMap.java & Hexagon Map Classes & Hexagon Map Classes\\
+\hline
 HexStack & Class & HexStack.java & UnitPool & UnitPool\\
 \hline
 UnitCount & SortedMap & HexStack.java & UnitPool & UnitPool\\
