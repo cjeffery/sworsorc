@@ -1,4 +1,4 @@
-\chapter{TEST PLAN}
+\title {TEST PLAN}
 
 
 {\centering\selectlanguage{english}\bfseries\color{black}
@@ -69,7 +69,7 @@ Keith Drew,
  Matthrew Brown,
  Tyler Jaszkowiak,
  Ian Westrope,
- ChiHsiang Wang,
+ ChiHsiang Wang
 \par}
 
 \bigskip
@@ -489,10 +489,25 @@ The automated unit tests are located at https://github.com/cjeffery/sworsorc/tre
 
 \section[INTRODUCTION]{\bfseries\color{black} INTRODUCTION}
 
-{\selectlanguage{english}\color{black}
+{
+\selectlanguage{english}\color{black}
+\subsection{HUD View}
 Our plan is to integrate the working hud/game code and test that it works in tangent, as opposed to only working in discrete locations of the project. We will be using junit tests to evaluate discrete methods and manual tests to test the GUI and game logic. To plan and document manually test for GUI components as they are developed.  As new code is integrated the unit tests will be rerun to ensure integration did not break any component. Manual tests will be rerun on a case-by-case basis. All tests will be run the day before the end of a sprint and before deliverable presentation.
 
+\selectlanguage{english}\color{black}
+\subsection{Rules View} % (fold)
+The purpose of this test plan is to state the processes used by Game Rules and Play Team in testing the Spells and Characters for the Swords \& Sorcery project.(Tao, Cameron)
+\newline
+\newline
+This test plan covers the creation and implementation of the Moveableunit class and its sub class Armyunits. (Matt)
+\newline
+\newline
+This test plan is also to provide as much coverage as possible to the methods and data of the Scenario class by verifying the results of execution against expectations through a series of automated unit tests and a manual GUI test. (Tyler)
+
+\subsection
+This test plan for the networking portion of the project. It will outline how we test networking, and how we'll test integration of networking into other code.
 }
+
 
 \section[TEST ITEMS]{\bfseries\color{black} TEST ITEMS}
 
@@ -613,6 +628,23 @@ solar configuration is also handled by SolarConfig and HUDInitializer classes.
 \newline
 Therefore, the only visible component being tested by this plan is the placement 
 of units and characters into the correct provinces of the map.
+\newline
+\newline
+This is a listing of what is NOT to be tested from both the Users
+viewpoint of what the system does and a configuration
+management/version control view. This is not a technical description
+of the software, but a USERS view of the functions.
+\newline
+\newline
+All data is verified, but testing the Scenario class alone cannot ensure 
+that it reaches the HUD successfully. Integration tests are required outside 
+of this plan for information such as solar configuration, move order, setup order, 
+game length, and diplomacy.
+\newline
+\newline
+What is not tested is the count of the units on the map that correspond to the scenario loaded. Also the type of unit is not test, this is assumed correct. 
+
+
 
 \subsection{Movement}
 
@@ -630,10 +662,69 @@ of units and characters into the correct provinces of the map.
 \item Effects of Partial Spells
 \item Manna Costing
 \end{itemize}
+\subsubsection{Character}
+\begin{center}
+\begin{tabularx}{\linewidth}{|p{2in}|X|p{2in}|}\hline
+\hline
+    \textbf{Rule Description}
+    &
+    \textbf{Test Description}
+    &
+    \textbf{Expected Result}
+\\\hline
+    Create new character object with its information.
+    &
+    createCharacter function is called with 
+    specific character name in CharacterMaker.java.
+    &
+    A new character object is created and returned 
+    that contains all of the specified characters information. 
+\\\hline 
+    Potential spells for selected character displayed.
+    &
+    Select character in GUI, then click cast spell button on sidebar panel.
+    &
+    List of spells that can be cast by selected character are displayed.
+\\\hline    
+\end{tabularx}
+\end{center}
+
+\subsubsection{Spells}
+\begin{center}
+\begin{tabularx}{\linewidth}{|p{2in}|X|p{2in}|}\hline
+\hline
+    \textbf{Rule Description}
+    &
+    \textbf{Test Description}
+    &
+    \textbf{Expected Result}
+\\\hline
+    Character with Power Level should have a spell book.
+    &
+    Generate a spell book for the character.
+    &
+    A frame with a list of spells should be shown on the screen.
+\\\hline 
+    Show spell description.
+    &
+    Click on the Spell button.
+    &
+    A frame will be displayed with all information about the spell.
+\\\hline   
+    A target need to be selected for most of the spells.
+    &
+    Click on cast button on the frame of displaying information about the spell. 
+    Then select a target by right click the target on the map.
+    &
+    A target is selected to cast the spell.
+\\\hline
+\end{tabularx}
+\end{center}
+
 }
 
 {\selectlanguage{english}\color{black}
-\subsection {Additional Features}
+\subsection {Additional Features To Be Test}
 \begin{itemize}
 \item 1 Complete Turn
 \item Movement
@@ -755,29 +846,56 @@ The only person capable of fully approving any fixes/modifications is Dr. J.}
 Junit test is a discrete code test designed to be ran as part of an automated test sequence that tests all Junit tests.}
 
 
+\clearpage\setcounter{page}{1}\pagestyle{Convertviii}
+\section[APPENDIX A. \ [Example JUnit Test{]}]{\selectlanguage{english}\bfseries\color{black} APPENDIX A.
+\ Example JUnit Test}
+
+
+{\selectlanguage{english}\color{black}
+
+\begin{tabbing}
+\hspace*{1cm}\=\hspace*{0cm}\= \kill
+    @Test\\
+    public void testStackWarning() \{\\
+        \\
+        \>boolean test;\\
+        \>pool.addUnit(1, new Bow(), "0101");\\
+        \>pool.addUnit(1, new Bow(), "0101");\\
+        \\
+        \>test = HexStack.overStackWaring(pool.getUnitsInHex("0101"),false);\\
+        \\
+        \>assertFalse(test);\\
+        \\
+        \>pool.addUnit(1, new Bow(), "0101");\\
+        \\
+        \>test = HexStack.overStackWaring(pool.getUnitsInHex("0101"),false);\\
+        \>assertTrue(test);\\
+    \}\\
+    \end{tabbing}  
+}
 
 \clearpage\setcounter{page}{1}\pagestyle{Convertviii}
-%\section[APPENDIX A. \ [insert name
-%here{]}]{\selectlanguage{english}\bfseries\color{black} APPENDIX A.
-%\ [insert name here]}
-%{\selectlanguage{english}\itshape\color{black}
-%Include copies of test examples, etc. supplied or
-%derived from the customer. \ Appendices are labeled A, B, {\dots}n.
-%\ \ Reference each appendix as appropriate in the text of the document.
-%}
+\section[APPENDIX B. \ [Example Manual Test{]}]{\selectlanguage{english}\bfseries\color{black} APPENDIX B.
+\ Example Manual Test}
+This test will ensure that the graphical components of the over stack warning in the stack class is behaving as designed.\
 
-%{\selectlanguage{english}\color{black}
-%\ [ insert appendix A here ]}
+\begin{enumerate}
+\item Start with any hex that has one unit in it.
+\item Add one unit to the stack. No warning should be triggered.
+\item Add one unit to the stack a warning should be triggered.
+\item Close the over stack warning box.
+\item Remove one unit from the stack. No warning should be triggered.
+\item Remove one unit from the stack. No warning should be triggered.
+\item Add one unit to the stack. No warning should be triggered.
+\item Add one unit to the stack a warning should be triggered.
+\item add one unit to the staff a warning should be triggered indicating there are 2 too many units in the stack.
+\end{enumerate}
+\
+\
+The test pass if all steps are successfully completed. Otherwise, test fails.
 
-\clearpage\setcounter{page}{1}\pagestyle{Convertix}
-%\section[APPENDIX B. \ [insert name
-%here{]}]{\selectlanguage{english}\bfseries\color{black} APPENDIX B.
-%\ [insert name here]}
-
-%\bigskip
-
-%{\selectlanguage{english}\color{black}
-%[ insert appendix B here ]}
-
-
-\bigskip
+\clearpage\setcounter{page}{1}\pagestyle{Convertviii}
+\section[APPENDIX C. \ [Team Test Plans{]}]{\selectlanguage{english}\bfseries\color{black} APPENDIX C.
+\ Individual Team Test Plans}
+All individually developed tests to be found at the following link:\\
+https://github.com/cjeffery/sworsorc/tree/master/doc/TestPlans

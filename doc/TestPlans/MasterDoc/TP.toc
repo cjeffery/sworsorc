@@ -49,7 +49,7 @@
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {1}IDENTIFIER}{1}{section.1.1}
+\contentsline {section}{\numberline {1}IDENTIFIER}{2}{section.1.1}
 \select@language {english}
 \select@language {english}
 \select@language {english}
@@ -59,65 +59,83 @@
 \select@language {english}
 \contentsline {section}{\numberline {3}INTRODUCTION}{2}{section.1.3}
 \select@language {english}
+\contentsline {subsection}{\numberline {3.1}HUD View}{2}{subsection.1.3.1}
+\select@language {english}
+\contentsline {subsection}{\numberline {3.2}Rules View}{2}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {3.3}T}{2}{subsection.1.3.3}
+\select@language {english}
 \select@language {english}
 \contentsline {section}{\numberline {4}TEST ITEMS}{2}{section.1.4}
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {subsection}{\numberline {4.1}Character}{2}{subsection.1.4.1}
-\contentsline {subsection}{\numberline {4.2}Scenario}{2}{subsection.1.4.2}
-\contentsline {subsection}{\numberline {4.3}Network}{3}{subsection.1.4.3}
-\contentsline {subsection}{\numberline {4.4}Additional items to be tested.}{3}{subsection.1.4.4}
+\contentsline {subsection}{\numberline {4.1}Character}{3}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {4.2}Scenario}{3}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {4.3}Network}{4}{subsection.1.4.3}
+\contentsline {subsection}{\numberline {4.4}Additional items to be tested.}{4}{subsection.1.4.4}
 \select@language {english}
 \select@language {english}
 \contentsline {section}{\numberline {5}SOFTWARE RISK ISSUES}{4}{section.1.5}
 \select@language {english}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {6}FEATURES TO BE TESTED}{4}{section.1.6}
+\contentsline {section}{\numberline {6}FEATURES TO BE TESTED}{5}{section.1.6}
 \select@language {english}
-\contentsline {subsection}{\numberline {6.1}Scenario}{4}{subsection.1.6.1}
+\contentsline {subsection}{\numberline {6.1}Scenario}{5}{subsection.1.6.1}
 \contentsline {subsection}{\numberline {6.2}Movement}{5}{subsection.1.6.2}
-\contentsline {subsection}{\numberline {6.3}Character, Spells}{5}{subsection.1.6.3}
+\contentsline {subsection}{\numberline {6.3}Character, Spells}{6}{subsection.1.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}Character}{6}{subsubsection.1.6.3.1}
+\contentsline {subsubsection}{\numberline {6.3.2}Spells}{6}{subsubsection.1.6.3.2}
 \select@language {english}
 \select@language {english}
-\contentsline {subsection}{\numberline {6.4}Additional Features}{5}{subsection.1.6.4}
+\contentsline {subsection}{\numberline {6.4}Additional Features To Be Test}{6}{subsection.1.6.4}
 \select@language {english}
-\contentsline {section}{\numberline {7}FEATURES NOT TO BE TESTED}{5}{section.1.7}
+\contentsline {section}{\numberline {7}FEATURES NOT TO BE TESTED}{7}{section.1.7}
 \select@language {english}
-\contentsline {subsection}{\numberline {7.1}Network}{6}{subsection.1.7.1}
+\contentsline {subsection}{\numberline {7.1}Network}{7}{subsection.1.7.1}
 \select@language {english}
-\contentsline {section}{\numberline {8}APPROACH}{6}{section.1.8}
-\select@language {english}
-\select@language {english}
-\contentsline {subsection}{\numberline {8.1}Network}{6}{subsection.1.8.1}
-\contentsline {section}{\numberline {9}ITEM PASS/FAIL CRITERIA}{6}{section.1.9}
+\contentsline {section}{\numberline {8}APPROACH}{7}{section.1.8}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {10}SUSPENSION CRITERIA}{6}{section.1.10}
-\select@language {english}
-\contentsline {section}{\numberline {11}TEST DELIVERABLES}{7}{section.1.11}
-\select@language {english}
-\select@language {english}
-\contentsline {section}{\numberline {12}REMAINING TEST TASKS}{7}{section.1.12}
+\contentsline {subsection}{\numberline {8.1}Network}{7}{subsection.1.8.1}
+\contentsline {section}{\numberline {9}ITEM PASS/FAIL CRITERIA}{8}{section.1.9}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {13}ENVIRONMENTAL NEEDS}{7}{section.1.13}
+\contentsline {section}{\numberline {10}SUSPENSION CRITERIA}{8}{section.1.10}
+\select@language {english}
+\contentsline {section}{\numberline {11}TEST DELIVERABLES}{8}{section.1.11}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {14}RESPONSIBILITIES}{7}{section.1.14}
+\contentsline {section}{\numberline {12}REMAINING TEST TASKS}{8}{section.1.12}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {15}SCHEDULE}{7}{section.1.15}
+\contentsline {section}{\numberline {13}ENVIRONMENTAL NEEDS}{8}{section.1.13}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {16}PLANNING RISKS AND CONTINGENCIES}{7}{section.1.16}
+\contentsline {section}{\numberline {14}RESPONSIBILITIES}{8}{section.1.14}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {17}APPROVALS}{7}{section.1.17}
+\contentsline {section}{\numberline {15}SCHEDULE}{9}{section.1.15}
 \select@language {english}
 \select@language {english}
-\contentsline {section}{\numberline {18}GLOSSARY}{8}{section.1.18}
+\contentsline {section}{\numberline {16}PLANNING RISKS AND CONTINGENCIES}{9}{section.1.16}
 \select@language {english}
 \select@language {english}
+\contentsline {section}{\numberline {17}APPROVALS}{9}{section.1.17}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {18}GLOSSARY}{9}{section.1.18}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {19}APPENDIX A. \ [Example JUnit Test{]}}{1}{section.1.19}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {20}APPENDIX B. \ [Example Manual Test{]}}{1}{section.1.20}
+\select@language {english}
+\select@language {english}
+\contentsline {section}{\numberline {21}APPENDIX C. \ [Team Test Plans{]}}{1}{section.1.21}
 \select@language {english}

@@ -1,10 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.27)  8 MAY 2014 18:55
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.27)  9 MAY 2014 09:10
 entering extended mode
-**C:/Users/David/Documents/GitHub/sworsorc/doc/TestPlans/MasterDoc/TP_Template.
-tex
-
-(C:/Users/David/Documents/GitHub/sworsorc/doc/TestPlans/MasterDoc/TP_Template.t
-ex
+**C:/Users/David/Documents/GitHub/sworsorc/doc/TestPlans/MasterDoc/TP.tex
+(C:/Users/David/Documents/GitHub/sworsorc/doc/TestPlans/MasterDoc/TP.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -387,11 +384,42 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip51
 )
+(C:\Users\David\MikTeX\tex\latex\tools\tabularx.sty
+Package: tabularx 2014/04/22 v2.09 `tabularx' package (DPC)
+\TX@col@width=\dimen130
+\TX@old@table=\dimen131
+\TX@old@col=\dimen132
+\TX@target=\dimen133
+\TX@delta=\dimen134
+\TX@cols=\count113
+\TX@ftn=\toks23
+)
+(C:\Users\David\MikTeX\tex\latex\ltablex\ltablex.sty
+Package: ltablex 1995/11/06 v1.0 Modified tabularx
+
+(C:\Users\David\MikTeX\tex\latex\tools\longtable.sty
+Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip52
+\LTright=\skip53
+\LTpre=\skip54
+\LTpost=\skip55
+\LTchunksize=\count114
+\LTcapwidth=\dimen135
+\LT@head=\box29
+\LT@firsthead=\box30
+\LT@foot=\box31
+\LT@lastfoot=\box32
+\LT@cols=\count115
+\LT@rows=\count116
+\c@LT@tables=\count117
+\c@LT@chunks=\count118
+\LT@p@ftn=\toks24
+))
 
 Package hyperref Warning: Option `pdftex' has already been used,
-(hyperref)                setting the option has no effect on input line 14.
+(hyperref)                setting the option has no effect on input line 16.
 
-Package hyperref Info: Option `colorlinks' set `true' on input line 14.
+Package hyperref Info: Option `colorlinks' set `true' on input line 16.
 (C:\Users\David\MikTeX\tex\latex\graphics\graphicx.sty
 Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
@@ -406,68 +434,67 @@ File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 )
-\Gin@req@height=\dimen130
-\Gin@req@width=\dimen131
+\Gin@req@height=\dimen136
+\Gin@req@width=\dimen137
 )
-(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP_Template.a
-ux (C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\tpd.aux))
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 109.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 109.
+(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP.aux
+(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TPBody.aux))
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 111.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 111.
 
 
 (C:\Users\David\MikTeX\tex\latex\base\ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 109.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 109.
-LaTeX Font Info:    ... okay on input line 109.
+LaTeX Font Info:    ... okay on input line 111.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 111.
+LaTeX Font Info:    ... okay on input line 111.
 
 (C:\Users\David\MikTeX\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count113
-\scratchdimen=\dimen132
-\scratchbox=\box29
-\nofMPsegments=\count114
-\nofMParguments=\count115
-\everyMPshowfont=\toks23
-\MPscratchCnt=\count116
-\MPscratchDim=\dimen133
-\MPnumerator=\count117
-\makeMPintoPDFobject=\count118
-\everyMPtoPDFconversion=\toks24
+\scratchcounter=\count119
+\scratchdimen=\dimen138
+\scratchbox=\box33
+\nofMPsegments=\count120
+\nofMParguments=\count121
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count122
+\MPscratchDim=\dimen139
+\MPnumerator=\count123
+\makeMPintoPDFobject=\count124
+\everyMPtoPDFconversion=\toks26
 )
-\AtBeginShipoutBox=\box30
-Package hyperref Info: Link coloring ON on input line 109.
+\AtBeginShipoutBox=\box34
+Package hyperref Info: Link coloring ON on input line 111.
  (C:\Users\David\MikTeX\tex\latex\hyperref\nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (C:\Users\David\MikTeX\tex\generic\oberdiek\gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count119
+\c@section@level=\count125
 )
-LaTeX Info: Redefining \ref on input line 109.
-LaTeX Info: Redefining \pageref on input line 109.
-LaTeX Info: Redefining \nameref on input line 109.
+LaTeX Info: Redefining \ref on input line 111.
+LaTeX Info: Redefining \pageref on input line 111.
+LaTeX Info: Redefining \nameref on input line 111.
 
-(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP_Template.o
-ut)
-(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP_Template.o
-ut)
+(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP.out)
+(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP.out)
 \@outlinefile=\write3
- (C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\tpd.tex
+
+(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TPBody.tex
 Chapter 1.
 
 Underfull \vbox (badness 3250) has occurred while \output is active []
@@ -530,17 +557,20 @@ pdfTeX warning: pdflatex.EXE: pop empty color page stack 0
 ] [3] [4
 
 ]
-(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP_Template.t
-oc)
+(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP.toc)
 \tf@toc=\write4
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.487 T
-       he automated unit tests are located at https://github.com/cjeffery/sw...
-[1]
-Underfull \hbox (badness 10000) in paragraph at lines 514--518
+l.477 T
+       estPlan 1.5\\} [1]
+Underfull \hbox (badness 10000) in paragraph at lines 499--506
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 499--506
 
  []
 
@@ -548,53 +578,116 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.528 \item N
-             ames of the neutrals in the scenario [2]pdfTeX warning (ext4): des
-tination with the same identifier (name{page.3}) has been already used, duplica
-te ignored
-<to be read again> 
-                   \relax 
-l.577 \section
-              [SOFTWARE RISK ISSUES]{\bfseries\color{black} SOFTWARE RISK IS...
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 606--616
+l.523 \item C
+             lass Interactions [2]
+Underfull \hbox (badness 10000) in paragraph at lines 529--533
 
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
+pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.621 \item u
-             nits are properly represented on HUD [4]
-Underfull \hbox (badness 10000) in paragraph at lines 651--658
+l.565   \item C
+               lient messages are received by related clients. [3]pdfTeX warnin
+g (ext4): destination with the same identifier (name{page.4}) has been already 
+used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.607 \item U
+             nit ID's interpreted incorrectly [4]
+Underfull \hbox (badness 10000) in paragraph at lines 621--646
 
  []
 
-[5] [6] [7] [8])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 113.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 113.
 
-(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP_Template.a
-ux (C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\tpd.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 113.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 113.
-Package rerunfilecheck Info: File `TP_Template.out' has not changed.
-(rerunfilecheck)             Checksum: 775A5B5FBAA9A9F61CA7EFA5C3030FE9;1867.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 113.
+Underfull \hbox (badness 10000) in paragraph at lines 621--646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 621--646
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 621--646
+
+ []
+
+[5]
+Underfull \hbox (badness 2671) in paragraph at lines 689--689
+[]|\T1/cmr/m/n/10 createCharacter func-tion is called
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 689
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 721--721
+[]|\T1/cmr/m/n/10 Character with Power Level
+ []
+
+
+Underfull \hbox (badness 1168) in paragraph at lines 721--721
+[]|\T1/cmr/m/n/10 A frame with a list of spells
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 721
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 742--749
+
+ []
+
+[7] [8] [9]pdfTeX warning (ext4): destination with the same identifier (name{pa
+ge.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.877 \clearpage
+                \setcounter{page}{1}\pagestyle{Convertviii} [1
+
+]pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.897 \clearpage
+                \setcounter{page}{1}\pagestyle{Convertviii} [1
+
+])pdfTeX warning (ext4): destination with the same identifier (name{page.1}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.113 \include{TPBody}
+                       [1
+
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 115.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 115.
+
+(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TP.aux
+(C:\Users\David\Documents\GitHub\sworsorc\doc\TestPlans\MasterDoc\TPBody.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 115.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 115.
+Package rerunfilecheck Info: File `TP.out' has not changed.
+(rerunfilecheck)             Checksum: C82694D38C691CC42E116FB5CE9A8A79;2460.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 115.
  )
 (\end occurred inside a group at level 1)
 
-### simple group (level 1) entered at line 705 ({)
+### simple group (level 1) entered at line 796 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7069 strings out of 493921
- 99689 string characters out of 3149688
- 198387 words of memory out of 3000000
- 10207 multiletter control sequences out of 15000+200000
+ 7242 strings out of 493921
+ 101713 string characters out of 3149688
+ 200437 words of memory out of 3000000
+ 10350 multiletter control sequences out of 15000+200000
  13392 words of font info for 33 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 29i,10n,30p,862b,633s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 29i,10n,31p,856b,653s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\David\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
 pen\ec\dpi600\tcrm1000.pk> <C:\Users\David\AppData\Local\MiKTeX\2.9\fonts\pk\lj
 four\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\David\AppData\Local\MiKTeX\2.9\f
@@ -604,9 +697,9 @@ a\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1000.pk> <C:\Users\Da
 vid\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.pk> <C
 :\Users\David\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2
 074.pk>
-Output written on TP_Template.pdf (12 pages, 117014 bytes).
+Output written on TP.pdf (16 pages, 140449 bytes).
 PDF statistics:
- 481 PDF objects out of 1000 (max. 8388607)
- 59 named destinations out of 1000 (max. 500000)
- 233 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 586 PDF objects out of 1000 (max. 8388607)
+ 79 named destinations out of 1000 (max. 500000)
+ 297 words of extra memory for PDF output out of 10000 (max. 10000000)
 
