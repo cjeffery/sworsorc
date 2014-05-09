@@ -1,407 +1,425 @@
-\contentsline {section}{\numberline {1}Introduction}{3}
-\contentsline {subsection}{\numberline {1.1}Document Purpose, Context, and Intended Audience}{3}
-\contentsline {subsubsection}{\numberline {1.1.1}Document Purpose}{3}
-\contentsline {subsubsection}{\numberline {1.1.2}Document Context}{3}
-\contentsline {subsubsection}{\numberline {1.1.3}Intended Audience}{3}
-\contentsline {subsection}{\numberline {1.2}Software Purpose, Context, and Intended Audience}{3}
-\contentsline {subsubsection}{\numberline {1.2.1}System and Software Purpose}{3}
-\contentsline {subsubsection}{\numberline {1.2.2}System and Software Context}{3}
-\contentsline {subsubsection}{\numberline {1.2.3}Intended Users of System and Software}{3}
-\contentsline {subsection}{\numberline {1.3}Definitions, Acronyms, and Abbreviations}{4}
-\contentsline {subsection}{\numberline {1.4}Document References}{5}
-\contentsline {subsection}{\numberline {1.5}Overview of Document}{5}
-\contentsline {paragraph}{Section 2}{5}
-\contentsline {paragraph}{Section 3}{5}
-\contentsline {paragraph}{Section 4}{6}
-\contentsline {paragraph}{Section 5}{6}
-\contentsline {subsection}{\numberline {1.6}Document Restrictions}{6}
-\contentsline {section}{\numberline {2}Constraints and Concerns}{6}
-\contentsline {subsection}{\numberline {2.1}Constraints}{6}
-\contentsline {subsection}{\numberline {2.2}Stakeholder Concerns}{6}
-\contentsline {section}{\numberline {3}System and Software Architecture}{6}
-\contentsline {subsection}{\numberline {3.1}Developer's Architectural View}{6}
-\contentsline {subsubsection}{\numberline {3.1.1}Developer's View Identification}{6}
-\contentsline {paragraph}{HUD Team View}{6}
-\contentsline {paragraph}{Rules Team View}{6}
-\contentsline {paragraph}{Networking Team View}{6}
-\contentsline {subsubsection}{\numberline {3.1.2}Developer's View Representation and Description}{7}
-\contentsline {paragraph}{Architectural Overview}{7}
-\contentsline {paragraph}{HUD Team View Representation and Description}{7}
-\contentsline {paragraph}{Rules Team View Representation and Description}{8}
-\contentsline {paragraph}{Networking Team View Representation and Description}{8}
-\contentsline {subsection}{\numberline {3.2}User's Architectural View}{8}
-\contentsline {subsubsection}{\numberline {3.2.1}User's View Identification}{8}
-\contentsline {subsubsection}{\numberline {3.2.2}User's View Representation and Description}{9}
-\contentsline {section}{\numberline {4}Software Detailed Design}{11}
-\contentsline {subsection}{\numberline {4.1}Developer's Viewpoint Detailed Software Design}{11}
-\contentsline {subsubsection}{\numberline {4.1.1}UML Class Diagrams}{11}
-\contentsline {subsubsection}{\numberline {4.1.2}UML Collaboration Diagrams}{14}
-\contentsline {subsubsection}{\numberline {4.1.3}UML State Charts}{15}
-\contentsline {subsection}{\numberline {4.2}Component Dictionary}{17}
-\contentsline {subsection}{\numberline {4.3}Component Detailed Design}{20}
-\contentsline {subsubsection}{\numberline {4.3.1}Detailed Design for Component: Army Unit}{20}
-\contentsline {paragraph}{Purpose}{20}
-\contentsline {paragraph}{Input}{20}
-\contentsline {paragraph}{Output}{20}
-\contentsline {paragraph}{Process}{20}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{20}
-\contentsline {subsubsection}{\numberline {4.3.2}Detailed Design for Component: Army Combat Results Table}{21}
-\contentsline {paragraph}{Purpose}{21}
-\contentsline {paragraph}{Input}{21}
-\contentsline {paragraph}{Output}{21}
-\contentsline {paragraph}{Process}{21}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{21}
-\contentsline {subsubsection}{\numberline {4.3.3}Detailed Design for Component: ClientObject }{21}
-\contentsline {paragraph}{Purpose}{21}
-\contentsline {paragraph}{Input}{21}
-\contentsline {paragraph}{Output}{21}
-\contentsline {paragraph}{Process}{21}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{21}
-\contentsline {subsubsection}{\numberline {4.3.4}Detailed Design for Component: Conductor}{21}
-\contentsline {paragraph}{Purpose}{21}
-\contentsline {paragraph}{Input}{22}
-\contentsline {paragraph}{Output}{22}
-\contentsline {paragraph}{Process}{22}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{22}
-\contentsline {subsubsection}{\numberline {4.3.5}Detailed Design for Component: DiplomacyController }{22}
-\contentsline {paragraph}{Purpose}{22}
-\contentsline {paragraph}{Input}{22}
-\contentsline {paragraph}{Output}{22}
-\contentsline {paragraph}{Process}{22}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{22}
-\contentsline {subsubsection}{\numberline {4.3.6}Detailed Design for Component: Diplomacy.fxml }{22}
-\contentsline {paragraph}{Purpose}{22}
-\contentsline {paragraph}{Input}{22}
-\contentsline {paragraph}{Output}{22}
-\contentsline {paragraph}{Process}{22}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{22}
-\contentsline {subsubsection}{\numberline {4.3.7}Detailed Design for Component: MessagePhoenix}{22}
-\contentsline {paragraph}{Purpose}{22}
-\contentsline {paragraph}{Input}{23}
-\contentsline {paragraph}{Output}{23}
-\contentsline {paragraph}{Process}{23}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{23}
-\contentsline {subsubsection}{\numberline {4.3.8}Detailed Design for Component: NetworkClient }{23}
+\contentsline {section}{\numberline {1}Introduction}{4}
+\contentsline {subsection}{\numberline {1.1}Document Purpose, Context, and Intended Audience}{4}
+\contentsline {subsubsection}{\numberline {1.1.1}Document Purpose}{4}
+\contentsline {subsubsection}{\numberline {1.1.2}Document Context}{4}
+\contentsline {subsubsection}{\numberline {1.1.3}Intended Audience}{4}
+\contentsline {subsection}{\numberline {1.2}Software Purpose, Context, and Intended Audience}{4}
+\contentsline {subsubsection}{\numberline {1.2.1}System and Software Purpose}{4}
+\contentsline {subsubsection}{\numberline {1.2.2}System and Software Context}{4}
+\contentsline {subsubsection}{\numberline {1.2.3}Intended Users of System and Software}{4}
+\contentsline {subsection}{\numberline {1.3}Definitions, Acronyms, and Abbreviations}{5}
+\contentsline {subsection}{\numberline {1.4}Document References}{6}
+\contentsline {subsection}{\numberline {1.5}Overview of Document}{6}
+\contentsline {paragraph}{Section 2}{6}
+\contentsline {paragraph}{Section 3}{7}
+\contentsline {paragraph}{Section 4}{7}
+\contentsline {paragraph}{Section 5}{7}
+\contentsline {subsection}{\numberline {1.6}Document Restrictions}{7}
+\contentsline {section}{\numberline {2}Constraints and Concerns}{7}
+\contentsline {subsection}{\numberline {2.1}Constraints}{7}
+\contentsline {subsection}{\numberline {2.2}Stakeholder Concerns}{7}
+\contentsline {section}{\numberline {3}System and Software Architecture}{7}
+\contentsline {subsection}{\numberline {3.1}Developer's Architectural View}{7}
+\contentsline {subsubsection}{\numberline {3.1.1}Developer's View Identification}{7}
+\contentsline {paragraph}{HUD Team View}{7}
+\contentsline {paragraph}{Rules Team View}{7}
+\contentsline {paragraph}{Networking Team View}{8}
+\contentsline {subsubsection}{\numberline {3.1.2}Developer's View Representation and Description}{8}
+\contentsline {paragraph}{Architectural Overview}{8}
+\contentsline {paragraph}{HUD Team View Representation and Description}{8}
+\contentsline {paragraph}{Rules Team View Representation and Description}{9}
+\contentsline {paragraph}{Networking Team View Representation and Description}{9}
+\contentsline {subsection}{\numberline {3.2}User's Architectural View}{11}
+\contentsline {subsubsection}{\numberline {3.2.1}User's View Identification}{11}
+\contentsline {subsubsection}{\numberline {3.2.2}User's View Representation and Description}{12}
+\contentsline {section}{\numberline {4}Software Detailed Design}{14}
+\contentsline {subsection}{\numberline {4.1}Developer's Viewpoint Detailed Software Design}{14}
+\contentsline {subsubsection}{\numberline {4.1.1}UML Class Diagrams}{14}
+\contentsline {subsubsection}{\numberline {4.1.2}UML Collaboration Diagrams}{17}
+\contentsline {subsubsection}{\numberline {4.1.3}UML State Charts}{18}
+\contentsline {subsection}{\numberline {4.2}Component Dictionary}{20}
+\contentsline {subsection}{\numberline {4.3}Component Detailed Design}{23}
+\contentsline {subsubsection}{\numberline {4.3.1}Detailed Design for Component: Army Unit}{23}
 \contentsline {paragraph}{Purpose}{23}
 \contentsline {paragraph}{Input}{23}
 \contentsline {paragraph}{Output}{23}
 \contentsline {paragraph}{Process}{23}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{23}
-\contentsline {subsubsection}{\numberline {4.3.9}Detailed Design for Component: NetworkServer }{23}
-\contentsline {paragraph}{Purpose}{23}
-\contentsline {paragraph}{Input}{23}
-\contentsline {paragraph}{Output}{23}
-\contentsline {paragraph}{Process}{23}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{23}
-\contentsline {subsubsection}{\numberline {4.3.10}Detailed Design for Component: Tag }{24}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{24}
+\contentsline {subsubsection}{\numberline {4.3.2}Detailed Design for Component: Army Combat Results Table}{24}
 \contentsline {paragraph}{Purpose}{24}
 \contentsline {paragraph}{Input}{24}
 \contentsline {paragraph}{Output}{24}
 \contentsline {paragraph}{Process}{24}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{24}
-\contentsline {subsubsection}{\numberline {4.3.11}Detailed Design for Component: Flag }{24}
+\contentsline {subsubsection}{\numberline {4.3.3}Detailed Design for Component: ClientObject }{24}
 \contentsline {paragraph}{Purpose}{24}
 \contentsline {paragraph}{Input}{24}
 \contentsline {paragraph}{Output}{24}
 \contentsline {paragraph}{Process}{24}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{24}
-\contentsline {subsubsection}{\numberline {4.3.12}Detailed Design for Component: Lobby }{24}
-\contentsline {paragraph}{Purpose}{24}
-\contentsline {paragraph}{Input}{24}
-\contentsline {paragraph}{Output}{24}
-\contentsline {paragraph}{Process}{24}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{24}
-\contentsline {subsubsection}{\numberline {4.3.13}Detailed Design for Component: LaunchCombat}{24}
-\contentsline {paragraph}{Purpose}{24}
-\contentsline {paragraph}{Input}{25}
-\contentsline {paragraph}{Output}{25}
-\contentsline {paragraph}{Process}{25}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{25}
-\contentsline {subsubsection}{\numberline {4.3.14}Detailed Design for Component: Retreat}{25}
+\contentsline {subsubsection}{\numberline {4.3.4}Detailed Design for Component: Conductor}{25}
 \contentsline {paragraph}{Purpose}{25}
 \contentsline {paragraph}{Input}{25}
 \contentsline {paragraph}{Output}{25}
 \contentsline {paragraph}{Process}{25}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{25}
-\contentsline {subsubsection}{\numberline {4.3.15}Detailed Design for Component: Spell Cast}{25}
+\contentsline {subsubsection}{\numberline {4.3.5}Detailed Design for Component: DiplomacyController }{25}
 \contentsline {paragraph}{Purpose}{25}
-\contentsline {paragraph}{Input}{26}
-\contentsline {paragraph}{Output}{26}
-\contentsline {paragraph}{Process}{26}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{26}
-\contentsline {subsubsection}{\numberline {4.3.16}Detailed Design for Component: Characters}{26}
+\contentsline {paragraph}{Input}{25}
+\contentsline {paragraph}{Output}{25}
+\contentsline {paragraph}{Process}{25}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{25}
+\contentsline {subsubsection}{\numberline {4.3.6}Detailed Design for Component: Diplomacy.fxml }{25}
+\contentsline {paragraph}{Purpose}{25}
+\contentsline {paragraph}{Input}{25}
+\contentsline {paragraph}{Output}{25}
+\contentsline {paragraph}{Process}{25}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{25}
+\contentsline {subsubsection}{\numberline {4.3.7}Detailed Design for Component: MessagePhoenix}{26}
 \contentsline {paragraph}{Purpose}{26}
 \contentsline {paragraph}{Input}{26}
 \contentsline {paragraph}{Output}{26}
 \contentsline {paragraph}{Process}{26}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{26}
-\contentsline {subsubsection}{\numberline {4.3.17}Detailed Design for Component: Solar Display}{26}
+\contentsline {subsubsection}{\numberline {4.3.8}Detailed Design for Component: NetworkClient }{26}
 \contentsline {paragraph}{Purpose}{26}
 \contentsline {paragraph}{Input}{26}
 \contentsline {paragraph}{Output}{26}
-\contentsline {paragraph}{Process}{27}
+\contentsline {paragraph}{Process}{26}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{26}
+\contentsline {subsubsection}{\numberline {4.3.9}Detailed Design for Component: NetworkServer }{26}
+\contentsline {paragraph}{Purpose}{26}
+\contentsline {paragraph}{Input}{26}
+\contentsline {paragraph}{Output}{26}
+\contentsline {paragraph}{Process}{26}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
-\contentsline {subsubsection}{\numberline {4.3.18}Detailed Design for Component: Movable Unit}{27}
+\contentsline {subsubsection}{\numberline {4.3.10}Detailed Design for Component: Tag }{27}
 \contentsline {paragraph}{Purpose}{27}
 \contentsline {paragraph}{Input}{27}
 \contentsline {paragraph}{Output}{27}
 \contentsline {paragraph}{Process}{27}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
-\contentsline {subsubsection}{\numberline {4.3.19}Detailed Design for Component: Movement Calculator}{27}
+\contentsline {subsubsection}{\numberline {4.3.11}Detailed Design for Component: Flag }{27}
 \contentsline {paragraph}{Purpose}{27}
 \contentsline {paragraph}{Input}{27}
-\contentsline {paragraph}{Output}{28}
-\contentsline {paragraph}{Process}{28}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{28}
-\contentsline {subsubsection}{\numberline {4.3.20}Detailed Design for Component: Unit Pool}{28}
+\contentsline {paragraph}{Output}{27}
+\contentsline {paragraph}{Process}{27}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
+\contentsline {subsubsection}{\numberline {4.3.12}Detailed Design for Component: Lobby }{27}
+\contentsline {paragraph}{Purpose}{27}
+\contentsline {paragraph}{Input}{27}
+\contentsline {paragraph}{Output}{27}
+\contentsline {paragraph}{Process}{27}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{27}
+\contentsline {subsubsection}{\numberline {4.3.13}Detailed Design for Component: LaunchCombat}{28}
 \contentsline {paragraph}{Purpose}{28}
 \contentsline {paragraph}{Input}{28}
 \contentsline {paragraph}{Output}{28}
 \contentsline {paragraph}{Process}{28}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{28}
-\contentsline {subsubsection}{\numberline {4.3.21}Detailed Design for Component: Hex Stack}{28}
+\contentsline {subsubsection}{\numberline {4.3.14}Detailed Design for Component: Retreat}{28}
 \contentsline {paragraph}{Purpose}{28}
 \contentsline {paragraph}{Input}{28}
 \contentsline {paragraph}{Output}{28}
 \contentsline {paragraph}{Process}{28}
-\contentsline {subsubsection}{\numberline {4.3.22}Detailed Design for Component: Add Move}{28}
-\contentsline {paragraph}{Purpose}{28}
-\contentsline {paragraph}{Input}{29}
-\contentsline {paragraph}{Output}{29}
-\contentsline {paragraph}{Process}{29}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{29}
-\contentsline {subsubsection}{\numberline {4.3.23}Detailed Design for Component: Add Move Stack}{29}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{28}
+\contentsline {subsubsection}{\numberline {4.3.15}Detailed Design for Component: Spell Cast}{29}
 \contentsline {paragraph}{Purpose}{29}
 \contentsline {paragraph}{Input}{29}
 \contentsline {paragraph}{Output}{29}
 \contentsline {paragraph}{Process}{29}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{29}
-\contentsline {subsubsection}{\numberline {4.3.24}Detailed Design for Component: Add Unit}{29}
+\contentsline {subsubsection}{\numberline {4.3.16}Detailed Design for Component: Characters}{29}
 \contentsline {paragraph}{Purpose}{29}
 \contentsline {paragraph}{Input}{29}
 \contentsline {paragraph}{Output}{29}
 \contentsline {paragraph}{Process}{29}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{29}
-\contentsline {subsubsection}{\numberline {4.3.25}Detailed Design for Component: Clear}{29}
+\contentsline {subsubsection}{\numberline {4.3.17}Detailed Design for Component: Solar Display}{29}
 \contentsline {paragraph}{Purpose}{29}
 \contentsline {paragraph}{Input}{29}
-\contentsline {paragraph}{Output}{29}
-\contentsline {paragraph}{Process}{29}
-\contentsline {subsubsection}{\numberline {4.3.26}Detailed Design for Component: Clear Over Stack}{30}
-\contentsline {paragraph}{Purpose}{30}
-\contentsline {paragraph}{Input}{30}
 \contentsline {paragraph}{Output}{30}
 \contentsline {paragraph}{Process}{30}
-\contentsline {subsubsection}{\numberline {4.3.27}Detailed Design for Component: End Movement Phase}{30}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{30}
+\contentsline {subsubsection}{\numberline {4.3.18}Detailed Design for Component: Movable Unit}{30}
 \contentsline {paragraph}{Purpose}{30}
 \contentsline {paragraph}{Input}{30}
 \contentsline {paragraph}{Output}{30}
 \contentsline {paragraph}{Process}{30}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{30}
-\contentsline {subsubsection}{\numberline {4.3.28}Detailed Design for Component: Get All Player Units}{30}
+\contentsline {subsubsection}{\numberline {4.3.19}Detailed Design for Component: Movement Calculator}{30}
 \contentsline {paragraph}{Purpose}{30}
-\contentsline {paragraph}{Input}{30}
-\contentsline {paragraph}{Output}{30}
-\contentsline {paragraph}{Process}{30}
-\contentsline {subsubsection}{\numberline {4.3.29}Detailed Design for Component: Get Instance}{30}
-\contentsline {paragraph}{Purpose}{30}
-\contentsline {paragraph}{Input}{30}
-\contentsline {paragraph}{Output}{30}
-\contentsline {paragraph}{Process}{30}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{30}
-\contentsline {subsubsection}{\numberline {4.3.30}Detailed Design for Component: Get Over Stack}{31}
-\contentsline {paragraph}{Purpose}{31}
 \contentsline {paragraph}{Input}{31}
 \contentsline {paragraph}{Output}{31}
 \contentsline {paragraph}{Process}{31}
-\contentsline {subsubsection}{\numberline {4.3.31}Detailed Design for Component: Get Player Specific Units}{31}
-\contentsline {paragraph}{Purpose}{31}
-\contentsline {paragraph}{Input}{31}
-\contentsline {paragraph}{Output}{31}
-\contentsline {paragraph}{Process}{31}
-\contentsline {subsubsection}{\numberline {4.3.32}Detailed Design for Component: Get Safe Teleport}{31}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{31}
+\contentsline {subsubsection}{\numberline {4.3.20}Detailed Design for Component: Unit Pool}{31}
 \contentsline {paragraph}{Purpose}{31}
 \contentsline {paragraph}{Input}{31}
 \contentsline {paragraph}{Output}{31}
 \contentsline {paragraph}{Process}{31}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{31}
-\contentsline {subsubsection}{\numberline {4.3.33}Detailed Design for Component: getUnit}{31}
+\contentsline {subsubsection}{\numberline {4.3.21}Detailed Design for Component: Hex Stack}{31}
 \contentsline {paragraph}{Purpose}{31}
 \contentsline {paragraph}{Input}{31}
 \contentsline {paragraph}{Output}{31}
-\contentsline {paragraph}{Process}{31}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{31}
-\contentsline {subsubsection}{\numberline {4.3.34}Detailed Design for Component: getUnitHexMove}{31}
-\contentsline {paragraph}{Purpose}{31}
-\contentsline {paragraph}{Input}{32}
-\contentsline {paragraph}{Output}{32}
 \contentsline {paragraph}{Process}{32}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{32}
-\contentsline {subsubsection}{\numberline {4.3.35}Detailed Design for Component: getUnitsInHex}{32}
-\contentsline {paragraph}{Purpose}{32}
-\contentsline {paragraph}{Input}{32}
-\contentsline {paragraph}{Output}{32}
-\contentsline {paragraph}{Process}{32}
-\contentsline {subsubsection}{\numberline {4.3.36}Detailed Design for Component: removeUnit}{32}
-\contentsline {paragraph}{Purpose}{32}
-\contentsline {paragraph}{Input}{32}
-\contentsline {paragraph}{Output}{32}
-\contentsline {paragraph}{Process}{32}
-\contentsline {subsubsection}{\numberline {4.3.37}Detailed Design for Component: setSafeTeleport}{32}
+\contentsline {subsubsection}{\numberline {4.3.22}Detailed Design for Component: Add Move}{32}
 \contentsline {paragraph}{Purpose}{32}
 \contentsline {paragraph}{Input}{32}
 \contentsline {paragraph}{Output}{32}
 \contentsline {paragraph}{Process}{32}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{32}
-\contentsline {subsubsection}{\numberline {4.3.38}Detailed Design for Component: setTeleportDestination}{32}
+\contentsline {subsubsection}{\numberline {4.3.23}Detailed Design for Component: Add Move Stack}{32}
 \contentsline {paragraph}{Purpose}{32}
 \contentsline {paragraph}{Input}{32}
 \contentsline {paragraph}{Output}{32}
+\contentsline {paragraph}{Process}{32}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{32}
+\contentsline {subsubsection}{\numberline {4.3.24}Detailed Design for Component: Add Unit}{32}
+\contentsline {paragraph}{Purpose}{32}
+\contentsline {paragraph}{Input}{32}
+\contentsline {paragraph}{Output}{32}
+\contentsline {paragraph}{Process}{32}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{32}
+\contentsline {subsubsection}{\numberline {4.3.25}Detailed Design for Component: Clear}{32}
+\contentsline {paragraph}{Purpose}{32}
+\contentsline {paragraph}{Input}{32}
+\contentsline {paragraph}{Output}{33}
 \contentsline {paragraph}{Process}{33}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{33}
-\contentsline {subsubsection}{\numberline {4.3.39}Detailed Design for Component: teleport}{33}
+\contentsline {subsubsection}{\numberline {4.3.26}Detailed Design for Component: Clear Over Stack}{33}
+\contentsline {paragraph}{Purpose}{33}
+\contentsline {paragraph}{Input}{33}
+\contentsline {paragraph}{Output}{33}
+\contentsline {paragraph}{Process}{33}
+\contentsline {subsubsection}{\numberline {4.3.27}Detailed Design for Component: End Movement Phase}{33}
 \contentsline {paragraph}{Purpose}{33}
 \contentsline {paragraph}{Input}{33}
 \contentsline {paragraph}{Output}{33}
 \contentsline {paragraph}{Process}{33}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{33}
-\contentsline {subsubsection}{\numberline {4.3.40}Detailed Design for Component: undoMove}{33}
+\contentsline {subsubsection}{\numberline {4.3.28}Detailed Design for Component: Get All Player Units}{33}
 \contentsline {paragraph}{Purpose}{33}
 \contentsline {paragraph}{Input}{33}
 \contentsline {paragraph}{Output}{33}
 \contentsline {paragraph}{Process}{33}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{33}
-\contentsline {subsubsection}{\numberline {4.3.41}Detailed Design for Component: hexStack}{33}
+\contentsline {subsubsection}{\numberline {4.3.29}Detailed Design for Component: Get Instance}{33}
 \contentsline {paragraph}{Purpose}{33}
 \contentsline {paragraph}{Input}{33}
 \contentsline {paragraph}{Output}{33}
 \contentsline {paragraph}{Process}{33}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{33}
-\contentsline {subsubsection}{\numberline {4.3.42}Detailed Design for Component: overStackWarning}{34}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{34}
+\contentsline {subsubsection}{\numberline {4.3.30}Detailed Design for Component: Get Over Stack}{34}
+\contentsline {paragraph}{Purpose}{34}
+\contentsline {paragraph}{Input}{34}
+\contentsline {paragraph}{Output}{34}
+\contentsline {paragraph}{Process}{34}
+\contentsline {subsubsection}{\numberline {4.3.31}Detailed Design for Component: Get Player Specific Units}{34}
+\contentsline {paragraph}{Purpose}{34}
+\contentsline {paragraph}{Input}{34}
+\contentsline {paragraph}{Output}{34}
+\contentsline {paragraph}{Process}{34}
+\contentsline {subsubsection}{\numberline {4.3.32}Detailed Design for Component: Get Safe Teleport}{34}
 \contentsline {paragraph}{Purpose}{34}
 \contentsline {paragraph}{Input}{34}
 \contentsline {paragraph}{Output}{34}
 \contentsline {paragraph}{Process}{34}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{34}
-\contentsline {subsubsection}{\numberline {4.3.43}Detailed Design for Component: removeOverStack}{34}
+\contentsline {subsubsection}{\numberline {4.3.33}Detailed Design for Component: getUnit}{34}
 \contentsline {paragraph}{Purpose}{34}
 \contentsline {paragraph}{Input}{34}
 \contentsline {paragraph}{Output}{34}
 \contentsline {paragraph}{Process}{34}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{34}
-\contentsline {subsubsection}{\numberline {4.3.44}Detailed Design for Component: mainMenu.fxml}{34}
-\contentsline {paragraph}{Purpose}{34}
-\contentsline {paragraph}{Input}{34}
-\contentsline {paragraph}{Output}{34}
-\contentsline {paragraph}{Process}{34}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{34}
-\contentsline {subsubsection}{\numberline {4.3.45}Detailed Design for Component: hud.fxml}{34}
-\contentsline {paragraph}{Purpose}{34}
-\contentsline {paragraph}{Input}{34}
-\contentsline {paragraph}{Output}{34}
-\contentsline {paragraph}{Process}{35}
-\contentsline {paragraph}{Design Constraints and Performance Requirements}{35}
-\contentsline {subsubsection}{\numberline {4.3.46}Detailed Design for Component: MainMenuController.java}{35}
+\contentsline {subsubsection}{\numberline {4.3.34}Detailed Design for Component: getUnitHexMove}{35}
 \contentsline {paragraph}{Purpose}{35}
 \contentsline {paragraph}{Input}{35}
 \contentsline {paragraph}{Output}{35}
 \contentsline {paragraph}{Process}{35}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{35}
-\contentsline {subsubsection}{\numberline {4.3.47}Detailed Design for Component: HUDController.java}{35}
+\contentsline {subsubsection}{\numberline {4.3.35}Detailed Design for Component: getUnitsInHex}{35}
+\contentsline {paragraph}{Purpose}{35}
+\contentsline {paragraph}{Input}{35}
+\contentsline {paragraph}{Output}{35}
+\contentsline {paragraph}{Process}{35}
+\contentsline {subsubsection}{\numberline {4.3.36}Detailed Design for Component: removeUnit}{35}
+\contentsline {paragraph}{Purpose}{35}
+\contentsline {paragraph}{Input}{35}
+\contentsline {paragraph}{Output}{35}
+\contentsline {paragraph}{Process}{35}
+\contentsline {subsubsection}{\numberline {4.3.37}Detailed Design for Component: setSafeTeleport}{35}
 \contentsline {paragraph}{Purpose}{35}
 \contentsline {paragraph}{Input}{35}
 \contentsline {paragraph}{Output}{35}
 \contentsline {paragraph}{Process}{35}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{35}
-\contentsline {subsubsection}{\numberline {4.3.48}Detailed Design for Component: Game.java}{35}
+\contentsline {subsubsection}{\numberline {4.3.38}Detailed Design for Component: setTeleportDestination}{35}
 \contentsline {paragraph}{Purpose}{35}
-\contentsline {paragraph}{Input}{35}
-\contentsline {paragraph}{Output}{35}
+\contentsline {paragraph}{Input}{36}
+\contentsline {paragraph}{Output}{36}
 \contentsline {paragraph}{Process}{36}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{36}
-\contentsline {subsubsection}{\numberline {4.3.49}Detailed Design for Component: Hexagon Classes}{36}
+\contentsline {subsubsection}{\numberline {4.3.39}Detailed Design for Component: teleport}{36}
 \contentsline {paragraph}{Purpose}{36}
 \contentsline {paragraph}{Input}{36}
 \contentsline {paragraph}{Output}{36}
 \contentsline {paragraph}{Process}{36}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{36}
-\contentsline {subsubsection}{\numberline {4.3.50}Detailed Design for Component: Hex Edges}{36}
+\contentsline {subsubsection}{\numberline {4.3.40}Detailed Design for Component: undoMove}{36}
 \contentsline {paragraph}{Purpose}{36}
 \contentsline {paragraph}{Input}{36}
 \contentsline {paragraph}{Output}{36}
 \contentsline {paragraph}{Process}{36}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{36}
-\contentsline {subsubsection}{\numberline {4.3.51}Detailed Design for Component: Map Classes}{36}
+\contentsline {subsubsection}{\numberline {4.3.41}Detailed Design for Component: hexStack}{36}
 \contentsline {paragraph}{Purpose}{36}
 \contentsline {paragraph}{Input}{36}
 \contentsline {paragraph}{Output}{36}
 \contentsline {paragraph}{Process}{37}
-\contentsline {subsubsection}{\numberline {4.3.52}Detailed Design for Component: Hex Rendering}{37}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{37}
+\contentsline {subsubsection}{\numberline {4.3.42}Detailed Design for Component: overStackWarning}{37}
 \contentsline {paragraph}{Purpose}{37}
 \contentsline {paragraph}{Input}{37}
 \contentsline {paragraph}{Output}{37}
 \contentsline {paragraph}{Process}{37}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{37}
-\contentsline {subsubsection}{\numberline {4.3.53}Detailed Design for Component: Map View}{37}
+\contentsline {subsubsection}{\numberline {4.3.43}Detailed Design for Component: removeOverStack}{37}
 \contentsline {paragraph}{Purpose}{37}
 \contentsline {paragraph}{Input}{37}
 \contentsline {paragraph}{Output}{37}
 \contentsline {paragraph}{Process}{37}
 \contentsline {paragraph}{Design Constraints and Performance Requirements}{37}
-\contentsline {subsection}{\numberline {4.4}Data Dictionary}{37}
-\contentsline {section}{\numberline {5}Requirements Traceability}{38}
-\contentsline {subsection}{\numberline {5.1}Components}{38}
-\contentsline {subsubsection}{\numberline {5.1.1}Movement}{38}
-\contentsline {paragraph}{Requirements Description}{38}
-\contentsline {paragraph}{Implementation Description}{38}
-\contentsline {paragraph}{Differences}{38}
-\contentsline {subsubsection}{\numberline {5.1.2}Unit HashMap}{39}
-\contentsline {paragraph}{Requirements Description}{39}
-\contentsline {paragraph}{Implementation Description}{39}
-\contentsline {paragraph}{Differences}{39}
-\contentsline {subsubsection}{\numberline {5.1.3}Stack Class}{39}
-\contentsline {paragraph}{Requirements Description}{39}
-\contentsline {paragraph}{Implementation Description}{39}
-\contentsline {paragraph}{Differences}{39}
-\contentsline {subsubsection}{\numberline {5.1.4}DiplomacyController}{39}
-\contentsline {paragraph}{Requirements Description}{39}
-\contentsline {paragraph}{Implementation Description}{39}
-\contentsline {paragraph}{Differences}{39}
-\contentsline {subsubsection}{\numberline {5.1.5}Combat}{39}
-\contentsline {paragraph}{Requirements Description}{39}
-\contentsline {paragraph}{Implementation Description}{39}
-\contentsline {paragraph}{Differences}{39}
-\contentsline {subsubsection}{\numberline {5.1.6}MoveableUnit}{39}
-\contentsline {paragraph}{Requirements Description}{39}
-\contentsline {paragraph}{Implementation Description}{40}
-\contentsline {paragraph}{Differences}{40}
-\contentsline {subsection}{\numberline {5.2}Hex Rendering}{40}
-\contentsline {paragraph}{Requirements Description}{40}
-\contentsline {paragraph}{Implementation Description}{40}
-\contentsline {paragraph}{Differences}{40}
-\contentsline {subsubsection}{\numberline {5.2.1}MapView}{40}
-\contentsline {paragraph}{Requirements Description}{40}
-\contentsline {paragraph}{Implementation Description}{40}
-\contentsline {paragraph}{Differences}{40}
-\contentsline {subsection}{\numberline {5.3}Hexagon, Edge, and Map Classes}{40}
-\contentsline {paragraph}{Requirements Description}{40}
-\contentsline {paragraph}{Implementation Description}{40}
-\contentsline {paragraph}{Differences}{40}
-\contentsline {subsection}{\numberline {5.4}Hex Rendering}{41}
-\contentsline {paragraph}{Requirements Description}{41}
-\contentsline {paragraph}{Implementation Description}{41}
-\contentsline {paragraph}{Differences}{41}
-\contentsline {subsubsection}{\numberline {5.4.1}MapView}{41}
-\contentsline {paragraph}{Requirements Description}{41}
-\contentsline {paragraph}{Implementation Description}{41}
-\contentsline {paragraph}{Differences}{41}
-\contentsline {subsection}{\numberline {5.5}Hexagon, Edge, and Map Classes}{41}
-\contentsline {paragraph}{Requirements Description}{41}
-\contentsline {paragraph}{Implementation Description}{41}
-\contentsline {paragraph}{Differences}{41}
-\contentsline {subsection}{\numberline {5.6}Traceability Analysis}{41}
-\contentsline {subsubsection}{\numberline {5.6.1}Attack Units}{41}
-\contentsline {subsubsection}{\numberline {5.6.2}Retreat}{42}
-\contentsline {subsubsection}{\numberline {5.6.3}Choose Leader}{42}
-\contentsline {subsubsection}{\numberline {5.6.4}View Character/Unit Statistics}{42}
-\contentsline {section}{\numberline {6}Appendix A}{42}
+\contentsline {subsubsection}{\numberline {4.3.44}Detailed Design for Component: mainMenu.fxml}{37}
+\contentsline {paragraph}{Purpose}{37}
+\contentsline {paragraph}{Input}{37}
+\contentsline {paragraph}{Output}{37}
+\contentsline {paragraph}{Process}{37}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{37}
+\contentsline {subsubsection}{\numberline {4.3.45}Detailed Design for Component: hud.fxml}{38}
+\contentsline {paragraph}{Purpose}{38}
+\contentsline {paragraph}{Input}{38}
+\contentsline {paragraph}{Output}{38}
+\contentsline {paragraph}{Process}{38}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{38}
+\contentsline {subsubsection}{\numberline {4.3.46}Detailed Design for Component: MainMenuController.java}{38}
+\contentsline {paragraph}{Purpose}{38}
+\contentsline {paragraph}{Input}{38}
+\contentsline {paragraph}{Output}{38}
+\contentsline {paragraph}{Process}{38}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{38}
+\contentsline {subsubsection}{\numberline {4.3.47}Detailed Design for Component: HUDController.java}{38}
+\contentsline {paragraph}{Purpose}{38}
+\contentsline {paragraph}{Input}{38}
+\contentsline {paragraph}{Output}{38}
+\contentsline {paragraph}{Process}{38}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{38}
+\contentsline {subsubsection}{\numberline {4.3.48}Detailed Design for Component: Game.java}{39}
+\contentsline {paragraph}{Purpose}{39}
+\contentsline {paragraph}{Input}{39}
+\contentsline {paragraph}{Output}{39}
+\contentsline {paragraph}{Process}{39}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{39}
+\contentsline {subsubsection}{\numberline {4.3.49}Detailed Design for Component: Hexagon Classes}{39}
+\contentsline {paragraph}{Purpose}{39}
+\contentsline {paragraph}{Input}{39}
+\contentsline {paragraph}{Output}{39}
+\contentsline {paragraph}{Process}{39}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{39}
+\contentsline {subsubsection}{\numberline {4.3.50}Detailed Design for Component: Hex Edges}{39}
+\contentsline {paragraph}{Purpose}{39}
+\contentsline {paragraph}{Input}{39}
+\contentsline {paragraph}{Output}{39}
+\contentsline {paragraph}{Process}{39}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{39}
+\contentsline {subsubsection}{\numberline {4.3.51}Detailed Design for Component: Map Classes}{40}
+\contentsline {paragraph}{Purpose}{40}
+\contentsline {paragraph}{Input}{40}
+\contentsline {paragraph}{Output}{40}
+\contentsline {paragraph}{Process}{40}
+\contentsline {subsubsection}{\numberline {4.3.52}Detailed Design for Component: Hex Rendering}{40}
+\contentsline {paragraph}{Purpose}{40}
+\contentsline {paragraph}{Input}{40}
+\contentsline {paragraph}{Output}{40}
+\contentsline {paragraph}{Process}{40}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{40}
+\contentsline {subsubsection}{\numberline {4.3.53}Detailed Design for Component: Map View}{40}
+\contentsline {paragraph}{Purpose}{40}
+\contentsline {paragraph}{Input}{40}
+\contentsline {paragraph}{Output}{40}
+\contentsline {paragraph}{Process}{40}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{40}
+\contentsline {subsubsection}{\numberline {4.3.54}Detailed Design for Component: Scenario}{41}
+\contentsline {paragraph}{Purpose}{41}
+\contentsline {paragraph}{Input}{41}
+\contentsline {paragraph}{Output}{41}
+\contentsline {paragraph}{Process}{41}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{41}
+\contentsline {subsubsection}{\numberline {4.3.55}Detailed Design for Component: populatePool()}{41}
+\contentsline {paragraph}{Purpose}{41}
+\contentsline {paragraph}{Input}{41}
+\contentsline {paragraph}{Output}{41}
+\contentsline {paragraph}{Process}{41}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{41}
+\contentsline {subsubsection}{\numberline {4.3.56}Detailed Design for Component: getRandSafeHex()}{41}
+\contentsline {paragraph}{Purpose}{41}
+\contentsline {paragraph}{Input}{42}
+\contentsline {paragraph}{Output}{42}
+\contentsline {paragraph}{Process}{42}
+\contentsline {paragraph}{Design Constraints and Performance Requirements}{42}
+\contentsline {subsection}{\numberline {4.4}Data Dictionary}{42}
+\contentsline {section}{\numberline {5}Requirements Traceability}{43}
+\contentsline {subsection}{\numberline {5.1}Components}{43}
+\contentsline {subsubsection}{\numberline {5.1.1}Movement}{43}
+\contentsline {paragraph}{Requirements Description}{43}
+\contentsline {paragraph}{Implementation Description}{43}
+\contentsline {paragraph}{Differences}{43}
+\contentsline {subsubsection}{\numberline {5.1.2}Unit HashMap}{43}
+\contentsline {paragraph}{Requirements Description}{43}
+\contentsline {paragraph}{Implementation Description}{43}
+\contentsline {paragraph}{Differences}{43}
+\contentsline {subsubsection}{\numberline {5.1.3}Stack Class}{43}
+\contentsline {paragraph}{Requirements Description}{43}
+\contentsline {paragraph}{Implementation Description}{43}
+\contentsline {paragraph}{Differences}{43}
+\contentsline {subsubsection}{\numberline {5.1.4}DiplomacyController}{44}
+\contentsline {paragraph}{Requirements Description}{44}
+\contentsline {paragraph}{Implementation Description}{44}
+\contentsline {paragraph}{Differences}{44}
+\contentsline {subsubsection}{\numberline {5.1.5}Combat}{44}
+\contentsline {paragraph}{Requirements Description}{44}
+\contentsline {paragraph}{Implementation Description}{44}
+\contentsline {paragraph}{Differences}{44}
+\contentsline {subsubsection}{\numberline {5.1.6}MoveableUnit}{44}
+\contentsline {paragraph}{Requirements Description}{44}
+\contentsline {paragraph}{Implementation Description}{44}
+\contentsline {paragraph}{Differences}{44}
+\contentsline {subsection}{\numberline {5.2}Hex Rendering}{44}
+\contentsline {paragraph}{Requirements Description}{44}
+\contentsline {paragraph}{Implementation Description}{44}
+\contentsline {paragraph}{Differences}{44}
+\contentsline {subsubsection}{\numberline {5.2.1}MapView}{45}
+\contentsline {paragraph}{Requirements Description}{45}
+\contentsline {paragraph}{Implementation Description}{45}
+\contentsline {paragraph}{Differences}{45}
+\contentsline {subsection}{\numberline {5.3}Hexagon, Edge, and Map Classes}{45}
+\contentsline {paragraph}{Requirements Description}{45}
+\contentsline {paragraph}{Implementation Description}{45}
+\contentsline {paragraph}{Differences}{45}
+\contentsline {subsection}{\numberline {5.4}Hex Rendering}{45}
+\contentsline {paragraph}{Requirements Description}{45}
+\contentsline {paragraph}{Implementation Description}{45}
+\contentsline {paragraph}{Differences}{45}
+\contentsline {subsubsection}{\numberline {5.4.1}MapView}{45}
+\contentsline {paragraph}{Requirements Description}{45}
+\contentsline {paragraph}{Implementation Description}{45}
+\contentsline {paragraph}{Differences}{46}
+\contentsline {subsection}{\numberline {5.5}Hexagon, Edge, and Map Classes}{46}
+\contentsline {paragraph}{Requirements Description}{46}
+\contentsline {paragraph}{Implementation Description}{46}
+\contentsline {paragraph}{Differences}{46}
+\contentsline {subsection}{\numberline {5.6}Traceability Analysis}{46}
+\contentsline {subsubsection}{\numberline {5.6.1}Attack Units}{46}
+\contentsline {subsubsection}{\numberline {5.6.2}Retreat}{46}
+\contentsline {subsubsection}{\numberline {5.6.3}Choose Leader}{46}
+\contentsline {subsubsection}{\numberline {5.6.4}View Character/Unit Statistics}{46}
+\contentsline {section}{\numberline {6}Appendix A}{46}
