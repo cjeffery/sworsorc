@@ -28,7 +28,7 @@ public final class Immobilization {
         frame.addWindowListener( new WindowAdapter() {
             @Override
             public void windowClosing( WindowEvent e )
-            {  System.exit(0); 
+            {  //System.exit(0); 
 
             }
         });

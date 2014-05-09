@@ -29,7 +29,7 @@ public class JFXpopup {
         
         ScrollPane root = new ScrollPane();
         
-        Scene popScene = new Scene(root,450,250);
+        Scene popScene = new Scene(root,250,300);
         VBox vb = new VBox();
         vb.getChildren().add(swingGui);
         

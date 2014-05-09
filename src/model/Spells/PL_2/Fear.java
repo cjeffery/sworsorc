@@ -6,26 +6,52 @@
 
 package Spells.PL_2;
 
+import Character.Characters;
+import Units.ArmyUnit;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Serializable;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import mainswordsorcery.Game;
+import sshexmap.HexMap;
 
 /**
  *
  * @author Tao Zhang & Cameron Simon
  */
-public final class Fear {
+public final class Fear implements Serializable{
     JFrame frame;
     
-    public Fear(){
-        prepareGUI();
+    int FearRange = 7;
+    
+    Characters caster;
+    
+    String target_hex;
+    
+    public Fear(Characters c){
+        caster = c;
+        getTarget();
     }
     
+    public void getTarget(){
+        // this function is used to get the target to cast spell
+        while(target_hex == null){
+            target_hex = Game.getInstance().hudController.target_unit.location;
+        }
+        if(((ArmyUnit)Game.getInstance().hudController.target_unit).isDemoralized() != true){
+            checkRange();
+        }else{
+            //System.out.println("***************cast fail");
+            Game.getInstance().hudController.chat_box.appendText(
+                    "Target is already demoralized.\n" + " Select another target\n");
+        }
+    }
+        
     public void prepareGUI(){
         frame = new JFrame("Fear");
         frame.setSize(400,400);
@@ -33,7 +59,7 @@ public final class Fear {
             @Override
             public void windowClosing( WindowEvent e )
             {  //System.exit(0); 
-
+                frame.dispose();
             }
         });
         
@@ -61,22 +87,16 @@ public final class Fear {
     }
     
     //return spell range
-    public int getRange(){
-        int range = 7;
-        // get spells range
-        return range;
-    }
-    
-    //get desired range
-    public int getDistance(){
-        int distance = 0;
-        //get distance
-        return distance;        
-    }
-    
-    public void getTarget(){
-        // this function is used to get the target to cast spell
-    }
+    public void checkRange(){
+        int distance = HexMap.distance(caster.location, target_hex);
+        if(distance <= FearRange){
+            System.out.println("Cast succeed!!!!!!!!!!!!!!");
+            performSpellEffects();
+        }else{
+            Game.getInstance().hudController.chat_box.appendText(
+                    "Target is not in range.\n" + " Select another target\n");
+        }
+    }    
     
     public boolean checkLimits(){
         boolean limit = false;
@@ -96,29 +116,23 @@ public final class Fear {
     public void performSpellEffects(){
         // this function is used to perform the spell effects
         // like cost mana, or the real effects described in rules
-        if(checkLimits() == true && checkMana() == true){
-            // perform
-            if(getDistance() <= getRange()){
-                //peform spell
-                selectUnits();
-                //demoralize selected units
-            }
-            else{
-                //not in range
-            }
-            // what I am thinking about performing some data effects
-            // is that we can make a tmp data file that stores all the
-            // char or unit info, 
-            // then we can just go into that file and change the data
-            // then we read the file again for refresh the game data
+        ((ArmyUnit)Game.getInstance().hudController.target_unit).SetDemoralized(true);
+        Game.getInstance().hudController.hmapContent.repaint();
+
+        prepareGUI();
             
-            
-        }else{
-            // show warning that it desn't fit all the limitations
-        }
-        
-        
-        
+        CostManna();        
     }
-        
+     
+    public boolean successCast(){
+        return true;
+    }
+    
+    public void CostManna(){
+        if(successCast()){
+            caster.CostManna(3);
+        }else{
+            // do nothing
+        }
+    }
 }

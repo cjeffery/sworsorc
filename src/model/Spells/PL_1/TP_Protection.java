@@ -36,7 +36,7 @@ public final class TP_Protection {
             @Override
             public void windowClosing( WindowEvent e )
             {  
-                System.exit(0); 
+                //System.exit(0); 
             }
         });
         

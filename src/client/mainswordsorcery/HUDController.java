@@ -54,7 +54,7 @@ public class HUDController {
     @FXML private TabPane TargetsPane;
     @FXML private MenuBar menuBar;
     @FXML private TextField message_box;
-    @FXML private TextArea chat_box;
+    @FXML public TextArea chat_box;
     @FXML private ScrollPane map_view;
     @FXML private ScrollPane mini_map;
     @FXML private SwingNode hex_map;
