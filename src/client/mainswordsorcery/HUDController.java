@@ -5,19 +5,15 @@ package mainswordsorcery;
  *
  * @author Joe Higley
  */
+import Character.*;
 import MoveCalculator.MovementCalculator;
 import Units.*;
 import java.awt.Color;
-import Character.*;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.Observable;
 import javafx.beans.value.*;
 import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
@@ -33,18 +29,14 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialogs;
-import static sscharts.ArmyCombatResultsTable.PrepareAttackResults;
-import static mainswordsorcery.LaunchCombat.*;
 import sscharts.RandomEventTable;
 import sscharts.Scenario;
 import sshexmap.MapHex;
 import sshexmap.MapView;
-import ssterrain.TTSwamp;
-import ssterrain.TerrainType;
-import sscharts.Scenario;
 import systemServer.NetworkClient;
+
+import static java.lang.Integer.parseInt;
+import static mainswordsorcery.LaunchCombat.LaunchBotton;
 
 
 public class HUDController {

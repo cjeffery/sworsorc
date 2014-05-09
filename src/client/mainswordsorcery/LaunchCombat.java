@@ -11,7 +11,6 @@ import MoveCalculator.MovementCalculator;
 import Units.ArmyUnit;
 import Units.MoveableUnit;
 import Units.UnitPool;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +19,10 @@ import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
-import static sscharts.ArmyCombatResultsTable.PrepareAttackResults;
 import sshexmap.MapHex;
 import sshexmap.MapView;
+
+import static sscharts.ArmyCombatResultsTable.PrepareAttackResults;
 
 
 /**

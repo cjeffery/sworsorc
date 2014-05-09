@@ -43,12 +43,10 @@ import java.util.Map;
  *
  * @author Jarvis the Unknown
  */
-final public class Conductor { // Should this be a static singleton? I think it should be (chris)
+final public class Conductor {
 
     private final static UnitPool pool = UnitPool.getInstance();
 
-    // Put singletons and other objects here, so conductor can access their methods
-    // Can we do "register" methods? We have access to singletons everywhere already
     /**
      * Processes all messages passed from NetworkClient
      * <p>
@@ -63,7 +61,7 @@ final public class Conductor { // Should this be a static singleton? I think it 
 
         switch ( tag ) {
             case ADD_UNIT:
-                pool.addUnit( 0, (MoveableUnit) data.get( 0 ) ); // TODO: (playerID??)
+                pool.addUnit( 0, (MoveableUnit) data.get( 0 ) );
                 break;
             case REMOVE_UNIT:
                 pool.removeUnit( (MoveableUnit) data.get( 0 ) );
