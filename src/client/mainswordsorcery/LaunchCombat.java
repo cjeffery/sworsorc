@@ -22,6 +22,7 @@ import org.controlsfx.dialog.Dialogs;
 import sshexmap.MapHex;
 import sshexmap.MapView;
 
+
 import static sscharts.ArmyCombatResultsTable.PrepareAttackResults;
 
 
@@ -39,9 +40,10 @@ public class LaunchCombat {
         static ArrayList<ArmyUnit> attackers = new ArrayList<>();
         static ArrayList<ArmyUnit> defenders = new ArrayList<>();
         static MapHex Defender_Terrain = new MapHex();
+        
     public static void LaunchBotton(List selected_stack, List target_stack, MapView hmapContent) {
         
-
+        
         
         
         selected_combat_unit = (MoveableUnit) selected_stack.get(0);
@@ -62,13 +64,13 @@ public class LaunchCombat {
         
         
         // Set up Defender's TerrainType
-       
+        MapHex Atk_Terrain = new MapHex();
         MapView temp = MapView.getMapView();
         Defender_Terrain = (MapHex)temp.GetHexMap().GetHex(target_combat_unit.getLocation());
-        
+        Atk_Terrain = (MapHex)temp.GetHexMap().GetHex(selected_combat_unit.getLocation());
         // Add Friendly Unit into Attackers List
         ArrayList<MapHex> FriendlyCombatList = new ArrayList<>();
-        FriendlyCombatList = getFriendlyList(Defender_Terrain);
+        FriendlyCombatList = getFriendlyList(Defender_Terrain, Atk_Terrain);
         System.out.println("Numbers of friendly units: " + FriendlyCombatList.size());
         
         for (MapHex FriendlyCombatList1 : FriendlyCombatList) {
@@ -245,15 +247,18 @@ public class LaunchCombat {
      * @return ArrayList<MapHex>
      * 
      */
-    public static ArrayList<MapHex> getFriendlyList( MapHex currHex )
+    public static ArrayList<MapHex> getFriendlyList( MapHex currHex, MapHex atk_terrain )
     {
         ArrayList<MapHex> neighbors = new ArrayList<>();
         //For each hex edge, 0-5, get the neighboring hex, if it's valid
         for( int i = 0; i < 6; i++ )
         {
             // Make sure the neighbor exists
-            if( currHex.getNeighbor( i ) != null && currHex.getNeighbor(i).getUnits() != null )
-                neighbors.add( currHex.getNeighbor(i));
+            if( currHex.getNeighbor( i ) != null && currHex.getNeighbor(i).getUnits() != null 
+                    && currHex.getNeighbor(i).GetID() != atk_terrain.GetID())
+                
+                    neighbors.add( currHex.getNeighbor(i));
+                
         }
         
         
