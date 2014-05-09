@@ -7,6 +7,7 @@
 
 package Spells;
 
+import Spells.JFXpopup;
 import Character.Characters;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -25,7 +26,7 @@ public final class Spell_Book implements Serializable {
 
     // Find a different way to do this please
     // Serialze information for the dialog, and then display the dialog in the calling class
-    //Stage popup = new Stage();
+    Stage popup = new Stage();
     
     /** ==========================
      *      Character info
@@ -210,7 +211,7 @@ public final class Spell_Book implements Serializable {
     
     public void hideWindow() {
         //mainFrame.setVisible(false);
-        //popup.close();
+        popup.close();
     }
 
     public Stage getSpellBook() {
