@@ -10,8 +10,8 @@
 \usepackage{pdfpages}
 \usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
 \parskip=0pt
-
-\title{ \center\includegraphics[width=\linewidth]{UIGraphic}\\
+\title{ 
+\center\includegraphics[width=\linewidth]{UIGraphic}\\
 		\center\textbf{\Large{System and Software Design Description(SSDD):}\\
 		\large{Incorporating Architectural Views and Detailed Design Criteria\\
 		For\\
@@ -31,7 +31,7 @@ Dr. Clinton Jeffery\\}
 \pagebreak
 
 \section{Introduction}
-This is the System and Software Design Document for Swords and Sorcery. This is one of five documents that describe the computer adaptation of the Swords and Sorcery board game developed by the Software Engineering class at the University of Idaho in Spring 2014.
+This is the System and Software Design Document for the computer adaptation of the Swords and Sorcery board game. This is one of five documents that describe the computer adaptation of the Swords and Sorcery board game. The computer adaptation was developed by the Software Engineering class at the University of Idaho in Spring 2014.
 \subsection{Document Purpose, Context, and Intended Audience}
 \subsubsection{Document Purpose}
 The purpose of this document is to describe the system and software design of Swords and Sorcery. This includes diagrams developed to guide design of S\&S, component descriptions, view descriptions, and requirements traceability.
@@ -131,7 +131,7 @@ This document is for LIMITED USE ONLY to UI CS personnel working on the project.
 \section{Constraints and Concerns}
 
 \subsection{Constraints}
-Swords and Sorcery requires the Java Runtime Environment 8 to run. S\&S also requires the JDK 8.0 and Netbeans 8.0 or better to develop. The game will run on Windows, Mac, and Linux, provided those systems have the mentioned software packages (JRE to play, JDK/Netbeans to develop). To play the game, a network connection is required, as well as the IP Address of the game server. As S\&S is a multiplayer game, one client is required for each player. Typically, this should be done using multiple computers, however, multiple clients can be run on the same computer.
+Swords and Sorcery requires the Java Runtime Environment 8 to run. S\&S also requires the JDK 8.0 and Netbeans 8.0 or better to develop, or a proficiency with ANT, which is the directory structure the project uses, as a result of being developed in Netbeans. The game will run on Windows, Mac, and Linux, provided those systems have the mentioned software packages (JRE to play, JDK/Netbeans to develop). To play the game, a network connection is required, as well as the IP Address of the game server. As S\&S is a multiplayer game, one client is required for each player. Typically, this should be done using multiple computers, however, multiple clients can be run on the same computer.
 
 \subsection{Stakeholder Concerns}
 There are no financial stakeholders, however, Dr. Clinton Jeffery can be considered a stakeholder, as well as each class member. As a class member, our concerns are providing a quality product, while Dr. Jeffery's concerns may include using good design principles, as this is a Software Engineering course. 
@@ -147,40 +147,66 @@ There are multiple developer views within the scope of the S\&S project for CS38
 \subsubsection{Developer's View Representation and Description}
 \paragraph{Architectural Overview}
 The following class diagram is inaccurate with respect to the project as it currently stands. The inaccuracies are the Chart class, which does not exist, and we discovered is unnecessary, as well as the alliance and player classes, which were never created. The alliance class was never created because we didn't make it that far with the project, and the player class was replaced with flags and variables, as a class was determined to be unneeded. Also, the diagram lacks references and design information relating the classes to the HUD and Networking components of S\&S.
-\includepdf{overview.png}
+\begin{center}
+\includegraphics[width=\linewidth]{overview.png}
+\end{center}
 \paragraph{HUD Team View Representation and Description}
 The HUD team view includes rules that affect the HUD (movement, hex painting, terrain, etc.) and the actual HUD itself, containing a view of the map, the minimap, character/unit descriptions, the solar display, the main menu, and hosting interactions between the game instance and the user. The HUD team also designed several data structures include the UnitPool and MainMap, for displaying the units and map in the HUD. Following is a collaboration diagram that shows a rough idea of the design from the HUD Team view.
 \begin{center}
 \includegraphics[width=\linewidth]{HUDTeamCollab.png}
 \end{center}
 \paragraph{Rules Team View Representation and Description}
-[Insert Description of graphics (UML) here]
+The rules team view covers the implementation of the rules from the actual boardgame, S\&S. This includes things like combat, spell casting, charts implementation, unit implementation and other rules related tasks. The design view for the rules team consists of how those rules interact with each other and the other groups (HUD, Networking).
 %\includegraphics[scale=•]{•}
 \paragraph{Networking Team View Representation and Description}
-[Insert Description of graphics (UML) here]
+The networking team view covers the client/server implementation and design for S\&S. Their overall view of design was a client/server model which hosts communication over the network and message passign for updating the state of a game. 
 %\includegraphics[scale=•]{•}
 
 \subsection{User's Architectural View}
-	\subsubsection{User's View Identification}
-	The User's view consists of their interactions with the S\&S GUI. This includes starting the client, joining/starting a game lobby, beginning a game, and interacting with the game. Found here are diagrams representing sequence of play and mouse/key button presses.
-	\subsubsection{User's View Representation and Description}
-	\includepdf{SequenceOfPlay.png}
-	\includepdf{KeyMouseButtons.png}
-\subsection{Consistency of Architectural Views}
-	\subsubsection{Detail of Inconsistencies Between Architectural Views}
-	\subsubsection{Consistency Analysis and Inconsistency Mitigations}
+\subsubsection{User's View Identification}
+The User's view consists of their interactions with the S\&S GUI. This includes starting the client, joining/starting a game lobby, beginning a game, and interacting with the game. Found here are diagrams representing sequence of play and mouse/key button presses.
+\subsubsection{User's View Representation and Description}
+\begin{center}
+\includegraphics[width=\linewidth]{SequenceOfPlay.png}
+\end{center}	
+\pagebreak
+\begin{center}
+\includegraphics[width=\linewidth]{KeyMouseButtons.png}
+\end{center}
+\pagebreak
 
 \section{Software Detailed Design}
 \subsection{Developer's Viewpoint Detailed Software Design}
 This section describes the developers viewpoint with respect to the software design. Included are the UML diagrams developed for the S\&S game, from which we began designing S\&S, as well as the state and collaboration diagrams. Many of the diagrams were developed at different points during the semester, reflected by the discrepancies between the SSRS, this document, and the Implementation document. 
-\includepdf{classDiagram.png}
-\includepdf{hex.png}
-\includepdf{units.png}
-\includepdf{dataDiagram.png}
-\includepdf{CollaborationMoveUnit.png}
-\includegraphics{CharacterCapture}
-\includepdf{RandomSpellTerrainEffectsOverview.png}
-\includepdf{SolarCycle.png}
+\subsubsection{UML Class Diagrams}
+\begin{center}
+\includegraphics[width=\linewidth]{classDiagram.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{hex.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{units.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{dataDiagram.png}
+\end{center}
+\pagebreak
+\subsubsection{UML Collaboration Diagrams}
+\begin{center}
+\includegraphics[width=\linewidth]{CollaborationMoveUnit.png}
+\end{center}
+\pagebreak
+\subsubsection{UML State Charts}
+\begin{center}
+\includegraphics[width=\linewidth]{CharacterCapture}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{RandomSpellTerrainEffectsOverview.png}
+\end{center}
+\begin{center}
+\includegraphics[width=\linewidth]{SolarCycle.png}
+\end{center}
 \pagebreak
 \subsection{Component Dictionary}
 \small{
@@ -240,6 +266,8 @@ HexStacked & Class & Implements rules for stacks. & UnitPool & None\\
 \hline
 Hexagon Map Classes & Model & Classes to represent a "map" of hexagons, either diplomacy or game. & Hexagon Classes & \\
 \hline
+Launch Combat & Static Method & Implement Combat Phase & Moveable Unit, Army Combat Results Table, HUDController, MovementCalculator & None\\
+\hline
 Lobby & Class & A server-side object that manages a grouping of client connection. & Tag, Flag, MessagePhoenix & \\ 
 \hline
 MainMenuController & Controller & Define and limit access to main menu & Game.java & \\
@@ -265,9 +293,13 @@ RemoveOverStack & Method & Removes units from an over-stacked hex. & UnitPool & 
 \hline
 RemoveUnit & UnitPool Method & Removes a single unit. & Sorted map: pool & None\\
 \hline
+Retreat & Static Method & Implement Retreat after Combat & Launch Combat, MovementCalculator & None\\
+\hline
 SetSafeTeleport & UnitPool Method & Sets the units that can safely teleport. & Array list: safeTeleport & None\\
 \hline
 Solar Display & Class & Tracks solar position, updates HUD image & Scenario/Game Rules & Spell Casting/HUD Controller\\
+\hline
+Spell Cast & Static Class & Perform Spell effects on given characters/units & None\\
 \hline
 Tag & Enum Class & An enumerated constant class providing identifiers for each general type of network message. & & \\
 \hline
@@ -283,7 +315,7 @@ UnitPool & Class & Track and manipulate all units in the game. & None & MovableU
 
 \subsection{Component Detailed Design}
 \subsection{Detailed Design for Component: Army Unit}
-\paragraph{Purpose} This class contains the data of the Army Units in the game and extends the Movable Unit class. This class contains new data like the strength of a unit and whether or not the units is conjured or demoralized. If a unit is conjured then there are special member variables that contain values that are associated with conjured units. If a unit is demoralized then the strength of the unit is different so a demoralized strength variable was added to the class. The strength and demoralized strength variables are used during the combat phase of a users turn and is used to determine the outcome of combat. 
+\paragraph{Purpose} This class contains the data of the Army Units in the game and extends the Movable Unit class. This class contains new data like the strength of a unit and whether or not the units are conjured or demoralized. If a unit is conjured then there are special member variables that contain values that are associated with conjured units. If a unit is demoralized then the strength of the unit is different so a demoralized strength variable was added to the class. The strength and demoralized strength variables are used during the combat phase of a users turn and is used to determine the outcome of combat. 
 \paragraph{Input} The only Inputs to this class are the ones needed to fill the member variables of this class.
 \paragraph{Output} This class by itself has no output produced other than the getter functions in the class.
 \paragraph{Process} Output is obtained by calling the getter functions. 
@@ -354,6 +386,28 @@ NetworkClient must be able to receive network message asynchronously.
 \paragraph{Output} A Lobby can forward messages received from one ClientObject to all clients in the Lobby.
 \paragraph{Process} Clients are added to or removed from (by client request) a particular lobby. 
 \paragraph{Design Constraints and Performance Requirements} None.
+
+\subsection{Detailed Design for Component: LaunchCombat}
+\paragraph{Purpose} The LaunchCombat is a public static Java class, which allows players to see combat details, and then they can decide to enforce the Combat between units or not.
+\paragraph{Input} Two ArrayList $<$MoveableUnit$>$ attackers and defenders, and the object from MapView so it can highlight those hexes for showing more combat information.
+\paragraph{Output} Confirmation for players to decide enforce combat, if yes, shows the combat result and give options of retreat or eliminate certain units.
+\paragraph{Process} The LaunchCombat first takes input Moveable units, this connect with the HUDcontroller class: left mouse click to get selected\_stack, and right mouse click to get target\_stack. When a player in the combat phase, they should pick both units then press $'$A$'$ to launch the combat. When clicked A button, first it shows dialogs to ask the attacker player if they want to add friendly units which surround the defender units into the combat, then it will pop out units detail include Attacks' strength, Defenders' strength, Defenders' Terrain type, and Defenders' strength after Terrain Type bonus with a confirmation dialog. The certain player should click yes button for showing combat result, or click no for doing nothing. If the player clicks yes button, the Combat result will shows as a notification on the right bottom conner, with this result both attacker player and defender player may meet three situations: Nothing Change, Retreat, Elimination. If the combat result returns 0, then the certain player doesn't need to do any reactions from this combat, if the result is a negative number, the certain player should eliminate numbers(since result is a integer number) of units from the units list; if the result is a positive number, then the player should decide to eliminate the unit OR retreat the unit.
+\paragraph{Design Constraints and Performance Requirements} 
+One Design Constraint is that the LaunchCombat only can be used while the Combat Phase, and both of Attacker Units and Defender Units should be selected. 
+
+\subsection{Detailed Design for Component: Retreat}
+\paragraph{Purpose} After the combat, players should decide to retreat the units if the result requires.
+\paragraph{Input} ArrayList$<$ArmyUnit$>$, combat result
+\paragraph{Output} It will highlight those hexes which the certain units can retreat to with red color, and right click the mouse button for retreating the certain units to certain hex.
+\paragraph{Process} First the result came from the LaunchCombat, so the player can get it's result value(negative, positive integer, or zero), if the result is a positive number then the player should decide to retreat the units or not, if not, then they should eliminate the unit, if yes, execute the Retreat function. The retreat function will send necessary input for the method getRetreatMove in the class Movement Calculator, so it can get which hexes that the certain units can move to, and it will highlight the available hexes with red color.
+\paragraph{Design Constraints and Performance Requirements} Retreat function will only be called while the combat result sent, in the other words, it needs to know the attackers list, defenders' list, and the combat result. For each units will be sent a message to ask for retreating if necessary.
+
+\subsection{Detailed Design for Component: Spell Cast}
+\paragraph{Purpose} The purpose of this class is to perform spells during the spell cast phase of the game.  These spells can have a variety of affects like destroying units, moving units, demoralizing units, along with many more.  
+\paragraph{Input} The character object and user input for things like unit to be cast on, number of targets, or manna to be transferred.  
+\paragraph{Output} The effects to units/characters.  This includes things like demoralization, graphical walls, or movement of units on map.
+\paragraph{Process} This class takes in the necessary information for the spell being cast.  Determines what the effects will be based on user input and character magic potential, then displays the effect on the map.
+\paragraph{Design Constraints and Performance Requirements} In order to perform a spell cast all information for that spell must be known.  This includes things like limits, range of spell, distance to target, and character manna potential.  
 
 \subsection{Detailed Design for Component: Characters}
 \paragraph{Purpose} This class contains the data of a Character in the game and extends the Movable Unit class. This class has variables unique to a character: magic level, magic potential, current manna, magic colour, and leadership. The magic level determines the hight level of spell that a character can cast. The magic potential is the maximum amount of manna that a character can have. The magic colour of a character determines when a character's spells have the most effect. Leadership is the influence that a character has in determining the result of army combat. Characters have the special ability to cast spells which uses the magic and manna values to determine the amount and effectiveness of their spells. 
@@ -633,9 +687,13 @@ work with JavaFX.
 \noindent\begin{tabularx}{\linewidth}{|l|X|X|X|X|}\hline
 \textbf{Name} & \textbf{Type/Range} & \textbf{Defined By...} & \textbf{Referenced By...} & \textbf{Modified By...}\\
 \hline
+allowance Cache & HashMap & Movement Calculator & Movement Calculator & Movement Calculator\\
+\hline
+retreat Allowance Cache & HashMap & Movement Calculator & Movement Calculator & Movement Calculator\\
+\hline
 HexMap & class/HashMap & HexMap.java & MainMap, DiplomacyMap & HUDController, ...\\
 \hline
-UnitPool & Class/SortedMap & UnitPool.java & Movement Calculator, Networking, MainMap, Spell, Combat, Stack & HUDController, Networking, Spell, Combat, Stack\\
+UnitPool & Class, SortedMap & UnitPool.java & Movement Calculator, Networking, MainMap, Spell, Combat, Stack & HUDController, Networking, Spell, Combat, Stack\\
 \hline
 Pool & SortedMap & UnitPool.java & UnitPool & UnitPool\\
 \hline
@@ -657,10 +715,18 @@ Options & Final object[2] ,[0]Yes, [1]No & UnitPool.java & UnitPool & None\\
 \hline
 PortNum & Int & UnitPool.java & UnitPool & UnitPool\\
 \hline
-
 HexMap's HashMap & HashMap<String,Hex> & HexMap.java & Hexagon Map Classes & Hexagon Map Classes\\
 \hline
 Hex Edge's element TreeMap<edgeType, EdgeElement> & HexMap.java & Hexagon Map Classes & Hexagon Map Classes\\
+HexStack & Class & HexStack.java & UnitPool & UnitPool\\
+\hline
+UnitCount & SortedMap & HexStack.java & UnitPool & UnitPool\\
+\hline
+UnitRemoveList & ArayList & HexStack.java & UnitPool & UnitPool\\
+\hline
+PopupScene & Scene & HexStack.java & UnitPool & UnitPool\\
+\hline
+Count & Integer & HexStack.java & UnitPool & UnitPool\\
 \hline
 \end{tabularx}
 \end{center}

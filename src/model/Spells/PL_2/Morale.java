@@ -7,6 +7,7 @@
 package Spells.PL_2;
 
 import Character.Characters;
+import mainswordsorcery.HUDController;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -34,8 +35,10 @@ public final class Morale {
     
     Characters character;
     
-    String target_n;
-    String target_h;
+    HUDController hud = new HUDController();
+    
+    String target_name;
+    String target_hex;
     
     public Morale(Characters c){
         character = c;
@@ -51,8 +54,8 @@ public final class Morale {
         frame.addWindowListener( new WindowAdapter() {
             @Override
             public void windowClosing( WindowEvent e )
-            {  //System.exit(0); 
-                System.exit(0);
+            {  
+                
             }
         });
         
@@ -62,7 +65,6 @@ public final class Morale {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                System.exit(0);
             }
         });
         
@@ -71,14 +73,6 @@ public final class Morale {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                
-                // set new frame with new 
-                //Implement_Spells is = new Implement_Spells();
-                //is.getSpellBook(is.PL, is.MagicPotential);
-                
-                // later, this method gonna return bool value and let character
-                // class know if he want to cast a new spell
-                System.exit(0);
             }
         });
         
@@ -101,10 +95,12 @@ public final class Morale {
     }   
     
     public void getTarget(){
+        //hud.setupEventHandlers();
+        target_hex = "1000";//hud.target_unit.location;
         // this function is used to get the target to cast spell
         
         // set the target hex 
-        
+        /*
         final JFrame target_info = new JFrame("Target Info");
         target_info.setSize(300,200);
         
@@ -155,6 +151,7 @@ public final class Morale {
         });
         
         target_info.setVisible(true);
+                */
     }
     
     public boolean checkLimits(){
@@ -170,7 +167,7 @@ public final class Morale {
     
     public boolean checkRange(){
         boolean go = true;
-        int distance = HexMap.distance(character.location, target_h);
+        int distance = HexMap.distance(character.location, target_hex);
         if(distance > MoraleRange){
             go = false;
         }
