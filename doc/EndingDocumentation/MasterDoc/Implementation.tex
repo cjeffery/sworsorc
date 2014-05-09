@@ -326,6 +326,7 @@ The PaintComponent method is what interacts with the Map Rendering code.
 The hexagon tiling math is interesting
 
 \subsubsection{Hexagon Math}
+
 Hexagon math was cobbled together from various sources on the internet and
 frenzied scribbles on note-paper. 
 
@@ -344,7 +345,7 @@ smoothly the distance between a column and it's neighbors is 3/4ths that.
 The height of a hexagon is the radius (32px) times the square root of 3.
 
 But the key to hexagon tiling was this stackoverflow post:
-http://gamedev.stackexchange.com/a/20762 
+http://gamedev.stackexchange.com/a/20762
 
 Which is to say, Hexagon picking involves converting between hexagon shaped
 and rectangle shaped tilings. Pretty cool.
@@ -370,8 +371,7 @@ given edge twice, and to avoid an edge being obscured by a neighboring hexagon.
 So MapView takes the following passes:
 \begin{enumerate}
 \item{Requests the Map Rendering code to draw all the hexagons}
-\item{Requests the Map Rendering code to highlight any hexagons that nee
-      highlighting}
+\item{Requests the Map Rendering code to highlight any hexagons that need highlighting}
 \item{Requests the Map Rendering code to draw all the edges}
 \end{enumerate}
 
@@ -420,7 +420,60 @@ connections whenever a class with a JavaFX object was attemped to be sent over t
 
 The message format did serve its purpose, however, and we were able to get some limited funcationality using it.
 
+\subsection{Threaded Connections}
 
+From the beginning, the network design included theads. Initially, it was simply a sending thread and a recieving thread. 
+However, that expanded into the use of sending/recieving, and command processing threads client side, and sending/recieving threads
+dedicated to each unique client connection on the server side.
+
+Each thread handles one "half" of the connection, so sending thread would write to the socket, and the recieving thread would read from the socket. Modern ethernet networks
+support two-way communication using switches, so the old 10Base2 Bus model is certainly no longer viable. Token ring was briefly considored, but would cause more syncronization issues
+than it would solve, again considoring the technology available. 
+
+Queues were implemented to pass messages in and out of threads, basically acting as a "buffer", so if there were slow-downs(common occurance in networks), 
+the threads wouldn't be causing data to be dumped.
+
+The threads themselves didn't cause an abnormal amount of issues, and served their job well. 
+If this were to be put on, again, the "hypothetical market", there would need to be changes to addres performance. Since (far as chris understand it) the threads
+are a client library, they aren't fully utilizing concurrence available by using OS level threads. Not to mention queue sizes and network syncronization, and the always-looming
+threat of a buffer overflow.
+
+\subsection{The Network Client}
+
+This is the Meat and Potatoes of the Networking system. It is a static singleton class, and handles all incoming/outgoing messages, user command processing, creating/closing connections, and anything else related to networking.
+
+There are many public utility functions, such as startGame, endTurn, and generateUniqueID.
+Most method calls, however, are to the send method, and its varients (sendChatMessage, poke). This sends a message including a flag, tag, the username of that client, and any data passed to it through var-args. This allows for quite a bit of flexibility in calls, and leaves the processing of a message up to its arguments, not the method call itself.
+
+Most of the difficulty in the implementation of the client was with command/message processing. The command thread processes any user input to the console box, such as network commands or chat messages, and sends the relevant messages. That was just a very hairy if-else mess, but not too terrible beyond constant maintence whenever a command changed.
+
+The ClientRecieverThread, on the other hand, was troublesome. Its structure is almost an identical copy of its twin in ClientObject server-side. This meant a LOT of maintence whenever something changed, and lots of hairpulling resulted from the errors  resulting from these subtle differences. This probably could've been done with a fancy design pattern during the design phase, but it was overlooked, and that led to a lot of extra time spent implementing.
+
+\subsection{The Network Server}
+
+This is actually simplier than the client side, even though it is utilizing more classes than the client side. 
+
+The Network Server itself is a static singleton class, with a constantly-running loop that listens for and recieves client connections. It manages the lobbies as a list of Lobby objects, and connected clients as a list of ClientObjects (each with their own pair of threads). 
+
+The primary functions of the server, beyond just passing along messages, is handling the "nitty-gritty" details of the network system. 
+These include global broadcasts, connections/disconnects, and the mangement of lobbies. It does not care about the game state in any way.
+
+That is the lobby's job. Each lobby object manages its own pool of clients, with a lobby having at least one client at any point in time. 
+Lobby-wide broadcasts are handled here, as well as phase changes and game turns. 
+
+Each client connection that is recieved is assigned to a client object, each with its own name (players username) and unique ID. These objects handle all of the server's incoming and outgoing communication, and anything being sent out must go through a client object. Thusly, broadcasts involve looping through the client lists and calling the send function on each one.
+Additionally, they have the responsibility of processing ALL incoming messages, and calling the requisite methods in NetworkServer or one of the Lobby objects.
+
+\subsection{The Conductor}
+
+The Conductor is really just that: a "network train" conductor
+Anything game related that is the clients responsibility is passed to the conductor's processMessage method, which then invokes the requisite methods by using static instances of UnitPool, HUDController, and others. 
+
+In its most basic form, its just a big switch statement that either directly calls the methods, or calls class utility methods that then directly call the methods on the instances.
+
+The only major issue with it is the same as with the recieving threads: any command change requires mantence accross the entire network codebase. Not very modular, and very very brittle. 
+
+In spite of that, it does work, and serves its purpose in this instance. 
 
 
 

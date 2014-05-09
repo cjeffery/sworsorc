@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.1.26)  9 MAY 2014 00:47
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.1.26)  9 MAY 2014 04:37
 entering extended mode
 **C:/Users/Tehlizard/Documents/NetBeansProjects/sworsorc/doc/EndingDocumentatio
 n/MasterDoc/Implementation.tex
@@ -478,37 +478,37 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 43.
  [1] [2] [3] [4]
 [5] [6] [7]
-Overfull \hbox (66.14616pt too wide) in paragraph at lines 346--348
+Overfull \hbox (66.14616pt too wide) in paragraph at lines 347--349
 []\OT1/cmr/m/n/12 But the key to hexagon tiling was this stack-over-flow post: 
 http://gamedev.stackexchange.com/a/20762 
  []
 
-[8] [9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 495--503
+[8] [9] [10] [11] [12]
+Underfull \hbox (badness 10000) in paragraph at lines 548--556
 
  []
 
-[11]
-LaTeX Font Info:    Try loading font information for U+msa on input line 506.
+[13]
+LaTeX Font Info:    Try loading font information for U+msa on input line 559.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 506.
+LaTeX Font Info:    Try loading font information for U+msb on input line 559.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 506--507
+Underfull \hbox (badness 10000) in paragraph at lines 559--560
 
  []
 
 
-Overfull \hbox (10.75647pt too wide) in paragraph at lines 509--510
+Overfull \hbox (10.75647pt too wide) in paragraph at lines 562--563
 \OT1/cmr/m/n/12 First the re-sult came from the Launch-Com-bat, so the player c
 an get its re-sult value(negative,
  []
 
-[12] [13]
+[14] [15]
 (C:\Users\Tehlizard\Documents\NetBeansProjects\sworsorc\doc\EndingDocumentation
 \MasterDoc\Implementation.aux) ) 
 Here is how much of TeX's memory you used:
@@ -524,9 +524,9 @@ Here is how much of TeX's memory you used:
 s/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr
 12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
 C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on Implementation.pdf (14 pages, 94891 bytes).
+Output written on Implementation.pdf (16 pages, 100095 bytes).
 PDF statistics:
- 70 PDF objects out of 1000 (max. 8388607)
+ 76 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
